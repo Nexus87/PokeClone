@@ -2,11 +2,13 @@
 
 namespace BattleLib
 {
-	public class IBattleClient
+	public interface IBattleClient
 	{
-		public IBattleClient ()
-		{
-		}
+		string ClientName { get; }
+
+		void battleStartHandler(object sender, EventArgs args);
+		void newRoundHandler(object sender, EventArgs args);
+		void battleEndHandler(object sender, EventArgs args);
 	}
 }
 
