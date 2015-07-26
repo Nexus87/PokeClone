@@ -2,7 +2,7 @@
 
 namespace BattleLib
 {
-	enum ActionType {
+	public enum ActionType {
 		immediate,
 		ranked
 	}
@@ -10,7 +10,7 @@ namespace BattleLib
 	public interface IAction
 	{
 		void applyTo(ICharakter charakter);
-		ActionType Type { get; }
+		ActionType Type { get; set; }
 	}
 }
 

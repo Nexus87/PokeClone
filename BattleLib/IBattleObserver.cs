@@ -3,13 +3,13 @@ using System.Collections.Generic;
 
 namespace BattleLib
 {
-	struct ClientInfo 
+	public struct ClientInfo 
 	{
-		int Id { get; }
-		string CharName { get; }
-		string ClientName { get; }
-		uint Hp { get; }
-		string Status { get; }
+		public int Id { get; set; }
+		public string CharName { get; set; }
+		public string ClientName { get; set; }
+		public int Hp { get; set; }
+		public string Status { get; set; }
 	}
 
 	public interface IBattleObserver
