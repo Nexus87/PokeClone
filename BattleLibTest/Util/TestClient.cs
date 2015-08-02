@@ -1,10 +1,10 @@
 ﻿//
-//  Test.cs
+//  TestClient.cs
 //
 //  Author:
-//       kevin <>
+//       Nexxuz0 <>
 //
-//  Copyright (c) 2015 kevin
+//  Copyright (c) 2015 Nexxuz0
 //
 //  This program is free software; you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -20,18 +20,47 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
-using NUnit.Framework;
 using System;
+
+using BattleLib;
 
 namespace BattleLibTest
 {
-	[TestFixture ()]
-	public class Test
-	{
-		[Test ()]
-		public void TestCase ()
+	class TestClient : IBattleClient {
+		int _roundNumber = 0;
+		int _roundCnt = 0;
+		public int RoundNumbers { 
+			get{ 
+				return _roundNumber;
+			} 
+			set{
+				_roundNumber = value; 
+				_roundCnt = 0;
+			} 
+		}
+		public int RoundCnt{  
+			get{
+				return _roundCnt;
+			}
+		}
+
+		public ICharakter Charakter { get; set; }
+		#region IBattleClient implementation
+		public void requestAction (IBattleState state)
 		{
 		}
+		public ICharakter requestCharakter ()
+		{
+			return Charakter;
+		}
+		public string ClientName {
+			get {
+				return "TestClient";
+			}
+		}
+		#endregion
+
+
 	}
 }
 

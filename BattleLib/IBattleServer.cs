@@ -3,17 +3,20 @@ using System.Collections.Generic;
 
 namespace BattleLib
 {
+	public delegate void Event(Object sender, EventArgs args);
+	public enum ServerState {
+		WaitForClientRegister,
+		WaitForClientAction,
+		WaitForClientCharakter,
+		ServerStopped
+	}
+
 	public interface IBattleServer
 	{
-		int registerClient(IBattleClient client);
-		void unregisterClient(IBattleClient client);
-
-		void setAction(int sourceId, int targetId, IAction action);
-
+		void start();
 		IBattleObserver getObserver();
 
-		IEnumerable<int> getClientList();
-		int Capacity{ get; }
+
 	}
 }
 

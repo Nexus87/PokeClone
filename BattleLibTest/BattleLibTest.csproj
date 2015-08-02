@@ -34,10 +34,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Test.cs" />
+    <Compile Include="BattleServerTest.cs" />
+    <Compile Include="Util\TestClient.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BattleLib\BattleLib.csproj">
+      <Project>{04216BD8-0BA1-4ECD-8172-CDEB9C3D69D0}</Project>
+      <Name>BattleLib</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Util\" />
   </ItemGroup>
 </Project>

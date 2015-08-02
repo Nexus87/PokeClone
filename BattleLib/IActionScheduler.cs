@@ -9,9 +9,10 @@ namespace BattleLib
 		public ICharakter Source { get; set; }
 		public IAction Action { get; set; }
 	}
+
 	public interface IActionScheduler
 	{
-		void appendAction(IAction action);
+		void appendAction(ActionData action);
 		void appendAction(IEnumerable<ActionData> actions);
 		void clearActions();
 

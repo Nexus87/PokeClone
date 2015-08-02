@@ -39,7 +39,9 @@
     <Compile Include="IBattleObserver.cs" />
     <Compile Include="IBattleServer.cs" />
     <Compile Include="ICharakter.cs" />
-    <Compile Include="DefautltBattleServer.cs" />
+    <Compile Include="IBattleState.cs" />
+    <Compile Include="DefaultBattleState.cs" />
+    <Compile Include="DefaultBattleServer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
