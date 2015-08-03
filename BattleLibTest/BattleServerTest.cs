@@ -107,22 +107,42 @@ namespace BattleLibTest
 		[SetUp]
 		public void init() {
 			_scheduler = new TestScheduler ();
-			_server = new DefaultBattleServer (_scheduler, _client1, _client2);
 			_client1 = new TestClient ();
 			_client2 = new TestClient ();
+            _server = new DefaultBattleServer(_scheduler, _client1, _client2);
 		}
 
 		[Test]
-		public void nullCharakterTest() {
+		public void NullCharakterTest() {
+            
 			_client1.Charakter = null;
 			_client2.Charakter = null;
 
 			_server.start ();
 			Assert.IsTrue (_client1.RoundCnt <= 1);
 			Assert.IsTrue (_client2.RoundCnt <= 1);
-
 		}
-			
+
+		[Test]
+        public void ConstructorExceptionTest()
+        {
+            Assert.Throws<NullReferenceException>(() => new DefaultBattleServer(_scheduler, null));
+            Assert.Throws<NullReferenceException>(() => new DefaultBattleServer(null, _client1));
+            Assert.Throws<NullReferenceException>(() => new DefaultBattleServer(null, null));
+            Assert.Throws<NullReferenceException>(() => new DefaultBattleServer(_scheduler, null, null));
+            Assert.Throws<NullReferenceException>(() => new DefaultBattleServer(_scheduler, _client1, null));
+            Assert.Throws<NullReferenceException>(() => new DefaultBattleServer(_scheduler, null, _client1));
+        }
+
+        [Test]
+        public void StartExceptionTest()
+        {
+            var testServer = new DefaultBattleServer(_scheduler);
+            Assert.Throws<InvalidOperationException>(() => testServer.start());
+
+            testServer = new DefaultBattleServer(_scheduler, _client1);
+            Assert.Throws<InvalidOperationException>(() => testServer.start());
+        }
 	}
 }
 

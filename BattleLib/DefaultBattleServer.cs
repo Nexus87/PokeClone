@@ -31,8 +31,21 @@ namespace BattleLib
 	{
 
 		public DefaultBattleServer(IActionScheduler scheduler, params IBattleClient[] clients) {
-			_scheduler = scheduler;
-			_clients.AddRange(clients);
+            if (scheduler == null)
+                throw new NullReferenceException("Scheduler must not be null");
+            if (clients == null)
+                throw new NullReferenceException("Client must not be null");
+
+            _scheduler = scheduler;
+            int cnt = 0;
+            foreach (var client in clients)
+            {
+                if (client == null)
+                    throw new NullReferenceException("Client must not be null");
+                _clients.Add(client);
+                _clientInfo.Add(new ClientData { Client = client, Id = cnt, Charakter = null });
+                cnt++;
+            }
 		}
 
 		void clientActionHandler(IBattleClient client, IAction action, int targetId){
@@ -95,11 +108,14 @@ namespace BattleLib
 			if (_clients.Count < 2)
 				throw new InvalidOperationException ("Server needs at least 2 clients");
 
-			while(_clients.Count > 1){
+			while(_clients.Count > 1)
+            {
 				_state.resetState (_clients);
 				_scheduler.clearActions ();
 
 				requestCharakters ();
+                if (_clients.Count() < 2)
+                    break;
 				requestActions ();
 				appylActions ();
 			}
