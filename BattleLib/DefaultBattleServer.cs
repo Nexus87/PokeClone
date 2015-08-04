@@ -37,6 +37,11 @@ namespace BattleLib
                 throw new NullReferenceException("Client must not be null");
 
             _scheduler = scheduler;
+            appendClients(clients);
+		}
+
+        void appendClients(params IBattleClient[] clients)
+        {
             int cnt = 0;
             foreach (var client in clients)
             {
@@ -46,7 +51,21 @@ namespace BattleLib
                 _clientInfo.Add(new ClientData { Client = client, Id = cnt, Charakter = null });
                 cnt++;
             }
-		}
+        }
+
+        void initState()
+        {
+            _state.clientActionEvent += clientActionHandler;
+            _state.clientExitEvent += clientExitHandler;
+        }
+
+        private void clientExitHandler(IBattleClient source)
+        {
+            if (!_clients.Contains(source) || source == null)
+                throw new ArgumentException("Invalid client");
+
+            _exitRequested.Add(source);
+        }
 
 		void clientActionHandler(IBattleClient client, IAction action, int targetId){
 			var sourceCharakter = (from info in _clientInfo
@@ -97,6 +116,10 @@ namespace BattleLib
 
 		void appylActions ()
 		{
+            foreach (var client in _exitRequested)
+            {
+                _clients.Remove(client);
+            }
 			foreach(var action in _scheduler.schedulActions()){
 				action.Action.applyTo (action.Target);
 			}
@@ -112,10 +135,12 @@ namespace BattleLib
             {
 				_state.resetState (_clients);
 				_scheduler.clearActions ();
+                _exitRequested.Clear();
 
 				requestCharakters ();
                 if (_clients.Count() < 2)
                     break;
+
 				requestActions ();
 				appylActions ();
 			}
@@ -147,6 +172,7 @@ namespace BattleLib
 		}
 
 		readonly List<ClientData> _clientInfo = new List<ClientData>();
+        readonly List<IBattleClient> _exitRequested = new List<IBattleClient>();
 		readonly DefaultBattleState _state = new DefaultBattleState();
 		readonly List<IBattleClient> _clients = new List<IBattleClient>();
 

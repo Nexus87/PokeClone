@@ -27,6 +27,7 @@ namespace BattleLib
 	public interface IBattleState
 	{
 		bool placeAction(IAction action, IBattleClient source, int targetId);
+        bool requestExit(IBattleClient source);
 	}
 }
 

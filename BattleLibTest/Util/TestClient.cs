@@ -26,9 +26,12 @@ using BattleLib;
 
 namespace BattleLibTest
 {
+    delegate void ActionDelegate(IBattleState state);
+
 	class TestClient : IBattleClient {
 		int _roundNumber = 0;
 		int _roundCnt = 0;
+
 		public int RoundNumbers { 
 			get{ 
 				return _roundNumber;
@@ -43,16 +46,22 @@ namespace BattleLibTest
 				return _roundCnt;
 			}
 		}
-
+        
 		public ICharakter Charakter { get; set; }
+        public ActionDelegate Action { get; set; }
+
 		#region IBattleClient implementation
 		public void requestAction (IBattleState state)
 		{
+            if (Action != null)
+                Action(state);
+            _roundNumber++;
 		}
 		public ICharakter requestCharakter ()
 		{
 			return Charakter;
 		}
+
 		public string ClientName {
 			get {
 				return "TestClient";

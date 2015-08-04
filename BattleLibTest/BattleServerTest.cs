@@ -29,31 +29,6 @@ using BattleLib;
 
 namespace BattleLibTest
 {
-	class TestChar : ICharakter {
-		#region ICharakter implementation
-		public bool isKO ()
-		{
-			return false;
-		}
-		public string Name {
-			get {
-				return "TestChar";
-			}
-		}
-		public int HP {
-			get {
-				return 100;
-			}
-		}
-		public string Status {
-			get {
-				return "Status";
-			}
-		}
-		#endregion
-		
-	}
-
 	class TestAction : IAction {
 		#region IAction implementation
 		public void applyTo (ICharakter charakter)
