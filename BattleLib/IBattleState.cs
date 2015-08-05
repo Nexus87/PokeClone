@@ -24,8 +24,14 @@ using System;
 
 namespace BattleLib
 {
+    public delegate void ClientAction(IBattleClient source, IAction action, int targetId);
+    public delegate void RequestExit(IBattleClient source);
+
 	public interface IBattleState
 	{
+        event ClientAction clientActionEvent;
+        event RequestExit clientExitEvent;
+
 		bool placeAction(IAction action, IBattleClient source, int targetId);
         bool requestExit(IBattleClient source);
 	}

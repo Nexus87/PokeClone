@@ -47,8 +47,7 @@ namespace BattleLib
             {
                 if (client == null)
                     throw new NullReferenceException("Client must not be null");
-                _clients.Add(client);
-                _clientInfo.Add(new ClientData { Client = client, Id = cnt, Charakter = null });
+                _clientInfo.Add(client, new ClientData { Client = client, Id = cnt, Charakter = null });
                 cnt++;
             }
         }
@@ -61,55 +60,55 @@ namespace BattleLib
 
         private void clientExitHandler(IBattleClient source)
         {
-            if (!_clients.Contains(source) || source == null)
+            if (source == null || !_clientInfo.ContainsKey(source))
                 throw new ArgumentException("Invalid client");
 
             _exitRequested.Add(source);
+            // No other action in this turn
+            _clientInfo[source].Action = null;
         }
 
 		void clientActionHandler(IBattleClient client, IAction action, int targetId){
-			var sourceCharakter = (from info in _clientInfo
-			                       where info.Client == client
-			                       select info.Charakter).FirstOrDefault ();
-			
-			if (sourceCharakter == null)
-				throw new ArgumentException ("Source not found");
 
-			var targetCharater = (from info in _clientInfo
-			                      where info.Id == targetId
-			                      select info.Charakter).FirstOrDefault ();
-			
-			if (targetCharater == null)
+            if (!_clientInfo.ContainsKey(client))
+                throw new ArgumentException("Source not found");
+
+            var target = (from info in _clientInfo
+                                  where info.Value.Id == targetId
+                                  select info.Key).FirstOrDefault();
+			if (target == null)
 				throw new ArgumentException ("Target not found");
 
-			_scheduler.appendAction (new ActionData{ 
-				Source = sourceCharakter, 
-				Target = targetCharater,
-				Action = action }
-			);
+             
+            var source = _clientInfo[client];
 
+            source.Action = action;
+            source.ActionTarget = target;
 		}
 
 		void requestCharakters ()
 		{
 			var requestChar = from info in _clientInfo
-			                  where info.Charakter == null
-			                  select info;
+			                  where info.Value.Charakter == null
+			                  select info.Value;
+
+            List<IBattleClient> toBeRemoved = new List<IBattleClient>();
 			
-			
-			for(int i = 0; i < requestChar.Count(); ++i){
-				var info = requestChar.ElementAt (i);
-				ICharakter charakter = info.Client.requestCharakter ();
-				if (charakter == null)
-					_clients.Remove (info.Client);
-				else
-					info.Charakter = charakter;
-			}
+            foreach(var client in requestChar) {
+                ICharakter charakter = client.Client.requestCharakter ();
+                if (charakter == null)
+                    toBeRemoved.Add(client.Client);
+                else
+                    client.Charakter = charakter;
+            }
+
+            foreach (var client in toBeRemoved)
+                _clientInfo.Remove(client);
 		}
 
 		void requestActions ()
 		{
-			foreach(var client in _clients){
+			foreach(var client in _clientInfo.Keys){
 				client.requestAction (_state);
 			}
 		}
@@ -118,27 +117,46 @@ namespace BattleLib
 		{
             foreach (var client in _exitRequested)
             {
-                _clients.Remove(client);
+                _clientInfo.Remove(client);
             }
-			foreach(var action in _scheduler.schedulActions()){
-				action.Action.applyTo (action.Target);
-			}
+
+            foreach(var client in _clientInfo.Values){
+                if (client.Action == null)
+                    continue;
+
+                ICharakter target;
+                try{
+                    target = _clientInfo[client.ActionTarget].Charakter;
+                }
+                catch(KeyNotFoundException){
+                    target = null;
+                }
+
+                _scheduler.appendAction(new ActionData{
+                    Source = client.Charakter,
+                    Target = target,
+                    Action = client.Action
+                });
+            }
+
+            foreach (var action in _scheduler.schedulActions())
+                action.Action.applyTo(action.Target);
 		}
 
 		#region IBattleServer implementation
 		public void start ()
 		{
-			if (_clients.Count < 2)
+			if (_clientInfo.Count < 2)
 				throw new InvalidOperationException ("Server needs at least 2 clients");
 
-			while(_clients.Count > 1)
+            while (_clientInfo.Count > 1)
             {
-				_state.resetState (_clients);
+                _state.resetState(_clientInfo.Keys);
 				_scheduler.clearActions ();
                 _exitRequested.Clear();
 
 				requestCharakters ();
-                if (_clients.Count() < 2)
+                if (_clientInfo.Count < 2)
                     break;
 
 				requestActions ();
@@ -165,16 +183,18 @@ namespace BattleLib
 
 		#endregion
 
-		struct ClientData {
+		class ClientData {
 			public IBattleClient Client { get; set; }
 			public int Id { get; set; }
 			public ICharakter Charakter { get; set; }
+            public IAction Action { get; set; }
+            public IBattleClient ActionTarget { get; set; }
 		}
 
-		readonly List<ClientData> _clientInfo = new List<ClientData>();
+        readonly Dictionary<IBattleClient, ClientData> _clientInfo = new Dictionary<IBattleClient, ClientData>();
+
         readonly List<IBattleClient> _exitRequested = new List<IBattleClient>();
 		readonly DefaultBattleState _state = new DefaultBattleState();
-		readonly List<IBattleClient> _clients = new List<IBattleClient>();
 
 		IActionScheduler _scheduler;
 	}

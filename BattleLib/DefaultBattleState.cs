@@ -25,12 +25,11 @@ using System.Collections.Generic;
 
 namespace BattleLib
 {
-	public delegate void ClientAction(IBattleClient source, IAction action, int targetId);
-    public delegate void RequestExit(IBattleClient source);
 
 	public class DefaultBattleState : IBattleState
 	{
-		public event ClientAction clientActionEvent;
+
+        public event ClientAction clientActionEvent;
         public event RequestExit clientExitEvent;
 
 		public DefaultBattleState() {}
@@ -38,7 +37,7 @@ namespace BattleLib
 			_clients.AddRange(clients);
 		}
 
-		public void resetState(List<IBattleClient> clients){
+		public void resetState(IEnumerable<IBattleClient> clients){
 			_clients.Clear();
 			_clients.AddRange(clients);
 		}
@@ -63,13 +62,13 @@ namespace BattleLib
                 throw new InvalidOperationException("Client already placed an action in this turn");
             if (clientExitEvent != null)
                 clientExitEvent.Invoke(source);
-
+            
+            _clients.Remove(source);
             return true;
         }
 		#endregion
 
 		readonly List<IBattleClient> _clients = new List<IBattleClient>();
-
     }
 }
 
