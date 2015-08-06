@@ -9,10 +9,11 @@ namespace BattleLibTest
 {
     class TestChar : ICharakter
     {
+        public TestChar() { HP = 100; }
         #region ICharakter implementation
         public bool isKO()
         {
-            return false;
+            return HP == 0;
         }
         public string Name
         {
@@ -21,13 +22,8 @@ namespace BattleLibTest
                 return "TestChar";
             }
         }
-        public int HP
-        {
-            get
-            {
-                return 100;
-            }
-        }
+        public int HP { get; set; }
+
         public string Status
         {
             get

@@ -29,11 +29,15 @@ using BattleLib;
 
 namespace BattleLibTest
 {
+    delegate void ApplyDelegate(ICharakter charakter);
+
 	class TestAction : IAction {
+        public ApplyDelegate Action { get; set; }
 		#region IAction implementation
 		public void applyTo (ICharakter charakter)
 		{
-			throw new NotImplementedException ();
+            if (Action != null)
+                Action(charakter);
 		}
 		public ActionType Type {
 			get {
@@ -117,6 +121,28 @@ namespace BattleLibTest
 
             testServer = new DefaultBattleServer(_scheduler, _client1);
             Assert.Throws<InvalidOperationException>(() => testServer.start());
+        }
+
+        [Test]
+        public void fullBattleTest()
+        {
+            _client1.Charakter = new TestChar();
+            _client2.Charakter = new TestChar();
+
+            TestAction action1 = new TestAction { Action = (ICharakter charakter) => ((TestChar)charakter).HP = 0 };
+            TestAction action2 = new TestAction();
+
+            // TODO don't hardcode the target id
+            _client1.Action = (IBattleState state) => state.placeAction(action1, _client1, 1);
+            _client2.Action = (IBattleState state) => state.placeAction(action2, _client2, 0);
+
+            _server.start();
+
+            Assert.AreEqual(_client1.RoundCnt, 1);
+            Assert.AreEqual(_client2.RoundCnt, 1);
+
+            Assert.AreEqual(_client2.Charakter.HP, 0);
+            
         }
 	}
 }

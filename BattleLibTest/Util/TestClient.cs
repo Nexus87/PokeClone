@@ -55,10 +55,12 @@ namespace BattleLibTest
 		{
             if (Action != null)
                 Action(state);
-            _roundNumber++;
+            _roundCnt++;
 		}
 		public ICharakter requestCharakter ()
 		{
+            if (Charakter == null || Charakter.isKO())
+                return null;
 			return Charakter;
 		}
 

@@ -38,6 +38,7 @@ namespace BattleLib
 
             _scheduler = scheduler;
             appendClients(clients);
+            initState();
 		}
 
         void appendClients(params IBattleClient[] clients)
@@ -89,7 +90,7 @@ namespace BattleLib
 		void requestCharakters ()
 		{
 			var requestChar = from info in _clientInfo
-			                  where info.Value.Charakter == null
+			                  where ( info.Value.Charakter == null || info.Value.Charakter.isKO() )
 			                  select info.Value;
 
             List<IBattleClient> toBeRemoved = new List<IBattleClient>();
@@ -140,7 +141,11 @@ namespace BattleLib
             }
 
             foreach (var action in _scheduler.schedulActions())
+            {
+                if (action.Source.isKO())
+                    continue;
                 action.Action.applyTo(action.Target);
+            }
 		}
 
 		#region IBattleServer implementation
@@ -149,18 +154,17 @@ namespace BattleLib
 			if (_clientInfo.Count < 2)
 				throw new InvalidOperationException ("Server needs at least 2 clients");
 
+            requestCharakters();
+
             while (_clientInfo.Count > 1)
             {
                 _state.resetState(_clientInfo.Keys);
 				_scheduler.clearActions ();
                 _exitRequested.Clear();
 
-				requestCharakters ();
-                if (_clientInfo.Count < 2)
-                    break;
-
 				requestActions ();
 				appylActions ();
+                requestCharakters();
 			}
 		}
 		public IBattleObserver getObserver ()
