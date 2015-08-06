@@ -49,6 +49,7 @@ namespace BattleLib
                 if (client == null)
                     throw new NullReferenceException("Client must not be null");
                 _clientInfo.Add(client, new ClientData { Client = client, Id = cnt, Charakter = null });
+				client.Id = cnt;
                 cnt++;
             }
         }
@@ -59,7 +60,7 @@ namespace BattleLib
             _state.clientExitEvent += clientExitHandler;
         }
 
-        private void clientExitHandler(IBattleClient source)
+        void clientExitHandler(IBattleClient source)
         {
             if (source == null || !_clientInfo.ContainsKey(source))
                 throw new ArgumentException("Invalid client");
@@ -93,18 +94,26 @@ namespace BattleLib
 			                  where ( info.Value.Charakter == null || info.Value.Charakter.isKO() )
 			                  select info.Value;
 
-            List<IBattleClient> toBeRemoved = new List<IBattleClient>();
+            var toBeRemoved = new List<IBattleClient>();
 			
             foreach(var client in requestChar) {
                 ICharakter charakter = client.Client.requestCharakter ();
-                if (charakter == null)
-                    toBeRemoved.Add(client.Client);
-                else
-                    client.Charakter = charakter;
+				if (charakter == null)
+					toBeRemoved.Add (client.Client);
+				else {
+					client.Charakter = charakter;
+					if (newCharEvent != null)
+						newCharEvent.Invoke (client.Id);
+				}
             }
 
-            foreach (var client in toBeRemoved)
-                _clientInfo.Remove(client);
+			foreach (var client in toBeRemoved) {
+				_clientInfo.Remove (client);
+				if (exitEvent != null)
+					exitEvent.Invoke (client.Id, "No more Chars");
+			}
+
+			_cachedInfo.Clear ();
 		}
 
 		void requestActions ()
@@ -119,6 +128,8 @@ namespace BattleLib
             foreach (var client in _exitRequested)
             {
                 _clientInfo.Remove(client);
+				if (exitEvent != null)
+					exitEvent.Invoke (client.Id, "Escaped");
             }
 
             foreach(var client in _clientInfo.Values){
@@ -145,7 +156,12 @@ namespace BattleLib
                 if (action.Source.isKO())
                     continue;
                 action.Action.applyTo(action.Target);
+				// TODO find a way to get the source and target id
+				if (actionEvent != null)
+					actionEvent.Invoke (0, 0, "Message");
             }
+
+			_cachedInfo.Clear ();
 		}
 
 		#region IBattleServer implementation
@@ -165,6 +181,8 @@ namespace BattleLib
 				requestActions ();
 				appylActions ();
                 requestCharakters();
+				if (newTurnEvent != null)
+					newTurnEvent.Invoke ();
 			}
 		}
 		public IBattleObserver getObserver ()
@@ -175,14 +193,38 @@ namespace BattleLib
 
 		#region IBattleObserver implementation
 
+		public event ActionEvent actionEvent;
+		public event ExitEvent exitEvent;
+		public event NewTurnEvent newTurnEvent;
+		public event NewCharEvent newCharEvent;
+
+		void fillCache() {
+			foreach(var data in _clientInfo.Values) {
+				_cachedInfo.Add (new ClientInfo {
+					CharName = data.Charakter.Name,
+					ClientName = data.Client.ClientName,
+					Hp = data.Charakter.HP,
+					Id = data.Id,
+					Status = data.Charakter.Status
+				});
+			}
+		}
+
 		public IEnumerable<ClientInfo> getAllInfos ()
 		{
-			throw new NotImplementedException ();
+			if (_cachedInfo.Count == 0)
+				fillCache ();
+			return _cachedInfo;
 		}
 
 		public IEnumerable<ClientInfo> getInfo (params int[] ids)
 		{
-			throw new NotImplementedException ();
+			if (_cachedInfo.Count == 0)
+				fillCache ();
+
+			return (from info in _cachedInfo 
+				where ids.Contains(info.Id)
+				select info);
 		}
 
 		#endregion
@@ -199,6 +241,7 @@ namespace BattleLib
 
         readonly List<IBattleClient> _exitRequested = new List<IBattleClient>();
 		readonly DefaultBattleState _state = new DefaultBattleState();
+		readonly List<ClientInfo> _cachedInfo = new List<ClientInfo>();
 
 		IActionScheduler _scheduler;
 	}

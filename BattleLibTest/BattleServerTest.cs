@@ -21,7 +21,6 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 using System;
-using System.Threading;
 using System.Collections.Generic;
 
 using NUnit.Framework;
@@ -117,10 +116,10 @@ namespace BattleLibTest
         public void StartExceptionTest()
         {
             var testServer = new DefaultBattleServer(_scheduler);
-            Assert.Throws<InvalidOperationException>(() => testServer.start());
+			Assert.Throws<InvalidOperationException> (testServer.start);
 
             testServer = new DefaultBattleServer(_scheduler, _client1);
-            Assert.Throws<InvalidOperationException>(() => testServer.start());
+			Assert.Throws<InvalidOperationException> (testServer.start);
         }
 
         [Test]
@@ -129,12 +128,12 @@ namespace BattleLibTest
             _client1.Charakter = new TestChar();
             _client2.Charakter = new TestChar();
 
-            TestAction action1 = new TestAction { Action = (ICharakter charakter) => ((TestChar)charakter).HP = 0 };
-            TestAction action2 = new TestAction();
+            var action1 = new TestAction { Action = charakter => ((TestChar)charakter).HP = 0 };
+            var action2 = new TestAction();
 
             // TODO don't hardcode the target id
-            _client1.Action = (IBattleState state) => state.placeAction(action1, _client1, 1);
-            _client2.Action = (IBattleState state) => state.placeAction(action2, _client2, 0);
+            _client1.Action = state => state.placeAction (action1, _client1, 1);
+            _client2.Action = state => state.placeAction (action2, _client2, 0);
 
             _server.start();
 

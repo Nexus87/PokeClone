@@ -20,7 +20,6 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
-using System;
 
 using BattleLib;
 
@@ -29,9 +28,9 @@ namespace BattleLibTest
     delegate void ActionDelegate(IBattleState state);
 
 	class TestClient : IBattleClient {
-		int _roundNumber = 0;
-		int _roundCnt = 0;
-
+		int _roundNumber;
+		int _roundCnt;
+		public int Id { get; set; }
 		public int RoundNumbers { 
 			get{ 
 				return _roundNumber;

@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using NUnit.Framework;
 using BattleLib;
@@ -16,7 +13,7 @@ namespace BattleLibTest
         {
             _client1.Charakter = _char;
             _client2.Charakter = _char;
-            List<IBattleClient> clients = new List<IBattleClient> { _client1, _client2 };
+            var clients = new List<IBattleClient> { _client1, _client2 };
 
             _state = new DefaultBattleState(clients);
 
@@ -24,14 +21,14 @@ namespace BattleLibTest
             _exitEventCnt = 0;
 
             _state.clientActionEvent += (source, a, id) => _actionEventCnt++;
-            _state.clientExitEvent += (source) => _exitEventCnt++;
+            _state.clientExitEvent += source => _exitEventCnt++;
         }
 
         [Test]
         public void simpleActionTest()
         {
-            _client1.Action = (IBattleState state) => state.placeAction(_action, _client1, 0);
-            _client2.Action = (IBattleState state) => state.placeAction(_action, _client2, 0);
+            _client1.Action = state => state.placeAction (_action, _client1, 0);
+            _client2.Action = state => state.placeAction (_action, _client2, 0);
 
             _client1.requestAction(_state);
             _client2.requestAction(_state);
@@ -43,8 +40,8 @@ namespace BattleLibTest
         [Test]
         public void simpleExitTest()
         {
-            _client1.Action = (IBattleState state) => state.requestExit(_client1);
-            _client2.Action = (IBattleState state) => state.requestExit(_client2);
+            _client1.Action = state => state.requestExit (_client1);
+            _client2.Action = state => state.requestExit (_client2);
 
             _client1.requestAction(_state);
             _client2.requestAction(_state);
@@ -56,8 +53,8 @@ namespace BattleLibTest
         [Test]
         public void mixedExitActionTest()
         {
-            _client1.Action = (IBattleState state) => state.placeAction(_action, _client1, 0);
-            _client2.Action = (IBattleState state) => state.requestExit(_client2);
+            _client1.Action = state => state.placeAction (_action, _client1, 0);
+            _client2.Action = state => state.requestExit (_client2);
             
             _client1.requestAction(_state);
             _client2.requestAction(_state);
@@ -69,8 +66,8 @@ namespace BattleLibTest
         [Test]
         public void multipleActionExceptionTest()
         {
-            _client1.Action = (IBattleState state) => state.placeAction(_action, _client1, 0);
-            _client2.Action = (IBattleState state) => state.placeAction(_action, _client2, 0);
+            _client1.Action = state => state.placeAction (_action, _client1, 0);
+            _client2.Action = state => state.placeAction (_action, _client2, 0);
 
             _client1.requestAction(_state);
             Assert.Throws<InvalidOperationException>(() => _client1.requestAction(_state));
@@ -83,8 +80,8 @@ namespace BattleLibTest
         [Test]
         public void multipleExitExceptionTest()
         {
-            _client1.Action = (IBattleState state) => state.requestExit(_client1);
-            _client2.Action = (IBattleState state) => state.requestExit(_client2);
+            _client1.Action = state => state.requestExit (_client1);
+            _client2.Action = state => state.requestExit (_client2);
 
             _client1.requestAction(_state);
             Assert.Throws<InvalidOperationException>(() => _client1.requestAction(_state));
@@ -97,12 +94,12 @@ namespace BattleLibTest
         [Test]
         public void mixedExitActionExceptionTest()
         {
-            _client1.Action = (IBattleState state) => state.placeAction(_action, _client1, 0);
-            _client2.Action = (IBattleState state) => state.placeAction(_action, _client2, 0);
+            _client1.Action = state => state.placeAction (_action, _client1, 0);
+            _client2.Action = state => state.placeAction (_action, _client2, 0);
 
             _client1.requestAction(_state);
 
-            _client1.Action = (IBattleState state) => state.requestExit(_client1);
+            _client1.Action = state => state.requestExit (_client1);
             Assert.Throws<InvalidOperationException>(() => _client1.requestAction(_state));
 
             _client2.requestAction(_state);
@@ -111,10 +108,10 @@ namespace BattleLibTest
             Assert.AreEqual(_exitEventCnt, 0);
         }
         DefaultBattleState _state;
-        TestClient _client1 = new TestClient();
-        TestClient _client2 = new TestClient();
+        readonly TestClient _client1 = new TestClient();
+        readonly TestClient _client2 = new TestClient();
         TestChar _char = new TestChar();
-        TestAction _action = new TestAction();
+        readonly TestAction _action = new TestAction();
 
         int _actionEventCnt;
         int _exitEventCnt;
