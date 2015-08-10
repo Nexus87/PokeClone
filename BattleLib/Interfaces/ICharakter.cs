@@ -8,7 +8,6 @@ namespace BattleLib
 		string Name { get; }
 		int HP { get; }
 		string Status { get; }
-
 		bool isKO();
 	}
 }

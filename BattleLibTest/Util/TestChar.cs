@@ -2,7 +2,7 @@
 
 namespace BattleLibTest
 {
-    class TestChar : ICharakter
+	class TestChar : ICharakter
     {
         public TestChar() { HP = 100; }
         #region ICharakter implementation
@@ -26,6 +26,7 @@ namespace BattleLibTest
                 return "Status";
             }
         }
+			
         #endregion
 
     }

@@ -31,17 +31,20 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MyClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="IAction.cs" />
-    <Compile Include="IActionScheduler.cs" />
-    <Compile Include="IBattleClient.cs" />
-    <Compile Include="IBattleObserver.cs" />
-    <Compile Include="IBattleServer.cs" />
-    <Compile Include="ICharakter.cs" />
-    <Compile Include="IBattleState.cs" />
     <Compile Include="DefaultBattleState.cs" />
     <Compile Include="DefaultBattleServer.cs" />
+    <Compile Include="Interfaces\IAction.cs" />
+    <Compile Include="Interfaces\IActionScheduler.cs" />
+    <Compile Include="Interfaces\IBattleClient.cs" />
+    <Compile Include="Interfaces\IBattleObserver.cs" />
+    <Compile Include="Interfaces\IBattleServer.cs" />
+    <Compile Include="Interfaces\IBattleState.cs" />
+    <Compile Include="Interfaces\ICharakter.cs" />
+    <Compile Include="PokemonV1.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="Interfaces\" />
+  </ItemGroup>
 </Project>
