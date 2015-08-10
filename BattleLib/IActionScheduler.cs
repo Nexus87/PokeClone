@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace BattleLib
 {
-	public struct ActionData{
+	public class ActionData{
 		public ICharakter Target { get; set; }
 		public ICharakter Source { get; set; }
 		public IAction Action { get; set; }
