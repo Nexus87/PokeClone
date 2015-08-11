@@ -22,32 +22,56 @@
 //
 using System;
 
-namespace BattleLib
+using BattleLib;
+
+namespace PokemonRules
 {
 
 	public class PokemonV1 : ICharakter
 	{
-		public enum StatusCondition {
-			Normal,
-			KO,
-			Paralyzed,
-			Sleeping,
-			Poisoned,
-			Freezed,
-			Burned
-		}
 
 		public PokemonV1(int maxHP, string name) {
 			MaxHP = maxHP;
 			_hp = maxHP;
 			Name = name;
 			Condition = StatusCondition.Normal;
+			resetModifier();
 		}
 
+		int _attack;
+		int _defense;
+		int _spAtk;
+		int _spDef;
+		int _speed;
+
 		public int MaxHP { get; private set; }
+		public int Attack { get{return _attack + AttackModifer;} set{_attack = value;} }
+		public int Defense { get{ return _defense + DefenseModifer;} set{_defense = value;} }
+		public int SpAtk { get{ return _spAtk + SpAtkModifer;} set{_spAtk = value;} }
+		public int SpDef { get{ return _spDef + SpDefModifer;} set{_spDef = value;} }
+		public int Speed { get{ return _speed + SpeedModifer;} set{_speed = value;} }
+
+		int AttackModifer { get; public set; }
+		int DefenseModifer { get; public set; }
+		int SpAtkModifer { get; public set; }
+		int SpDefModifer { get; public set; }
+		int SpeedModifer { get; public set; }
+
+		public void resetModifier() {
+			AttackModifer = 0;
+			DefenseModifer = 0;
+			SpAtkModifer = 0;
+			SpDefModifer = 0;
+			SpeedModifer = 0;
+		}
+
+		public PokemonType Type1 { get; private set; }
+		public PokemonType Type2 { get; private set; }
+
 		public StatusCondition Condition { get; set; }
 
 		int _hp;
+
 
 		#region ICharakter implementation
 
