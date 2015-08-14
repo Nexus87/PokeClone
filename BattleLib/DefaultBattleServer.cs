@@ -36,6 +36,12 @@ namespace BattleLib
             if (clients == null)
                 throw new NullReferenceException("Client must not be null");
 
+            // To avoid null checks
+            actionEvent += (a, b, c) => { };
+            exitEvent += (a, b) => { };
+            newTurnEvent += () => { };
+            newCharEvent += (a) => { };
+
             _scheduler = scheduler;
             appendClients(clients);
             initState();
@@ -95,23 +101,25 @@ namespace BattleLib
 			                  select new {info.Key, info.Value};
 
             var toBeRemoved = new List<IBattleClient>();
-			
-            foreach(var client in requestChar) {
-				ICharakter charakter = client.Key.requestCharakter ();
-				if (charakter == null)
-					toBeRemoved.Add (client.Key);
-				else {
-					client.Value.Charakter = charakter;
-					if (newCharEvent != null)
-						newCharEvent.Invoke (client.Value.Id);
-				}
+
+            foreach (var client in requestChar)
+            {
+                ICharakter charakter = client.Key.requestCharakter();
+                if (charakter == null)
+                    toBeRemoved.Add(client.Key);
+                else
+                {
+                    client.Value.Charakter = charakter;
+
+                    newCharEvent(client.Value.Id);
+                }
             }
-				
-			foreach (var client in toBeRemoved) {
-				_clientInfo.Remove (client);
-				if (exitEvent != null)
-					exitEvent.Invoke (client.Id, "No more Chars");
-			}
+
+            foreach (var client in toBeRemoved)
+            {
+                _clientInfo.Remove(client);
+                exitEvent(client.Id, "No more Chars");
+            }
 
 			_cachedInfo.Clear ();
 		}
@@ -128,11 +136,10 @@ namespace BattleLib
 		void execEscapes ()
 		{
 			foreach (var client in _exitRequested) {
-				_clientInfo.Remove (client);
-				if (exitEvent != null)
-					exitEvent.Invoke (client.Id, "Escaped");
-			}
-		}
+                _clientInfo.Remove(client);
+                exitEvent(client.Id, "Escaped");
+            }
+        }
 
 		void initScheduler ()
 		{
@@ -168,10 +175,8 @@ namespace BattleLib
                     continue;
                 action.Action.applyTo(action.Target);
 
-				if (actionEvent != null) {
-					var eAction = (ExtendedActionData) action;
-					actionEvent.Invoke (eAction.SourceId, eAction.TargetId, "Message");
-				}
+                var eAction = (ExtendedActionData)action;
+                actionEvent(eAction.SourceId, eAction.TargetId, "Message");
             }
 
 			_cachedInfo.Clear ();
@@ -196,8 +201,7 @@ namespace BattleLib
 
                 requestCharakters();
 
-				if (newTurnEvent != null)
-					newTurnEvent.Invoke ();
+                newTurnEvent();
 			}
 		}
 		public IBattleObserver getObserver ()

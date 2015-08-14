@@ -34,6 +34,7 @@ namespace PokemonRules
 			MaxHP = maxHP;
 			_hp = maxHP;
 			Name = name;
+            Level = 1;
 			Condition = StatusCondition.Normal;
 			resetModifier();
 		}
@@ -45,17 +46,18 @@ namespace PokemonRules
 		int _speed;
 
 		public int MaxHP { get; private set; }
+        public int Level { get; set; }
 		public int Attack { get{return _attack + AttackModifer;} set{_attack = value;} }
 		public int Defense { get{ return _defense + DefenseModifer;} set{_defense = value;} }
 		public int SpAtk { get{ return _spAtk + SpAtkModifer;} set{_spAtk = value;} }
 		public int SpDef { get{ return _spDef + SpDefModifer;} set{_spDef = value;} }
 		public int Speed { get{ return _speed + SpeedModifer;} set{_speed = value;} }
 
-		int AttackModifer { get; public set; }
-		int DefenseModifer { get; public set; }
-		int SpAtkModifer { get; public set; }
-		int SpDefModifer { get; public set; }
-		int SpeedModifer { get; public set; }
+		public int AttackModifer { private get; set; }
+        public int DefenseModifer { private get; set; }
+        public int SpAtkModifer { private get; set; }
+        public int SpDefModifer { private get; set; }
+        public int SpeedModifer { private get; set; }
 
 		public void resetModifier() {
 			AttackModifer = 0;
@@ -65,8 +67,8 @@ namespace PokemonRules
 			SpeedModifer = 0;
 		}
 
-		public PokemonType Type1 { get; private set; }
-		public PokemonType Type2 { get; private set; }
+		public PokemonType Type1 { get; set; }
+		public PokemonType Type2 { get; set; }
 
 		public StatusCondition Condition { get; set; }
 
