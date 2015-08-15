@@ -22,7 +22,7 @@
 //
 using System;
 
-namespace PokemonRules {
+namespace Base {
 
 	public enum StatusCondition {
 		Normal,

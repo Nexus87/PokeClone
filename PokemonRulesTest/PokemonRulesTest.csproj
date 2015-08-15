@@ -46,9 +46,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject />
-  </PropertyGroup>
   <ItemGroup>
     <None Include="package.config" />
   </ItemGroup>
@@ -59,13 +56,13 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BattleLib\BattleLib.csproj">
-      <Project>{04216bd8-0ba1-4ecd-8172-cdeb9c3d69d0}</Project>
-      <Name>BattleLib</Name>
-    </ProjectReference>
     <ProjectReference Include="..\PokemonRules\PokemonRules.csproj">
-      <Project>{45f17be4-a525-43bf-91d9-2503f69a08fd}</Project>
+      <Project>{45F17BE4-A525-43BF-91D9-2503F69A08FD}</Project>
       <Name>PokemonRules</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Base\Base.csproj">
+      <Project>{DDF413D1-9BE0-446B-82AF-E10242E8B812}</Project>
+      <Name>Base</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

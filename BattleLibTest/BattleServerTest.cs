@@ -22,7 +22,7 @@
 //
 using System;
 using System.Collections.Generic;
-
+using Base;
 using NUnit.Framework;
 using BattleLib;
 

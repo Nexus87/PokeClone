@@ -20,64 +20,21 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
-using System;
+
 using System.Linq;
 using System.Runtime.Serialization.Json;
-using System.Runtime.Serialization;
 using System.IO;
+using Base;
 
-namespace PokemonRules
-{
+namespace PokemonRules {
+	
 	public class CharFactory
 	{
-        //TODO make this class private!
-        [DataContract]
-        public class PrimitiveData
-        {
-            [DataMember]
-            public string name;
-            [DataMember]
-            public int id;
-            [DataMember]
-            public int hp;
-            [DataMember]
-            public int atk;
-            [DataMember]
-            public int def;
-            [DataMember]
-            public int spatk;
-            [DataMember]
-            public int spdef;
-            [DataMember]
-            public int init;
-            [DataMember]
-            public PokemonType type1;
-            [DataMember]
-            public PokemonType type2;
 
-            public override bool Equals(object obj)
-            {
-                if (obj == null || !(obj is PrimitiveData))
-                    return false;
-
-                PrimitiveData other = (PrimitiveData)obj;
-                return name.Equals(other.name) &&
-                    id == other.id &&
-                    hp == other.hp &&
-                    atk == other.atk &&
-                    def == other.def &&
-                    spatk == other.spatk &&
-                    spdef == other.spdef &&
-                    init == other.init &&
-                    type1 == other.type1 &&
-                    type2 == other.type2;
-            }
-        }
-
-        DataContractJsonSerializer _serializer = new DataContractJsonSerializer(typeof(PrimitiveData[]));
+		readonly DataContractJsonSerializer _serializer = new DataContractJsonSerializer(typeof(PKData[]));
         string File{ get; set; }
-        PrimitiveData[] _data;
-        PrimitiveData[] Data {
+		PKData[] _data;
+		PKData[] Data {
             get { 
                 if (_data == null)
                     initList();
@@ -85,18 +42,21 @@ namespace PokemonRules
             } 
         }
 
-        private void initList()
+		CharacterRules Rules { get; set;}
+
+        void initList()
         {
             var inStream = new FileStream(File, FileMode.Open);
-            _data = (PrimitiveData[])_serializer.ReadObject(inStream);
+			_data = (PKData[])_serializer.ReadObject(inStream);
             inStream.Close();
         }
-		public CharFactory (string file)
+		public CharFactory (string file, CharacterRules rules)
 		{
             File = file;
+			Rules = rules;
 		}
 
-        public PokemonV1 getChar(string name)
+        public Pokemon getChar(string name)
         {
             var result = (from d in Data
                          where d.name.Equals(name)
@@ -105,34 +65,46 @@ namespace PokemonRules
             return toChar(result);
         }
 
-        private PokemonV1 toChar(PrimitiveData data)
+		public Pokemon getChar(int id)
+		{
+			var result = (from d in Data
+			              where d.id == id
+			              select d).FirstOrDefault ();
+			
+			return toChar (result);
+		}
+
+		Pokemon toChar(PKData data)
         {
             if (data == null)
                 return null;
 
-            return new PokemonV1(data.hp, data.name)
-            {
-                Attack = data.atk,
-                Defense = data.def,
-                SpAtk = data.spatk,
-                SpDef = data.spdef,
-                Speed = data.init,
-                Type1 = data.type1,
-                Type2 = data.type2
-            };
+
+			Stats iv = Rules.generateIV ();
+			Stats stats = new Stats () {
+				HP = data.baseStats.HP + iv.HP,
+				Atk = data.baseStats.Atk + iv.Atk,
+				Def = data.baseStats.Def + iv.Def,
+				SpAtk = data.baseStats.SpAtk + iv.SpAtk,
+				SpDef = data.baseStats.SpDef + iv.SpDef,
+				Speed = data.baseStats.Speed + iv.Speed
+			};
+			var builder = new PokemonBuilder(data);
+			builder.setIV (iv).setStats (stats);
+			return builder.build ();
         }
 
-        public PrimitiveData getData()
+		public PKData getData()
         {
             var file = new FileStream(File, FileMode.Open);
             var ret = _serializer.ReadObject(file);
             file.Close();
-            return ((PrimitiveData[]) ret)[0];
+			return ((PKData[]) ret)[0];
         }
 
-        public void writeData(PrimitiveData data)
+		public void writeData(PKData data)
         {
-            var wrapper = new PrimitiveData[] { data };
+            var wrapper = new [] { data };
             var file = new FileStream(File, FileMode.Create);
             _serializer.WriteObject(file, wrapper);
             file.Close();

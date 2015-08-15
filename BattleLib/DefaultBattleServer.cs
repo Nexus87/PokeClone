@@ -22,8 +22,8 @@
 //
 using System;
 using System.Collections.Generic;
-
 using System.Linq;
+using Base;
 
 namespace BattleLib
 {
@@ -40,7 +40,7 @@ namespace BattleLib
             actionEvent += (a, b, c) => { };
             exitEvent += (a, b) => { };
             newTurnEvent += () => { };
-            newCharEvent += (a) => { };
+            newCharEvent += a => { };
 
             _scheduler = scheduler;
             appendClients(clients);
@@ -222,8 +222,7 @@ namespace BattleLib
 				_cachedInfo.Add (new ClientInfo {
 					CharName = data.Charakter.Name,
 					Hp = data.Charakter.HP,
-					Id = data.Id,
-					Status = data.Charakter.Status
+					Id = data.Id
 				});
 			}
 		}

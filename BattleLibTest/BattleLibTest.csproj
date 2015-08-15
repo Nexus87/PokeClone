@@ -50,6 +50,10 @@
       <Project>{04216BD8-0BA1-4ECD-8172-CDEB9C3D69D0}</Project>
       <Name>BattleLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Base\Base.csproj">
+      <Project>{DDF413D1-9BE0-446B-82AF-E10242E8B812}</Project>
+      <Name>Base</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
 </Project>

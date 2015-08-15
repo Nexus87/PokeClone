@@ -30,19 +30,19 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.XML" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Enums.cs" />
-    <Compile Include="PokemonV1.cs" />
     <Compile Include="CharFactory.cs" />
+    <Compile Include="CharacterRules.cs" />
+    <Compile Include="Gen1CharRules.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\BattleLib\BattleLib.csproj">
-      <Project>{04216BD8-0BA1-4ECD-8172-CDEB9C3D69D0}</Project>
-      <Name>BattleLib</Name>
+    <ProjectReference Include="..\Base\Base.csproj">
+      <Project>{DDF413D1-9BE0-446B-82AF-E10242E8B812}</Project>
+      <Name>Base</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

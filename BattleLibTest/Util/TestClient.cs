@@ -22,7 +22,7 @@
 //
 
 using BattleLib;
-
+using Base;
 namespace BattleLibTest
 {
     delegate void ActionDelegate(IBattleState state);

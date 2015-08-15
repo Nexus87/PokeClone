@@ -1,5 +1,5 @@
 ﻿using BattleLib;
-
+using Base;
 namespace BattleLibTest
 {
 	class TestChar : ICharakter
@@ -18,14 +18,6 @@ namespace BattleLibTest
             }
         }
         public int HP { get; set; }
-
-        public string Status
-        {
-            get
-            {
-                return "Status";
-            }
-        }
 			
         #endregion
 
