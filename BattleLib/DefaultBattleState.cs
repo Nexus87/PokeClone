@@ -42,7 +42,8 @@ namespace BattleLib
         {
             // Avoid null checks
             clientActionEvent += (a, b, c) => { };
-            clientExitEvent += (a) => { };
+            clientExitEvent += a => {
+			};
         }
 		public void resetState(IEnumerable<IBattleClient> clients){
 			_clients.Clear();

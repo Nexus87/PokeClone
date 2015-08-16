@@ -44,7 +44,7 @@ namespace PokemonRules
 
 			var iStats = generateIV ();
 
-			var stats = new Stats () {
+			var stats = new Stats {
 				HP = data.baseStats.HP + iStats.HP,
 				Atk = data.baseStats.Atk + iStats.Atk,
 				Def = data.baseStats.Def + iStats.Def,
@@ -62,7 +62,7 @@ namespace PokemonRules
 		public Stats generateIV ()
 		{
 			var r = new Random ();
-			return new Stats () {
+			return new Stats {
 				Atk = r.Next (0, 15),
 				Def = r.Next (0, 15),
 				HP = r.Next (0, 15),

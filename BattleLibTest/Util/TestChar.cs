@@ -1,5 +1,4 @@
-﻿using BattleLib;
-using Base;
+﻿using Base;
 namespace BattleLibTest
 {
 	class TestChar : ICharakter
