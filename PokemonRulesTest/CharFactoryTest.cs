@@ -43,6 +43,10 @@ namespace PokemonRulesTest
     [TestFixture]
     class CharFactoryTest
     {
+		static int PseudoRandom(int min, int max){
+			return 0;
+		}
+
 		static readonly PKData testData = new PKData
         {
 			baseStats = new Stats{
@@ -61,31 +65,24 @@ namespace PokemonRulesTest
 
 
         CharFactory _factory;
+		CharacterRules _rules;
         [SetUp]
         public void init()
         {
-			_factory = new CharFactory("./Test.txt", new Gen1CharRules());
-        }
-        [TestCase]
-        public void simpleReadWriteTest()
-        {
-
-			var result = new PKData();
-            Assert.DoesNotThrow(() => _factory.writeData(testData));
-            Assert.DoesNotThrow(() => result = _factory.getData());
-
-			Assert.IsTrue(result.compare(testData));
+			_rules = new Gen1CharRules (PseudoRandom);
+			_factory = new CharFactory("../../TestData/CharFactoryTestData.txt", _rules);
         }
 
         [TestCase]
         public void getCharTest()
         {
             Pokemon result = null;
-            Assert.DoesNotThrow(() => _factory.writeData(testData));
-            Assert.DoesNotThrow(() => result = _factory.getChar(testData.id));
-
-            Assert.NotNull(result);
-			Assert.IsTrue (result.compare(testData));
+			foreach (var data in CharFactoryTestData.Data) {
+				Assert.DoesNotThrow (() => result = _factory.getChar (data.id));
+				Pokemon pkm = _rules.toPokemon(data);
+				Assert.NotNull (result);
+				Assert.IsTrue (result.compare ( pkm ));
+			}
         }
     }
 }
