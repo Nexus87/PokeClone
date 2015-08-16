@@ -24,7 +24,7 @@ namespace PokemonRules
 
 			var iStats = generateIV ();
 
-			Stats stats = new Stats () {
+			var stats = new Stats () {
 				HP = data.baseStats.HP + iStats.HP,
 				Atk = data.baseStats.Atk + iStats.Atk,
 				Def = data.baseStats.Def + iStats.Def,

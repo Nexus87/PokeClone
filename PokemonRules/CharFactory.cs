@@ -33,66 +33,39 @@ namespace PokemonRules {
 
 		readonly DataContractJsonSerializer _serializer = new DataContractJsonSerializer(typeof(PKData[]));
         string File{ get; set; }
-		PKData[] _data;
-		PKData[] Data {
-            get { 
-                if (_data == null)
-                    initList();
-                return _data;
-            } 
-        }
+
+		PKData[] Data{ get; set; }
 
 		CharacterRules Rules { get; set;}
 
         void initList()
         {
             var inStream = new FileStream(File, FileMode.Open);
-			_data = (PKData[])_serializer.ReadObject(inStream);
+			Data = (PKData[]) _serializer.ReadObject(inStream);
             inStream.Close();
         }
+
 		public CharFactory (string file, CharacterRules rules)
 		{
             File = file;
 			Rules = rules;
 		}
-
-        public Pokemon getChar(string name)
-        {
-            var result = (from d in Data
-                         where d.name.Equals(name)
-                         select d).FirstOrDefault();
-            
-            return toChar(result);
-        }
-
+			
 		public Pokemon getChar(int id)
 		{
 			var result = (from d in Data
 			              where d.id == id
 			              select d).FirstOrDefault ();
+
+			return result == null ? null : Rules.toPokemon (result);
 			
-			return toChar (result);
 		}
-
-		Pokemon toChar(PKData data)
-        {
-            if (data == null)
-                return null;
-
-
-			Stats iv = Rules.generateIV ();
-			Stats stats = new Stats () {
-				HP = data.baseStats.HP + iv.HP,
-				Atk = data.baseStats.Atk + iv.Atk,
-				Def = data.baseStats.Def + iv.Def,
-				SpAtk = data.baseStats.SpAtk + iv.SpAtk,
-				SpDef = data.baseStats.SpDef + iv.SpDef,
-				Speed = data.baseStats.Speed + iv.Speed
-			};
-			var builder = new PokemonBuilder(data);
-			builder.setIV (iv).setStats (stats);
-			return builder.build ();
-        }
+			
+		public Pokemon getChar(int id, int level){
+			var charakter = getChar(id);
+			Rules.toLevel (charakter, level);
+			return charakter;
+		}
 
 		public PKData getData()
         {
