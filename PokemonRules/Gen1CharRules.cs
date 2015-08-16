@@ -7,14 +7,34 @@ namespace PokemonRules
 	{
 		#region CharacterRules implementation
 
+		static int newState(double baseV, double iV, double level) {
+			return (int) Math.Floor ((baseV + iV) * level / 50.0d + 10.0d);
+		}
+
 		public void levelUp (Pokemon charakter)
 		{
-			throw new NotImplementedException ();
+			if (charakter.Level == 100)
+				return;
+			
+			toLevel (charakter, charakter.Level + 1);
 		}
 
 		public void toLevel (Pokemon charakter, int level)
 		{
-			throw new NotImplementedException ();
+			var baseStates = charakter.BaseValues;
+			var ivStates = charakter.IV;
+
+			var newStats = new Stats{
+				HP = newState (baseStates.HP, ivStates.HP + 50.0d, level),
+				Atk = newState (baseStates.Atk, ivStates.Atk, level),
+				Def = newState (baseStates.Def, ivStates.Def, level),
+				SpAtk = newState (baseStates.SpAtk, ivStates.SpAtk, level),
+				SpDef = newState (baseStates.SpDef, ivStates.SpDef, level),
+				Speed = newState (baseStates.Speed, ivStates.Speed, level)
+			};
+
+			charakter.Stats = newStats;
+			charakter.Level++;
 		}
 
 		public Pokemon toPokemon (PKData data)

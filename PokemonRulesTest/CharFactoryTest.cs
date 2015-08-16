@@ -82,7 +82,7 @@ namespace PokemonRulesTest
         {
             Pokemon result = null;
             Assert.DoesNotThrow(() => _factory.writeData(testData));
-            Assert.DoesNotThrow(() => result = _factory.getChar(testData.name));
+            Assert.DoesNotThrow(() => result = _factory.getChar(testData.id));
 
             Assert.NotNull(result);
 			Assert.IsTrue (result.compare(testData));

@@ -32,6 +32,7 @@ namespace Base
 			Name = source.Name;
 			Stats = source.Stats;
 			IV = source.IV;
+			BaseValue = source.BaseValues;
 			Type1 = source.Type1;
 			Type2 = source.Type2;
 		}
@@ -40,6 +41,7 @@ namespace Base
 			Id = source.id;
 			Level = 1;
 			Name = source.name;
+			BaseValue = source.baseStats;
 			Type1 = source.type1;
 			Type2 = source.type2;
 		}
@@ -55,6 +57,7 @@ namespace Base
 		string Name { get; set; }
 		Stats Stats{ get; set; }
 		Stats IV { get; set; }
+		Stats BaseValue { get; set; }
 		PokemonType Type1 { get; set; }
 		PokemonType Type2 { get; set; }
 
@@ -77,6 +80,10 @@ namespace Base
 			return this;
 		}
 
+		public PokemonBuilder setBaseValues(Stats BaseValue) {
+			this.BaseValue = BaseValue;
+			return this;
+		}
 		public PokemonBuilder setStats(Stats Stats){
 			this.Stats = Stats;
 			return this;
@@ -92,32 +99,35 @@ namespace Base
 		}
 
 		public Pokemon build() {
-			if (Name == null || Stats == null || Type1 == PokemonType.None || Id == 0 || IV == null)
+			if (Name == null || Stats == null || Type1 == PokemonType.None || Id == 0 || IV == null || BaseValue == null)
 				throw new InvalidOperationException ("Builder does not have all values");
 
-			return new Pokemon (Id, Level, Name, Stats, IV, Type1, Type2);
+			return new Pokemon (Id, Level, Name, Stats, IV, BaseValue, Type1, Type2);
 		}
 	}
 
 	public class Pokemon : ICharakter
 	{
 
-		public Pokemon(int Id, int Level, string Name, Stats Stats, Stats IV, PokemonType Type1, PokemonType Type2)
+		public Pokemon(int Id, int Level, string Name, Stats Stats, Stats IV, Stats BaseValues, PokemonType Type1, PokemonType Type2)
 		{
 			this.Id = Id;
+			this.Name = Name;
 			this.Level = Level;
 			this.Stats = Stats;
 			this.IV = IV;
+			this.BaseValues = BaseValues;
 			this.Type1 = Type1;
 			this.Type2 = Type2;
 			Condition = StatusCondition.Normal;
 		}
 
 		public int Id { get; private set; }
-		public int Level { get; private set; }
+		public int Level { get; set; }
 
 		public Stats IV { get; private set; }
-		public Stats Stats { get; internal set; }
+		public Stats BaseValues { get; private set; }
+		public Stats Stats { get; set; }
 
 
 		public PokemonType Type1 { get; internal set; }

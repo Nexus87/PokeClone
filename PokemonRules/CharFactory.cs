@@ -49,6 +49,7 @@ namespace PokemonRules {
 		{
             File = file;
 			Rules = rules;
+			initList ();
 		}
 			
 		public Pokemon getChar(int id)
