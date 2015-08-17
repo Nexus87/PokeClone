@@ -47,23 +47,6 @@ namespace PokemonRulesTest
 			return 0;
 		}
 
-		static readonly PKData testData = new PKData
-        {
-			baseStats = new Stats{
-            	Atk = 10,
-            	Def = 11,
-            	HP = 12,
-				SpAtk = 15,
-				SpDef = 16,
-				Speed = 14,
-			},
-            id = 13,            
-            name = "Name",
-            type1 = PokemonType.Bug,
-            type2 = PokemonType.None
-        };
-
-
         CharFactory _factory;
 		CharacterRules _rules;
         [SetUp]

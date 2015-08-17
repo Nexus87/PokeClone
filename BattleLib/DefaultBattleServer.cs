@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Base;
 
+//TODO use command pattern for exit/change/action
 namespace BattleLib
 {
 	public class DefaultBattleServer : IBattleServer, IBattleObserver
@@ -64,12 +65,18 @@ namespace BattleLib
         {
             _state.clientActionEvent += clientActionHandler;
             _state.clientExitEvent += clientExitHandler;
+			_state.clientChangeEvent += clientChangeHandler;
         }
 
-        void clientChangeHandler(IBattleClient source, ICharakter newCharakter)
+		void clientChangeHandler(Object sender, NewCharakterArgs args)
         {
+			if (args.Source == null || _clientInfo.ContainsKey (args.Source))
+				throw new ArgumentException ("Invalid client");
 
+			_changeRequested.Add (args);
+			_clientInfo [args.Source].Action = null;
         }
+
         void clientExitHandler(Object sender, RequestExitArgs args)
         {
             if (args.Source == null || !_clientInfo.ContainsKey(args.Source))
@@ -212,7 +219,7 @@ namespace BattleLib
         {
             foreach (var data in _changeRequested)
             {
-                _clientInfo[data.Source].Charakter = data.NewChar;
+                _clientInfo[data.Source].Charakter = data.NewCharakter;
                 newCharEvent(this, new NewCharEventArg { Id = data.Source.Id });
             }
         }
@@ -278,7 +285,7 @@ namespace BattleLib
         readonly Dictionary<IBattleClient, ClientData> _clientInfo = new Dictionary<IBattleClient, ClientData>();
 
         readonly List<IBattleClient> _exitRequested = new List<IBattleClient>();
-        readonly List<ChangeData> _changeRequested = new List<ChangeData>();
+		readonly List<NewCharakterArgs> _changeRequested = new List<NewCharakterArgs>();
 		readonly DefaultBattleState _state = new DefaultBattleState();
 
 		IActionScheduler _scheduler;
