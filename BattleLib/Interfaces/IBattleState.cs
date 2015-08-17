@@ -24,9 +24,43 @@ using System;
 using Base;
 namespace BattleLib
 {
-    public delegate void ClientAction(IBattleClient source, IAction action, int targetId);
-    public delegate void RequestExit(IBattleClient source);
-    public delegate void NewCharakter(IBattleClient source, ICharakter newCharakter);
+    public class ClientActionArgs : EventArgs
+    {
+        public IBattleClient Source;
+        public IAction Action;
+        public int TargetId;
+        public ClientActionArgs(IBattleClient source, IAction action, int targetId)
+        {
+            Source = source;
+            Action = action;
+            TargetId = targetId;
+        }
+    }
+
+    public class RequestExitArgs : EventArgs
+    {
+        public IBattleClient Source;
+        public RequestExitArgs(IBattleClient source)
+        {
+            Source = source;
+        }
+    }
+
+    public class NewCharakterArgs : EventArgs
+    {
+        public IBattleClient Source;
+        public ICharakter NewCharakter;
+
+        public NewCharakterArgs(IBattleClient source, ICharakter newCharakter)
+        {
+            Source = source;
+            NewCharakter = newCharakter;
+        }
+    }
+
+    public delegate void ClientAction(object sender, ClientActionArgs e);
+    public delegate void RequestExit(object sender, RequestExitArgs e);
+    public delegate void NewCharakter(object sender, NewCharakterArgs e);
 
 	public interface IBattleState
 	{

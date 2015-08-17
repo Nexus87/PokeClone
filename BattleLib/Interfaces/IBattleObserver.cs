@@ -12,10 +12,25 @@ namespace BattleLib
 		public string Status { get; set; }
 	}
 
-	public delegate void ActionEvent(int source, int target, String message);
-	public delegate void ExitEvent(int id, String message);
-	public delegate void NewTurnEvent();
-	public delegate void NewCharEvent(int id);
+    public class ActionEventArgs : EventArgs{
+        public int Source { get; set; }
+        public int Target { get; set; }
+    }
+
+    public class ExitEventArgs : EventArgs
+    {
+        public int Id { get; set; }
+    }
+
+    public class NewCharEventArg : EventArgs
+    {
+        public int Id { get; set; }
+    }
+
+    public delegate void ActionEvent(object sender, ActionEventArgs e);
+    public delegate void ExitEvent(object sender, ExitEventArgs e);
+    public delegate void NewTurnEvent(object sender, EventArgs e);
+    public delegate void NewCharEvent(object sender, NewCharEventArg e);
 
 	public interface IBattleObserver
 	{

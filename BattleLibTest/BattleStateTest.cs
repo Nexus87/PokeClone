@@ -20,8 +20,8 @@ namespace BattleLibTest
             _actionEventCnt = 0;
             _exitEventCnt = 0;
 
-            _state.clientActionEvent += (source, a, id) => _actionEventCnt++;
-            _state.clientExitEvent += source => _exitEventCnt++;
+            _state.clientActionEvent += (a, b) => _actionEventCnt++;
+            _state.clientExitEvent += (a, b) => _exitEventCnt++;
         }
 
         [Test]

@@ -37,10 +37,10 @@ namespace BattleLib
                 throw new NullReferenceException("Client must not be null");
 
             // To avoid null checks
-            actionEvent += (a, b, c) => { };
+            actionEvent += (a, b) => { };
             exitEvent += (a, b) => { };
-            newTurnEvent += () => { };
-            newCharEvent += a => { };
+            newTurnEvent += (a, b) => { };
+            newCharEvent += (a, b) => { };
 
             _scheduler = scheduler;
             appendClients(clients);
@@ -70,31 +70,31 @@ namespace BattleLib
         {
 
         }
-        void clientExitHandler(IBattleClient source)
+        void clientExitHandler(Object sender, RequestExitArgs args)
         {
-            if (source == null || !_clientInfo.ContainsKey(source))
+            if (args.Source == null || !_clientInfo.ContainsKey(args.Source))
                 throw new ArgumentException("Invalid client");
 
-            _exitRequested.Add(source);
+            _exitRequested.Add(args.Source);
             // No other action in this turn
-            _clientInfo[source].Action = null;
+            _clientInfo[args.Source].Action = null;
         }
 
-		void clientActionHandler(IBattleClient client, IAction action, int targetId){
+		void clientActionHandler(Object sender, ClientActionArgs args){
 
-            if (!_clientInfo.ContainsKey(client))
+            if (!_clientInfo.ContainsKey(args.Source))
                 throw new ArgumentException("Source not found");
 
             var target = (from info in _clientInfo
-                                  where info.Value.Id == targetId
+                                  where info.Value.Id == args.TargetId
                                   select info.Key).FirstOrDefault();
 			if (target == null)
 				throw new ArgumentException ("Target not found");
 
-             
-            var source = _clientInfo[client];
 
-            source.Action = action;
+            var source = _clientInfo[args.Source];
+
+            source.Action = args.Action;
             source.ActionTarget = target;
 		}
 
@@ -114,14 +114,14 @@ namespace BattleLib
                 else
                 {
                     client.Value.Charakter = charakter;
-                    newCharEvent(client.Value.Id);
+                    newCharEvent(this, new NewCharEventArg{Id = client.Value.Id});
                 }
             }
 
             foreach (var client in toBeRemoved)
             {
                 _clientInfo.Remove(client);
-                exitEvent(client.Id, "No more Chars");
+                exitEvent(this, new ExitEventArgs{Id = client.Id});
             }
 
 		}
@@ -139,7 +139,7 @@ namespace BattleLib
 		{
 			foreach (var client in _exitRequested) {
                 _clientInfo.Remove(client);
-                exitEvent(client.Id, "Escaped");
+                exitEvent(this, new ExitEventArgs{Id = client.Id});
             }
         }
 
@@ -178,7 +178,8 @@ namespace BattleLib
                 action.Action.applyTo(action.Target);
 
                 var eAction = (ExtendedActionData)action;
-                actionEvent(eAction.SourceId, eAction.TargetId, "Message");
+                var args = new ActionEventArgs { Source = eAction.SourceId, Target = eAction.TargetId };
+                actionEvent(this, args);
             }
 
 		}
@@ -203,7 +204,7 @@ namespace BattleLib
 
                 requestCharakters();
 
-                newTurnEvent();
+                newTurnEvent(this, null);
 			}
 		}
 
@@ -212,7 +213,7 @@ namespace BattleLib
             foreach (var data in _changeRequested)
             {
                 _clientInfo[data.Source].Charakter = data.NewChar;
-                newCharEvent(data.Source.Id);
+                newCharEvent(this, new NewCharEventArg { Id = data.Source.Id });
             }
         }
 		public IBattleObserver getObserver ()
