@@ -1,4 +1,4 @@
-﻿[
+[
 	{
 	"baseStats":
 		{
@@ -13,7 +13,7 @@
 	"name":"Name1",
 	"type1":12,
 	"type2":0
-	}
+	},
 	{
 	"baseStats":
 		{
@@ -28,7 +28,7 @@
 	"name":"Name2",
 	"type1":1,
 	"type2":0
-	}
+	},
 	{
 	"baseStats":
 		{

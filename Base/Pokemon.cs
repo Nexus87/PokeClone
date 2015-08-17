@@ -52,7 +52,7 @@ namespace Base
 			Type2 = PokemonType.None;
 		}
 
-		int Id { get; set; }
+		int? Id { get; set; }
 		int Level { get; set; }
 		string Name { get; set; }
 		Stats Stats{ get; set; }
@@ -99,10 +99,10 @@ namespace Base
 		}
 
 		public Pokemon build() {
-			if (Name == null || Stats == null || Type1 == PokemonType.None || Id == 0 || IV == null || BaseValue == null)
+			if (Name == null || Stats == null || Type1 == PokemonType.None || Id == null || IV == null || BaseValue == null)
 				throw new InvalidOperationException ("Builder does not have all values");
 
-			return new Pokemon (Id, Level, Name, Stats, IV, BaseValue, Type1, Type2);
+			return new Pokemon (Id.Value, Level, Name, Stats, IV, BaseValue, Type1, Type2);
 		}
 	}
 

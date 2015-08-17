@@ -66,6 +66,10 @@ namespace BattleLib
             _state.clientExitEvent += clientExitHandler;
         }
 
+        void clientChangeHandler(IBattleClient source, ICharakter newCharakter)
+        {
+
+        }
         void clientExitHandler(IBattleClient source)
         {
             if (source == null || !_clientInfo.ContainsKey(source))
@@ -110,7 +114,6 @@ namespace BattleLib
                 else
                 {
                     client.Value.Charakter = charakter;
-
                     newCharEvent(client.Value.Id);
                 }
             }
@@ -121,7 +124,6 @@ namespace BattleLib
                 exitEvent(client.Id, "No more Chars");
             }
 
-			_cachedInfo.Clear ();
 		}
 
 		void requestActions ()
@@ -179,7 +181,6 @@ namespace BattleLib
                 actionEvent(eAction.SourceId, eAction.TargetId, "Message");
             }
 
-			_cachedInfo.Clear ();
 		}
 
 		#region IBattleServer implementation
@@ -193,10 +194,11 @@ namespace BattleLib
             while (_clientInfo.Count > 1)
             {
                 _exitRequested.Clear();
-
+                _changeRequested.Clear();
 				requestActions ();
 
 				execEscapes ();
+                execChanges ();
 				appylActions ();
 
                 requestCharakters();
@@ -204,6 +206,15 @@ namespace BattleLib
                 newTurnEvent();
 			}
 		}
+
+        private void execChanges()
+        {
+            foreach (var data in _changeRequested)
+            {
+                _clientInfo[data.Source].Charakter = data.NewChar;
+                newCharEvent(data.Source.Id);
+            }
+        }
 		public IBattleObserver getObserver ()
 		{
 			return this;
@@ -217,29 +228,30 @@ namespace BattleLib
 		public event NewTurnEvent newTurnEvent;
 		public event NewCharEvent newCharEvent;
 
-		void fillCache() {
+		List<ClientInfo> fillCache() {
+            var result = new List<ClientInfo>();
 			foreach(var data in _clientInfo.Values) {
-				_cachedInfo.Add (new ClientInfo {
+                result.Add(new ClientInfo
+                {
 					CharName = data.Charakter.Name,
 					Hp = data.Charakter.HP,
 					Id = data.Id
 				});
 			}
+
+            return result;
 		}
 
 		public IEnumerable<ClientInfo> getAllInfos ()
 		{
-			if (_cachedInfo.Count == 0)
-				fillCache ();
-			return _cachedInfo;
+            return fillCache();
 		}
 
 		public IEnumerable<ClientInfo> getInfo (params int[] ids)
 		{
-			if (_cachedInfo.Count == 0)
-				fillCache ();
+            var infos = getAllInfos();
 
-			return (from info in _cachedInfo 
+            return (from info in infos 
 				where ids.Contains(info.Id)
 				select info);
 		}
@@ -252,6 +264,11 @@ namespace BattleLib
             public IAction Action { get; set; }
             public IBattleClient ActionTarget { get; set; }
 		}
+        class ChangeData
+        {
+            public IBattleClient Source { get; set; }
+            public ICharakter NewChar { get; set; }
+        }
 
 		class ExtendedActionData : ActionData {
 			public int SourceId { get; set; }
@@ -260,8 +277,8 @@ namespace BattleLib
         readonly Dictionary<IBattleClient, ClientData> _clientInfo = new Dictionary<IBattleClient, ClientData>();
 
         readonly List<IBattleClient> _exitRequested = new List<IBattleClient>();
+        readonly List<ChangeData> _changeRequested = new List<ChangeData>();
 		readonly DefaultBattleState _state = new DefaultBattleState();
-		readonly List<ClientInfo> _cachedInfo = new List<ClientInfo>();
 
 		IActionScheduler _scheduler;
 	}

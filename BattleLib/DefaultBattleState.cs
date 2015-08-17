@@ -31,6 +31,7 @@ namespace BattleLib
 
         public event ClientAction clientActionEvent;
         public event RequestExit clientExitEvent;
+        public event NewCharakter clientChangeEvent;
 
         public DefaultBattleState() { initEvents(); }
 		public DefaultBattleState(List<IBattleClient> clients) {
@@ -42,8 +43,8 @@ namespace BattleLib
         {
             // Avoid null checks
             clientActionEvent += (a, b, c) => { };
-            clientExitEvent += a => {
-			};
+            clientExitEvent += a => {};
+            clientChangeEvent += (a, b) => { };
         }
 		public void resetState(IEnumerable<IBattleClient> clients){
 			_clients.Clear();
@@ -68,11 +69,21 @@ namespace BattleLib
             if (!_clients.Contains(source))
                 throw new InvalidOperationException("Client already placed an action in this turn");
 
-             clientExitEvent.Invoke(source);
+             clientExitEvent(source);
             
             _clients.Remove(source);
             return true;
         }
+
+        public bool changeChar(IBattleClient source, Base.ICharakter newCharacter)
+        {
+            if(!_clients.Contains(source))
+                throw new InvalidOperationException("Client already placed an action in this turn");
+
+            clientChangeEvent(source, newCharacter);
+            return true;
+        }
+
 		#endregion
 
 		readonly List<IBattleClient> _clients = new List<IBattleClient>();

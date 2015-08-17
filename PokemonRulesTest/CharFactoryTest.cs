@@ -79,9 +79,8 @@ namespace PokemonRulesTest
             Pokemon result = null;
 			foreach (var data in CharFactoryTestData.Data) {
 				Assert.DoesNotThrow (() => result = _factory.getChar (data.id));
-				Pokemon pkm = _rules.toPokemon(data);
 				Assert.NotNull (result);
-				Assert.IsTrue (result.compare ( pkm ));
+				Assert.IsTrue (result.compare ( data ));
 			}
         }
     }

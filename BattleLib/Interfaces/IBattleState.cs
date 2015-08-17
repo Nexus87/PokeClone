@@ -21,18 +21,21 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 using System;
-
+using Base;
 namespace BattleLib
 {
     public delegate void ClientAction(IBattleClient source, IAction action, int targetId);
     public delegate void RequestExit(IBattleClient source);
+    public delegate void NewCharakter(IBattleClient source, ICharakter newCharakter);
 
 	public interface IBattleState
 	{
         event ClientAction clientActionEvent;
         event RequestExit clientExitEvent;
+        event NewCharakter clientChangeEvent;
 
 		bool placeAction(IAction action, IBattleClient source, int targetId);
+        bool changeChar(IBattleClient source, ICharakter newCharacter);
         bool requestExit(IBattleClient source);
 	}
 }
