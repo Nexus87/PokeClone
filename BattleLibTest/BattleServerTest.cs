@@ -105,22 +105,25 @@ namespace BattleLibTest
         }
 
         [Test]
-        [Ignore("Need to be fixed to work with commands")]
         public void fullBattleTest()
         {
             _client1.Charakter = new TestChar();
             _client2.Charakter = new TestChar();
 
             // TODO don't hardcode the target id
-            //_client1.Action = state => state.placeAction (action1, _client1, 1);
-            //_client2.Action = state => state.placeAction (action2, _client2, 0);
+            _client1.Action = state =>
+            {
+                if (_client1.RoundCnt == 0)
+                    state.makeMove(new Move(new MoveData()), _client1, 1);
+                else
+                    state.requestExit(_client1);
+            };
+            _client2.Action = state => state.makeMove(new Move(new MoveData()), _client2, 0);
 
             _server.start();
 
-            Assert.AreEqual(_client1.RoundCnt, 1);
-            Assert.AreEqual(_client2.RoundCnt, 1);
-
-            Assert.AreEqual(_client2.Charakter.HP, 0);
+            Assert.AreEqual(_client1.RoundCnt, 2);
+            Assert.AreEqual(_client2.RoundCnt, 2);
             
         }
 	}

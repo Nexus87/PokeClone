@@ -67,9 +67,10 @@ namespace BattleLib
             _state.clientCommandEvent += clientCommandHandler;
         }
 
-        private void clientCommandHandler(object sender, IClientCommand command)
+        private void clientCommandHandler(object sender, ClientCommandArgs args)
         {
-            throw new NotImplementedException();
+            validateClient(args.Source);
+            _clientInfo[args.Source].Command = args.Command;
         }
 
 		void requestCharakters ()

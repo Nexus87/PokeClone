@@ -25,7 +25,18 @@ using Base;
 using BattleLib.Interfaces;
 namespace BattleLib
 {
-    public delegate void ClientCommand(object sender, IClientCommand command);
+    public class ClientCommandArgs : EventArgs
+    {
+        public IBattleClient Source;
+        public IClientCommand Command;
+
+        public ClientCommandArgs(IBattleClient source, IClientCommand command)
+        {
+            Source = source;
+            Command = command;
+        }
+    }
+    public delegate void ClientCommand(object sender, ClientCommandArgs args);
 
 	public interface IBattleState
 	{

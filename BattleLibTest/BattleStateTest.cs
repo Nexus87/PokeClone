@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using BattleLib;
 using Base;
+using BattleLib.Interfaces;
 namespace BattleLibTest
 {
     [TestFixture]
@@ -19,8 +20,14 @@ namespace BattleLibTest
             _state = new DefaultBattleState(clients);
 
             _actionEventCnt = 0;
-
-            _state.clientCommandEvent += (a, b) => _actionEventCnt++;
+            _exitEventCnt = 0;
+            _state.clientCommandEvent += (a, b) =>
+            {
+                if (b.Command.Type == CommandType.Exit)
+                    _exitEventCnt++;
+                else if (b.Command.Type == CommandType.Move)
+                    _actionEventCnt++;
+            };
         }
 
         [Test]
@@ -33,6 +40,7 @@ namespace BattleLibTest
             _client2.requestAction(_state);
 
             Assert.AreEqual(_actionEventCnt, 2);
+            Assert.AreEqual(_exitEventCnt, 0);
         }
 
         [Test]
@@ -44,7 +52,8 @@ namespace BattleLibTest
             _client1.requestAction(_state);
             _client2.requestAction(_state);
 
-            Assert.AreEqual(_actionEventCnt, 2);
+            Assert.AreEqual(_actionEventCnt, 0);
+            Assert.AreEqual(_exitEventCnt, 2);
         }
 
         [Test]
@@ -56,7 +65,8 @@ namespace BattleLibTest
             _client1.requestAction(_state);
             _client2.requestAction(_state);
 
-            Assert.AreEqual(_actionEventCnt, 2);
+            Assert.AreEqual(_actionEventCnt, 1);
+            Assert.AreEqual(_exitEventCnt, 1);
         }
 
         [Test]
@@ -70,6 +80,7 @@ namespace BattleLibTest
             _client2.requestAction(_state);
 
             Assert.AreEqual(_actionEventCnt, 2);
+            Assert.AreEqual(_exitEventCnt, 0);
         }
 
         [Test]
@@ -82,7 +93,8 @@ namespace BattleLibTest
             Assert.Throws<InvalidOperationException>(() => _client1.requestAction(_state));
             _client2.requestAction(_state);
 
-            Assert.AreEqual(_actionEventCnt, 2);
+            Assert.AreEqual(_actionEventCnt, 0);
+            Assert.AreEqual(_exitEventCnt, 2);
         }
 
         [Test]
@@ -99,6 +111,7 @@ namespace BattleLibTest
             _client2.requestAction(_state);
 
             Assert.AreEqual(_actionEventCnt, 2);
+            Assert.AreEqual(_exitEventCnt, 0);
         }
 
         DefaultBattleState _state;
@@ -108,5 +121,6 @@ namespace BattleLibTest
         readonly Move _move = new Move(new MoveData());
 
         int _actionEventCnt;
+private  int _exitEventCnt;
     }
 }

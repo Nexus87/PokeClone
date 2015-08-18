@@ -53,7 +53,7 @@ namespace BattleLib
 			if (!_clients.Contains (source))
 				throw new InvalidOperationException ("Client already placed an action in this turn");
 
-            clientCommandEvent(this, new MoveCommand(source, move, targetId));
+            clientCommandEvent(this, new ClientCommandArgs(source, new MoveCommand(source, move, targetId)));
 			_clients.Remove (source);
 
 
@@ -65,7 +65,7 @@ namespace BattleLib
             if (!_clients.Contains(source))
                 throw new InvalidOperationException("Client already placed an action in this turn");
 
-            clientCommandEvent(this, new ExitCommand(source));
+            clientCommandEvent(this, new ClientCommandArgs(source, new ExitCommand(source)));
             _clients.Remove(source);
 
             return true;
@@ -76,7 +76,7 @@ namespace BattleLib
             if(!_clients.Contains(source))
                 throw new InvalidOperationException("Client already placed an action in this turn");
 
-            clientCommandEvent(this, new ChangeCommand(source, newCharacter));
+            clientCommandEvent(this, new ClientCommandArgs(source, new ChangeCommand(source, newCharacter)));
             _clients.Remove(source);
             return true;
         }
