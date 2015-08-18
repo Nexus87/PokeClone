@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Base
 {
-    public enum Stats{
+    public enum State{
         HP,
         Atk,
         Def,
@@ -14,10 +14,12 @@ namespace Base
         SpDef,
         Speed
     }
-    interface EffectFacade
+    public interface EffectFacade
     {
-        void manipulateState(Stats stat, int modifier);
-        void manipulateCondition(StatusCondition condition);
+        void manipulateTargetState(State stat, int modifier);
+		void manipulateSourceState(State stat, int modifier);
+        void manipulateTargetCondition(StatusCondition condition);
+		void manipulateSourceCondition(StatusCondition condition);
 
         ICharakter getCharakter();
     }

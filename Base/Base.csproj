@@ -33,13 +33,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EffectFacade.cs" />
-    <Compile Include="MoveEffect.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Pokemon.cs" />
     <Compile Include="ICharakter.cs" />
     <Compile Include="BaseStats.cs" />
     <Compile Include="Move.cs" />
+    <Compile Include="ISpecialEffect.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
