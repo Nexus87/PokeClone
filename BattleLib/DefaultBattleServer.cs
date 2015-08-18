@@ -24,11 +24,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Base;
+using BattleLib.Interfaces;
 
 //TODO use command pattern for exit/change/action
 namespace BattleLib
 {
-	public class DefaultBattleServer : IBattleServer, IBattleObserver
+	public class DefaultBattleServer : IBattleServer, IBattleObserver, CommandReceiver
 	{
 
 		public DefaultBattleServer(IActionScheduler scheduler, params IBattleClient[] clients) {
@@ -63,47 +64,13 @@ namespace BattleLib
 
         void initState()
         {
-            _state.clientActionEvent += clientActionHandler;
-            _state.clientExitEvent += clientExitHandler;
-			_state.clientChangeEvent += clientChangeHandler;
+            _state.clientCommandEvent += clientCommandHandler;
         }
 
-		void clientChangeHandler(Object sender, NewCharakterArgs args)
+        private void clientCommandHandler(object sender, IClientCommand command)
         {
-			if (args.Source == null || _clientInfo.ContainsKey (args.Source))
-				throw new ArgumentException ("Invalid client");
-
-			_changeRequested.Add (args);
-			_clientInfo [args.Source].Action = null;
+            throw new NotImplementedException();
         }
-
-        void clientExitHandler(Object sender, RequestExitArgs args)
-        {
-            if (args.Source == null || !_clientInfo.ContainsKey(args.Source))
-                throw new ArgumentException("Invalid client");
-
-            _exitRequested.Add(args.Source);
-            // No other action in this turn
-            _clientInfo[args.Source].Action = null;
-        }
-
-		void clientActionHandler(Object sender, ClientActionArgs args){
-
-            if (!_clientInfo.ContainsKey(args.Source))
-                throw new ArgumentException("Source not found");
-
-            var target = (from info in _clientInfo
-                                  where info.Value.Id == args.TargetId
-                                  select info.Key).FirstOrDefault();
-			if (target == null)
-				throw new ArgumentException ("Target not found");
-
-
-            var source = _clientInfo[args.Source];
-
-            source.Action = args.Action;
-            source.ActionTarget = target;
-		}
 
 		void requestCharakters ()
 		{
@@ -142,35 +109,15 @@ namespace BattleLib
 			}
 		}
 
-		void execEscapes ()
-		{
-			foreach (var client in _exitRequested) {
-                _clientInfo.Remove(client);
-                exitEvent(this, new ExitEventArgs{Id = client.Id});
-            }
-        }
-
 		void initScheduler ()
 		{
-			_scheduler.clearActions ();
+			_scheduler.clearCommands ();
 
 			foreach (var client in _clientInfo.Values) {
-				if (client.Action == null)
-					continue;
-				ICharakter target;
-				try {
-					target = _clientInfo [client.ActionTarget].Charakter;
-				}
-				catch (KeyNotFoundException) {
-					target = null;
-				}
-				_scheduler.appendAction (new ExtendedActionData {
-					Source = client.Charakter,
-					Target = target,
-					Action = client.Action,
-					SourceId = client.Id,
-					TargetId = client.ActionTarget.Id
-				});
+                if (client.Command == null)
+                    throw new InvalidOperationException("Command should not be null!");
+
+				_scheduler.appendCommand (client.Command);
 			}
 		}
 
@@ -178,16 +125,8 @@ namespace BattleLib
 		{
             initScheduler ();
 
-            foreach (var action in _scheduler.schedulActions())
-            {
-                if (action.Source.isKO())
-                    continue;
-                action.Action.applyTo(action.Target);
-
-                var eAction = (ExtendedActionData)action;
-                var args = new ActionEventArgs { Source = eAction.SourceId, Target = eAction.TargetId };
-                actionEvent(this, args);
-            }
+            foreach (var command in _scheduler.scheduleCommands())
+                command.execute(this);
 
 		}
 
@@ -201,12 +140,7 @@ namespace BattleLib
 
             while (_clientInfo.Count > 1)
             {
-                _exitRequested.Clear();
-                _changeRequested.Clear();
 				requestActions ();
-
-				execEscapes ();
-                execChanges ();
 				appylActions ();
 
                 requestCharakters();
@@ -215,14 +149,6 @@ namespace BattleLib
 			}
 		}
 
-        private void execChanges()
-        {
-            foreach (var data in _changeRequested)
-            {
-                _clientInfo[data.Source].Charakter = data.NewCharakter;
-                newCharEvent(this, new NewCharEventArg { Id = data.Source.Id });
-            }
-        }
 		public IBattleObserver getObserver ()
 		{
 			return this;
@@ -269,8 +195,8 @@ namespace BattleLib
 		class ClientData {
 			public int Id { get; set; }
 			public ICharakter Charakter { get; set; }
-            public IAction Action { get; set; }
             public IBattleClient ActionTarget { get; set; }
+            public IClientCommand Command { get; set; }
 		}
         class ChangeData
         {
@@ -278,17 +204,42 @@ namespace BattleLib
             public ICharakter NewChar { get; set; }
         }
 
-		class ExtendedActionData : ActionData {
-			public int SourceId { get; set; }
-			public int TargetId { get; set; }
-		}
         readonly Dictionary<IBattleClient, ClientData> _clientInfo = new Dictionary<IBattleClient, ClientData>();
-
-        readonly List<IBattleClient> _exitRequested = new List<IBattleClient>();
-		readonly List<NewCharakterArgs> _changeRequested = new List<NewCharakterArgs>();
 		readonly DefaultBattleState _state = new DefaultBattleState();
 
 		IActionScheduler _scheduler;
-	}
+
+        void validateClient(IBattleClient client)
+        {
+            if (client == null || !_clientInfo.ContainsKey(client))
+                throw new ArgumentException("Invalid client");
+        }
+
+        public void clientExit(IBattleClient source)
+        {
+            validateClient(source);
+
+            //TODO uses rules to determine if an exit is possible
+            int id = _clientInfo[source].Id;
+            _clientInfo.Remove(source);
+            exitEvent(this, new ExitEventArgs{ Id = id });
+        }
+
+        public void execMove(IBattleClient source, Move move, int targetId)
+        {
+            validateClient(source);
+            //TODO implement
+        }
+
+        public void execChange(IBattleClient source, ICharakter charakter)
+        {
+            validateClient(source);
+            if (charakter == null)
+                throw new ArgumentException("Character must not be null");
+
+            //TODO uses rules to determine if a character change is possible
+            _clientInfo[source].Charakter = charakter;
+        }
+    }
 }
 

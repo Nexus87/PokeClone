@@ -29,10 +29,6 @@ namespace BattleLib
 	public class DefaultBattleState : IBattleState
 	{
 
-        public event ClientAction clientActionEvent;
-        public event RequestExit clientExitEvent;
-        public event NewCharakter clientChangeEvent;
-
         public DefaultBattleState() { initEvents(); }
 		public DefaultBattleState(List<IBattleClient> clients) {
 			_clients.AddRange(clients);
@@ -42,9 +38,7 @@ namespace BattleLib
         void initEvents()
         {
             // Avoid null checks
-            clientActionEvent += (a, b) => { };
-            clientExitEvent += (a, b) => {};
-            clientChangeEvent += (a, b) => { };
+            clientCommandEvent += (a, b) => { };
         }
 		public void resetState(IEnumerable<IBattleClient> clients){
 			_clients.Clear();
@@ -53,13 +47,15 @@ namespace BattleLib
 
 		#region IBattleState implementation
 
-		public bool placeAction (IAction action, IBattleClient source, int targetId)
+
+        public bool makeMove(Base.Move move, IBattleClient source, int targetId)
 		{
 			if (!_clients.Contains (source))
 				throw new InvalidOperationException ("Client already placed an action in this turn");
 
+            clientCommandEvent(this, new MoveCommand(source, move, targetId));
 			_clients.Remove (source);
-            clientActionEvent(this, new ClientActionArgs(source, action, targetId));
+
 
 			return true;
 		}
@@ -69,9 +65,9 @@ namespace BattleLib
             if (!_clients.Contains(source))
                 throw new InvalidOperationException("Client already placed an action in this turn");
 
-             clientExitEvent(this, new RequestExitArgs(source));
-            
+            clientCommandEvent(this, new ExitCommand(source));
             _clients.Remove(source);
+
             return true;
         }
 
@@ -80,13 +76,18 @@ namespace BattleLib
             if(!_clients.Contains(source))
                 throw new InvalidOperationException("Client already placed an action in this turn");
 
-            clientChangeEvent(this, new NewCharakterArgs(source, newCharacter));
+            clientCommandEvent(this, new ChangeCommand(source, newCharacter));
+            _clients.Remove(source);
             return true;
         }
 
 		#endregion
 
 		readonly List<IBattleClient> _clients = new List<IBattleClient>();
+
+
+        public event ClientCommand clientCommandEvent = (a, b) => {};
+
     }
 }
 

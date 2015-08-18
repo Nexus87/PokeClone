@@ -22,53 +22,16 @@
 //
 using System;
 using Base;
+using BattleLib.Interfaces;
 namespace BattleLib
 {
-    public class ClientActionArgs : EventArgs
-    {
-        public IBattleClient Source;
-        public IAction Action;
-        public int TargetId;
-        public ClientActionArgs(IBattleClient source, IAction action, int targetId)
-        {
-            Source = source;
-            Action = action;
-            TargetId = targetId;
-        }
-    }
-
-    public class RequestExitArgs : EventArgs
-    {
-        public IBattleClient Source;
-        public RequestExitArgs(IBattleClient source)
-        {
-            Source = source;
-        }
-    }
-
-    public class NewCharakterArgs : EventArgs
-    {
-        public IBattleClient Source;
-        public ICharakter NewCharakter;
-
-        public NewCharakterArgs(IBattleClient source, ICharakter newCharakter)
-        {
-            Source = source;
-            NewCharakter = newCharakter;
-        }
-    }
-
-    public delegate void ClientAction(object sender, ClientActionArgs e);
-    public delegate void RequestExit(object sender, RequestExitArgs e);
-    public delegate void NewCharakter(object sender, NewCharakterArgs e);
+    public delegate void ClientCommand(object sender, IClientCommand command);
 
 	public interface IBattleState
 	{
-        event ClientAction clientActionEvent;
-        event RequestExit clientExitEvent;
-        event NewCharakter clientChangeEvent;
+        event ClientCommand clientCommandEvent;
 
-		bool placeAction(IAction action, IBattleClient source, int targetId);
+		bool makeMove(Move move, IBattleClient source, int targetId);
         bool changeChar(IBattleClient source, ICharakter newCharacter);
         bool requestExit(IBattleClient source);
 	}

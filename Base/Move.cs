@@ -25,8 +25,12 @@ namespace Base
 
 	public class Move
 	{
-		public Move ()
+        public MoveData Data { get; private set; }
+        public int RemainingPP { get; set; }
+		public Move (MoveData data)
 		{
+            Data = data;
+            RemainingPP = data.PP;
 		}
 	}
 }

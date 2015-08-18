@@ -31,7 +31,10 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClientCommands.cs" />
     <Compile Include="IBattleRules.cs" />
+    <Compile Include="Interfaces\CommandReceiver.cs" />
+    <Compile Include="Interfaces\IClientCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DefaultBattleState.cs" />
     <Compile Include="DefaultBattleServer.cs" />
