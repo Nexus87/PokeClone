@@ -21,97 +21,160 @@ namespace BattleLibTest
 
             _actionEventCnt = 0;
             _exitEventCnt = 0;
+            _changeEventCnt = 0;
             _state.clientCommandEvent += (a, b) =>
             {
-                if (b.Command.Type == CommandType.Exit)
-                    _exitEventCnt++;
-                else if (b.Command.Type == CommandType.Move)
-                    _actionEventCnt++;
+                switch (b.Command.Type)
+                {
+                    case CommandType.Exit:
+                        _exitEventCnt++;
+                        break;
+                    case CommandType.Move:
+                        _actionEventCnt++;
+                        break;
+                    case CommandType.Change:
+                        _changeEventCnt++;
+                        break;
+                }
             };
         }
 
         [Test]
         public void simpleActionTest()
         {
-            _client1.Action = state => state.makeMove(_move, _client1, 0);
-            _client2.Action = state => state.makeMove(_move, _client2, 0);
-
-            _client1.requestAction(_state);
-            _client2.requestAction(_state);
+            _state.makeMove(_move, _client1, 0);
+            _state.makeMove(_move, _client2, 0);
 
             Assert.AreEqual(_actionEventCnt, 2);
             Assert.AreEqual(_exitEventCnt, 0);
+            Assert.AreEqual(_changeEventCnt, 0);
         }
 
         [Test]
         public void simpleExitTest()
         {
-            _client1.Action = state => state.requestExit (_client1);
-            _client2.Action = state => state.requestExit (_client2);
-
-            _client1.requestAction(_state);
-            _client2.requestAction(_state);
+            _state.requestExit (_client1);
+            _state.requestExit (_client2);
 
             Assert.AreEqual(_actionEventCnt, 0);
             Assert.AreEqual(_exitEventCnt, 2);
+            Assert.AreEqual(_changeEventCnt, 0);
         }
 
         [Test]
+        public void simpleChangeTest()
+        {
+            ICharakter char1 = new TestChar();
+            ICharakter char2 = new TestChar();
+
+            _state.changeChar(_client1, char1);
+            _state.changeChar(_client2, char2);
+
+            Assert.AreEqual(_actionEventCnt, 0);
+            Assert.AreEqual(_exitEventCnt, 0);
+            Assert.AreEqual(_changeEventCnt, 2);
+        }
+        [Test]
         public void mixedExitActionTest()
         {
-            _client1.Action = state => state.makeMove(_move, _client1, 0);
-            _client2.Action = state => state.requestExit (_client2);
-            
-            _client1.requestAction(_state);
-            _client2.requestAction(_state);
+            _state.makeMove(_move, _client1, 0);
+            _state.requestExit (_client2);
 
             Assert.AreEqual(_actionEventCnt, 1);
             Assert.AreEqual(_exitEventCnt, 1);
+            Assert.AreEqual(_changeEventCnt, 0);
         }
 
         [Test]
         public void multipleActionExceptionTest()
         {
-            _client1.Action = state => state.makeMove(_move, _client1, 0);
-            _client2.Action = state => state.makeMove(_move, _client2, 0);
+            _state.makeMove(_move, _client1, 0);
+            _state.makeMove(_move, _client2, 0);
 
-            _client1.requestAction(_state);
-            Assert.Throws<InvalidOperationException>(() => _client1.requestAction(_state));
-            _client2.requestAction(_state);
+            Assert.Throws<InvalidOperationException>(() => _state.makeMove(_move, _client1, 0));
+            Assert.Throws<InvalidOperationException>(() => _state.makeMove(_move, _client2, 0));
 
             Assert.AreEqual(_actionEventCnt, 2);
             Assert.AreEqual(_exitEventCnt, 0);
+            Assert.AreEqual(_changeEventCnt, 0);
         }
 
         [Test]
         public void multipleExitExceptionTest()
         {
-            _client1.Action = state => state.requestExit (_client1);
-            _client2.Action = state => state.requestExit (_client2);
+            _state.requestExit (_client1);
+            _state.requestExit (_client2);
 
-            _client1.requestAction(_state);
-            Assert.Throws<InvalidOperationException>(() => _client1.requestAction(_state));
-            _client2.requestAction(_state);
+            Assert.Throws<InvalidOperationException>(() => _state.requestExit (_client1));
+            Assert.Throws<InvalidOperationException>(() => _state.requestExit(_client2));
 
             Assert.AreEqual(_actionEventCnt, 0);
             Assert.AreEqual(_exitEventCnt, 2);
+            Assert.AreEqual(_changeEventCnt, 0);
         }
 
         [Test]
         public void mixedExitActionExceptionTest()
         {
-            _client1.Action = state => state.makeMove (_move, _client1, 0);
-            _client2.Action = state => state.makeMove(_move, _client2, 0);
+            _state.makeMove (_move, _client1, 0);
+            _state.makeMove(_move, _client2, 0);
 
-            _client1.requestAction(_state);
-
-            _client1.Action = state => state.requestExit (_client1);
-            Assert.Throws<InvalidOperationException>(() => _client1.requestAction(_state));
-
-            _client2.requestAction(_state);
+            Assert.Throws<InvalidOperationException>(() => _state.makeMove (_move, _client1, 0));
+            Assert.Throws<InvalidOperationException>(() => _state.makeMove(_move, _client2, 0));
 
             Assert.AreEqual(_actionEventCnt, 2);
             Assert.AreEqual(_exitEventCnt, 0);
+            Assert.AreEqual(_changeEventCnt, 0);
+        }
+
+        [Test]
+        public void multipleChangeExceptionTest()
+        {
+            ICharakter char1 = new TestChar();
+            ICharakter char2 = new TestChar();
+
+            _state.changeChar(_client1, char1);
+            _state.changeChar(_client2, char2);
+
+            Assert.Throws<InvalidOperationException>(() => _state.changeChar(_client1, char1));
+            Assert.Throws<InvalidOperationException>(() => _state.changeChar(_client2, char2));
+
+            Assert.AreEqual(_actionEventCnt, 0);
+            Assert.AreEqual(_exitEventCnt, 0);
+            Assert.AreEqual(_changeEventCnt, 2);
+        }
+
+        [Test]
+        public void resetTest()
+        {
+            ICharakter char1 = new TestChar();
+
+            _state.makeMove(_move, _client1, 0);
+            Assert.Throws<InvalidOperationException>(() => _state.changeChar(_client1, char1));
+
+            _state.makeMove(_move, _client2, 0);
+            Assert.Throws<InvalidOperationException>(() => _state.requestExit(_client2));
+
+            _state.resetState(new List<IBattleClient> { _client1, _client2 });
+
+            Assert.DoesNotThrow(() => _state.makeMove(_move, _client1, 0));
+            Assert.DoesNotThrow(() => _state.requestExit(_client2));
+        }
+
+        [Test]
+        public void defaultConstructorTest()
+        {
+            var testState = new DefaultBattleState();
+
+            ICharakter char1 = new TestChar();
+
+            Assert.Throws<InvalidOperationException>(() => testState.changeChar(_client1, char1));
+            Assert.Throws<InvalidOperationException>(() => testState.requestExit(_client2));
+
+            testState.resetState(new List<IBattleClient> { _client1, _client2 });
+
+            Assert.DoesNotThrow(() => testState.makeMove(_move, _client1, 0));
+            Assert.DoesNotThrow(() => testState.requestExit(_client2));
         }
 
         DefaultBattleState _state;
@@ -121,6 +184,7 @@ namespace BattleLibTest
         readonly Move _move = new Move(new MoveData());
 
         int _actionEventCnt;
-private  int _exitEventCnt;
+        private int _exitEventCnt;
+        private int _changeEventCnt;
     }
 }
