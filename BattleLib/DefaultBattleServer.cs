@@ -45,8 +45,8 @@ namespace BattleLib
             newCharEvent += (a, b) => { };
 
             _scheduler = scheduler;
+            _state.clientCommandEvent += clientCommandHandler;
             appendClients(clients);
-            initState();
 		}
 
         void appendClients(params IBattleClient[] clients)
@@ -56,16 +56,13 @@ namespace BattleLib
             {
                 if (client == null)
                     throw new NullReferenceException("Client must not be null");
+
                 _clientInfo.Add(client, new ClientData { Id = cnt, Charakter = null });
 				client.Id = cnt;
                 cnt++;
             }
         }
 
-        void initState()
-        {
-            _state.clientCommandEvent += clientCommandHandler;
-        }
 
         private void clientCommandHandler(object sender, ClientCommandArgs args)
         {
