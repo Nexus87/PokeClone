@@ -25,6 +25,7 @@ using System.Linq;
 using System.Runtime.Serialization.Json;
 using System.IO;
 using Base;
+using System.Collections.Generic;
 
 namespace PokemonRules {
 	
@@ -83,7 +84,12 @@ namespace PokemonRules {
             _serializer.WriteObject(file, wrapper);
             file.Close();
         }
-			
+
+        public IEnumerable<int> getIds()
+        {
+            return from data in Data
+                   select data.id;
+        }
 	}
 }
 

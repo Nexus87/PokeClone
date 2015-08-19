@@ -56,6 +56,25 @@ namespace BattleLibTest
         }
     }
 
+    public class TestRules : IBattleRules
+    {
+
+        public bool canEscape()
+        {
+            return true;
+        }
+
+        public bool canChange()
+        {
+            return true;
+        }
+
+        public bool execMove(ICharakter source, Move move, ICharakter target)
+        {
+            return true;
+        }
+    }
+
 	[TestFixture]
 	public class BattleServerTest
 	{
@@ -69,7 +88,7 @@ namespace BattleLibTest
 			_scheduler = new TestScheduler ();
 			_client1 = new TestClient ();
 			_client2 = new TestClient ();
-            _server = new DefaultBattleServer(_scheduler, _client1, _client2);
+            _server = new DefaultBattleServer(_scheduler, new TestRules(), _client1, _client2);
 		}
 
 		[Test]
@@ -86,21 +105,25 @@ namespace BattleLibTest
 		[Test]
         public void ConstructorExceptionTest()
         {
-            Assert.Throws<NullReferenceException>(() => new DefaultBattleServer(_scheduler, null));
-            Assert.Throws<NullReferenceException>(() => new DefaultBattleServer(null, _client1));
-            Assert.Throws<NullReferenceException>(() => new DefaultBattleServer(null, null));
-            Assert.Throws<NullReferenceException>(() => new DefaultBattleServer(_scheduler, null, null));
-            Assert.Throws<NullReferenceException>(() => new DefaultBattleServer(_scheduler, _client1, null));
+            IBattleRules rules = new TestRules();
+            Assert.Throws<NullReferenceException>(() => new DefaultBattleServer(_scheduler, rules, null));
+            Assert.Throws<NullReferenceException>(() => new DefaultBattleServer(null, rules, _client1));
             Assert.Throws<NullReferenceException>(() => new DefaultBattleServer(_scheduler, null, _client1));
+            Assert.Throws<NullReferenceException>(() => new DefaultBattleServer(null, rules,  null));
+            Assert.Throws<NullReferenceException>(() => new DefaultBattleServer(null, null, null));
+            Assert.Throws<NullReferenceException>(() => new DefaultBattleServer(_scheduler, rules, null, null));
+            Assert.Throws<NullReferenceException>(() => new DefaultBattleServer(_scheduler, rules, _client1, null));
+            Assert.Throws<NullReferenceException>(() => new DefaultBattleServer(_scheduler, rules, null, _client1));
         }
 
         [Test]
         public void StartExceptionTest()
         {
-            var testServer = new DefaultBattleServer(_scheduler);
+            IBattleRules rules = new TestRules();
+            var testServer = new DefaultBattleServer(_scheduler, rules);
 			Assert.Throws<InvalidOperationException> (testServer.start);
 
-            testServer = new DefaultBattleServer(_scheduler, _client1);
+            testServer = new DefaultBattleServer(_scheduler, rules, _client1);
 			Assert.Throws<InvalidOperationException> (testServer.start);
         }
 

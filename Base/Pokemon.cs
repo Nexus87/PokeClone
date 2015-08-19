@@ -21,6 +21,7 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 using System;
+using System.Collections.Generic;
 
 namespace Base
 {
@@ -129,6 +130,7 @@ namespace Base
 		public Stats BaseValues { get; private set; }
 		public Stats Stats { get; set; }
 
+        public List<Move> Moves { get; set; }
 
 		public PokemonType Type1 { get; internal set; }
 		public PokemonType Type2 { get; internal set; }

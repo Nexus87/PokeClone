@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokemonRulesTest", "Pokemon
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Base", "Base\Base.csproj", "{DDF413D1-9BE0-446B-82AF-E10242E8B812}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleClient", "ConsoleClient\ConsoleClient.csproj", "{5DF2D8A0-38DD-4359-9CA6-F17F4707171D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{04216BD8-0BA1-4ECD-8172-CDEB9C3D69D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{04216BD8-0BA1-4ECD-8172-CDEB9C3D69D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{04216BD8-0BA1-4ECD-8172-CDEB9C3D69D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1B068E6-894C-4625-B176-3547992FDAA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1B068E6-894C-4625-B176-3547992FDAA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1B068E6-894C-4625-B176-3547992FDAA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1B068E6-894C-4625-B176-3547992FDAA5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{45F17BE4-A525-43BF-91D9-2503F69A08FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{45F17BE4-A525-43BF-91D9-2503F69A08FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{45F17BE4-A525-43BF-91D9-2503F69A08FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -33,10 +39,13 @@ Global
 		{DDF413D1-9BE0-446B-82AF-E10242E8B812}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DDF413D1-9BE0-446B-82AF-E10242E8B812}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DDF413D1-9BE0-446B-82AF-E10242E8B812}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F1B068E6-894C-4625-B176-3547992FDAA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F1B068E6-894C-4625-B176-3547992FDAA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F1B068E6-894C-4625-B176-3547992FDAA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F1B068E6-894C-4625-B176-3547992FDAA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5DF2D8A0-38DD-4359-9CA6-F17F4707171D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DF2D8A0-38DD-4359-9CA6-F17F4707171D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DF2D8A0-38DD-4359-9CA6-F17F4707171D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DF2D8A0-38DD-4359-9CA6-F17F4707171D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		Policies = $0
@@ -48,8 +57,5 @@ Global
 		$2.TabsToSpaces = False
 		$2.inheritsSet = VisualStudio
 		$2.inheritsScope = text/plain
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal

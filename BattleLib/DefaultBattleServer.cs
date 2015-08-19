@@ -26,24 +26,20 @@ using System.Linq;
 using Base;
 using BattleLib.Interfaces;
 
-//TODO use command pattern for exit/change/action
 namespace BattleLib
 {
 	public class DefaultBattleServer : IBattleServer, IBattleObserver, CommandReceiver
 	{
 
-		public DefaultBattleServer(IActionScheduler scheduler, params IBattleClient[] clients) {
+		public DefaultBattleServer(IActionScheduler scheduler, IBattleRules rules, params IBattleClient[] clients) {
             if (scheduler == null)
                 throw new NullReferenceException("Scheduler must not be null");
             if (clients == null)
                 throw new NullReferenceException("Client must not be null");
+            if (rules == null)
+                throw new NullReferenceException("Rules must not be null");
 
-            // To avoid null checks
-            actionEvent += (a, b) => { };
-            exitEvent += (a, b) => { };
-            newTurnEvent += (a, b) => { };
-            newCharEvent += (a, b) => { };
-
+            _rules = rules;
             _scheduler = scheduler;
             _state.clientCommandEvent += clientCommandHandler;
             appendClients(clients);
@@ -58,7 +54,7 @@ namespace BattleLib
                     throw new NullReferenceException("Client must not be null");
 
                 _clientInfo.Add(client, new ClientData { Id = cnt, Charakter = null });
-				client.Id = cnt;
+				//client.Id = cnt;
                 cnt++;
             }
         }
@@ -92,8 +88,9 @@ namespace BattleLib
 
             foreach (var client in toBeRemoved)
             {
+                int id = _clientInfo[client].Id;
                 _clientInfo.Remove(client);
-                exitEvent(this, new ExitEventArgs{Id = client.Id});
+                exitEvent(this, new ExitEventArgs { Id = id });
             }
 
 		}
@@ -155,10 +152,10 @@ namespace BattleLib
 
 		#region IBattleObserver implementation
 
-		public event ActionEvent actionEvent;
-		public event ExitEvent exitEvent;
-		public event NewTurnEvent newTurnEvent;
-		public event NewCharEvent newCharEvent;
+		public event ActionEvent actionEvent = (a, b) => {};
+        public event ExitEvent exitEvent = (a, b) => { };
+        public event NewTurnEvent newTurnEvent = (a, b) => { };
+        public event NewCharEvent newCharEvent = (a, b) => { };
 
 		List<ClientInfo> fillCache() {
             var result = new List<ClientInfo>();
@@ -196,16 +193,12 @@ namespace BattleLib
             public IBattleClient ActionTarget { get; set; }
             public IClientCommand Command { get; set; }
 		}
-        class ChangeData
-        {
-            public IBattleClient Source { get; set; }
-            public ICharakter NewChar { get; set; }
-        }
 
         readonly Dictionary<IBattleClient, ClientData> _clientInfo = new Dictionary<IBattleClient, ClientData>();
 		readonly DefaultBattleState _state = new DefaultBattleState();
-
+        IBattleRules _rules;
 		IActionScheduler _scheduler;
+
 
         void validateClient(IBattleClient client)
         {
@@ -217,7 +210,9 @@ namespace BattleLib
         {
             validateClient(source);
 
-            //TODO uses rules to determine if an exit is possible
+            if (!_rules.canEscape())
+                return;
+
             int id = _clientInfo[source].Id;
             _clientInfo.Remove(source);
             exitEvent(this, new ExitEventArgs{ Id = id });
@@ -226,7 +221,13 @@ namespace BattleLib
         public void execMove(IBattleClient source, Move move, int targetId)
         {
             validateClient(source);
-            //TODO implement
+
+            var sourceChar = _clientInfo[source].Charakter;
+            var targetChar = (from info in _clientInfo.Values
+                             where info.Id == targetId
+                             select info.Charakter).FirstOrDefault();
+
+            _rules.execMove(sourceChar, move, targetChar);
         }
 
         public void execChange(IBattleClient source, ICharakter charakter)
@@ -235,7 +236,9 @@ namespace BattleLib
             if (charakter == null)
                 throw new ArgumentException("Character must not be null");
 
-            //TODO uses rules to determine if a character change is possible
+            if (!_rules.canChange())
+                return;
+
             _clientInfo[source].Charakter = charakter;
         }
     }

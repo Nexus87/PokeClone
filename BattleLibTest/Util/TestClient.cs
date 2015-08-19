@@ -30,7 +30,6 @@ namespace BattleLibTest
 	class TestClient : IBattleClient {
 		int _roundNumber;
 		int _roundCnt;
-		public int Id { get; set; }
 		public int RoundNumbers { 
 			get{ 
 				return _roundNumber;
