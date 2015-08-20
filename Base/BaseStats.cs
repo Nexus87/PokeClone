@@ -1,7 +1,15 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 namespace Base
 {
+    [DataContract]
+    public class MoveList
+    {
+        [DataMember]
+        public Tuple<int, string>[] Moves;
+    }
+
 	[DataContract]
 	public class Stats {
 		[DataMember]
@@ -31,6 +39,8 @@ namespace Base
 		public PokemonType type1;
 		[DataMember]
 		public PokemonType type2;
+        [DataMember]
+        public MoveList moveList;
 	}
 }
 

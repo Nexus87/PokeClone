@@ -33,6 +33,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MoveFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CharFactory.cs" />
     <Compile Include="CharacterRules.cs" />

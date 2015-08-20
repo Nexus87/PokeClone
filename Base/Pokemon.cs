@@ -28,12 +28,11 @@ namespace Base
 	public class PokemonBuilder {
 
 		public PokemonBuilder(Pokemon source) {
-			Id = source.Id;
 			Level = source.Level;
 			Name = source.Name;
 			Stats = source.Stats;
 			IV = source.IV;
-			BaseValue = source.BaseValues;
+            BaseData = source.BaseData;
 			Type1 = source.Type1;
 			Type2 = source.Type2;
 		}
@@ -42,7 +41,7 @@ namespace Base
 			Id = source.id;
 			Level = 1;
 			Name = source.name;
-			BaseValue = source.baseStats;
+            BaseData = source;
 			Type1 = source.type1;
 			Type2 = source.type2;
 		}
@@ -58,7 +57,7 @@ namespace Base
 		string Name { get; set; }
 		Stats Stats{ get; set; }
 		Stats IV { get; set; }
-		Stats BaseValue { get; set; }
+        PKData BaseData { get; set; }
 		PokemonType Type1 { get; set; }
 		PokemonType Type2 { get; set; }
 
@@ -81,8 +80,9 @@ namespace Base
 			return this;
 		}
 
-		public PokemonBuilder setBaseValues(Stats BaseValue) {
-			this.BaseValue = BaseValue;
+        public PokemonBuilder setBaseData(PKData BaseData)
+        {
+            this.BaseData = BaseData;
 			return this;
 		}
 		public PokemonBuilder setStats(Stats Stats){
@@ -100,40 +100,36 @@ namespace Base
 		}
 
 		public Pokemon build() {
-			if (Name == null || Stats == null || Type1 == PokemonType.None || Id == null || IV == null || BaseValue == null)
+            if (Name == null || Stats == null || IV == null || BaseData == null)
 				throw new InvalidOperationException ("Builder does not have all values");
 
-			return new Pokemon (Id.Value, Level, Name, Stats, IV, BaseValue, Type1, Type2);
+            return new Pokemon(BaseData, Level, Name, Stats, IV);
 		}
 	}
 
 	public class Pokemon : ICharakter
 	{
 
-		public Pokemon(int Id, int Level, string Name, Stats Stats, Stats IV, Stats BaseValues, PokemonType Type1, PokemonType Type2)
+		public Pokemon(PKData BaseData, int Level, string Name, Stats Stats, Stats IV)
 		{
-			this.Id = Id;
+            this.BaseData = BaseData;
 			this.Name = Name;
 			this.Level = Level;
 			this.Stats = Stats;
 			this.IV = IV;
-			this.BaseValues = BaseValues;
-			this.Type1 = Type1;
-			this.Type2 = Type2;
 			Condition = StatusCondition.Normal;
 		}
 
-		public int Id { get; private set; }
+        public PKData BaseData { get; set; }
 		public int Level { get; set; }
 
 		public Stats IV { get; private set; }
-		public Stats BaseValues { get; private set; }
 		public Stats Stats { get; set; }
 
         public List<Move> Moves { get; set; }
 
-		public PokemonType Type1 { get; internal set; }
-		public PokemonType Type2 { get; internal set; }
+		public PokemonType Type1 { get{ return BaseData.type1; }}
+        public PokemonType Type2 { get { return BaseData.type2; }}
 
 		public StatusCondition Condition { get; set; }
 

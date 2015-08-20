@@ -68,7 +68,7 @@ namespace ConsoleClient
                 {
                     answer = int.Parse(str);
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     Console.WriteLine("Invalid input");
                     continue;
@@ -122,7 +122,7 @@ namespace ConsoleClient
                 {
                     answer = int.Parse(str);
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     Console.WriteLine("Invalid input");
                     continue;
@@ -154,7 +154,7 @@ namespace ConsoleClient
             if (args.Length != 1)
                 return;
 
-            var factory = new CharFactory(args[0], new Gen1CharRules());
+            var factory = new CharFactory(args[0], new Gen1CharRules(new MoveFactory("")));
             var ids = (from id in factory.getIds()
                        select id).Take(6);
             if (ids.Count() == 0)

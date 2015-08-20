@@ -52,7 +52,7 @@ namespace PokemonRulesTest
         [SetUp]
         public void init()
         {
-			_rules = new Gen1CharRules (PseudoRandom);
+			_rules = new Gen1CharRules (new MoveFactory(""), PseudoRandom);
 			_factory = new CharFactory("../../TestData/CharFactoryTestData.txt", _rules);
         }
 
