@@ -48,9 +48,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject />
-  </PropertyGroup>
-  <PropertyGroup>
     <ManifestCertificateThumbprint>8936A746B7D752EACD0A7420E5DDCE65B0E5D254</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
@@ -82,6 +79,9 @@
       <HintPath>..\packages\Eto.Platform.Wpf.2.0.7\lib\net45\Eto.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="Eto.Gtk2">
+      <HintPath>..\packages\Eto.Platform.Gtk.2.0.7\lib\net45\Eto.Gtk2.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
@@ -105,7 +105,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Base\Base.csproj">
-      <Project>{ddf413d1-9be0-446b-82af-e10242e8b812}</Project>
+      <Project>{DDF413D1-9BE0-446B-82AF-E10242E8B812}</Project>
       <Name>Base</Name>
     </ProjectReference>
   </ItemGroup>

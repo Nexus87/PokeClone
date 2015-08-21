@@ -28,7 +28,6 @@
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -36,6 +35,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Commandlineparameters>../../../PokemonRulesTest/TestData/CharFactoryTestData.txt</Commandlineparameters>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -67,19 +67,19 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Base\Base.csproj">
-      <Project>{ddf413d1-9be0-446b-82af-e10242e8b812}</Project>
+      <Project>{DDF413D1-9BE0-446B-82AF-E10242E8B812}</Project>
       <Name>Base</Name>
     </ProjectReference>
     <ProjectReference Include="..\BattleLibTest\BattleLibTest.csproj">
-      <Project>{f1b068e6-894c-4625-b176-3547992fdaa5}</Project>
+      <Project>{F1B068E6-894C-4625-B176-3547992FDAA5}</Project>
       <Name>BattleLibTest</Name>
     </ProjectReference>
     <ProjectReference Include="..\BattleLib\BattleLib.csproj">
-      <Project>{04216bd8-0ba1-4ecd-8172-cdeb9c3d69d0}</Project>
+      <Project>{04216BD8-0BA1-4ECD-8172-CDEB9C3D69D0}</Project>
       <Name>BattleLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\PokemonRules\PokemonRules.csproj">
-      <Project>{45f17be4-a525-43bf-91d9-2503f69a08fd}</Project>
+      <Project>{45F17BE4-A525-43BF-91D9-2503F69A08FD}</Project>
       <Name>PokemonRules</Name>
     </ProjectReference>
   </ItemGroup>

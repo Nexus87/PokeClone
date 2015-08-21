@@ -25,10 +25,6 @@ Global
 		{04216BD8-0BA1-4ECD-8172-CDEB9C3D69D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{04216BD8-0BA1-4ECD-8172-CDEB9C3D69D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{04216BD8-0BA1-4ECD-8172-CDEB9C3D69D0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F1B068E6-894C-4625-B176-3547992FDAA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F1B068E6-894C-4625-B176-3547992FDAA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F1B068E6-894C-4625-B176-3547992FDAA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F1B068E6-894C-4625-B176-3547992FDAA5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{45F17BE4-A525-43BF-91D9-2503F69A08FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{45F17BE4-A525-43BF-91D9-2503F69A08FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{45F17BE4-A525-43BF-91D9-2503F69A08FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -37,10 +33,6 @@ Global
 		{4E54ED71-E778-4C71-8E06-B231D5A9F180}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4E54ED71-E778-4C71-8E06-B231D5A9F180}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4E54ED71-E778-4C71-8E06-B231D5A9F180}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DDF413D1-9BE0-446B-82AF-E10242E8B812}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DDF413D1-9BE0-446B-82AF-E10242E8B812}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DDF413D1-9BE0-446B-82AF-E10242E8B812}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DDF413D1-9BE0-446B-82AF-E10242E8B812}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5DF2D8A0-38DD-4359-9CA6-F17F4707171D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5DF2D8A0-38DD-4359-9CA6-F17F4707171D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5DF2D8A0-38DD-4359-9CA6-F17F4707171D}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -49,9 +41,11 @@ Global
 		{935394CF-DA70-46B3-82EF-AA1B45141412}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{935394CF-DA70-46B3-82EF-AA1B45141412}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{935394CF-DA70-46B3-82EF-AA1B45141412}.Release|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
+		{DDF413D1-9BE0-446B-82AF-E10242E8B812}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDF413D1-9BE0-446B-82AF-E10242E8B812}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1B068E6-894C-4625-B176-3547992FDAA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1B068E6-894C-4625-B176-3547992FDAA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		<<<<<<< HEAD
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		Policies = $0
@@ -63,5 +57,8 @@ Global
 		$2.TabsToSpaces = False
 		$2.inheritsSet = VisualStudio
 		$2.inheritsScope = text/plain
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal
