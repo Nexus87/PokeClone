@@ -20,6 +20,7 @@ namespace Tools
         TextBox _spDef;
         TextBox _speed;
 
+        List<PKData> _list = new List<PKData>();
         IEnumerable<Object> _types = Enum.GetValues(typeof(PokemonType)).Cast<Object>();
 
         public CharBuilderForm()
@@ -91,7 +92,9 @@ namespace Tools
                                     new TableRow()
                                 }
                             }  
-                        }
+                        },
+                        
+                        new TableCell(null, true)
                     ),
                     new TableRow()
                 }
@@ -100,7 +103,7 @@ namespace Tools
             var MainLayout = new Splitter
             {
                 Panel1 = FieldsLayout,
-                Panel2 = new ListBox(),
+                Panel2 = new GroupBox { Content = new ListBox { DataStore = _list } , Text = "Character List" }
             };
 
             this.Content = MainLayout;

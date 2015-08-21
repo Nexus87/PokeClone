@@ -15,6 +15,7 @@ namespace Tools
         {
             this.Size = new Size(600, 400);
             this.Content = new CharBuilderForm();
+            this.Padding = new Padding(5, 5);
         }
     }
 }
