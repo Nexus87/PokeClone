@@ -92,9 +92,9 @@ namespace Tools
 						Rows = {
 							new TableRow (
 								new TableCell (new Label{ Text = "Type1: " }),
-								new ComboBox{ DataStore = _types, ReadOnly = true, SelectedIndex = 1 },
+								new ComboBox{ DataStore = _types, ReadOnly = true, SelectedIndex = (int) PokemonType.Normal },
 								new TableCell (new Label{ Text = "Type2: " }),
-								new ComboBox{ DataStore = _types, ReadOnly = true, SelectedIndex = 0 }
+								new ComboBox{ DataStore = _types, ReadOnly = true, SelectedIndex = (int) PokemonType.None }
 							),
 							new TableRow ()
 						}

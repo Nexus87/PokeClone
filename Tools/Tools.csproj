@@ -70,6 +70,7 @@
     <Compile Include="MainClass.cs" />
     <Compile Include="MainForm.cs" />
     <Compile Include="CharBuilderForm.cs" />
+    <Compile Include="MoveBuilderForm.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Eto">

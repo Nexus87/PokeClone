@@ -14,7 +14,13 @@ namespace Tools
         public MainForm()
         {
             this.Size = new Size(600, 400);
-            this.Content = new CharBuilderForm();
+            this.Content = new TableLayout
+            {
+                Rows = {
+                    new TableRow(new CharBuilderForm()),
+                    new TableRow(new MoveBuilderForm()),
+                }
+            };
             this.Padding = new Padding(5, 5);
         }
     }
