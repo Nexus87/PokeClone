@@ -13,7 +13,6 @@ namespace ConsoleClient
     {
         Pokemon _current;
         public List<Pokemon> _chars = new List<Pokemon>();
-        public IBattleObserver Observer { get; set; }
         public override string ClientName
         {
             get { return "AI"; }
@@ -21,9 +20,9 @@ namespace ConsoleClient
 
         int searchTarget()
         {
-            return (from info in Observer.getAllInfos()
-                    where info.ClientName != ClientName
-                    select info.Id).First();
+            return (from info in BattleState
+                    where info.ClientId != Id
+                    select info.ClientId).First();
         }
         public override IClientCommand requestAction()
         {

@@ -20,5 +20,10 @@ namespace BattleLibTest
 			
         #endregion
 
+
+        public int Id
+        {
+            get { return 1; }
+        }
     }
 }

@@ -7,8 +7,11 @@ using System.Threading.Tasks;
 
 namespace BattleLib.Interfaces
 {
-    public abstract class AbstractClient : IBattleClient
+    public abstract class AbstractClient
     {
+        internal protected IEnumerable<ClientInfo> BattleState { get; internal set; }
+        internal protected int Id { get; internal set; }
+
         protected IClientCommand exitCommand()
         {
             return new ExitCommand(this);

@@ -50,6 +50,12 @@ namespace ConsoleClient
             WaitForInputEvent(this, new WaitForInputArgs {Current = _current, Client = this });
             return Command;
         }
+        public int searchTarget()
+        {
+            return (from info in BattleState
+                    where info.ClientId != Id
+                    select info.ClientId).First();
+        }
 
         public override Base.ICharakter requestCharakter()
         {

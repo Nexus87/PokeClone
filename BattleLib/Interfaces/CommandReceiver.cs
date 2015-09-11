@@ -9,8 +9,8 @@ namespace BattleLib.Interfaces
 {
     public interface CommandReceiver
     {
-        void clientExit(IBattleClient source);
-        void execMove(IBattleClient source, Move move, int targetId);
-        void execChange(IBattleClient source, ICharakter charakter);
+        void clientExit(AbstractClient source);
+        void execMove(AbstractClient source, Move move, int targetId);
+        void execChange(AbstractClient source, ICharakter charakter);
     }
 }

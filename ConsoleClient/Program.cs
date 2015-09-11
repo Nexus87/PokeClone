@@ -12,41 +12,41 @@ namespace ConsoleClient
 {
     class Program
     {
-        static IBattleObserver observer;
         static PlayerClient pc1;
         static Player p1;
+        static IBattleServer server;
         static void printInfo(ClientInfo info)
         {
             Console.WriteLine(info.ClientName);
-            Console.WriteLine(info.CharName + ": HP:" + info.Hp + " Status: " + info.Status);
+            Console.WriteLine(info.CharName + ": HP:" + info.CurrentHP + " Status: ?");
             Console.WriteLine();
         }
-        static void actionEventHandler(object sender, ActionEventArgs args)
-        {
-            var source = observer.getInfo(args.Source).First().CharName;
-            var target = observer.getInfo(args.Target).First().CharName;
+        //static void actionEventHandler(object sender, ActionEventArgs args)
+        //{
+        //    var source = observer.getInfo(args.Source).First().CharName;
+        //    var target = observer.getInfo(args.Target).First().CharName;
 
-            Console.WriteLine("Some action from " + source + " hit " + target + ".\n");
-        }
+        //    Console.WriteLine("Some action from " + source + " hit " + target + ".\n");
+        //}
 
-        static void exitEventHandler(object sender, ExitEventArgs args)
-        {
-            var source = observer.getInfo(args.Id).First().ClientName;
+        //static void exitEventHandler(object sender, ExitEventArgs args)
+        //{
+        //    var source = observer.getInfo(args.Id).First().ClientName;
 
-            Console.WriteLine(source + " left.\n");
-        }
+        //    Console.WriteLine(source + " left.\n");
+        //}
 
-        static void newTurnHandler(object sender, EventArgs args)
-        {
-            Console.WriteLine("New turn!\n");
-        }
+        //static void newTurnHandler(object sender, EventArgs args)
+        //{
+        //    Console.WriteLine("New turn!\n");
+        //}
 
-        static void newCharEventHandler(object sender, NewCharEventArg args)
-        {
-            var info = observer.getInfo(args.Id).First();
+        //static void newCharEventHandler(object sender, NewCharEventArg args)
+        //{
+        //    var info = observer.getInfo(args.Id).First();
 
-            Console.WriteLine(info.ClientName + " uses new pkm " + info.CharName + ".\n");
-        }
+        //    Console.WriteLine(info.ClientName + " uses new pkm " + info.CharName + ".\n");
+        //}
 
         static void handleAttack(WaitForInputArgs args)
         {
@@ -79,7 +79,7 @@ namespace ConsoleClient
                 else
                     Console.WriteLine("Invalid input");
             }
-            args.Client.Command = args.Client.moveCommand(args.Current.Moves[answer], searchTarget());
+            args.Client.Command = args.Client.moveCommand(args.Current.Moves[answer], pc1.searchTarget());
         }
 
         static void handleChange(WaitForInputArgs args)
@@ -94,17 +94,11 @@ namespace ConsoleClient
             args.Client.Command = args.Client.changeCommand(newPkm);
         }
 
-        static int searchTarget()
-        {
-            return (from info in observer.getInfo()
-                    where info.ClientName != pc1.ClientName
-                    select info.Id).First();
-        }
 
         static void waitForInputHandler(object sender, WaitForInputArgs args)
         {
             Console.WriteLine("Current status:\n");
-            foreach (var info in observer.getAllInfos())
+            foreach (var info in server.getCurrentState())
             {
                 printInfo(info);
             }
@@ -168,9 +162,7 @@ namespace ConsoleClient
                 ac1._chars.Add(factory.getChar(id));
             }
 
-            IBattleServer server = new DefaultBattleServer(new TestScheduler(), new TestRules(), pc1, ac1);
-            observer = server.getObserver();
-            ac1.Observer = observer;
+            server = new DefaultBattleServer(new TestScheduler(), new TestRules(), pc1, ac1);
 
             server.start();
         }

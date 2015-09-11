@@ -157,7 +157,12 @@ namespace Base
 			return Condition == StatusCondition.KO;
 		}
 		#endregion
-		
-	}
+
+
+        public int Id
+        {
+            get { return BaseData.id;  }
+        }
+    }
 }
 

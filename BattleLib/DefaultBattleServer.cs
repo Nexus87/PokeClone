@@ -28,10 +28,11 @@ using BattleLib.Interfaces;
 
 namespace BattleLib
 {
-	public class DefaultBattleServer : IBattleServer, IBattleObserver, CommandReceiver
+	public class DefaultBattleServer : IBattleServer, CommandReceiver
 	{
 
-		public DefaultBattleServer(IActionScheduler scheduler, IBattleRules rules, params IBattleClient[] clients) {
+        public DefaultBattleServer(IActionScheduler scheduler, IBattleRules rules, params AbstractClient[] clients)
+        {
             if (scheduler == null)
                 throw new NullReferenceException("Scheduler must not be null");
             if (clients == null)
@@ -44,21 +45,22 @@ namespace BattleLib
             appendClients(clients);
 		}
 
-        void validateClient(IBattleClient client)
+        void validateClient(AbstractClient client)
         {
             if (client == null || !_clientInfo.ContainsKey(client))
                 throw new ArgumentException("Invalid client");
         }
 
-        void appendClients(params IBattleClient[] clients)
+        void appendClients(params AbstractClient[] clients)
         {
-            int cnt = 0;
+            int cnt = _clientInfo.Count;
             foreach (var client in clients)
             {
                 if (client == null)
                     throw new NullReferenceException("Client must not be null");
 
                 _clientInfo.Add(client, new ClientData { Id = cnt, Charakter = null });
+                client.Id = cnt;
                 cnt++;
             }
         }
@@ -69,7 +71,7 @@ namespace BattleLib
 			                  where (info.Value.Charakter == null || info.Value.Charakter.isKO ())
 			                  select new {info.Key, info.Value};
 
-            var toBeRemoved = new List<IBattleClient>();
+            var toBeRemoved = new List<AbstractClient>();
 
             foreach (var client in requestChar)
             {
@@ -79,7 +81,7 @@ namespace BattleLib
                 else
                 {
                     client.Value.Charakter = charakter;
-                    newCharEvent(this, new NewCharEventArg{Id = client.Value.Id});
+                    ActionExecuted(this, "New charakter!");
                 }
             }
 
@@ -87,7 +89,7 @@ namespace BattleLib
             {
                 int id = _clientInfo[client].Id;
                 _clientInfo.Remove(client);
-                exitEvent(this, new ExitEventArgs { Id = id });
+                ClientQuit(this, null);
             }
 
 		}
@@ -122,81 +124,48 @@ namespace BattleLib
 
 		}
 
+        void updateClients()
+        {
+            var state = getCurrentState();
+            foreach (var client in _clientInfo.Keys)
+                client.BattleState = state;
+        }
 		#region IBattleServer implementation
 		public void start ()
 		{
 			if (_clientInfo.Count < 2)
 				throw new InvalidOperationException ("Server needs at least 2 clients");
-
+            _isRunning = true;
             requestCharakters();
 
             while (_clientInfo.Count > 1)
             {
+                NewTurn(this, null);
 				requestActions ();
 				appylActions ();
 
                 requestCharakters();
-
-                newTurnEvent(this, null);
 			}
-		}
-
-		public IBattleObserver getObserver ()
-		{
-			return this;
-		}
-		#endregion
-
-		#region IBattleObserver implementation
-
-		public event ActionEvent actionEvent = (a, b) => {};
-        public event ExitEvent exitEvent = (a, b) => { };
-        public event NewTurnEvent newTurnEvent = (a, b) => { };
-        public event NewCharEvent newCharEvent = (a, b) => { };
-
-		List<ClientInfo> fillCache() {
-            var result = new List<ClientInfo>();
-			foreach(var data in _clientInfo.Values) {
-                result.Add(new ClientInfo
-                {
-					CharName = data.Charakter.Name,
-					Hp = data.Charakter.HP,
-					Id = data.Id
-				});
-			}
-
-            return result;
-		}
-
-		public IEnumerable<ClientInfo> getAllInfos ()
-		{
-            return fillCache();
-		}
-
-		public IEnumerable<ClientInfo> getInfo (params int[] ids)
-		{
-            var infos = getAllInfos();
-
-            return (from info in infos 
-				where ids.Contains(info.Id)
-				select info);
+            _isRunning = false;
 		}
 
 		#endregion
+
 
 		class ClientData {
 			public int Id { get; set; }
 			public ICharakter Charakter { get; set; }
-            public IBattleClient ActionTarget { get; set; }
+            public AbstractClient ActionTarget { get; set; }
             public IClientCommand Command { get; set; }
 		}
 
-        readonly Dictionary<IBattleClient, ClientData> _clientInfo = new Dictionary<IBattleClient, ClientData>();
+        readonly Dictionary<AbstractClient, ClientData> _clientInfo = new Dictionary<AbstractClient, ClientData>();
         IBattleRules _rules;
 		IActionScheduler _scheduler;
-
-
-        public void clientExit(IBattleClient source)
+        bool _isRunning;
+        readonly List<ClientInfo> _infoList = new List<ClientInfo>();
+        
+        public void clientExit(AbstractClient source)
         {
             validateClient(source);
 
@@ -205,10 +174,10 @@ namespace BattleLib
 
             int id = _clientInfo[source].Id;
             _clientInfo.Remove(source);
-            exitEvent(this, new ExitEventArgs{ Id = id });
+            ClientQuit(this, null);
         }
 
-        public void execMove(IBattleClient source, Move move, int targetId)
+        public void execMove(AbstractClient source, Move move, int targetId)
         {
             validateClient(source);
 
@@ -220,7 +189,7 @@ namespace BattleLib
             _rules.execMove(sourceChar, move, targetChar);
         }
 
-        public void execChange(IBattleClient source, ICharakter charakter)
+        public void execChange(AbstractClient source, ICharakter charakter)
         {
             validateClient(source);
             if (charakter == null)
@@ -230,6 +199,40 @@ namespace BattleLib
                 return;
 
             _clientInfo[source].Charakter = charakter;
+        }
+
+        ClientInfo toInfo(AbstractClient client){
+            var data = _clientInfo[client];
+            return new ClientInfo {
+                ClientName = client.ClientName,
+                ClientId = data.Id,
+                CharId = data.Charakter == null ? -1 : data.Charakter.Id,
+                CharName = data.Charakter == null ? null : data.Charakter.Name,
+                CurrentHP = data.Charakter == null ? -1 : data.Charakter.HP
+            };
+        }
+
+        public event EventHandler ServerStart = (a, b) => { };
+        public event EventHandler ServerEnd = (a, b) => { };
+        public event EventHandler<string> ActionExecuted = (a, b) => { };
+        public event EventHandler ClientQuit = (a, b) => { };
+        public event EventHandler NewTurn = (a, b) => { };
+
+        public void addClient(AbstractClient client)
+        {
+            appendClients(client);
+        }
+
+
+        public IEnumerable<ClientInfo> getCurrentState()
+        {
+            if (!_isRunning)
+                return null;
+            List<ClientInfo> result = new List<ClientInfo>(_clientInfo.Count);
+            foreach (var client in _clientInfo.Keys)
+                result.Add(toInfo(client));
+
+            return result;
         }
     }
 }

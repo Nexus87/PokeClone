@@ -10,11 +10,11 @@ namespace BattleLib
 {
     class MoveCommand : IClientCommand
     {
-        IBattleClient _source;
+        AbstractClient _source;
         Move _move;
         int _targetId;
 
-        public MoveCommand(IBattleClient source, Move move, int targetId)
+        public MoveCommand(AbstractClient source, Move move, int targetId)
         {
             _source = source;
             _move = move;
@@ -33,8 +33,8 @@ namespace BattleLib
 
     class ExitCommand : IClientCommand
     {
-        IBattleClient _source;
-        public ExitCommand(IBattleClient source)
+        AbstractClient _source;
+        public ExitCommand(AbstractClient source)
         {
             _source = source;
         }
@@ -51,10 +51,10 @@ namespace BattleLib
 
     class ChangeCommand : IClientCommand
     {
-        IBattleClient _source;
+        AbstractClient _source;
         ICharakter _character;
 
-        public ChangeCommand(IBattleClient source, ICharakter character)
+        public ChangeCommand(AbstractClient source, ICharakter character)
         {
             _source = source;
             _character = character;
