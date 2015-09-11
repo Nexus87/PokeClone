@@ -33,19 +33,17 @@
   <ItemGroup>
     <Compile Include="ClientCommands.cs" />
     <Compile Include="IBattleRules.cs" />
+    <Compile Include="Interfaces\AbstractClient.cs" />
     <Compile Include="Interfaces\CommandReceiver.cs" />
     <Compile Include="Interfaces\IClientCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="DefaultBattleState.cs" />
     <Compile Include="DefaultBattleServer.cs" />
     <Compile Include="Interfaces\IActionScheduler.cs" />
     <Compile Include="Interfaces\IBattleClient.cs" />
     <Compile Include="Interfaces\IBattleObserver.cs" />
     <Compile Include="Interfaces\IBattleServer.cs" />
-    <Compile Include="Interfaces\IBattleState.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Base\Base.csproj">
       <Project>{DDF413D1-9BE0-446B-82AF-E10242E8B812}</Project>

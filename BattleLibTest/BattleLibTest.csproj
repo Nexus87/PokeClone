@@ -35,7 +35,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BattleServerTest.cs" />
-    <Compile Include="BattleStateTest.cs" />
     <Compile Include="Util\TestChar.cs" />
     <Compile Include="Util\TestClient.cs" />
   </ItemGroup>

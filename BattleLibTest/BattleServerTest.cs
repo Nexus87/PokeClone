@@ -75,19 +75,39 @@ namespace BattleLibTest
         }
     }
 
+    class TestClient1 : TestClient
+    {
+        public override IClientCommand requestAction()
+        {
+            if (RoundCnt == 0)
+                Command = moveCommand(new Move(new MoveData()), 1);
+            else
+                Command = exitCommand();
+
+            return base.requestAction();
+        }
+    }
+    class TestClient2 : TestClient
+    {
+        public override IClientCommand requestAction()
+        {
+            Command =  moveCommand(new Move(new MoveData()), 1);
+            return base.requestAction();
+        }
+    }
 	[TestFixture]
 	public class BattleServerTest
 	{
-		TestClient _client1;
-		TestClient _client2;
+		TestClient1 _client1;
+		TestClient2 _client2;
 		TestScheduler _scheduler;
 		IBattleServer _server;
 
 		[SetUp]
 		public void init() {
 			_scheduler = new TestScheduler ();
-			_client1 = new TestClient ();
-			_client2 = new TestClient ();
+			_client1 = new TestClient1 ();
+			_client2 = new TestClient2 ();
             _server = new DefaultBattleServer(_scheduler, new TestRules(), _client1, _client2);
 		}
 
@@ -134,14 +154,6 @@ namespace BattleLibTest
             _client2.Charakter = new TestChar();
 
             // TODO don't hardcode the target id
-            _client1.Action = state =>
-            {
-                if (_client1.RoundCnt == 0)
-                    state.makeMove(new Move(new MoveData()), _client1, 1);
-                else
-                    state.requestExit(_client1);
-            };
-            _client2.Action = state => state.makeMove(new Move(new MoveData()), _client2, 0);
 
             _server.start();
 

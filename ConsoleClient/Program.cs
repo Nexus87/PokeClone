@@ -79,9 +79,7 @@ namespace ConsoleClient
                 else
                     Console.WriteLine("Invalid input");
             }
-
-            args.State.makeMove(args.Current.Moves[answer], args.Client, searchTarget());
-
+            args.Client.Command = args.Client.moveCommand(args.Current.Moves[answer], searchTarget());
         }
 
         static void handleChange(WaitForInputArgs args)
@@ -93,7 +91,7 @@ namespace ConsoleClient
             if (newPkm == null)
                 newPkm = args.Current;
 
-            args.State.changeChar(args.Client, newPkm);
+            args.Client.Command = args.Client.changeCommand(newPkm);
         }
 
         static int searchTarget()
@@ -102,6 +100,7 @@ namespace ConsoleClient
                     where info.ClientName != pc1.ClientName
                     select info.Id).First();
         }
+
         static void waitForInputHandler(object sender, WaitForInputArgs args)
         {
             Console.WriteLine("Current status:\n");
@@ -143,7 +142,7 @@ namespace ConsoleClient
                     handleChange(args);
                     break;
                 case 3:
-                    args.State.requestExit(args.Client);
+                    args.Client.Command = args.Client.exitCommand();
                     break;
             }
 

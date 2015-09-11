@@ -41,9 +41,14 @@ namespace BattleLib
 
             _rules = rules;
             _scheduler = scheduler;
-            _state.clientCommandEvent += clientCommandHandler;
             appendClients(clients);
 		}
+
+        void validateClient(IBattleClient client)
+        {
+            if (client == null || !_clientInfo.ContainsKey(client))
+                throw new ArgumentException("Invalid client");
+        }
 
         void appendClients(params IBattleClient[] clients)
         {
@@ -54,16 +59,8 @@ namespace BattleLib
                     throw new NullReferenceException("Client must not be null");
 
                 _clientInfo.Add(client, new ClientData { Id = cnt, Charakter = null });
-				//client.Id = cnt;
                 cnt++;
             }
-        }
-
-
-        private void clientCommandHandler(object sender, ClientCommandArgs args)
-        {
-            validateClient(args.Source);
-            _clientInfo[args.Source].Command = args.Command;
         }
 
 		void requestCharakters ()
@@ -96,11 +93,11 @@ namespace BattleLib
 		}
 
 		void requestActions ()
-		{
-			_state.resetState(_clientInfo.Keys);
-
+        {
+            IClientCommand ret;
 			foreach(var client in _clientInfo.Keys){
-				client.requestAction (_state);
+				while((ret = client.requestAction()) == null);
+                _clientInfo[client].Command = ret;
 			}
 		}
 
@@ -195,16 +192,9 @@ namespace BattleLib
 		}
 
         readonly Dictionary<IBattleClient, ClientData> _clientInfo = new Dictionary<IBattleClient, ClientData>();
-		readonly DefaultBattleState _state = new DefaultBattleState();
         IBattleRules _rules;
 		IActionScheduler _scheduler;
 
-
-        void validateClient(IBattleClient client)
-        {
-            if (client == null || !_clientInfo.ContainsKey(client))
-                throw new ArgumentException("Invalid client");
-        }
 
         public void clientExit(IBattleClient source)
         {

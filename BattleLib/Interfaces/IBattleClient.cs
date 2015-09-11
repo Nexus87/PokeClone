@@ -1,12 +1,13 @@
 ﻿using System;
 using Base;
+using BattleLib.Interfaces;
 
 namespace BattleLib
 {
 	public interface IBattleClient
 	{
 		string ClientName { get; }
-		void requestAction( IBattleState state );
+		IClientCommand requestAction();
 		ICharakter requestCharakter();
 	}
 }

@@ -5,37 +5,53 @@ using System.Text;
 using System.Threading.Tasks;
 using BattleLib;
 using Base;
+using BattleLib.Interfaces;
 namespace ConsoleClient
 {
     class WaitForInputArgs : EventArgs
     {
-        public IBattleState State;
         public Pokemon Current;
-        public IBattleClient Client;
+        public PlayerClient Client;
     }
     delegate void WaitForInput(object sender, EventArgs args);
-    class PlayerClient : IBattleClient
+    class PlayerClient : AbstractClient
     {
         public event WaitForInput WaitForInputEvent = (a, b) => { };
 
         Player _player;
         Pokemon _current;
+        public IClientCommand Command;
         public PlayerClient(Player player)
         {
             _player = player;
         }
 
-        public string ClientName
+        public override string ClientName
         {
             get { return "Player"; }
         }
 
-        public void requestAction(IBattleState state)
+        public new IClientCommand exitCommand()
         {
-            WaitForInputEvent(this, new WaitForInputArgs { State = state, Current = _current, Client = this });
+            return base.exitCommand();
         }
 
-        public Base.ICharakter requestCharakter()
+        public new IClientCommand moveCommand(Move move, int targetId)
+        {
+            return base.moveCommand(move, targetId);
+        }
+
+        public new IClientCommand changeCommand(ICharakter charakter)
+        {
+            return base.changeCommand(charakter);
+        }
+        public override IClientCommand requestAction()
+        {
+            WaitForInputEvent(this, new WaitForInputArgs {Current = _current, Client = this });
+            return Command;
+        }
+
+        public override Base.ICharakter requestCharakter()
         {
             _current = (from chars in _player._pkm
                     where !chars.isKO()

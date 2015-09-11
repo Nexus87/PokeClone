@@ -23,11 +23,11 @@
 
 using BattleLib;
 using Base;
+using BattleLib.Interfaces;
 namespace BattleLibTest
 {
-    delegate void ActionDelegate(IBattleState state);
 
-	class TestClient : IBattleClient {
+	class TestClient : AbstractClient {
 		int _roundNumber;
 		int _roundCnt;
 		public int RoundNumbers { 
@@ -46,23 +46,24 @@ namespace BattleLibTest
 		}
         
 		public ICharakter Charakter { get; set; }
-        public ActionDelegate Action { get; set; }
+        public IClientCommand Command { get; set; }
 
 		#region IBattleClient implementation
-		public void requestAction (IBattleState state)
-		{
-            if (Action != null)
-                Action(state);
+
+        public override IClientCommand requestAction()
+		{            
             _roundCnt++;
+            return Command;
 		}
-		public ICharakter requestCharakter ()
+        public override ICharakter requestCharakter()
 		{
             if (Charakter == null || Charakter.isKO())
                 return null;
 			return Charakter;
 		}
 
-		public string ClientName {
+        public override string ClientName
+        {
 			get {
 				return "TestClient";
 			}
