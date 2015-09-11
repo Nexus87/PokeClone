@@ -8,7 +8,7 @@ namespace Base
 {
     public interface ISpecialEffect
     {
-        void executeEffect(EffectFacade facade);
+        void ExecuteEffect(IEffectFacade facade);
     }
 
 	public class StateEffect : ISpecialEffect {
@@ -23,12 +23,12 @@ namespace Base
 		}
 
 		#region ISpecialEffect implementation
-		public void executeEffect (EffectFacade facade)
+		public void ExecuteEffect (IEffectFacade facade)
 		{
 			if (Self)
-				facade.manipulateSourceState (State, Modifier);
+				facade.ManipulateSourceState (State, Modifier);
 			else
-				facade.manipulateTargetState (State, Modifier);
+				facade.ManipulateTargetState (State, Modifier);
 		}
 		#endregion
 	}
@@ -42,12 +42,12 @@ namespace Base
 			Self = self;
 		}
 		#region ISpecialEffect implementation
-		public void executeEffect (EffectFacade facade)
+		public void ExecuteEffect (IEffectFacade facade)
 		{
 			if (Self)
-				facade.manipulateSourceCondition (Condition);
+				facade.ManipulateSourceCondition (Condition);
 			else
-				facade.manipulateTargetCondition (Condition);
+				facade.ManipulateTargetCondition (Condition);
 		}
 		#endregion
 	}

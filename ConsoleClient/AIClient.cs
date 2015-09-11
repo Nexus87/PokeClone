@@ -24,18 +24,18 @@ namespace ConsoleClient
                     where info.ClientId != Id
                     select info.ClientId).First();
         }
-        public override IClientCommand requestAction()
+        public override IClientCommand RequestAction()
         {
             Random rand = new Random();
             int toSkip = rand.Next(0, _current.Moves.Count());
             var move = _current.Moves[toSkip];
-            return moveCommand(move, searchTarget());
+            return MoveCommand(move, searchTarget());
         }
 
-        public override Base.ICharakter requestCharakter()
+        public override Base.ICharakter RequestCharacter()
         {
             _current = (from character in _chars
-                        where !character.isKO()
+                        where !character.IsKO()
                         select character).FirstOrDefault();
 
             return _current;

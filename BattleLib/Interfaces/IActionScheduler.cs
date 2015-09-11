@@ -8,11 +8,11 @@ namespace BattleLib
 {
 	public interface IActionScheduler
 	{
-        void appendCommand(IClientCommand command);
-        void appendCommand(IEnumerable<IClientCommand> commands);
-        void clearCommands();
+        void AppendCommand(IClientCommand command);
+        void AppendCommand(IEnumerable<IClientCommand> commands);
+        void ClearCommands();
 
-        IEnumerable<IClientCommand> scheduleCommands();
+        IEnumerable<IClientCommand> ScheduleCommands();
 	}
 }
 

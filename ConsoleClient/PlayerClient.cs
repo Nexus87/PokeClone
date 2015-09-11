@@ -31,21 +31,21 @@ namespace ConsoleClient
             get { return "Player"; }
         }
 
-        public new IClientCommand exitCommand()
+        public new IClientCommand ExitCommand()
         {
-            return base.exitCommand();
+            return base.ExitCommand();
         }
 
-        public new IClientCommand moveCommand(Move move, int targetId)
+        public new IClientCommand MoveCommand(Move move, int targetId)
         {
-            return base.moveCommand(move, targetId);
+            return base.MoveCommand(move, targetId);
         }
 
-        public new IClientCommand changeCommand(ICharakter charakter)
+        public new IClientCommand ChangeCommand(ICharakter charakter)
         {
-            return base.changeCommand(charakter);
+            return base.ChangeCommand(charakter);
         }
-        public override IClientCommand requestAction()
+        public override IClientCommand RequestAction()
         {
             WaitForInputEvent(this, new WaitForInputArgs {Current = _current, Client = this });
             return Command;
@@ -57,10 +57,10 @@ namespace ConsoleClient
                     select info.ClientId).First();
         }
 
-        public override Base.ICharakter requestCharakter()
+        public override Base.ICharakter RequestCharacter()
         {
             _current = (from chars in _player._pkm
-                    where !chars.isKO()
+                    where !chars.IsKO()
                     select chars).FirstOrDefault();
 
             return _current;

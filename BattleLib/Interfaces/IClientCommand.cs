@@ -17,7 +17,7 @@ namespace BattleLib.Interfaces
     public interface IClientCommand
     {
         CommandType Type{ get; }
-        void execute(CommandReceiver receiver);
+        void Execute(ICommandReceiver receiver);
     }
 
 

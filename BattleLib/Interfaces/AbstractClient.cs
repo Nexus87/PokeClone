@@ -12,23 +12,23 @@ namespace BattleLib.Interfaces
         internal protected IEnumerable<ClientInfo> BattleState { get; internal set; }
         internal protected int Id { get; internal set; }
 
-        protected IClientCommand exitCommand()
+        protected IClientCommand ExitCommand()
         {
             return new ExitCommand(this);
         }
 
-        protected IClientCommand moveCommand(Move move, int targetId)
+        protected IClientCommand MoveCommand(Move move, int targetId)
         {
             return new MoveCommand(this, move, targetId);
         }
 
-        protected IClientCommand changeCommand(ICharakter charakter)
+        protected IClientCommand ChangeCommand(ICharakter character)
         {
-            return new ChangeCommand(this, charakter);
+            return new ChangeCommand(this, character);
         }
 
         public abstract string ClientName { get; }
-        public abstract IClientCommand requestAction();
-        public abstract ICharakter requestCharakter();
+        public abstract IClientCommand RequestAction();
+        public abstract ICharakter RequestCharacter();
     }
 }

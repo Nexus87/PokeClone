@@ -7,10 +7,10 @@ using Base;
 
 namespace BattleLib.Interfaces
 {
-    public interface CommandReceiver
+    public interface ICommandReceiver
     {
-        void clientExit(AbstractClient source);
-        void execMove(AbstractClient source, Move move, int targetId);
-        void execChange(AbstractClient source, ICharakter charakter);
+        void ClientExit(AbstractClient source);
+        void ExecMove(AbstractClient source, Move move, int targetId);
+        void ExecChange(AbstractClient source, ICharakter charakter);
     }
 }

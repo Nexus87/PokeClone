@@ -35,14 +35,14 @@ namespace PokemonRules
 			
 			toLevel (charakter, charakter.Level + 1);
 
-            return from moves in charakter.BaseData.moveList.Moves
+            return from moves in charakter.BaseData.MoveList.Moves
                    where moves.Item1 == charakter.Level
                    select _factory.getMove(moves.Item2);
 		}
 
 		public void toLevel (Pokemon charakter, int level)
 		{
-			var baseStates = charakter.BaseData.baseStats;
+			var baseStates = charakter.BaseData.BaseStats;
 			var ivStates = charakter.IV;
 
 			var newStats = new Stats{
@@ -66,12 +66,12 @@ namespace PokemonRules
 			var iStats = generateIV ();
 
 			var stats = new Stats {
-				HP = data.baseStats.HP + iStats.HP,
-				Atk = data.baseStats.Atk + iStats.Atk,
-				Def = data.baseStats.Def + iStats.Def,
-				SpAtk = data.baseStats.SpAtk + iStats.SpAtk,
-				SpDef = data.baseStats.SpDef + iStats.SpDef,
-				Speed = data.baseStats.Speed + iStats.Speed
+				HP = data.BaseStats.HP + iStats.HP,
+				Atk = data.BaseStats.Atk + iStats.Atk,
+				Def = data.BaseStats.Def + iStats.Def,
+				SpAtk = data.BaseStats.SpAtk + iStats.SpAtk,
+				SpDef = data.BaseStats.SpDef + iStats.SpDef,
+				Speed = data.BaseStats.Speed + iStats.Speed
 			};
 
 			var builder = new PokemonBuilder(data);

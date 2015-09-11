@@ -25,9 +25,9 @@ namespace BattleLib
             get { return CommandType.Move; }
         }
 
-        public void execute(CommandReceiver receiver)
+        public void Execute(ICommandReceiver receiver)
         {
-            receiver.execMove(_source, _move, _targetId);
+            receiver.ExecMove(_source, _move, _targetId);
         }
     }
 
@@ -43,9 +43,9 @@ namespace BattleLib
             get { return CommandType.Exit; }
         }
 
-        public void execute(CommandReceiver receiver)
+        public void Execute(ICommandReceiver receiver)
         {
-            receiver.clientExit(_source);
+            receiver.ClientExit(_source);
         }
     }
 
@@ -64,9 +64,9 @@ namespace BattleLib
             get { return CommandType.Change; }
         }
 
-        public void execute(CommandReceiver receiver)
+        public void Execute(ICommandReceiver receiver)
         {
-            receiver.execChange(_source, _character);
+            receiver.ExecChange(_source, _character);
         }
     }
 

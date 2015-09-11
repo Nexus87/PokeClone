@@ -56,7 +56,7 @@ namespace PokemonRules {
 		public Pokemon getChar(int id)
 		{
 			var result = (from d in Data
-			              where d.id == id
+			              where d.Id == id
 			              select d).FirstOrDefault ();
 
 			return result == null ? null : Rules.toPokemon (result);
@@ -88,7 +88,7 @@ namespace PokemonRules {
         public IEnumerable<int> getIds()
         {
             return from data in Data
-                   select data.id;
+                   select data.Id;
         }
 	}
 }

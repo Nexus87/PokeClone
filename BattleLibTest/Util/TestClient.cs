@@ -50,14 +50,14 @@ namespace BattleLibTest
 
 		#region IBattleClient implementation
 
-        public override IClientCommand requestAction()
+        public override IClientCommand RequestAction()
 		{            
             _roundCnt++;
             return Command;
 		}
-        public override ICharakter requestCharakter()
+        public override ICharakter RequestCharacter()
 		{
-            if (Charakter == null || Charakter.isKO())
+            if (Charakter == null || Charakter.IsKO())
                 return null;
 			return Charakter;
 		}

@@ -5,7 +5,7 @@ namespace BattleLibTest
     {
         public TestChar() { HP = 100; }
         #region ICharakter implementation
-        public bool isKO()
+        public bool IsKO()
         {
             return HP == 0;
         }

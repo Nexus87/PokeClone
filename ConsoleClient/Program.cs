@@ -79,26 +79,26 @@ namespace ConsoleClient
                 else
                     Console.WriteLine("Invalid input");
             }
-            args.Client.Command = args.Client.moveCommand(args.Current.Moves[answer], pc1.searchTarget());
+            args.Client.Command = args.Client.MoveCommand(args.Current.Moves[answer], pc1.searchTarget());
         }
 
         static void handleChange(WaitForInputArgs args)
         {
             var newPkm =  (from pkm in p1._pkm
-                    where !pkm.isKO() && pkm != args.Current
+                    where !pkm.IsKO() && pkm != args.Current
                     select pkm).FirstOrDefault();
 
             if (newPkm == null)
                 newPkm = args.Current;
 
-            args.Client.Command = args.Client.changeCommand(newPkm);
+            args.Client.Command = args.Client.ChangeCommand(newPkm);
         }
 
 
         static void waitForInputHandler(object sender, WaitForInputArgs args)
         {
             Console.WriteLine("Current status:\n");
-            foreach (var info in server.getCurrentState())
+            foreach (var info in server.GetCurrentState())
             {
                 printInfo(info);
             }
@@ -136,7 +136,7 @@ namespace ConsoleClient
                     handleChange(args);
                     break;
                 case 3:
-                    args.Client.Command = args.Client.exitCommand();
+                    args.Client.Command = args.Client.ExitCommand();
                     break;
             }
 
@@ -164,7 +164,7 @@ namespace ConsoleClient
 
             server = new DefaultBattleServer(new TestScheduler(), new TestRules(), pc1, ac1);
 
-            server.start();
+            server.Start();
         }
     }
 }

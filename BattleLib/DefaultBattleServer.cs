@@ -28,7 +28,7 @@ using BattleLib.Interfaces;
 
 namespace BattleLib
 {
-	public class DefaultBattleServer : IBattleServer, CommandReceiver
+	public class DefaultBattleServer : IBattleServer, ICommandReceiver
 	{
 
         public DefaultBattleServer(IActionScheduler scheduler, IBattleRules rules, params AbstractClient[] clients)
@@ -68,14 +68,14 @@ namespace BattleLib
 		void requestCharakters ()
 		{
 			var requestChar = from info in _clientInfo
-			                  where (info.Value.Charakter == null || info.Value.Charakter.isKO ())
+			                  where (info.Value.Charakter == null || info.Value.Charakter.IsKO ())
 			                  select new {info.Key, info.Value};
 
             var toBeRemoved = new List<AbstractClient>();
 
             foreach (var client in requestChar)
             {
-                ICharakter charakter = client.Key.requestCharakter();
+                ICharakter charakter = client.Key.RequestCharacter();
                 if (charakter == null)
                     toBeRemoved.Add(client.Key);
                 else
@@ -87,7 +87,6 @@ namespace BattleLib
 
             foreach (var client in toBeRemoved)
             {
-                int id = _clientInfo[client].Id;
                 _clientInfo.Remove(client);
                 ClientQuit(this, null);
             }
@@ -98,20 +97,20 @@ namespace BattleLib
         {
             IClientCommand ret;
 			foreach(var client in _clientInfo.Keys){
-				while((ret = client.requestAction()) == null);
+				while((ret = client.RequestAction()) == null);
                 _clientInfo[client].Command = ret;
 			}
 		}
 
 		void initScheduler ()
 		{
-			_scheduler.clearCommands ();
+			_scheduler.ClearCommands ();
 
 			foreach (var client in _clientInfo.Values) {
                 if (client.Command == null)
                     throw new InvalidOperationException("Command should not be null!");
 
-				_scheduler.appendCommand (client.Command);
+				_scheduler.AppendCommand (client.Command);
 			}
 		}
 
@@ -119,19 +118,19 @@ namespace BattleLib
 		{
             initScheduler ();
 
-            foreach (var command in _scheduler.scheduleCommands())
-                command.execute(this);
+            foreach (var command in _scheduler.ScheduleCommands())
+                command.Execute(this);
 
 		}
 
         void updateClients()
         {
-            var state = getCurrentState();
+            var state = GetCurrentState();
             foreach (var client in _clientInfo.Keys)
                 client.BattleState = state;
         }
 		#region IBattleServer implementation
-		public void start ()
+		public void Start ()
 		{
 			if (_clientInfo.Count < 2)
 				throw new InvalidOperationException ("Server needs at least 2 clients");
@@ -165,19 +164,18 @@ namespace BattleLib
         bool _isRunning;
         readonly List<ClientInfo> _infoList = new List<ClientInfo>();
         
-        public void clientExit(AbstractClient source)
+        public void ClientExit(AbstractClient source)
         {
             validateClient(source);
 
-            if (!_rules.canEscape())
+            if (!_rules.CanEscape())
                 return;
 
-            int id = _clientInfo[source].Id;
             _clientInfo.Remove(source);
             ClientQuit(this, null);
         }
 
-        public void execMove(AbstractClient source, Move move, int targetId)
+        public void ExecMove(AbstractClient source, Move move, int targetId)
         {
             validateClient(source);
 
@@ -186,16 +184,16 @@ namespace BattleLib
                              where info.Id == targetId
                              select info.Charakter).FirstOrDefault();
 
-            _rules.execMove(sourceChar, move, targetChar);
+            _rules.ExecMove(sourceChar, move, targetChar);
         }
 
-        public void execChange(AbstractClient source, ICharakter charakter)
+        public void ExecChange(AbstractClient source, ICharakter charakter)
         {
             validateClient(source);
             if (charakter == null)
                 throw new ArgumentException("Character must not be null");
 
-            if (!_rules.canChange())
+            if (!_rules.CanChange())
                 return;
 
             _clientInfo[source].Charakter = charakter;
@@ -218,13 +216,13 @@ namespace BattleLib
         public event EventHandler ClientQuit = (a, b) => { };
         public event EventHandler NewTurn = (a, b) => { };
 
-        public void addClient(AbstractClient client)
+        public void AddClient(AbstractClient client)
         {
             appendClients(client);
         }
 
 
-        public IEnumerable<ClientInfo> getCurrentState()
+        public IEnumerable<ClientInfo> GetCurrentState()
         {
             if (!_isRunning)
                 return null;

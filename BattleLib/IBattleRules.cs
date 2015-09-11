@@ -9,8 +9,8 @@ namespace BattleLib
 {
     public interface IBattleRules
     {
-        bool canEscape();
-        bool canChange();
-        bool execMove(ICharakter source, Move move, ICharakter target);
+        bool CanEscape();
+        bool CanChange();
+        bool ExecMove(ICharakter source, Move move, ICharakter target);
     }
 }

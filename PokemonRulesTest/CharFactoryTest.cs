@@ -11,16 +11,16 @@ namespace PokemonRulesTest
 				return false;
 
 			var other = (PKData)obj;
-			return d.name.Equals(other.name) &&
-				d.id == other.id &&
-				d.baseStats.HP == other.baseStats.HP &&
-				d.baseStats.Atk == other.baseStats.Atk &&
-				d.baseStats.Def == other.baseStats.Def &&
-				d.baseStats.SpAtk == other.baseStats.SpAtk &&
-				d.baseStats.SpDef == other.baseStats.SpDef &&
-				d.baseStats.Speed == other.baseStats.Speed &&
-				d.type1 == other.type1 &&
-				d.type2 == other.type2;
+			return d.Name.Equals(other.Name) &&
+				d.Id == other.Id &&
+				d.BaseStats.HP == other.BaseStats.HP &&
+				d.BaseStats.Atk == other.BaseStats.Atk &&
+				d.BaseStats.Def == other.BaseStats.Def &&
+				d.BaseStats.SpAtk == other.BaseStats.SpAtk &&
+				d.BaseStats.SpDef == other.BaseStats.SpDef &&
+				d.BaseStats.Speed == other.BaseStats.Speed &&
+				d.Type1 == other.Type1 &&
+				d.Type2 == other.Type2;
 		}
 
 		public static bool compare(this Pokemon p, object obj) {
@@ -28,15 +28,15 @@ namespace PokemonRulesTest
 			if (data == null)
 				return false;
 			
-			return p.Stats.Atk == data.baseStats.Atk &&
-				p.Stats.Def == data.baseStats.Def &&
-				p.Stats.SpAtk == data.baseStats.SpAtk &&
-				p.Stats.SpDef == data.baseStats.SpDef &&
-				p.Stats.Speed == data.baseStats.Speed &&
-				p.Stats.HP == data.baseStats.HP &&
-				p.Name == data.name &&
-				p.Type1 == data.type1 &&
-				p.Type2 == data.type2;
+			return p.Stats.Atk == data.BaseStats.Atk &&
+				p.Stats.Def == data.BaseStats.Def &&
+				p.Stats.SpAtk == data.BaseStats.SpAtk &&
+				p.Stats.SpDef == data.BaseStats.SpDef &&
+				p.Stats.Speed == data.BaseStats.Speed &&
+				p.Stats.HP == data.BaseStats.HP &&
+				p.Name == data.Name &&
+				p.Type1 == data.Type1 &&
+				p.Type2 == data.Type2;
 		}
 	}
 
@@ -61,7 +61,7 @@ namespace PokemonRulesTest
         {
             Pokemon result = null;
 			foreach (var data in CharFactoryTestData.Data) {
-				Assert.DoesNotThrow (() => result = _factory.getChar (data.id));
+				Assert.DoesNotThrow (() => result = _factory.getChar (data.Id));
 				Assert.NotNull (result);
 				Assert.IsTrue (result.compare ( data ));
 			}

@@ -38,12 +38,12 @@ namespace Base
 		}
 
 		public PokemonBuilder(PKData source) {
-			Id = source.id;
+			Id = source.Id;
 			Level = 1;
-			Name = source.name;
+			Name = source.Name;
             BaseData = source;
-			Type1 = source.type1;
-			Type2 = source.type2;
+			Type1 = source.Type1;
+			Type2 = source.Type2;
 		}
 
 		public PokemonBuilder() {
@@ -128,8 +128,8 @@ namespace Base
 
         public List<Move> Moves { get; set; }
 
-		public PokemonType Type1 { get{ return BaseData.type1; }}
-        public PokemonType Type2 { get { return BaseData.type2; }}
+		public PokemonType Type1 { get{ return BaseData.Type1; }}
+        public PokemonType Type2 { get { return BaseData.Type2; }}
 
 		public StatusCondition Condition { get; set; }
 
@@ -152,7 +152,7 @@ namespace Base
 			} 
 		}
 
-		public bool isKO ()
+		public bool IsKO ()
 		{
 			return Condition == StatusCondition.KO;
 		}
@@ -161,7 +161,7 @@ namespace Base
 
         public int Id
         {
-            get { return BaseData.id;  }
+            get { return BaseData.Id;  }
         }
     }
 }

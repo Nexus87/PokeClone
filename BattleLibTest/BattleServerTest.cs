@@ -34,23 +34,23 @@ namespace BattleLibTest
 	public class TestScheduler : IActionScheduler {
         readonly List<IClientCommand> _commands = new List<IClientCommand>();
 
-        public void appendCommand(BattleLib.Interfaces.IClientCommand command)
+        public void AppendCommand(BattleLib.Interfaces.IClientCommand command)
         {
             _commands.Add(command);
         }
 
-        public void appendCommand(IEnumerable<BattleLib.Interfaces.IClientCommand> commands)
+        public void AppendCommand(IEnumerable<BattleLib.Interfaces.IClientCommand> commands)
         {
             _commands.AddRange(commands);
         }
 
-        public IEnumerable<BattleLib.Interfaces.IClientCommand> scheduleCommands()
+        public IEnumerable<BattleLib.Interfaces.IClientCommand> ScheduleCommands()
         {
             return _commands;
         }
 
 
-        public void clearCommands()
+        public void ClearCommands()
         {
             _commands.Clear();
         }
@@ -59,17 +59,17 @@ namespace BattleLibTest
     public class TestRules : IBattleRules
     {
 
-        public bool canEscape()
+        public bool CanEscape()
         {
             return true;
         }
 
-        public bool canChange()
+        public bool CanChange()
         {
             return true;
         }
 
-        public bool execMove(ICharakter source, Move move, ICharakter target)
+        public bool ExecMove(ICharakter source, Move move, ICharakter target)
         {
             return true;
         }
@@ -77,22 +77,22 @@ namespace BattleLibTest
 
     class TestClient1 : TestClient
     {
-        public override IClientCommand requestAction()
+        public override IClientCommand RequestAction()
         {
             if (RoundCnt == 0)
-                Command = moveCommand(new Move(new MoveData()), 1);
+                Command =MoveCommand(new Move(new MoveData()), 1);
             else
-                Command = exitCommand();
+                Command = ExitCommand();
 
-            return base.requestAction();
+            return base.RequestAction();
         }
     }
     class TestClient2 : TestClient
     {
-        public override IClientCommand requestAction()
+        public override IClientCommand RequestAction()
         {
-            Command =  moveCommand(new Move(new MoveData()), 1);
-            return base.requestAction();
+            Command =  MoveCommand(new Move(new MoveData()), 1);
+            return base.RequestAction();
         }
     }
 	[TestFixture]
@@ -117,7 +117,7 @@ namespace BattleLibTest
 			_client1.Charakter = null;
 			_client2.Charakter = null;
 
-			_server.start ();
+			_server.Start ();
 			Assert.IsTrue (_client1.RoundCnt <= 1);
 			Assert.IsTrue (_client2.RoundCnt <= 1);
 		}
@@ -141,10 +141,10 @@ namespace BattleLibTest
         {
             IBattleRules rules = new TestRules();
             var testServer = new DefaultBattleServer(_scheduler, rules);
-			Assert.Throws<InvalidOperationException> (testServer.start);
+			Assert.Throws<InvalidOperationException> (testServer.Start);
 
             testServer = new DefaultBattleServer(_scheduler, rules, _client1);
-			Assert.Throws<InvalidOperationException> (testServer.start);
+			Assert.Throws<InvalidOperationException> (testServer.Start);
         }
 
         [Test]
@@ -155,7 +155,7 @@ namespace BattleLibTest
 
             // TODO don't hardcode the target id
 
-            _server.start();
+            _server.Start();
 
             Assert.AreEqual(_client1.RoundCnt, 2);
             Assert.AreEqual(_client2.RoundCnt, 2);

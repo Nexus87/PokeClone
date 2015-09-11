@@ -14,13 +14,11 @@ namespace Base
         SpDef,
         Speed
     }
-    public interface EffectFacade
+    public interface IEffectFacade
     {
-        void manipulateTargetState(State stat, int modifier);
-		void manipulateSourceState(State stat, int modifier);
-        void manipulateTargetCondition(StatusCondition condition);
-		void manipulateSourceCondition(StatusCondition condition);
-
-        ICharakter getCharakter();
+        void ManipulateTargetState(State stat, int modifier);
+		void ManipulateSourceState(State stat, int modifier);
+        void ManipulateTargetCondition(StatusCondition condition);
+		void ManipulateSourceCondition(StatusCondition condition);
     }
 }

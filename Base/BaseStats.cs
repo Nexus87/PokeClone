@@ -7,7 +7,7 @@ namespace Base
     public class MoveList
     {
         [DataMember]
-        public Tuple<int, string>[] Moves;
+        public Tuple<int, string>[] Moves { get; set; }
     }
 
 	[DataContract]
@@ -29,18 +29,18 @@ namespace Base
 	[DataContract]
 	public class PKData
 	{
-		[DataMember]
-		public string name;
-		[DataMember]
-		public int id;
-		[DataMember]
-		public Stats baseStats;
-		[DataMember]
-		public PokemonType type1;
-		[DataMember]
-		public PokemonType type2;
         [DataMember]
-        public MoveList moveList;
+        public string Name { get; set; }
+		[DataMember]
+        public int Id { get; set; }
+		[DataMember]
+        public Stats BaseStats { get; set; }
+		[DataMember]
+        public PokemonType Type1 { get; set; }
+		[DataMember]
+        public PokemonType Type2 { get; set; }
+        [DataMember]
+        public MoveList MoveList { get; set; }
 	}
 }
 

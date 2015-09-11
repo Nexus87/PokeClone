@@ -21,10 +21,10 @@ namespace BattleLib
         event EventHandler<String> ActionExecuted;
         event EventHandler ClientQuit;
 
-        void addClient(AbstractClient client);
+        void AddClient(AbstractClient client);
         
-		void start();
-        IEnumerable<ClientInfo> getCurrentState();
+		void Start();
+        IEnumerable<ClientInfo> GetCurrentState();
 	}
 }
 

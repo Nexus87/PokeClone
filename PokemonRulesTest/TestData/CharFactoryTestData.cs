@@ -6,7 +6,7 @@ namespace PokemonRulesTest
 	{
 		static PKData d1 = new PKData 
 			{
-			baseStats = new Stats
+			BaseStats = new Stats
 				{
 					Atk = 10,
 					Def = 10,
@@ -15,14 +15,14 @@ namespace PokemonRulesTest
 					SpDef = 10,
 					Speed = 10
 				},
-				id = 0,
-				name = "Name1",
-			type1 = PokemonType.Bug,
-				type2 = 0
+				Id = 0,
+				Name = "Name1",
+			Type1 = PokemonType.Bug,
+				Type2 = 0
 			};
 
 		static PKData d2 = new PKData {
-			baseStats = new Stats {
+			BaseStats = new Stats {
 				Atk = 1,
 				Def = 1,
 				HP = 1,
@@ -30,13 +30,13 @@ namespace PokemonRulesTest
 				SpDef = 1,
 				Speed = 1
 			},
-			id = 1,
-			name = "Name2",
-			type1 = PokemonType.Normal,
-			type2 = 0
+			Id = 1,
+			Name = "Name2",
+			Type1 = PokemonType.Normal,
+			Type2 = 0
 		};
 		static PKData d3 = new PKData {
-			baseStats = new Stats {
+			BaseStats = new Stats {
 				Atk = 2,
 				Def = 2,
 				HP = 2,
@@ -44,10 +44,10 @@ namespace PokemonRulesTest
 				SpDef = 2,
 				Speed = 2
 			},
-			id = 2,
-			name = "Name3",
-			type1 = PokemonType.Electric,
-			type2 = PokemonType.Normal
+			Id = 2,
+			Name = "Name3",
+			Type1 = PokemonType.Electric,
+			Type2 = PokemonType.Normal
 		};
 		public static PKData[] Data = { d1, d2, d3 };
 	}
