@@ -11,6 +11,6 @@ namespace BattleLib
     {
         bool CanEscape();
         bool CanChange();
-        bool ExecMove(ICharakter source, Move move, ICharakter target);
+        bool ExecMove(ICharacter source, Move move, ICharacter target);
     }
 }

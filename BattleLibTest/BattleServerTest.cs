@@ -29,9 +29,9 @@ using BattleLib.Interfaces;
 
 namespace BattleLibTest
 {
-    delegate void ApplyDelegate(ICharakter charakter);
+    delegate void ApplyDelegate(ICharacter charakter);
 
-	public class TestScheduler : IActionScheduler {
+	public class TestScheduler : ICommandScheduler {
         readonly List<IClientCommand> _commands = new List<IClientCommand>();
 
         public void AppendCommand(BattleLib.Interfaces.IClientCommand command)
@@ -69,7 +69,7 @@ namespace BattleLibTest
             return true;
         }
 
-        public bool ExecMove(ICharakter source, Move move, ICharakter target)
+        public bool ExecMove(ICharacter source, Move move, ICharacter target)
         {
             return true;
         }

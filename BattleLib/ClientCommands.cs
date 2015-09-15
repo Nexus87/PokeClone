@@ -8,7 +8,7 @@ using BattleLib.Interfaces;
 using Base;
 namespace BattleLib
 {
-    class MoveCommand : IClientCommand
+    public class MoveCommand : IClientCommand
     {
         AbstractClient _source;
         Move _move;
@@ -27,11 +27,13 @@ namespace BattleLib
 
         public void Execute(ICommandReceiver receiver)
         {
+            if (receiver == null) throw new ArgumentNullException("receiver", "Argument should not be null");
+
             receiver.ExecMove(_source, _move, _targetId);
         }
     }
 
-    class ExitCommand : IClientCommand
+    public class ExitCommand : IClientCommand
     {
         AbstractClient _source;
         public ExitCommand(AbstractClient source)
@@ -45,16 +47,18 @@ namespace BattleLib
 
         public void Execute(ICommandReceiver receiver)
         {
+            if (receiver == null) throw new ArgumentNullException("receiver", "Argument should not be null");
+
             receiver.ClientExit(_source);
         }
     }
 
-    class ChangeCommand : IClientCommand
+    public class ChangeCommand : IClientCommand
     {
         AbstractClient _source;
-        ICharakter _character;
+        ICharacter _character;
 
-        public ChangeCommand(AbstractClient source, ICharakter character)
+        public ChangeCommand(AbstractClient source, ICharacter character)
         {
             _source = source;
             _character = character;
@@ -66,6 +70,8 @@ namespace BattleLib
 
         public void Execute(ICommandReceiver receiver)
         {
+            if (receiver == null) throw new ArgumentNullException("receiver", "Argument should not be null");
+
             receiver.ExecChange(_source, _character);
         }
     }

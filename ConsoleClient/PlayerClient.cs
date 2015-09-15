@@ -41,7 +41,7 @@ namespace ConsoleClient
             return base.MoveCommand(move, targetId);
         }
 
-        public new IClientCommand ChangeCommand(ICharakter charakter)
+        public new IClientCommand ChangeCommand(ICharacter charakter)
         {
             return base.ChangeCommand(charakter);
         }
@@ -57,7 +57,7 @@ namespace ConsoleClient
                     select info.ClientId).First();
         }
 
-        public override Base.ICharakter RequestCharacter()
+        public override Base.ICharacter RequestCharacter()
         {
             _current = (from chars in _player._pkm
                     where !chars.IsKO()

@@ -37,58 +37,55 @@ namespace PokemonRules {
 
 		PKData[] Data{ get; set; }
 
-		CharacterRules Rules { get; set;}
+		ICharacterRules Rules { get; set;}
 
         void initList()
         {
-            var inStream = new FileStream(File, FileMode.Open);
-			Data = (PKData[]) _serializer.ReadObject(inStream);
-            inStream.Close();
+            using (var inStream = new FileStream(File, FileMode.Open))
+            {
+                Data = (PKData[])_serializer.ReadObject(inStream);
+            }
         }
 
-		public CharFactory (string file, CharacterRules rules)
+		public CharFactory (string file, ICharacterRules rules)
 		{
             File = file;
 			Rules = rules;
 			initList ();
 		}
 			
-		public Pokemon getChar(int id)
+		public Pokemon GetChar(int id)
 		{
 			var result = (from d in Data
 			              where d.Id == id
 			              select d).FirstOrDefault ();
 
-			return result == null ? null : Rules.toPokemon (result);
+			return result == null ? null : Rules.ToPokemon (result);
 			
 		}
 			
-		public Pokemon getChar(int id, int level){
-			var charakter = getChar(id);
-			Rules.toLevel (charakter, level);
+		public Pokemon GetChar(int id, int level){
+			var charakter = GetChar(id);
+			Rules.ToLevel (charakter, level);
 			return charakter;
 		}
 
-		public PKData getData()
-        {
-            var file = new FileStream(File, FileMode.Open);
-            var ret = _serializer.ReadObject(file);
-            file.Close();
-			return ((PKData[]) ret)[0];
-        }
-
-		public void writeData(PKData data)
+		public void WriteData(PKData data)
         {
             var wrapper = new [] { data };
-            var file = new FileStream(File, FileMode.Create);
-            _serializer.WriteObject(file, wrapper);
-            file.Close();
+            using (var file = new FileStream(File, FileMode.Create))
+            {
+                _serializer.WriteObject(file, wrapper);
+            }
         }
 
-        public IEnumerable<int> getIds()
+        public IEnumerable<int> Ids
         {
-            return from data in Data
-                   select data.Id;
+            get
+            {
+                return from data in Data
+                       select data.Id;
+            }
         }
 	}
 }

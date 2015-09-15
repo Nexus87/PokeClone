@@ -6,7 +6,7 @@ using BattleLib.Interfaces;
 
 namespace BattleLib
 {
-	public interface IActionScheduler
+	public interface ICommandScheduler
 	{
         void AppendCommand(IClientCommand command);
         void AppendCommand(IEnumerable<IClientCommand> commands);

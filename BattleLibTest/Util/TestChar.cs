@@ -1,7 +1,7 @@
 ﻿using Base;
 namespace BattleLibTest
 {
-	class TestChar : ICharakter
+	class TestChar : ICharacter
     {
         public TestChar() { HP = 100; }
         #region ICharakter implementation

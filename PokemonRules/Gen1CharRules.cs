@@ -7,13 +7,16 @@ namespace PokemonRules
 {
 	public delegate int RndNumGen(int min, int max) ;
 
-	public class Gen1CharRules : CharacterRules
+	public class Gen1CharRules : ICharacterRules
 	{
 		readonly RndNumGen _generator;
 		Random _rnd;
         MoveFactory _factory;
 
-		public Gen1CharRules(MoveFactory factory, RndNumGen gen = null){
+        public Gen1CharRules(MoveFactory factory) : this(factory, null)
+        {}
+
+		public Gen1CharRules(MoveFactory factory, RndNumGen gen){
 			if (gen == null) {
 				_rnd = new Random ();
 				_generator = _rnd.Next;
@@ -28,22 +31,26 @@ namespace PokemonRules
 			return (int) Math.Floor ((baseV + iV) * level / 50.0d + 10.0d);
 		}
 
-		public IEnumerable<Move> levelUp (Pokemon charakter)
+		public IEnumerable<Move> LevelUp (Pokemon character)
 		{
-            if (charakter.Level == 100)
+            if (character == null) throw new ArgumentNullException("character", "Argument should not be null");
+
+            if (character.Level == 100)
                 return new List<Move>();
 			
-			toLevel (charakter, charakter.Level + 1);
+			ToLevel (character, character.Level + 1);
 
-            return from moves in charakter.BaseData.MoveList.Moves
-                   where moves.Item1 == charakter.Level
-                   select _factory.getMove(moves.Item2);
+            return from moves in character.BaseData.MoveList.Moves
+                   where moves.Item1 == character.Level
+                   select _factory.GetMove(moves.Item2);
 		}
 
-		public void toLevel (Pokemon charakter, int level)
+		public void ToLevel (Pokemon character, int level)
 		{
-			var baseStates = charakter.BaseData.BaseStats;
-			var ivStates = charakter.IV;
+            if (character == null) throw new ArgumentNullException("character", "Argument should not be null");
+
+			var baseStates = character.BaseData.BaseStats;
+			var ivStates = character.IV;
 
 			var newStats = new Stats{
 				HP = newState (baseStates.HP, ivStates.HP + 50.0d, level),
@@ -54,16 +61,16 @@ namespace PokemonRules
 				Speed = newState (baseStates.Speed, ivStates.Speed, level)
 			};
 
-			charakter.Stats = newStats;
-			charakter.Level++;
+			character.Stats = newStats;
+			character.Level++;
 		}
 
-		public Pokemon toPokemon (PKData data)
+		public Pokemon ToPokemon (PKData data)
 		{
 			if (data == null)
 				return null;
 
-			var iStats = generateIV ();
+			var iStats = GenerateIV ();
 
 			var stats = new Stats {
 				HP = data.BaseStats.HP + iStats.HP,
@@ -75,12 +82,12 @@ namespace PokemonRules
 			};
 
 			var builder = new PokemonBuilder(data);
-			builder.setIV (iStats).setStats (stats);
-			return builder.build ();
+			builder.SetIV (iStats).SetStats (stats);
+			return builder.Build ();
 		}
 
 
-		public Stats generateIV ()
+		public Stats GenerateIV ()
 		{
 			return new Stats {
 				Atk = _generator (0, 15),

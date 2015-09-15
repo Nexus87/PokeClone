@@ -45,7 +45,7 @@ namespace BattleLibTest
 			}
 		}
         
-		public ICharakter Charakter { get; set; }
+		public ICharacter Charakter { get; set; }
         public IClientCommand Command { get; set; }
 
 		#region IBattleClient implementation
@@ -55,7 +55,7 @@ namespace BattleLibTest
             _roundCnt++;
             return Command;
 		}
-        public override ICharakter RequestCharacter()
+        public override ICharacter RequestCharacter()
 		{
             if (Charakter == null || Charakter.IsKO())
                 return null;

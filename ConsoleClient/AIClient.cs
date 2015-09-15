@@ -32,7 +32,7 @@ namespace ConsoleClient
             return MoveCommand(move, searchTarget());
         }
 
-        public override Base.ICharakter RequestCharacter()
+        public override Base.ICharacter RequestCharacter()
         {
             _current = (from character in _chars
                         where !character.IsKO()

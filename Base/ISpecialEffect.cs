@@ -25,6 +25,8 @@ namespace Base
 		#region ISpecialEffect implementation
 		public void ExecuteEffect (IEffectFacade facade)
 		{
+            if (facade == null) throw new ArgumentNullException("facade", "Argument should not be null");
+
 			if (Self)
 				facade.ManipulateSourceState (State, Modifier);
 			else
@@ -44,6 +46,8 @@ namespace Base
 		#region ISpecialEffect implementation
 		public void ExecuteEffect (IEffectFacade facade)
 		{
+            if (facade == null) throw new ArgumentNullException("facade", "Argument should not be null");
+
 			if (Self)
 				facade.ManipulateSourceCondition (Condition);
 			else

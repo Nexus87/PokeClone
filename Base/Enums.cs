@@ -29,7 +29,7 @@ namespace Base {
 		Paralyzed,
 		Sleeping,
 		Poisoned,
-		Freezed,
+		Frozen,
 		Burned
 	}
 		

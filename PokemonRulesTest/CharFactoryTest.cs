@@ -48,7 +48,7 @@ namespace PokemonRulesTest
 		}
 
         CharFactory _factory;
-		CharacterRules _rules;
+		ICharacterRules _rules;
         [SetUp]
         public void init()
         {

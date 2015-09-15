@@ -1,7 +1,7 @@
 ﻿namespace Base
 {
 
-	public interface ICharakter
+	public interface ICharacter
 	{
         int Id { get; }
 		string Name { get; }

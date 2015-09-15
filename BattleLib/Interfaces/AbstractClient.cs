@@ -22,13 +22,13 @@ namespace BattleLib.Interfaces
             return new MoveCommand(this, move, targetId);
         }
 
-        protected IClientCommand ChangeCommand(ICharakter character)
+        protected IClientCommand ChangeCommand(ICharacter character)
         {
             return new ChangeCommand(this, character);
         }
 
         public abstract string ClientName { get; }
         public abstract IClientCommand RequestAction();
-        public abstract ICharakter RequestCharacter();
+        public abstract ICharacter RequestCharacter();
     }
 }

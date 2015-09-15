@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 namespace PokemonRules
 {
-	public interface CharacterRules
+	public interface ICharacterRules
 	{
-		IEnumerable<Move> levelUp(Pokemon charakter);
-		void toLevel(Pokemon charakter, int level);
-		Pokemon toPokemon(PKData data);
-		Stats generateIV();
+		IEnumerable<Move> LevelUp(Pokemon character);
+		void ToLevel(Pokemon character, int level);
+		Pokemon ToPokemon(PKData data);
+		Stats GenerateIV();
 	}
 }
 

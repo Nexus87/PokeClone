@@ -14,7 +14,7 @@ namespace Base
 		[DataMember]
 		public string Name { get; set; }
 		[DataMember]
-		public PokemonType Type { get; set; }
+		public PokemonType PkmType { get; set; }
 		[DataMember]
 		public int? Damage { get; set; }
 		[DataMember]
@@ -29,6 +29,8 @@ namespace Base
         public int RemainingPP { get; set; }
 		public Move (MoveData data)
 		{
+            if (data == null) throw new ArgumentNullException("data", "Argument should not be null");
+
             Data = data;
             RemainingPP = data.PP;
 		}

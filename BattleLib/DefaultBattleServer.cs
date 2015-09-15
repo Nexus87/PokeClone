@@ -31,14 +31,14 @@ namespace BattleLib
 	public class DefaultBattleServer : IBattleServer, ICommandReceiver
 	{
 
-        public DefaultBattleServer(IActionScheduler scheduler, IBattleRules rules, params AbstractClient[] clients)
+        public DefaultBattleServer(ICommandScheduler scheduler, IBattleRules rules, params AbstractClient[] clients)
         {
             if (scheduler == null)
-                throw new NullReferenceException("Scheduler must not be null");
+                throw new ArgumentNullException("scheduler", "Scheduler must not be null");
             if (clients == null)
-                throw new NullReferenceException("Client must not be null");
+                throw new ArgumentNullException("clients", "Client must not be null");
             if (rules == null)
-                throw new NullReferenceException("Rules must not be null");
+                throw new ArgumentNullException("rules", "Rules must not be null");
 
             _rules = rules;
             _scheduler = scheduler;
@@ -57,9 +57,9 @@ namespace BattleLib
             foreach (var client in clients)
             {
                 if (client == null)
-                    throw new NullReferenceException("Client must not be null");
+                    throw new ArgumentNullException("clients", "Client must not be null");
 
-                _clientInfo.Add(client, new ClientData { Id = cnt, Charakter = null });
+                _clientInfo.Add(client, new ClientData { Id = cnt, Character = null });
                 client.Id = cnt;
                 cnt++;
             }
@@ -68,19 +68,19 @@ namespace BattleLib
 		void requestCharakters ()
 		{
 			var requestChar = from info in _clientInfo
-			                  where (info.Value.Charakter == null || info.Value.Charakter.IsKO ())
+			                  where (info.Value.Character == null || info.Value.Character.IsKO ())
 			                  select new {info.Key, info.Value};
 
             var toBeRemoved = new List<AbstractClient>();
 
             foreach (var client in requestChar)
             {
-                ICharakter charakter = client.Key.RequestCharacter();
+                ICharacter charakter = client.Key.RequestCharacter();
                 if (charakter == null)
                     toBeRemoved.Add(client.Key);
                 else
                 {
-                    client.Value.Charakter = charakter;
+                    client.Value.Character = charakter;
                     ActionExecuted(this, "New charakter!");
                 }
             }
@@ -144,6 +144,7 @@ namespace BattleLib
 				appylActions ();
 
                 requestCharakters();
+                updateClients();
 			}
             _isRunning = false;
 		}
@@ -153,16 +154,14 @@ namespace BattleLib
 
 		class ClientData {
 			public int Id { get; set; }
-			public ICharakter Charakter { get; set; }
-            public AbstractClient ActionTarget { get; set; }
+			public ICharacter Character { get; set; }
             public IClientCommand Command { get; set; }
 		}
 
         readonly Dictionary<AbstractClient, ClientData> _clientInfo = new Dictionary<AbstractClient, ClientData>();
         IBattleRules _rules;
-		IActionScheduler _scheduler;
+		ICommandScheduler _scheduler;
         bool _isRunning;
-        readonly List<ClientInfo> _infoList = new List<ClientInfo>();
         
         public void ClientExit(AbstractClient source)
         {
@@ -179,24 +178,24 @@ namespace BattleLib
         {
             validateClient(source);
 
-            var sourceChar = _clientInfo[source].Charakter;
+            var sourceChar = _clientInfo[source].Character;
             var targetChar = (from info in _clientInfo.Values
                              where info.Id == targetId
-                             select info.Charakter).FirstOrDefault();
+                             select info.Character).FirstOrDefault();
 
             _rules.ExecMove(sourceChar, move, targetChar);
         }
 
-        public void ExecChange(AbstractClient source, ICharakter charakter)
+        public void ExecChange(AbstractClient source, ICharacter character)
         {
             validateClient(source);
-            if (charakter == null)
+            if (character == null)
                 throw new ArgumentException("Character must not be null");
 
             if (!_rules.CanChange())
                 return;
 
-            _clientInfo[source].Charakter = charakter;
+            _clientInfo[source].Character = character;
         }
 
         ClientInfo toInfo(AbstractClient client){
@@ -204,9 +203,9 @@ namespace BattleLib
             return new ClientInfo {
                 ClientName = client.ClientName,
                 ClientId = data.Id,
-                CharId = data.Charakter == null ? -1 : data.Charakter.Id,
-                CharName = data.Charakter == null ? null : data.Charakter.Name,
-                CurrentHP = data.Charakter == null ? -1 : data.Charakter.HP
+                CharId = data.Character == null ? -1 : data.Character.Id,
+                CharName = data.Character == null ? null : data.Character.Name,
+                CurrentHP = data.Character == null ? -1 : data.Character.HP
             };
         }
 

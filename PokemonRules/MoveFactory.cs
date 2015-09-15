@@ -26,7 +26,7 @@ namespace PokemonRules
             }
         }
 
-        public Move getMove(string name)
+        public Move GetMove(string name)
         {
             MoveData data = new MoveData();
             if (!_moves.TryGetValue(name, out data))
@@ -35,9 +35,12 @@ namespace PokemonRules
             return new Move(data);
         }
 
-        public IEnumerable<string> getAllNames()
+        public IEnumerable<string> Names
         {
-            return _moves.Keys;
+            get
+            {
+                return _moves.Keys;
+            }
         }
     }
 }

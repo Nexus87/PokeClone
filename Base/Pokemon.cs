@@ -28,78 +28,59 @@ namespace Base
 	public class PokemonBuilder {
 
 		public PokemonBuilder(Pokemon source) {
+            if (source == null) throw new ArgumentNullException("source", "Argument should not be null");
+
 			Level = source.Level;
 			Name = source.Name;
 			Stats = source.Stats;
 			IV = source.IV;
             BaseData = source.BaseData;
-			Type1 = source.Type1;
-			Type2 = source.Type2;
 		}
 
 		public PokemonBuilder(PKData source) {
-			Id = source.Id;
+            if (source == null) throw new ArgumentNullException("source", "Argument should not be null");
+
 			Level = 1;
 			Name = source.Name;
             BaseData = source;
-			Type1 = source.Type1;
-			Type2 = source.Type2;
 		}
 
 		public PokemonBuilder() {
 			Level = 1;
-			Type1 = PokemonType.None;
-			Type2 = PokemonType.None;
 		}
 
-		int? Id { get; set; }
 		int Level { get; set; }
 		string Name { get; set; }
 		Stats Stats{ get; set; }
 		Stats IV { get; set; }
         PKData BaseData { get; set; }
-		PokemonType Type1 { get; set; }
-		PokemonType Type2 { get; set; }
 
-		public PokemonBuilder setId( int Id) {
-			this.Id = Id;
+
+		public PokemonBuilder SetLevel(int level){
+            this.Level = level;
 			return this;
 		}
 
-		public PokemonBuilder setLevel(int Level){
-			this.Level = Level;
+		public PokemonBuilder SetName( string name ){
+            this.Name = name;
+			return this;
+		}
+		public PokemonBuilder SetIV(Stats iv){
+            this.IV = iv;
 			return this;
 		}
 
-		public PokemonBuilder setName( string Name ){
-			this.Name = Name;
-			return this;
-		}
-		public PokemonBuilder setIV(Stats IV){
-			this.IV = IV;
-			return this;
-		}
-
-        public PokemonBuilder setBaseData(PKData BaseData)
+        public PokemonBuilder SetBaseData(PKData baseData)
         {
-            this.BaseData = BaseData;
+            this.BaseData = baseData;
 			return this;
 		}
-		public PokemonBuilder setStats(Stats Stats){
-			this.Stats = Stats;
-			return this;
-		}
-		public PokemonBuilder setType1 (PokemonType Type1){
-			this.Type1 = Type1;
+		public PokemonBuilder SetStats(Stats stats){
+            this.Stats = stats;
 			return this;
 		}
 
-		public PokemonBuilder setType2 (PokemonType Type2) {
-			this.Type2 = Type2;
-			return this;
-		}
-
-		public Pokemon build() {
+		public Pokemon Build() {
             if (Name == null || Stats == null || IV == null || BaseData == null)
 				throw new InvalidOperationException ("Builder does not have all values");
 
@@ -107,17 +88,18 @@ namespace Base
 		}
 	}
 
-	public class Pokemon : ICharakter
+	public class Pokemon : ICharacter
 	{
 
-		public Pokemon(PKData BaseData, int Level, string Name, Stats Stats, Stats IV)
+		public Pokemon(PKData baseData, int level, string name, Stats stats, Stats iv)
 		{
-            this.BaseData = BaseData;
-			this.Name = Name;
-			this.Level = Level;
-			this.Stats = Stats;
-			this.IV = IV;
+            this.BaseData = baseData;
+			this.Name = name;
+			this.Level = level;
+			this.Stats = stats;
+			this.IV = iv;
 			Condition = StatusCondition.Normal;
+            Moves = new List<Move>();
 		}
 
         public PKData BaseData { get; set; }
@@ -126,7 +108,7 @@ namespace Base
 		public Stats IV { get; private set; }
 		public Stats Stats { get; set; }
 
-        public List<Move> Moves { get; set; }
+        public List<Move> Moves { get; private set; }
 
 		public PokemonType Type1 { get{ return BaseData.Type1; }}
         public PokemonType Type2 { get { return BaseData.Type2; }}
