@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BattleLib", "BattleLib\BattleLib.csproj", "{04216BD8-0BA1-4ECD-8172-CDEB9C3D69D0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BattleLibTest", "BattleLibTest\BattleLibTest.csproj", "{F1B068E6-894C-4625-B176-3547992FDAA5}"
@@ -14,6 +16,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleClient", "ConsoleClient\ConsoleClient.csproj", "{5DF2D8A0-38DD-4359-9CA6-F17F4707171D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tools", "Tools\Tools.csproj", "{935394CF-DA70-46B3-82EF-AA1B45141412}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToolsWPF", "ToolsWPF\ToolsWPF.csproj", "{FBB6DBB8-0698-4E85-AB6A-99B9A0850CB1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,6 +53,10 @@ Global
 		{935394CF-DA70-46B3-82EF-AA1B45141412}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{935394CF-DA70-46B3-82EF-AA1B45141412}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{935394CF-DA70-46B3-82EF-AA1B45141412}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FBB6DBB8-0698-4E85-AB6A-99B9A0850CB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBB6DBB8-0698-4E85-AB6A-99B9A0850CB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBB6DBB8-0698-4E85-AB6A-99B9A0850CB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBB6DBB8-0698-4E85-AB6A-99B9A0850CB1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
