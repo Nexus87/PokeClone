@@ -22,14 +22,13 @@ namespace ToolsWPF
     public partial class CharBuilder : UserControl
     {
         public IEnumerable<PokemonType> Types { get; private set; }
-        public PKData Data { get; set; }
+        public List<PKData> Data { get; set; }
         
         public CharBuilder()
         {
             Types = Globals.TypeList;
-            Data = new PKData();
-            Data.Type1 = PokemonType.Normal;
-            Data.Type2 = PokemonType.None;
+            Data = new List<PKData>();
+            Data.Add(new PKData { Name = "Data1", BaseStats = new Stats()});
 
             InitializeComponent();
         }
