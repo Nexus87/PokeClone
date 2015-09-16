@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Base;
 
 namespace ToolsWPF.MoveBuilder
 {
@@ -20,15 +21,14 @@ namespace ToolsWPF.MoveBuilder
     /// </summary>
     public partial class MoveBuilder : UserControl
     {
-        public IEnumerable<Base.PokemonType> Types { get; private set; } 
-        public Base.PokemonType SelectedType {
-            get;
-            set;
-        }
+        public List<MoveData> Data { get; set; }
+        public IEnumerable<PokemonType> Types { get; set; }
         public MoveBuilder()
         {
+            Data = new List<MoveData>();
+            Data.Add(new MoveData { Name = "Name1" });
+            Data.Add(new MoveData { Name = "Name2" });
             Types = Globals.TypeList;
-            SelectedType = 0;
             InitializeComponent();
         }
     }
