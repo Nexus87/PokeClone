@@ -1,7 +1,9 @@
 ﻿using NUnit.Framework;
-
+using Moq;
 using PokemonRules;
 using Base;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace PokemonRulesTest
 {
@@ -47,24 +49,77 @@ namespace PokemonRulesTest
 			return 0;
 		}
 
+        Mock<ICharRepository> _charRepositoryMock;
         CharFactory _factory;
-		ICharacterRules _rules;
+		Mock<ICharacterRules> _rulesMock;
+        List<PKData> _testData = new List<PKData>();
+        List<Pokemon> _testChar = new List<Pokemon>();
         [SetUp]
         public void init()
         {
-			_rules = new Gen1CharRules (new MoveFactory(""), PseudoRandom);
-			_factory = new CharFactory("../../TestData/CharFactoryTestData.txt", _rules);
+            _charRepositoryMock = new Mock<ICharRepository>();
+            _rulesMock = new Mock<ICharacterRules>();
+			_factory = new CharFactory(_charRepositoryMock.Object, _rulesMock.Object);
+
+            Stats testStats = new Stats();
+            _testData.Add(new PKData{Id = 0, BaseStats = testStats, Name = "Data1"});
+            _testData.Add(new PKData { Id = 1, BaseStats = testStats, Name = "Data2" });
+            _testData.Add(new PKData { Id = 2, BaseStats = testStats, Name = "Data3" });
+
+            foreach(var data in _testData)
+                _testChar.Add(new Pokemon(data, testStats));
         }
 
         [TestCase]
-        public void getCharTest()
+        public void GetCharTest()
         {
-            Pokemon result = null;
-			foreach (var data in CharFactoryTestData.Data) {
-				Assert.DoesNotThrow (() => result = _factory.getChar (data.Id));
-				Assert.NotNull (result);
-				Assert.IsTrue (result.compare ( data ));
-			}
+            for (int i = 0; i < _testData.Count; i++)
+            {
+                var retData = _testData[i];
+                var retChar = _testChar[i];
+
+                _charRepositoryMock.Setup(rep => rep.getPKData(retData.Id)).Returns(retData).Verifiable();
+                _rulesMock.Setup(rules => rules.ToPokemon(retData)).Returns(retChar).Verifiable();
+
+                var result = _factory.GetChar(retData.Id);
+
+                Assert.AreEqual(result, retChar);
+                _charRepositoryMock.Verify();
+                _rulesMock.Verify();
+            }
+
+        }
+
+        [TestCase]
+        public void GetCharLeveledTest()
+        {
+            for (int i = 0; i < _testData.Count; i++)
+            {
+                var retData = _testData[i];
+                var retChar = _testChar[i];
+                int retLevel = 0;
+                int testLevel = 15;
+                _charRepositoryMock.Setup(rep => rep.getPKData(retData.Id)).Returns(retData).Verifiable();
+                _rulesMock.Setup(rules => rules.ToPokemon(retData)).Returns(retChar).Verifiable();
+                _rulesMock.Setup(rules => rules.ToLevel(retChar, It.IsAny<int>())).Callback<Pokemon, int>( (pkm, lvl) => retLevel = lvl).Verifiable();
+
+                var result = _factory.GetChar(retData.Id, testLevel);
+
+                Assert.AreEqual(result, retChar);
+                Assert.AreEqual(retLevel, testLevel);
+                _charRepositoryMock.Verify();
+                _rulesMock.Verify();
+            }
+        }
+        [TestCase]
+        public void GetIdTest()
+        {
+            var ids = from data in _testData
+                      select data.Id;
+            _charRepositoryMock.Setup(rep => rep.Ids).Returns(ids);
+
+            var result = _factory.Ids;
+            Assert.AreEqual(result, ids);
         }
     }
 }

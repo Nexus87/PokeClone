@@ -102,6 +102,9 @@ namespace Base
             Moves = new List<Move>();
 		}
 
+        public Pokemon(PKData baseData, Stats iv) : this(baseData, 1, baseData.Name, baseData.BaseStats, iv)
+        {}
+
         public PKData BaseData { get; set; }
 		public int Level { get; set; }
 

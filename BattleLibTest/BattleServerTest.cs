@@ -126,14 +126,14 @@ namespace BattleLibTest
         public void ConstructorExceptionTest()
         {
             IBattleRules rules = new TestRules();
-            Assert.Throws<NullReferenceException>(() => new DefaultBattleServer(_scheduler, rules, null));
-            Assert.Throws<NullReferenceException>(() => new DefaultBattleServer(null, rules, _client1));
-            Assert.Throws<NullReferenceException>(() => new DefaultBattleServer(_scheduler, null, _client1));
-            Assert.Throws<NullReferenceException>(() => new DefaultBattleServer(null, rules,  null));
-            Assert.Throws<NullReferenceException>(() => new DefaultBattleServer(null, null, null));
-            Assert.Throws<NullReferenceException>(() => new DefaultBattleServer(_scheduler, rules, null, null));
-            Assert.Throws<NullReferenceException>(() => new DefaultBattleServer(_scheduler, rules, _client1, null));
-            Assert.Throws<NullReferenceException>(() => new DefaultBattleServer(_scheduler, rules, null, _client1));
+            Assert.Throws<ArgumentNullException>(() => new DefaultBattleServer(_scheduler, rules, null));
+            Assert.Throws<ArgumentNullException>(() => new DefaultBattleServer(null, rules, _client1));
+            Assert.Throws<ArgumentNullException>(() => new DefaultBattleServer(_scheduler, null, _client1));
+            Assert.Throws<ArgumentNullException>(() => new DefaultBattleServer(null, rules, null));
+            Assert.Throws<ArgumentNullException>(() => new DefaultBattleServer(null, null, null));
+            Assert.Throws<ArgumentNullException>(() => new DefaultBattleServer(_scheduler, rules, null, null));
+            Assert.Throws<ArgumentNullException>(() => new DefaultBattleServer(_scheduler, rules, _client1, null));
+            Assert.Throws<ArgumentNullException>(() => new DefaultBattleServer(_scheduler, rules, null, _client1));
         }
 
         [Test]

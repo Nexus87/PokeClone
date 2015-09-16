@@ -147,8 +147,8 @@ namespace ConsoleClient
             if (args.Length != 1)
                 return;
 
-            var factory = new CharFactory(args[0], new Gen1CharRules(new MoveFactory("")));
-            var ids = (from id in factory.getIds()
+            CharFactory factory = null;// new CharFactory(args[0], new Gen1CharRules(new MoveFactory("")));
+            var ids = (from id in factory.Ids
                        select id).Take(6);
             if (ids.Count() == 0)
                 return;
@@ -158,8 +158,8 @@ namespace ConsoleClient
             AIClient ac1 = new AIClient();
             foreach (var id in ids)
             {
-                p1._pkm.Add(factory.getChar(id));
-                ac1._chars.Add(factory.getChar(id));
+                p1._pkm.Add(factory.GetChar(id));
+                ac1._chars.Add(factory.GetChar(id));
             }
 
             server = new DefaultBattleServer(new TestScheduler(), new TestRules(), pc1, ac1);

@@ -28,8 +28,8 @@ namespace ToolsWPF
         {
             Types = Globals.TypeList;
             Data = new PKData();
-            Data.type1 = PokemonType.Normal;
-            Data.type2 = PokemonType.None;
+            Data.Type1 = PokemonType.Normal;
+            Data.Type2 = PokemonType.None;
 
             InitializeComponent();
         }

@@ -31,62 +31,27 @@ namespace PokemonRules {
 	
 	public class CharFactory
 	{
+        ICharacterRules _rules;
+        ICharRepository _repository;
 
-		readonly DataContractJsonSerializer _serializer = new DataContractJsonSerializer(typeof(PKData[]));
-        string File{ get; set; }
-
-		PKData[] Data{ get; set; }
-
-		ICharacterRules Rules { get; set;}
-
-        void initList()
-        {
-            using (var inStream = new FileStream(File, FileMode.Open))
-            {
-                Data = (PKData[])_serializer.ReadObject(inStream);
-            }
-        }
-
-		public CharFactory (string file, ICharacterRules rules)
+		public CharFactory (ICharRepository repository, ICharacterRules rules)
 		{
-            File = file;
-			Rules = rules;
-			initList ();
+			_rules = rules;
+            _repository = repository;
 		}
 			
 		public Pokemon GetChar(int id)
 		{
-			var result = (from d in Data
-			              where d.Id == id
-			              select d).FirstOrDefault ();
-
-			return result == null ? null : Rules.ToPokemon (result);
-			
+            return _rules.ToPokemon(_repository.getPKData(id));
 		}
 			
 		public Pokemon GetChar(int id, int level){
 			var charakter = GetChar(id);
-			Rules.ToLevel (charakter, level);
+			_rules.ToLevel (charakter, level);
 			return charakter;
 		}
 
-		public void WriteData(PKData data)
-        {
-            var wrapper = new [] { data };
-            using (var file = new FileStream(File, FileMode.Create))
-            {
-                _serializer.WriteObject(file, wrapper);
-            }
-        }
-
-        public IEnumerable<int> Ids
-        {
-            get
-            {
-                return from data in Data
-                       select data.Id;
-            }
-        }
+        public IEnumerable<int> Ids { get{ return _repository.Ids; } }
 	}
 }
 
