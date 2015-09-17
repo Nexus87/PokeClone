@@ -26,6 +26,7 @@ using Base;
 using NUnit.Framework;
 using BattleLib;
 using BattleLib.Interfaces;
+using Moq;
 
 namespace BattleLibTest
 {
@@ -98,67 +99,104 @@ namespace BattleLibTest
 	[TestFixture]
 	public class BattleServerTest
 	{
-		TestClient1 _client1;
-		TestClient2 _client2;
-		TestScheduler _scheduler;
-		IBattleServer _server;
+        Mock<AbstractClient> clientMock1 = new Mock<AbstractClient>();
+        Mock<AbstractClient> clientMock2 = new Mock<AbstractClient>();
+        Mock<ICommandScheduler> schedulerMock = new Mock<ICommandScheduler>();
+        Mock<IBattleRules> rulesMock = new Mock<IBattleRules>();
+        Mock<ICharacter> characterMock = new Mock<ICharacter>();
+        Mock<IClientCommand> commandMock = new Mock<IClientCommand>();
 
+        IBattleServer _server;
 		[SetUp]
 		public void init() {
-			_scheduler = new TestScheduler ();
-			_client1 = new TestClient1 ();
-			_client2 = new TestClient2 ();
-            _server = new DefaultBattleServer(_scheduler, new TestRules(), _client1, _client2);
+            _server = new DefaultBattleServer(schedulerMock.Object, rulesMock.Object, clientMock1.Object, clientMock2.Object);
+            commandMock.Setup(command => command.Execute(It.IsAny<ICommandReceiver>()));
+            clientMock1.Setup(client => client.RequestAction()).Returns(commandMock.Object);
+            clientMock2.Setup(client => client.RequestAction()).Returns(commandMock.Object);
+            clientMock1.Setup(client => client.RequestCharacter()).Returns(characterMock.Object);
+            clientMock2.Setup(client => client.RequestCharacter()).Returns(characterMock.Object);
+            rulesMock.Setup(r => r.CanEscape()).Returns(true);
+            rulesMock.Setup(r => r.CanChange()).Returns(true);
+            rulesMock.Setup(r => r.ExecMove(It.IsAny<ICharacter>(), It.IsAny<Move>(), It.IsAny<ICharacter>())).Returns(true);
+            
+            clientMock1.ResetCalls();
+            clientMock2.ResetCalls();
 		}
 
-		[Test]
+        [Test, Timeout(2000)]
 		public void NullCharakterTest() {
-            
-			_client1.Charakter = null;
-			_client2.Charakter = null;
+
+            clientMock1.Setup(client => client.RequestCharacter()).Returns(characterMock.Object);
+            clientMock2.Setup(client => client.RequestCharacter()).Returns(() =>  null );
 
 			_server.Start ();
-			Assert.IsTrue (_client1.RoundCnt <= 1);
-			Assert.IsTrue (_client2.RoundCnt <= 1);
+
+            clientMock1.Verify(c => c.RequestAction(), Times.Never());
+            clientMock2.Verify(c => c.RequestAction(), Times.Never());
+            clientMock1.Verify(c => c.RequestCharacter(), Times.AtMostOnce());
+            clientMock2.Verify(c => c.RequestCharacter(), Times.Once());
 		}
 
 		[Test]
         public void ConstructorExceptionTest()
         {
-            IBattleRules rules = new TestRules();
-            Assert.Throws<ArgumentNullException>(() => new DefaultBattleServer(_scheduler, rules, null));
-            Assert.Throws<ArgumentNullException>(() => new DefaultBattleServer(null, rules, _client1));
-            Assert.Throws<ArgumentNullException>(() => new DefaultBattleServer(_scheduler, null, _client1));
+            var rules = rulesMock.Object;
+            var scheduler = schedulerMock.Object;
+            var client = clientMock1.Object;
+
+            Assert.Throws<ArgumentNullException>(() => new DefaultBattleServer(scheduler, rules, null));
+            Assert.Throws<ArgumentNullException>(() => new DefaultBattleServer(null, rules, client));
+            Assert.Throws<ArgumentNullException>(() => new DefaultBattleServer(scheduler, null, client));
             Assert.Throws<ArgumentNullException>(() => new DefaultBattleServer(null, rules, null));
             Assert.Throws<ArgumentNullException>(() => new DefaultBattleServer(null, null, null));
-            Assert.Throws<ArgumentNullException>(() => new DefaultBattleServer(_scheduler, rules, null, null));
-            Assert.Throws<ArgumentNullException>(() => new DefaultBattleServer(_scheduler, rules, _client1, null));
-            Assert.Throws<ArgumentNullException>(() => new DefaultBattleServer(_scheduler, rules, null, _client1));
+            Assert.Throws<ArgumentNullException>(() => new DefaultBattleServer(scheduler, rules, null, null));
+            Assert.Throws<ArgumentNullException>(() => new DefaultBattleServer(scheduler, rules, client, null));
+            Assert.Throws<ArgumentNullException>(() => new DefaultBattleServer(scheduler, rules, null, client));
         }
 
-        [Test]
+        [Test, Timeout(2000)]
         public void StartExceptionTest()
         {
-            IBattleRules rules = new TestRules();
-            var testServer = new DefaultBattleServer(_scheduler, rules);
+            var rules = rulesMock.Object;
+            var scheduler = schedulerMock.Object;
+            var client = clientMock1.Object;
+
+            var testServer = new DefaultBattleServer(scheduler, rules);
 			Assert.Throws<InvalidOperationException> (testServer.Start);
 
-            testServer = new DefaultBattleServer(_scheduler, rules, _client1);
+            testServer = new DefaultBattleServer(scheduler, rules, client);
 			Assert.Throws<InvalidOperationException> (testServer.Start);
         }
 
-        [Test]
+        [Test, Timeout(2000)]
         public void fullBattleTest()
         {
-            _client1.Charakter = new TestChar();
-            _client2.Charakter = new TestChar();
+            List<IClientCommand> commands1 = new List<IClientCommand>();
+            List<IClientCommand> commands2 = new List<IClientCommand>();
+            int roundCnt = 0;
 
-            // TODO don't hardcode the target id
+            commands1.Add(commandMock.Object);
+            commands1.Add(commandMock.Object);
 
+            commands2.Add(commandMock.Object);
+            commands2.Add(new ExitCommand(clientMock1.Object));
+
+            schedulerMock.Setup(s => s.AppendCommand(It.IsAny<IClientCommand>()));
+            schedulerMock.Setup(s => s.AppendCommand(It.IsAny<IEnumerable<IClientCommand>>()));
+            schedulerMock.Setup(s => s.ScheduleCommands()).Returns(() =>
+            {
+                if (roundCnt == 1)
+                    return commands2;
+                roundCnt++;
+                return commands1;
+            });
             _server.Start();
 
-            Assert.AreEqual(_client1.RoundCnt, 2);
-            Assert.AreEqual(_client2.RoundCnt, 2);
+
+            clientMock1.Verify(c => c.RequestAction(), Times.Exactly(2));
+            clientMock2.Verify(c => c.RequestAction(), Times.Exactly(2));
+            clientMock1.Verify(c => c.RequestCharacter(), Times.Once());
+            clientMock2.Verify(c => c.RequestCharacter(), Times.Once());
             
         }
 	}

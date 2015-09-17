@@ -54,6 +54,7 @@ namespace PokemonRulesTest
 		Mock<ICharacterRules> _rulesMock;
         List<PKData> _testData = new List<PKData>();
         List<Pokemon> _testChar = new List<Pokemon>();
+
         [SetUp]
         public void init()
         {
