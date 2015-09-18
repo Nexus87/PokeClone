@@ -5,16 +5,20 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ToolsWPF.MoveBuilder"
              DataContext="{Binding RelativeSource={RelativeSource Self}}">
+    <UserControl.Resources>
+        <local:NullIntConvert x:Key="NullIntConvert"/>
+        <local:NegateConverter x:Key="Negate"/>
+    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="0*"/>
-            <ColumnDefinition Width="0*"/>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <GroupBox x:Name="groupBox" Header="Moves" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Padding="3" Grid.Column="1">
+        <GroupBox x:Name="groupBox" Header="Moves" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Padding="3" Grid.Column="2" Grid.ColumnSpan="1">
             <Grid DataContext="{Binding ElementName=moveList, Path=SelectedItem}">
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
@@ -25,21 +29,31 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Label x:Name="nameLabel" Content="Name" VerticalAlignment="Top"/>
-                <TextBox x:Name="nameText" Grid.Column="1" TextWrapping="Wrap" Text="{Binding Path=Name}" VerticalAlignment="Top"/>
-                <TextBox x:Name="damageBox" Grid.Column="1" Grid.Row="1" TextWrapping="Wrap" Text="{Binding Path=Damage}" VerticalAlignment="Top"/>
-                <Label x:Name="damageLabel" Content="Damage" Grid.Row="1" VerticalAlignment="Top"/>
-                <Label x:Name="typeLabel" Content="Type" Grid.Column="2" VerticalAlignment="Top"/>
-                <Label x:Name="accuracyLabel" Content="Accuracy" Grid.Column="2" Grid.Row="1" VerticalAlignment="Top"/>
-                <Label x:Name="ppLabel" Content="PP" Grid.Row="2" VerticalAlignment="Top"/>
-                <TextBox x:Name="accuracyBox" Grid.Column="3" TextWrapping="Wrap" Text="{Binding Path=Accuracy}" Grid.Row="1" VerticalAlignment="Top"/>
-                <ComboBox x:Name="typeBox1" Grid.Column="3" VerticalAlignment="Top" IsReadOnly="True" ItemsSource="{Binding Types, ElementName=MoveBuilderForm}" SelectedItem="{Binding Path=PkmType}"/>
-                <TextBox x:Name="ppBox" Grid.Column="1" Grid.Row="2" TextWrapping="Wrap" Text="{Binding Path=PP}" VerticalAlignment="Top"/>
+                <Label x:Name="nameLabel" Content="Name"/>
+                <TextBox x:Name="nameText" Grid.Column="1" TextWrapping="Wrap" Text="{Binding Path=Name}" />
+                <TextBox x:Name="damageBox" Grid.Column="3" Grid.Row="1" TextWrapping="Wrap" Text="{Binding Path=Damage}" IsEnabled="{Binding IsChecked, Converter={StaticResource Negate}, ElementName=noDamageBox}" />
+                <Label x:Name="damageLabel" Content="Damage" Grid.Column="2" Grid.Row="1"/>
+                <Label x:Name="typeLabel" Content="Type" Grid.Row="2"/>
+                <Label x:Name="accuracyLabel" Content="Accuracy" Grid.Column="2" Grid.Row="3"/>
+                <Label x:Name="ppLabel" Content="PP" Grid.Row="1"/>
+                <TextBox x:Name="accuracyBox" Grid.Column="3" TextWrapping="Wrap" Text="{Binding Path=Accuracy}" Grid.Row="3" IsEnabled="{Binding IsChecked, Converter={StaticResource Negate}, ElementName=hitAlwaysBox}" />
+                <ComboBox x:Name="typeBox1" IsReadOnly="True" ItemsSource="{Binding Types, ElementName=MoveBuilderForm}" SelectedItem="{Binding Path=PkmType}" Grid.Row="2" Grid.Column="1"/>
+                <TextBox x:Name="ppBox" Grid.Column="1" Grid.Row="1" TextWrapping="Wrap" Text="{Binding PP, UpdateSourceTrigger=PropertyChanged}"/>
+                <CheckBox x:Name="noDamageBox" Grid.ColumnSpan="2" Content="No damage" Grid.Column="2" IsChecked="{Binding Path=Damage, Converter={StaticResource NullIntConvert}}"/>
+                <CheckBox x:Name="hitAlwaysBox" Grid.ColumnSpan="2" Content="Hit always" Grid.Column="2" Grid.Row="2" IsChecked="{Binding Path=Accuracy, Converter={StaticResource NullIntConvert}}"/>
             </Grid>
         </GroupBox>
-        <GroupBox Header="GroupBox">
-            <ListBox x:Name="moveList" ItemsSource="{Binding Path=Data}" SelectedIndex="0" DisplayMemberPath="Name"/>
+        <GroupBox Header="List">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <ListBox x:Name="moveList" ItemsSource="{Binding Data, NotifyOnSourceUpdated=True}" SelectedIndex="0" DisplayMemberPath="Name"/>
+                <Button x:Name="addButton" Content="New" Grid.Row="1" Click="addButton_Click"/>
+            </Grid>
         </GroupBox>
+        <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch"/>
 
     </Grid>
 </UserControl>
