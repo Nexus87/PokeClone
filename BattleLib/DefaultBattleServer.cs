@@ -95,10 +95,8 @@ namespace BattleLib
 
 		void requestActions ()
         {
-            IClientCommand ret;
 			foreach(var client in _clientInfo.Keys){
-				while((ret = client.RequestAction()) == null);
-                _clientInfo[client].Command = ret;
+                _clientInfo[client].Command = client.RequestAction();
 			}
 		}
 
@@ -135,6 +133,7 @@ namespace BattleLib
 			if (_clientInfo.Count < 2)
 				throw new InvalidOperationException ("Server needs at least 2 clients");
             _isRunning = true;
+            ServerStart(this, null);
             requestCharakters();
 
             while (_clientInfo.Count > 1)
@@ -147,6 +146,7 @@ namespace BattleLib
                 updateClients();
 			}
             _isRunning = false;
+            ServerEnd(this, null);
 		}
 
 		#endregion

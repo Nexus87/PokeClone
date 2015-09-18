@@ -111,10 +111,15 @@ namespace BattleLibTest
 		public void init() {
             _server = new DefaultBattleServer(schedulerMock.Object, rulesMock.Object, clientMock1.Object, clientMock2.Object);
             commandMock.Setup(command => command.Execute(It.IsAny<ICommandReceiver>()));
+            
+            //Setup action
             clientMock1.Setup(client => client.RequestAction()).Returns(commandMock.Object);
             clientMock2.Setup(client => client.RequestAction()).Returns(commandMock.Object);
+
+            //Setup character
             clientMock1.Setup(client => client.RequestCharacter()).Returns(characterMock.Object);
             clientMock2.Setup(client => client.RequestCharacter()).Returns(characterMock.Object);
+
             rulesMock.Setup(r => r.CanEscape()).Returns(true);
             rulesMock.Setup(r => r.CanChange()).Returns(true);
             rulesMock.Setup(r => r.ExecMove(It.IsAny<ICharacter>(), It.IsAny<Move>(), It.IsAny<ICharacter>())).Returns(true);
@@ -152,6 +157,65 @@ namespace BattleLibTest
             Assert.Throws<ArgumentNullException>(() => new DefaultBattleServer(scheduler, rules, null, null));
             Assert.Throws<ArgumentNullException>(() => new DefaultBattleServer(scheduler, rules, client, null));
             Assert.Throws<ArgumentNullException>(() => new DefaultBattleServer(scheduler, rules, null, client));
+        }
+
+        [Test, Timeout(2000)]
+        public void InvalidCommandTest()
+        {
+            int roundCnt = 0;
+            var invalidClient = (new Mock<AbstractClient>()).Object;
+            List<IClientCommand> commands = new List<IClientCommand>();
+
+            schedulerMock.Setup(s => s.AppendCommand(It.IsAny<IClientCommand>()))
+                .Callback<IClientCommand>(command => commands.Add(command));
+            schedulerMock.Setup(s => s.AppendCommand(It.IsAny<IEnumerable<IClientCommand>>()))
+                .Callback<IEnumerable<IClientCommand>>(list => commands.AddRange(list));
+            schedulerMock.Setup(s => s.ScheduleCommands()).Returns(commands);
+
+            clientMock1.Setup(c => c.RequestAction()).Returns(() =>
+            {
+                switch (roundCnt)
+                {
+                    case 0:
+                        roundCnt++;
+                        return new MoveCommand(null, new Move(new MoveData()), 0);
+                    case 1:
+                        roundCnt++;
+                        return new MoveCommand(invalidClient, new Move(new MoveData()), 0);
+                    case 2:
+                        roundCnt++;
+                        return new ChangeCommand(null, characterMock.Object);
+                    case 3:
+                        roundCnt++;
+                        return new ChangeCommand(invalidClient, characterMock.Object);
+                    case 4:
+                        roundCnt++;
+                        return new ExitCommand(null);
+                    case 5:
+                        roundCnt++;
+                        return new ExitCommand(invalidClient);
+                }
+                return null;
+            }
+            );
+
+            while (roundCnt < 6)
+            {
+                commands.Clear();
+                Assert.Throws<ArgumentException>(() => _server.Start());
+            }
+        }
+
+
+        [Test, Timeout(2000)]
+        public void NullCommandTest()
+        {
+            clientMock1.Setup(c => c.RequestAction()).Returns(() => null);
+
+            Assert.Throws<InvalidOperationException>(() => _server.Start());
+
+            clientMock1.Verify(c => c.RequestAction(), Times.Once());
+            clientMock2.Verify(c => c.RequestAction(), Times.AtMostOnce());
         }
 
         [Test, Timeout(2000)]
