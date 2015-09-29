@@ -29,10 +29,22 @@
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MonoGame.Framework, Version=3.4.0.459, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MonoGame.Framework.WindowsGL.3.4.0.459\lib\net40\MonoGame.Framework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="OpenTK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
+      <HintPath>..\packages\MonoGame.Framework.WindowsGL.3.4.0.459\lib\net40\OpenTK.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClientCommands.cs" />
+    <Compile Include="GraphicComponent\BattleGraphics.cs" />
+    <Compile Include="GraphicComponent\MenuItem.cs" />
+    <Compile Include="GraphicComponent\MessageBox.cs" />
+    <Compile Include="GraphicComponent\SelectBox.cs" />
     <Compile Include="IBattleRules.cs" />
     <Compile Include="Interfaces\AbstractClient.cs" />
     <Compile Include="Interfaces\CommandReceiver.cs" />
@@ -48,5 +60,12 @@
       <Project>{DDF413D1-9BE0-446B-82AF-E10242E8B812}</Project>
       <Name>Base</Name>
     </ProjectReference>
+    <ProjectReference Include="..\GameEngine\GameEngine.csproj">
+      <Project>{23963db5-ceb3-42a9-874e-d2a5b9291174}</Project>
+      <Name>GameEngine</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>

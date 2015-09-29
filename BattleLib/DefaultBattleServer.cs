@@ -28,8 +28,8 @@ using BattleLib.Interfaces;
 
 namespace BattleLib
 {
-	public class DefaultBattleServer : IBattleServer, ICommandReceiver
-	{
+    public class DefaultBattleServer : IBattleServer, ICommandReceiver
+    {
 
         public DefaultBattleServer(ICommandScheduler scheduler, IBattleRules rules, params AbstractClient[] clients)
         {
@@ -43,7 +43,7 @@ namespace BattleLib
             _rules = rules;
             _scheduler = scheduler;
             appendClients(clients);
-		}
+        }
 
         void validateClient(AbstractClient client)
         {
@@ -65,11 +65,11 @@ namespace BattleLib
             }
         }
 
-		void requestCharakters ()
-		{
-			var requestChar = from info in _clientInfo
-			                  where (info.Value.Character == null || info.Value.Character.IsKO ())
-			                  select new {info.Key, info.Value};
+        void requestCharakters ()
+        {
+            var requestChar = from info in _clientInfo
+                              where (info.Value.Character == null || info.Value.Character.IsKO ())
+                              select new {info.Key, info.Value};
 
             var toBeRemoved = new List<AbstractClient>();
 
@@ -91,35 +91,35 @@ namespace BattleLib
                 ClientQuit(this, null);
             }
 
-		}
+        }
 
-		void requestActions ()
+        void requestActions ()
         {
-			foreach(var client in _clientInfo.Keys){
+            foreach(var client in _clientInfo.Keys){
                 _clientInfo[client].Command = client.RequestAction();
-			}
-		}
+            }
+        }
 
-		void initScheduler ()
-		{
-			_scheduler.ClearCommands ();
+        void initScheduler ()
+        {
+            _scheduler.ClearCommands ();
 
-			foreach (var client in _clientInfo.Values) {
+            foreach (var client in _clientInfo.Values) {
                 if (client.Command == null)
                     throw new InvalidOperationException("Command should not be null!");
 
-				_scheduler.AppendCommand (client.Command);
-			}
-		}
+                _scheduler.AppendCommand (client.Command);
+            }
+        }
 
-		void appylActions ()
-		{
+        void appylActions ()
+        {
             initScheduler ();
 
             foreach (var command in _scheduler.ScheduleCommands())
                 command.Execute(this);
 
-		}
+        }
 
         void updateClients()
         {
@@ -127,11 +127,11 @@ namespace BattleLib
             foreach (var client in _clientInfo.Keys)
                 client.BattleState = state;
         }
-		#region IBattleServer implementation
-		public void Start ()
-		{
-			if (_clientInfo.Count < 2)
-				throw new InvalidOperationException ("Server needs at least 2 clients");
+        #region IBattleServer implementation
+        public void Start ()
+        {
+            if (_clientInfo.Count < 2)
+                throw new InvalidOperationException ("Server needs at least 2 clients");
             _isRunning = true;
             ServerStart(this, null);
             requestCharakters();
@@ -139,28 +139,28 @@ namespace BattleLib
             while (_clientInfo.Count > 1)
             {
                 NewTurn(this, null);
-				requestActions ();
-				appylActions ();
+                requestActions ();
+                appylActions ();
 
                 requestCharakters();
                 updateClients();
-			}
+            }
             _isRunning = false;
             ServerEnd(this, null);
-		}
+        }
 
-		#endregion
+        #endregion
 
 
-		class ClientData {
-			public int Id { get; set; }
-			public ICharacter Character { get; set; }
+        class ClientData {
+            public int Id { get; set; }
+            public ICharacter Character { get; set; }
             public IClientCommand Command { get; set; }
-		}
+        }
 
         readonly Dictionary<AbstractClient, ClientData> _clientInfo = new Dictionary<AbstractClient, ClientData>();
         IBattleRules _rules;
-		ICommandScheduler _scheduler;
+        ICommandScheduler _scheduler;
         bool _isRunning;
         
         public void ClientExit(AbstractClient source)
