@@ -11,24 +11,32 @@ namespace BattleLib.GraphicComponent
 {
     internal class MessageBox : AbstractGraphicComponent
     {
+        Rectangle Constraints = new Rectangle();
         readonly Vector2 margin = new Vector2(50, 30);
-        Texture2D _border;
-        SpriteFont _font;
+        Texture2D border;
+        SpriteFont font;
         String _currentMessage = "Text";
-
-        public MessageBox(Game game) : base(game)
-        {}
-
-        public override void Draw(SpriteBatch batch, GameTime gameTime)
+        
+        public override Point Size
         {
-            Vector2 textVec = Constraints.Location.ToVector2() + margin;
-            batch.Draw(_border, Constraints, Color.White);
-            batch.DrawString(_font, _currentMessage, textVec, Color.Black);
+            get { return Constraints.Size; }
+            set { Constraints.Size = value; }
+        }
+        public MessageBox(SpriteFont font, Texture2D border, Game game) : base(game)
+        {
+            this.border = border;
+            this.font = font;
+        }
+
+        public override void Draw(Vector2 Origin, SpriteBatch batch, GameTime gameTime)
+        {
+            Constraints.Location = Origin.ToPoint();
+            Vector2 textVec = Origin + margin;
+            batch.Draw(border,Constraints, Color.White);
+            batch.DrawString(font, _currentMessage, textVec, Color.Black);
         }
         public override void Setup(Rectangle screen)
         {
-            _border = Game.Content.Load<Texture2D>("border");
-            _font = Game.Content.Load<SpriteFont>("MenuFont");
         }
     }
 }

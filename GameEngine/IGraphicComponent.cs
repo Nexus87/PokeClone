@@ -11,10 +11,10 @@ namespace GameEngine
     public interface IGraphicComponent
     {
         Game Game { get; }
-        Rectangle Constraints { get; set; }
+        Point Size { get; set; }
 
         void Setup(Rectangle screen);
-        void Draw(SpriteBatch batch, GameTime time);
+        void Draw(Vector2 origin, SpriteBatch batch, GameTime time);
     }
 
     public abstract class AbstractGraphicComponent : IGraphicComponent
@@ -23,10 +23,10 @@ namespace GameEngine
         {
             Game = game;
         }
-        public Rectangle Constraints { get; set; }
-        public Game Game { get; protected set;}
 
-        public abstract void Draw(SpriteBatch batch, GameTime time);
+        public Game Game { get; protected set; }
+        public virtual Point Size { get; set; }
+        public abstract void Draw(Vector2 origin, SpriteBatch batch, GameTime time);
         public abstract void Setup(Rectangle screen);
     }
 }

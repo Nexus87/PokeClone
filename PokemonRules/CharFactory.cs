@@ -28,30 +28,30 @@ using Base;
 using System.Collections.Generic;
 
 namespace PokemonRules {
-	
-	public class CharFactory
-	{
+    
+    public class CharFactory
+    {
         ICharacterRules _rules;
         ICharRepository _repository;
 
-		public CharFactory (ICharRepository repository, ICharacterRules rules)
-		{
-			_rules = rules;
+        public CharFactory (ICharRepository repository, ICharacterRules rules)
+        {
+            _rules = rules;
             _repository = repository;
-		}
-			
-		public Pokemon GetChar(int id)
-		{
+        }
+            
+        public Pokemon GetChar(int id)
+        {
             return _rules.ToPokemon(_repository.getPKData(id));
-		}
-			
-		public Pokemon GetChar(int id, int level){
-			var charakter = GetChar(id);
-			_rules.ToLevel (charakter, level);
-			return charakter;
-		}
+        }
+            
+        public Pokemon GetChar(int id, int level){
+            var charakter = GetChar(id);
+            _rules.ToLevel (charakter, level);
+            return charakter;
+        }
 
         public IEnumerable<int> Ids { get{ return _repository.Ids; } }
-	}
+    }
 }
 

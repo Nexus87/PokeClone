@@ -40,7 +40,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ContentFactory.cs" />
     <Compile Include="GameEngine.cs" />
     <Compile Include="IGraphicComponent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

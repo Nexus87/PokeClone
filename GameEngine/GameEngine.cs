@@ -11,6 +11,7 @@ namespace GameEngine
         readonly List<GameComponent> _components = new List<GameComponent>();
         readonly List<GameComponent> _suspended = new List<GameComponent> ();
         IGraphicComponent _grapics = null;
+        Vector2 origin = new Vector2(0, 0);
         GraphicsDeviceManager graphics;
         SpriteBatch _batch;
 
@@ -48,7 +49,7 @@ namespace GameEngine
         {
             GraphicsDevice.Clear(new Color(248, 248, 248, 0));
             _batch.Begin();
-            _grapics.Draw(_batch, gameTime);
+            _grapics.Draw(origin, _batch, gameTime);
             _batch.End();
         }
 
