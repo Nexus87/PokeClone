@@ -18,9 +18,12 @@ namespace PokemonGame
         static void Main()
         {
             var engine = new Engine();
-            var model = new MenuModel();
+            var model = new MainMenuModel();
+            var menu = new MenuComponent();
+            menu.AddModel(model);
+            menu.SetMenu(MenuType.Main);
             var graphic = new BattleGraphics(model, engine);
-            var input = new InputComponent(model, engine);
+            var input = new InputComponent(menu, engine);
             engine.setGraphicCompomnent(graphic);
             engine.AddComponent(input);
             using (var game = new Game1())

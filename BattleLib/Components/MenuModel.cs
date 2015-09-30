@@ -13,57 +13,78 @@ namespace BattleLib.Components
         List
     }
 
-    public enum MenuType
+    public class MainMenuModel : IMenuModel
     {
-        Main,
-        PKMN,
-        Item
-    }
-
-    public enum Direction
-    {
-        Up,
-        Down,
-        Left,
-        Right
-    }
-
-    public class SelectionEventArgs : EventArgs
-    {
-        public int NewSelection { get; set; }
-    }
-      
-
-    public class MenuModel
-    {
-        public event EventHandler OnMenuChanged;
         public event EventHandler<SelectionEventArgs> OnSelectionChanged;
 
         int selectedItem;
-        public List<String> TextItems { get; set; }
+        public List<String> TextItems { get; private set; }
 
-        readonly List<String> mainMenu = new List<String> { "Attack", "PKMN", "Items", "Run" };
-        IDirectionHandler handler;
+        readonly List<String> mainMenu = new List<String> {
+            MenuType.Attack.ToString(),
+            MenuType.PKMN.ToString(),
+            MenuType.Item.ToString(),
+            "Run"
+        };
 
         public MenuOrdering MenuOrdering { get; private set; }
-        public MenuType MenuType { get; private set; }
+        public MenuType Type { get; private set; }
 
-        public MenuModel()
+        public MainMenuModel()
         {
             TextItems = mainMenu;
+            Type = MenuType.Main;
             selectedItem = 0;
-            handler = new TableHandler();
         }
 
         public void HandleDirection(Direction direction)
         {
-            int newSelection = handler.HandleDirection(selectedItem, direction);
+            int newSelection = NewSelection(selectedItem, direction);
             if (newSelection == selectedItem)
                 return;
 
             selectedItem = newSelection;
             if(OnSelectionChanged != null)
                 OnSelectionChanged(this, new SelectionEventArgs { NewSelection = newSelection });
+        }
+
+        public MenuType Select()
+        {
+            switch (selectedItem)
+            {
+                case 0:
+                    return MenuType.Attack;
+                case 1:
+                    return MenuType.PKMN;
+                case 3:
+                    return MenuType.Item;
+            }
+
+            return Type;
+        }
+
+        public MenuType Back()
+        {
+            //Main Menu, can't go back
+            return Type;
+        }
+
+        private int NewSelection(int currentSelected, Direction direction)
+        {
+            switch (direction)
+            {
+                case Direction.Down:
+                    return currentSelected < 2 ? currentSelected + 2 : currentSelected;
+                case Direction.Up:
+                    return currentSelected < 2 ? currentSelected : currentSelected - 2;
+                case Direction.Left:
+                    return currentSelected % 2 == 0 ? currentSelected : currentSelected - 1;
+                case Direction.Right:
+                    return currentSelected % 2 == 0 ? currentSelected + 1 : currentSelected;
+            }
+
+            //Should never happen
+            return 0;
         }
 
         private interface IDirectionHandler
@@ -94,29 +115,6 @@ namespace BattleLib.Components
                 // Should never happen
                 return 0;
             }
-        }
-
-        // Assume this to be a 2x2 table
-        private class TableHandler : IDirectionHandler
-        {
-            public int HandleDirection(int currentSelected, Direction direction)
-            {
-                switch (direction)
-                {
-                    case Direction.Down:
-                        return currentSelected < 2 ? currentSelected + 2 : currentSelected;
-                    case Direction.Up:
-                        return currentSelected < 2 ? currentSelected : currentSelected - 2;
-                    case Direction.Left:
-                        return currentSelected % 2 == 0 ? currentSelected : currentSelected - 1;
-                    case Direction.Right:
-                        return currentSelected % 2 == 0 ? currentSelected + 1 : currentSelected;
-                }
-
-                //Should never happen
-                return 0;
-            }
-
         }
     }
 }

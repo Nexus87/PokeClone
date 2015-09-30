@@ -41,9 +41,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClientCommands.cs" />
+    <Compile Include="Components\IMenuModel.cs" />
     <Compile Include="Components\InputComponent.cs" />
+    <Compile Include="Components\MenuComponent.cs" />
     <Compile Include="Components\MenuModel.cs" />
     <Compile Include="GraphicComponent\BattleGraphics.cs" />
+    <Compile Include="GraphicComponent\IMenuState.cs" />
+    <Compile Include="GraphicComponent\MenuGraphics.cs" />
     <Compile Include="GraphicComponent\MenuItem.cs" />
     <Compile Include="GraphicComponent\MessageBox.cs" />
     <Compile Include="GraphicComponent\SelectBox.cs" />

@@ -10,9 +10,8 @@ using BattleLib.Components;
 
 namespace BattleLib.GraphicComponent
 {
-    public class SelectBox : AbstractGraphicComponent
+    public class SelectBox : IMenuState
     {
-        readonly String[] mainMenu = { "Attack", "Item", "PKMN", "Escape" };
         readonly Vector2 margin = new Vector2(50, 40);
         readonly Vector2 xSpacing = new Vector2(150, 0);
         readonly Vector2 ySpacing = new Vector2(0, 50);
@@ -24,13 +23,21 @@ namespace BattleLib.GraphicComponent
         List<MenuItem> items = new List<MenuItem>();
         List<Vector2> offsets = new List<Vector2>();
         MenuItem lastSelected;
-        MenuModel model;
-
+        MainMenuModel model;
+        Game game;
         Rectangle Constraints = new Rectangle();
-        public override Point Size
+        public Point Size
         {
             get { return Constraints.Size; }
             set { Constraints.Size = value; }
+        }
+
+        public int SelectedIndex
+        {
+            set
+            {
+                throw new NotImplementedException();
+            }
         }
 
         void buildMenu(List<String> texts, MenuOrdering layout)
@@ -39,9 +46,9 @@ namespace BattleLib.GraphicComponent
             {
                 case MenuOrdering.Table:
                     int i = 0;
-                    foreach (var text in mainMenu)
+                    foreach (var text in texts)
                     {
-                        var item = new MenuItem(font, arrow, Game);
+                        var item = new MenuItem(font, arrow, game);
                         var x = (i % 2) * xSpacing; ;
                         var y = ((int)(i / 2.0f)) * ySpacing;
     
@@ -54,8 +61,9 @@ namespace BattleLib.GraphicComponent
 
             }
         }
-        public SelectBox(SpriteFont font, Texture2D border, Texture2D arrow, MenuModel model, Game game) : base(game)
+        public SelectBox(SpriteFont font, Texture2D border, Texture2D arrow, MainMenuModel model, Game game)
         {
+            this.game = game;
             this.model = model;
             this.font = font;
             this.border = border;
@@ -63,7 +71,7 @@ namespace BattleLib.GraphicComponent
 
             model.OnSelectionChanged += Model_OnSelectionChanged;
 
-            buildMenu(mainMenu.ToList(), MenuOrdering.Table);
+            buildMenu(model.TextItems, MenuOrdering.Table);
             items[0].Selected = true;
             lastSelected = items[0];
         }
@@ -75,7 +83,7 @@ namespace BattleLib.GraphicComponent
             lastSelected.Selected = true;
         }
 
-        public override void Draw(Vector2 origin, SpriteBatch batch, GameTime time)
+        public void Draw(Vector2 origin, SpriteBatch batch, GameTime time)
         {
             Constraints.Location = origin.ToPoint();
             batch.Draw(border, Constraints, Color.White);
@@ -85,8 +93,25 @@ namespace BattleLib.GraphicComponent
             }
         }
 
-        public override void Setup(Rectangle screen)
+        Point position;
+        Point size;
+
+        public void Draw(GameTime time, SpriteBatch batch, int screenWidth, int screenHeigth)
         {
+            position.X = (int) (screenWidth / 2.0f);
+            position.Y = (int)(2.0 * screenHeigth / 3.0f);
+
+            size.X = screenWidth - position.X;
+            size.Y = screenHeigth - position.Y;
+
+            Constraints.Location = position;
+            Constraints.Size = size;
+
+            batch.Draw(border, Constraints, Color.White);
+            for (int i = 0; i < items.Count; i++)
+            {
+                items[i].Draw(position.ToVector2() + offsets[i], batch, time);
+            }
         }
     }
 }

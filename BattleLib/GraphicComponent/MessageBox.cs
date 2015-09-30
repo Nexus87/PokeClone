@@ -17,11 +17,7 @@ namespace BattleLib.GraphicComponent
         SpriteFont font;
         String _currentMessage = "Text";
         
-        public override Point Size
-        {
-            get { return Constraints.Size; }
-            set { Constraints.Size = value; }
-        }
+
         public MessageBox(SpriteFont font, Texture2D border, Game game) : base(game)
         {
             this.border = border;
@@ -38,5 +34,19 @@ namespace BattleLib.GraphicComponent
         public override void Setup(Rectangle screen)
         {
         }
+
+
+        public override void Draw(GameTime time, SpriteBatch batch, int screenWidth, int screenHeight)
+        {
+            Constraints.X = 0;
+            Constraints.Y = (int)(2.0f * screenHeight / 3.0f);
+
+            Constraints.Width = screenWidth;
+            Constraints.Height = screenHeight - Constraints.Y;
+
+            batch.Draw(border, Constraints, Color.White);
+            batch.DrawString(font, _currentMessage, Constraints.Location.ToVector2() + margin, Color.Black);
+        }
+
     }
 }
