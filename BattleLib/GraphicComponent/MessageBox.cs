@@ -31,6 +31,7 @@ namespace BattleLib.GraphicComponent
             batch.Draw(border,Constraints, Color.White);
             batch.DrawString(font, _currentMessage, textVec, Color.Black);
         }
+
         public override void Setup(Rectangle screen)
         {
         }

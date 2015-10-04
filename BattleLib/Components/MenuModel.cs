@@ -86,35 +86,5 @@ namespace BattleLib.Components
             //Should never happen
             return 0;
         }
-
-        private interface IDirectionHandler
-        {
-            int HandleDirection(int currentSelected, Direction direction);
-        }
-
-        private class ListHandler : IDirectionHandler
-        {
-            int max;
-            public ListHandler(int max)
-            {
-                this.max = max;
-            }
-            public int HandleDirection(int currentSelected, Direction direction)
-            {
-                switch (direction)
-                {
-                    case Direction.Left:
-                    case Direction.Right:
-                        return currentSelected;
-                    case Direction.Up:
-                        return currentSelected == 0 ? currentSelected : currentSelected - 1;
-                    case Direction.Down:
-                        return currentSelected == max ? currentSelected : currentSelected + 1;
-                }
-
-                // Should never happen
-                return 0;
-            }
-        }
     }
 }
