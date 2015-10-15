@@ -43,7 +43,7 @@ namespace GameEngine
             _batch = new SpriteBatch(GraphicsDevice);
             if (_grapics == null)
                 throw new InvalidOperationException("Graphic component is not set");
-            _grapics.Setup(GraphicsDevice.Viewport.Bounds);
+            _grapics.Setup(GraphicsDevice.Viewport.Bounds, Content);
         }
         protected override void Draw(GameTime gameTime)
         {

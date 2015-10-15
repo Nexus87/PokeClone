@@ -8,6 +8,8 @@
     <RootNamespace>BattleLib</RootNamespace>
     <AssemblyName>BattleLib</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -53,7 +55,6 @@
     <Compile Include="GraphicComponent\MenuItem.cs" />
     <Compile Include="GraphicComponent\MessageBox.cs" />
     <Compile Include="GraphicComponent\SelectBox.cs" />
-    <Compile Include="GraphicComponent\SpiteFont.cs" />
     <Compile Include="IBattleRules.cs" />
     <Compile Include="Interfaces\AbstractClient.cs" />
     <Compile Include="Interfaces\CommandReceiver.cs" />
@@ -77,4 +78,5 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
 </Project>

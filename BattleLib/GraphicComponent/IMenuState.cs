@@ -1,5 +1,6 @@
 ﻿using BattleLib.Components;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace BattleLib.GraphicComponent
         int SelectedIndex { set; }
 
         void Draw(GameTime time, SpriteBatch batch, int screenWidth, int screenHeigth);
+        void Setup(ContentManager content);
     }
 
 

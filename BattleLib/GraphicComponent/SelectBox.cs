@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using BattleLib.Components;
+using Microsoft.Xna.Framework.Content;
 
 namespace BattleLib.GraphicComponent
 {
@@ -24,8 +25,8 @@ namespace BattleLib.GraphicComponent
         List<Vector2> offsets = new List<Vector2>();
         MenuItem lastSelected;
         MainMenuModel model;
-        Game game;
         Rectangle Constraints = new Rectangle();
+        
         public Point Size
         {
             get { return Constraints.Size; }
@@ -48,7 +49,7 @@ namespace BattleLib.GraphicComponent
                     int i = 0;
                     foreach (var text in texts)
                     {
-                        var item = new MenuItem(font, arrow, game);
+                        var item = new MenuItem(font, arrow);
                         var x = (i % 2) * xSpacing; ;
                         var y = ((int)(i / 2.0f)) * ySpacing;
     
@@ -61,19 +62,12 @@ namespace BattleLib.GraphicComponent
 
             }
         }
-        public SelectBox(SpriteFont font, Texture2D border, Texture2D arrow, MainMenuModel model, Game game)
+        public SelectBox(MainMenuModel model)
         {
-            this.game = game;
             this.model = model;
-            this.font = font;
-            this.border = border;
-            this.arrow = arrow;
 
             model.OnSelectionChanged += Model_OnSelectionChanged;
 
-            buildMenu(model.TextItems, MenuOrdering.Table);
-            items[0].Selected = true;
-            lastSelected = items[0];
         }
 
         private void Model_OnSelectionChanged(object sender, SelectionEventArgs e)
@@ -112,6 +106,19 @@ namespace BattleLib.GraphicComponent
             {
                 items[i].Draw(position.ToVector2() + offsets[i], batch, time);
             }
+        }
+
+
+        public void Setup(ContentManager content)
+        {
+            this.font = content.Load<SpriteFont>("MenuFont");
+            this.border = content.Load<Texture2D>("border");
+            this.arrow = content.Load<Texture2D>("arrow");
+
+            buildMenu(model.TextItems, MenuOrdering.Table);
+
+            items[0].Selected = true;
+            lastSelected = items[0];
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -12,13 +13,14 @@ namespace GameEngine
     {
         Game Game { get; }
 
-        void Setup(Rectangle screen);
+        void Setup(Rectangle screen, ContentManager content);
         void Draw(Vector2 origin, SpriteBatch batch, GameTime time);
         void Draw(GameTime time, SpriteBatch batch, int screenWidth, int screenHeight);
     }
 
     public abstract class AbstractGraphicComponent : IGraphicComponent
     {
+        protected AbstractGraphicComponent() {}
         protected AbstractGraphicComponent(Game game)
         {
             Game = game;
@@ -30,6 +32,6 @@ namespace GameEngine
         public virtual void Draw(GameTime time, SpriteBatch batch, int screenWidth, int screenHeight)
         {}
 
-        public abstract void Setup(Rectangle screen);
+        public abstract void Setup(Rectangle screen, ContentManager content);
     }
 }

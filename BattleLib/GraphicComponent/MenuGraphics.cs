@@ -1,5 +1,6 @@
 ﻿using BattleLib.Components;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -28,6 +29,12 @@ namespace BattleLib.GraphicComponent
         public void Draw(GameTime time, SpriteBatch batch, int screenWidth, int screenHeight)
         {
             currentState.Draw(time, batch, screenWidth, screenHeight);
+        }
+
+        public void Setup(ContentManager content)
+        {
+            foreach (var item in menus.Values)
+                item.Setup(content);
         }
 
     }

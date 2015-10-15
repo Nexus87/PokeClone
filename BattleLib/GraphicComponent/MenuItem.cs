@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Content;
 
 namespace BattleLib.GraphicComponent
 {
@@ -16,7 +17,7 @@ namespace BattleLib.GraphicComponent
         Rectangle arrowConstraints;
         Vector2 textPosition;
 
-        internal MenuItem(SpriteFont font, Texture2D arrow, Game game) : base(game)
+        internal MenuItem(SpriteFont font, Texture2D arrow)
         {
             this.font = font;
             this.arrow = arrow;
@@ -39,7 +40,7 @@ namespace BattleLib.GraphicComponent
             batch.DrawString(font, Text, origin + textPosition, Color.Black);
         }
 
-        public override void Setup(Rectangle screen)
+        public override void Setup(Rectangle screen, ContentManager content)
         {
 
         }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using GameEngine;
+using Microsoft.Xna.Framework.Content;
 
 namespace BattleLib.GraphicComponent
 {
@@ -16,13 +17,6 @@ namespace BattleLib.GraphicComponent
         Texture2D border;
         SpriteFont font;
         String _currentMessage = "Text";
-        
-
-        public MessageBox(SpriteFont font, Texture2D border, Game game) : base(game)
-        {
-            this.border = border;
-            this.font = font;
-        }
 
         public override void Draw(Vector2 Origin, SpriteBatch batch, GameTime gameTime)
         {
@@ -32,8 +26,10 @@ namespace BattleLib.GraphicComponent
             batch.DrawString(font, _currentMessage, textVec, Color.Black);
         }
 
-        public override void Setup(Rectangle screen)
+        public override void Setup(Rectangle screen, ContentManager content)
         {
+            border = content.Load<Texture2D>("border");
+            font = content.Load<SpriteFont>("MenuFont");
         }
 
 

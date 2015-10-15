@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using BattleLib.Components;
 using Base;
+using Microsoft.Xna.Framework.Content;
 
 namespace BattleLib.GraphicComponent
 {
@@ -14,7 +15,7 @@ namespace BattleLib.GraphicComponent
     {
         AttackMenuModel model;
         List<MenuItem> items = new List<MenuItem>();
-        SpiteFont font;
+        SpriteFont font;
         Texture2D arrow;
 
         public AttackMenu(AttackMenuModel model)
@@ -34,7 +35,7 @@ namespace BattleLib.GraphicComponent
         {
             foreach(var move in moves)
             {
-                var item = new MenuItem(font, arrow, game);
+                var item = new MenuItem(font, arrow);
             }
         }
         Rectangle constraints = new Rectangle();
@@ -48,6 +49,13 @@ namespace BattleLib.GraphicComponent
             constraints.Height = screenHeigth - constraints.Y;
 
             throw new NotImplementedException();
+        }
+
+
+        public void Setup(ContentManager content)
+        {
+            font = content.Load<SpriteFont>("MenuFont");
+            arrow = content.Load<Texture2D>("Arrow");
         }
     }
 }

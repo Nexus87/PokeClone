@@ -1,6 +1,7 @@
 ﻿using BattleLib.Components;
 using GameEngine;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -22,9 +23,15 @@ namespace BattleLib.GraphicComponent
         public BattleGraphics(MainMenuModel model, Game game) : base(game)
         {
             this.model = model;
+            var select = new SelectBox(model);
+            box = new MessageBox();
+
+            menu = new MenuGraphics();
+            menu.Add(MenuType.Main, select);
+            menu.SetMenu(MenuType.Main);
         }
 
-        public override void Setup(Rectangle screen)
+        public override void Setup(Rectangle screen, ContentManager content)
         {
             screenWidth = screen.Size.X;
             screenHeight = screen.Size.Y;
@@ -33,12 +40,8 @@ namespace BattleLib.GraphicComponent
             var arrow = Game.Content.Load<Texture2D>("arrow");
             var font = Game.Content.Load<SpriteFont>("MenuFont");
 
-            box = new MessageBox(font, border, Game);
-            var select = new SelectBox(font, border, arrow, model, Game);
-
-            menu = new MenuGraphics();
-            menu.Add(MenuType.Main, select);
-            menu.SetMenu(MenuType.Main);
+            box.Setup(screen, content);
+            menu.Setup(content);
         }
 
         public override void Draw(Vector2 origin, SpriteBatch batch, GameTime time)
@@ -46,5 +49,6 @@ namespace BattleLib.GraphicComponent
             box.Draw(time, batch, screenWidth, screenHeight);
             menu.Draw(time, batch, screenWidth, screenHeight);
         }
+
     }
 }
