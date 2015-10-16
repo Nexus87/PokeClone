@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Content;
 
 namespace BattleLib.GraphicComponent
 {
-    class MenuItem : AbstractGraphicComponent
+    public class MenuItem : AbstractGraphicComponent
     {
         SpriteFont font;
         Texture2D arrow;

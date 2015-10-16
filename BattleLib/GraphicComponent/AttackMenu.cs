@@ -11,51 +11,47 @@ using Microsoft.Xna.Framework.Content;
 
 namespace BattleLib.GraphicComponent
 {
-    public class AttackMenu : IMenuState
+    public class AttackMenu : AbstractMenuState
     {
         AttackMenuModel model;
-        List<MenuItem> items = new List<MenuItem>();
-        SpriteFont font;
-        Texture2D arrow;
 
-        public AttackMenu(AttackMenuModel model)
+        public AttackMenu(AttackMenuModel model) : base(model)
         {
             this.model = model;
+
+            XPosition = 1.0f / 2.0f;
+            YPosition = 2.0f / 3.0f;
+
+            Width = 1.0f - XPosition;
+            Heigth = 1.0f - YPosition;
         }
 
-        public int SelectedIndex
+        protected override void BuildMenu()
         {
-            set
+            Vector2 margin = new Vector2(50, 40);
+            Vector2 ySpacing = new Vector2(0, 25);
+
+            List<Move> moves = model.Moves;
+
+            for (int i = 0; i < 4; i++)
             {
-                throw new NotImplementedException();
+                itemOffsets.Add(margin + i * ySpacing);
             }
-        }
 
-        void buildMenu(List<Move> moves)
-        {
-            foreach(var move in moves)
+            foreach (var move in moves)
             {
                 var item = new MenuItem(font, arrow);
+                item.Text = move.Data.Name;
+                items.Add(item);
+            }
+
+            while (items.Count < 4)
+            {
+                var item = new MenuItem(font, arrow);
+                item.Text = "--------------";
+                items.Add(item);
             }
         }
-        Rectangle constraints = new Rectangle();
 
-        public void Draw(GameTime time, SpriteBatch batch, int screenWidth, int screenHeigth)
-        {
-            constraints.X = (int)(screenWidth / 7.0f);
-            constraints.Y = (int)(2.0f * screenHeigth / 7.0f);
-
-            constraints.Width = screenWidth - constraints.X;
-            constraints.Height = screenHeigth - constraints.Y;
-
-            throw new NotImplementedException();
-        }
-
-
-        public void Setup(ContentManager content)
-        {
-            font = content.Load<SpriteFont>("MenuFont");
-            arrow = content.Load<Texture2D>("Arrow");
-        }
     }
 }

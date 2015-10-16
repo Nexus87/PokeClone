@@ -32,10 +32,21 @@ namespace BattleLib.Components
         {
             models.Add(model.Type, model);
         }
+
         public void Select()
         {
             MenuType type = currentState.Select();
+            ChangeMenu(type);
+        }
 
+        public void Back()
+        {
+            MenuType type = currentState.Back();
+            ChangeMenu(type);
+        }
+
+        private void ChangeMenu(MenuType type)
+        {
             if (type == currentState.Type)
                 return;
 

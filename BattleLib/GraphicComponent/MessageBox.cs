@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Content;
 
 namespace BattleLib.GraphicComponent
 {
-    internal class MessageBox : AbstractGraphicComponent
+    public class MessageBox : AbstractGraphicComponent
     {
         Rectangle Constraints = new Rectangle();
         readonly Vector2 margin = new Vector2(50, 30);

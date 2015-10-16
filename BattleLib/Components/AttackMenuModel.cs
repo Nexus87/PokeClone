@@ -14,6 +14,13 @@ namespace BattleLib.Components
             Moves = pkm.Moves;
         }
 
+        //TODO remove this constructor
+        public AttackMenuModel()
+        {
+            MoveData data1 = new MoveData{Name = "Attack1"};
+            MoveData data2 = new MoveData{Name = "Attack2"};
+            Moves = new List<Move> { new Move(data1), new Move(data2) };
+        }
         public MenuType Type{ get { return MenuType.Attack; } }
         
         public event EventHandler<SelectionEventArgs> OnSelectionChanged;

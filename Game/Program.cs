@@ -19,10 +19,23 @@ namespace PokemonGame
         {
             var engine = new Engine();
             var model = new MainMenuModel();
+            var attackModel = new AttackMenuModel();
             var menu = new MenuComponent();
+            var menuGraphics = new MenuGraphics();
+
+            menuGraphics.Add(MenuType.Main, new MainMenuState(model));
+            menuGraphics.Add(MenuType.Attack, new AttackMenu(attackModel));
+
+            menu.AddModel(attackModel);
             menu.AddModel(model);
             menu.SetMenu(MenuType.Main);
-            var graphic = new BattleGraphics(model, engine);
+
+            menu.OnMenuChanged += menuGraphics.OnMenuChange;
+            var graphic = new BattleGraphics(engine);
+
+            graphic.MessageBox = new MessageBox();
+            graphic.Menu = menuGraphics;
+
             var input = new InputComponent(menu, engine);
             engine.setGraphicCompomnent(graphic);
             engine.AddComponent(input);

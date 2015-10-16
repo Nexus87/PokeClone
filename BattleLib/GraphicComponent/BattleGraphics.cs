@@ -16,19 +16,11 @@ namespace BattleLib.GraphicComponent
         int screenWidth;
         int screenHeight;
 
-        MessageBox box;
-        MenuGraphics menu;
-        MainMenuModel model;
+        public MessageBox MessageBox { get; set; }
+        public MenuGraphics Menu { get; set; }
 
-        public BattleGraphics(MainMenuModel model, Game game) : base(game)
+        public BattleGraphics(Game game) : base(game)
         {
-            this.model = model;
-            var select = new SelectBox(model);
-            box = new MessageBox();
-
-            menu = new MenuGraphics();
-            menu.Add(MenuType.Main, select);
-            menu.SetMenu(MenuType.Main);
         }
 
         public override void Setup(Rectangle screen, ContentManager content)
@@ -40,14 +32,14 @@ namespace BattleLib.GraphicComponent
             var arrow = Game.Content.Load<Texture2D>("arrow");
             var font = Game.Content.Load<SpriteFont>("MenuFont");
 
-            box.Setup(screen, content);
-            menu.Setup(content);
+            MessageBox.Setup(screen, content);
+            Menu.Setup(content);
         }
 
         public override void Draw(Vector2 origin, SpriteBatch batch, GameTime time)
         {
-            box.Draw(time, batch, screenWidth, screenHeight);
-            menu.Draw(time, batch, screenWidth, screenHeight);
+            MessageBox.Draw(time, batch, screenWidth, screenHeight);
+            Menu.Draw(time, batch, screenWidth, screenHeight);
         }
 
     }

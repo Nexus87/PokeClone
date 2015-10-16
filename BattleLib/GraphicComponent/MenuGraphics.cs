@@ -15,6 +15,11 @@ namespace BattleLib.GraphicComponent
         Dictionary<MenuType, IMenuState> menus = new Dictionary<MenuType, IMenuState>();
         IMenuState currentState;
 
+        public void OnMenuChange(Object source, MenuChangedArgs args)
+        {
+            currentState = menus[args.MenuType];
+        }
+
         public void Add(MenuType type, IMenuState state)
         {
             menus.Add(type, state);
@@ -35,6 +40,8 @@ namespace BattleLib.GraphicComponent
         {
             foreach (var item in menus.Values)
                 item.Setup(content);
+            if (currentState == null)
+                currentState = menus.First().Value;
         }
 
     }
