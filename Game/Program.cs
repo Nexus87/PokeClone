@@ -18,25 +18,36 @@ namespace PokemonGame
         static void Main()
         {
             var engine = new Engine();
-            var model = new MainMenuModel();
+            
+            var mainModel = new MainMenuModel();
             var attackModel = new AttackMenuModel();
-            var menu = new MenuComponent();
+            var itemModel = new ItemMenuModel();
+
+            var mainMenuView = new MainMenuState(mainModel);
+            var attackMenuView = new AttackMenu(attackModel);
+            var itemMenuView = new ItemMenuState(itemModel);
+
+            var menuComponent = new MenuComponent();
             var menuGraphics = new MenuGraphics();
 
-            menuGraphics.Add(MenuType.Main, new MainMenuState(model));
-            menuGraphics.Add(MenuType.Attack, new AttackMenu(attackModel));
+            menuGraphics.Add(MenuType.Main, mainMenuView);
+            menuGraphics.Add(MenuType.Attack, attackMenuView);
+            menuGraphics.Add(MenuType.Item, itemMenuView);
 
-            menu.AddModel(attackModel);
-            menu.AddModel(model);
-            menu.SetMenu(MenuType.Main);
+            menuComponent.AddModel(attackModel);
+            menuComponent.AddModel(mainModel);
+            menuComponent.AddModel(itemModel);
 
-            menu.OnMenuChanged += menuGraphics.OnMenuChange;
+            menuComponent.SetMenu(MenuType.Main);
+
+            menuComponent.OnMenuChanged += menuGraphics.OnMenuChange;
+
             var graphic = new BattleGraphics(engine);
 
             graphic.MessageBox = new MessageBox();
             graphic.Menu = menuGraphics;
 
-            var input = new InputComponent(menu, engine);
+            var input = new InputComponent(menuComponent, engine);
             engine.setGraphicCompomnent(graphic);
             engine.AddComponent(input);
             using (var game = new Game1())

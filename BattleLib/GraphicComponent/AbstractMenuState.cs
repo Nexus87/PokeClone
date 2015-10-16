@@ -40,7 +40,7 @@ namespace BattleLib.GraphicComponent
 
         protected AbstractMenuState() {}
 
-        protected void model_OnSelectionChanged(object sender, SelectionEventArgs e)
+        protected virtual void model_OnSelectionChanged(object sender, SelectionEventArgs e)
         {
             if (e.NewSelection >= items.Count)
                 return;

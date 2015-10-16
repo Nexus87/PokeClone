@@ -56,7 +56,7 @@ namespace BattleLib.Components
                     return MenuType.Attack;
                 case 1:
                     return MenuType.PKMN;
-                case 3:
+                case 2:
                     return MenuType.Item;
             }
 
