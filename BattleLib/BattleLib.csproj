@@ -48,7 +48,7 @@
     <Compile Include="Components\InputComponent.cs" />
     <Compile Include="Components\ItemMenuModel.cs" />
     <Compile Include="Components\MenuComponent.cs" />
-    <Compile Include="Components\MenuModel.cs" />
+    <Compile Include="Components\MainMenuModel.cs" />
     <Compile Include="GraphicComponent\AbstractMenuState.cs" />
     <Compile Include="GraphicComponent\AttackMenu.cs" />
     <Compile Include="GraphicComponent\BattleGraphics.cs" />

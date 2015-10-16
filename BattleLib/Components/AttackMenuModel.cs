@@ -1,17 +1,18 @@
 ﻿using Base;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace BattleLib.Components
 {
     public class AttackMenuModel : IMenuModel
     {
-        public List<Move> Moves { get; private set; }
+        List<Move> moves;
 
         int selectedIndex = 0;
         public AttackMenuModel(Pokemon pkm)
         {
-            Moves = pkm.Moves;
+            moves = pkm.Moves;
         }
 
         //TODO remove this constructor
@@ -19,7 +20,7 @@ namespace BattleLib.Components
         {
             MoveData data1 = new MoveData{Name = "Attack1"};
             MoveData data2 = new MoveData{Name = "Attack2"};
-            Moves = new List<Move> { new Move(data1), new Move(data2) };
+            moves = new List<Move> { new Move(data1), new Move(data2) };
         }
         public MenuType Type{ get { return MenuType.Attack; } }
         
@@ -37,7 +38,7 @@ namespace BattleLib.Components
                 case Direction.Up:
                     return selectedIndex > 0 ? selectedIndex - 1 : selectedIndex;
                 case Direction.Down:
-                    return selectedIndex < Moves.Count - 1 ? selectedIndex + 1 : selectedIndex;
+                    return selectedIndex < moves.Count - 1 ? selectedIndex + 1 : selectedIndex;
             }
 
             return selectedIndex;
@@ -57,6 +58,17 @@ namespace BattleLib.Components
         public MenuType Select()
         {
             throw new NotImplementedException();
+        }
+
+        public IEnumerator<string> GetEnumerator()
+        {
+            foreach (var move in moves)
+                yield return move.Data.Name;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
         }
     }
 }

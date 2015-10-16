@@ -20,10 +20,9 @@ namespace BattleLib.GraphicComponent
             Vector2 margin = new Vector2(50, 40);
             Vector2 xSpacing = new Vector2(150, 0);
             Vector2 ySpacing = new Vector2(0, 50);
-            var texts = model.TextItems;
             int i = 0;
 
-            foreach (var text in texts)
+            foreach (var text in model)
             {
                 items.Add(new MenuItem(font, arrow) { Text = text });
 

@@ -31,17 +31,16 @@ namespace BattleLib.GraphicComponent
             Vector2 margin = new Vector2(50, 40);
             Vector2 ySpacing = new Vector2(0, 25);
 
-            List<Move> moves = model.Moves;
 
             for (int i = 0; i < 4; i++)
             {
                 itemOffsets.Add(margin + i * ySpacing);
             }
 
-            foreach (var move in moves)
+            foreach (var move in model)
             {
                 var item = new MenuItem(font, arrow);
-                item.Text = move.Data.Name;
+                item.Text = move;
                 items.Add(item);
             }
 

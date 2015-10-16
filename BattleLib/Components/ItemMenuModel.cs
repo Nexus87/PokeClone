@@ -1,5 +1,6 @@
 ﻿using Base;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,14 +11,12 @@ namespace BattleLib.Components
     public class ItemMenuModel : IMenuModel
     {
         int selectedIndex = 0;
-        public List<Item> Items { get; private set; }
+        readonly List<Item> items = new List<Item>();
 
         public ItemMenuModel()
         {
-
-            Items = new List<Item>();
             for (int i = 0; i < 10; i++)
-                Items.Add(new Item { Name = "Item" + (i + 1) });
+                items.Add(new Item { Name = "Item" + (i + 1) });
         }
 
         public event EventHandler<SelectionEventArgs> OnSelectionChanged;
@@ -41,7 +40,7 @@ namespace BattleLib.Components
                 case Direction.Up:
                     return selectedIndex > 0 ? selectedIndex - 1 : selectedIndex;
                 case Direction.Down:
-                    return selectedIndex < Items.Count - 1 ? selectedIndex + 1 : selectedIndex;
+                    return selectedIndex < items.Count - 1 ? selectedIndex + 1 : selectedIndex;
             }
 
             return selectedIndex;
@@ -57,6 +56,17 @@ namespace BattleLib.Components
             selectedIndex = newIndex;
             if (OnSelectionChanged != null)
                 OnSelectionChanged(this, new SelectionEventArgs { NewSelection = selectedIndex });
+        }
+
+        public IEnumerator<string> GetEnumerator()
+        {
+            foreach(var item in items)
+                yield return item.Name;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
         }
     }
 }

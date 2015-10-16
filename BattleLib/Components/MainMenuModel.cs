@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,7 +19,7 @@ namespace BattleLib.Components
         public event EventHandler<SelectionEventArgs> OnSelectionChanged;
 
         int selectedItem;
-        public List<String> TextItems { get; private set; }
+        private List<String> textItems;
 
         readonly List<String> mainMenu = new List<String> {
             MenuType.Attack.ToString(),
@@ -32,7 +33,7 @@ namespace BattleLib.Components
 
         public MainMenuModel()
         {
-            TextItems = mainMenu;
+            textItems = mainMenu;
             Type = MenuType.Main;
             selectedItem = 0;
         }
@@ -85,6 +86,16 @@ namespace BattleLib.Components
 
             //Should never happen
             return 0;
+        }
+
+        public IEnumerator<string> GetEnumerator()
+        {
+            return textItems.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
         }
     }
 }

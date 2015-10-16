@@ -47,13 +47,14 @@ namespace BattleLib.GraphicComponent
             e.NewSelection = index - itemViewStart;
             base.model_OnSelectionChanged(sender, e);
         }
+
         protected override void BuildMenu()
         {
             Vector2 margin = new Vector2(30, 40);
             Vector2 ySpacing = new Vector2(0, 30);
 
-            foreach (var item in model.Items)
-                internalItems.Add(new MenuItem(font, arrow) { Text = item.Name });
+            foreach (var item in model)
+                internalItems.Add(new MenuItem(font, arrow) { Text = item });
 
             for (int i = 0; i < maxItems; i++)
                 itemOffsets.Add(margin + i * ySpacing);
