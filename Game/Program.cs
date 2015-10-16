@@ -22,10 +22,12 @@ namespace PokemonGame
             var mainModel = new MainMenuModel();
             var attackModel = new AttackMenuModel();
             var itemModel = new ItemMenuModel();
+            var pkmnModel = new CharacterMenuModel();
 
             var mainMenuView = new MainMenuState(mainModel);
             var attackMenuView = new AttackMenu(attackModel);
             var itemMenuView = new ItemMenuState(itemModel);
+            var pkmnMenuView = new CharacterMenuState(pkmnModel);
 
             var menuComponent = new MenuComponent();
             var menuGraphics = new MenuGraphics();
@@ -33,10 +35,12 @@ namespace PokemonGame
             menuGraphics.Add(MenuType.Main, mainMenuView);
             menuGraphics.Add(MenuType.Attack, attackMenuView);
             menuGraphics.Add(MenuType.Item, itemMenuView);
+            menuGraphics.Add(MenuType.PKMN, pkmnMenuView);
 
             menuComponent.AddModel(attackModel);
             menuComponent.AddModel(mainModel);
             menuComponent.AddModel(itemModel);
+            menuComponent.AddModel(pkmnModel);
 
             menuComponent.SetMenu(MenuType.Main);
 

@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="ClientCommands.cs" />
     <Compile Include="Components\AttackMenuModel.cs" />
+    <Compile Include="Components\CharacterMenuModel.cs" />
     <Compile Include="Components\IMenuModel.cs" />
     <Compile Include="Components\InputComponent.cs" />
     <Compile Include="Components\ItemMenuModel.cs" />
@@ -52,6 +53,7 @@
     <Compile Include="GraphicComponent\AbstractMenuState.cs" />
     <Compile Include="GraphicComponent\AttackMenu.cs" />
     <Compile Include="GraphicComponent\BattleGraphics.cs" />
+    <Compile Include="GraphicComponent\CharacterMenuState.cs" />
     <Compile Include="GraphicComponent\IMenuState.cs" />
     <Compile Include="GraphicComponent\ItemMenuState.cs" />
     <Compile Include="GraphicComponent\MenuGraphics.cs" />

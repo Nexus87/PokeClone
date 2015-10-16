@@ -8,11 +8,6 @@ using System.Threading.Tasks;
 
 namespace BattleLib.Components
 {
-    public enum MenuOrdering
-    {
-        Table,
-        List
-    }
 
     public class MainMenuModel : IMenuModel
     {
@@ -28,7 +23,6 @@ namespace BattleLib.Components
             "Run"
         };
 
-        public MenuOrdering MenuOrdering { get; private set; }
         public MenuType Type { get; private set; }
 
         public MainMenuModel()
