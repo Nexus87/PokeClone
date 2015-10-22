@@ -27,5 +27,13 @@ namespace BattleLib.Components
         {
             return Enumerable.Empty<string>().GetEnumerator();
         }
+
+        public void Init()
+        {
+        }
+
+        public void Clean()
+        {
+        }
     }
 }

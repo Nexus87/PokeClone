@@ -43,6 +43,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClientCommands.cs" />
+    <Compile Include="Components\AbstractListModel.cs" />
+    <Compile Include="Components\AbstractMenuModel.cs" />
     <Compile Include="Components\AttackMenuModel.cs" />
     <Compile Include="Components\CharacterMenuModel.cs" />
     <Compile Include="Components\IMenuModel.cs" />

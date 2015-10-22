@@ -19,6 +19,8 @@ namespace PokemonGame
         static void Main()
         {
             var engine = new Engine();
+            var graphic = new BattleGraphics(engine);
+            
             MenuComponentBuilder builder = new MenuComponentBuilder();
 
             var mainModel = new MainMenuModel();
@@ -29,11 +31,10 @@ namespace PokemonGame
             builder.AddMenu(mainModel, new MainMenuState(mainModel));
             builder.AddMenu(attackModel, new AttackMenu(attackModel));
             builder.AddMenu(itemModel, new ItemMenuState(itemModel));
-            builder.AddMenu(pkmnModel, new CharacterMenuState(pkmnModel));
+            builder.AddMenu(pkmnModel, new CharacterMenuState(pkmnModel, graphic));
 
             builder.Component.SetMenu(MenuType.Main);
 
-            var graphic = new BattleGraphics(engine);
 
             graphic.MessageBox = new MessageBox();
             graphic.Menu = builder.Graphics;

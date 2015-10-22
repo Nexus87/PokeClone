@@ -22,7 +22,10 @@ namespace BattleLib.GraphicComponent
 
         public void OnMenuChange(Object source, MenuChangedArgs args)
         {
+            if(currentState != null)
+                currentState.OnHide();
             currentState = menus[args.MenuType];
+            currentState.OnShow();
         }
 
         public void Add(MenuType type, IMenuState state)

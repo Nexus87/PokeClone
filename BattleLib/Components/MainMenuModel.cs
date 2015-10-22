@@ -9,13 +9,8 @@ using System.Threading.Tasks;
 namespace BattleLib.Components
 {
 
-    public class MainMenuModel : IMenuModel
+    public class MainMenuModel : AbstractMenuModel<string>
     {
-        public event EventHandler<SelectionEventArgs> OnSelectionChanged;
-
-        int selectedItem;
-        private List<String> textItems;
-
         readonly List<String> mainMenu = new List<String> {
             MenuType.Attack.ToString(),
             MenuType.PKMN.ToString(),
@@ -23,29 +18,22 @@ namespace BattleLib.Components
             "Run"
         };
 
-        public MenuType Type { get; private set; }
+        public override MenuType Type { get { return MenuType.Main; } }
 
         public MainMenuModel()
         {
-            textItems = mainMenu;
-            Type = MenuType.Main;
-            selectedItem = 0;
+            items = mainMenu;
         }
 
-        public void HandleDirection(Direction direction)
+        public override void HandleDirection(Direction direction)
         {
-            int newSelection = NewSelection(selectedItem, direction);
-            if (newSelection == selectedItem)
-                return;
-
-            selectedItem = newSelection;
-            if(OnSelectionChanged != null)
-                OnSelectionChanged(this, new SelectionEventArgs { NewSelection = newSelection });
+            int newSelection = NewSelection(selectedIndex, direction);
+            UpdateIndex(newSelection);
         }
 
-        public MenuType Select()
+        public override MenuType Select()
         {
-            switch (selectedItem)
+            switch (selectedIndex)
             {
                 case 0:
                     return MenuType.Attack;
@@ -58,7 +46,7 @@ namespace BattleLib.Components
             return Type;
         }
 
-        public MenuType Back()
+        public override MenuType Back()
         {
             //Main Menu, can't go back
             return Type;
@@ -80,16 +68,6 @@ namespace BattleLib.Components
 
             //Should never happen
             return 0;
-        }
-
-        public IEnumerator<string> GetEnumerator()
-        {
-            return textItems.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return this.GetEnumerator();
         }
     }
 }

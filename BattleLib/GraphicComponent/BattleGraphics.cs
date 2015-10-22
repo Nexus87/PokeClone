@@ -42,5 +42,15 @@ namespace BattleLib.GraphicComponent
             Menu.Draw(time, batch, screenWidth, screenHeight);
         }
 
+        public void DisplayText(String text)
+        {
+            if(MessageBox != null)
+                MessageBox.Text = text;
+        }
+
+        public void ClearText()
+        {
+            DisplayText("");
+        }
     }
 }

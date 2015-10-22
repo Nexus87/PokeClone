@@ -13,5 +13,13 @@ namespace BattleLib.GraphicComponent
         public void Setup(ContentManager content)
         {
         }
+
+        public void OnShow()
+        {
+        }
+
+        public void OnHide()
+        {
+        }
     }
 }

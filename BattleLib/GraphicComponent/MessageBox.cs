@@ -16,14 +16,18 @@ namespace BattleLib.GraphicComponent
         readonly Vector2 margin = new Vector2(50, 30);
         Texture2D border;
         SpriteFont font;
-        String _currentMessage = "Text";
+        public String Text{ private get; set; }
 
+        public MessageBox()
+        {
+            Text = "";
+        }
         public override void Draw(Vector2 Origin, SpriteBatch batch, GameTime gameTime)
         {
             Constraints.Location = Origin.ToPoint();
             Vector2 textVec = Origin + margin;
             batch.Draw(border,Constraints, Color.White);
-            batch.DrawString(font, _currentMessage, textVec, Color.Black);
+            batch.DrawString(font, Text, textVec, Color.Black);
         }
 
         public override void Setup(Rectangle screen, ContentManager content)
@@ -42,7 +46,7 @@ namespace BattleLib.GraphicComponent
             Constraints.Height = screenHeight - Constraints.Y;
 
             batch.Draw(border, Constraints, Color.White);
-            batch.DrawString(font, _currentMessage, Constraints.Location.ToVector2() + margin, Color.Black);
+            batch.DrawString(font, Text, Constraints.Location.ToVector2() + margin, Color.Black);
         }
 
     }

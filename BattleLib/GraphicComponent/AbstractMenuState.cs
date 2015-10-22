@@ -85,5 +85,11 @@ namespace BattleLib.GraphicComponent
             }
         }
 
+
+        public virtual void OnShow()
+        { }
+
+        public virtual void OnHide()
+        { }
     }
 }

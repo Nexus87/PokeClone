@@ -58,8 +58,10 @@ namespace BattleLib.Components
             if (type == currentState.Type)
                 return;
 
+            currentState.Clean();
             if (!models.TryGetValue(type, out currentState))
                 throw new InvalidOperationException("Menu type \"" + type + "\" not found");
+            currentState.Init();
 
             if (OnMenuChanged != null)
                 OnMenuChanged(this, new MenuChangedArgs { MenuType = type });

@@ -5,14 +5,11 @@ using System.Collections.Generic;
 
 namespace BattleLib.Components
 {
-    public class AttackMenuModel : IMenuModel
+    public class AttackMenuModel : AbstractListModel<Move>
     {
-        List<Move> moves;
-
-        int selectedIndex = 0;
         public AttackMenuModel(Pokemon pkm)
         {
-            moves = pkm.Moves;
+            items = pkm.Moves;
         }
 
         //TODO remove this constructor
@@ -20,55 +17,23 @@ namespace BattleLib.Components
         {
             MoveData data1 = new MoveData{Name = "Attack1"};
             MoveData data2 = new MoveData{Name = "Attack2"};
-            moves = new List<Move> { new Move(data1), new Move(data2) };
+            items = new List<Move> { new Move(data1), new Move(data2) };
         }
-        public MenuType Type{ get { return MenuType.Attack; } }
-        
-        public event EventHandler<SelectionEventArgs> OnSelectionChanged;
-
-        public MenuType Back()
+        public override MenuType Type{ get { return MenuType.Attack; } }
+        public override MenuType Back()
         {
             return MenuType.Main;
         }
 
-        int NewSelection(Direction direction)
-        {
-            switch (direction)
-            {
-                case Direction.Up:
-                    return selectedIndex > 0 ? selectedIndex - 1 : selectedIndex;
-                case Direction.Down:
-                    return selectedIndex < moves.Count - 1 ? selectedIndex + 1 : selectedIndex;
-            }
-
-            return selectedIndex;
-        }
-        public void HandleDirection(Direction direction)
-        {
-            int newIndex = NewSelection(direction);
-
-            if (newIndex == selectedIndex)
-                return;
-
-            selectedIndex = newIndex;
-            if (OnSelectionChanged != null)
-                OnSelectionChanged(this, new SelectionEventArgs { NewSelection = selectedIndex });
-        }
-
-        public MenuType Select()
+        public override MenuType Select()
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerator<string> GetEnumerator()
-        {
-            foreach (var move in moves)
-                yield return move.Data.Name;
-        }
 
-        IEnumerator IEnumerable.GetEnumerator()
+        public override void Init()
         {
-            return this.GetEnumerator();
+            SelectIndex(0);
         }
     }
 }

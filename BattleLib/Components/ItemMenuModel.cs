@@ -8,65 +8,33 @@ using System.Threading.Tasks;
 
 namespace BattleLib.Components
 {
-    public class ItemMenuModel : IMenuModel
+    public class ItemMenuModel : AbstractListModel<Item>
     {
-        int selectedIndex = 0;
-        readonly List<Item> items = new List<Item>();
-
         public ItemMenuModel()
         {
+            var tmpItems = new List<Item>();
             for (int i = 0; i < 10; i++)
-                items.Add(new Item { Name = "Item" + (i + 1) });
+                tmpItems.Add(new Item { Name = "Item" + (i + 1) });
+            items = tmpItems;
         }
 
-        public event EventHandler<SelectionEventArgs> OnSelectionChanged;
+        public override MenuType Type{ get { return MenuType.Item; } }
 
-        public MenuType Type{ get { return MenuType.Item; } }
-
-        public MenuType Select()
+        public override MenuType Select()
         {
             throw new NotImplementedException();
         }
 
-        public MenuType Back()
+        public override MenuType Back()
         {
             return MenuType.Main;
         }
 
-        int NewSelection(Direction direction)
+        public override void Init()
         {
-            switch (direction)
-            {
-                case Direction.Up:
-                    return selectedIndex > 0 ? selectedIndex - 1 : selectedIndex;
-                case Direction.Down:
-                    return selectedIndex < items.Count - 1 ? selectedIndex + 1 : selectedIndex;
-            }
+            SelectIndex(0);
 
-            return selectedIndex;
         }
 
-        public void HandleDirection(Direction direction)
-        {
-            int newIndex = NewSelection(direction);
-
-            if (newIndex == selectedIndex)
-                return;
-
-            selectedIndex = newIndex;
-            if (OnSelectionChanged != null)
-                OnSelectionChanged(this, new SelectionEventArgs { NewSelection = selectedIndex });
-        }
-
-        public IEnumerator<string> GetEnumerator()
-        {
-            foreach(var item in items)
-                yield return item.Name;
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return this.GetEnumerator();
-        }
     }
 }

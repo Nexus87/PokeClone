@@ -25,6 +25,11 @@ namespace Base
 
 	public class Move
 	{
+        public override string ToString()
+        {
+            return Data.Name;
+        }
+
         public MoveData Data { get; private set; }
         public int RemainingPP { get; set; }
 		public Move (MoveData data)

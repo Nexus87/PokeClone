@@ -32,6 +32,8 @@ namespace BattleLib.Components
 
     public interface IMenuModel : IEnumerable<String>
     {
+        void Init();
+        void Clean();
         event EventHandler<SelectionEventArgs> OnSelectionChanged;
         MenuType Type { get; }
         MenuType Select();

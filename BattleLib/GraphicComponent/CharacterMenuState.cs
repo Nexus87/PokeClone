@@ -11,20 +11,21 @@ namespace BattleLib.GraphicComponent
     public class CharacterMenuState : AbstractMenuState
     {
         CharacterMenuModel model;
+        BattleGraphics graphics;
 
-        Rectangle textBox = new Rectangle();
         String text;
 
-        public CharacterMenuState(CharacterMenuModel model)
+        public CharacterMenuState(CharacterMenuModel model, BattleGraphics graphics)
             : base(model)
         {
             this.model = model;
-            
+            this.graphics = graphics;
+
             XPosition = 0;
             YPosition = 0;
 
             Width = 1.0f;
-            Heigth = 0.75f;
+            Heigth = 2.0f/3.0f;
 
         }
 
@@ -45,23 +46,15 @@ namespace BattleLib.GraphicComponent
                 text = items[0].Text;
         }
 
-        public override void Draw(GameTime time, Microsoft.Xna.Framework.Graphics.SpriteBatch batch, int screenWidth, int screenHeigth)
-        {
-            base.Draw(time, batch, screenWidth, screenHeigth);
-
-            textBox.X = 0;
-            textBox.Y = (int) (Heigth * screenHeigth);
-            textBox.Width = screenWidth;
-            textBox.Height = screenHeigth - textBox.Y;
-
-            batch.Draw(border, textBox, Color.White);
-            batch.DrawString(font, text, textBox.Location.ToVector2() + new Vector2(40, 40), Color.Black);
-        }
-
         protected override void model_OnSelectionChanged(object sender, SelectionEventArgs e)
         {
             base.model_OnSelectionChanged(sender, e);
-            text = currentItem.Text;
+            graphics.DisplayText(currentItem.Text);
+        }
+
+        public override void OnHide()
+        {
+            graphics.ClearText();
         }
     }
 }

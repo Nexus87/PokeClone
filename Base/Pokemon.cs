@@ -120,6 +120,10 @@ namespace Base
 
 		int _hp;
 
+        public override string ToString()
+        {
+            return Name;
+        }
 
 		#region ICharakter implementation
 
