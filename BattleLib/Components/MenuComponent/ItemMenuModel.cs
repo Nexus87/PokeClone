@@ -33,7 +33,6 @@ namespace BattleLib.Components
         public override void Init()
         {
             SelectIndex(0);
-
         }
 
     }

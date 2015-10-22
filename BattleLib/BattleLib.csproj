@@ -43,16 +43,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClientCommands.cs" />
-    <Compile Include="Components\AbstractListModel.cs" />
-    <Compile Include="Components\AbstractMenuModel.cs" />
-    <Compile Include="Components\AttackMenuModel.cs" />
-    <Compile Include="Components\CharacterMenuModel.cs" />
-    <Compile Include="Components\IMenuModel.cs" />
+    <Compile Include="Components\BattleStateComponent\BattleStateComponent.cs" />
+    <Compile Include="Components\BattleStateComponent\IBattleState.cs" />
+    <Compile Include="Components\MenuComponent\AbstractListModel.cs" />
+    <Compile Include="Components\MenuComponent\AbstractMenuModel.cs" />
+    <Compile Include="Components\MenuComponent\AttackMenuModel.cs" />
+    <Compile Include="Components\MenuComponent\CharacterMenuModel.cs" />
+    <Compile Include="Components\MenuComponent\IMenuModel.cs" />
     <Compile Include="Components\InputComponent.cs" />
-    <Compile Include="Components\ItemMenuModel.cs" />
-    <Compile Include="Components\MenuComponent.cs" />
-    <Compile Include="Components\MainMenuModel.cs" />
-    <Compile Include="Components\NullMenuModel.cs" />
+    <Compile Include="Components\MenuComponent\ItemMenuModel.cs" />
+    <Compile Include="Components\MenuComponent\MenuComponent.cs" />
+    <Compile Include="Components\MenuComponent\MainMenuModel.cs" />
+    <Compile Include="Components\MenuComponent\NullMenuModel.cs" />
     <Compile Include="GraphicComponent\AbstractMenuState.cs" />
     <Compile Include="GraphicComponent\AttackMenu.cs" />
     <Compile Include="GraphicComponent\BattleGraphics.cs" />
@@ -88,5 +90,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
 </Project>
