@@ -62,6 +62,6 @@ namespace BattleLib.GraphicComponent
         {
             base.model_OnSelectionChanged(sender, e);
             text = currentItem.Text;
-        }
+        }
     }
 }

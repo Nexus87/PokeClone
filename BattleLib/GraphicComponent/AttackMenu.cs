@@ -51,6 +51,5 @@ namespace BattleLib.GraphicComponent
                 items.Add(item);
             }
         }
-
     }
 }

@@ -50,6 +50,7 @@
     <Compile Include="Components\ItemMenuModel.cs" />
     <Compile Include="Components\MenuComponent.cs" />
     <Compile Include="Components\MainMenuModel.cs" />
+    <Compile Include="Components\NullMenuModel.cs" />
     <Compile Include="GraphicComponent\AbstractMenuState.cs" />
     <Compile Include="GraphicComponent\AttackMenu.cs" />
     <Compile Include="GraphicComponent\BattleGraphics.cs" />
@@ -60,10 +61,12 @@
     <Compile Include="GraphicComponent\MenuItem.cs" />
     <Compile Include="GraphicComponent\MessageBox.cs" />
     <Compile Include="GraphicComponent\MainMenuState.cs" />
+    <Compile Include="GraphicComponent\NullMenuState.cs" />
     <Compile Include="IBattleRules.cs" />
     <Compile Include="Interfaces\AbstractClient.cs" />
     <Compile Include="Interfaces\CommandReceiver.cs" />
     <Compile Include="Interfaces\IClientCommand.cs" />
+    <Compile Include="MenuComponentBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DefaultBattleServer.cs" />
     <Compile Include="Interfaces\IActionScheduler.cs" />

@@ -19,7 +19,8 @@ namespace BattleLib.Components
         Main,
         Attack,
         PKMN,
-        Item
+        Item,
+        None
     }
 
 

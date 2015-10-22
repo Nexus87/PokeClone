@@ -52,11 +52,6 @@ namespace BattleLib.GraphicComponent
             currentItem.Selected = true;
         }
 
-        public int SelectedIndex
-        {
-            set { throw new NotImplementedException(); }
-        }
-
         public virtual void Draw(GameTime time, SpriteBatch batch, int screenWidth, int screenHeigth)
         {
             position.X = (int)(screenWidth * XPosition);

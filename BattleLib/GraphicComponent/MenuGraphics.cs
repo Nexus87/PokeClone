@@ -15,6 +15,11 @@ namespace BattleLib.GraphicComponent
         Dictionary<MenuType, IMenuState> menus = new Dictionary<MenuType, IMenuState>();
         IMenuState currentState;
 
+        public MenuGraphics()
+        {
+            Add(MenuType.None, new NullMenuState());
+        }
+
         public void OnMenuChange(Object source, MenuChangedArgs args)
         {
             currentState = menus[args.MenuType];

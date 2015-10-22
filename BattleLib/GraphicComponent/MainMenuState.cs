@@ -44,6 +44,5 @@ namespace BattleLib.GraphicComponent
             Width = 1.0f - XPosition;
             Heigth = 1.0f - YPosition;
         }
-
     }
 }

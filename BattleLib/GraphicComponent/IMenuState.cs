@@ -12,8 +12,6 @@ namespace BattleLib.GraphicComponent
 {
     public interface IMenuState
     {
-        int SelectedIndex { set; }
-
         void Draw(GameTime time, SpriteBatch batch, int screenWidth, int screenHeigth);
         void Setup(ContentManager content);
     }

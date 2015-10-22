@@ -18,10 +18,18 @@ namespace BattleLib.Components
         Dictionary<MenuType, IMenuModel> models = new Dictionary<MenuType, IMenuModel>();
         IMenuModel currentState;
 
+        public MenuComponent()
+        {
+            AddModel(new NullMenuModel());
+        }
+
         public void SetMenu(MenuType type)
         {
             if (!models.TryGetValue(type, out currentState))
                 throw new InvalidOperationException("Menu type \"" + type + "\" not found");
+
+            if (OnMenuChanged != null)
+                OnMenuChanged(this, new MenuChangedArgs { MenuType = type });
         }
         public void HandleDirection(Direction direction)
         {
