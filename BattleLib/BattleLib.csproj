@@ -45,6 +45,7 @@
     <Compile Include="ClientCommands.cs" />
     <Compile Include="Components\BattleStateComponent\BattleStateComponent.cs" />
     <Compile Include="Components\BattleStateComponent\IBattleState.cs" />
+    <Compile Include="Components\BattleStateComponent\WaitForCharState.cs" />
     <Compile Include="Components\MenuComponent\AbstractListModel.cs" />
     <Compile Include="Components\MenuComponent\AbstractMenuModel.cs" />
     <Compile Include="Components\MenuComponent\AttackMenuModel.cs" />

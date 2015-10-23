@@ -8,10 +8,12 @@ using System.Threading.Tasks;
 
 namespace BattleLib.Components.BattleStateComponent
 {
-    internal interface IBattleState
+    public interface IBattleState
     {
-        void Update();
-        void SetCharacter(Pokemon pkmn);
-        void SetAction(IClientCommand command);
+        bool IsDone();
+        void Update(BattleData data);
+        void SetCharacter(ClientIdentifier id, Pokemon pkmn);
+        void SetMove(ClientIdentifier id, Move move);
+        void SetItem(ClientIdentifier id, Item item);
     }
 }
