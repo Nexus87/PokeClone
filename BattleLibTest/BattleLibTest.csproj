@@ -40,6 +40,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BattleServerTest.cs" />
+    <Compile Include="Components\MenuComponent\IMenuStateTest.cs" />
+    <Compile Include="Components\MenuComponent\MenuComponentTest.cs" />
     <Compile Include="Util\TestChar.cs" />
     <Compile Include="Util\TestClient.cs" />
   </ItemGroup>

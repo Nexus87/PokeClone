@@ -20,17 +20,16 @@ namespace BattleLib.Components
 
         public MenuComponent()
         {
-            AddModel(new NullMenuModel());
+            currentState = new NullMenuModel();
+            AddModel(currentState);
+            
         }
 
         public void SetMenu(MenuType type)
         {
-            if (!models.TryGetValue(type, out currentState))
-                throw new InvalidOperationException("Menu type \"" + type + "\" not found");
-
-            if (OnMenuChanged != null)
-                OnMenuChanged(this, new MenuChangedArgs { MenuType = type });
+            ChangeMenu(type);
         }
+
         public void HandleDirection(Direction direction)
         {
             currentState.HandleDirection(direction);
@@ -58,9 +57,12 @@ namespace BattleLib.Components
             if (type == currentState.Type)
                 return;
 
-            currentState.Clean();
-            if (!models.TryGetValue(type, out currentState))
+            IMenuModel newState;
+            if (!models.TryGetValue(type, out newState))
                 throw new InvalidOperationException("Menu type \"" + type + "\" not found");
+            
+            currentState.Clean();
+            currentState = newState;
             currentState.Init();
 
             if (OnMenuChanged != null)
