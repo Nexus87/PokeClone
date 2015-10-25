@@ -1,7 +1,6 @@
-﻿using System;
+﻿using BattleLib.Interfaces;
+using System;
 using System.Collections.Generic;
-using Base;
-using BattleLib.Interfaces;
 namespace BattleLib
 {
     public class ClientInfo

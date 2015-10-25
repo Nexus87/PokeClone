@@ -1,17 +1,8 @@
-﻿using GameEngine;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using BattleLib.Components;
-using Microsoft.Xna.Framework.Content;
+﻿using BattleLib.Components.Input;
 using BattleLib.Components.Menu;
-using BattleLib.Components.Input;
+using Microsoft.Xna.Framework;
 
-namespace BattleLib.GraphicComponent
+namespace BattleLib.GraphicComponents.MenuView
 {
     public class MainMenuState : AbstractMenuState
     {

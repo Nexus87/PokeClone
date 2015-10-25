@@ -1,11 +1,7 @@
-﻿using System;
+﻿using Base;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Runtime.Serialization.Json;
-using Base;
 using System.IO;
+using System.Runtime.Serialization.Json;
 
 namespace PokemonRules
 {

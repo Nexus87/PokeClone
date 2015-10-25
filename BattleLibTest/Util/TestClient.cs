@@ -21,13 +21,12 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 
-using BattleLib;
 using Base;
 using BattleLib.Interfaces;
 namespace BattleLibTest
 {
 
-	class TestClient : AbstractClient {
+    class TestClient : AbstractClient {
 		int _roundNumber;
 		int _roundCnt;
 		public int RoundNumbers { 

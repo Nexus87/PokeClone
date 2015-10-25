@@ -1,12 +1,7 @@
 ﻿
 using Base;
-using BattleLib.Components.Input;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using BattleLib.Components.Menu;
+using System;
 
 namespace BattleLib.Components.Input
 {

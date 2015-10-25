@@ -1,14 +1,9 @@
-﻿using BattleLib.Components;
-using BattleLib.Components.Input;
+﻿using BattleLib.Components.Input;
 using BattleLib.Components.Menu;
 using Microsoft.Xna.Framework;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace BattleLib.GraphicComponent
+namespace BattleLib.GraphicComponents.MenuView
 {
     public class CharacterMenuState : AbstractMenuState
     {

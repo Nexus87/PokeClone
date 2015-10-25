@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace BattleLib.GraphicComponent
+namespace BattleLib.GraphicComponents.MenuView
 {
     internal class NullMenuState : IMenuState
     {

@@ -1,15 +1,10 @@
 ﻿using Base;
-using BattleLib.Components;
 using BattleLib.Components.BattleState;
 using BattleLib.Components.Input;
 using BattleLib.Components.Menu;
-using BattleLib.GraphicComponent;
+using BattleLib.GraphicComponents;
+using BattleLib.GraphicComponents.MenuView;
 using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BattleLib
 {

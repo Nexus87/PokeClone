@@ -1,10 +1,9 @@
-﻿using System;
-using GameEngine;
-using BattleLib.GraphicComponent;
-using BattleLib.Components;
-using BattleLib;
-using BattleLib.Components.Menu;
+﻿using BattleLib;
 using BattleLib.Components.BattleState;
+using BattleLib.Components.Menu;
+using BattleLib.GraphicComponents;
+using GameEngine;
+using System;
 
 namespace PokemonGame
 {

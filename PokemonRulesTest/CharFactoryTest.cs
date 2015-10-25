@@ -1,9 +1,9 @@
-﻿using NUnit.Framework;
+﻿using Base;
 using Moq;
+using NUnit.Framework;
 using PokemonRules;
-using Base;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PokemonRulesTest
 {

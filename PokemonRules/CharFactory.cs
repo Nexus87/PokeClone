@@ -21,14 +21,12 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 
-using System.Linq;
-using System.Runtime.Serialization.Json;
-using System.IO;
 using Base;
 using System.Collections.Generic;
 
-namespace PokemonRules {
-    
+namespace PokemonRules
+{
+
     public class CharFactory
     {
         ICharacterRules _rules;
