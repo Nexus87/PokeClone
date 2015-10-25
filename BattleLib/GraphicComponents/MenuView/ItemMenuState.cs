@@ -29,7 +29,7 @@ namespace BattleLib.GraphicComponent
             Heigth = 1.0f - YPosition;
         }
 
-        public override void model_OnSelectionChanged(object sender, SelectionEventArgs e)
+        public override void model_OnSelectionChanged(object sender, SelectedIndexChangedEvent e)
         {
             int index = e.NewSelection;
 

@@ -14,7 +14,7 @@ namespace BattleLib.Components.Input
         {
         }
 
-        public override event EventHandler<PKMNSelectedEventArgs> OnPKMNSelected;
+        public override event EventHandler<SelectedEventArgs<Pokemon>> OnPKMNSelected;
         public override MenuType Type
         {
             get
@@ -26,7 +26,7 @@ namespace BattleLib.Components.Input
         public override MenuType Select()
         {
             if (OnPKMNSelected != null)
-                OnPKMNSelected(this, new PKMNSelectedEventArgs { SelectedPKMN = model.Get(selectedIndex) });
+                OnPKMNSelected(this, new SelectedEventArgs<Pokemon> { SelectedValue = model.Get(selectedIndex) });
 
             return MenuType.None;
         }

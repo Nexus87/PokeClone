@@ -32,6 +32,18 @@ namespace BattleLib.Components.BattleState
 
         IBattleState currentState;
 
+        public ClientIdentifier PlayerIdentifier {
+            get { return data.player; }
+            set { data.player = value; }
+        }
+
+        public ClientIdentifier AIIdentifier
+        {
+            get { return data.ai; }
+            set { data.ai = value; }
+        }
+
+        public BattleStateComponent(Game game) : base(game) { }
         public BattleStateComponent(ClientIdentifier player, ClientIdentifier ai, Game game) : base(game)
         {
             data.player = player;

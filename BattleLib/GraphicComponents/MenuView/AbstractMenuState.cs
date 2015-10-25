@@ -37,12 +37,12 @@ namespace BattleLib.GraphicComponent
 
         protected AbstractMenuState(IMenuController controller)
         {
-            controller.OnSelectionChanged += model_OnSelectionChanged;
+            controller.OnSelectedIndexChange += model_OnSelectionChanged;
         }
 
         protected AbstractMenuState() {}
 
-        public virtual void model_OnSelectionChanged(object sender, SelectionEventArgs e)
+        public virtual void model_OnSelectionChanged(object sender, SelectedIndexChangedEvent e)
         {
             if (e.NewSelection >= items.Count)
                 return;

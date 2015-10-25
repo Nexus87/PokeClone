@@ -14,14 +14,14 @@ namespace BattleLib.Components.Input
         {
         }
 
-        public override event EventHandler<ItemSelectedEventArgs> OnItemSelection;
+        public override event EventHandler<SelectedEventArgs<Item>> OnItemSelection;
 
         public override MenuType Type { get { return MenuType.Item; } }
 
         public override MenuType Select()
         {
             if (OnItemSelection != null)
-                OnItemSelection(this, new ItemSelectedEventArgs { SelectedItem = model.Get(selectedIndex) });
+                OnItemSelection(this, new SelectedEventArgs<Item> { SelectedValue = model.Get(selectedIndex) });
 
             return MenuType.None;
         }

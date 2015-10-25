@@ -1,4 +1,5 @@
-﻿using BattleLib.Components.BattleState;
+﻿using Base;
+using BattleLib.Components.BattleState;
 using BattleLib.Components.Menu;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
@@ -18,7 +19,6 @@ namespace BattleLib.Components.Input
     public class InputComponent : GameComponent
     {
         public event EventHandler<MenuChangedArgs> OnMenuChanged;
-        public event EventHandler<SelectionEventArgs> OnSelectionChanged;
 
         KeyboardState oldState;
         Dictionary<MenuType, IMenuController> states = new Dictionary<MenuType, IMenuController>();
@@ -36,6 +36,7 @@ namespace BattleLib.Components.Input
         {
             playerId = id;
             battleState = stateComponent;
+            battleState.PlayerIdentifier = playerId;
 
             currentState = new NullController();
             AddState(currentState);
@@ -44,32 +45,24 @@ namespace BattleLib.Components.Input
         public void AddState(IMenuController state)
         {
             states.Add(state.Type, state);
-            state.OnSelectionChanged += State_OnSelectionChanged;
             state.OnItemSelection += State_OnItemSelection;
             state.OnMoveSelected += State_OnMoveSelected;
             state.OnPKMNSelected += State_OnPKMNSelected;
         }
 
-        void State_OnSelectionChanged(object sender, SelectionEventArgs e)
+        void State_OnPKMNSelected(object sender, SelectedEventArgs<Pokemon> e)
         {
-            if (OnSelectionChanged != null)
-                OnSelectionChanged(this, e);
-
+            battleState.SetCharacter(playerId, e.SelectedValue);
         }
 
-        void State_OnPKMNSelected(object sender, PKMNSelectedEventArgs e)
+        void State_OnMoveSelected(object sender, SelectedEventArgs<Move> e)
         {
-            battleState.SetCharacter(playerId, e.SelectedPKMN);
+            battleState.SetMove(playerId, e.SelectedValue);
         }
 
-        void State_OnMoveSelected(object sender, MoveSelectedEventArgs e)
+        void State_OnItemSelection(object sender, SelectedEventArgs<Item> e)
         {
-            battleState.SetMove(playerId, e.SelectedMove);
-        }
-
-        void State_OnItemSelection(object sender, ItemSelectedEventArgs e)
-        {
-            battleState.SetItem(playerId, e.SelectedItem);
+            battleState.SetItem(playerId, e.SelectedValue);
         }
 
         public override void Update(GameTime gameTime)
@@ -101,10 +94,6 @@ namespace BattleLib.Components.Input
             if (!states.TryGetValue(type, out newState))
                 throw new InvalidOperationException("State '" + type + "' is unkown.");
             
-            // TODO: The following code depends on the behavior of MenuComponent and MenuGraphics:
-            // If we call Setup befor firing the OnMenuChanged event, OnSelectionChanged events
-            // will change the old state.
-
             currentState.TearDown();
             if (OnMenuChanged != null)
                 OnMenuChanged(this, new MenuChangedArgs { MenuType = type });

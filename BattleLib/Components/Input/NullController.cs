@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BattleLib.Components.Menu;
+using Base;
 
 namespace BattleLib.Components.Input
 {
@@ -11,10 +12,10 @@ namespace BattleLib.Components.Input
     {
         public MenuType Type{ get { return MenuType.None; } }
 
-        public event EventHandler<ItemSelectedEventArgs> OnItemSelection;
-        public event EventHandler<MoveSelectedEventArgs> OnMoveSelected;
-        public event EventHandler<PKMNSelectedEventArgs> OnPKMNSelected;
-        public event EventHandler<SelectionEventArgs> OnSelectionChanged;
+        public event EventHandler<SelectedEventArgs<Item>> OnItemSelection;
+        public event EventHandler<SelectedEventArgs<Move>> OnMoveSelected;
+        public event EventHandler<SelectedEventArgs<Pokemon>> OnPKMNSelected;
+        public event EventHandler<SelectedIndexChangedEvent> OnSelectedIndexChange;
 
         public MenuType Back()
         {

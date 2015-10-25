@@ -16,33 +16,23 @@ namespace BattleLib.Components.Input
         Right
     }
 
-    public class SelectionEventArgs : EventArgs
+    public class SelectedIndexChangedEvent : EventArgs
     {
         public int NewSelection { get; set; }
     }
 
-    public class ItemSelectedEventArgs : EventArgs
+    public class SelectedEventArgs<T> : EventArgs
     {
-        public Item SelectedItem { get; set; }
-    }
-
-    public class MoveSelectedEventArgs : EventArgs
-    {
-        public Move SelectedMove { get; set; }
-    }
-
-    public class PKMNSelectedEventArgs : EventArgs
-    {
-        public Pokemon SelectedPKMN { get; set; }
+        public T SelectedValue { get; set; }
     }
 
     public interface IMenuController
     {
-        event EventHandler<SelectionEventArgs> OnSelectionChanged;
+        event EventHandler<SelectedIndexChangedEvent> OnSelectedIndexChange;
 
-        event EventHandler<ItemSelectedEventArgs> OnItemSelection;
-        event EventHandler<MoveSelectedEventArgs> OnMoveSelected;
-        event EventHandler<PKMNSelectedEventArgs> OnPKMNSelected;
+        event EventHandler<SelectedEventArgs<Item>> OnItemSelection;
+        event EventHandler<SelectedEventArgs<Move>> OnMoveSelected;
+        event EventHandler<SelectedEventArgs<Pokemon>> OnPKMNSelected;
 
         void Setup();
         void TearDown();

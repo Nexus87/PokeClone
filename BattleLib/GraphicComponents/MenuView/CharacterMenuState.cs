@@ -48,7 +48,7 @@ namespace BattleLib.GraphicComponent
                 text = items[0].Text;
         }
 
-        public override void model_OnSelectionChanged(object sender, SelectionEventArgs e)
+        public override void model_OnSelectionChanged(object sender, SelectedIndexChangedEvent e)
         {
             base.model_OnSelectionChanged(sender, e);
             graphics.DisplayText(currentItem.Text);

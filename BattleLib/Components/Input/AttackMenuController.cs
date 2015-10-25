@@ -18,12 +18,12 @@ namespace BattleLib.Components.Input
 
         public override MenuType Type { get { return MenuType.Attack; } }
 
-        public override event EventHandler<MoveSelectedEventArgs> OnMoveSelected;
+        public override event EventHandler<SelectedEventArgs<Move>> OnMoveSelected;
 
         public override MenuType Select()
         {
             if (OnMoveSelected != null)
-                OnMoveSelected(this, new MoveSelectedEventArgs { SelectedMove = model.Get(selectedIndex) });
+                OnMoveSelected(this, new SelectedEventArgs<Move> { SelectedValue = model.Get(selectedIndex) });
 
             return MenuType.None;
         }
