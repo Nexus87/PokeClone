@@ -28,6 +28,8 @@ namespace BattleLib.Components.Input
             if (selectedIndex != newIndex)
                 SelectIndex(newIndex);
         }
+
+   
         protected void SelectIndex(int newIndex)
         {
             selectedIndex = newIndex;

@@ -29,7 +29,7 @@ namespace BattleLib.Components.Input
 
         public override void Setup()
         {
-            UpdateIndex(0);
+            SelectIndex(0);
         }
     }
 }

@@ -45,6 +45,12 @@ namespace BattleLib.Components.BattleState
             data.player = player;
             data.ai = ai;
         }
+
+        public override void Initialize()
+        {
+            if (AIIdentifier == null || PlayerIdentifier == null)
+                throw new InvalidOperationException("One of the identifier is missing");
+        }
         public override void Update(GameTime gameTime)
         {
             currentState.Update(data);
