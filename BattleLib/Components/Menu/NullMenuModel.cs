@@ -4,19 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BattleLib.Components
+namespace BattleLib.Components.Menu
 {
     internal class NullMenuModel : IMenuModel
     {
-        public event EventHandler<SelectionEventArgs> OnSelectionChanged;
-
         public MenuType Type{ get{ return MenuType.None; }}
-
-        public MenuType Select() { return Type; }
-
-        public MenuType Back() { return Type; }
-
-        public void HandleDirection(Direction direction) { }
 
         public IEnumerator<string> GetEnumerator()
         {
@@ -26,14 +18,6 @@ namespace BattleLib.Components
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
             return Enumerable.Empty<string>().GetEnumerator();
-        }
-
-        public void Init()
-        {
-        }
-
-        public void Clean()
-        {
         }
     }
 }

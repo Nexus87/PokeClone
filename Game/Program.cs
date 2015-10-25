@@ -3,6 +3,8 @@ using GameEngine;
 using BattleLib.GraphicComponent;
 using BattleLib.Components;
 using BattleLib;
+using BattleLib.Components.Menu;
+using BattleLib.Components.BattleState;
 
 namespace PokemonGame
 {
@@ -20,28 +22,18 @@ namespace PokemonGame
         {
             var engine = new Engine();
             var graphic = new BattleGraphics(engine);
-            
-            MenuComponentBuilder builder = new MenuComponentBuilder();
+            var battleState = new BattleStateComponent(new ClientIdentifier(), new ClientIdentifier(), engine);
+            MenuComponentBuilder builder = new MenuComponentBuilder(engine, battleState);
 
-            var mainModel = new MainMenuModel();
-            var attackModel = new AttackMenuModel();
-            var itemModel = new ItemMenuModel();
-            var pkmnModel = new CharacterMenuModel();
-
-            builder.AddMenu(mainModel, new MainMenuState(mainModel));
-            builder.AddMenu(attackModel, new AttackMenu(attackModel));
-            builder.AddMenu(itemModel, new ItemMenuState(itemModel));
-            builder.AddMenu(pkmnModel, new CharacterMenuState(pkmnModel, graphic));
-
-            builder.Component.SetMenu(MenuType.Main);
+            builder.BuildDefaultMenu(graphic);
+            builder.Input.SetMenu(MenuType.Main);
 
 
             graphic.MessageBox = new MessageBox();
             graphic.Menu = builder.Graphics;
 
-            var input = new InputComponent(builder.Component, engine);
             engine.setGraphicCompomnent(graphic);
-            engine.AddComponent(input);
+            engine.AddComponent(builder.Input);
 
             using (var game = new Game1())
                 engine.Run();

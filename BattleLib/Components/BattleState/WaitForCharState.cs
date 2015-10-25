@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BattleLib.Components.BattleStateComponent
+namespace BattleLib.Components.BattleState
 {
     public class WaitForCharState : IBattleState
     {

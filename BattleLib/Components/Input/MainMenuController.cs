@@ -1,28 +1,19 @@
-﻿using Microsoft.Xna.Framework;
+﻿using BattleLib.Components.Menu;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BattleLib.Components
+namespace BattleLib.Components.Input
 {
-
-    public class MainMenuModel : AbstractMenuModel<string>
+    public class MainMenuController : AbstractMenuController
     {
-        readonly List<String> mainMenu = new List<String> {
-            MenuType.Attack.ToString(),
-            MenuType.PKMN.ToString(),
-            MenuType.Item.ToString(),
-            "Run"
-        };
-
         public override MenuType Type { get { return MenuType.Main; } }
 
-        public MainMenuModel()
+        public override MenuType Back()
         {
-            items = mainMenu;
+            return Type;
         }
 
         public override void HandleDirection(Direction direction)
@@ -43,12 +34,6 @@ namespace BattleLib.Components
                     return MenuType.Item;
             }
 
-            return Type;
-        }
-
-        public override MenuType Back()
-        {
-            //Main Menu, can't go back
             return Type;
         }
 

@@ -1,4 +1,6 @@
 ﻿using BattleLib.Components;
+using BattleLib.Components.Input;
+using BattleLib.Components.Menu;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;

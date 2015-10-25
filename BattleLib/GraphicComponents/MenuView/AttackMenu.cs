@@ -8,14 +8,16 @@ using Microsoft.Xna.Framework.Graphics;
 using BattleLib.Components;
 using Base;
 using Microsoft.Xna.Framework.Content;
+using BattleLib.Components.Menu;
+using BattleLib.Components.Input;
 
 namespace BattleLib.GraphicComponent
 {
     public class AttackMenu : AbstractMenuState
     {
-        AttackMenuModel model;
+        IMenuModel model;
 
-        public AttackMenu(AttackMenuModel model) : base(model)
+        public AttackMenu(IMenuModel model, IMenuController controller) : base(controller)
         {
             this.model = model;
 

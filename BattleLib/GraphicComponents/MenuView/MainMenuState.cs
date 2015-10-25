@@ -8,12 +8,14 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using BattleLib.Components;
 using Microsoft.Xna.Framework.Content;
+using BattleLib.Components.Menu;
+using BattleLib.Components.Input;
 
 namespace BattleLib.GraphicComponent
 {
     public class MainMenuState : AbstractMenuState
     {
-        MainMenuModel model;
+        IMenuModel model;
 
         protected override void BuildMenu()
         {
@@ -34,7 +36,7 @@ namespace BattleLib.GraphicComponent
             }
 
         }
-        public MainMenuState(MainMenuModel model) : base(model)
+        public MainMenuState(IMenuModel model, IMenuController controller) : base(controller)
         {
             this.model = model;
 

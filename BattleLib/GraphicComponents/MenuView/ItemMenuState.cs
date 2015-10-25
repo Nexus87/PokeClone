@@ -1,4 +1,6 @@
 ﻿using BattleLib.Components;
+using BattleLib.Components.Input;
+using BattleLib.Components.Menu;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -10,13 +12,13 @@ namespace BattleLib.GraphicComponent
 {
     public class ItemMenuState : AbstractMenuState
     {
-        ItemMenuModel model;
+        IMenuModel model;
 
         List<MenuItem> internalItems = new List<MenuItem>();
         int itemViewStart = 0;
         readonly int maxItems = 8;
 
-        public ItemMenuState(ItemMenuModel model) : base(model)
+        public ItemMenuState(IMenuModel model, IMenuController controller) : base(controller)
         {
             this.model = model;
 
@@ -27,7 +29,7 @@ namespace BattleLib.GraphicComponent
             Heigth = 1.0f - YPosition;
         }
 
-        protected override void model_OnSelectionChanged(object sender, SelectionEventArgs e)
+        public override void model_OnSelectionChanged(object sender, SelectionEventArgs e)
         {
             int index = e.NewSelection;
 

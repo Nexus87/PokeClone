@@ -1,13 +1,22 @@
-﻿using System;
+﻿using BattleLib.Components.Menu;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BattleLib.Components
+namespace BattleLib.Components.Input
 {
-    public abstract class AbstractListModel<T> : AbstractMenuModel<T>
+    public abstract class AbstractListController<T> : AbstractMenuController
+        where T:IMenuModel
     {
+        protected T model;
+
+        protected AbstractListController(T model)
+        {
+            this.model = model;
+        }
+
         int NewSelection(Direction direction)
         {
             switch (direction)
@@ -15,7 +24,7 @@ namespace BattleLib.Components
                 case Direction.Up:
                     return selectedIndex > 0 ? selectedIndex - 1 : selectedIndex;
                 case Direction.Down:
-                    return selectedIndex < items.Count() - 1 ? selectedIndex + 1 : selectedIndex;
+                    return selectedIndex < model.Count() - 1 ? selectedIndex + 1 : selectedIndex;
             }
 
             return selectedIndex;

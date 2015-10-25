@@ -1,4 +1,6 @@
 ﻿using BattleLib.Components;
+using BattleLib.Components.Input;
+using BattleLib.Components.Menu;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -33,14 +35,14 @@ namespace BattleLib.GraphicComponent
 
         protected abstract void BuildMenu();
 
-        protected AbstractMenuState(IMenuModel model)
+        protected AbstractMenuState(IMenuController controller)
         {
-            model.OnSelectionChanged += model_OnSelectionChanged;
+            controller.OnSelectionChanged += model_OnSelectionChanged;
         }
 
         protected AbstractMenuState() {}
 
-        protected virtual void model_OnSelectionChanged(object sender, SelectionEventArgs e)
+        public virtual void model_OnSelectionChanged(object sender, SelectionEventArgs e)
         {
             if (e.NewSelection >= items.Count)
                 return;

@@ -1,37 +1,31 @@
-﻿using System;
-using System.Collections;
+﻿using BattleLib.Components.Menu;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BattleLib.Components
+namespace BattleLib.Components.Input
 {
-    public abstract class AbstractMenuModel<T> : IMenuModel
+    public abstract class AbstractMenuController : IMenuController 
     {
+        
         protected int selectedIndex = 0;
-        protected IEnumerable<T> items;
         public virtual void Init() { }
         public virtual void Clean() { }
 
         public event EventHandler<SelectionEventArgs> OnSelectionChanged;
 
+        public virtual event EventHandler<ItemSelectedEventArgs> OnItemSelection;
+        public virtual event EventHandler<MoveSelectedEventArgs> OnMoveSelected;
+        public virtual event EventHandler<PKMNSelectedEventArgs> OnPKMNSelected;
+
         public abstract MenuType Type { get; }
         public abstract MenuType Select();
-        public abstract MenuType Back();
+
+        public virtual MenuType Back() { return MenuType.Main; }
 
         public abstract void HandleDirection(Direction direction);
-
-        public IEnumerator<string> GetEnumerator()
-        {
-            foreach (var item in items)
-                yield return item.ToString();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return this.GetEnumerator();
-        }
 
         protected void UpdateIndex(int newIndex)
         {
@@ -43,6 +37,14 @@ namespace BattleLib.Components
             selectedIndex = newIndex;
             if (OnSelectionChanged != null)
                 OnSelectionChanged(this, new SelectionEventArgs { NewSelection = selectedIndex });
+        }
+
+        public virtual void Setup()
+        {
+        }
+
+        public virtual void TearDown()
+        {
         }
     }
 }
