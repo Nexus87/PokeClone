@@ -42,7 +42,6 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ClientCommands.cs" />
     <Compile Include="Components\BattleState\AbstractState.cs" />
     <Compile Include="Components\BattleState\BattleData.cs" />
     <Compile Include="Components\BattleState\BattleStateComponent.cs" />
@@ -79,15 +78,10 @@
     <Compile Include="GraphicComponents\MenuView\MainMenuState.cs" />
     <Compile Include="GraphicComponents\MenuView\NullMenuState.cs" />
     <Compile Include="IBattleRules.cs" />
-    <Compile Include="Interfaces\AbstractClient.cs" />
-    <Compile Include="Interfaces\CommandReceiver.cs" />
-    <Compile Include="Interfaces\IClientCommand.cs" />
     <Compile Include="MenuComponentBuilder.cs" />
     <Compile Include="ModelFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="DefaultBattleServer.cs" />
     <Compile Include="Interfaces\IActionScheduler.cs" />
-    <Compile Include="Interfaces\IBattleServer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

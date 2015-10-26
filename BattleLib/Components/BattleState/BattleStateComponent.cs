@@ -1,5 +1,4 @@
 ﻿using Base;
-using BattleLib.Interfaces;
 using Microsoft.Xna.Framework;
 using System;
 

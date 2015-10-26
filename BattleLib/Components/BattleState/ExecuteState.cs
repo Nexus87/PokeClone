@@ -10,10 +10,12 @@ namespace BattleLib.Components.BattleState
     {
         bool done = false;
         ICommandScheduler scheduler;
+        IBattleRules rules;
 
-        public ExecuteState(ICommandScheduler scheduler)
+        public ExecuteState(ICommandScheduler scheduler, IBattleRules rules)
         {
             this.scheduler = scheduler;
+            this.rules = rules;
         }
         public override void Init()
         {
@@ -30,7 +32,7 @@ namespace BattleLib.Components.BattleState
             scheduler.AppendCommand(data.aiCommand);
 
             foreach (var command in scheduler.ScheduleCommands())
-                command.Execute();
+                command.Execute(rules, data);
 
             data.aiCommand = null;
             data.playerCommand = null;
