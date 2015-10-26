@@ -30,7 +30,7 @@ using System.Collections.Generic;
 
 namespace BattleLibTest
 {
-    delegate void ApplyDelegate(ICharacter charakter);
+    delegate void ApplyDelegate(Pokemon charakter);
 
 	public class TestScheduler : ICommandScheduler {
         readonly List<IClientCommand> _commands = new List<IClientCommand>();
@@ -70,7 +70,7 @@ namespace BattleLibTest
             return true;
         }
 
-        public bool ExecMove(ICharacter source, Move move, ICharacter target)
+        public bool ExecMove(Pokemon source, Move move, Pokemon target)
         {
             return true;
         }
@@ -103,7 +103,7 @@ namespace BattleLibTest
         Mock<AbstractClient> clientMock2 = new Mock<AbstractClient>();
         Mock<ICommandScheduler> schedulerMock = new Mock<ICommandScheduler>();
         Mock<IBattleRules> rulesMock = new Mock<IBattleRules>();
-        Mock<ICharacter> characterMock = new Mock<ICharacter>();
+        Mock<Pokemon> characterMock = new Mock<Pokemon>();
         Mock<IClientCommand> commandMock = new Mock<IClientCommand>();
 
         IBattleServer _server;
@@ -122,7 +122,7 @@ namespace BattleLibTest
 
             rulesMock.Setup(r => r.CanEscape()).Returns(true);
             rulesMock.Setup(r => r.CanChange()).Returns(true);
-            rulesMock.Setup(r => r.ExecMove(It.IsAny<ICharacter>(), It.IsAny<Move>(), It.IsAny<ICharacter>())).Returns(true);
+            rulesMock.Setup(r => r.ExecMove(It.IsAny<Pokemon>(), It.IsAny<Move>(), It.IsAny<Pokemon>())).Returns(true);
             
             clientMock1.ResetCalls();
             clientMock2.ResetCalls();

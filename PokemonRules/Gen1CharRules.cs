@@ -49,21 +49,18 @@ namespace PokemonRules
 		{
             if (character == null) throw new ArgumentNullException("character", "Argument should not be null");
 
-			var baseStates = character.BaseData.BaseStats;
-			var ivStates = character.IV;
+            var baseStates = character.BaseData.BaseStats;
+            var ivStates = character.IV;
 
-			var newStats = new Stats{
-				HP = newState (baseStates.HP, ivStates.HP + 50.0d, level),
-				Atk = newState (baseStates.Atk, ivStates.Atk, level),
-				Def = newState (baseStates.Def, ivStates.Def, level),
-				SpAtk = newState (baseStates.SpAtk, ivStates.SpAtk, level),
-				SpDef = newState (baseStates.SpDef, ivStates.SpDef, level),
-				Speed = newState (baseStates.Speed, ivStates.Speed, level)
-			};
+            character.Stats.HP = newState(baseStates.HP, ivStates.HP + 50.0d, level);
+            character.Stats.Atk = newState(baseStates.Atk, ivStates.Atk, level);
+            character.Stats.Def = newState(baseStates.Def, ivStates.Def, level);
+            character.Stats.SpAtk = newState(baseStates.SpAtk, ivStates.SpAtk, level);
+            character.Stats.SpDef = newState(baseStates.SpDef, ivStates.SpDef, level);
+            character.Stats.Speed = newState(baseStates.Speed, ivStates.Speed, level);
 
-			character.Stats = newStats;
-			character.Level++;
-		}
+            character.Level++;
+        }
 
 		public Pokemon ToPokemon (PKData data)
 		{

@@ -18,13 +18,13 @@ namespace BattleLib.Interfaces
             return new MoveCommand(this, move, targetId);
         }
 
-        protected IClientCommand ChangeCommand(ICharacter character)
+        protected IClientCommand ChangeCommand(Pokemon character)
         {
             return new ChangeCommand(this, character);
         }
 
         public abstract string ClientName { get; }
         public abstract IClientCommand RequestAction();
-        public abstract ICharacter RequestCharacter();
+        public abstract Pokemon RequestCharacter();
     }
 }

@@ -46,6 +46,10 @@
     <Compile Include="Components\BattleState\AbstractState.cs" />
     <Compile Include="Components\BattleState\BattleData.cs" />
     <Compile Include="Components\BattleState\BattleStateComponent.cs" />
+    <Compile Include="Components\BattleState\Commands\ChangeCommand.cs" />
+    <Compile Include="Components\BattleState\Commands\ICommand.cs" />
+    <Compile Include="Components\BattleState\Commands\ItemCommand.cs" />
+    <Compile Include="Components\BattleState\Commands\MoveCommand.cs" />
     <Compile Include="Components\BattleState\ExecuteState.cs" />
     <Compile Include="Components\BattleState\IBattleState.cs" />
     <Compile Include="Components\BattleState\WaitForActionState.cs" />

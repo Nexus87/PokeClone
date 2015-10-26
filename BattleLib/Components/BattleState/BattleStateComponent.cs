@@ -5,15 +5,11 @@ using System;
 
 namespace BattleLib.Components.BattleState
 {
-    internal class PkmnChangedArgs : EventArgs
-    {
-        public ClientIdentifier id;
-    }
-
     public class ClientIdentifier
     {
         public String Name { get; set; }
     }
+
 
     public class BattleStateComponent : GameComponent
     {

@@ -26,6 +26,17 @@ namespace BattleLib
         {
             throw new NotImplementedException();
         }
+
+
+        public int Priority
+        {
+            get { return 11; }
+        }
+
+        public void Execute(IBattleRules rules, Components.BattleState.BattleData data)
+        {
+            throw new NotImplementedException();
+        }
     }
     public class MoveCommand : IClientCommand
     {
@@ -61,6 +72,17 @@ namespace BattleLib
         {
             throw new NotImplementedException();
         }
+
+
+        public int Priority
+        {
+            get { return _move.Data.Priority; }
+        }
+
+        public void Execute(IBattleRules rules, Components.BattleState.BattleData data)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class ExitCommand : IClientCommand
@@ -87,19 +109,30 @@ namespace BattleLib
         {
             throw new NotImplementedException();
         }
+
+
+        public int Priority
+        {
+            get { return 12; }
+        }
+
+        public void Execute(IBattleRules rules, Components.BattleState.BattleData data)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class ChangeCommand : IClientCommand
     {
         AbstractClient _source;
-        ICharacter _character;
+        Pokemon _character;
 
         public ChangeCommand(Pokemon newChar)
         {
             _character = newChar;
         }
 
-        public ChangeCommand(AbstractClient source, ICharacter character)
+        public ChangeCommand(AbstractClient source, Pokemon character)
         {
             _source = source;
             _character = character;
@@ -118,6 +151,17 @@ namespace BattleLib
 
 
         public void Execute()
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public int Priority
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public void Execute(IBattleRules rules, Components.BattleState.BattleData data)
         {
             throw new NotImplementedException();
         }

@@ -88,7 +88,7 @@ namespace Base
 		}
 	}
 
-	public class Pokemon : ICharacter
+	public class Pokemon
 	{
 
 		public Pokemon(PKData baseData, int level, string name, Stats stats, Stats iv)
@@ -107,7 +107,9 @@ namespace Base
 
         public PKData BaseData { get; private set; }
 		public int Level { get; set; }
-
+        public int HP { get; set; }
+        public String Name { get; set; }
+        
 		public Stats IV { get; private set; }
 		public Stats Stats { get; private set; }
 
@@ -130,34 +132,15 @@ namespace Base
 
 		public StatusCondition Condition { get; set; }
 
-		int _hp;
-
         public override string ToString()
         {
             return Name;
         }
 
-		#region ICharakter implementation
-
-		public string Name { get; private set; }
-		public int HP { 
-			get{ return _hp; }
-			set{
-				if (value <= 0) {
-					_hp = 0;
-					Condition = StatusCondition.KO;
-				} else if (value > Stats.HP)
-					_hp = Stats.HP;
-				else
-					_hp = value;
-			} 
-		}
-
 		public bool IsKO ()
 		{
 			return Condition == StatusCondition.KO;
 		}
-		#endregion
 
 
         public int Id

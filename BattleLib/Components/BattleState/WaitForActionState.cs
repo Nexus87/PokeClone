@@ -1,5 +1,5 @@
 ﻿using Base;
-using BattleLib.Interfaces;
+using BattleLib.Components.BattleState.Commands;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,8 +10,8 @@ namespace BattleLib.Components.BattleState
 {
     class WaitForActionState : IBattleState
     {
-        IClientCommand playerCommand = null;
-        IClientCommand aiCommand = null;
+        ICommand playerCommand = null;
+        ICommand aiCommand = null;
 
         ClientIdentifier player;
         ClientIdentifier ai;
@@ -48,16 +48,16 @@ namespace BattleLib.Components.BattleState
             if (id == player)
             {
                 Validate(playerCommand, "Player");
-                playerCommand = new ChangeCommand(pkmn);
+                playerCommand = new BattleLib.Components.BattleState.Commands.ChangeCommand(id, pkmn);
             }
             else if (id == ai)
             {
                 Validate(aiCommand, "AI");
-                aiCommand = new ChangeCommand(pkmn);
+                aiCommand = new BattleLib.Components.BattleState.Commands.ChangeCommand(id, pkmn);
             }
         }
 
-        private void Validate(IClientCommand target, string Name)
+        private void Validate(ICommand target, string Name)
         {
             if (target != null)
                 throw new InvalidOperationException(Name + " already made a move for this turn.");
@@ -68,12 +68,12 @@ namespace BattleLib.Components.BattleState
             if (id == player)
             {
                 Validate(playerCommand, "Player");
-                playerCommand = new MoveCommand(move);
+                playerCommand = new BattleLib.Components.BattleState.Commands.MoveCommand(id, move);
             }
             else if (id == ai)
             {
                 Validate(aiCommand, "AI");
-                aiCommand = new MoveCommand(move);
+                aiCommand = new BattleLib.Components.BattleState.Commands.MoveCommand(id, move);
             }
         }
 
@@ -82,12 +82,12 @@ namespace BattleLib.Components.BattleState
             if (id == player)
             {
                 Validate(playerCommand, "Player");
-                playerCommand = new ItemCommand(item);
+                playerCommand = new BattleLib.Components.BattleState.Commands.ItemCommand(id, item);
             }
             else if (id == ai)
             {
                 Validate(aiCommand, "AI");
-                aiCommand = new ItemCommand(item);
+                aiCommand = new BattleLib.Components.BattleState.Commands.ItemCommand(id, item);
             }
         }
     }

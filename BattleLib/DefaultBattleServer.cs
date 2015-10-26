@@ -75,7 +75,7 @@ namespace BattleLib
 
             foreach (var client in requestChar)
             {
-                ICharacter charakter = client.Key.RequestCharacter();
+                Pokemon charakter = client.Key.RequestCharacter();
                 if (charakter == null)
                     toBeRemoved.Add(client.Key);
                 else
@@ -154,7 +154,7 @@ namespace BattleLib
 
         class ClientData {
             public int Id { get; set; }
-            public ICharacter Character { get; set; }
+            public Pokemon Character { get; set; }
             public IClientCommand Command { get; set; }
         }
 
@@ -186,7 +186,7 @@ namespace BattleLib
             _rules.ExecMove(sourceChar, move, targetChar);
         }
 
-        public void ExecChange(AbstractClient source, ICharacter character)
+        public void ExecChange(AbstractClient source, Pokemon character)
         {
             validateClient(source);
             if (character == null)

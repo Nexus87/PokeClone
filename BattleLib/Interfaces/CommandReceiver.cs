@@ -6,6 +6,6 @@ namespace BattleLib.Interfaces
     {
         void ClientExit(AbstractClient source);
         void ExecMove(AbstractClient source, Move move, int targetId);
-        void ExecChange(AbstractClient source, ICharacter character);
+        void ExecChange(AbstractClient source, Pokemon character);
     }
 }

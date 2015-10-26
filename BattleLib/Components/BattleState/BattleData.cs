@@ -1,4 +1,5 @@
 ﻿using Base;
+using BattleLib.Components.BattleState.Commands;
 using BattleLib.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,11 @@ using System.Threading.Tasks;
 
 namespace BattleLib.Components.BattleState
 {
+    internal class PkmnChangedArgs : EventArgs
+    {
+        public ClientIdentifier id;
+    }
+
     public class BattleData
     {
         internal event EventHandler<PkmnChangedArgs> OnPkmnChange = (a, b) => { };
@@ -38,7 +44,7 @@ namespace BattleLib.Components.BattleState
             }
         }
 
-        public IClientCommand playerCommand;
-        public IClientCommand aiCommand;
+        public ICommand playerCommand;
+        public ICommand aiCommand;
     }
 }

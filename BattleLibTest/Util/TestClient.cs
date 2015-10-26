@@ -43,8 +43,8 @@ namespace BattleLibTest
 				return _roundCnt;
 			}
 		}
-        
-		public ICharacter Charakter { get; set; }
+
+        public Pokemon Charakter { get; set; }
         public IClientCommand Command { get; set; }
 
 		#region IBattleClient implementation
@@ -54,7 +54,7 @@ namespace BattleLibTest
             _roundCnt++;
             return Command;
 		}
-        public override ICharacter RequestCharacter()
+        public override Pokemon RequestCharacter()
 		{
             if (Charakter == null || Charakter.IsKO())
                 return null;

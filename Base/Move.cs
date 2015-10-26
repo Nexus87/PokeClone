@@ -9,6 +9,12 @@ namespace Base
 		Status
 	}
 
+    public enum Target
+    {
+        Enemy,
+        Self
+    }
+
 	[DataContract]
 	public class MoveData {
 		[DataMember]
@@ -21,6 +27,10 @@ namespace Base
 		public int? Accuracy { get; set; }
 		[DataMember]
 		public int PP { get; set; }
+        [DataMember]
+        public int Priority { get; set; }
+        [DataMember]
+        public Target TargetMode { get; set; }
 	}
 
 	public class Move

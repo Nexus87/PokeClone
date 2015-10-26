@@ -1,4 +1,5 @@
-﻿namespace BattleLib.Interfaces
+﻿using BattleLib.Components.BattleState;
+namespace BattleLib.Interfaces
 {
     public enum CommandType
     {
@@ -11,6 +12,8 @@
     public interface IClientCommand
     {
         CommandType Type{ get; }
+        int Priority { get; }
+        void Execute(IBattleRules rules, BattleData data);
         void Execute(ICommandReceiver receiver);
         void Execute();
     }
