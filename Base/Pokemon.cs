@@ -105,11 +105,23 @@ namespace Base
         public Pokemon(PKData baseData, Stats iv) : this(baseData, 1, baseData.Name, baseData.BaseStats, iv)
         {}
 
-        public PKData BaseData { get; set; }
+        public PKData BaseData { get; private set; }
 		public int Level { get; set; }
 
 		public Stats IV { get; private set; }
-		public Stats Stats { get; set; }
+		public Stats Stats { get; private set; }
+
+        public Stats StatModifier { get; private set; }
+        
+        public void ResetModifiers()
+        {
+            StatModifier.Atk = 0;
+            StatModifier.Def = 0;
+            StatModifier.HP = 0;
+            StatModifier.SpAtk = 0;
+            StatModifier.SpDef = 0;
+            StatModifier.Speed = 0;
+        }
 
         public List<Move> Moves { get; private set; }
 
