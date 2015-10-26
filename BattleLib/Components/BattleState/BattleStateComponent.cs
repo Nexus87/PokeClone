@@ -5,21 +5,14 @@ using System;
 
 namespace BattleLib.Components.BattleState
 {
+    internal class PkmnChangedArgs : EventArgs
+    {
+        public ClientIdentifier id;
+    }
+
     public class ClientIdentifier
     {
         public String Name { get; set; }
-    }
-
-    public class BattleData
-    {
-        public ClientIdentifier player;
-        public ClientIdentifier ai;
-
-        public Pokemon playerPkmn;
-        public Pokemon aiPkmn;
-
-        public IClientCommand playerCommand;
-        public IClientCommand aiCommand;
     }
 
     public class BattleStateComponent : GameComponent
@@ -51,6 +44,7 @@ namespace BattleLib.Components.BattleState
             if (AIIdentifier == null || PlayerIdentifier == null)
                 throw new InvalidOperationException("One of the identifier is missing");
         }
+
         public override void Update(GameTime gameTime)
         {
             currentState.Update(data);

@@ -3,7 +3,7 @@ using System;
 
 namespace BattleLib.Components.BattleState
 {
-    public class WaitForCharState : IBattleState
+    public class WaitForCharState : AbstractState
     {
         bool done = false;
 
@@ -19,50 +19,46 @@ namespace BattleLib.Components.BattleState
             this.ai = ai;
         }
 
-        public void Update(BattleData data)
+        public override void Init()
         {
-            if (data.playerPkmn != null && enqueuedPlayerChar != null)
-                throw new InvalidOperationException("Player character is already set!\n");
-            if(data.aiPkmn != null && enqueuedAiChar != null)
-                throw new InvalidOperationException("AI character is already set!\n");
+            enqueuedAiChar = null;
+            enqueuedPlayerChar = null;
+            done = false;
+        }
 
-            if (enqueuedPlayerChar != null)
+        public override void Update(BattleData data)
+        {
+            done = data.PlayerPkmn != null && data.AIPkmn != null;
+            if (done)
+                return;
+
+            if (data.PlayerPkmn == null && enqueuedPlayerChar != null)
+                data.PlayerPkmn = enqueuedPlayerChar;
+
+            if (data.AIPkmn == null && enqueuedAiChar != null)
+                data.AIPkmn = enqueuedAiChar;
+
+        }
+
+        public override void SetCharacter(ClientIdentifier id, Pokemon pkmn)
+        {
+            if (id == player)
             {
-                data.playerPkmn = enqueuedPlayerChar;
-                enqueuedPlayerChar = null;
-            }
-
-            if (enqueuedAiChar != null)
-            {
-                data.aiPkmn = enqueuedAiChar;
-                enqueuedAiChar = null;
-            }
-
-            done = data.playerPkmn != null && data.aiPkmn != null;
-        }
-
-        public void SetMove(ClientIdentifier id, Move move)
-        {
-            // Does nothing
-        }
-
-        public void SetItem(ClientIdentifier id, Item item)
-        {
-            // Does nothing
-        }
-
-
-        public void SetCharacter(ClientIdentifier id, Pokemon pkmn)
-        {
-            if(id == player)
+                if (enqueuedPlayerChar != null)
+                    throw new InvalidOperationException("Character is already set for player.");
                 enqueuedPlayerChar = pkmn;
-            else if(id == ai)
+            }
+            else if (id == ai)
+            {
+                if (enqueuedAiChar != null)
+                    throw new InvalidOperationException("Character is already set for AI.");
                 enqueuedAiChar = pkmn;
+            }
             else
                 throw new ArgumentException("Source identifier not found\n");
         }
 
-        public bool IsDone()
+        public override bool IsDone()
         {
             return done;
         }

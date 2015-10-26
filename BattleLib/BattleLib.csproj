@@ -43,8 +43,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClientCommands.cs" />
+    <Compile Include="Components\BattleState\AbstractState.cs" />
+    <Compile Include="Components\BattleState\BattleData.cs" />
     <Compile Include="Components\BattleState\BattleStateComponent.cs" />
+    <Compile Include="Components\BattleState\ExecuteState.cs" />
     <Compile Include="Components\BattleState\IBattleState.cs" />
+    <Compile Include="Components\BattleState\WaitForActionState.cs" />
     <Compile Include="Components\BattleState\WaitForCharState.cs" />
     <Compile Include="Components\Input\AbstractListController.cs" />
     <Compile Include="Components\Input\AbstractMenuController.cs" />

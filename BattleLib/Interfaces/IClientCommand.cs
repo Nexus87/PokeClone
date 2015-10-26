@@ -12,6 +12,7 @@
     {
         CommandType Type{ get; }
         void Execute(ICommandReceiver receiver);
+        void Execute();
     }
 
 
