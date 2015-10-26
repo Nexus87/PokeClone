@@ -56,6 +56,7 @@ namespace GameEngine
         {
             foreach (var comp in _components)
                 comp.Initialize();
+            base.Initialize();
         }
         protected override void Update(GameTime gameTime)
         {
