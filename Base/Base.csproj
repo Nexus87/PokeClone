@@ -44,6 +44,7 @@
     <Compile Include="BaseStats.cs" />
     <Compile Include="Move.cs" />
     <Compile Include="ISpecialEffect.cs" />
+    <Compile Include="TypeTable.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

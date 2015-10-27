@@ -34,7 +34,7 @@ namespace BattleLib.Components.BattleState.Commands
             if (id == data.player)
             {
                 source = data.PlayerPkmn;
-                if (!rules.ExecChange(source, newPkmn))
+                if (!rules.TryChange(source, newPkmn))
                     return;
 
                 data.PlayerPkmn = newPkmn;
@@ -43,7 +43,7 @@ namespace BattleLib.Components.BattleState.Commands
             {
                 source = data.AIPkmn;
 
-                if (!rules.ExecChange(source, newPkmn))
+                if (!rules.TryChange(source, newPkmn))
                     return;
 
                 data.AIPkmn = newPkmn;

@@ -5,7 +5,9 @@ namespace BattleLib
 {
     public class OnDamageTakenArgs : EventArgs
     {
+        public bool hit;
         public bool critical;
+        public bool effective;
         public Pokemon pkmn;
     }
 
@@ -31,8 +33,8 @@ namespace BattleLib
         bool CanEscape();
         bool CanChange();
         
-        bool ExecMove(Pokemon source, Move move, Pokemon target);
-        bool ExecChange(Pokemon oldPkmn, Pokemon newPkmn);
+        void ExecMove(Pokemon source, Move move, Pokemon target);
+        bool TryChange(Pokemon oldPkmn, Pokemon newPkmn);
         bool UseItem(Pokemon target, Item item);
     }
 }

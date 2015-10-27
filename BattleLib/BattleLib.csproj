@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Components\BattleState\AbstractState.cs" />
     <Compile Include="Components\BattleState\BattleData.cs" />
+    <Compile Include="Components\BattleState\BattleModel.cs" />
     <Compile Include="Components\BattleState\BattleStateComponent.cs" />
     <Compile Include="Components\BattleState\Commands\ChangeCommand.cs" />
     <Compile Include="Components\BattleState\Commands\ICommand.cs" />
