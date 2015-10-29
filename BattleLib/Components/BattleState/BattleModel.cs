@@ -9,6 +9,7 @@ namespace BattleLib.Components.BattleState
 {
     public class BattleModel
     {
+        // TODO Send informations about what has changed
         public event EventHandler<Object> OnDataChange = (a,b) => {};
 
         int playerPkmn;

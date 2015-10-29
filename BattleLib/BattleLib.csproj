@@ -68,6 +68,7 @@
     <Compile Include="Components\Menu\MenuComponent.cs" />
     <Compile Include="Components\Menu\NullMenuModel.cs" />
     <Compile Include="Gen1BattleRules.cs" />
+    <Compile Include="GraphicComponents\BattleStateView.cs" />
     <Compile Include="GraphicComponents\MenuView\AbstractMenuState.cs" />
     <Compile Include="GraphicComponents\MenuView\AttackMenu.cs" />
     <Compile Include="GraphicComponents\BattleGraphics.cs" />
