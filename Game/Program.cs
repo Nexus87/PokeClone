@@ -20,7 +20,7 @@ namespace PokemonGame
         static void Main()
         {
             var engine = new Engine();
-            var graphic = new BattleGraphics(engine);
+            var graphic = new BattleGraphics();
             var battleState = new BattleStateComponent(new ClientIdentifier(), new ClientIdentifier(), engine);
             MenuComponentBuilder builder = new MenuComponentBuilder(engine, battleState);
 

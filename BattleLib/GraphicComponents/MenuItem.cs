@@ -6,7 +6,7 @@ using System;
 
 namespace BattleLib.GraphicComponents
 {
-    public class MenuItem : AbstractGraphicComponent
+    public class MenuItem
     {
         SpriteFont font;
         Texture2D arrow;
@@ -26,7 +26,7 @@ namespace BattleLib.GraphicComponents
         public bool Selected { get; set; }
         public String Text { get; set; }
 
-        public override void Draw(Vector2 origin, SpriteBatch batch, GameTime time)
+        public void Draw(Vector2 origin, SpriteBatch batch, GameTime time)
         {
             if (Selected)
             {
@@ -36,7 +36,7 @@ namespace BattleLib.GraphicComponents
             batch.DrawString(font, Text, origin + textPosition, Color.Black);
         }
 
-        public override void Setup(Rectangle screen, ContentManager content)
+        public void Setup(Rectangle screen, ContentManager content)
         {
 
         }

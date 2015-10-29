@@ -15,28 +15,19 @@ namespace BattleLib.GraphicComponents
         public MessageBox MessageBox { get; set; }
         public MenuGraphics Menu { get; set; }
 
-        public BattleGraphics(Game game) : base(game)
-        {
-        }
-
         public override void Setup(Rectangle screen, ContentManager content)
         {
             screenWidth = screen.Size.X;
             screenHeight = screen.Size.Y;
 
-            var border = Game.Content.Load<Texture2D>("border");
-            var arrow = Game.Content.Load<Texture2D>("arrow");
-            var font = Game.Content.Load<SpriteFont>("MenuFont");
+            var border = content.Load<Texture2D>("border");
+            var arrow = content.Load<Texture2D>("arrow");
+            var font = content.Load<SpriteFont>("MenuFont");
 
             MessageBox.Setup(screen, content);
             Menu.Setup(content);
         }
 
-        public override void Draw(Vector2 origin, SpriteBatch batch, GameTime time)
-        {
-            MessageBox.Draw(time, batch, screenWidth, screenHeight);
-            Menu.Draw(time, batch, screenWidth, screenHeight);
-        }
 
         public void DisplayText(String text)
         {
@@ -47,6 +38,12 @@ namespace BattleLib.GraphicComponents
         public void ClearText()
         {
             DisplayText("");
+        }
+
+        public override void Draw(GameTime time, SpriteBatch batch, int screenWidth, int screenHeight)
+        {
+            MessageBox.Draw(time, batch, screenWidth, screenHeight);
+            Menu.Draw(time, batch, screenWidth, screenHeight);
         }
     }
 }

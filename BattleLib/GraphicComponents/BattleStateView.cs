@@ -51,12 +51,13 @@ namespace BattleLib.GraphicComponents
             if (lastAIHP.CompareTo(model.AIHP) != 0)
                 lastAIHP = model.AIHP;
         }
-        public override void Draw(Vector2 origin, SpriteBatch batch, GameTime time)
+
+        public override void Setup(Rectangle screen, ContentManager content)
         {
             throw new NotImplementedException();
         }
 
-        public override void Setup(Rectangle screen, ContentManager content)
+        public override void Draw(GameTime time, SpriteBatch batch, int screenWidth, int screenHeight)
         {
             throw new NotImplementedException();
         }

@@ -18,13 +18,6 @@ namespace BattleLib.GraphicComponents
         {
             Text = "";
         }
-        public override void Draw(Vector2 Origin, SpriteBatch batch, GameTime gameTime)
-        {
-            Constraints.Location = Origin.ToPoint();
-            Vector2 textVec = Origin + margin;
-            batch.Draw(border,Constraints, Color.White);
-            batch.DrawString(font, Text, textVec, Color.Black);
-        }
 
         public override void Setup(Rectangle screen, ContentManager content)
         {
