@@ -27,6 +27,9 @@ namespace BattleLib.GraphicComponents
         BattleModel model;
         TextureProvider provider;
 
+        Texture2D playerTexture;
+        Texture2D aiTexture;
+
         public BattleStateView(BattleModel model, TextureProvider provider)
         {
             this.model = model;
@@ -39,9 +42,10 @@ namespace BattleLib.GraphicComponents
         void model_OnDataChange(object sender, object e)
         {
             if (lastPlayerId != model.PlayerPkmn)
-                lastPlayerId = model.PlayerPkmn;
+                UpdatePlayerId();
             if (lastAIId != model.AIPkmn)
-                lastAIId = model.AIPkmn;
+                UpdteAiId();
+
             if (lastPlayerCondition != model.PlayerCondition)
                 lastPlayerCondition = model.PlayerCondition;
             if (lastAICondition != model.AICondition)
@@ -54,7 +58,20 @@ namespace BattleLib.GraphicComponents
 
         public override void Setup(Rectangle screen, ContentManager content)
         {
-            throw new NotImplementedException();
+            UpdatePlayerId();
+            UpdteAiId();
+        }
+
+        private void UpdteAiId()
+        {
+            lastAIId = model.AIPkmn;
+            aiTexture = provider.getTexturesFront(lastAIId);
+        }
+
+        private void UpdatePlayerId()
+        {
+            lastPlayerId = model.PlayerPkmn;
+            playerTexture = provider.getTextureBack(lastPlayerId);
         }
 
         public override void Draw(GameTime time, SpriteBatch batch, int screenWidth, int screenHeight)

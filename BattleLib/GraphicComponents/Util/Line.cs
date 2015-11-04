@@ -11,6 +11,31 @@ namespace BattleLib.GraphicComponents.Util
 {
     class Line
     {
+        public float X { get; set; }
+        public float Y { get; set; }
+
+        public float Width { get; set; }
+        public float Heigth { get; set; }
+
+        void CalculateStartEnd()
+        {
+            newStart.X = X + (Heigth / 4.0f);
+            newStart.Y = Y;
+            newScale.X = Width - (Heigth/2.0f);
+            newScale.Y = Heigth;
+
+            cupStart.X = X;
+            cupStart.Y = Y;
+
+            cupEnd.X = X + newScale.X;
+            cupEnd.Y = Y;
+
+            cupScale = ((1.0f) / cups.Height) * Heigth;
+        }
+
+        Vector2 absoluteStart;
+        Vector2 absoluteScale;
+
         Texture2D pixel;
         Texture2D cups;
 
@@ -20,6 +45,12 @@ namespace BattleLib.GraphicComponents.Util
         Vector2 scale;
         Vector2 start;
         Vector2 end;
+
+        Vector2 newScale;
+        Vector2 newStart;
+        Vector2 cupStart;
+        Vector2 cupEnd;
+        float cupScale;
 
         public Color Color { get; set; }
         public float Scale
@@ -84,10 +115,37 @@ namespace BattleLib.GraphicComponents.Util
                 Init(batch.GraphicsDevice);
 
             batch.Draw(pixel, start, null, Color, angle, Vector2.Zero, scale, SpriteEffects.None, 0);
-            batch.Draw(cups, start + circleOffset, null, Color, 0, Vector2.Zero, circleScale, SpriteEffects.None, 0);
-            batch.Draw(cups, end + circleOffset, null, Color, 0, Vector2.Zero, circleScale, SpriteEffects.None, 0);
+            //batch.Draw(cups, start + circleOffset, null, Color, 0, Vector2.Zero, circleScale, SpriteEffects.None, 0);
+            //batch.Draw(cups, end + circleOffset, null, Color, 0, Vector2.Zero, circleScale, SpriteEffects.None, 0);
         }
 
+        public void Draw(SpriteBatch batch, int screenWidth, int screenHeight)
+        {
+            if (pixel == null)
+                Init(batch.GraphicsDevice);
+
+            CalculateStartEnd();
+
+            absoluteStart.X = newStart.X * screenWidth;
+            absoluteStart.Y = newStart.Y * screenHeight;
+
+            absoluteScale.X = newScale.X * screenWidth;
+            absoluteScale.Y = newScale.Y * screenHeight;
+
+            batch.Draw(pixel, absoluteStart, null, Color, angle, Vector2.Zero, absoluteScale, SpriteEffects.None, 0);
+
+            float absoluteCupScale = cupScale * screenHeight;
+
+            absoluteStart.X = cupStart.X * screenWidth;
+            absoluteStart.Y = cupStart.Y * screenHeight;
+
+            batch.Draw(cups, absoluteStart, null, Color, 0, Vector2.Zero, absoluteCupScale, SpriteEffects.None, 0);
+
+            absoluteStart.X = cupEnd.X * screenWidth;
+            absoluteStart.Y = cupEnd.Y * screenHeight;
+
+            batch.Draw(cups, absoluteStart, null, Color, 0, Vector2.Zero, absoluteCupScale, SpriteEffects.None, 0);
+        }
         public void Setup(ContentManager content)
         {
             cups = content.Load<Texture2D>("circle");

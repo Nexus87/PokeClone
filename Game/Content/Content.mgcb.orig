@@ -43,7 +43,11 @@
 /processorParam:TextureFormat=Color
 /build:arrow.png
 
+<<<<<<< Updated upstream
 #begin circle.png
+=======
+#begin charmander-back.png
+>>>>>>> Stashed changes
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -53,7 +57,10 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
+<<<<<<< Updated upstream
 /build:circle.png
+=======
+/build:charmander-back.png
 
 #begin charmander-front.png
 /importer:TextureImporter
@@ -67,15 +74,4 @@
 /processorParam:TextureFormat=Color
 /build:charmander-front.png
 
-#begin charmander-back.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:charmander-back.png
-
+>>>>>>> Stashed changes

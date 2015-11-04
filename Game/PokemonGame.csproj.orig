@@ -58,9 +58,12 @@
   <ItemGroup>
     <Content Include="Content\arrow.png" />
     <Content Include="Content\border.png" />
+<<<<<<< Updated upstream
     <Content Include="Content\circle.png" />
+=======
     <Content Include="Content\charmander-back.png" />
     <Content Include="Content\charmander-front.png" />
+>>>>>>> Stashed changes
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>

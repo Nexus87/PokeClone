@@ -18,14 +18,14 @@ namespace GameEngine
 
         public TextureProvider() { }
 
-        Texture2D getTexturesFront(int id)
+        public Texture2D getTexturesFront(int id)
         {
-            return Content.Load<Texture2D>(id.ToString() + "-front");
+            return Content.Load<Texture2D>("charmander-front");
         }
 
-        Texture2D getTextureBack(int id)
+        public Texture2D getTextureBack(int id)
         {
-            return Content.Load<Texture2D>(id.ToString() + "-back");
+            return Content.Load<Texture2D>("charmander-back");
         }
     }
 }
