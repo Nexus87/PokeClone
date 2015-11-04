@@ -58,6 +58,7 @@
   <ItemGroup>
     <Content Include="Content\arrow.png" />
     <Content Include="Content\border.png" />
+    <Content Include="Content\circle.png" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
