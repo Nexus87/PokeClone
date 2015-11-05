@@ -49,12 +49,11 @@ namespace GameEngine
             screenWidth = GraphicsDevice.Viewport.Bounds.Width;
             screenHeight = GraphicsDevice.Viewport.Bounds.Height;
             _grapics.Setup(GraphicsDevice.Viewport.Bounds, Content);
+            transformation = Matrix.CreateScale(screenWidth, screenHeight, 1);
         }
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(new Color(248, 248, 248, 0));
-            transformation.M11 = screenWidth;
-            transformation.M22 = screenHeight;
             _batch.Begin(transformMatrix: transformation);
             _grapics.Draw(gameTime, _batch, 1, 1);
             _batch.End();

@@ -14,6 +14,8 @@ namespace BattleLib.GraphicComponents
         Texture2D border;
         SpriteFont font;
         TextureBox box = new TextureBox("border");
+        TextGraphic text = new TextGraphic("MenuFont");
+
         public String Text{ private get; set; }
 
         public MessageBox()
@@ -22,13 +24,20 @@ namespace BattleLib.GraphicComponents
             box.Y = 2.0f / 3.0f;
             box.Width = 1;
             box.Height = 1.0f / 3.0f;
+
+            text.X = box.X + 0.05f;
+            text.Y = box.Y + 0.05f;
+
+            text.Text = "abc";
         }
 
         public override void Setup(Rectangle screen, ContentManager content)
         {
             border = content.Load<Texture2D>("border");
             font = content.Load<SpriteFont>("MenuFont");
+            
             box.Setup(content);
+            text.Setup(content);
         }
 
 
@@ -40,8 +49,9 @@ namespace BattleLib.GraphicComponents
             Constraints.Width = screenWidth;
             Constraints.Height = screenHeight - Constraints.Y;
 
-            box.Draw(batch);
-            batch.DrawString(font, Text, Constraints.Location.ToVector2() + margin, Color.Black);
+            //box.Draw(batch);
+            text.Draw(batch);
+            //batch.DrawString(font, Text, Constraints.Location.ToVector2() + margin, Color.Black);
         }
 
     }
