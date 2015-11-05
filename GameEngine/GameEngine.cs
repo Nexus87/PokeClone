@@ -12,12 +12,14 @@ namespace GameEngine
         IGraphicComponent _grapics = null;
         Vector2 origin = new Vector2(0, 0);
         GraphicsDeviceManager graphics;
+        Matrix transformation = Matrix.Identity;
         SpriteBatch _batch;
-        private int screenHeigth;
+        private int screenHeight;
         private int screenWidth;
 
         public Engine() : base()
         {
+            this.Window.AllowUserResizing = true;
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
         }
@@ -45,14 +47,16 @@ namespace GameEngine
             if (_grapics == null)
                 throw new InvalidOperationException("Graphic component is not set");
             screenWidth = GraphicsDevice.Viewport.Bounds.Width;
-            screenHeigth = GraphicsDevice.Viewport.Bounds.Height;
+            screenHeight = GraphicsDevice.Viewport.Bounds.Height;
             _grapics.Setup(GraphicsDevice.Viewport.Bounds, Content);
         }
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(new Color(248, 248, 248, 0));
-            _batch.Begin();
-            _grapics.Draw(gameTime, _batch, screenWidth, screenHeigth);
+            transformation.M11 = screenWidth;
+            transformation.M22 = screenHeight;
+            _batch.Begin(transformMatrix: transformation);
+            _grapics.Draw(gameTime, _batch, 1, 1);
             _batch.End();
         }
 

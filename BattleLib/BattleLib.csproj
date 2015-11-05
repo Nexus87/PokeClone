@@ -81,6 +81,7 @@
     <Compile Include="GraphicComponents\MenuView\MainMenuState.cs" />
     <Compile Include="GraphicComponents\MenuView\NullMenuState.cs" />
     <Compile Include="GraphicComponents\Util\Line.cs" />
+    <Compile Include="GraphicComponents\Util\TextureBox.cs" />
     <Compile Include="IBattleRules.cs" />
     <Compile Include="MenuComponentBuilder.cs" />
     <Compile Include="ModelFactory.cs" />

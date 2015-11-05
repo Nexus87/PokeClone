@@ -1,4 +1,5 @@
-﻿using GameEngine;
+﻿using BattleLib.GraphicComponents.Util;
+using GameEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -12,17 +13,22 @@ namespace BattleLib.GraphicComponents
         readonly Vector2 margin = new Vector2(50, 30);
         Texture2D border;
         SpriteFont font;
+        TextureBox box = new TextureBox("border");
         public String Text{ private get; set; }
 
         public MessageBox()
         {
-            Text = "";
+            Text = "abc";
+            box.Y = 2.0f / 3.0f;
+            box.Width = 1;
+            box.Height = 1.0f / 3.0f;
         }
 
         public override void Setup(Rectangle screen, ContentManager content)
         {
             border = content.Load<Texture2D>("border");
             font = content.Load<SpriteFont>("MenuFont");
+            box.Setup(content);
         }
 
 
@@ -34,7 +40,7 @@ namespace BattleLib.GraphicComponents
             Constraints.Width = screenWidth;
             Constraints.Height = screenHeight - Constraints.Y;
 
-            batch.Draw(border, Constraints, Color.White);
+            box.Draw(batch);
             batch.DrawString(font, Text, Constraints.Location.ToVector2() + margin, Color.Black);
         }
 
