@@ -29,7 +29,15 @@ namespace GameEngine.Graphics
 
         public float TextSize { get { return textSize; } set { textSize = value; CalculateFontScale(); } }
         public String Text { get { return text; } set { text = value; CalculateFontScale(); } }
+        public float TextWidth { get { return CalculateTextLength(); } }
 
+        private float CalculateTextLength()
+        {
+            if (font == null)
+                return 0;
+
+            return scale.X * font.MeasureString(text).X;
+        }
         string fontName;
         SpriteFont font;
         
@@ -64,8 +72,6 @@ namespace GameEngine.Graphics
                 return;
 
             var size = font.MeasureString(text);
-
-            float quotient = size.X / size.Y;
 
             scale.X = aspectRation * textSize / size.Y;
             scale.Y = textSize / size.Y;
