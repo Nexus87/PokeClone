@@ -15,13 +15,12 @@ namespace BattleLib.GraphicComponents
         SpriteFont font;
         TextureBox box = new TextureBox("border");
         Frame frame;
-        TextBox text = new TextBox("MenuFont");
+        GraphicText text = new GraphicText("MenuFont");
 
         public String Text{ private get; set; }
 
         public MessageBox()
         {
-            Text = "abc";
             box.Y = 2.0f / 3.0f;
             box.Width = 1;
             box.Height = 1.0f / 3.0f;
@@ -29,7 +28,8 @@ namespace BattleLib.GraphicComponents
             text.X = box.X + 0.05f;
             text.Y = box.Y + 0.05f;
 
-            text.Text = "abc";
+            text.Text = "A";
+            text.TextSize = 16.0f / 480.0f;
             frame = new Frame("border");
             var layout = new TableLayout(2, 2);
             layout.AddComponent(0, 0, new TextureBox("border"));
@@ -57,7 +57,7 @@ namespace BattleLib.GraphicComponents
         public override void Draw(GameTime time, SpriteBatch batch, int screenWidth, int screenHeight)
         {
             //box.Draw(batch);
-            //text.Draw(time, batch);
+            text.Draw(batch);
             //batch.DrawString(font, Text, Constraints.Location.ToVector2() + margin, Color.Black);
             frame.Draw(time, batch);
         }

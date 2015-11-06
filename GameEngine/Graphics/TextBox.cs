@@ -9,23 +9,50 @@ using System.Threading.Tasks;
 
 namespace GameEngine.Graphics
 {
-    public class TextBox : AbstractGraphicComponent
+    public class GraphicText
     {
-        string fontName;
-        SpriteFont font;
+        private static EventHandler AspectRationChanged;
 
-        Vector2 textScale;
-        string text;
+        internal static float AspectRation
+        {
+            get { return aspectRation; }
+            set {   
+                aspectRation = value;
+                if (AspectRationChanged != null)
+                    AspectRationChanged(null, null);
+            }
+        }
+        private static float aspectRation = 1.0f;
 
+        public float X { get { return position.X; } set { position.X = value; } }
+        public float Y { get { return position.Y; } set { position.Y = value; } }
+
+        public float TextSize { get { return textSize; } set { textSize = value; CalculateFontScale(); } }
         public String Text { get { return text; } set { text = value; CalculateFontScale(); } }
 
-        public TextBox(string fontName)
+        string fontName;
+        SpriteFont font;
+        
+        string text;
+
+        float textSize;
+        Vector2 scale;
+        Vector2 position;
+
+
+        public GraphicText(string fontName)
         {
             this.fontName = fontName;
-            Text = "";
+            text = "";
+            AspectRationChanged += OnAspectRationChanged;
         }
 
-        public override void Setup(ContentManager content)
+        private void OnAspectRationChanged(object sender, EventArgs e)
+        {
+            CalculateFontScale();
+        }
+
+        public void Setup(ContentManager content)
         {
             font = content.Load<SpriteFont>(fontName);
             CalculateFontScale();
@@ -36,25 +63,20 @@ namespace GameEngine.Graphics
             if (font == null)
                 return;
 
-            var textSize = font.MeasureString(text);
+            var size = font.MeasureString(text);
 
-            textScale.X = 1.0f / textSize.X;
-            textScale.Y = 1.0f / textSize.Y;
+            float quotient = size.X / size.Y;
 
-            CalculateScale();
+            scale.X = aspectRation * textSize / size.Y;
+            scale.Y = textSize / size.Y;
+
         }
 
-        public override void Draw(GameTime time, SpriteBatch batch)
+        public void Draw(SpriteBatch batch)
         {
             position.X = 0.05f;
             position.Y = 0.05f;
             batch.DrawString(font, Text, position, Color.Black, 0, Vector2.Zero, scale, SpriteEffects.None, 0);
-        }
-
-        protected override void CalculateScale()
-        {
-            scale.X = Width.CompareTo(0) <= 0 ? 1.0f * textScale.X * textScale.X : Width * textScale.X;
-            scale.Y = Height.CompareTo(0) <= 0 ? 1.0f * textScale.Y * textScale.Y : Height * textScale.Y;
         }
     }
 }

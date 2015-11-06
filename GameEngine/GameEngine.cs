@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GameEngine.Graphics;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -19,9 +20,18 @@ namespace GameEngine
 
         public Engine() : base()
         {
-            this.Window.AllowUserResizing = true;
+            this.Window.AllowUserResizing = false;
+            this.Window.ClientSizeChanged += Window_ClientSizeChanged;
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+        }
+
+        void Window_ClientSizeChanged(object sender, EventArgs e)
+        {
+            screenWidth = GraphicsDevice.Viewport.Bounds.Width;
+            screenHeight = GraphicsDevice.Viewport.Bounds.Height;
+            transformation = Matrix.CreateScale(screenWidth, screenHeight, 1);
+            GraphicText.AspectRation = ((float)screenHeight) / ((float)screenWidth);
         }
 
         public void setGraphicCompomnent(IGraphicComponentOld component)
@@ -49,12 +59,14 @@ namespace GameEngine
             screenWidth = GraphicsDevice.Viewport.Bounds.Width;
             screenHeight = GraphicsDevice.Viewport.Bounds.Height;
             _grapics.Setup(GraphicsDevice.Viewport.Bounds, Content);
+
             transformation = Matrix.CreateScale(screenWidth, screenHeight, 1);
+            //transformation = Matrix.CreateOrthographic(screenWidth, screenHeight, 0, 0);
         }
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(new Color(248, 248, 248, 0));
-            _batch.Begin(transformMatrix: transformation);
+            _batch.Begin(transformMatrix: transformation, samplerState: SamplerState.PointClamp);
             _grapics.Draw(gameTime, _batch, 1, 1);
             _batch.End();
         }
