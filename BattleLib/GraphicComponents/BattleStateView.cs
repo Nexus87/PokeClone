@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace BattleLib.GraphicComponents
 {
-    public class BattleStateView : AbstractGraphicComponent
+    public class BattleStateView : AbstractGraphicComponentOld
     {
 
         int lastPlayerId;

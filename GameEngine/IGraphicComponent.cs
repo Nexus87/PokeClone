@@ -4,15 +4,15 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace GameEngine
 {
-    public interface IGraphicComponent
+    public interface IGraphicComponentOld
     {
         void Setup(Rectangle screen, ContentManager content);
         void Draw(GameTime time, SpriteBatch batch, int screenWidth, int screenHeight);
     }
 
-    public abstract class AbstractGraphicComponent : IGraphicComponent
+    public abstract class AbstractGraphicComponentOld : IGraphicComponentOld
     {
-        protected AbstractGraphicComponent() {}
+        protected AbstractGraphicComponentOld() {}
 
         public abstract void Draw(GameTime time, SpriteBatch batch, int screenWidth, int screenHeight);
 

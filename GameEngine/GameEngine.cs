@@ -9,7 +9,7 @@ namespace GameEngine
     {
         readonly List<GameComponent> _components = new List<GameComponent>();
         readonly List<GameComponent> _suspended = new List<GameComponent> ();
-        IGraphicComponent _grapics = null;
+        IGraphicComponentOld _grapics = null;
         Vector2 origin = new Vector2(0, 0);
         GraphicsDeviceManager graphics;
         Matrix transformation = Matrix.Identity;
@@ -24,7 +24,7 @@ namespace GameEngine
             Content.RootDirectory = "Content";
         }
 
-        public void setGraphicCompomnent(IGraphicComponent component)
+        public void setGraphicCompomnent(IGraphicComponentOld component)
         {
             _grapics = component;
         }

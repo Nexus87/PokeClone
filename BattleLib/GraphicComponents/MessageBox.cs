@@ -1,5 +1,5 @@
-﻿using BattleLib.GraphicComponents.Util;
-using GameEngine;
+﻿using GameEngine;
+using GameEngine.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -7,14 +7,15 @@ using System;
 
 namespace BattleLib.GraphicComponents
 {
-    public class MessageBox : AbstractGraphicComponent
+    public class MessageBox : AbstractGraphicComponentOld
     {
         Rectangle Constraints = new Rectangle();
         readonly Vector2 margin = new Vector2(50, 30);
         Texture2D border;
         SpriteFont font;
         TextureBox box = new TextureBox("border");
-        TextGraphic text = new TextGraphic("MenuFont");
+        Frame frame;
+        TextBox text = new TextBox("MenuFont");
 
         public String Text{ private get; set; }
 
@@ -29,6 +30,17 @@ namespace BattleLib.GraphicComponents
             text.Y = box.Y + 0.05f;
 
             text.Text = "abc";
+            frame = new Frame("border");
+            var layout = new TableLayout(2, 2);
+            layout.AddComponent(0, 0, new TextureBox("border"));
+            layout.AddComponent(0, 1, new TextureBox("border"));
+            layout.AddComponent(1, 0, new TextureBox("border"));
+            layout.AddComponent(1, 1, new TextureBox("border"));
+            frame.Layout = layout;
+            frame.X = 0.0f;
+            frame.Y = 2.0f/3.0f;
+            frame.Width = 1.0f;
+            frame.Height = 1.0f / 3.0f;
         }
 
         public override void Setup(Rectangle screen, ContentManager content)
@@ -38,20 +50,16 @@ namespace BattleLib.GraphicComponents
             
             box.Setup(content);
             text.Setup(content);
+            frame.Setup(content);
         }
 
 
         public override void Draw(GameTime time, SpriteBatch batch, int screenWidth, int screenHeight)
         {
-            Constraints.X = 0;
-            Constraints.Y = (int)(2.0f * screenHeight / 3.0f);
-
-            Constraints.Width = screenWidth;
-            Constraints.Height = screenHeight - Constraints.Y;
-
             //box.Draw(batch);
-            text.Draw(batch);
+            //text.Draw(time, batch);
             //batch.DrawString(font, Text, Constraints.Location.ToVector2() + margin, Color.Black);
+            frame.Draw(time, batch);
         }
 
     }

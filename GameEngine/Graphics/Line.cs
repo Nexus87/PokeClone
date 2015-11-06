@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BattleLib.GraphicComponents.Util
+namespace GameEngine.Graphics
 {
-    class Line
+    public class Line
     {
         public float X { get; set; }
         public float Y { get; set; }

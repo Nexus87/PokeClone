@@ -80,9 +80,6 @@
     <Compile Include="GraphicComponents\MessageBox.cs" />
     <Compile Include="GraphicComponents\MenuView\MainMenuState.cs" />
     <Compile Include="GraphicComponents\MenuView\NullMenuState.cs" />
-    <Compile Include="GraphicComponents\Util\Line.cs" />
-    <Compile Include="GraphicComponents\Util\Text.cs" />
-    <Compile Include="GraphicComponents\Util\TextureBox.cs" />
     <Compile Include="IBattleRules.cs" />
     <Compile Include="MenuComponentBuilder.cs" />
     <Compile Include="ModelFactory.cs" />
@@ -103,6 +100,8 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="GraphicComponents\Util\" />
+  </ItemGroup>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
 </Project>

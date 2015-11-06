@@ -1,6 +1,6 @@
 ﻿using BattleLib.GraphicComponents.MenuView;
-using BattleLib.GraphicComponents.Util;
 using GameEngine;
+using GameEngine.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -8,7 +8,7 @@ using System;
 
 namespace BattleLib.GraphicComponents
 {
-    public class BattleGraphics : AbstractGraphicComponent
+    public class BattleGraphics : AbstractGraphicComponentOld
     {
         int screenWidth;
         int screenHeight;
