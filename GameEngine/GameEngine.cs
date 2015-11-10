@@ -8,30 +8,53 @@ namespace GameEngine
 {
     public class Engine : Game
     {
+        public static readonly float ScreenWidth = 1920;
+        public static readonly float ScreenHeight = 1080;
+
+        public static readonly float AspectRation = ScreenWidth/ScreenHeight;
+
+        RenderTarget2D target;
+        GraphicsDeviceManager manager;
         readonly List<GameComponent> _components = new List<GameComponent>();
         readonly List<GameComponent> _suspended = new List<GameComponent> ();
         IGraphicComponentOld _grapics = null;
-        Vector2 origin = new Vector2(0, 0);
-        GraphicsDeviceManager graphics;
+
         Matrix transformation = Matrix.Identity;
         SpriteBatch _batch;
-        private int screenHeight;
-        private int screenWidth;
+        private Rectangle display;
 
         public Engine() : base()
         {
-            this.Window.AllowUserResizing = false;
+            manager = new GraphicsDeviceManager(this);
+            this.Window.AllowUserResizing = true;
             this.Window.ClientSizeChanged += Window_ClientSizeChanged;
-            graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
         }
 
         void Window_ClientSizeChanged(object sender, EventArgs e)
         {
-            screenWidth = GraphicsDevice.Viewport.Bounds.Width;
-            screenHeight = GraphicsDevice.Viewport.Bounds.Height;
-            transformation = Matrix.CreateScale(screenWidth, screenHeight, 1);
-            GraphicText.AspectRation = ((float)screenHeight) / ((float)screenWidth);
+            float bufferX = (float)GraphicsDevice.PresentationParameters.BackBufferWidth;
+            float bufferY = (float)GraphicsDevice.PresentationParameters.BackBufferHeight;
+
+            float windowX = (float)Window.ClientBounds.Width;
+            float windowY = (float)Window.ClientBounds.Height;
+
+            float displayRatio = windowX / windowY;
+            float invBufferRatio = bufferY / bufferX;
+
+            float scaleX = bufferX / ScreenWidth;
+            float scaleY = displayRatio * invBufferRatio * scaleX;
+
+            if (scaleY * ScreenHeight > GraphicsDevice.PresentationParameters.BackBufferHeight)
+            {
+                scaleY = bufferY / ScreenHeight;
+                scaleX = scaleY / (displayRatio * invBufferRatio);
+            }
+
+            display.Width = (int) (scaleX * ScreenWidth);
+            display.Height = (int)(scaleY * ScreenHeight);
+            display.X = (int)((bufferX - display.Width) / 2.0f);
+            display.Y = (int)((bufferY - display.Height) / 2.0f);
         }
 
         public void setGraphicCompomnent(IGraphicComponentOld component)
@@ -56,19 +79,25 @@ namespace GameEngine
             _batch = new SpriteBatch(GraphicsDevice);
             if (_grapics == null)
                 throw new InvalidOperationException("Graphic component is not set");
-            screenWidth = GraphicsDevice.Viewport.Bounds.Width;
-            screenHeight = GraphicsDevice.Viewport.Bounds.Height;
             _grapics.Setup(GraphicsDevice.Viewport.Bounds, Content);
 
-            transformation = Matrix.CreateScale(screenWidth, screenHeight, 1);
             //transformation = Matrix.CreateOrthographic(screenWidth, screenHeight, 0, 0);
         }
+
         protected override void Draw(GameTime gameTime)
         {
+            GraphicsDevice.SetRenderTarget(target);
             GraphicsDevice.Clear(new Color(248, 248, 248, 0));
-            _batch.Begin(transformMatrix: transformation, samplerState: SamplerState.PointClamp);
+            
+            _batch.Begin();
             _grapics.Draw(gameTime, _batch, 1, 1);
             _batch.End();
+
+            GraphicsDevice.SetRenderTarget(null);
+            _batch.Begin();
+            _batch.Draw(target, destinationRectangle: display);
+            _batch.End();
+
         }
 
         protected override void Initialize()
@@ -76,6 +105,8 @@ namespace GameEngine
             foreach (var comp in _components)
                 comp.Initialize();
             base.Initialize();
+            target = new RenderTarget2D(GraphicsDevice, (int)ScreenWidth, (int)ScreenHeight);
+            
         }
         protected override void Update(GameTime gameTime)
         {

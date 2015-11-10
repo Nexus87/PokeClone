@@ -27,15 +27,15 @@ namespace BattleLib.GraphicComponents
             screenWidth = screen.Size.X;
             screenHeight = screen.Size.Y;
 
-            line.Start = new Vector2(0.3f * screenWidth, 0.3f * screenHeight);
-            line.End = new Vector2(0.6f * screenWidth, 0.3f * screenHeight);
+            line.Start = new Vector2(0.3f * Engine.ScreenWidth, 0.3f * Engine.ScreenHeight);
+            line.End = new Vector2(0.6f * Engine.ScreenWidth, 0.3f * Engine.ScreenHeight);
             line.Scale = 0.05f * screenHeight;
             line.Color = Color.DarkViolet;
 
             line2.X = 0.0f;
-            line2.Y = 0.3f;
-            line2.Width = 1.0f;
-            line2.Heigth = 0.05f;
+            line2.Y = 0.3f * Engine.ScreenHeight;
+            line2.Width = 1.0f * Engine.ScreenWidth;
+            line2.Heigth = 0.05f * Engine.ScreenHeight;
             line2.Color = Color.Black;
 
             var border = content.Load<Texture2D>("border");

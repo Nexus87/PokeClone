@@ -21,15 +21,15 @@ namespace BattleLib.GraphicComponents
 
         public MessageBox()
         {
-            box.Y = 2.0f / 3.0f;
-            box.Width = 1;
-            box.Height = 1.0f / 3.0f;
+            box.Y = 2.0f * Engine.ScreenHeight/ 3.0f;
+            box.Width = 1 * Engine.ScreenWidth;
+            box.Height = 1.0f * Engine.ScreenHeight / 3.0f;
 
-            text.X = box.X + 0.05f;
-            text.Y = box.Y + 0.05f;
+            text.X = (box.X + 0.05f) * Engine.ScreenWidth;
+            text.Y = (box.Y + 0.05f) * Engine.ScreenHeight;
 
             text.Text = "A";
-            text.TextSize = 16.0f / 480.0f;
+            text.TextSize = 16.0f * Engine.ScreenHeight / 480.0f;
             frame = new Frame("border");
             var layout = new TableLayout(2, 2);
             layout.AddComponent(0, 0, new TextureBox("border"));
@@ -37,10 +37,11 @@ namespace BattleLib.GraphicComponents
             layout.AddComponent(1, 0, new TextureBox("border"));
             layout.AddComponent(1, 1, new TextureBox("border"));
             frame.Layout = layout;
+
             frame.X = 0.0f;
-            frame.Y = 2.0f/3.0f;
-            frame.Width = 1.0f;
-            frame.Height = 1.0f / 3.0f;
+            frame.Y = 2.0f * Engine.ScreenHeight/3.0f;
+            frame.Width = 1.0f * Engine.ScreenWidth;
+            frame.Height = 1.0f * Engine.ScreenHeight/ 3.0f;
         }
 
         public override void Setup(Rectangle screen, ContentManager content)
@@ -56,10 +57,10 @@ namespace BattleLib.GraphicComponents
 
         public override void Draw(GameTime time, SpriteBatch batch, int screenWidth, int screenHeight)
         {
-            //box.Draw(batch);
+            box.Draw(time, batch);
             text.Draw(batch);
             //batch.DrawString(font, Text, Constraints.Location.ToVector2() + margin, Color.Black);
-            frame.Draw(time, batch);
+            //frame.Draw(time, batch);
         }
 
     }
