@@ -14,7 +14,7 @@ namespace BattleLib.GraphicComponents
         float x;
         float y;
         TextureBox box = new TextureBox("border");
-        GraphicText text = new GraphicText("MenuFont");
+        TextGraphic text = new TextGraphic("MenuFont");
 
         public String Text{ private get; set; }
 

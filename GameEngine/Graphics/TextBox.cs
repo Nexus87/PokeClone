@@ -9,62 +9,38 @@ using System.Threading.Tasks;
 
 namespace GameEngine.Graphics
 {
-    public class GraphicText
+    public class TextBox : IGraphicComponent
     {
+        public string Text { get { return text; } set { text = value; } }
+        public float TextSize { get { return textGraphic.TextSize; } set { textGraphic.TextSize = value; } }
 
-        public float X { get { return position.X; } set { position.X = value; } }
-        public float Y { get { return position.Y; } set { position.Y = value; } }
+        public float X { get { return x; } set { x = value; textGraphic.X = x; } }
+        public float Y { get { return y; } set { y = value; textGraphic.Y = y; } }
 
-        public float TextSize { get { return textSize; } set { textSize = value; CalculateFontScale(); } }
-        public String Text { get { return text; } set { text = value; CalculateFontScale(); } }
-        public float TextWidth { get { return CalculateTextLength(); } }
+        public float Width { get { return width; } set { width = value; } }
+        public float Height { get { return height; } set { height = value; } }
 
-        private float CalculateTextLength()
-        {
-            if (font == null)
-                return 0;
+        private TextGraphic textGraphic;
+        private float x;
+        private float y;
 
-            return scale.X * font.MeasureString(text).X;
-        }
-        string fontName;
-        SpriteFont font;
-        
+        private float width;
+        private float height;
+
         string text;
-
-        float textSize;
-        Vector2 scale;
-        Vector2 position;
-
-
-        public GraphicText(string fontName)
+        public TextBox(String fontName)
         {
-            this.fontName = fontName;
-            text = "";
-            textSize = 32.0f;
+            textGraphic = new TextGraphic(fontName);
         }
 
+        public void Draw(GameTime time, SpriteBatch batch)
+        {
+            textGraphic.Draw(batch);
+        }
 
         public void Setup(ContentManager content)
         {
-            font = content.Load<SpriteFont>(fontName);
-            CalculateFontScale();
-        }
-
-        private void CalculateFontScale()
-        {
-            if (font == null)
-                return;
-
-            var size = font.MeasureString(text);
-
-            scale.X = textSize / size.X;
-            scale.Y = textSize / size.Y;
-
-        }
-
-        public void Draw(SpriteBatch batch)
-        {
-            batch.DrawString(font, Text, position, Color.Black, 0, Vector2.Zero, scale, SpriteEffects.None, 0);
+            textGraphic.Setup(content);
         }
     }
 }

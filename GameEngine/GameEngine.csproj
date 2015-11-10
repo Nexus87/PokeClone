@@ -52,6 +52,7 @@
     <Compile Include="Graphics\Line.cs" />
     <Compile Include="Graphics\TableLayout.cs" />
     <Compile Include="Graphics\TextBox.cs" />
+    <Compile Include="Graphics\TextGraphic.cs" />
     <Compile Include="Graphics\TextureBox.cs" />
     <Compile Include="IGraphicComponent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
