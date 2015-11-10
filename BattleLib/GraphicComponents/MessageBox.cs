@@ -28,22 +28,22 @@ namespace BattleLib.GraphicComponents
 
             textBox.X = (box.X + 0.05f) * Engine.ScreenWidth;
             textBox.Y = (box.Y + 0.05f) * Engine.ScreenHeight; ;
-            textBox.Width = box.Width - 0.05f * Engine.ScreenWidth;
+            textBox.Width = box.Width - 0.1f * Engine.ScreenWidth;
             textBox.Height = box.Height - 0.05f *Engine.ScreenHeight;
-            textBox.Text = "A";
+            textBox.Text = "012345678901234567890123456789012345678901234567890123456789012345678901234567890";
         }
 
 
         public float X
         {
             get { return x; }
-            set { x = value; box.X = x; textBox.X = x + marginX; }
+            set { x = value; box.X = x; textBox.X = x; }
         }
 
         public float Y 
         { 
             get { return y; }
-            set { y = value; box.Y = y; textBox.Y = y + marginY; } 
+            set { y = value; box.Y = y; textBox.Y = y; } 
         }
 
         public float Width { get { return box.Width; } set { box.Width = value; } }

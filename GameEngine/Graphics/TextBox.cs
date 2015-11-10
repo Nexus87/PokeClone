@@ -36,6 +36,7 @@ namespace GameEngine.Graphics
         public void Draw(GameTime time, SpriteBatch batch)
         {
             textGraphic.Draw(batch);
+            var w = textGraphic.TextWidth;
         }
 
         public void Setup(ContentManager content)

@@ -24,7 +24,7 @@ namespace GameEngine.Graphics
             if (font == null)
                 return 0;
 
-            return scale.X * font.MeasureString(text).X;
+            return scale * font.MeasureString(text).X;
         }
 
         string fontName;
@@ -33,7 +33,7 @@ namespace GameEngine.Graphics
         string text;
 
         float textSize;
-        Vector2 scale;
+        float scale;
         Vector2 position;
 
         public float CalculateTextLength(string text)
@@ -41,7 +41,8 @@ namespace GameEngine.Graphics
             if (font == null)
                 return 0;
 
-            return scale.X * font.MeasureString(text).X;
+            var size = font.MeasureString(text);
+            return textSize * size.X / size.Y; 
         }
 
         public TextGraphic(string fontName)
@@ -63,10 +64,9 @@ namespace GameEngine.Graphics
             if (font == null)
                 return;
 
-            var size = font.MeasureString(text);
+            var size = font.MeasureString(" ");
 
-            scale.X = textSize / size.X;
-            scale.Y = textSize / size.Y;
+            scale = textSize / size.Y;
 
         }
 
