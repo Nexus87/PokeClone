@@ -11,18 +11,6 @@ namespace GameEngine.Graphics
 {
     public class GraphicText
     {
-        private static EventHandler AspectRationChanged;
-
-        internal static float AspectRation
-        {
-            get { return aspectRation; }
-            set {   
-                aspectRation = value;
-                if (AspectRationChanged != null)
-                    AspectRationChanged(null, null);
-            }
-        }
-        private static float aspectRation = 1.0f;
 
         public float X { get { return position.X; } set { position.X = value; } }
         public float Y { get { return position.Y; } set { position.Y = value; } }
@@ -52,13 +40,9 @@ namespace GameEngine.Graphics
         {
             this.fontName = fontName;
             text = "";
-            AspectRationChanged += OnAspectRationChanged;
+            textSize = 32.0f;
         }
 
-        private void OnAspectRationChanged(object sender, EventArgs e)
-        {
-            CalculateFontScale();
-        }
 
         public void Setup(ContentManager content)
         {
@@ -73,15 +57,13 @@ namespace GameEngine.Graphics
 
             var size = font.MeasureString(text);
 
-            scale.X = aspectRation * textSize / size.Y;
+            scale.X = textSize / size.X;
             scale.Y = textSize / size.Y;
 
         }
 
         public void Draw(SpriteBatch batch)
         {
-            position.X = 0.05f;
-            position.Y = 0.05f;
             batch.DrawString(font, Text, position, Color.Black, 0, Vector2.Zero, scale, SpriteEffects.None, 0);
         }
     }

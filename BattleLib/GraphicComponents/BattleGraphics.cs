@@ -38,11 +38,13 @@ namespace BattleLib.GraphicComponents
             line2.Heigth = 0.05f * Engine.ScreenHeight;
             line2.Color = Color.Black;
 
-            var border = content.Load<Texture2D>("border");
-            var arrow = content.Load<Texture2D>("arrow");
-            var font = content.Load<SpriteFont>("MenuFont");
+            MessageBox.Setup(content);
 
-            MessageBox.Setup(screen, content);
+            MessageBox.X = 0;
+            MessageBox.Y = 2.0f * Engine.ScreenHeight / 3.0f;
+            MessageBox.Width = Engine.ScreenWidth;
+            MessageBox.Height = Engine.ScreenHeight - MessageBox.Y;
+
             Menu.Setup(content);
             line.Setup(content);
             line2.Setup(content);
@@ -62,7 +64,7 @@ namespace BattleLib.GraphicComponents
 
         public override void Draw(GameTime time, SpriteBatch batch, int screenWidth, int screenHeight)
         {
-            MessageBox.Draw(time, batch, screenWidth, screenHeight);
+            MessageBox.Draw(time, batch);
             Menu.Draw(time, batch, screenWidth, screenHeight);
             line.Draw(batch);
             line2.Draw(batch, screenWidth, screenHeight);

@@ -7,20 +7,21 @@ using System;
 
 namespace BattleLib.GraphicComponents
 {
-    public class MessageBox : AbstractGraphicComponentOld
+    public class MessageBox : IGraphicComponent
     {
-        Rectangle Constraints = new Rectangle();
-        readonly Vector2 margin = new Vector2(50, 30);
-        Texture2D border;
-        SpriteFont font;
+        float marginX = 0.06f * Engine.ScreenWidth;
+        float marginY = 0.07f * Engine.ScreenHeight;
+        float x;
+        float y;
         TextureBox box = new TextureBox("border");
-        Frame frame;
         GraphicText text = new GraphicText("MenuFont");
 
         public String Text{ private get; set; }
 
         public MessageBox()
         {
+            X = 0;
+            Y = 0;
             box.Y = 2.0f * Engine.ScreenHeight/ 3.0f;
             box.Width = 1 * Engine.ScreenWidth;
             box.Height = 1.0f * Engine.ScreenHeight / 3.0f;
@@ -29,39 +30,34 @@ namespace BattleLib.GraphicComponents
             text.Y = (box.Y + 0.05f) * Engine.ScreenHeight;
 
             text.Text = "A";
-            text.TextSize = 16.0f * Engine.ScreenHeight / 480.0f;
-            frame = new Frame("border");
-            var layout = new TableLayout(2, 2);
-            layout.AddComponent(0, 0, new TextureBox("border"));
-            layout.AddComponent(0, 1, new TextureBox("border"));
-            layout.AddComponent(1, 0, new TextureBox("border"));
-            layout.AddComponent(1, 1, new TextureBox("border"));
-            frame.Layout = layout;
-
-            frame.X = 0.0f;
-            frame.Y = 2.0f * Engine.ScreenHeight/3.0f;
-            frame.Width = 1.0f * Engine.ScreenWidth;
-            frame.Height = 1.0f * Engine.ScreenHeight/ 3.0f;
         }
 
-        public override void Setup(Rectangle screen, ContentManager content)
+
+        public float X
         {
-            border = content.Load<Texture2D>("border");
-            font = content.Load<SpriteFont>("MenuFont");
-            
-            box.Setup(content);
-            text.Setup(content);
-            frame.Setup(content);
+            get { return x; }
+            set { x = value; box.X = x; text.X = x + marginX; }
         }
 
+        public float Y 
+        { 
+            get { return y; } 
+            set { y = value; box.Y = y; text.Y = y + marginY; } 
+        }
 
-        public override void Draw(GameTime time, SpriteBatch batch, int screenWidth, int screenHeight)
+        public float Width { get { return box.Width; } set { box.Width = value; } }
+        public float Height { get { return box.Height; } set { box.Height = value; } }
+
+        public void Draw(GameTime time, SpriteBatch batch)
         {
             box.Draw(time, batch);
             text.Draw(batch);
-            //batch.DrawString(font, Text, Constraints.Location.ToVector2() + margin, Color.Black);
-            //frame.Draw(time, batch);
         }
 
+        public void Setup(ContentManager content)
+        {
+            box.Setup(content);
+            text.Setup(content);
+        }
     }
 }
