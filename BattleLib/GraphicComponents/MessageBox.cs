@@ -14,8 +14,8 @@ namespace BattleLib.GraphicComponents
         float x;
         float y;
         TextureBox box = new TextureBox("border");
-        TextGraphic text = new TextGraphic("MenuFont");
-
+        //TextGraphic text = new TextGraphic("MenuFont");
+        TextBox textBox = new TextBox("MenuFont");
         public String Text{ private get; set; }
 
         public MessageBox()
@@ -26,23 +26,24 @@ namespace BattleLib.GraphicComponents
             box.Width = 1 * Engine.ScreenWidth;
             box.Height = 1.0f * Engine.ScreenHeight / 3.0f;
 
-            text.X = (box.X + 0.05f) * Engine.ScreenWidth;
-            text.Y = (box.Y + 0.05f) * Engine.ScreenHeight;
-
-            text.Text = "A";
+            textBox.X = (box.X + 0.05f) * Engine.ScreenWidth;
+            textBox.Y = (box.Y + 0.05f) * Engine.ScreenHeight; ;
+            textBox.Width = box.Width - 0.05f * Engine.ScreenWidth;
+            textBox.Height = box.Height - 0.05f *Engine.ScreenHeight;
+            textBox.Text = "A";
         }
 
 
         public float X
         {
             get { return x; }
-            set { x = value; box.X = x; text.X = x + marginX; }
+            set { x = value; box.X = x; textBox.X = x + marginX; }
         }
 
         public float Y 
         { 
-            get { return y; } 
-            set { y = value; box.Y = y; text.Y = y + marginY; } 
+            get { return y; }
+            set { y = value; box.Y = y; textBox.Y = y + marginY; } 
         }
 
         public float Width { get { return box.Width; } set { box.Width = value; } }
@@ -51,13 +52,15 @@ namespace BattleLib.GraphicComponents
         public void Draw(GameTime time, SpriteBatch batch)
         {
             box.Draw(time, batch);
-            text.Draw(batch);
+            textBox.Draw(time, batch);
+            //text.Draw(batch);
         }
 
         public void Setup(ContentManager content)
         {
             box.Setup(content);
-            text.Setup(content);
+            textBox.Setup(content);
+            //text.Setup(content);
         }
     }
 }

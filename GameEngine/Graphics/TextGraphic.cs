@@ -36,6 +36,13 @@ namespace GameEngine.Graphics
         Vector2 scale;
         Vector2 position;
 
+        public float CalculateTextLength(string text)
+        {
+            if (font == null)
+                return 0;
+
+            return scale.X * font.MeasureString(text).X;
+        }
 
         public TextGraphic(string fontName)
         {
