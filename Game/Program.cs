@@ -27,8 +27,6 @@ namespace PokemonGame
             builder.BuildDefaultMenu(graphic);
             builder.Input.SetMenu(MenuType.Main);
 
-
-            graphic.MessageBox = new MessageBox();
             graphic.Menu = builder.Graphics;
 
             engine.setGraphicCompomnent(graphic);

@@ -22,6 +22,7 @@ namespace GameEngine.Graphics
         public Frame(String backgroundTexture)
         {
             box = new TextureBox(backgroundTexture);
+            Layout = new DefaultLayout();
         }
 
         public void Draw(GameTime time, SpriteBatch batch)
@@ -42,6 +43,14 @@ namespace GameEngine.Graphics
 
             Layout.Init(box);
             Layout.Setup(content);
+        }
+
+        public void SetMargins(int left = 0, int right = 0, int top = 0, int bottom = 0)
+        {
+            if (Layout == null)
+                return;
+
+            Layout.SetMargin(left, right, top, bottom);
         }
     }
 }

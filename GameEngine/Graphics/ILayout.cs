@@ -12,6 +12,9 @@ namespace GameEngine.Graphics
     public interface ILayout
     {
         void Init(IGraphicComponent component);
+        void AddComponent(IGraphicComponent component);
+
+        void SetMargin(int left = 0, int right = 0, int top = 0, int bottom = 0);
         void Setup(ContentManager content);
         void Draw(GameTime time, SpriteBatch batch);
     }
