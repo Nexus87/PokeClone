@@ -60,6 +60,7 @@ namespace GameEngine.Graphics
             rightCup.Y = Position.Y;
             rightCup.X = Position.X + Size.X - Size.Y;
 
+            rightCup.X = rightCup.X.CompareTo(leftCup.X) > 0 ? rightCup.X : leftCup.X;
             cupScale.X = cupScale.Y = Size.Y * circleScale;
         }
     }
