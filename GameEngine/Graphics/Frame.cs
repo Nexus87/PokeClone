@@ -11,6 +11,9 @@ namespace GameEngine.Graphics
 {
     public class Frame : IGraphicComponent
     {
+        public event EventHandler<EventArgs> SizeChanged;
+        public event EventHandler<EventArgs> PositionChanged;
+
         public float X { get { return box.X; } set { box.X = value; } }
         public float Y { get { return box.Y; } set { box.Y = value; } }
         public float Width { get { return box.Width; } set { box.Width = value; } }
@@ -22,7 +25,21 @@ namespace GameEngine.Graphics
         public Frame(String backgroundTexture)
         {
             box = new TextureBox(backgroundTexture);
-            Layout = new DefaultLayout();
+            box.PositionChanged += box_PositionChanged;
+            box.SizeChanged += box_SizeChanged;
+            Layout = new SingleComponentLayout();
+        }
+
+        void box_SizeChanged(object sender, EventArgs e)
+        {
+            if (SizeChanged != null)
+                SizeChanged(this, null);
+        }
+
+        void box_PositionChanged(object sender, EventArgs e)
+        {
+            if (PositionChanged != null)
+                PositionChanged(this, null);
         }
 
         public void Draw(GameTime time, SpriteBatch batch)
@@ -52,5 +69,6 @@ namespace GameEngine.Graphics
 
             Layout.SetMargin(left, right, top, bottom);
         }
+
     }
 }

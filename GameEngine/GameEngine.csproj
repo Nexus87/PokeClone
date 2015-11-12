@@ -46,8 +46,9 @@
   <ItemGroup>
     <Compile Include="GameEngine.cs" />
     <Compile Include="Graphics\AbstractGraphicComponent.cs" />
+    <Compile Include="Graphics\AbstractLayout.cs" />
     <Compile Include="Graphics\BoxLayout.cs" />
-    <Compile Include="Graphics\DefaultLayout.cs" />
+    <Compile Include="Graphics\SingleComponentLayout.cs" />
     <Compile Include="Graphics\Frame.cs" />
     <Compile Include="Graphics\IGraphicComponent.cs" />
     <Compile Include="Graphics\ILayout.cs" />

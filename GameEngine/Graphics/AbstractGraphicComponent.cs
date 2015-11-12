@@ -11,21 +11,91 @@ namespace GameEngine.Graphics
 {
     public abstract class AbstractGraphicComponent : IGraphicComponent
     {
-        public float X { get { return position.X; } set { position.X = value; } }
-        public float Y { get { return position.Y; } set { position.Y = value; } }
+        public event EventHandler<EventArgs> SizeChanged = (a, b) => { };
+        public event EventHandler<EventArgs> PositionChanged = (a, b) => { };
 
-        public float Width { get { return width; } set { width = value; CalculateScale(); } }
-        public float Height { get { return height; } set { height = value; CalculateScale(); } }
+        public float X 
+        { 
+            get { return position.X; } 
+            set 
+            {
+                if (position.X == value)
+                    return;
 
-        protected float width;
-        protected float height;
+                position.X = value; 
+                Invalidate(); 
+                PositionChanged(this, null); 
+            } 
+        }
+        
+        public float Y 
+        { 
+            get { return position.Y; } 
+            set 
+            {
+                if (position.Y == value)
+                    return;
 
-        protected Vector2 position;
-        protected Vector2 scale;
+                position.Y = value; 
+                Invalidate(); 
+                PositionChanged(this, null); 
+            } 
+        }
 
-        public abstract void Draw(GameTime time, SpriteBatch batch);
+        public float Width 
+        {
+            get 
+            { 
+                return size.X; 
+            } 
+            set
+            {
+                if (size.X == value)
+                    return;
+                size.X = value; 
+                Invalidate(); 
+                SizeChanged(this, null); 
+            } 
+        }
+
+        public float Height
+        {
+            get { return size.Y; } 
+            set 
+            {
+                if (size.Y == value)
+                    return;
+                size.Y = value; 
+                Invalidate(); 
+                SizeChanged(this, null); 
+            } 
+        }
+
+        private bool needsUpdate = true;
+        protected Vector2 Position { get { return position; } }
+        protected Vector2 Size { get { return size; } }
+
+        private Vector2 position;
+        private Vector2 size;
+
+        public virtual void Draw(GameTime time, SpriteBatch batch)
+        {
+            if (needsUpdate)
+            {
+                Update();
+                needsUpdate = false;
+            }
+            DrawComponent(time, batch);
+        }
+
         public abstract void Setup(ContentManager content);
 
-        protected virtual void CalculateScale() { }
+        protected abstract void DrawComponent(GameTime time, SpriteBatch batch);
+        protected virtual void Update() { }
+
+        protected void Invalidate()
+        {
+            needsUpdate = true;
+        }
     }
 }

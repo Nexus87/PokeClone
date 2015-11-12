@@ -15,30 +15,32 @@ namespace BattleLib.GraphicComponents
 
         private MessageBox messageBox;
         public MenuGraphics Menu { get; set; }
-        Line line;
+        Line line1;
         Line line2;
         Texture2D pkmn;
 
         public override void Setup(Rectangle screen, ContentManager content)
         {
-            line = new Line();
             line2 = new Line();
+            line1 = new Line();
             messageBox = new MessageBox();
 
             screenWidth = screen.Size.X;
             screenHeight = screen.Size.Y;
 
-            line.Start = new Vector2(0.3f * Engine.ScreenWidth, 0.3f * Engine.ScreenHeight);
-            line.End = new Vector2(0.6f * Engine.ScreenWidth, 0.3f * Engine.ScreenHeight);
-            line.Scale = 0.05f * screenHeight;
-            line.Color = Color.DarkViolet;
 
-            line2.X = 0.0f;
+            line2.X = 50.0f;
             line2.Y = 0.4f * Engine.ScreenHeight;
-            line2.Width = 1.0f * Engine.ScreenWidth;
-            line2.Heigth = 0.05f * Engine.ScreenHeight;
+            line2.Width = 0.8f * Engine.ScreenWidth;
+            line2.Height = 50.0f;
             line2.Color = Color.Black;
-            
+
+            line1.X = line2.X + 10.0f;
+            line1.Y = line2.Y + 10.0f;
+            line1.Width = 0.5f * (line2.Width - 40.0f);
+            line1.Height = line2.Height - 20.0f;
+            line1.Color = Color.Green;
+
             messageBox.X = 0;
             messageBox.Y = 2.0f * Engine.ScreenHeight / 3.0f;
             messageBox.Width = Engine.ScreenWidth;
@@ -48,7 +50,7 @@ namespace BattleLib.GraphicComponents
 
 
             Menu.Setup(content);
-            line.Setup(content);
+            line1.Setup(content);
             line2.Setup(content);
         }
 
@@ -66,10 +68,16 @@ namespace BattleLib.GraphicComponents
 
         public override void Draw(GameTime time, SpriteBatch batch, int screenWidth, int screenHeight)
         {
+            if (time.ElapsedGameTime.Seconds == 0)
+            {
+                line1.Width += 5.0f;
+                if (line1.Width > (line2.Width - 40.0f))
+                    line1.Width = 0.0f;
+            }
             messageBox.Draw(time, batch);
             //Menu.Draw(time, batch, screenWidth, screenHeight);
-            line.Draw(batch);
-            line2.Draw(batch, screenWidth, screenHeight);
+            line2.Draw(time, batch);
+            line1.Draw(time, batch);
         }
     }
 }

@@ -9,73 +9,72 @@ using System.Threading.Tasks;
 
 namespace GameEngine.Graphics
 {
-    public abstract class BoxLayout : ILayout
+    public class BoxLayout : AbstractLayout
     {
-        private Vector2 position;
-        private Vector2 size;
+        public enum Direction { Horizontal, Vertical };
 
-        private float marginLeft;
-        private float marginRight;
-        private float marginTop;
-        private float marginBottom;
+        private readonly List<IGraphicComponent> components = new List<IGraphicComponent>();
+        private Direction direction;
 
-        private bool needsUpdate = true;
-
-        protected readonly LinkedList<IGraphicComponent> components = new LinkedList<IGraphicComponent>();
-        protected float X { get { return position.X + marginRight; } }
-        protected float Y { get { return position.Y + marginTop; } }
-
-        protected float Width { get { return size.X - marginRight - marginLeft; } }
-        protected float Height { get { return size.Y - marginTop - marginBottom; } }
-
-        protected void Invalidate()
+        public BoxLayout(Direction direction)
         {
-            needsUpdate = true;
+            this.direction = direction;
         }
 
-        public void Init(IGraphicComponent component)
+        public override void AddComponent(IGraphicComponent component)
         {
-            position.X = component.X;
-            position.Y = component.Y;
-
-            size.X = component.Width;
-            size.Y = component.Height;
+            components.Add(component);
+            Invalidate();
         }
 
-        public void AddComponent(IGraphicComponent component)
-        {
-            components.AddLast(component);
-        }
-
-        public void SetMargin(int left = 0, int right = 0, int top = 0, int bottom = 0)
-        {
-            marginLeft = left;
-            marginRight = right;
-            marginTop = top;
-            marginBottom = bottom;
-        }
-
-        public void Setup(ContentManager content)
+        public override void Setup(ContentManager content)
         {
             foreach (var component in components)
                 component.Setup(content);
         }
 
-        public void Draw(GameTime time, SpriteBatch batch)
+        protected override void DrawComponents(GameTime time, SpriteBatch batch)
         {
-            if (needsUpdate)
-                Update();
-
             foreach (var component in components)
                 component.Draw(time, batch);
         }
 
-        private void Update()
+        protected override void UpdateComponents()
         {
-            InitComponents();
-            needsUpdate = false;
+            if (direction == Direction.Horizontal)
+            {
+                float width = Width / components.Count;
+                for (int i = 0; i < components.Count; i++)
+                {
+                    var component = components[i];
+                    component.X = X + i * width;
+                    component.Y = Y;
+                    component.Width = width;
+                    component.Height = Height;
+                }
+            }
+            else
+            {
+                float height = Height / components.Count;
+                for (int i = 0; i < components.Count; i++)
+                {
+                    var component = components[i];
+                    component.X = X;
+                    component.Y = Y + i * height;
+                    component.Width = Width;
+                    component.Height = height;
+                }
+            }
         }
+    }
 
-        protected abstract void InitComponents();
+    public class VBoxLayout : BoxLayout
+    {
+        public VBoxLayout() : base(Direction.Vertical) { }
+    }
+
+    public class HBoxLayout : BoxLayout
+    {
+        public HBoxLayout() : base(Direction.Horizontal) { }
     }
 }
