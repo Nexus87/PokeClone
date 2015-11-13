@@ -7,21 +7,21 @@ namespace GameEngine.Graphics
 {
     public class TableLayout : AbstractLayout
     {
-        private int columns;
+        public int Columns { get; private set; }
         private IGraphicComponent[,] components;
-        private int rows;
+        public int Rows { get; private set; }
 
         public TableLayout(int rows, int columns)
         {
             if (rows <= 0 || columns <= 0)
                 throw new ArgumentException("Row and columns need to be greater than 0");
 
-            this.rows = rows;
-            this.columns = columns;
+            this.Rows = rows;
+            this.Columns = columns;
             components = new IGraphicComponent[rows, columns];
         }
 
-        public void AddComponent(int row, int column, IGraphicComponent component)
+        public void SetComponent(int row, int column, IGraphicComponent component)
         {
             components[row, column] = component;
             Invalidate();
@@ -29,7 +29,21 @@ namespace GameEngine.Graphics
 
         public override void AddComponent(IGraphicComponent component)
         {
-            AddComponent(0, 0, component);
+            SetComponent(0, 0, component);
+        }
+
+        public override void RemoveComponent(IGraphicComponent component)
+        {
+            for (int i = 0; i < Rows; i++)
+            {
+                for (int j = 0; j < Columns; j++)
+                {
+                    if (components[i, j] == component)
+                    {
+                        components[i, j] = null;
+                    }
+                }
+            }
         }
 
         public override void Setup(ContentManager content)
@@ -53,11 +67,11 @@ namespace GameEngine.Graphics
 
         protected override void UpdateComponents()
         {
-            float width = Width / columns;
-            float height = Height / rows;
-            for (int i = 0; i < rows; i++)
+            float width = Width / Columns;
+            float height = Height / Rows;
+            for (int i = 0; i < Rows; i++)
             {
-                for (int j = 0; j < columns; j++)
+                for (int j = 0; j < Columns; j++)
                 {
                     var component = components[i, j];
                     if (component == null)

@@ -1,19 +1,14 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GameEngine.Graphics
 {
     public class BoxLayout : AbstractLayout
     {
-        public enum Direction { Horizontal, Vertical };
-
         private readonly List<IGraphicComponent> components = new List<IGraphicComponent>();
+
         private Direction direction;
 
         public BoxLayout(Direction direction)
@@ -21,9 +16,17 @@ namespace GameEngine.Graphics
             this.direction = direction;
         }
 
+        public enum Direction { Horizontal, Vertical };
+
         public override void AddComponent(IGraphicComponent component)
         {
             components.Add(component);
+            Invalidate();
+        }
+
+        public override void RemoveComponent(IGraphicComponent component)
+        {
+            components.Remove(component);
             Invalidate();
         }
 
@@ -68,13 +71,19 @@ namespace GameEngine.Graphics
         }
     }
 
-    public class VBoxLayout : BoxLayout
-    {
-        public VBoxLayout() : base(Direction.Vertical) { }
-    }
-
     public class HBoxLayout : BoxLayout
     {
-        public HBoxLayout() : base(Direction.Horizontal) { }
+        public HBoxLayout()
+            : base(Direction.Horizontal)
+        {
+        }
+    }
+
+    public class VBoxLayout : BoxLayout
+    {
+        public VBoxLayout()
+            : base(Direction.Vertical)
+        {
+        }
     }
 }

@@ -45,18 +45,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GameEngine.cs" />
-    <Compile Include="Graphics\AbstractGraphicComponent.cs" />
+    <Compile Include="Graphics\Bascis\AbstractGraphicComponent.cs" />
     <Compile Include="Graphics\AbstractLayout.cs" />
     <Compile Include="Graphics\BoxLayout.cs" />
     <Compile Include="Graphics\SingleComponentLayout.cs" />
-    <Compile Include="Graphics\Frame.cs" />
+    <Compile Include="Graphics\Bascis\Frame.cs" />
     <Compile Include="Graphics\IGraphicComponent.cs" />
     <Compile Include="Graphics\ILayout.cs" />
-    <Compile Include="Graphics\Line.cs" />
+    <Compile Include="Graphics\Bascis\Line.cs" />
     <Compile Include="Graphics\TableLayout.cs" />
-    <Compile Include="Graphics\TextBox.cs" />
-    <Compile Include="Graphics\TextGraphic.cs" />
-    <Compile Include="Graphics\TextureBox.cs" />
+    <Compile Include="Graphics\Views\DefaultSelectionHandler.cs" />
+    <Compile Include="Graphics\Views\IItemModel.cs" />
+    <Compile Include="Graphics\Views\ISelectionHandler.cs" />
+    <Compile Include="Graphics\Views\ItemBox.cs" />
+    <Compile Include="Graphics\Views\TableView.cs" />
+    <Compile Include="Graphics\Bascis\TextBox.cs" />
+    <Compile Include="Graphics\Bascis\TextGraphic.cs" />
+    <Compile Include="Graphics\Bascis\TextureBox.cs" />
     <Compile Include="IGraphicComponent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TextureProvider.cs" />

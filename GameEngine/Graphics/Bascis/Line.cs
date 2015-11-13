@@ -1,34 +1,25 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GameEngine.Graphics
 {
     public class Line : AbstractGraphicComponent
     {
-        Texture2D pixel;
-        Texture2D cups;
-
-        float circleScale;
-        Vector2 leftCup;
-        Vector2 rightCup;
-        Vector2 cupScale;
-
-        Vector2 line;
-        Vector2 lineScale;
-
+        private float circleScale;
+        private Texture2D cups;
+        private Vector2 cupScale;
+        private Vector2 leftCup;
+        private Vector2 line;
+        private Vector2 lineScale;
+        private Texture2D pixel;
+        private Vector2 rightCup;
         public Color Color { get; set; }
 
-
-        void Init(GraphicsDevice device)
+        public override void Setup(ContentManager content)
         {
-            pixel = new Texture2D(device, 1, 1, false, SurfaceFormat.Color, 1);
-            pixel.SetData(new[] { Color.White });
+            cups = content.Load<Texture2D>("circle");
+            circleScale = 1.0f / cups.Height;
         }
 
         protected override void DrawComponent(GameTime time, SpriteBatch batch)
@@ -40,12 +31,6 @@ namespace GameEngine.Graphics
 
             batch.Draw(cups, position: leftCup, scale: cupScale, color: Color);
             batch.Draw(cups, position: rightCup, scale: cupScale, color: Color);
-        }
-
-        public override void Setup(ContentManager content)
-        {
-            cups = content.Load<Texture2D>("circle");
-            circleScale = 1.0f / cups.Height;
         }
 
         protected override void Update()
@@ -62,6 +47,12 @@ namespace GameEngine.Graphics
 
             rightCup.X = rightCup.X.CompareTo(leftCup.X) > 0 ? rightCup.X : leftCup.X;
             cupScale.X = cupScale.Y = Size.Y * circleScale;
+        }
+
+        private void Init(GraphicsDevice device)
+        {
+            pixel = new Texture2D(device, 1, 1, false, SurfaceFormat.Color, 1);
+            pixel.SetData(new[] { Color.White });
         }
     }
 }

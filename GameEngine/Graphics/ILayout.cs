@@ -13,6 +13,7 @@ namespace GameEngine.Graphics
     {
         void Init(IGraphicComponent component);
         void AddComponent(IGraphicComponent component);
+        void RemoveComponent(IGraphicComponent component);
 
         void SetMargin(int left = 0, int right = 0, int top = 0, int bottom = 0);
         void Setup(ContentManager content);
