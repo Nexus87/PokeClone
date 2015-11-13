@@ -54,7 +54,9 @@
     <Compile Include="Graphics\ILayout.cs" />
     <Compile Include="Graphics\Bascis\Line.cs" />
     <Compile Include="Graphics\TableLayout.cs" />
+    <Compile Include="Graphics\Views\DefaultListModel.cs" />
     <Compile Include="Graphics\Views\DefaultSelectionHandler.cs" />
+    <Compile Include="Graphics\Views\DefaultTableModel.cs" />
     <Compile Include="Graphics\Views\IItemModel.cs" />
     <Compile Include="Graphics\Views\ISelectionHandler.cs" />
     <Compile Include="Graphics\Views\ItemBox.cs" />

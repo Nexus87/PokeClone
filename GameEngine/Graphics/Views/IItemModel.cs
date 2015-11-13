@@ -8,6 +8,8 @@ namespace GameEngine.Graphics.Views
 {
     public interface IItemModel<T>
     {
+        event EventHandler SizeChanged;
+
         int Rows { get; }
         int Columns { get; }
 
