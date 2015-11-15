@@ -18,6 +18,10 @@ namespace GameEngine.Graphics.Views
         public IItemModel<T> Model { private get; set; }
         public Tuple<int, int> SelectedIndex { get; private set; }
 
+        public DefaultSelectionHandler()
+        {
+            SelectedIndex = new Tuple<int, int>(0, 0);
+        }
         public virtual void HandleInput(Keys key)
         {
             if (key == UpKey)

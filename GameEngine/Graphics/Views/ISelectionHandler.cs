@@ -7,13 +7,11 @@ using System.Threading.Tasks;
 
 namespace GameEngine.Graphics.Views
 {
-    public interface ISelectionHandler
+    public interface ISelectionHandler : IInputHandler
     {
         event EventHandler<EventArgs> SelectionChanged;
         event EventHandler<EventArgs> ItemSelected;
 
         Tuple<int, int> SelectedIndex { get; }
-
-        void HandleInput(Keys key);
     }
 }

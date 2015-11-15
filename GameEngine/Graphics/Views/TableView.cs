@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework.Input;
 
 namespace GameEngine.Graphics
 {
@@ -12,7 +13,7 @@ namespace GameEngine.Graphics
         public T SelectedData;
     }
 
-    public class TableView<T> : AbstractGraphicComponent
+    public class TableView<T> : AbstractGraphicComponent, IWidget
     {
         public event EventHandler<SelectionEventArgs<T>> ItemSelected;
 
@@ -33,6 +34,7 @@ namespace GameEngine.Graphics
 
                 handler.ItemSelected += handler_ItemSelected;
                 handler.SelectionChanged += handler_SelectionChanged;
+                handler_SelectionChanged(null, null);
             }
         }
 
@@ -79,9 +81,6 @@ namespace GameEngine.Graphics
 
         private int visibleRows = 8;
         private int visibleColumns = 8;
-
-        private int selectedRow;
-        private int selectedColumn;
 
         private int startRow = 0;
         private int startColumn = 0;
@@ -131,6 +130,12 @@ namespace GameEngine.Graphics
                 for (int j = 0; j < layout.Columns; j++)
                     layout.SetComponent(i, j, items[startRow + i, startColumn + j]);
             }
+        }
+
+        public void HandleInput(Keys key)
+        {
+            if (handler != null)
+                handler.HandleInput(key);
         }
     }
 }

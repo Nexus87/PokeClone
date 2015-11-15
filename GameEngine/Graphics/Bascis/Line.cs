@@ -35,6 +35,12 @@ namespace GameEngine.Graphics
 
         protected override void Update()
         {
+            if(Size.X == 0)
+            {
+                lineScale.X = 0;
+                cupScale.X = 0;
+                return;
+            }
             lineScale.Y = Size.Y;
             lineScale.X = Size.X - Size.Y;
 

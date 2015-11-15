@@ -57,9 +57,11 @@
     <Compile Include="Graphics\Views\DefaultListModel.cs" />
     <Compile Include="Graphics\Views\DefaultSelectionHandler.cs" />
     <Compile Include="Graphics\Views\DefaultTableModel.cs" />
+    <Compile Include="Graphics\Views\IInputHandler.cs" />
     <Compile Include="Graphics\Views\IItemModel.cs" />
     <Compile Include="Graphics\Views\ISelectionHandler.cs" />
     <Compile Include="Graphics\Views\ItemBox.cs" />
+    <Compile Include="Graphics\Views\IWidget.cs" />
     <Compile Include="Graphics\Views\TableView.cs" />
     <Compile Include="Graphics\Bascis\TextBox.cs" />
     <Compile Include="Graphics\Bascis\TextGraphic.cs" />
