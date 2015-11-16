@@ -1,4 +1,5 @@
-﻿using BattleLib.GraphicComponents.MenuView;
+﻿using Base;
+using BattleLib.GraphicComponents.MenuView;
 using GameEngine;
 using GameEngine.Graphics;
 using GameEngine.Graphics.Views;
@@ -7,6 +8,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Collections.Generic;
 
 namespace BattleLib.GraphicComponents
 {
@@ -19,18 +21,24 @@ namespace BattleLib.GraphicComponents
         public MenuGraphics Menu { get; set; }
         Line line1;
         Line line2;
-        TableWidget<string> mainMenu;
+        TableWidget<Item> mainMenu;
         Frame menuFrame = new Frame("border");
         Texture2D pkmn;
 
         public override void Setup(Rectangle screen, ContentManager content)
         {
-            var model = new DefaultTableModel<string>();
-            model.Items = new string[2, 2] { { "Attack", "PKMN" }, { "Item", "Run" } };
+
+            var model = new DefaultListModel<Item>();
+            var list = new List<Item>(15);
+            for (int i = 0; i < 15; i++)
+                list.Add(new Item {Name = "Item" + i });
+
+            model.Items = list;
             line2 = new Line();
             line1 = new Line();
             messageBox = new MessageBox();
-            mainMenu = new TableWidget<string>();
+
+            mainMenu = new TableWidget<Item>();
 
             screenWidth = screen.Size.X;
             screenHeight = screen.Size.Y;
@@ -49,7 +57,7 @@ namespace BattleLib.GraphicComponents
             line1.Color = Color.Green;
 
             menuFrame.X = 0.5f * Engine.ScreenWidth;
-            menuFrame.Y = 2.0f * Engine.ScreenHeight / 3.0f;
+            menuFrame.Y = 1.0f * Engine.ScreenHeight / 3.0f;
             menuFrame.Width = Engine.ScreenWidth - menuFrame.X;
             menuFrame.Height = Engine.ScreenHeight - menuFrame.Y;
 

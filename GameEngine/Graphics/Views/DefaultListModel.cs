@@ -12,15 +12,11 @@ namespace GameEngine.Graphics.Views
         {
             set
             {
+                if (value == null)
+                    throw new ArgumentNullException("Items must not be null");
+
                 if (items == value)
                     return;
-
-                if (value == null)
-                {
-                    items = null;
-                    SizeChanged(this, null);
-                    return;
-                }
 
                 if (items.Count != value.Count)
                 {
@@ -33,8 +29,8 @@ namespace GameEngine.Graphics.Views
             }
         }
 
-        private List<T> items;
-        public event EventHandler SizeChanged;
+        private List<T> items = new List<T>();
+        public event EventHandler SizeChanged = delegate { };
 
         public int Rows
         {
