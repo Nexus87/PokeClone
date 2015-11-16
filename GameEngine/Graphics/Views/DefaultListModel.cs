@@ -58,5 +58,14 @@ namespace GameEngine.Graphics.Views
         {
             return items[row].ToString();
         }
+
+
+        public void SetData(T data, int row, int column)
+        {
+            if (column > 0)
+                throw new InvalidOperationException("Index out of bound");
+
+            items[row] = data;
+        }
     }
 }

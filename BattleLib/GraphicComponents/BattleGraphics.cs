@@ -19,7 +19,8 @@ namespace BattleLib.GraphicComponents
         public MenuGraphics Menu { get; set; }
         Line line1;
         Line line2;
-        TableView<string> mainMenu;
+        TableWidget<string> mainMenu;
+        Frame menuFrame = new Frame("border");
         Texture2D pkmn;
 
         public override void Setup(Rectangle screen, ContentManager content)
@@ -29,13 +30,12 @@ namespace BattleLib.GraphicComponents
             line2 = new Line();
             line1 = new Line();
             messageBox = new MessageBox();
-            mainMenu = new TableView<string>(model);
-            mainMenu.Handler = new DefaultSelectionHandler<string> { Model = model };
+            mainMenu = new TableWidget<string>();
 
             screenWidth = screen.Size.X;
             screenHeight = screen.Size.Y;
 
-
+            mainMenu.Model = model;
             line2.X = 50.0f;
             line2.Y = 0.4f * Engine.ScreenHeight;
             line2.Width = 0.8f * Engine.ScreenWidth;
@@ -48,11 +48,12 @@ namespace BattleLib.GraphicComponents
             line1.Height = line2.Height - 20.0f;
             line1.Color = Color.Green;
 
-            mainMenu.X = 0.5f * Engine.ScreenWidth;
-            mainMenu.Y = 2.0f * Engine.ScreenHeight / 3.0f + 50.0f;
-            mainMenu.Width = Engine.ScreenWidth - mainMenu.X;
-            mainMenu.Height = Engine.ScreenHeight - mainMenu.Y;
+            menuFrame.X = 0.5f * Engine.ScreenWidth;
+            menuFrame.Y = 2.0f * Engine.ScreenHeight / 3.0f;
+            menuFrame.Width = Engine.ScreenWidth - menuFrame.X;
+            menuFrame.Height = Engine.ScreenHeight - menuFrame.Y;
 
+            menuFrame.AddContent(mainMenu);
             messageBox.X = 0;
             messageBox.Y = 2.0f * Engine.ScreenHeight / 3.0f;
             messageBox.Width = Engine.ScreenWidth;
@@ -60,11 +61,11 @@ namespace BattleLib.GraphicComponents
             messageBox.Setup(content);
 
 
-
+            menuFrame.SetMargins(100, 50, 100, 50);
             Menu.Setup(content);
             line1.Setup(content);
             line2.Setup(content);
-            mainMenu.Setup(content);
+            menuFrame.Setup(content);
         }
 
 
@@ -94,7 +95,7 @@ namespace BattleLib.GraphicComponents
             //Menu.Draw(time, batch, screenWidth, screenHeight);
             line2.Draw(time, batch);
             line1.Draw(time, batch);
-            mainMenu.Draw(time, batch);
+            menuFrame.Draw(time, batch);
         }
     }
 }

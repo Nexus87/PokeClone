@@ -58,5 +58,11 @@ namespace GameEngine.Graphics.Views
 
             return items[row, column].ToString();
         }
+
+
+        public void SetData(T data, int row, int column)
+        {
+            items[row, column] = data;
+        }
     }
 }

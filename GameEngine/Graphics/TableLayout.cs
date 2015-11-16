@@ -13,8 +13,8 @@ namespace GameEngine.Graphics
 
         public TableLayout(int rows, int columns)
         {
-            if (rows <= 0 || columns <= 0)
-                throw new ArgumentException("Row and columns need to be greater than 0");
+            if (rows < 0 || columns < 0)
+                throw new ArgumentException("Row and columns need to be positive");
 
             this.Rows = rows;
             this.Columns = columns;

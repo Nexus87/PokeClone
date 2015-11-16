@@ -3,7 +3,7 @@ using System;
 
 namespace GameEngine.Graphics.Views
 {
-    public class DefaultSelectionHandler<T> : ISelectionHandler
+    public class DefaultSelectionHandler<T> : ISelectionHandler<T>
     {
         public Keys DownKey = Keys.Down;
         public Keys LeftKey = Keys.Left;
@@ -15,23 +15,22 @@ namespace GameEngine.Graphics.Views
 
         public event EventHandler<EventArgs> SelectionChanged;
 
-        public IItemModel<T> Model { private get; set; }
-        public Tuple<int, int> SelectedIndex { get; private set; }
+        public int SelectedRow { get; private set; }
+        public int SelectedColumn { get; private set; }
 
-        public DefaultSelectionHandler()
-        {
-            SelectedIndex = new Tuple<int, int>(0, 0);
-        }
+        private int Rows { get; set; }
+        private int Columns { get; set; }
+
         public virtual void HandleInput(Keys key)
         {
             if (key == UpKey)
-                TrySetRow(SelectedIndex.Item1 - 1);
+                TrySetRow(SelectedRow - 1);
             else if (key == DownKey)
-                TrySetRow(SelectedIndex.Item1 + 1);
+                TrySetRow(SelectedRow + 1);
             else if (key == LeftKey)
-                TrySetColumn(SelectedIndex.Item2 - 1);
+                TrySetColumn(SelectedColumn - 1);
             else if (key == RightKey)
-                TrySetColumn(SelectedIndex.Item2 + 1);
+                TrySetColumn(SelectedColumn + 1);
             else if (key == SelectKey)
             {
                 if (ItemSelected != null)
@@ -47,28 +46,35 @@ namespace GameEngine.Graphics.Views
 
         private void TrySetColumn(int column)
         {
-            if (column == SelectedIndex.Item2)
+            if (column == SelectedColumn)
                 return;
 
-            if (column >= Model.Columns || column < 0)
+            if (column >= Columns || column < 0)
                 return;
 
-            SelectedIndex = new Tuple<int, int>(SelectedIndex.Item1, column);
+            SelectedColumn = column;
             if (SelectionChanged != null)
                 SelectionChanged(this, null);
         }
 
         private void TrySetRow(int row)
         {
-            if (row == SelectedIndex.Item1)
+            if (row == SelectedRow)
                 return;
 
-            if (row >= Model.Rows || row < 0)
+            if (row >= Rows || row < 0)
                 return;
 
-            SelectedIndex = new Tuple<int, int>(row, SelectedIndex.Item2);
+            SelectedRow = row;
             if (SelectionChanged != null)
                 SelectionChanged(this, null);
+        }
+
+
+        public void Init(IItemModel<T> model)
+        {
+            Rows = model.Rows;
+            Columns = model.Columns;
         }
     }
 }

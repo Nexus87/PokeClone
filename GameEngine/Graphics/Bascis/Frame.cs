@@ -8,13 +8,18 @@ namespace GameEngine.Graphics
     public class Frame : IGraphicComponent
     {
         private IGraphicComponent box;
-
+        public void AddContent(IGraphicComponent component)
+        {
+            Layout.AddComponent(component);
+        }
         public Frame(String backgroundTexture)
         {
             box = new TextureBox(backgroundTexture);
             box.PositionChanged += box_PositionChanged;
             box.SizeChanged += box_SizeChanged;
             Layout = new SingleComponentLayout();
+
+            SetMargins(90, 90, 80, 80);
         }
 
         public event EventHandler<EventArgs> PositionChanged;

@@ -16,7 +16,6 @@ namespace BattleLib.GraphicComponents
         {
             textBox.Text = "012345678901234567890123456789012345678901234567890123456789012345678901234567890";
             Layout.AddComponent(textBox);
-            SetMargins(90, 90, 80, 80);
         }
     }
 }

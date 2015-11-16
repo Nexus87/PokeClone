@@ -15,5 +15,6 @@ namespace GameEngine.Graphics.Views
 
         T DataAt(int row, int column);
         string DataStringAt(int row, int column);
+        void SetData(T data, int row, int column);
     }
 }

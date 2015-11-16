@@ -8,13 +8,10 @@ namespace GameEngine.Graphics
     public abstract class AbstractGraphicComponent : IGraphicComponent
     {
         private bool needsUpdate = true;
-
         private Vector2 position;
-
         private Vector2 size;
 
         public event EventHandler<EventArgs> PositionChanged = (a, b) => { };
-
         public event EventHandler<EventArgs> SizeChanged = (a, b) => { };
 
         public float Height

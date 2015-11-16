@@ -5,6 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Content;
 
 namespace GameEngine.Graphics
 {
@@ -13,70 +16,35 @@ namespace GameEngine.Graphics
         public T SelectedData;
     }
 
-    public class TableView<T> : AbstractGraphicComponent, IWidget
+    public class TableView<T> : AbstractGraphicComponent
     {
-        public event EventHandler<SelectionEventArgs<T>> ItemSelected;
-
-        public IItemModel<T> Model { get; set; }
-        public ISelectionHandler Handler
+        private ContentManager content;
+        public IItemModel<T> Model
         {
+            get { return model; }
             set
             {
-                if (handler != null)
+                if (value == null)
+                    throw new ArgumentNullException("Model must not be null");
+                if (model != null)
                 {
-                    handler.ItemSelected -= handler_ItemSelected;
-                    handler.SelectionChanged -= handler_SelectionChanged;
+                    model.SizeChanged -= model_SizeChanged;
                 }
-
-                handler = value;
-                if (handler == null)
-                    return;
-
-                handler.ItemSelected += handler_ItemSelected;
-                handler.SelectionChanged += handler_SelectionChanged;
-                handler_SelectionChanged(null, null);
+                model = value;
+                model.SizeChanged += model_SizeChanged;
+                model_SizeChanged(null, null);
             }
         }
 
-        void handler_SelectionChanged(object sender, EventArgs e)
+        void model_SizeChanged(object sender, EventArgs e)
         {
-            if (selectedItem != null)
-                selectedItem.IsSelected = false;
-
-            var newSelection = handler.SelectedIndex;
-            var oldRow = startRow;
-            var oldColumn = startColumn;
-
-            // newSelection.Item1 needs to be between [startRow, startRow + layout.Rows[
-            while(newSelection.Item1 >= startRow + layout.Rows)
-                startRow++;
-            while (newSelection.Item1 < startRow)
-                startRow--;
-
-            while (newSelection.Item2 >= startColumn + layout.Columns)
-                startColumn++;
-            while (newSelection.Item2 < startColumn)
-                startColumn--;
-
-            selectedItem = items[newSelection.Item1, newSelection.Item2];
-
-            if (selectedItem != null)
-                selectedItem.IsSelected = true;
-
-            if (oldColumn != startColumn || oldRow != startRow)
-                FillLayout();
+            InitTable();
+            // If the game is already running, content != null
+            if (content != null)
+                Setup(content);
         }
 
-        void handler_ItemSelected(object sender, EventArgs e)
-        {
-            var selection = handler.SelectedIndex;
-            var Item = Model.DataAt(selection.Item1, selection.Item2);
-
-            if (ItemSelected != null)
-                ItemSelected(this, new SelectionEventArgs<T> { SelectedData = Item });
-        }
-
-        private ISelectionHandler handler;
+        private IItemModel<T> model;
         private TableLayout layout;
 
         private int visibleRows = 8;
@@ -88,14 +56,50 @@ namespace GameEngine.Graphics
         private ItemBox[,] items;
         private ItemBox selectedItem;
 
+        public void SelectItem(int row, int column)
+        {
+            if (selectedItem != null)
+                selectedItem.IsSelected = false;
+
+            if (row > Model.Rows || column > Model.Columns)
+                return;
+
+            var oldRow = startRow;
+            var oldColumn = startColumn;
+
+            // row needs to be between [startRow, startRow + layout.Rows[
+            while (row >= startRow + layout.Rows)
+                startRow++;
+            while (row < startRow)
+                startRow--;
+
+            while (column >= startColumn + layout.Columns)
+                startColumn++;
+            while (column < startColumn)
+                startColumn--;
+
+            selectedItem = items[row, column];
+
+            if (selectedItem != null)
+                selectedItem.IsSelected = true;
+
+            if (oldColumn != startColumn || oldRow != startRow)
+                FillLayout();
+        }
+
         public TableView(IItemModel<T> model) 
         {
             this.Model = model;
+            InitTable();
+
+        }
+
+        private void InitTable()
+        {
             layout = new TableLayout(Math.Min(model.Rows, visibleRows), Math.Min(model.Columns, visibleColumns));
             layout.Init(this);
             items = new ItemBox[model.Rows, model.Columns];
             InitItems();
-
         }
 
         private void InitItems()
@@ -109,8 +113,9 @@ namespace GameEngine.Graphics
             }
         }
 
-        public override void Setup(Microsoft.Xna.Framework.Content.ContentManager content)
+        public override void Setup(ContentManager content)
         {
+            this.content = content;
             foreach (var item in items)
                 item.Setup(content);
             
@@ -118,7 +123,7 @@ namespace GameEngine.Graphics
             FillLayout();
         }
 
-        protected override void DrawComponent(Microsoft.Xna.Framework.GameTime time, Microsoft.Xna.Framework.Graphics.SpriteBatch batch)
+        protected override void DrawComponent(GameTime time, SpriteBatch batch)
         {
             layout.Draw(time, batch);
         }
@@ -130,12 +135,6 @@ namespace GameEngine.Graphics
                 for (int j = 0; j < layout.Columns; j++)
                     layout.SetComponent(i, j, items[startRow + i, startColumn + j]);
             }
-        }
-
-        public void HandleInput(Keys key)
-        {
-            if (handler != null)
-                handler.HandleInput(key);
         }
     }
 }

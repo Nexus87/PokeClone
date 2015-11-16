@@ -17,7 +17,7 @@ namespace GameEngine.Graphics
         private Vector2 size;
         protected float Height { get { return size.Y - marginTop - marginBottom; } }
         protected float Width { get { return size.X - marginRight - marginLeft; } }
-        protected float X { get { return position.X + marginRight; } }
+        protected float X { get { return position.X + marginLeft; } }
         protected float Y { get { return position.Y + marginTop; } }
 
         public abstract void AddComponent(IGraphicComponent component);

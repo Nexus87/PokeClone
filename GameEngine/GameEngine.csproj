@@ -66,6 +66,7 @@
     <Compile Include="Graphics\Bascis\TextBox.cs" />
     <Compile Include="Graphics\Bascis\TextGraphic.cs" />
     <Compile Include="Graphics\Bascis\TextureBox.cs" />
+    <Compile Include="Graphics\Views\TableWidget.cs" />
     <Compile Include="IGraphicComponent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TextureProvider.cs" />
