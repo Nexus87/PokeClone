@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameEngine.Graphics.Views
+namespace GameEngine
 {
     public interface IInputHandler
     {

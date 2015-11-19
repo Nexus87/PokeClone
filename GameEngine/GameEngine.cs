@@ -1,6 +1,7 @@
 ﻿using GameEngine.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 
@@ -10,25 +11,68 @@ namespace GameEngine
     {
         public static readonly float ScreenWidth = 1920;
         public static readonly float ScreenHeight = 1080;
-
+        
+        public readonly Configuration Config;
         public static readonly float AspectRation = ScreenWidth/ScreenHeight;
+
+        public readonly GUIManager GUI = new GUIManager();
+
+        public static void ShowGUI()
+        {
+            engine.GUI.Show();
+            engine.input.handler = engine.GUI;
+        }
+
+        public static void Init(Configuration config)
+        {
+            engine = new Engine(config);
+        }
+
+        public static Engine GetInstance()
+        {
+            return engine;
+        }
+
+        private static Engine engine;
+        public IInputHandler DefaultInputHandler;
 
         RenderTarget2D target;
         GraphicsDeviceManager manager;
         readonly List<GameComponent> _components = new List<GameComponent>();
         readonly List<GameComponent> _suspended = new List<GameComponent> ();
+
         IGraphicComponentOld _grapics = null;
-
-        Matrix transformation = Matrix.Identity;
-        SpriteBatch _batch;
+        private Matrix transformation = Matrix.Identity;
+        private SpriteBatch _batch;
         private Rectangle display;
+        private InputComponent input;
 
-        public Engine() : base()
+        public void AddKeyListener(Keys key)
         {
+            input.Keys.Add(key);
+        }
+
+        public void AddKeyListener(IEnumerable<Keys> keys)
+        {
+            input.Keys.AddRange(keys);
+        }
+
+        private Engine(Configuration config) : base()
+        {
+            this.Config = config;
+            input = new InputComponent(this);
             manager = new GraphicsDeviceManager(this);
-            this.Window.AllowUserResizing = true;
-            this.Window.ClientSizeChanged += Window_ClientSizeChanged;
+
+            Window.AllowUserResizing = true;
+            Window.ClientSizeChanged += Window_ClientSizeChanged;
+            GUI.GUIClose += GUI_GUIClose;
+
             Content.RootDirectory = "Content";
+        }
+
+        void GUI_GUIClose(object sender, EventArgs e)
+        {
+            input.handler = DefaultInputHandler;
         }
 
         void Window_ClientSizeChanged(object sender, EventArgs e)
@@ -108,6 +152,7 @@ namespace GameEngine
             target = new RenderTarget2D(GraphicsDevice, (int)ScreenWidth, (int)ScreenHeight);
             
         }
+
         protected override void Update(GameTime gameTime)
         {
             base.Update(gameTime);

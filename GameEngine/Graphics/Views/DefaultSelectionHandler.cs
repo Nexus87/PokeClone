@@ -21,6 +21,16 @@ namespace GameEngine.Graphics.Views
         private int Rows { get; set; }
         private int Columns { get; set; }
 
+        public DefaultSelectionHandler() {}
+        public DefaultSelectionHandler(Configuration config)
+        {
+            DownKey = config.KeyDown;
+            LeftKey = config.KeyLeft;
+            RightKey = config.KeyRight;
+            UpKey = config.KeyUp;
+            SelectKey = config.KeySelect;
+        }
+
         public virtual void HandleInput(Keys key)
         {
             if (key == UpKey)
@@ -36,12 +46,6 @@ namespace GameEngine.Graphics.Views
                 if (ItemSelected != null)
                     ItemSelected(this, null);
             }
-            else
-                HandleAdditionalKeys(key);
-        }
-
-        protected virtual void HandleAdditionalKeys(Keys key)
-        {
         }
 
         private void TrySetColumn(int column)

@@ -19,7 +19,8 @@ namespace PokemonGame
         [STAThread]
         static void Main()
         {
-            var engine = new Engine();
+            Engine.Init(new Configuration());
+            var engine = Engine.GetInstance();
             var graphic = new BattleGraphics();
             var battleState = new BattleStateComponent(new ClientIdentifier(), new ClientIdentifier(), engine);
             MenuComponentBuilder builder = new MenuComponentBuilder(engine, battleState);
