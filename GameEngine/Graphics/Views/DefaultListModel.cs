@@ -8,7 +8,7 @@ namespace GameEngine.Graphics.Views
 {
     public class DefaultListModel<T> : IItemModel<T>
     {
-        public List<T> Items
+        public virtual List<T> Items
         {
             set
             {
@@ -29,20 +29,20 @@ namespace GameEngine.Graphics.Views
             }
         }
 
-        private List<T> items = new List<T>();
+        protected List<T> items = new List<T>();
         public event EventHandler SizeChanged = delegate { };
 
-        public int Rows
+        public virtual int Rows
         {
             get { return items == null ? 0 : items.Count(); }
         }
 
-        public int Columns
+        public virtual  int Columns
         {
             get { return 1; }
         }
 
-        public T DataAt(int row, int column)
+        public virtual T DataAt(int row, int column)
         {
             if (column > 0)
                 return default(T);
@@ -50,13 +50,13 @@ namespace GameEngine.Graphics.Views
             return items[row];
         }
 
-        public string DataStringAt(int row, int column)
+        public virtual string DataStringAt(int row, int column)
         {
             return items[row].ToString();
         }
 
 
-        public void SetData(T data, int row, int column)
+        public virtual void SetData(T data, int row, int column)
         {
             if (column > 0)
                 throw new InvalidOperationException("Index out of bound");

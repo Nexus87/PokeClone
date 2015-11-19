@@ -10,10 +10,11 @@ namespace GameEngine.Graphics.Views
         public Keys RightKey = Keys.Right;
         public Keys SelectKey = Keys.Enter;
         public Keys UpKey = Keys.Up;
+        public Keys BackKey = Keys.Escape;
 
-        public event EventHandler<EventArgs> ItemSelected;
-
-        public event EventHandler<EventArgs> SelectionChanged;
+        public event EventHandler<EventArgs> ItemSelected = delegate { };
+        public event EventHandler<EventArgs> CloseRequested = delegate { };
+        public event EventHandler<EventArgs> SelectionChanged = delegate { };
 
         public int SelectedRow { get; private set; }
         public int SelectedColumn { get; private set; }
@@ -29,6 +30,7 @@ namespace GameEngine.Graphics.Views
             RightKey = config.KeyRight;
             UpKey = config.KeyUp;
             SelectKey = config.KeySelect;
+            BackKey = config.KeyBack;
         }
 
         public virtual void HandleInput(Keys key)
@@ -42,10 +44,9 @@ namespace GameEngine.Graphics.Views
             else if (key == RightKey)
                 TrySetColumn(SelectedColumn + 1);
             else if (key == SelectKey)
-            {
-                if (ItemSelected != null)
-                    ItemSelected(this, null);
-            }
+                ItemSelected(this, null);
+            else if (key == BackKey)
+                CloseRequested(this, null);
         }
 
         private void TrySetColumn(int column)

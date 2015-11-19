@@ -23,6 +23,7 @@ namespace PokemonGame
             var engine = Engine.GetInstance();
             var graphic = new BattleGraphics();
             var battleState = new BattleStateComponent(new ClientIdentifier(), new ClientIdentifier(), engine);
+            
             MenuComponentBuilder builder = new MenuComponentBuilder(engine, battleState);
 
             builder.BuildDefaultMenu(graphic);

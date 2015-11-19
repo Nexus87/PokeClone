@@ -6,7 +6,7 @@ using System;
 
 namespace GameEngine.Graphics.Views
 {
-    public class TableWidget<T> : AbstractGraphicComponent
+    public class TableWidget<T> : AbstractGraphicComponent, IWidget
     {
         private ISelectionHandler<T> handler;
         private SingleComponentLayout layout;
@@ -16,6 +16,21 @@ namespace GameEngine.Graphics.Views
         public TableWidget()
         {
             handler = new DefaultSelectionHandler<T>();
+            model = new DefaultTableModel<T>();
+            view = new TableView<T>(model);
+            layout = new SingleComponentLayout();
+
+            layout.AddComponent(view);
+
+            InitHandlerEvents();
+            InitModelEvents();
+
+            model_SizeChanged(null, null);
+        }
+
+        public TableWidget(Configuration config)
+        {
+            handler = new DefaultSelectionHandler<T>(config);
             model = new DefaultTableModel<T>();
             view = new TableView<T>(model);
             layout = new SingleComponentLayout();
