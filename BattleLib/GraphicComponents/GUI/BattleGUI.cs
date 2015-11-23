@@ -1,8 +1,11 @@
 ﻿using Base;
+using BattleLib.Components.BattleState;
 using GameEngine;
 using GameEngine.Graphics;
 using GameEngine.Graphics.Views;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
@@ -11,9 +14,8 @@ namespace BattleLib.GraphicComponents.GUI
 {
     public class BattleGUI : AbstractGraphicComponent, IWidget
     {
-        public event EventHandler GetFocus;
-        public event EventHandler<VisibiltyChangeArgs> VisiblityChanged;
-        public bool IsVisible { get; set; }
+        public BattleStateComponent BattleState { get; set; }
+        public ClientIdentifier ID { get; set; }
 
         private TableWidget<string> MainMenu;
         private TableWidget<Move> AttackMenu;
@@ -24,8 +26,9 @@ namespace BattleLib.GraphicComponents.GUI
         private Frame attackFrame = new Frame("border");
         private Frame itemFrame = new Frame("border");
 
-        private IWidget currentFrame;
+        private IGraphicComponent currentFrame;
         private IWidget currentMenu;
+        private IWidget messageBox;
 
         public BattleGUI(Configuration config)
         {
@@ -36,6 +39,60 @@ namespace BattleLib.GraphicComponents.GUI
 
             InitMainMenu();
             InitAttackMenu();
+            InitItemMenu();
+            InitPKMNMenu();
+        }
+
+        private void InitPKMNMenu()
+        {
+            var model = new DefaultListModel<Pokemon>();
+            var list = new List<Pokemon>();
+            PKData data = new PKData();
+            list.Add(new Pokemon(data, data.BaseStats) { Name = "PKMN1"});
+            list.Add(new Pokemon(data, data.BaseStats) { Name = "PKMN2" });
+
+            PKMNMenu.Model = model;
+            PKMNMenu.X = 0;
+            PKMNMenu.Y = 0;
+            PKMNMenu.Width = Engine.ScreenWidth;
+            PKMNMenu.Height = Engine.ScreenHeight;
+
+            PKMNMenu.ItemSelected += PKMNMenu_ItemSelected;
+        }
+
+        private void PKMNMenu_ItemSelected(object sender, SelectionEventArgs<Pokemon> e)
+        {
+            BattleState.SetCharacter(ID, e.SelectedData);
+            currentFrame = null;
+            currentMenu = messageBox;
+        }
+
+        private void InitItemMenu()
+        {
+            var model = new DefaultListModel<Item>();
+            var list = new List<Item>();
+            for (int i = 0; i < 20; i++)
+                list.Add(new Item { Name = "Item" + i });
+
+            model.Items = list;
+            ItemMenu.Model = model;
+
+            itemFrame.AddContent(ItemMenu);
+
+            itemFrame.X = 3.0f * Engine.ScreenWidth / 8.0f;
+            itemFrame.Y = 1.0f * Engine.ScreenHeight / 8.0f;
+
+            itemFrame.Width = Engine.ScreenWidth - itemFrame.X;
+            itemFrame.Height = (2.0f * Engine.ScreenHeight / 3.0f) - itemFrame.Y;
+
+            ItemMenu.ItemSelected += ItemMenu_ItemSelected;
+        }
+
+        private void ItemMenu_ItemSelected(object sender, SelectionEventArgs<Item> e)
+        {
+            BattleState.SetItem(ID, e.SelectedData);
+            currentFrame = null;
+            currentMenu = messageBox;
         }
 
         private void InitAttackMenu()
@@ -49,6 +106,20 @@ namespace BattleLib.GraphicComponents.GUI
             AttackMenu.Model = model;
 
             attackFrame.AddContent(AttackMenu);
+            attackFrame.X = Engine.ScreenWidth / 2.0f;
+            attackFrame.Y = 2.0f * Engine.ScreenHeight / 3.0f;
+
+            attackFrame.Width = Engine.ScreenWidth - attackFrame.X;
+            attackFrame.Height = Engine.ScreenHeight - attackFrame.Y;
+
+            AttackMenu.ItemSelected += AttackMenu_ItemSelected;
+        }
+
+        private void AttackMenu_ItemSelected(object sender, SelectionEventArgs<Move> e)
+        {
+            BattleState.SetMove(ID, e.SelectedData);
+            currentFrame = null;
+            currentMenu = messageBox;
         }
 
         private void InitMainMenu()
@@ -69,7 +140,21 @@ namespace BattleLib.GraphicComponents.GUI
 
         void MainMenu_ItemSelected(object sender, SelectionEventArgs<string> e)
         {
-            throw new NotImplementedException();
+            switch (e.SelectedData)
+            {
+                case "Attack":
+                    currentFrame = attackFrame;
+                    currentMenu = AttackMenu;
+                    break;
+                case "PKMN":
+                    currentFrame = PKMNMenu;
+                    currentMenu = PKMNMenu;
+                    break;
+                case "Item":
+                    currentFrame = itemFrame;
+                    currentMenu = ItemMenu;
+                    break;
+            }
         }
         public void HandleInput(Keys key)
         {
@@ -81,7 +166,7 @@ namespace BattleLib.GraphicComponents.GUI
             
         }
 
-        protected override void DrawComponent(Microsoft.Xna.Framework.GameTime time, Microsoft.Xna.Framework.Graphics.SpriteBatch batch)
+        protected override void DrawComponent(GameTime time, SpriteBatch batch)
         {
             throw new NotImplementedException();
         }
