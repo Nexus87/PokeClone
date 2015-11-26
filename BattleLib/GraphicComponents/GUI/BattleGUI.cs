@@ -2,7 +2,9 @@
 using BattleLib.Components.BattleState;
 using GameEngine;
 using GameEngine.Graphics;
+using GameEngine.Graphics.Basic;
 using GameEngine.Graphics.Views;
+using GameEngine.Graphics.Widgets;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;

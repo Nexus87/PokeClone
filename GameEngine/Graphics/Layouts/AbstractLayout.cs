@@ -3,11 +3,11 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 
-namespace GameEngine.Graphics
+namespace GameEngine.Graphics.Layouts
 {
     public abstract class AbstractLayout : ILayout
     {
-        protected IGraphicComponent parent;
+        private IGraphicComponent parent;
         private float marginBottom;
         private float marginLeft;
         private float marginRight;
@@ -19,6 +19,7 @@ namespace GameEngine.Graphics
         protected float Width { get { return size.X - marginRight - marginLeft; } }
         protected float X { get { return position.X + marginLeft; } }
         protected float Y { get { return position.Y + marginTop; } }
+        protected IGraphicComponent Parent { get { return parent; } }
 
         public abstract void AddComponent(IGraphicComponent component);
 

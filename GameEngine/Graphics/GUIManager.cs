@@ -1,4 +1,5 @@
 ﻿using GameEngine.Graphics.Views;
+using GameEngine.Graphics.Widgets;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;

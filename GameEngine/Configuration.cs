@@ -26,10 +26,10 @@ namespace GameEngine
         public Keys KeySelect { get; private set; }
         public Keys KeyBack { get; private set; }
 
-        public virtual T getOption<T>(string option)
+        public virtual T GetOption<T>(string optionString)
         {
             object ret = null;
-            switch (option)
+            switch (optionString)
             {
                 case "UpKey":
                     ret = Keys.Up;

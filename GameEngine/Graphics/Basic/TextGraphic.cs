@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 
-namespace GameEngine.Graphics
+namespace GameEngine.Graphics.Basic
 {
     public class TextGraphic
     {

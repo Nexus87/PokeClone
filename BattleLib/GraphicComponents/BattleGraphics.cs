@@ -2,7 +2,9 @@
 using BattleLib.GraphicComponents.MenuView;
 using GameEngine;
 using GameEngine.Graphics;
+using GameEngine.Graphics.Basic;
 using GameEngine.Graphics.Views;
+using GameEngine.Graphics.Widgets;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -21,24 +23,25 @@ namespace BattleLib.GraphicComponents
         public MenuGraphics Menu { get; set; }
         Line line1;
         Line line2;
-        TableWidget<Item> mainMenu;
+        TableWidget<string> mainMenu;
         Frame menuFrame = new Frame("border");
         Texture2D pkmn;
 
         public override void Setup(Rectangle screen, ContentManager content)
         {
 
-            var model = new DefaultListModel<Item>();
+            var model = new DefaultTableModel<string>(2, 2);
+            
             var list = new List<Item>(15);
             for (int i = 0; i < 15; i++)
                 list.Add(new Item {Name = "Item" + i });
 
-            model.Items = list;
+            model.Items = new string[,] { { "Attack", "PKMN" }, { "Item", "Escape" } };
             line2 = new Line();
             line1 = new Line();
             messageBox = new MessageBox();
 
-            mainMenu = new TableWidget<Item>();
+            mainMenu = new TableWidget<string>();
 
             screenWidth = screen.Size.X;
             screenHeight = screen.Size.Y;

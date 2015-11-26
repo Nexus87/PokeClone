@@ -1,10 +1,13 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GameEngine.Graphics.Basic;
+using GameEngine.Graphics.Layouts;
+using GameEngine.Graphics.Views;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 
-namespace GameEngine.Graphics.Views
+namespace GameEngine.Graphics.Widgets
 {
     public class TableWidget<T> : AbstractGraphicComponent, IWidget
     {

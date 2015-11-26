@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 
-namespace GameEngine.Graphics
+namespace GameEngine.Graphics.Layouts
 {
     public class BoxLayout : AbstractLayout
     {

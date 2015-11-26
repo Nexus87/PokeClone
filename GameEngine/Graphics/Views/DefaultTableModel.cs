@@ -11,6 +11,10 @@ namespace GameEngine.Graphics.Views
             items = new T[0, 0];
         }
 
+        public DefaultTableModel(uint rows, uint columns)
+        {
+            items = new T[rows, columns];
+        }
         public event EventHandler SizeChanged = delegate { };
 
         public int Columns { get { return items == null ? 0 : items.GetLength(1); } }

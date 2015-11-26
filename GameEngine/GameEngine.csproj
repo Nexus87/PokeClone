@@ -22,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>ExtendedDesignGuidelineRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -46,25 +47,25 @@
   <ItemGroup>
     <Compile Include="Configuration.cs" />
     <Compile Include="GameEngine.cs" />
-    <Compile Include="Graphics\Basic\AbstractGraphicComponent.cs" />
-    <Compile Include="Graphics\AbstractLayout.cs" />
+    <Compile Include="Graphics\AbstractGraphicComponent.cs" />
+    <Compile Include="Graphics\Layouts\AbstractLayout.cs" />
     <Compile Include="Graphics\Basic\MultlineTextBox.cs" />
     <Compile Include="Graphics\Basic\NullGraphicObject.cs" />
-    <Compile Include="Graphics\BoxLayout.cs" />
+    <Compile Include="Graphics\Layouts\BoxLayout.cs" />
     <Compile Include="Graphics\GUIManager.cs" />
-    <Compile Include="Graphics\InputComponent.cs" />
-    <Compile Include="Graphics\SingleComponentLayout.cs" />
+    <Compile Include="InputComponent.cs" />
+    <Compile Include="Graphics\Layouts\SingleComponentLayout.cs" />
     <Compile Include="Graphics\Basic\Frame.cs" />
     <Compile Include="Graphics\IGraphicComponent.cs" />
-    <Compile Include="Graphics\ILayout.cs" />
+    <Compile Include="Graphics\Layouts\ILayout.cs" />
     <Compile Include="Graphics\Basic\Line.cs" />
-    <Compile Include="Graphics\TableLayout.cs" />
+    <Compile Include="Graphics\Layouts\TableLayout.cs" />
     <Compile Include="Graphics\Views\DefaultListModel.cs" />
     <Compile Include="Graphics\Views\DefaultSelectionHandler.cs" />
     <Compile Include="Graphics\Views\DefaultTableModel.cs" />
     <Compile Include="Graphics\IInputHandler.cs" />
     <Compile Include="Graphics\Views\IItemModel.cs" />
-    <Compile Include="Graphics\Views\ISelectionHandler.cs" />
+    <Compile Include="Graphics\Widgets\ISelectionHandler.cs" />
     <Compile Include="Graphics\Views\ItemBox.cs" />
     <Compile Include="Graphics\Widgets\IWidget.cs" />
     <Compile Include="Graphics\Views\TableView.cs" />

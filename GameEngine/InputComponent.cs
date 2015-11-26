@@ -1,4 +1,5 @@
-﻿using GameEngine.Graphics.Views;
+﻿using GameEngine.Graphics;
+using GameEngine.Graphics.Views;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -7,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameEngine.Graphics
+namespace GameEngine
 {
     class InputComponent : GameComponent
     {
@@ -25,7 +26,8 @@ namespace GameEngine.Graphics
             var state = Keyboard.GetState();
             foreach (var entry in Keys)
             {
-                handler.HandleInput(entry);
+                if(state.IsKeyDown(entry) && !oldState.IsKeyDown(entry))
+                    handler.HandleInput(entry);
             }
 
             oldState = state;

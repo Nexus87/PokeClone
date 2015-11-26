@@ -8,8 +8,10 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using GameEngine.Graphics.Basic;
+using GameEngine.Graphics.Layouts;
 
-namespace GameEngine.Graphics
+namespace GameEngine.Graphics.Views
 {
     public class SelectionEventArgs<T> : EventArgs
     {
@@ -19,6 +21,24 @@ namespace GameEngine.Graphics
     public class TableView<T> : AbstractGraphicComponent
     {
         private ContentManager content;
+        private ItemBox[,] items;
+        private TableLayout layout;
+        private IItemModel<T> model;
+        private ItemBox selectedItem;
+
+        private int startColumn = 0;
+
+        private int startRow = 0;
+
+        private int visibleColumns = 8;
+
+        private int visibleRows = 8;
+
+        public TableView(IItemModel<T> model)
+        {
+            this.Model = model;
+        }
+
         public IItemModel<T> Model
         {
             get { return model; }
@@ -35,26 +55,6 @@ namespace GameEngine.Graphics
                 model_SizeChanged(null, null);
             }
         }
-
-        void model_SizeChanged(object sender, EventArgs e)
-        {
-            InitTable();
-            // If the game is already running, content != null
-            if (content != null)
-                Setup(content);
-        }
-
-        private IItemModel<T> model;
-        private TableLayout layout;
-
-        private int visibleRows = 8;
-        private int visibleColumns = 8;
-
-        private int startRow = 0;
-        private int startColumn = 0;
-
-        private ItemBox[,] items;
-        private ItemBox selectedItem;
 
         public void SelectItem(int row, int column)
         {
@@ -87,19 +87,36 @@ namespace GameEngine.Graphics
                 FillLayout();
         }
 
-        public TableView(IItemModel<T> model) 
+        public override void Setup(ContentManager content)
         {
-            this.Model = model;
-            InitTable();
+            this.content = content;
 
         }
 
-        private void InitTable()
+        protected override void DrawComponent(GameTime time, SpriteBatch batch)
         {
-            layout = new TableLayout(Math.Min(model.Rows, visibleRows), Math.Min(model.Columns, visibleColumns));
-            layout.Init(this);
-            items = new ItemBox[model.Rows, model.Columns];
-            InitItems();
+            layout.Draw(time, batch);
+        }
+
+        protected override void Update()
+        {
+            base.Update();
+            InitTable();
+            foreach (var item in items)
+                item.Setup(content);
+
+            layout.Setup(content);
+            FillLayout();
+
+        }
+
+        private void FillLayout()
+        {
+            for (int i = 0; i < layout.Rows; i++)
+            {
+                for (int j = 0; j < layout.Columns; j++)
+                    layout.SetComponent(i, j, items[startRow + i, startColumn + j]);
+            }
         }
 
         private void InitItems()
@@ -113,28 +130,17 @@ namespace GameEngine.Graphics
             }
         }
 
-        public override void Setup(ContentManager content)
+        private void InitTable()
         {
-            this.content = content;
-            foreach (var item in items)
-                item.Setup(content);
-            
-            layout.Setup(content);
-            FillLayout();
+            layout = new TableLayout(Math.Min(model.Rows, visibleRows), Math.Min(model.Columns, visibleColumns));
+            layout.Init(this);
+            items = new ItemBox[model.Rows, model.Columns];
+            InitItems();
         }
 
-        protected override void DrawComponent(GameTime time, SpriteBatch batch)
+        void model_SizeChanged(object sender, EventArgs e)
         {
-            layout.Draw(time, batch);
-        }
-
-        private void FillLayout()
-        {
-            for (int i = 0; i < layout.Rows; i++)
-            {
-                for (int j = 0; j < layout.Columns; j++)
-                    layout.SetComponent(i, j, items[startRow + i, startColumn + j]);
-            }
+            Invalidate();
         }
     }
 }

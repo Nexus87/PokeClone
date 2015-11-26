@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace GameEngine.Graphics
+namespace GameEngine.Graphics.Layouts
 {
     public class SingleComponentLayout : AbstractLayout
     {

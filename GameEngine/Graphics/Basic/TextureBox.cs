@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameEngine.Graphics
+namespace GameEngine.Graphics.Basic
 {
     public class TextureBox : AbstractGraphicComponent
     {

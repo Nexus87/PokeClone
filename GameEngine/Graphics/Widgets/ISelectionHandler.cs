@@ -1,11 +1,12 @@
-﻿using Microsoft.Xna.Framework.Input;
+﻿using GameEngine.Graphics.Views;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameEngine.Graphics.Views
+namespace GameEngine.Graphics
 {
     public interface ISelectionHandler<T> : IInputHandler
     {
