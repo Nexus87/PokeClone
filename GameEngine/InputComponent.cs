@@ -5,32 +5,38 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace GameEngine
 {
+ 
     class InputComponent : GameComponent
     {
         private KeyboardState oldState;
         internal List<Keys> Keys = new List<Keys>();
         internal IInputHandler handler;
+        private InputManager manager;
 
-        public InputComponent(Game game) : base(game)
-        { }
+        internal InputComponent(Game game, InputManager manager) : base(game)
+        {
+            this.manager = manager;
+        }
+
+        public InputComponent(Game game) : this(game, new InputManager()) { }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+            manager.Update();
 
-            var state = Keyboard.GetState();
             foreach (var entry in Keys)
             {
-                if(state.IsKeyDown(entry) && !oldState.IsKeyDown(entry))
+                if (manager.IsKeyDown(entry) && !oldState.IsKeyDown(entry))
                     handler.HandleInput(entry);
             }
 
-            oldState = state;
+            oldState = manager.GetState();
         }
     }
 }

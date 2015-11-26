@@ -5,23 +5,22 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("GameEngine")]
+[assembly: AssemblyTitle("GameEngineTest")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("GameEngine")]
+[assembly: AssemblyProduct("GameEngineTest")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
-[assembly: InternalsVisibleTo("GameEngineTest")]
-[assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
+
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 
 // COM, set the ComVisible attribute to true on that type.
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("83045e8c-412d-4bd2-9b7a-8f7b89cc224e")]
+[assembly: Guid("6215504c-2d88-4bd2-a9ed-a900f1f47a8e")]
 
 // Version information for an assembly consists of the following four values:
 //
