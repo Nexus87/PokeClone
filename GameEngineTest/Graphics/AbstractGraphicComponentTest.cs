@@ -28,7 +28,6 @@ namespace GameEngineTest.Graphics
             batch = new Mock<ISpriteBatch>();
 
             testObj = componentMock.Object;
-            
         }
 
         [TestCase]

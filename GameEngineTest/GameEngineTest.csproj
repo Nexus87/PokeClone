@@ -51,9 +51,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Graphics\AbstractGraphicComponentTest.cs" />
+    <Compile Include="Graphics\Basic\LineTest.cs" />
     <Compile Include="IGraphicComponentTest.cs" />
     <Compile Include="InputComponentTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util\SpriteBatchMock.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
