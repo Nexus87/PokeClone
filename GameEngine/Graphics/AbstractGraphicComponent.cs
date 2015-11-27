@@ -74,7 +74,7 @@ namespace GameEngine.Graphics
         protected Vector2 Position { get { return position; } }
         protected Vector2 Size { get { return size; } }
 
-        public virtual void Draw(GameTime time, SpriteBatch batch)
+        public void Draw(GameTime time, SpriteBatch batch)
         {
             if (needsUpdate)
             {
