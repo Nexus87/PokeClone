@@ -124,7 +124,7 @@ namespace GameEngineTest
         {
             float X = 5.0f;
             float Y = 5.0f;
-            float Width = 10.0f;
+            float Width = 150.0f;
             float Height = 10.0f;
             SpriteBatchMock batch = new SpriteBatchMock();
 

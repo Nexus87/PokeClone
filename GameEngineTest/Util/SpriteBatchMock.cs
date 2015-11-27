@@ -18,11 +18,11 @@ namespace GameEngineTest.Util
         public bool IsInConstraints(float X, float Y, float Width, float Height)
         {
             bool ret = true;
-            ret &= X.CompareTo(Position.X) >= 0 && X.CompareTo(Position.X + Size.X) <= 0;
-            ret &= Y.CompareTo(Position.Y) >= 0 && Y.CompareTo(Position.Y + Size.Y) <= 0;
+            ret &= (Width.CompareTo(0) == 0) || (Position.X.CompareTo(X) >= 0 && Position.X.CompareTo(X + Width) <= 0);
+            ret &= (Height.CompareTo(0) == 0) || (Position.Y.CompareTo(Y) >= 0 && Position.Y.CompareTo(Y + Height) <= 0);
 
-            ret &= Width.CompareTo(Size.X) <= 0;
-            ret &= Height.CompareTo(Size.Y) <= 0;
+            ret &= Size.X.CompareTo(Width) <= 0;
+            ret &= Size.Y.CompareTo(Height) <= 0;
 
             return ret;
         }
@@ -57,10 +57,15 @@ namespace GameEngineTest.Util
             var obj = new DrawnObject();
             obj.Position = position;
             obj.Size = size * scale;
+            Objects.AddLast(obj);
         }
         public GraphicsDevice GraphicsDevice
         {
-            get { throw new NotImplementedException(); }
+            get
+            {
+                var dev = new GraphicsDevice(GraphicsAdapter.DefaultAdapter, GraphicsProfile.Reach, new PresentationParameters());
+                return dev;
+            }
         }
 
         public void Begin(SpriteSortMode sortMode = SpriteSortMode.Deferred, BlendState blendState = null, SamplerState samplerState = null, DepthStencilState depthStencilState = null, RasterizerState rasterizerState = null, Effect effect = null, Matrix? transformMatrix = null)
