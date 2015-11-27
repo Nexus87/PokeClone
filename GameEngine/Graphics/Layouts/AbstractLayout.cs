@@ -1,26 +1,25 @@
 ﻿using GameEngine.Wrapper;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 using System;
 
 namespace GameEngine.Graphics.Layouts
 {
     public abstract class AbstractLayout : ILayout
     {
-        private IGraphicComponent parent;
         private float marginBottom;
         private float marginLeft;
         private float marginRight;
         private float marginTop;
         private bool needsUpdate = true;
+        private IGraphicComponent parent;
         private Vector2 position;
         private Vector2 size;
         protected float Height { get { return size.Y - marginTop - marginBottom; } }
+        protected IGraphicComponent Parent { get { return parent; } }
         protected float Width { get { return size.X - marginRight - marginLeft; } }
         protected float X { get { return position.X + marginLeft; } }
         protected float Y { get { return position.Y + marginTop; } }
-        protected IGraphicComponent Parent { get { return parent; } }
 
         public abstract void AddComponent(IGraphicComponent component);
 

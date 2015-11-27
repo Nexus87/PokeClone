@@ -52,12 +52,16 @@
   <ItemGroup>
     <Compile Include="Graphics\AbstractGraphicComponentTest.cs" />
     <Compile Include="Graphics\Basic\LineTest.cs" />
+    <Compile Include="Graphics\Layouts\AbstractLayoutTest.cs" />
+    <Compile Include="Graphics\Layouts\ILayoutTest.cs" />
     <Compile Include="IGraphicComponentTest.cs" />
     <Compile Include="InputComponentTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\SpriteBatchMock.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
