@@ -1,6 +1,8 @@
 ﻿using Base;
 using BattleLib.Components.BattleState;
 using GameEngine;
+using GameEngine.Graphics;
+using GameEngine.Wrapper;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -12,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace BattleLib.GraphicComponents
 {
-    public class BattleStateView : AbstractGraphicComponentOld
+    public class BattleStateView : AbstractGraphicComponent
     {
 
         int lastPlayerId;
@@ -56,7 +58,7 @@ namespace BattleLib.GraphicComponents
                 lastAIHP = model.AIHP;
         }
 
-        public override void Setup(Rectangle screen, ContentManager content)
+        public override void Setup(ContentManager content)
         {
             UpdatePlayerId();
             UpdteAiId();
@@ -74,7 +76,7 @@ namespace BattleLib.GraphicComponents
             playerTexture = provider.getTextureBack(lastPlayerId);
         }
 
-        public override void Draw(GameTime time, SpriteBatch batch, int screenWidth, int screenHeight)
+        protected override void DrawComponent(GameTime time, ISpriteBatch batch)
         {
             throw new NotImplementedException();
         }

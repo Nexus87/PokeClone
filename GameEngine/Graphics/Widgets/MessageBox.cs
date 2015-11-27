@@ -1,6 +1,7 @@
 ﻿using GameEngine.Graphics.Basic;
 using GameEngine.Graphics.Layouts;
 using GameEngine.Graphics.Views;
+using GameEngine.Wrapper;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -35,7 +36,7 @@ namespace GameEngine.Graphics.Widgets
             throw new NotImplementedException();
         }
 
-        protected override void DrawComponent(GameTime time, SpriteBatch batch)
+        protected override void DrawComponent(GameTime time, ISpriteBatch batch)
         {
             throw new NotImplementedException();
         }

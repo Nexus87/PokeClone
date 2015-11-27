@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using GameEngine.Graphics.Basic;
 using GameEngine.Graphics.Layouts;
+using GameEngine.Wrapper;
 
 namespace GameEngine.Graphics.Views
 {
@@ -37,6 +38,7 @@ namespace GameEngine.Graphics.Views
         public TableView(IItemModel<T> model)
         {
             this.Model = model;
+            layout = new TableLayout(Math.Min(model.Rows, visibleRows), Math.Min(model.Columns, visibleColumns));
         }
 
         public IItemModel<T> Model
@@ -93,7 +95,7 @@ namespace GameEngine.Graphics.Views
 
         }
 
-        protected override void DrawComponent(GameTime time, SpriteBatch batch)
+        protected override void DrawComponent(GameTime time, ISpriteBatch batch)
         {
             layout.Draw(time, batch);
         }

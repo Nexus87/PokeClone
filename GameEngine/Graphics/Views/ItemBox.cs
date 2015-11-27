@@ -1,4 +1,5 @@
 ﻿using GameEngine.Graphics.Basic;
+using GameEngine.Wrapper;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -28,7 +29,7 @@ namespace GameEngine.Graphics.Views
             textBox.Setup(content);
         }
 
-        protected override void DrawComponent(GameTime time, SpriteBatch batch)
+        protected override void DrawComponent(GameTime time, ISpriteBatch batch)
         {
             if (IsSelected)
                 arrow.Draw(time, batch);

@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GameEngine.Wrapper;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -22,7 +23,7 @@ namespace GameEngine.Graphics.Basic
             circleScale = 1.0f / cups.Height;
         }
 
-        protected override void DrawComponent(GameTime time, SpriteBatch batch)
+        protected override void DrawComponent(GameTime time, ISpriteBatch batch)
         {
             if (pixel == null)
                 Init(batch.GraphicsDevice);

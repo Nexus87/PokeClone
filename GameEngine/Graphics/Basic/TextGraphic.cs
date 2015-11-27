@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GameEngine.Wrapper;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -36,7 +37,7 @@ namespace GameEngine.Graphics.Basic
             return textSize * size.X / size.Y;
         }
 
-        public void Draw(SpriteBatch batch)
+        public void Draw(ISpriteBatch batch)
         {
             batch.DrawString(font, Text, position, Color.Black, 0, Vector2.Zero, scale, SpriteEffects.None, 0);
         }

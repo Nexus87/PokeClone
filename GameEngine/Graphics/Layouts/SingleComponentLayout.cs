@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GameEngine.Wrapper;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -27,7 +28,7 @@ namespace GameEngine.Graphics.Layouts
                 component.Setup(content);
         }
 
-        protected override void DrawComponents(GameTime time, SpriteBatch batch)
+        protected override void DrawComponents(GameTime time, ISpriteBatch batch)
         {
             if (component != null)
                 component.Draw(time, batch);

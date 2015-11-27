@@ -1,5 +1,6 @@
 ﻿using GameEngine.Graphics.Views;
 using GameEngine.Graphics.Widgets;
+using GameEngine.Wrapper;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -32,7 +33,7 @@ namespace GameEngine.Graphics
             handler = GUIWidget;
         }
 
-        internal void Draw(GameTime time, SpriteBatch batch)
+        internal void Draw(GameTime time, ISpriteBatch batch)
         {
             GUIWidget.Draw(time, batch);
         }

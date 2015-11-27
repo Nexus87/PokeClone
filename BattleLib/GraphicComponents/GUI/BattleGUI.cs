@@ -5,6 +5,7 @@ using GameEngine.Graphics;
 using GameEngine.Graphics.Basic;
 using GameEngine.Graphics.Views;
 using GameEngine.Graphics.Widgets;
+using GameEngine.Wrapper;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -168,7 +169,7 @@ namespace BattleLib.GraphicComponents.GUI
             
         }
 
-        protected override void DrawComponent(GameTime time, SpriteBatch batch)
+        protected override void DrawComponent(GameTime time, ISpriteBatch batch)
         {
             throw new NotImplementedException();
         }

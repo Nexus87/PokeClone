@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GameEngine.Wrapper;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -56,7 +57,7 @@ namespace GameEngine.Graphics.Layouts
             }
         }
 
-        protected override void DrawComponents(GameTime time, SpriteBatch batch)
+        protected override void DrawComponents(GameTime time, ISpriteBatch batch)
         {
             foreach (var component in components)
             {

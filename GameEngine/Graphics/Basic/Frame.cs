@@ -1,4 +1,5 @@
 ﻿using GameEngine.Graphics.Layouts;
+using GameEngine.Wrapper;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -33,7 +34,7 @@ namespace GameEngine.Graphics.Basic
         public float X { get { return box.X; } set { box.X = value; } }
         public float Y { get { return box.Y; } set { box.Y = value; } }
 
-        public void Draw(GameTime time, SpriteBatch batch)
+        public void Draw(GameTime time, ISpriteBatch batch)
         {
             box.Draw(time, batch);
             Layout.Draw(time, batch);

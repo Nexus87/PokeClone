@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using GameEngine.Graphics.Layouts;
+using GameEngine.Wrapper;
 
 namespace GameEngine.Graphics.Basic
 {
@@ -37,7 +38,7 @@ namespace GameEngine.Graphics.Basic
             layout.Setup(content);
         }
 
-        protected override void DrawComponent(GameTime time, SpriteBatch batch)
+        protected override void DrawComponent(GameTime time, ISpriteBatch batch)
         {
             layout.Draw(time, batch);
         }

@@ -1,4 +1,5 @@
 ﻿using GameEngine.Graphics;
+using GameEngine.Wrapper;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -13,36 +14,19 @@ using System.Threading.Tasks;
 
 namespace GameEngineTest.Graphics
 {
-    class MyTestClass : AbstractGraphicComponent
-    {
-
-        public override void Setup(ContentManager content)
-        {
-            throw new NotImplementedException();
-        }
-
-        protected override void DrawComponent(GameTime time, SpriteBatch batch)
-        {
-        }
-    }
-
-
     [TestFixture]
     public class AbstractGraphicComponentTest : IGraphicComponentTest
     {
         Mock<AbstractGraphicComponent> componentMock;
-        GraphicsAdapter adapter;
-        GraphicsDevice dev;
-        SpriteBatch sprite;
+        Mock<ISpriteBatch> batch;
 
         [SetUp]
         public void SetUp()
         {
             componentMock = new Mock<AbstractGraphicComponent>();
             componentMock.CallBase = true;
-            adapter = GraphicsAdapter.DefaultAdapter;
-            dev = new GraphicsDevice(adapter, GraphicsProfile.Reach, new PresentationParameters());
-            sprite = new SpriteBatch(dev);
+            batch = new Mock<ISpriteBatch>();
+
             testObj = componentMock.Object;
             
         }
@@ -50,8 +34,8 @@ namespace GameEngineTest.Graphics
         [TestCase]
         public void ExecuteUpdateTest()
         {
-            var obj = componentMock.Object;
-            obj.Draw(new GameTime(), sprite);
+            var sprite = batch.Object;
+            componentMock.Object.Draw(new GameTime(), sprite);
             componentMock.Protected().Verify("Update", Times.Once());
 
             componentMock.ResetCalls();
@@ -82,6 +66,8 @@ namespace GameEngineTest.Graphics
         [TestCase]
         public void MultipleChangedUpdateTest()
         {
+            var sprite = batch.Object;
+
             componentMock.Object.Draw(new GameTime(), sprite);
             componentMock.Protected().Verify("Update", Times.Once());
 
@@ -130,6 +116,7 @@ namespace GameEngineTest.Graphics
         public void DrawComponentCalled()
         {
             var time = new GameTime();
+            var sprite = batch.Object;
             componentMock.Object.Draw(time, sprite);
             componentMock.Protected().Verify("DrawComponent", Times.Once(), time, sprite);
         }

@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GameEngine.Wrapper;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -44,7 +45,7 @@ namespace GameEngine.Graphics.Basic
             return num;
         }
 
-        public void Draw(GameTime time, SpriteBatch batch)
+        public void Draw(GameTime time, ISpriteBatch batch)
         {
             if (needsUpdate)
                 CalculateDisplayedChars();

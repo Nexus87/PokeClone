@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GameEngine.Wrapper;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -23,7 +24,7 @@ namespace GameEngine.Graphics.Layouts
 
         public abstract void AddComponent(IGraphicComponent component);
 
-        public void Draw(GameTime time, SpriteBatch batch)
+        public void Draw(GameTime time, ISpriteBatch batch)
         {
             if (needsUpdate)
             {
@@ -56,7 +57,7 @@ namespace GameEngine.Graphics.Layouts
 
         public abstract void Setup(ContentManager content);
 
-        protected abstract void DrawComponents(GameTime time, SpriteBatch batch);
+        protected abstract void DrawComponents(GameTime time, ISpriteBatch batch);
 
         protected void Invalidate()
         {

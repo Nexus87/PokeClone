@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GameEngine.Wrapper;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -74,7 +75,7 @@ namespace GameEngine.Graphics
         protected Vector2 Position { get { return position; } }
         protected Vector2 Size { get { return size; } }
 
-        public void Draw(GameTime time, SpriteBatch batch)
+        public void Draw(GameTime time, ISpriteBatch batch)
         {
             if (needsUpdate)
             {
@@ -86,7 +87,7 @@ namespace GameEngine.Graphics
 
         public abstract void Setup(ContentManager content);
 
-        protected abstract void DrawComponent(GameTime time, SpriteBatch batch);
+        protected abstract void DrawComponent(GameTime time, ISpriteBatch batch);
 
         protected void Invalidate()
         {

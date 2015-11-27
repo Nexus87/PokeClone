@@ -5,6 +5,7 @@ using GameEngine.Graphics;
 using GameEngine.Graphics.Basic;
 using GameEngine.Graphics.Views;
 using GameEngine.Graphics.Widgets;
+using GameEngine.Wrapper;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -14,10 +15,8 @@ using System.Collections.Generic;
 
 namespace BattleLib.GraphicComponents
 {
-    public class BattleGraphics : AbstractGraphicComponentOld
+    public class BattleGraphics : AbstractGraphicComponent
     {
-        int screenWidth;
-        int screenHeight;
 
         private MessageBox messageBox;
         public MenuGraphics Menu { get; set; }
@@ -27,7 +26,7 @@ namespace BattleLib.GraphicComponents
         Frame menuFrame = new Frame("border");
         Texture2D pkmn;
 
-        public override void Setup(Rectangle screen, ContentManager content)
+        public override void Setup(ContentManager content)
         {
 
             var model = new DefaultTableModel<string>(2, 2);
@@ -42,9 +41,6 @@ namespace BattleLib.GraphicComponents
             messageBox = new MessageBox();
 
             mainMenu = new TableWidget<string>();
-
-            screenWidth = screen.Size.X;
-            screenHeight = screen.Size.Y;
 
             mainMenu.Model = model;
             line2.X = 50.0f;
@@ -93,7 +89,7 @@ namespace BattleLib.GraphicComponents
         private static Keys[] keys = new Keys[] { Keys.Up, Keys.Down, Keys.Left, Keys.Right };
         private Random rnd = new Random();
 
-        public override void Draw(GameTime time, SpriteBatch batch, int screenWidth, int screenHeight)
+        protected override void DrawComponent(GameTime time, ISpriteBatch batch)
         {
             if (time.ElapsedGameTime.Seconds == 0)
             {

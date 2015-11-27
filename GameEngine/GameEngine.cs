@@ -1,4 +1,5 @@
 ﻿using GameEngine.Graphics;
+using GameEngine.Wrapper;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -41,9 +42,9 @@ namespace GameEngine
         readonly List<GameComponent> _components = new List<GameComponent>();
         readonly List<GameComponent> _suspended = new List<GameComponent> ();
 
-        IGraphicComponentOld _grapics = null;
+        IGraphicComponent _grapics = null;
         private Matrix transformation = Matrix.Identity;
-        private SpriteBatch _batch;
+        private XNASpriteBatch _batch;
         private Rectangle display;
         private InputComponent input;
 
@@ -101,7 +102,7 @@ namespace GameEngine
             display.Y = (int)((bufferY - display.Height) / 2.0f);
         }
 
-        public void setGraphicCompomnent(IGraphicComponentOld component)
+        public void setGraphicCompomnent(IGraphicComponent component)
         {
             _grapics = component;
         }
@@ -120,10 +121,10 @@ namespace GameEngine
         protected override void LoadContent()
         {
             base.LoadContent();
-            _batch = new SpriteBatch(GraphicsDevice);
+            _batch = new XNASpriteBatch(GraphicsDevice);
             if (_grapics == null)
                 throw new InvalidOperationException("Graphic component is not set");
-            _grapics.Setup(GraphicsDevice.Viewport.Bounds, Content);
+            _grapics.Setup(Content);
 
             //transformation = Matrix.CreateOrthographic(screenWidth, screenHeight, 0, 0);
         }
@@ -134,7 +135,7 @@ namespace GameEngine
             GraphicsDevice.Clear(new Color(248, 248, 248, 0));
             
             _batch.Begin();
-            _grapics.Draw(gameTime, _batch, 1, 1);
+            _grapics.Draw(gameTime, _batch);
             _batch.End();
 
             GraphicsDevice.SetRenderTarget(null);
