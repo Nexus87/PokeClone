@@ -21,12 +21,12 @@ namespace GameEngine.Graphics.Basic
         readonly LinkedList<string> lines = new LinkedList<string>();
         VBoxLayout layout = new VBoxLayout();
 
-        public MultlineTextBox(int lineNumber, string fontName)
+        public MultlineTextBox(int lineNumber, string fontName, ISpriteFont font)
         {
             this.lineNumber = lineNumber;
             for (int i = 0; i < lineNumber; i++)
             {
-                var box = new TextBox(fontName);
+                var box = new TextBox(fontName, font);
                 texts.Add(box);
                 layout.AddComponent(box);
             }

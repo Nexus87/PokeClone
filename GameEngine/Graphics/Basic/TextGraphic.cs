@@ -8,16 +8,17 @@ namespace GameEngine.Graphics.Basic
 {
     public class TextGraphic
     {
-        private SpriteFont font;
+        private ISpriteFont font;
         private string fontName;
         private Vector2 position;
         private float scale;
         private string text;
         private float textSize;
 
-        public TextGraphic(string fontName)
+        public TextGraphic(string fontName, ISpriteFont font)
         {
             this.fontName = fontName;
+            this.font = font;
             text = "";
             textSize = 32.0f;
         }
@@ -49,7 +50,7 @@ namespace GameEngine.Graphics.Basic
 
         public void Setup(ContentManager content)
         {
-            font = content.Load<SpriteFont>(fontName);
+            font.Load(content, fontName);
             CalculateFontScale();
         }
 

@@ -20,7 +20,7 @@ namespace GameEngine.Graphics.Views
         public ItemBox(String displayedText)
         {
             arrow = new TextureBox("arrow");
-            textBox = new TextBox("MenuFont");
+            textBox = new TextBox("MenuFont", new XNASpriteFont());
             textBox.Text = displayedText;
         }
         public override void Setup(ContentManager content)

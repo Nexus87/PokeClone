@@ -1,6 +1,7 @@
 ﻿using GameEngine;
 using GameEngine.Graphics;
 using GameEngine.Graphics.Basic;
+using GameEngine.Wrapper;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -10,7 +11,7 @@ namespace BattleLib.GraphicComponents
 {
     public class MessageBox : Frame
     {
-        TextBox textBox = new TextBox("MenuFont");
+        TextBox textBox = new TextBox("MenuFont", new XNASpriteFont());
         public String Text { set { textBox.Text = value; } }
 
         public MessageBox() : base("border")

@@ -36,7 +36,7 @@ namespace GameEngineTest.Util
     class SpriteBatchMock : ISpriteBatch
     {
         public readonly LinkedList<DrawnObject> Objects = new LinkedList<DrawnObject>();
-
+      
         private void SetData(Vector2 position, Vector2 size)
         {
             SetData(position, size, Vector2.One);
@@ -59,6 +59,17 @@ namespace GameEngineTest.Util
             obj.Size = size * scale;
             Objects.AddLast(obj);
         }
+
+        private void SetData(Vector2 position, ISpriteFont font, string text, Vector2 scale)
+        {
+            SetData(position, font.MeasureString(text), scale);
+        }
+
+        private void SetData(Vector2 position, ISpriteFont font, string text)
+        {
+            SetData(position, font, text, Vector2.One);
+        }
+
         public GraphicsDevice GraphicsDevice
         {
             get
@@ -119,34 +130,34 @@ namespace GameEngineTest.Util
 
         }
 
-        public void DrawString(Microsoft.Xna.Framework.Graphics.SpriteFont spriteFont, string text, Microsoft.Xna.Framework.Vector2 position, Microsoft.Xna.Framework.Color color)
+        public void DrawString(ISpriteFont spriteFont, string text, Vector2 position, Color color)
         {
-            throw new NotImplementedException();
+            SetData(position, spriteFont, text);
         }
 
-        public void DrawString(Microsoft.Xna.Framework.Graphics.SpriteFont spriteFont, StringBuilder text, Microsoft.Xna.Framework.Vector2 position, Microsoft.Xna.Framework.Color color)
+        public void DrawString(ISpriteFont spriteFont, StringBuilder text, Vector2 position, Color color)
         {
-            throw new NotImplementedException();
+            SetData(position, spriteFont, text.ToString());
         }
 
-        public void DrawString(Microsoft.Xna.Framework.Graphics.SpriteFont spriteFont, string text, Microsoft.Xna.Framework.Vector2 position, Microsoft.Xna.Framework.Color color, float rotation, Microsoft.Xna.Framework.Vector2 origin, float scale, Microsoft.Xna.Framework.Graphics.SpriteEffects effects, float layerDepth)
+        public void DrawString(ISpriteFont spriteFont, string text, Vector2 position, Color color, float rotation, Vector2 origin, float scale, SpriteEffects effects, float layerDepth)
         {
-            throw new NotImplementedException();
+            SetData(position, spriteFont, text, new Vector2(scale));
         }
 
-        public void DrawString(Microsoft.Xna.Framework.Graphics.SpriteFont spriteFont, string text, Microsoft.Xna.Framework.Vector2 position, Microsoft.Xna.Framework.Color color, float rotation, Microsoft.Xna.Framework.Vector2 origin, Microsoft.Xna.Framework.Vector2 scale, Microsoft.Xna.Framework.Graphics.SpriteEffects effects, float layerDepth)
+        public void DrawString(ISpriteFont spriteFont, string text, Vector2 position, Color color, float rotation, Vector2 origin, Vector2 scale, SpriteEffects effects, float layerDepth)
         {
-            throw new NotImplementedException();
+            SetData(position, spriteFont, text, scale);
         }
 
-        public void DrawString(Microsoft.Xna.Framework.Graphics.SpriteFont spriteFont, StringBuilder text, Microsoft.Xna.Framework.Vector2 position, Microsoft.Xna.Framework.Color color, float rotation, Microsoft.Xna.Framework.Vector2 origin, float scale, Microsoft.Xna.Framework.Graphics.SpriteEffects effects, float layerDepth)
+        public void DrawString(ISpriteFont spriteFont, StringBuilder text, Vector2 position, Color color, float rotation, Vector2 origin, float scale, SpriteEffects effects, float layerDepth)
         {
-            throw new NotImplementedException();
+            SetData(position, spriteFont, text.ToString(), new Vector2(scale));
         }
 
-        public void DrawString(SpriteFont spriteFont, StringBuilder text, Microsoft.Xna.Framework.Vector2 position, Microsoft.Xna.Framework.Color color, float rotation, Microsoft.Xna.Framework.Vector2 origin, Microsoft.Xna.Framework.Vector2 scale, Microsoft.Xna.Framework.Graphics.SpriteEffects effects, float layerDepth)
+        public void DrawString(ISpriteFont spriteFont, StringBuilder text, Vector2 position, Color color, float rotation, Vector2 origin, Vector2 scale, SpriteEffects effects, float layerDepth)
         {
-            throw new NotImplementedException();
+            SetData(position, spriteFont, text.ToString(), scale);
         }
 
         public void End()

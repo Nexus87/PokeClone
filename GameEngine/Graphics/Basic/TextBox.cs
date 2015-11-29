@@ -18,9 +18,9 @@ namespace GameEngine.Graphics.Basic
 
         private float width;
 
-        public TextBox(String fontName)
+        public TextBox(String fontName, ISpriteFont font)
         {
-            textGraphic = new TextGraphic(fontName);
+            textGraphic = new TextGraphic(fontName, font);
         }
 
         public event EventHandler<EventArgs> PositionChanged = (a, b) => { };

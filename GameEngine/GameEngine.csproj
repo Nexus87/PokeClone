@@ -78,7 +78,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TextureProvider.cs" />
     <Compile Include="Wrapper\ISpriteBatch.cs" />
+    <Compile Include="Wrapper\ISpriteFont.cs" />
     <Compile Include="Wrapper\XNASpriteBatch.cs" />
+    <Compile Include="Wrapper\XNASpriteFont.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">
