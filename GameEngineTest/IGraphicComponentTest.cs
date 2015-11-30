@@ -1,6 +1,8 @@
 ﻿using GameEngine.Graphics;
 using GameEngineTest.Util;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -14,6 +16,13 @@ namespace GameEngineTest
     public abstract class IGraphicComponentTest
     {
         public IGraphicComponent testObj;
+        public Mock<ContentManager> contentMock;
+
+        public IGraphicComponentTest()
+        {
+            var serviceMock = new Mock<IServiceProvider>();
+            contentMock = new Mock<ContentManager>(serviceMock.Object);
+        }
 
         [TestCase]
         public void ChangeEventTest()

@@ -52,7 +52,9 @@
   <ItemGroup>
     <Compile Include="Graphics\AbstractGraphicComponentTest.cs" />
     <Compile Include="Graphics\Basic\LineTest.cs" />
+    <Compile Include="Graphics\Basic\TextBoxTest.cs" />
     <Compile Include="Graphics\Basic\TextGraphicTest.cs" />
+    <Compile Include="Graphics\Basic\TextureBoxTest.cs" />
     <Compile Include="Graphics\Layouts\AbstractLayoutTest.cs" />
     <Compile Include="Graphics\Layouts\ILayoutTest.cs" />
     <Compile Include="IGraphicComponentTest.cs" />

@@ -12,20 +12,19 @@ namespace GameEngine.Graphics.Basic
         private string fontName;
         private Vector2 position;
         private float scale;
-        private string text;
-        private float textSize;
+        private string text = "";
+        private float textSize = 32.0f;
+        private bool needsUpdate = false;
 
         public TextGraphic(string fontName, ISpriteFont font)
         {
             this.fontName = fontName;
             this.font = font;
-            text = "";
-            textSize = 32.0f;
         }
 
-        public String Text { get { return text; } set { text = value; CalculateFontScale(); } }
-        public float TextSize { get { return textSize; } set { textSize = value; CalculateFontScale(); } }
-        public float TextWidth { get { return CalculateTextLength(); } }
+        public String Text { get { return text; } set { text = value; Invalidate(); } }
+        public float TextSize { get { return textSize; } set { textSize = value; Invalidate(); } }
+        public float TextWidth { get { return CalculateTextLength(text); } }
         public float X { get { return position.X; } set { position.X = value; } }
         public float Y { get { return position.Y; } set { position.Y = value; } }
 
@@ -40,6 +39,8 @@ namespace GameEngine.Graphics.Basic
 
         public void Draw(ISpriteBatch batch)
         {
+            if (needsUpdate)
+                Update();
             batch.DrawString(font, Text, position, Color.Black, 0, Vector2.Zero, scale, SpriteEffects.None, 0);
         }
 
@@ -51,10 +52,14 @@ namespace GameEngine.Graphics.Basic
         public void Setup(ContentManager content)
         {
             font.Load(content, fontName);
-            CalculateFontScale();
         }
 
-        private void CalculateFontScale()
+        private void Invalidate()
+        {
+            needsUpdate = true;
+        }
+
+        private void Update()
         {
             if (font == null)
                 return;
@@ -62,14 +67,7 @@ namespace GameEngine.Graphics.Basic
             var size = font.MeasureString(" ");
 
             scale = textSize / size.Y;
-        }
-
-        private float CalculateTextLength()
-        {
-            if (font == null)
-                return 0;
-
-            return scale * font.MeasureString(text).X;
+            needsUpdate = false;
         }
     }
 }
