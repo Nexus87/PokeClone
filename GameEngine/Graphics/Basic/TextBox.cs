@@ -1,7 +1,6 @@
 ﻿using GameEngine.Wrapper;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 using System;
 
 namespace GameEngine.Graphics.Basic
@@ -27,13 +26,56 @@ namespace GameEngine.Graphics.Basic
 
         public event EventHandler<EventArgs> SizeChanged = (a, b) => { };
 
-        public float Height { get { return height; } set { height = value; SizeChanged(this, null); } }
+        public float Height
+        {
+            get { return height; }
+            set
+            {
+                if (height == value)
+                    return;
+                height = value;
+                SizeChanged(this, null);
+            }
+        }
         public string Text { get { return text; } set { text = value; Invalidate(); } }
         public float TextSize { get { return textGraphic.TextSize; } set { textGraphic.TextSize = value; Invalidate(); } }
 
-        public float Width { get { return width; } set { width = value; Invalidate(); SizeChanged(this, null); } }
-        public float X { get { return textGraphic.X; } set { textGraphic.X = value; PositionChanged(this, null); } }
-        public float Y { get { return textGraphic.Y; } set { textGraphic.Y = value; PositionChanged(this, null); } }
+        public float Width
+        {
+            get { return width; }
+            set
+            {
+                if (width == value)
+                    return;
+                width = value;
+                Invalidate();
+                SizeChanged(this, null);
+            }
+        }
+
+        public float X
+        {
+            get { return textGraphic.X; }
+            set
+            {
+                if (textGraphic.X == value)
+                    return;
+                textGraphic.X = value;
+                PositionChanged(this, null);
+            }
+        }
+
+        public float Y
+        {
+            get { return textGraphic.Y; }
+            set
+            {
+                if (textGraphic.Y == value)
+                    return;
+                textGraphic.Y = value;
+                PositionChanged(this, null);
+            }
+        }
 
         public int DisplayableChars()
         {
