@@ -39,7 +39,7 @@ namespace GameEngine.Graphics.Views
 
         protected override void Update()
         {
-            float internalHight = textBox.TextSize;
+            float internalHight = textBox.PreferedTextSize;
 
             arrow.X = X;
             arrow.Y = Y;

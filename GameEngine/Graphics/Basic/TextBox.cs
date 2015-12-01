@@ -8,15 +8,11 @@ namespace GameEngine.Graphics.Basic
     public class TextBox : IGraphicComponent
     {
         private float height;
-
         private bool needsUpdate = true;
-
         private string text = "";
-
         private TextGraphic textGraphic;
-
         private float width;
-
+        private float prefTextSize;
         public TextBox(String fontName, ISpriteFont font)
         {
             textGraphic = new TextGraphic(fontName, font);
@@ -34,11 +30,30 @@ namespace GameEngine.Graphics.Basic
                 if (height == value)
                     return;
                 height = value;
+                if (height > prefTextSize)
+                    textGraphic.TextSize = prefTextSize;
+
                 SizeChanged(this, null);
             }
         }
+
+        public float PreferedTextSize
+        { 
+            get { return prefTextSize; } 
+            set 
+            {
+                if (prefTextSize == value)
+                    return;
+                
+                prefTextSize = value;
+                if (prefTextSize > height)
+                    return;  
+            
+                textGraphic.TextSize = value; 
+                Invalidate();
+            } 
+        }
         public string Text { get { return text; } set { text = value; Invalidate(); } }
-        public float TextSize { get { return textGraphic.TextSize; } set { textGraphic.TextSize = value; Invalidate(); } }
 
         public float Width
         {
