@@ -2,6 +2,7 @@
 using GameEngine.Wrapper;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,10 +20,14 @@ namespace GameEngineTest.Util
         {
             bool ret = true;
             ret &= (Width.CompareTo(0) == 0) || (Position.X.CompareTo(X) >= 0 && Position.X.CompareTo(X + Width) <= 0);
+            Assert.IsTrue(ret);
             ret &= (Height.CompareTo(0) == 0) || (Position.Y.CompareTo(Y) >= 0 && Position.Y.CompareTo(Y + Height) <= 0);
+            Assert.IsTrue(ret);
 
             ret &= Size.X.CompareTo(Width) <= 0;
+            Assert.IsTrue(ret);
             ret &= Size.Y.CompareTo(Height) <= 0;
+            Assert.IsTrue(ret);
 
             return ret;
         }

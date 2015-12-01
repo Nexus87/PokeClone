@@ -1,5 +1,6 @@
 ﻿using GameEngine.Graphics.Basic;
 using GameEngine.Wrapper;
+using Microsoft.Xna.Framework;
 using Moq;
 using NUnit.Framework;
 using System;
@@ -20,6 +21,7 @@ namespace GameEngineTest.Graphics.Basic
         public void Setup()
         {
             fontMock = new Mock<ISpriteFont>();
+            fontMock.Setup(o => o.MeasureString(It.IsAny<string>())).Returns<string>(s => new Vector2(16.0f * s.Length, 16.0f));
             box = new TextBox("", fontMock.Object);
             testObj = box;
         }
