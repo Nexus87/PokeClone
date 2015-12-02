@@ -21,6 +21,8 @@ namespace GameEngine.Graphics.Basic
             get { return prefTextSize; } 
             set 
             {
+                if (value.CompareTo(0) < 0)
+                    throw new ArgumentException("PreferedTextSize must be >= 0");
                 if (prefTextSize == value)
                     return;
                 
@@ -30,12 +32,14 @@ namespace GameEngine.Graphics.Basic
         }
 
         public string Text { get { return text; } set { text = value; Invalidate(); } }
-
+        public float RealTextHeight { get { return prefTextSize <= Height ? prefTextSize : Height; } }
+        
         public int DisplayableChars()
         {
+            textGraphic.TextSize = RealTextHeight;
             float charWidth = textGraphic.GetSingleCharWidth();
             if (charWidth.CompareTo(0) == 0)
-                throw new InvalidOperationException("Textbox is not set up");
+                return 0;
 
             int num = (int)Math.Floor(Width / charWidth);
             return num;
@@ -55,7 +59,7 @@ namespace GameEngine.Graphics.Basic
         {
             textGraphic.X = X;
             textGraphic.Y = Y;
-            textGraphic.TextSize = Math.Min(prefTextSize, Height);
+            textGraphic.TextSize = RealTextHeight;
 
             float length = textGraphic.CalculateTextLength(" ");
             if (length.CompareTo(0) == 0)

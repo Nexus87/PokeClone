@@ -23,7 +23,57 @@ namespace GameEngineTest.Graphics.Basic
             fontMock = new Mock<ISpriteFont>();
             fontMock.Setup(o => o.MeasureString(It.IsAny<string>())).Returns<string>(s => new Vector2(16.0f * s.Length, 16.0f));
             box = new TextBox("", fontMock.Object);
+            box.Text = "TestString";
             testObj = box;
+            testObj.Setup(contentMock.Object);
+        }
+
+        static public List<TestCaseData> ValidData = new List<TestCaseData>{
+            new TestCaseData(150.0f, 50.0f, 32.0f),
+            new TestCaseData(0.0f, 50.0f, 32.0f),
+            new TestCaseData(150.0f, 0.0f, 32.0f),
+            new TestCaseData(150.0f, 40.0f, 0.0f),
+            new TestCaseData(150.0f, 40.0f, 50.0f)
+        };
+
+        static public List<TestCaseData> InvalidTextSize = new List<TestCaseData>{
+            new TestCaseData(-1.0f)
+        };
+
+        [TestCaseSource("ValidData")]
+        public void RealTextSizeTest(float Width, float Height, float TextSize)
+        {
+            box.Width = Width;
+            box.Height = Height;
+            box.PreferedTextSize = TextSize;
+
+            Assert.AreEqual(Width, box.Width);
+            Assert.AreEqual(Height, box.Height);
+            Assert.AreEqual(TextSize, box.PreferedTextSize);
+
+            Assert.LessOrEqual(box.RealTextHeight, Height);
+            if (TextSize <= Height)
+                Assert.AreEqual(TextSize, box.RealTextHeight);
+        }
+
+        [TestCaseSource("InvalidTextSize")]
+        public void InvalidTextSizeTest(float TextSize)
+        {
+            float size = box.RealTextHeight;
+            Assert.Throws<ArgumentException>(() => box.PreferedTextSize = TextSize);
+            Assert.AreEqual(size, box.RealTextHeight);
+        }
+
+
+        [TestCaseSource("ValidData")]
+        public void DisplayableCharsTest(float Width, float Heigth, float TextSize)
+        {
+            box.Width = Width;
+            box.Height = Heigth;
+            box.PreferedTextSize = TextSize;
+
+            int num = box.DisplayableChars();
+            Assert.LessOrEqual(num * TextSize, Width);
         }
     }
 }

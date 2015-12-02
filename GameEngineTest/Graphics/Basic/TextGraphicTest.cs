@@ -18,7 +18,7 @@ namespace GameEngineTest.Graphics.Basic
     public class TextGraphicTest
     {
         TextGraphic testObj;
-
+        
         [SetUp]
         public void Setup()
         {
