@@ -5,36 +5,15 @@ using System;
 
 namespace GameEngine.Graphics.Basic
 {
-    public class TextBox : IGraphicComponent
+    public class TextBox : AbstractGraphicComponent
     {
-        private float height;
-        private bool needsUpdate = true;
         private string text = "";
         private TextGraphic textGraphic;
-        private float width;
         private float prefTextSize;
+
         public TextBox(String fontName, ISpriteFont font)
         {
             textGraphic = new TextGraphic(fontName, font);
-        }
-
-        public event EventHandler<EventArgs> PositionChanged = (a, b) => { };
-
-        public event EventHandler<EventArgs> SizeChanged = (a, b) => { };
-
-        public float Height
-        {
-            get { return height; }
-            set
-            {
-                if (height == value)
-                    return;
-                height = value;
-                if (height > prefTextSize)
-                    textGraphic.TextSize = prefTextSize;
-
-                SizeChanged(this, null);
-            }
         }
 
         public float PreferedTextSize
@@ -46,51 +25,11 @@ namespace GameEngine.Graphics.Basic
                     return;
                 
                 prefTextSize = value;
-                if (prefTextSize > height)
-                    return;  
-            
-                textGraphic.TextSize = value; 
                 Invalidate();
             } 
         }
+
         public string Text { get { return text; } set { text = value; Invalidate(); } }
-
-        public float Width
-        {
-            get { return width; }
-            set
-            {
-                if (width == value)
-                    return;
-                width = value;
-                Invalidate();
-                SizeChanged(this, null);
-            }
-        }
-
-        public float X
-        {
-            get { return textGraphic.X; }
-            set
-            {
-                if (textGraphic.X == value)
-                    return;
-                textGraphic.X = value;
-                PositionChanged(this, null);
-            }
-        }
-
-        public float Y
-        {
-            get { return textGraphic.Y; }
-            set
-            {
-                if (textGraphic.Y == value)
-                    return;
-                textGraphic.Y = value;
-                PositionChanged(this, null);
-            }
-        }
 
         public int DisplayableChars()
         {
@@ -102,21 +41,22 @@ namespace GameEngine.Graphics.Basic
             return num;
         }
 
-        public void Draw(GameTime time, ISpriteBatch batch)
+        protected override void DrawComponent(GameTime time, ISpriteBatch batch)
         {
-            if (needsUpdate)
-                CalculateDisplayedChars();
-
             textGraphic.Draw(batch);
         }
 
-        public void Setup(ContentManager content)
+        public override void Setup(ContentManager content)
         {
             textGraphic.Setup(content);
         }
 
-        private void CalculateDisplayedChars()
+        protected override void Update()
         {
+            textGraphic.X = X;
+            textGraphic.Y = Y;
+            textGraphic.TextSize = Math.Min(prefTextSize, Height);
+
             float length = textGraphic.CalculateTextLength(" ");
             if (length.CompareTo(0) == 0)
             {
@@ -124,15 +64,8 @@ namespace GameEngine.Graphics.Basic
                 return;
             }
 
-            int cnt = (int)Math.Floor(width / length);
+            int cnt = (int)Math.Floor(Width / length);
             textGraphic.Text = text.Substring(0, Math.Min(text.Length, cnt));
-
-            needsUpdate = false;
-        }
-
-        private void Invalidate()
-        {
-            needsUpdate = true;
         }
     }
 }

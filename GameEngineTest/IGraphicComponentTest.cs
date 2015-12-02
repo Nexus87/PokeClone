@@ -1,4 +1,5 @@
-﻿using GameEngine.Graphics;
+﻿using GameEngine;
+using GameEngine.Graphics;
 using GameEngineTest.Util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -24,6 +25,24 @@ namespace GameEngineTest
             contentMock = new Mock<ContentManager>(serviceMock.Object);
         }
 
+        public static List<TestCaseData> InvalidData = new List<TestCaseData>{
+            new TestCaseData(0.0f, 0.0f, -1.0f, 1.0f),
+            new TestCaseData(0.0f, 0.0f, 1.0f, -1.0f),
+            new TestCaseData(0.0f, 0.0f, -1.0f, -1.0f)
+        };
+
+        [TestCaseSource(typeof(IGraphicComponentTest), "InvalidData")]
+        public void InvalidCoordinatesTest(float X, float Y, float Width, float Height)
+        {
+            Assert.Throws<ArgumentException>(delegate()
+                {
+                    testObj.X = X;
+                    testObj.Y = Y;
+                    testObj.Width = Width;
+                    testObj.Height = Height;
+                }
+            );
+        }
         [TestCase]
         public void ChangeEventTest()
         {
@@ -128,13 +147,16 @@ namespace GameEngineTest
             Assert.AreEqual(TestValueHeight, testObj.Height);
         }
 
-        [TestCase]
-        public void DrawInConstraintsTest()
+        public static List<TestCaseData> DivideCases = new List<TestCaseData>{
+            new TestCaseData(5.0f, 5.0f, 150.0f, 10.0f ),
+            new TestCaseData( 0.0f, 0.0f, 150.0f, 10.0f ),
+            new TestCaseData( 0.0f, 0.0f, 0.0f, 10.0f ),
+            new TestCaseData( 0.0f, 0.0f, 150.0f, 0.0f)
+        };
+
+        [Test, TestCaseSource(typeof(IGraphicComponentTest), "DivideCases")]
+        public void DrawInConstraintsTest(float X, float Y, float Width, float Height)
         {
-            float X = 5.0f;
-            float Y = 5.0f;
-            float Width = 150.0f;
-            float Height = 10.0f;
             SpriteBatchMock batch = new SpriteBatchMock();
 
             testObj.X = X;

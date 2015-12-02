@@ -20,6 +20,8 @@ namespace GameEngine.Graphics
             get { return size.Y; }
             set
             {
+                if (value.CompareTo(0) < 0)
+                    throw new ArgumentException("Height must be >=0");
                 if (size.Y == value)
                     return;
                 size.Y = value;
@@ -36,6 +38,8 @@ namespace GameEngine.Graphics
             }
             set
             {
+                if (value.CompareTo(0) < 0)
+                    throw new ArgumentException("Width must be >=0");
                 if (size.X == value)
                     return;
                 size.X = value;

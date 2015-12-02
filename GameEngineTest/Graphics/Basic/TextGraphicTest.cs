@@ -31,12 +31,27 @@ namespace GameEngineTest.Graphics.Basic
             testObj.Setup(contentMock.Object);
         }
 
-        [TestCase]
-        public void PropertiesTest()
+        public static List<TestCaseData> InvalidData = new List<TestCaseData>{
+            new TestCaseData(-1.0f),
+            new TestCaseData(-100.0f)
+        };
+
+        public static List<TestCaseData> ValidPropertyData = new List<TestCaseData>{
+            new TestCaseData("TestText", 32.0f, 0.0f, 0.0f),
+            new TestCaseData("", 32.0f, 0.0f, 0.0f),
+            new TestCaseData(" ", 32.0f, 0.0f, 0.0f),
+            new TestCaseData("TestText", 0.0f, 0.0f, 0.0f)
+        };
+
+        [TestCaseSource("InvalidData")]
+        public void InvalidDataTest(float textHeight)
         {
-            string testText = "TestText";
-            float testCoordinate = 1.0f;
-            float testSize = 15.0f;
+            Assert.Throws<ArgumentException>(() => testObj.TextSize = textHeight);
+        }
+
+        [TestCaseSource("ValidPropertyData")]
+        public void PropertiesTest(string testText, float testSize, float X, float Y)
+        {
 
             Assert.AreEqual("", testObj.Text);
             Assert.AreEqual(0, testObj.TextWidth);
@@ -44,11 +59,11 @@ namespace GameEngineTest.Graphics.Basic
             testObj.Text = testText;
             Assert.AreEqual(testText, testObj.Text);
             
-            testObj.X = testCoordinate;
-            Assert.AreEqual(testCoordinate, testObj.X);
+            testObj.X = X;
+            Assert.AreEqual(X, testObj.X);
 
-            testObj.Y = testCoordinate;
-            Assert.AreEqual(testCoordinate, testObj.Y);
+            testObj.Y = Y;
+            Assert.AreEqual(Y, testObj.Y);
 
             testObj.TextSize = testSize;
             Assert.AreEqual(testSize, testObj.TextSize);
@@ -56,14 +71,10 @@ namespace GameEngineTest.Graphics.Basic
             Assert.AreEqual(testSize * testText.Length, testObj.TextWidth);
         }
 
-        [TestCase]
-        public void SizePredictionTest()
+        [TestCaseSource("ValidPropertyData")]
+        public void SizePredictionTest(string Text, float TextHeight, float X, float Y)
         {
             var spriteMock = new SpriteBatchMock();
-            string Text = "TestText";
-            float X = 10.0f;
-            float Y = 20.0f;
-            float TextHeight = 20.0f;
             float TextWidth = TextHeight * Text.Length;
       
             testObj.X = X;
