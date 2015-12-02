@@ -15,9 +15,9 @@ namespace GameEngine.Graphics.Layouts
         private IGraphicComponent parent;
         private Vector2 position;
         private Vector2 size;
-        protected float Height { get { return size.Y - marginTop - marginBottom; } }
+        protected float Height { get { return Math.Max(0, size.Y - marginTop - marginBottom); } }
         protected IGraphicComponent Parent { get { return parent; } }
-        protected float Width { get { return size.X - marginRight - marginLeft; } }
+        protected float Width { get { return Math.Max(0, size.X - marginRight - marginLeft); } }
         protected float X { get { return position.X + marginLeft; } }
         protected float Y { get { return position.Y + marginTop; } }
 
