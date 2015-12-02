@@ -18,15 +18,17 @@ namespace GameEngineTest.Util
 
         public bool IsInConstraints(float X, float Y, float Width, float Height)
         {
+            float realWidth = Math.Max(0, Width);
+            float realHeight = Math.Max(0, Height);
             bool ret = true;
-            ret &= (Width.CompareTo(0) == 0) || (Position.X.CompareTo(X) >= 0 && Position.X.CompareTo(X + Width) <= 0);
+            ret &= (realWidth.CompareTo(0) == 0) || (Position.X.CompareTo(X) >= 0 && Position.X.CompareTo(X + realWidth) <= 0);
             Assert.IsTrue(ret);
-            ret &= (Height.CompareTo(0) == 0) || (Position.Y.CompareTo(Y) >= 0 && Position.Y.CompareTo(Y + Height) <= 0);
+            ret &= (realHeight.CompareTo(0) == 0) || (Position.Y.CompareTo(Y) >= 0 && Position.Y.CompareTo(Y + realHeight) <= 0);
             Assert.IsTrue(ret);
 
-            ret &= Size.X.CompareTo(Width) <= 0;
+            ret &= Size.X.CompareTo(realWidth) <= 0;
             Assert.IsTrue(ret);
-            ret &= Size.Y.CompareTo(Height) <= 0;
+            ret &= Size.Y.CompareTo(realHeight) <= 0;
             Assert.IsTrue(ret);
 
             return ret;

@@ -147,14 +147,15 @@ namespace GameEngineTest
             Assert.AreEqual(TestValueHeight, testObj.Height);
         }
 
-        public static List<TestCaseData> DivideCases = new List<TestCaseData>{
+        public static List<TestCaseData> ValidCoordinates = new List<TestCaseData>{
             new TestCaseData(5.0f, 5.0f, 150.0f, 10.0f ),
             new TestCaseData( 0.0f, 0.0f, 150.0f, 10.0f ),
             new TestCaseData( 0.0f, 0.0f, 0.0f, 10.0f ),
-            new TestCaseData( 0.0f, 0.0f, 150.0f, 0.0f)
+            new TestCaseData( 0.0f, 0.0f, 150.0f, 0.0f),
+            new TestCaseData( 0.0f, 0.0f, 50.0f, 150.0f)
         };
 
-        [Test, TestCaseSource(typeof(IGraphicComponentTest), "DivideCases")]
+        [Test, TestCaseSource(typeof(IGraphicComponentTest), "ValidCoordinates")]
         public void DrawInConstraintsTest(float X, float Y, float Width, float Height)
         {
             SpriteBatchMock batch = new SpriteBatchMock();

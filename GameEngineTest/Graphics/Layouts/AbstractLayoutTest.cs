@@ -27,8 +27,18 @@ namespace GameEngineTest.Graphics.Layouts
         {
             Assert.GreaterOrEqual(this.X, X);
             Assert.GreaterOrEqual(this.Y, Y);
-            Assert.LessOrEqual(this.Width, Width);
-            Assert.LessOrEqual(this.Height, Height);
+            Assert.GreaterOrEqual(this.Width, 0);
+            Assert.GreaterOrEqual(this.Height, 0);
+
+            if (Width >= 0)
+                Assert.LessOrEqual(this.Width, Width);
+            else
+                Assert.AreEqual(0, this.Width);
+
+            if(Height >= 0)
+                Assert.LessOrEqual(this.Height, Height);
+            else
+                Assert.AreEqual(0, this.Height);
         }
     }
     [TestFixture]
@@ -43,15 +53,24 @@ namespace GameEngineTest.Graphics.Layouts
             layout = layoutMock.Object;
         }
 
-        [TestCase]
-        public void ProtectedPropertiesTest()
+        public static List<TestCaseData> ValidData = new List<TestCaseData>
         {
-            float X = 1.0f;
-            float Y = 1.0f;
-            float Width = 30.0f;
-            float Height = 50.0f;
-            int Margin = 10;
-
+            new TestCaseData(1.0f, 1.0f, 50.0f, 50.0f, 0),
+            new TestCaseData(0.0f, 0.0f, 50.0f, 50.0f, 0),
+            new TestCaseData(0.0f, 0.0f, 0.0f, 50.0f, 0),
+            new TestCaseData(0.0f, 0.0f, 50.0f, 0.0f, 0),
+            new TestCaseData(0.0f, 0.0f, 0.0f, 0.0f, 0),
+            new TestCaseData(0.0f, 0.0f, 150.0f, 50.0f, 0),
+            new TestCaseData(0.0f, 0.0f, 50.0f, 150.0f, 0),
+            new TestCaseData(1.0f, 1.0f, 50.0f, 50.0f, 10),
+            new TestCaseData(1.0f, 1.0f, 50.0f, 50.0f, 40),
+            new TestCaseData(0.0f, 0.0f, 0.0f, 50.0f, 10),
+            new TestCaseData(0.0f, 0.0f, 50.0f, 0.0f, 10),
+            new TestCaseData(0.0f, 0.0f, 0.0f, 0.0f, 10),
+        };
+        [TestCaseSource("ValidData")]
+        public void ProtectedPropertiesTest(float X, float Y, float Width, float Height, int Margin)
+        {
             var compMock = new Mock<IGraphicComponent>();
             var testObj = new TestLayout();
 

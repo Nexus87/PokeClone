@@ -14,6 +14,7 @@ namespace GameEngine.Graphics.Basic
         public TextBox(String fontName, ISpriteFont font)
         {
             textGraphic = new TextGraphic(fontName, font);
+            prefTextSize = textGraphic.TextSize;
         }
 
         public float PreferedTextSize
