@@ -10,11 +10,11 @@ namespace GameEngine.Graphics.Basic
     {
         private ISpriteFont font;
         private string fontName;
+        private bool needsUpdate = false;
         private Vector2 position;
         private float scale;
         private string text = "";
         private float textSize = 32.0f;
-        private bool needsUpdate = false;
 
         public TextGraphic(string fontName, ISpriteFont font)
         {
@@ -23,7 +23,17 @@ namespace GameEngine.Graphics.Basic
         }
 
         public String Text { get { return text; } set { text = value; Invalidate(); } }
-        public float TextSize { get { return textSize; } set { textSize = value; Invalidate(); } }
+        public float TextSize
+        {
+            get { return textSize; }
+            set
+            {
+                if (value.CompareTo(0) < 0)
+                    throw new ArgumentException("TextSize must be >= 0");
+                textSize = value;
+                Invalidate();
+            }
+        }
         public float TextWidth { get { return CalculateTextLength(text); } }
         public float X { get { return position.X; } set { position.X = value; } }
         public float Y { get { return position.Y; } set { position.Y = value; } }

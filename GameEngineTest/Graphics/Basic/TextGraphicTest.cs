@@ -79,7 +79,7 @@ namespace GameEngineTest.Graphics.Basic
       
             testObj.X = X;
             testObj.Y = Y;
-            testObj.TextSize = 20.0f;
+            testObj.TextSize = TextHeight;
 
             Assert.AreEqual(TextWidth, testObj.CalculateTextLength(Text));
 
