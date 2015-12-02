@@ -1,25 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using GameEngine.Graphics.Layouts;
+using GameEngine.Wrapper;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using GameEngine.Graphics.Layouts;
-using GameEngine.Wrapper;
+using System.Collections.Generic;
 
 namespace GameEngine.Graphics.Basic
 {
     public class MultlineTextBox : AbstractGraphicComponent
     {
-        public bool ClearOnNext { get; set; }
-        public string Text { set { text = value; Invalidate(); } }
-        string text;
-        int lineNumber;
-        readonly List<TextBox> texts = new List<TextBox>();
-        readonly LinkedList<string> lines = new LinkedList<string>();
-        VBoxLayout layout = new VBoxLayout();
+        private readonly LinkedList<string> lines = new LinkedList<string>();
+        private readonly List<TextBox> texts = new List<TextBox>();
+        private VBoxLayout layout = new VBoxLayout();
+        private int lineNumber;
+        private string text;
 
         public MultlineTextBox(int lineNumber, string fontName, ISpriteFont font)
         {
@@ -30,6 +23,23 @@ namespace GameEngine.Graphics.Basic
                 texts.Add(box);
                 layout.AddComponent(box);
             }
+        }
+
+        public int CharsPerLine()
+        {
+            // If we don't force the layout to update, DisplayableChars might
+            // return 0
+            layout.ForceUpdateComponents();
+            return texts[0].DisplayableChars();
+        }
+        public string Text { set { text = value; Invalidate(); } }
+        public bool HasNext()
+        {
+            return lines.Count == 0;
+        }
+        public void NextLine()
+        {
+            SetText();
         }
 
         public override void Setup(ContentManager content)
@@ -68,45 +78,23 @@ namespace GameEngine.Graphics.Basic
         private void SplitText()
         {
             string remaining = text;
-            // If we don't force the layout to update, DisplayableChars might return 0
-            layout.ForceUpdateComponents();
-            int limit = texts[0].DisplayableChars();
+            int limit = CharsPerLine();
             if (limit == 0)
                 return;
 
-            while(remaining.Length > limit)
+            while (remaining.Length > limit)
             {
                 int length = remaining.Substring(0, limit).LastIndexOf(" ");
-                
+
                 if (length == -1)
                     length = limit;
-                
+
                 lines.AddLast(remaining.Substring(0, length));
-                remaining = remaining.Substring(length + 1);           
+                remaining = remaining.Substring(length + 1);
             }
 
             lines.AddLast(remaining);
-        }
-
-        public void NextLine()
-        {
-            // If there is only one line, it needs to be cleared
-            // in order to show a new one
-            if (ClearOnNext || lineNumber == 1)
-            {
-                SetText();
-                return;
-            }
-
-            // We have at least 2 lines here
-            for(int i = 0; i < texts.Count - 1; i++)
-            {
-                texts[i].Text = texts[i + 1].Text;
-            }
-
-            texts[texts.Count - 1].Text = lines.Count > 0 ? lines.First.Value : "";
-            if(lines.Count != 0)
-                lines.RemoveFirst();
+            lines.AddLast("");
         }
     }
 }
