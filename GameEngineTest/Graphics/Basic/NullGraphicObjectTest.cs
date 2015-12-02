@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace GameEngineTest.Graphics.Basic
 {
+    [TestFixture]
     public class NullGraphicObjectTest : IGraphicComponentTest
     {
         [SetUp]

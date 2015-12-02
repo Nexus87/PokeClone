@@ -48,7 +48,6 @@ namespace GameEngine.Graphics.Basic
             base.Update();
             SplitText();
             SetText();
-
         }
 
         private void SetText()
@@ -69,15 +68,21 @@ namespace GameEngine.Graphics.Basic
         private void SplitText()
         {
             string remaining = text;
+            // If we don't force the layout to update, DisplayableChars might return 0
+            layout.ForceUpdateComponents();
             int limit = texts[0].DisplayableChars();
+            if (limit == 0)
+                return;
+
             while(remaining.Length > limit)
             {
                 int length = remaining.Substring(0, limit).LastIndexOf(" ");
+                
                 if (length == -1)
                     length = limit;
+                
                 lines.AddLast(remaining.Substring(0, length));
-                remaining = remaining.Substring(length);
-                    
+                remaining = remaining.Substring(length + 1);           
             }
 
             lines.AddLast(remaining);

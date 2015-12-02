@@ -82,5 +82,15 @@ namespace GameEngine.Graphics.Layouts
 
             Invalidate();
         }
+
+        public void ForceUpdateComponents()
+        {
+            // UpdateComponent wouldn't do anything useful
+            if (needsUpdate == false)
+                return;
+
+            UpdateComponents();
+            needsUpdate = false;
+        }
     }
 }

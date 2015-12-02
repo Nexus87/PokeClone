@@ -36,24 +36,42 @@ namespace GameEngine.Graphics.Basic
 
         protected override void Update()
         {
-            if(Size.X == 0)
+            if(Width == 0)
             {
                 lineScale.X = 0;
                 cupScale.X = 0;
                 return;
             }
-            lineScale.Y = Size.Y;
-            lineScale.X = Size.X - Size.Y;
+            else if (Width.CompareTo(Height) < 0)
+                LineWithFlatCups();
+            else
+                LineWithCups();
+                
+        }
 
-            line.X = Position.X + Size.Y / 2.0f;
+        private void LineWithCups()
+        {
+            // Width >= Height && Width != 0
+            lineScale.Y = Height;
+            lineScale.X = Width - Height; // >= 0
+
+            line.X = Position.X + Height / 2.0f;
             line.Y = Position.Y;
 
             leftCup = Position;
             rightCup.Y = Position.Y;
-            rightCup.X = Position.X + Size.X - Size.Y;
+            rightCup.X = Position.X + Width - Height;
 
             rightCup.X = rightCup.X.CompareTo(leftCup.X) > 0 ? rightCup.X : leftCup.X;
-            cupScale.X = cupScale.Y = Size.Y * circleScale;
+            cupScale.X = cupScale.Y = Height * circleScale;
+        }
+
+        private void LineWithFlatCups()
+        {
+            line =  leftCup = rightCup = Position;
+            lineScale.X = lineScale.Y = 0;
+            cupScale.X = Width * circleScale;
+            cupScale.Y = Height * circleScale;
         }
 
         private void Init(GraphicsDevice device)
