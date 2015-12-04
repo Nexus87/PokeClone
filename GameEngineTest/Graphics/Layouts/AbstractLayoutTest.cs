@@ -50,7 +50,7 @@ namespace GameEngineTest.Graphics.Layouts
         {
             layoutMock = new Mock<AbstractLayout>();
             layoutMock.CallBase = true;
-            layout = layoutMock.Object;
+            testLayout = layoutMock.Object;
         }
 
         public static List<TestCaseData> ValidData = new List<TestCaseData>
@@ -73,11 +73,7 @@ namespace GameEngineTest.Graphics.Layouts
         {
             var compMock = new Mock<IGraphicComponent>();
             var testObj = new TestLayout();
-
-            compMock.Setup(o => o.X).Returns(X);
-            compMock.Setup(o => o.Y).Returns(Y);
-            compMock.Setup(o => o.Width).Returns(Width);
-            compMock.Setup(o => o.Height).Returns(Height);
+            compMock.SetCoordinates(X, Y, Width, Height);
 
             testObj.Init(compMock.Object);
 
@@ -115,32 +111,32 @@ namespace GameEngineTest.Graphics.Layouts
             compMock.Setup(o => o.Width).Returns(Width);
             compMock.Setup(o => o.Height).Returns(Height);
 
-            layout.Init(compMock.Object);
+            testLayout.Init(compMock.Object);
 
-            layout.Draw(new GameTime(), batch);
+            testLayout.Draw(new GameTime(), batch);
             layoutMock.Protected().Verify("UpdateComponents", Times.Once());
             layoutMock.ResetCalls();
 
-            layout.Draw(new GameTime(), batch);
+            testLayout.Draw(new GameTime(), batch);
             layoutMock.Protected().Verify("UpdateComponents", Times.Never());
             layoutMock.ResetCalls();
 
             compMock.Raise(o => o.PositionChanged += null, new EventArgs());
-            layout.Draw(new GameTime(), batch);
-            layout.Draw(new GameTime(), batch);
+            testLayout.Draw(new GameTime(), batch);
+            testLayout.Draw(new GameTime(), batch);
             layoutMock.Protected().Verify("UpdateComponents", Times.Once());
             layoutMock.ResetCalls();
 
             compMock.Raise(o => o.SizeChanged += null, new EventArgs());
-            layout.Draw(new GameTime(), batch);
-            layout.Draw(new GameTime(), batch);
+            testLayout.Draw(new GameTime(), batch);
+            testLayout.Draw(new GameTime(), batch);
             layoutMock.Protected().Verify("UpdateComponents", Times.Once());
             layoutMock.ResetCalls();
 
             compMock.Raise(o => o.SizeChanged += null, new EventArgs());
             compMock.Raise(o => o.PositionChanged += null, new EventArgs());
-            layout.Draw(new GameTime(), batch);
-            layout.Draw(new GameTime(), batch);
+            testLayout.Draw(new GameTime(), batch);
+            testLayout.Draw(new GameTime(), batch);
             layoutMock.Protected().Verify("UpdateComponents", Times.Once());
             layoutMock.ResetCalls();
         }

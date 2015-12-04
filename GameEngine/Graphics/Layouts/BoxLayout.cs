@@ -9,7 +9,6 @@ namespace GameEngine.Graphics.Layouts
     public class BoxLayout : AbstractLayout
     {
         private readonly List<IGraphicComponent> components = new List<IGraphicComponent>();
-
         private Direction direction;
 
         public BoxLayout(Direction direction)

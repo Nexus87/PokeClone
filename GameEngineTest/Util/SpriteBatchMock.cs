@@ -42,7 +42,7 @@ namespace GameEngineTest.Util
 
     class SpriteBatchMock : ISpriteBatch
     {
-        public readonly LinkedList<DrawnObject> Objects = new LinkedList<DrawnObject>();
+        public readonly List<DrawnObject> Objects = new List<DrawnObject>();
         public readonly LinkedList<string> DrawnStrings = new LinkedList<string>();
 
         private void SetData(Vector2 position, Vector2 size)
@@ -65,7 +65,7 @@ namespace GameEngineTest.Util
             var obj = new DrawnObject();
             obj.Position = position;
             obj.Size = size * scale;
-            Objects.AddLast(obj);
+            Objects.Add(obj);
         }
 
         private void SetData(Vector2 position, ISpriteFont font, string text, Vector2 scale)

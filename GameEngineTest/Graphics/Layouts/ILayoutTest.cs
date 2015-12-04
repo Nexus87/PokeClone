@@ -14,7 +14,7 @@ namespace GameEngineTest.Graphics.Layouts
 {
     public abstract class ILayoutTest
     {
-        public ILayout layout;
+        public ILayout testLayout;
 
         public static List<TestCaseData> ValidData = new List<TestCaseData>
         {
@@ -32,13 +32,9 @@ namespace GameEngineTest.Graphics.Layouts
         {
             SpriteBatchMock batch = new SpriteBatchMock();
             var compMock = new Mock<IGraphicComponent>();
+            compMock.SetCoordinates(X, Y, Width, Height);
 
-            compMock.Setup(o => o.X).Returns(X);
-            compMock.Setup(o => o.Y).Returns(Y);
-            compMock.Setup(o => o.Width).Returns(Width);
-            compMock.Setup(o => o.Height).Returns(Height);
-
-            layout.Draw(new GameTime(), batch);
+            testLayout.Draw(new GameTime(), batch);
 
             foreach (var obj in batch.Objects)
                 obj.IsInConstraints(compMock.Object);
@@ -50,39 +46,35 @@ namespace GameEngineTest.Graphics.Layouts
             int Margin = 10;
             SpriteBatchMock batch = new SpriteBatchMock();
             var compMock = new Mock<IGraphicComponent>();
-
-            compMock.Setup(o => o.X).Returns(X);
-            compMock.Setup(o => o.Y).Returns(Y);
-            compMock.Setup(o => o.Width).Returns(Width);
-            compMock.Setup(o => o.Height).Returns(Height);
+            compMock.SetCoordinates(X, Y, Width, Height);
 
 
-            layout.SetMargin(left: Margin);
-            layout.Draw(new GameTime(), batch);
+            testLayout.SetMargin(left: Margin);
+            testLayout.Draw(new GameTime(), batch);
             foreach (var obj in batch.Objects)
                 obj.IsInConstraints(X + Margin, Y, Width - Margin, Height);
             batch.Objects.Clear();
 
-            layout.SetMargin(right: Margin);
-            layout.Draw(new GameTime(), batch);
+            testLayout.SetMargin(right: Margin);
+            testLayout.Draw(new GameTime(), batch);
             foreach (var obj in batch.Objects)
                 obj.IsInConstraints(X, Y, Width - Margin, Height);
             batch.Objects.Clear();
 
-            layout.SetMargin(top: Margin);
-            layout.Draw(new GameTime(), batch);
+            testLayout.SetMargin(top: Margin);
+            testLayout.Draw(new GameTime(), batch);
             foreach (var obj in batch.Objects)
                 obj.IsInConstraints(X, Y + Margin, Width, Height - Margin);
             batch.Objects.Clear();
 
-            layout.SetMargin(bottom: Margin);
-            layout.Draw(new GameTime(), batch);
+            testLayout.SetMargin(bottom: Margin);
+            testLayout.Draw(new GameTime(), batch);
             foreach (var obj in batch.Objects)
                 obj.IsInConstraints(X, Y, Width, Height - Margin);
             batch.Objects.Clear();
 
-            layout.SetMargin(Margin, Margin, Margin, Margin);
-            layout.Draw(new GameTime(), batch);
+            testLayout.SetMargin(Margin, Margin, Margin, Margin);
+            testLayout.Draw(new GameTime(), batch);
             foreach (var obj in batch.Objects)
                 obj.IsInConstraints(X + Margin, Y + Margin, Width - 2*Margin, Height - 2*Margin);
             batch.Objects.Clear();

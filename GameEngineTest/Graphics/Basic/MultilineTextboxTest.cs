@@ -53,7 +53,7 @@ namespace GameEngineTest.Graphics.Basic
             string testString = simple;
 
             box.Text = testString;
-            box.Draw(new GameTime(), spriteBatch);
+            box.Draw(spriteBatch);
 
             Assert.AreEqual(2, spriteBatch.DrawnStrings.Count);
             Assert.AreEqual(simple, spriteBatch.DrawnStrings.First.Value);
@@ -62,7 +62,7 @@ namespace GameEngineTest.Graphics.Basic
             // Separator at start
             spriteBatch.DrawnStrings.Clear();
             box.Text = " " + simple;
-            box.Draw(new GameTime(), spriteBatch);
+            box.Draw(spriteBatch);
 
             Assert.AreEqual(2, spriteBatch.DrawnStrings.Count);
             Assert.AreEqual(simple, spriteBatch.DrawnStrings.First.Value);
@@ -71,7 +71,7 @@ namespace GameEngineTest.Graphics.Basic
             // 2 Separators at start and end
             spriteBatch.DrawnStrings.Clear();
             box.Text = " " + " " + simple + " " + " ";
-            box.Draw(new GameTime(), spriteBatch);
+            box.Draw(spriteBatch);
 
             Assert.AreEqual(2, spriteBatch.DrawnStrings.Count);
             Assert.AreEqual(simple, spriteBatch.DrawnStrings.First.Value);
@@ -81,7 +81,7 @@ namespace GameEngineTest.Graphics.Basic
             // Separator at end
             spriteBatch.DrawnStrings.Clear();
             box.Text = simple + " ";
-            box.Draw(new GameTime(), spriteBatch);
+            box.Draw(spriteBatch);
 
             Assert.AreEqual(2, spriteBatch.DrawnStrings.Count);
             Assert.AreEqual(simple, spriteBatch.DrawnStrings.First.Value);
@@ -90,7 +90,7 @@ namespace GameEngineTest.Graphics.Basic
             // 2 Separators at end
             spriteBatch.DrawnStrings.Clear();
             box.Text = simple + " " + " ";
-            box.Draw(new GameTime(), spriteBatch);
+            box.Draw(spriteBatch);
 
             Assert.AreEqual(2, spriteBatch.DrawnStrings.Count);
             Assert.AreEqual(simple, spriteBatch.DrawnStrings.First.Value);
@@ -100,7 +100,7 @@ namespace GameEngineTest.Graphics.Basic
             // 2 Separators at start
             spriteBatch.DrawnStrings.Clear();
             box.Text = " " + " " + simple;
-            box.Draw(new GameTime(), spriteBatch);
+            box.Draw(spriteBatch);
 
             Assert.AreEqual(2, spriteBatch.DrawnStrings.Count);
             Assert.AreEqual(simple, spriteBatch.DrawnStrings.First.Value);
@@ -129,7 +129,7 @@ namespace GameEngineTest.Graphics.Basic
             testString = simple + s + simple;
 
             box.Text = testString;
-            box.Draw(new GameTime(), spriteBatch);
+            box.Draw(spriteBatch);
 
             Assert.AreEqual(2, spriteBatch.DrawnStrings.Count);
             foreach (var str in spriteBatch.DrawnStrings)
@@ -146,7 +146,7 @@ namespace GameEngineTest.Graphics.Basic
             testString = simple + s + simple;
 
             box.Text = testString;
-            box.Draw(new GameTime(), spriteBatch);
+            box.Draw(spriteBatch);
 
             Assert.AreEqual(2, spriteBatch.DrawnStrings.Count);
             foreach (var str in spriteBatch.DrawnStrings)
@@ -162,7 +162,7 @@ namespace GameEngineTest.Graphics.Basic
             // First test:
             // testString.Count == 2 * displayableChars
             box.Text = testString;
-            box.Draw(new GameTime(), spriteBatch);
+            box.Draw(spriteBatch);
 
             Assert.AreEqual(2, spriteBatch.DrawnStrings.Count);
             Assert.Contains(simple + "a", spriteBatch.DrawnStrings);
@@ -174,7 +174,7 @@ namespace GameEngineTest.Graphics.Basic
             // testString.Count > 2 * displayableChars, but after the split
             // they should fit in two lines
             box.Text = testString + "a";
-            box.Draw(new GameTime(), spriteBatch);
+            box.Draw(spriteBatch);
 
             Assert.AreEqual(2, spriteBatch.DrawnStrings.Count);
             foreach (var str in spriteBatch.DrawnStrings)
@@ -189,7 +189,7 @@ namespace GameEngineTest.Graphics.Basic
             string testString = simple + simple + s;
 
             box.Text = testString;
-            box.Draw(new GameTime(), spriteBatch);
+            box.Draw(spriteBatch);
 
             Assert.AreEqual(2, spriteBatch.DrawnStrings.Count);
             foreach (var str in spriteBatch.DrawnStrings)
@@ -220,7 +220,7 @@ namespace GameEngineTest.Graphics.Basic
             box.Text = testString;
             for (int i = 0; i < number; i += 2)
             {
-                box.Draw(new GameTime(), spriteBatch);
+                box.Draw(spriteBatch);
                 Assert.AreEqual(2, spriteBatch.DrawnStrings.Count);
                 Assert.Contains(lines[i], spriteBatch.DrawnStrings);
                 Assert.Contains(lines[i+1], spriteBatch.DrawnStrings);
@@ -233,7 +233,7 @@ namespace GameEngineTest.Graphics.Basic
             }
 
             Assert.IsFalse(box.HasNext());
-            box.Draw(new GameTime(), spriteBatch);
+            box.Draw(spriteBatch);
             Assert.AreEqual(2, spriteBatch.DrawnStrings.Count);
             foreach(var str in spriteBatch.DrawnStrings)
                 Assert.AreEqual("", str);
@@ -243,7 +243,7 @@ namespace GameEngineTest.Graphics.Basic
         public void NullTextTest()
         {
             box.Text = null;
-            box.Draw(new GameTime(), spriteBatch);
+            box.Draw(spriteBatch);
 
             Assert.AreEqual(2, spriteBatch.DrawnStrings.Count);
             foreach (var str in spriteBatch.DrawnStrings)
