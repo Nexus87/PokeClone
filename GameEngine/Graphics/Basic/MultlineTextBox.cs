@@ -3,6 +3,7 @@ using GameEngine.Wrapper;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace GameEngine.Graphics.Basic
 {
@@ -35,7 +36,7 @@ namespace GameEngine.Graphics.Basic
         public string Text { set { text = value; Invalidate(); } }
         public bool HasNext()
         {
-            return lines.Count == 0;
+            return lines.Count != 0;
         }
         public void NextLine()
         {
@@ -77,24 +78,27 @@ namespace GameEngine.Graphics.Basic
 
         private void SplitText()
         {
-            string remaining = text;
+            if (text == null)
+                return;
+            string remaining = text.Trim();
             int limit = CharsPerLine();
             if (limit == 0)
                 return;
 
             while (remaining.Length > limit)
             {
-                int length = remaining.Substring(0, limit).LastIndexOf(" ");
+                var sub = remaining.Substring(0, limit);
+                var match = Regex.Match(remaining.Substring(0, limit), @"\s", RegexOptions.RightToLeft);
+                int length = match.Success ? match.Index : limit;
 
-                if (length == -1)
-                    length = limit;
 
-                lines.AddLast(remaining.Substring(0, length));
-                remaining = remaining.Substring(length + 1);
+                lines.AddLast(remaining.Substring(0, length).Trim());
+                remaining = remaining.Substring(length).TrimStart();
             }
 
-            lines.AddLast(remaining);
-            lines.AddLast("");
+            // remaining has no trailing whitespace, because we trimmed it at the beginning.
+            if(remaining != "")
+                lines.AddLast(remaining);
         }
     }
 }

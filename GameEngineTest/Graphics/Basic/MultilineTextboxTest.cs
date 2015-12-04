@@ -47,7 +47,7 @@ namespace GameEngineTest.Graphics.Basic
         }
 
         [TestCase]
-        public void SimpleTextSplitTest()
+        public void NoSplitTest()
         {
             string simple = new string('a', displayableChars);
             string testString = simple;
@@ -58,6 +58,54 @@ namespace GameEngineTest.Graphics.Basic
             Assert.AreEqual(2, spriteBatch.DrawnStrings.Count);
             Assert.AreEqual(simple, spriteBatch.DrawnStrings.First.Value);
             Assert.AreEqual("", spriteBatch.DrawnStrings.Last.Value);
+
+            // Separator at start
+            spriteBatch.DrawnStrings.Clear();
+            box.Text = " " + simple;
+            box.Draw(new GameTime(), spriteBatch);
+
+            Assert.AreEqual(2, spriteBatch.DrawnStrings.Count);
+            Assert.AreEqual(simple, spriteBatch.DrawnStrings.First.Value);
+            Assert.AreEqual("", spriteBatch.DrawnStrings.Last.Value);
+            
+            // 2 Separators at start and end
+            spriteBatch.DrawnStrings.Clear();
+            box.Text = " " + " " + simple + " " + " ";
+            box.Draw(new GameTime(), spriteBatch);
+
+            Assert.AreEqual(2, spriteBatch.DrawnStrings.Count);
+            Assert.AreEqual(simple, spriteBatch.DrawnStrings.First.Value);
+            Assert.AreEqual("", spriteBatch.DrawnStrings.Last.Value);
+            Assert.IsFalse(box.HasNext());
+
+            // Separator at end
+            spriteBatch.DrawnStrings.Clear();
+            box.Text = simple + " ";
+            box.Draw(new GameTime(), spriteBatch);
+
+            Assert.AreEqual(2, spriteBatch.DrawnStrings.Count);
+            Assert.AreEqual(simple, spriteBatch.DrawnStrings.First.Value);
+            Assert.AreEqual("", spriteBatch.DrawnStrings.Last.Value);
+
+            // 2 Separators at end
+            spriteBatch.DrawnStrings.Clear();
+            box.Text = simple + " " + " ";
+            box.Draw(new GameTime(), spriteBatch);
+
+            Assert.AreEqual(2, spriteBatch.DrawnStrings.Count);
+            Assert.AreEqual(simple, spriteBatch.DrawnStrings.First.Value);
+            Assert.AreEqual("", spriteBatch.DrawnStrings.Last.Value);
+            Assert.IsFalse(box.HasNext());
+
+            // 2 Separators at start
+            spriteBatch.DrawnStrings.Clear();
+            box.Text = " " + " " + simple;
+            box.Draw(new GameTime(), spriteBatch);
+
+            Assert.AreEqual(2, spriteBatch.DrawnStrings.Count);
+            Assert.AreEqual(simple, spriteBatch.DrawnStrings.First.Value);
+            Assert.AreEqual("", spriteBatch.DrawnStrings.Last.Value);
+            Assert.IsFalse(box.HasNext());
 
         }
 
@@ -71,8 +119,11 @@ namespace GameEngineTest.Graphics.Basic
         [TestCaseSource("Separators")]
         public void LineBreaksTest(string s)
         {
-            Assert.IsTrue(displayableChars > 11);
-            string simple = new string('a', 5);
+            //Make sure a the text must be split
+            Assert.Greater(displayableChars, 4);
+            Assert.Less(displayableChars, 2 * 4 + 1);
+
+            string simple = new string('a', 3);
             string testString;
 
             testString = simple + s + simple;
@@ -148,6 +199,7 @@ namespace GameEngineTest.Graphics.Basic
         }
 
         public static List<int> NumberOfLines = new List<int> { 0, 1, 2, 3, 4 };
+        
         [TestCaseSource("NumberOfLines")]
         public void NextLineTest(int number)
         {
@@ -165,19 +217,37 @@ namespace GameEngineTest.Graphics.Basic
                 lines.Add("");
             }
 
-            for (int i = 0; i < lines.Count; i += 2)
+            box.Text = testString;
+            for (int i = 0; i < number; i += 2)
             {
                 box.Draw(new GameTime(), spriteBatch);
                 Assert.AreEqual(2, spriteBatch.DrawnStrings.Count);
                 Assert.Contains(lines[i], spriteBatch.DrawnStrings);
                 Assert.Contains(lines[i+1], spriteBatch.DrawnStrings);
 
-                Assert.IsTrue(box.HasNext(), "Error on run " + i);
+                // If this is not the last run, there must be lines left
+                if (i + 2 < number)
+                    Assert.IsTrue(box.HasNext());
                 box.NextLine();
                 spriteBatch.DrawnStrings.Clear();
             }
 
             Assert.IsFalse(box.HasNext());
+            box.Draw(new GameTime(), spriteBatch);
+            Assert.AreEqual(2, spriteBatch.DrawnStrings.Count);
+            foreach(var str in spriteBatch.DrawnStrings)
+                Assert.AreEqual("", str);
+        }
+
+        [TestCase]
+        public void NullTextTest()
+        {
+            box.Text = null;
+            box.Draw(new GameTime(), spriteBatch);
+
+            Assert.AreEqual(2, spriteBatch.DrawnStrings.Count);
+            foreach (var str in spriteBatch.DrawnStrings)
+                Assert.AreEqual("", str);
         }
     }
 }
