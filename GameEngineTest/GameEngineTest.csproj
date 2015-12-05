@@ -61,6 +61,7 @@
     <Compile Include="Graphics\Layouts\BoxLayoutTest.cs" />
     <Compile Include="Graphics\Layouts\ILayoutTest.cs" />
     <Compile Include="Graphics\Layouts\SingleComponentLayoutTest.cs" />
+    <Compile Include="Graphics\Layouts\TableLayoutTest.cs" />
     <Compile Include="IGraphicComponentTest.cs" />
     <Compile Include="InputComponentTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

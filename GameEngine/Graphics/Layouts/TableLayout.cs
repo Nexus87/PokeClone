@@ -1,16 +1,13 @@
 ﻿using GameEngine.Wrapper;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 using System;
 
 namespace GameEngine.Graphics.Layouts
 {
     public class TableLayout : AbstractLayout
     {
-        public int Columns { get; private set; }
         private IGraphicComponent[,] components;
-        public int Rows { get; private set; }
 
         public TableLayout(int rows, int columns)
         {
@@ -22,11 +19,8 @@ namespace GameEngine.Graphics.Layouts
             components = new IGraphicComponent[rows, columns];
         }
 
-        public void SetComponent(int row, int column, IGraphicComponent component)
-        {
-            components[row, column] = component;
-            Invalidate();
-        }
+        public int Columns { get; private set; }
+        public int Rows { get; private set; }
 
         public override void AddComponent(IGraphicComponent component)
         {
@@ -45,6 +39,12 @@ namespace GameEngine.Graphics.Layouts
                     }
                 }
             }
+        }
+
+        public void SetComponent(int row, int column, IGraphicComponent component)
+        {
+            components[row, column] = component;
+            Invalidate();
         }
 
         public override void Setup(ContentManager content)
