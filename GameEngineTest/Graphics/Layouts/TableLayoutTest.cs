@@ -36,15 +36,28 @@ namespace GameEngineTest.Graphics.Layouts
             Assert.AreEqual(2, layout.Rows);
             Assert.AreEqual(2, layout.Columns);
 
-            layout.SetComponent(3, 2, new Mock<IGraphicComponent>().Object);
+            IGraphicComponent[,] component = new IGraphicComponent[2, 2];
+            for(int i = 0; i < 2; i++)
+            {
+                for (int j = 0; j < 2; j++)
+                    component[i, j] = layout.GetComponent(i, j);
+            }
+
+            layout.SetComponent(2, 1, new Mock<IGraphicComponent>().Object);
 
             Assert.AreEqual(3, layout.Rows);
             Assert.AreEqual(2, layout.Columns);
 
-            layout.SetComponent(3, 4, new Mock<IGraphicComponent>().Object);
+            layout.SetComponent(2, 3, new Mock<IGraphicComponent>().Object);
 
             Assert.AreEqual(3, layout.Rows);
             Assert.AreEqual(4, layout.Columns);
+
+            for (int i = 0; i < 2; i++)
+            {
+                for (int j = 0; j < 2; j++)
+                   Assert.AreEqual(component[i, j], layout.GetComponent(i, j));
+            }
         }
 
         [TestCase]

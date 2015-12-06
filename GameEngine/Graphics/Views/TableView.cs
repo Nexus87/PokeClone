@@ -40,6 +40,7 @@ namespace GameEngine.Graphics.Views
             this.Model = model;
             items = new ItemBox[model.Rows, model.Columns];
             layout = new TableLayout(Math.Min(model.Rows, visibleRows), Math.Min(model.Columns, visibleColumns));
+            layout.Init(this);
         }
 
         public IItemModel<T> Model
@@ -134,8 +135,7 @@ namespace GameEngine.Graphics.Views
         }
 
         private void InitTable()
-        {
-            layout = new TableLayout(Math.Min(model.Rows, visibleRows), Math.Min(model.Columns, visibleColumns));
+        { 
             layout.Init(this);
             items = new ItemBox[model.Rows, model.Columns];
             InitItems();
