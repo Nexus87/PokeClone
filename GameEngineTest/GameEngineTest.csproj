@@ -68,6 +68,7 @@
     <Compile Include="Util\Extensions.cs" />
     <Compile Include="Util\SpriteBatchMock.cs" />
     <Compile Include="Views\DefaultListModelTest.cs" />
+    <Compile Include="Views\DefaultTableModelTest.cs" />
     <Compile Include="Views\IItemModelTest.cs" />
   </ItemGroup>
   <ItemGroup>
