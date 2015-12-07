@@ -121,7 +121,7 @@ namespace GameEngine.Graphics.Widgets
 
         private void InitModelEvents()
         {
-            model.SizeChanged += model_SizeChanged;
+            model.DataChanged += model_SizeChanged;
         }
 
         private void model_SizeChanged(object sender, EventArgs e)

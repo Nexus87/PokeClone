@@ -52,10 +52,10 @@ namespace GameEngine.Graphics.Views
                     throw new ArgumentNullException("Model must not be null");
                 if (model != null)
                 {
-                    model.SizeChanged -= model_SizeChanged;
+                    model.DataChanged -= model_SizeChanged;
                 }
                 model = value;
-                model.SizeChanged += model_SizeChanged;
+                model.DataChanged += model_SizeChanged;
                 model_SizeChanged(null, null);
             }
         }

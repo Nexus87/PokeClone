@@ -15,7 +15,7 @@ namespace GameEngine.Graphics.Views
         {
             items = new T[rows, columns];
         }
-        public event EventHandler SizeChanged = delegate { };
+        public event EventHandler<DataChangedArgs<T>> DataChanged = delegate { };
 
         public int Columns { get { return items == null ? 0 : items.GetLength(1); } }
 
@@ -29,7 +29,7 @@ namespace GameEngine.Graphics.Views
                 if (value == null)
                 {
                     items = null;
-                    SizeChanged(this, null);
+                    DataChanged(this, null);
                     return;
                 }
 
@@ -37,7 +37,7 @@ namespace GameEngine.Graphics.Views
                     items.GetLength(1) != value.GetLength(1))
                 {
                     items = value;
-                    SizeChanged(this, null);
+                    DataChanged(this, null);
                     return;
                 }
 
@@ -64,9 +64,10 @@ namespace GameEngine.Graphics.Views
         }
 
 
-        public void SetData(T data, int row, int column)
+        public bool SetData(T data, int row, int column)
         {
             items[row, column] = data;
+            return true;
         }
     }
 }

@@ -21,7 +21,7 @@ namespace GameEngine.Graphics.Views
                 if (items.Count != value.Count)
                 {
                     items = value;
-                    SizeChanged(this, null);
+                    DataChanged(this, null);
                     return;
                 }
 
@@ -30,7 +30,7 @@ namespace GameEngine.Graphics.Views
         }
 
         protected List<T> items = new List<T>();
-        public event EventHandler SizeChanged = delegate { };
+        public event EventHandler<DataChangedArgs<T>> DataChanged = delegate { };
 
         public virtual int Rows
         {
@@ -56,12 +56,14 @@ namespace GameEngine.Graphics.Views
         }
 
 
-        public virtual void SetData(T data, int row, int column)
+        public virtual bool SetData(T data, int row, int column)
         {
             if (column > 0)
                 throw new InvalidOperationException("Index out of bound");
 
             items[row] = data;
+
+            return true;
         }
     }
 }
