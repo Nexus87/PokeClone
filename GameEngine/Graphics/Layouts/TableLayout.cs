@@ -49,7 +49,7 @@ namespace GameEngine.Graphics.Layouts
         public void SetComponent(int row, int column, IGraphicComponent component)
         {
             if (row >= Rows || column >= Columns)
-                Resize(row, column);
+                Resize(row >= Rows ? row + 1 : Rows, column >= Columns ? column + 1 : Columns);
 
             components[row, column] = component;
             Invalidate();
@@ -57,9 +57,15 @@ namespace GameEngine.Graphics.Layouts
 
         private void Resize(int row, int column)
         {
-            var comp = new IGraphicComponent[row + 1, column + 1];
-            Array.Copy(components, comp, components.Length);
-            components = comp;
+            var comp = new IGraphicComponent[row, column];
+            for (int i = 0; i < Math.Min(Rows, row); i++)
+            {
+                for (int j = 0; j < Math.Min(Columns, column); j++)
+                {
+                    comp[i, j] = components[i, j];
+                }
+            }
+                components = comp;
         }
 
         public override void Setup(ContentManager content)
