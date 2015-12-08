@@ -19,7 +19,12 @@ namespace GameEngine.Graphics.Views
         public T SelectedData;
     }
 
-    public class TableView<T> : AbstractGraphicComponent
+    public class TableView<T> : InternalTableView<T, XNASpriteFont>
+    {
+        public TableView(IItemModel<T> model) : base(model) { }
+    }
+
+    public class InternalTableView<T, SpriteFontClass> : AbstractGraphicComponent where SpriteFontClass : ISpriteFont, new()
     {
         private ContentManager content;
         private ItemBox[,] items;
@@ -28,14 +33,11 @@ namespace GameEngine.Graphics.Views
         private ItemBox selectedItem;
 
         private int startColumn = 0;
-
         private int startRow = 0;
-
         private int visibleColumns = 8;
-
         private int visibleRows = 8;
 
-        public TableView(IItemModel<T> model)
+        public InternalTableView(IItemModel<T> model)
         {
             this.Model = model;
             items = new ItemBox[model.Rows, model.Columns];
@@ -129,7 +131,7 @@ namespace GameEngine.Graphics.Views
             {
                 for (int j = 0; j < Model.Columns; j++)
                 {
-                    items[i, j] = new ItemBox(Model.DataStringAt(i, j));
+                    items[i, j] = new ItemBox(Model.DataStringAt(i, j), new SpriteFontClass());
                 }
             }
         }

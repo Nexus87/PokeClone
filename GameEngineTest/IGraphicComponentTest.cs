@@ -1,5 +1,6 @@
 ﻿using GameEngine;
 using GameEngine.Graphics;
+using GameEngine.Wrapper;
 using GameEngineTest.Util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -18,11 +19,13 @@ namespace GameEngineTest
     {
         public IGraphicComponent testObj;
         public Mock<ContentManager> contentMock;
+        public Mock<ISpriteFont> fontMock;
 
         public IGraphicComponentTest()
         {
             var serviceMock = new Mock<IServiceProvider>();
             contentMock = new Mock<ContentManager>(serviceMock.Object);
+            fontMock = new Mock<ISpriteFont>();
         }
 
         public static List<TestCaseData> InvalidData = new List<TestCaseData>{

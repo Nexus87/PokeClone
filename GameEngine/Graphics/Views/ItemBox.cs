@@ -17,10 +17,10 @@ namespace GameEngine.Graphics.Views
         private TextureBox arrow;
         private TextBox textBox;
 
-        public ItemBox(String displayedText)
+        public ItemBox(String displayedText, ISpriteFont spriteFont)
         {
             arrow = new TextureBox("arrow");
-            textBox = new TextBox("MenuFont", new XNASpriteFont());
+            textBox = new TextBox("MenuFont", spriteFont);
             textBox.Text = displayedText;
         }
         public override void Setup(ContentManager content)

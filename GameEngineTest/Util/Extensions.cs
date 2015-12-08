@@ -2,6 +2,8 @@
 using GameEngine.Graphics.Layouts;
 using GameEngine.Wrapper;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -29,6 +31,17 @@ namespace GameEngineTest.Util
         public static void Draw(this ILayout layout, ISpriteBatch spriteBatch)
         {
             layout.Draw(new GameTime(), spriteBatch);
+        }
+
+        public static void SetupLoad(this Mock<ContentManager> contentMock)
+        {
+            var dev = new GraphicsDevice(GraphicsAdapter.DefaultAdapter, GraphicsProfile.Reach, new PresentationParameters());
+            contentMock.Setup(o => o.Load<Texture2D>(It.IsAny<string>())).Returns(new Texture2D(dev, 10, 10));
+        }
+
+        public static void SetupMeasureString(this Mock<ISpriteFont> fontMock)
+        {
+            fontMock.Setup(o => o.MeasureString(It.IsAny<string>())).Returns<string>(s => new Vector2(16.0f * s.Length, 16.0f));
         }
     }
 }
