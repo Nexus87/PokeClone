@@ -128,7 +128,10 @@ namespace BattleLib.GraphicComponents.GUI
         private void InitMainMenu()
         {
             var model = new DefaultTableModel<string>();
-            model.Items = new string[,] { { "Attack", "PKMN" }, { "Item", "Run" } };
+            model.SetData("Attack", 0, 0);
+            model.SetData("PKMN", 0, 1);
+            model.SetData("Item", 1, 0);
+            model.SetData("Run", 1, 1);
 
             MainMenu.Model = model;
             mainFrame.AddContent(MainMenu);

@@ -35,7 +35,11 @@ namespace BattleLib.GraphicComponents
             for (int i = 0; i < 15; i++)
                 list.Add(new Item {Name = "Item" + i });
 
-            model.Items = new string[,] { { "Attack", "PKMN" }, { "Item", "Escape" } };
+            model.SetData("Attack", 0, 0);
+            model.SetData("PKMN", 0, 1);
+            model.SetData("Item", 1, 0);
+            model.SetData("Run", 1, 1);
+
             line2 = new Line();
             line1 = new Line();
             messageBox = new MessageBox();

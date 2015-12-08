@@ -13,10 +13,16 @@ namespace GameEngine.Graphics.Views
         public T newData;
     }
 
+    public class SizeChangedArgs : EventArgs
+    {
+        public int newRows;
+        public int newColumns;
+    }
+
     public interface IItemModel<T>
     {
         event EventHandler<DataChangedArgs<T>> DataChanged;
-
+        event EventHandler<SizeChangedArgs> SizeChanged;
         int Rows { get; }
         int Columns { get; }
 

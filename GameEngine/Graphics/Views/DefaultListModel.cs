@@ -31,6 +31,7 @@ namespace GameEngine.Graphics.Views
 
         protected List<T> items = new List<T>();
         public event EventHandler<DataChangedArgs<T>> DataChanged = delegate { };
+        public event EventHandler<SizeChangedArgs> SizeChanged = delegate { };
 
         public virtual int Rows
         {

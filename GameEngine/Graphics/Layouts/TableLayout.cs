@@ -1,4 +1,5 @@
 ﻿using GameEngine.Wrapper;
+using GameEngine.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using System;
@@ -58,14 +59,8 @@ namespace GameEngine.Graphics.Layouts
         private void Resize(int row, int column)
         {
             var comp = new IGraphicComponent[row, column];
-            for (int i = 0; i < Math.Min(Rows, row); i++)
-            {
-                for (int j = 0; j < Math.Min(Columns, column); j++)
-                {
-                    comp[i, j] = components[i, j];
-                }
-            }
-                components = comp;
+            components.Copy(comp);
+            components = comp;
         }
 
         public override void Setup(ContentManager content)

@@ -33,6 +33,21 @@ namespace GameEngineTest.Views
         }
 
         [TestCase]
+        public void DefaultValuesTest()
+        {
+            int rows = testModel.Rows;
+            int columns = testModel.Columns;
+            var t = new TestType { testString = "Test" };
+
+            Assert.AreEqual(default(TestType), testModel.DataAt(rows, columns));
+            Assert.AreEqual("", testModel.DataStringAt(rows, columns));
+
+            Assert.True(testModel.SetData(t, rows + 1, 0));
+            Assert.AreEqual(default(TestType), testModel.DataAt(rows, 0));
+            Assert.AreEqual("", testModel.DataStringAt(rows, columns));
+        }
+
+        [TestCase]
         public void DataChangedEventTest()
         {
             DataChangedArgs<TestType> eventArgs = null;
@@ -49,6 +64,53 @@ namespace GameEngineTest.Views
             eventArgs = null;
 
             Assert.True(testModel.SetData(t, 0, 0));
+            Assert.IsNull(eventArgs);
+
+            Assert.True(testModel.SetData(null, 0, 0));
+            Assert.NotNull(eventArgs);
+            Assert.AreEqual(0, eventArgs.row);
+            Assert.AreEqual(0, eventArgs.column);
+            Assert.AreEqual(null, eventArgs.newData);
+        }
+
+        [TestCase]
+        public void SizeChangedEventTest()
+        {
+            SizeChangedArgs eventArgs = null;
+            var t = new TestType { testString = "Test" };
+            int rows = testModel.Rows;
+            int columns = testModel.Columns;
+
+            testModel.SizeChanged += (obj, args) => { eventArgs = args; };
+
+            Assert.True(testModel.SetData(t, rows, columns));
+            Assert.NotNull(eventArgs);
+            Assert.AreEqual(rows + 1, eventArgs.newRows);
+            Assert.AreEqual(columns + 1, eventArgs.newColumns);
+
+            eventArgs = null;
+            rows = testModel.Rows;
+            columns = testModel.Columns;
+
+            Assert.True(testModel.SetData(t, rows, columns-1));
+            Assert.NotNull(eventArgs);
+            Assert.AreEqual(rows + 1, eventArgs.newRows);
+            Assert.AreEqual(columns, eventArgs.newColumns);
+
+            eventArgs = null;
+            rows = testModel.Rows;
+            columns = testModel.Columns;
+
+            Assert.True(testModel.SetData(t, rows - 1, columns));
+            Assert.NotNull(eventArgs);
+            Assert.AreEqual(rows, eventArgs.newRows);
+            Assert.AreEqual(columns + 1, eventArgs.newColumns);
+
+            eventArgs = null;
+            rows = testModel.Rows;
+            columns = testModel.Columns;
+
+            Assert.True(testModel.SetData(t, rows - 1, columns - 1));
             Assert.IsNull(eventArgs);
         }
     }

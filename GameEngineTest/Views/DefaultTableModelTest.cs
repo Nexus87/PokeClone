@@ -25,13 +25,14 @@ namespace GameEngineTest.Views
             var t1 = new TestType { testString = "T1" };
             var t2 = new TestType { testString = "T2" };
 
-            Assert.AreEqual(1, model.Rows);
-            Assert.AreEqual(1, model.Columns);
+            Assert.AreEqual(0, model.Rows);
+            Assert.AreEqual(0, model.Columns);
 
             Assert.IsTrue(model.SetData(t1, 1, 0));
             Assert.AreEqual(2, model.Rows);
             Assert.AreEqual(1, model.Columns);
             Assert.AreEqual(t1, model.DataAt(1, 0));
+            Assert.AreEqual(null, model.DataAt(0, 0));
 
             Assert.IsTrue(model.SetData(t2, 1, 1));
             Assert.AreEqual(2, model.Rows);

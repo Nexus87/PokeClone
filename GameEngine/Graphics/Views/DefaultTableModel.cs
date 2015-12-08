@@ -1,4 +1,5 @@
 ﻿using System;
+using GameEngine.Utils;
 
 namespace GameEngine.Graphics.Views
 {
@@ -6,50 +7,25 @@ namespace GameEngine.Graphics.Views
     {
         private T[,] items;
 
-        public DefaultTableModel()
+        public DefaultTableModel() : this(0, 0)
         {
-            items = new T[0, 0];
         }
 
         public DefaultTableModel(uint rows, uint columns)
         {
             items = new T[rows, columns];
         }
+
         public event EventHandler<DataChangedArgs<T>> DataChanged = delegate { };
+        public event EventHandler<SizeChangedArgs> SizeChanged = delegate { };
 
-        public int Columns { get { return items == null ? 0 : items.GetLength(1); } }
+        public int Columns { get { return items.GetLength(1); } }
 
-        public T[,] Items
-        {
-            set
-            {
-                if (items == value)
-                    return;
-
-                if (value == null)
-                {
-                    items = null;
-                    DataChanged(this, null);
-                    return;
-                }
-
-                if (items.GetLength(0) != value.GetLength(0) ||
-                    items.GetLength(1) != value.GetLength(1))
-                {
-                    items = value;
-                    DataChanged(this, null);
-                    return;
-                }
-
-                items = value;
-            }
-        }
-
-        public int Rows { get { return items == null ? 0 : items.GetLength(0); } }
+        public int Rows { get { return items.GetLength(0); } }
 
         public T DataAt(int row, int column)
         {
-            if (items == null)
+            if (row >= Rows || column >= Columns)
                 return default(T);
 
             return items[row, column];
@@ -57,17 +33,35 @@ namespace GameEngine.Graphics.Views
 
         public string DataStringAt(int row, int column)
         {
-            if (items == null)
+            if (row >= Rows || column >= Columns)
                 return "";
 
-            return items[row, column].ToString();
+            var item = items[row, column];
+            return item == null ? "" : item.ToString();
         }
 
 
         public bool SetData(T data, int row, int column)
         {
+            if (row >= Rows || column >= Columns)
+            {
+                Resize(row >= Rows ? row + 1 : Rows, column >= Columns ? column + 1 : Columns);
+                SizeChanged(this, new SizeChangedArgs { newRows = Rows, newColumns = Columns });
+            }
+
+            var oldValue = items[row, column];
             items[row, column] = data;
+
+            if (!Object.Equals(oldValue, data))
+                DataChanged(this, new DataChangedArgs<T> { column = column, row = row, newData = data });
             return true;
+        }
+
+        private void Resize(int newRows, int newColumns)
+        {
+            var newItems = new T[newRows, newColumns];
+            items.Copy(newItems);
+            items = newItems;
         }
     }
 }
