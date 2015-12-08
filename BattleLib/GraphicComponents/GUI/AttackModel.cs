@@ -7,17 +7,6 @@ namespace BattleLib.GraphicComponents.GUI
 {
     internal class AttackModel : DefaultListModel<Move>
     {
-        public override List<Move> Items
-        {
-            set
-            {
-                if (value.Count > 4)
-                    throw new InvalidOperationException("Only 4 moves are possible.");
-
-                base.Items = value;
-            }
-        }
-
         public override int Rows { get { return 4; } }
 
         public override Move DataAt(int row, int column)

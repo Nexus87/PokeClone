@@ -25,7 +25,7 @@ namespace GameEngineTest.Views
             var t1 = new TestType { testString = "T1" };
             var t2 = new TestType { testString = "T2" };
 
-            Assert.AreEqual(1, model.Rows);
+            Assert.AreEqual(0, model.Rows);
             Assert.AreEqual(1, model.Columns);
 
             Assert.IsTrue(model.SetData(t1, 1, 0));

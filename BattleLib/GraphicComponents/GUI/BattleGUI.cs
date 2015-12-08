@@ -75,9 +75,8 @@ namespace BattleLib.GraphicComponents.GUI
             var model = new DefaultListModel<Item>();
             var list = new List<Item>();
             for (int i = 0; i < 20; i++)
-                list.Add(new Item { Name = "Item" + i });
+                model.SetData(new Item { Name = "Item" + i }, i);
 
-            model.Items = list;
             ItemMenu.Model = model;
 
             itemFrame.AddContent(ItemMenu);
@@ -102,10 +101,9 @@ namespace BattleLib.GraphicComponents.GUI
         {
             var model = new AttackModel();
             var list = new List<Move>();
-            list.Add(new Move(new MoveData { Name = "Move1" }));
-            list.Add(new Move(new MoveData { Name = "Move2" }));
 
-            model.Items = list;
+            model.SetData(new Move(new MoveData { Name = "Move1" }), 0);
+            model.SetData(new Move(new MoveData { Name = "Move2" }), 1);
             AttackMenu.Model = model;
 
             attackFrame.AddContent(AttackMenu);

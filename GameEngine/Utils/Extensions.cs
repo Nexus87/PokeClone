@@ -20,5 +20,22 @@ namespace GameEngine.Utils
                 }
             }
         }
+
+        public static void Resize<T>(this List<T> list, int newSize)
+        {
+            if (list.Count == newSize)
+                return;
+            else if (list.Count > newSize)
+            {
+                list.RemoveRange(newSize, list.Count - newSize);
+            }
+            else
+            {
+                if (list.Capacity < newSize)
+                    list.Capacity = newSize;
+
+                list.AddRange(Enumerable.Repeat(default(T), newSize - list.Count));
+            }
+        }
     }
 }
