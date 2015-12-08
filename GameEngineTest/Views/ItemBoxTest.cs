@@ -32,15 +32,15 @@ namespace GameEngineTest.Views
             DrawInConstraintsTest(X, Y, Height, Width);
         }
 
-        [TestCase]
-        public void ArrowPositionTest()
+        [TestCaseSource(typeof(IGraphicComponentTest), "ValidCoordinates")]
+        public void ArrowPositionTest(float X, float Y, float Width, float Height)
         {
             SpriteBatchMock spriteBatch = new SpriteBatchMock();
 
-            item.X = 50.0f;
-            item.Y = 50.0f;
-            item.Width = 100.0f;
-            item.Height = 100.0f;
+            item.X = X;
+            item.Y = Y;
+            item.Width = Width;
+            item.Height = Height;
 
             item.Draw(spriteBatch);
 
@@ -62,19 +62,8 @@ namespace GameEngineTest.Views
             Assert.LessOrEqual(first.Position.X, text.Position.X);
             Assert.LessOrEqual(second.Position.X, text.Position.X);
 
-            if (first.Position.X.CompareTo(text.Position.X) < 0)
-            {
-                // First one is the Arrow, second one the text
-                Assert.AreEqual(text.Position, second.Position);
-                Assert.AreEqual(text.Size, second.Size);
-            }
-            else if (first.Position.X.CompareTo(text.Position.X) == 0)
-            {
-                //First one is the text, the second one is the arrow
-                Assert.AreEqual(text.Position, first.Position);
-                Assert.AreEqual(text.Size, first.Size);
-                Assert.Less(second.Position.X, text.Position.X);
-            }
+            Assert.IsTrue((first.Position.Equals(text.Position) && first.Size.Equals(text.Size)) ||
+                (second.Position.Equals(text.Position) && second.Size.Equals(text.Size)));
         }
     }
 }

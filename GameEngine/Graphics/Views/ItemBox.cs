@@ -39,17 +39,21 @@ namespace GameEngine.Graphics.Views
 
         protected override void Update()
         {
-            float internalHight = textBox.PreferedTextSize;
+
+            textBox.Height = Height;
+
+            // If we can't draw the whole arrow, draw no arrow at all
+            float arrowHeight = textBox.RealTextHeight;
+            float arrowWidth = Width.CompareTo(arrowHeight) <= 0 ? 0 : arrowHeight;
 
             arrow.X = X;
             arrow.Y = Y;
-            arrow.Width = Math.Min(internalHight, Width);
-            arrow.Height = internalHight;
+            arrow.Width = arrowWidth;
+            arrow.Height = arrowHeight;
 
-            textBox.X = X + internalHight;
+            textBox.X = X + arrowWidth;
             textBox.Y = Y;
-            textBox.Width = Math.Max(Width - internalHight, 0);
-            textBox.Height = internalHight;
+            textBox.Width = Math.Max(Width - arrowWidth, 0);
 
         }
     }
