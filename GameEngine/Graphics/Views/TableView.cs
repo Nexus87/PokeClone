@@ -1,4 +1,5 @@
 ﻿using GameEngine.Graphics.Views;
+using GameEngine.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,27 +40,17 @@ namespace GameEngine.Graphics.Views
 
         public InternalTableView(IItemModel<T> model)
         {
-            this.Model = model;
+            this.model = model;
+            model.DataChanged += model_DataChanged;
+            model.SizeChanged += model_SizeChanged;
             items = new ItemBox[model.Rows, model.Columns];
             layout = new TableLayout(Math.Min(model.Rows, visibleRows), Math.Min(model.Columns, visibleColumns));
             layout.Init(this);
         }
 
-        public IItemModel<T> Model
+        private void model_DataChanged(object sender, DataChangedArgs<T> e)
         {
-            get { return model; }
-            set
-            {
-                if (value == null)
-                    throw new ArgumentNullException("Model must not be null");
-                if (model != null)
-                {
-                    model.DataChanged -= model_SizeChanged;
-                }
-                model = value;
-                model.DataChanged += model_SizeChanged;
-                model_SizeChanged(null, null);
-            }
+            var newData = e.newData;
         }
 
         public void SelectItem(int row, int column)
@@ -67,7 +58,9 @@ namespace GameEngine.Graphics.Views
             if (selectedItem != null)
                 selectedItem.IsSelected = false;
 
-            if (row > Model.Rows || column > Model.Columns)
+            if (row >= model.Rows || column >= model.Columns)
+                return;
+            if (row >= items.GetLength(0) || column >= items.GetLength(1))
                 return;
 
             var oldRow = startRow;
@@ -125,27 +118,16 @@ namespace GameEngine.Graphics.Views
             }
         }
 
-        private void InitItems()
-        {
-            for (int i = 0; i < Model.Rows; i++)
-            {
-                for (int j = 0; j < Model.Columns; j++)
-                {
-                    items[i, j] = new ItemBox(Model.DataStringAt(i, j), new SpriteFontClass());
-                }
-            }
-        }
-
         private void InitTable()
         { 
             layout.Init(this);
-            items = new ItemBox[model.Rows, model.Columns];
-            InitItems();
         }
 
-        void model_SizeChanged(object sender, EventArgs e)
+        void model_SizeChanged(object sender, SizeChangedArgs e)
         {
-            Invalidate();
+            var newItems = new ItemBox[e.newRows, e.newColumns];
+            items.Copy(newItems);
+            items = newItems;
         }
     }
 }

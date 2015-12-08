@@ -59,7 +59,7 @@ namespace GameEngineTest.Graphics.Layouts
                    Assert.AreEqual(component[i, j], layout.GetComponent(i, j));
             }
         }
-
+        
         [TestCase]
         public void NullComponentTest()
         {
@@ -68,13 +68,23 @@ namespace GameEngineTest.Graphics.Layouts
             var component = new Mock<IGraphicComponent>();
             var serviceMock = new Mock<IServiceProvider>();
             var contentMock = new Mock<ContentManager>(serviceMock.Object);
-            component.SetCoordinates(10.0f, 10.0f, 250.0f, 250.0f);
+            component.SetCoordinates(0.0f, 00.0f, 250.0f, 250.0f);
 
-            layout.Init(component.Object);
-            layout.Setup(contentMock.Object);
-            layout.Draw(spriteBatch);
+            tableLayout.Init(component.Object);
+            tableLayout.Setup(contentMock.Object);
+            tableLayout.Draw(spriteBatch);
 
             Assert.AreEqual(0, spriteBatch.Objects.Count);
+
+            spriteBatch.Objects.Clear();
+            tableLayout.SetComponent(4, 4, new Mock<AbstractGraphicComponent>().Object);
+            tableLayout.Draw(spriteBatch);
+
+            Assert.AreEqual(1, spriteBatch.Objects.Count);
+            Assert.AreEqual(50.0f, spriteBatch.Objects[0].Size.X);
+            Assert.AreEqual(50.0f, spriteBatch.Objects[0].Size.Y);
+            Assert.AreEqual(4*50.0f, spriteBatch.Objects[0].Position.X);
+            Assert.AreEqual(4 * 50.0f, spriteBatch.Objects[0].Position.Y);
         }
     }
 }

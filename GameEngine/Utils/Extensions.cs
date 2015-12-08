@@ -21,6 +21,19 @@ namespace GameEngine.Utils
             }
         }
 
+        public static void Copy<T, S>(this T[,] source, T[,] target)
+        {
+            int rows = Math.Min(source.GetLength(0), target.GetLength(0));
+            int columns = Math.Min(source.GetLength(1), target.GetLength(1));
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    target[i, j] = source[i, j];
+                }
+            }
+        }
+
         public static void Resize<T>(this List<T> list, int newSize)
         {
             if (list.Count == newSize)
@@ -37,5 +50,7 @@ namespace GameEngine.Utils
                 list.AddRange(Enumerable.Repeat(default(T), newSize - list.Count));
             }
         }
+
+
     }
 }

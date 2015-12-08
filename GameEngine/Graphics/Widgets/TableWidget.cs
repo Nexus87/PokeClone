@@ -74,7 +74,7 @@ namespace GameEngine.Graphics.Widgets
             set
             {
                 model = value;
-                view.Model = model;
+                //view.Model = model;
                 InitModelEvents();
                 model_SizeChanged(null, null);
             }
