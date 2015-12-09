@@ -35,8 +35,8 @@ namespace GameEngine.Graphics.Views
 
         private int startColumn = 0;
         private int startRow = 0;
-        private int visibleColumns = 8;
-        private int visibleRows = 8;
+        public int VisibleColumns { get { return 8; } }
+        public int VisibleRows { get { return 8; } }
 
         public InternalTableView(IItemModel<T> model)
         {
@@ -44,7 +44,7 @@ namespace GameEngine.Graphics.Views
             model.DataChanged += model_DataChanged;
             model.SizeChanged += model_SizeChanged;
             items = new ItemBox[model.Rows, model.Columns];
-            layout = new TableLayout(Math.Min(model.Rows, visibleRows), Math.Min(model.Columns, visibleColumns));
+            layout = new TableLayout(Math.Min(model.Rows, VisibleRows), Math.Min(model.Columns, VisibleColumns));
             layout.Init(this);
         }
 
@@ -86,6 +86,33 @@ namespace GameEngine.Graphics.Views
                 FillLayout();
         }
 
+        public int SelectedRow
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public int SelectedColumn
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public int Rows
+        {
+            get
+            {
+
+                throw new NotImplementedException();
+            }
+        }
+
+        public int Columns
+        {
+            get
+            {
+
+                throw new NotImplementedException();
+            }
+        }
         public override void Setup(ContentManager content)
         {
             this.content = content;
@@ -129,5 +156,6 @@ namespace GameEngine.Graphics.Views
             items.Copy(newItems);
             items = newItems;
         }
+
     }
 }
