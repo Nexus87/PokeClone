@@ -65,10 +65,27 @@ namespace GameEngine.Graphics.Views
             this.model = model;
             model.DataChanged += model_DataChanged;
             model.SizeChanged += model_SizeChanged;
+            
             items = new ItemBox[model.Rows, model.Columns];
+            InitItems();
 
             layout = new TableLayout(ViewportRows, ViewportColumns);
             layout.Init(this);
+        }
+
+        private void InitItems()
+        {
+            for (int i = 0; i < model.Rows; i++)
+            {
+                for (int j = 0; j < model.Columns; j++)
+                {
+                    var str = model.DataStringAt(i, j);
+                    if (str == null)
+                        continue;
+
+                    items[i, j] = new ItemBox(str, new SpriteFontClass());
+                }
+            }
         }
 
         private void model_DataChanged(object sender, DataChangedArgs<T> e)
@@ -141,9 +158,9 @@ namespace GameEngine.Graphics.Views
 
         private void FillLayout()
         {
-            for (int i = 0; i < layout.Rows; i++)
+            for (int i = 0; i < ViewportRows; i++)
             {
-                for (int j = 0; j < layout.Columns; j++)
+                for (int j = 0; j < ViewportColumns; j++)
                     layout.SetComponent(i, j, items[startRow + i, startColumn + j]);
             }
         }
