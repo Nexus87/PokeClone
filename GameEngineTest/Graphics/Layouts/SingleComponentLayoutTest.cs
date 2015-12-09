@@ -17,9 +17,9 @@ namespace GameEngineTest.Graphics.Layouts
         [SetUp]
         public void Setup()
         {
-            var componentMock = new Mock<IGraphicComponent>();
+            var componentMock = new GraphicComponentMock();
             layout = new SingleComponentLayout();
-            layout.AddComponent(componentMock.Object);
+            layout.AddComponent(componentMock);
 
             testLayout = layout;
         }

@@ -1,7 +1,10 @@
 ﻿using GameEngine.Graphics;
 using GameEngine.Graphics.Layouts;
+using GameEngine.Wrapper;
 using GameEngineTest.Util;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 using Moq;
 using NUnit.Framework;
 using System;
@@ -12,10 +15,28 @@ using System.Threading.Tasks;
 
 namespace GameEngineTest.Graphics.Layouts
 {
+    public class GraphicComponentMock : AbstractGraphicComponent
+    {
+        Texture2D texture;
+        public GraphicComponentMock()
+        {
+            var dev = new GraphicsDevice(GraphicsAdapter.DefaultAdapter, GraphicsProfile.Reach, new PresentationParameters());
+            texture = new Texture2D(dev, 10, 10);
+        }
+        public override void Setup(ContentManager content)
+        {
+        }
+
+        protected override void DrawComponent(GameTime time, ISpriteBatch batch)
+        {
+            var batchMock = (SpriteBatchMock)batch;
+            batch.Draw(texture: texture, position: Position, destinationRectangle: null, scale: Size);
+        }
+    }
     public abstract class ILayoutTest
     {
         public ILayout testLayout;
-
+        
         public static List<TestCaseData> ValidData = new List<TestCaseData>
         {
             new TestCaseData(1.0f, 1.0f, 50.0f, 50.0f),

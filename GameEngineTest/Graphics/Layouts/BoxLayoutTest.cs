@@ -15,7 +15,7 @@ namespace GameEngineTest.Graphics.Layouts
     public class VBoxLayoutTest : ILayoutTest
     {
         VBoxLayout layout;
-        List<Mock<IGraphicComponent>> mocks = new List<Mock<IGraphicComponent>>();
+
         [SetUp]
         public void Setup()
         {
@@ -23,9 +23,8 @@ namespace GameEngineTest.Graphics.Layouts
             layout = new VBoxLayout();
             for (int i = 0; i < 4; i++)
             {
-                var mock = new Mock<IGraphicComponent>();
-                mocks.Add(mock);
-                layout.AddComponent(mock.Object);
+                var mock = new GraphicComponentMock();
+                layout.AddComponent(mock);
             }
 
             testLayout = layout;
@@ -66,7 +65,7 @@ namespace GameEngineTest.Graphics.Layouts
 
             layout = new HBoxLayout();
             for (int i = 0; i < 4; i++)
-                layout.AddComponent((new Mock<IGraphicComponent>()).Object);
+                layout.AddComponent(new GraphicComponentMock());
 
             testLayout = layout;
         }

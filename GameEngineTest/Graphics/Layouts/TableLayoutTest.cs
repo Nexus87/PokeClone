@@ -24,7 +24,7 @@ namespace GameEngineTest.Graphics.Layouts
             for(int i = 0; i < 2; i++)
             {
                 for (int j = 0; j < 2; j++)
-                    layout.SetComponent(i, j, new Mock<IGraphicComponent>().Object);
+                    layout.SetComponent(i, j, new GraphicComponentMock());
             }
 
             testLayout = layout;
@@ -77,7 +77,7 @@ namespace GameEngineTest.Graphics.Layouts
             Assert.AreEqual(0, spriteBatch.Objects.Count);
 
             spriteBatch.Objects.Clear();
-            tableLayout.SetComponent(4, 4, new Mock<AbstractGraphicComponent>().Object);
+            tableLayout.SetComponent(4, 4, new GraphicComponentMock());
             tableLayout.Draw(spriteBatch);
 
             Assert.AreEqual(1, spriteBatch.Objects.Count);
