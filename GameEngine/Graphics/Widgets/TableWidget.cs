@@ -110,7 +110,7 @@ namespace GameEngine.Graphics.Widgets
 
         private void handler_SelectionChanged(object sender, EventArgs e)
         {
-            view.SelectItem(handler.SelectedRow, handler.SelectedColumn);
+            view.SetCellSelection(handler.SelectedRow, handler.SelectedColumn, true);
         }
 
         private void InitHandlerEvents()

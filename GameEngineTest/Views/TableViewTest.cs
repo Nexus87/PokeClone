@@ -83,12 +83,27 @@ namespace GameEngineTest.Views
         [TestCaseSource("ModelCoordinates")]
         public void SelectCellTest(int a, int b)
         {
-            Assert.AreEqual(0, table.SelectedColumn);
-            Assert.AreEqual(0, table.SelectedRow);
 
-            table.SelectItem(a, b);
-            Assert.AreEqual(b, table.SelectedColumn);
-            Assert.AreEqual(a, table.SelectedRow);
+            TestTableCellSelection();
+
+            Assert.IsTrue(table.SetCellSelection(a, b, true));
+            for (int i = 0; i < table.Rows; i++)
+            {
+                for (int j = 0; j < table.Columns; j++)
+                {
+                    Assert.AreEqual(i == a && j == b, table.IsCellSelected(i, j));
+                }
+            }
+
+            Assert.IsTrue(table.SetCellSelection(a, b, false));
+            TestTableCellSelection();
+        }
+
+        private void TestTableCellSelection()
+        {
+            for (int i = 0; i < table.Rows; i++)
+                for (int j = 0; j < table.Columns; j++)
+                    Assert.IsFalse(table.IsCellSelected(i, j));
         }
 
         [TestCaseSource("ModelCoordinates")]
@@ -101,16 +116,15 @@ namespace GameEngineTest.Views
 
             table = new TableView<TestType>(modelMock.Object);
 
-            Assert.AreEqual(row, table.SelectedRow);
-            Assert.AreEqual(column, table.SelectedColumn);
+            TestTableCellSelection();
 
             int selectRow = row == 0 ? 1 : 0;
             int selectColumn = column == 0 ? 1 : 0;
 
-            table.SelectItem(selectRow, selectColumn);
+            Assert.IsFalse(table.SetCellSelection(selectRow, selectColumn, true));
+            Assert.IsFalse(table.SetCellSelection(selectRow, selectColumn, false));
 
-            Assert.AreEqual(row, table.SelectedRow);
-            Assert.AreEqual(column, table.SelectedColumn);
+            TestTableCellSelection();
         }
 
         [TestCase]
@@ -119,12 +133,10 @@ namespace GameEngineTest.Views
             int selectRow = table.Rows;
             int selectColumn = table.Columns;
 
-            Assert.AreEqual(0, table.SelectedColumn);
-            Assert.AreEqual(0, table.SelectedRow);
+            TestTableCellSelection();
 
-            table.SelectItem(selectRow, selectColumn);
-            Assert.AreEqual(0, table.SelectedColumn);
-            Assert.AreEqual(0, table.SelectedRow);
+            Assert.IsFalse(table.SetCellSelection(selectRow, selectColumn, true));
+            Assert.IsFalse(table.SetCellSelection(selectRow, selectColumn, false));
         }
 
         [TestCase]
@@ -164,9 +176,8 @@ namespace GameEngineTest.Views
         public void SelectionOnModelResizeTest()
         {
             var data = new TestType { testString = "Data" };
-            table.SelectItem(1, 1);
-            Assert.AreEqual(1, table.SelectedColumn);
-            Assert.AreEqual(1, table.SelectedRow);
+            Assert.IsTrue(table.SetCellSelection(1, 1, true));
+            Assert.IsTrue(table.IsCellSelected(1, 1));
 
             modelMock.Setup(o => o.Columns).Returns(3);
             modelMock.Setup(o => o.Rows).Returns(3);
@@ -176,12 +187,10 @@ namespace GameEngineTest.Views
             Assert.AreEqual(3, table.Rows);
             Assert.AreEqual(3, table.Columns);
 
-            Assert.AreEqual(1, table.SelectedColumn);
-            Assert.AreEqual(1, table.SelectedRow);
+            Assert.IsTrue(table.IsCellSelected(1, 1));
 
-            table.SelectItem(2, 2);
-            Assert.AreEqual(2, table.SelectedColumn);
-            Assert.AreEqual(2, table.SelectedRow);
+            Assert.IsTrue(table.IsCellSelected(2, 2)); ;
+            Assert.IsTrue(table.IsCellSelected(2, 2));
         }
 
         [TestCase]
@@ -194,24 +203,7 @@ namespace GameEngineTest.Views
 
             table = new TableView<TestType>(modelMock.Object);
 
-            Assert.AreEqual(-1, table.SelectedColumn);
-            Assert.AreEqual(-1, table.SelectedRow);
-
-            table.SelectItem(0, 0);
-            Assert.AreEqual(-1, table.SelectedColumn);
-            Assert.AreEqual(-1, table.SelectedRow);
-
-            modelMock.Setup(o => o.Columns).Returns(3);
-            modelMock.Setup(o => o.Rows).Returns(3);
-            modelMock.Raise(o => o.SizeChanged += null, modelMock.Object, new SizeChangedArgs { newColumns = 3, newRows = 3 });
-            modelMock.Raise(o => o.DataChanged += null, modelMock.Object, new DataChangedArgs<TestType> { column = 2, row = 2, newData = data });
-
-            Assert.AreEqual(0, table.SelectedColumn);
-            Assert.AreEqual(0, table.SelectedRow);
-
-            table.SelectItem(2, 2);
-            Assert.AreEqual(2, table.SelectedColumn);
-            Assert.AreEqual(2, table.SelectedRow);
+            Assert.IsFalse(table.SetCellSelection(0, 0, true));
         }
     }
 }
