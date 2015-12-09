@@ -60,6 +60,8 @@ namespace GameEngine.Graphics.Layouts
         {
             if (row < 0 || column < 0)
                 throw new ArgumentException("Negative values are not allowed");
+            if (row == Rows && column == Columns)
+                return;
 
             var comp = new IGraphicComponent[row, column];
             components.Copy(comp);

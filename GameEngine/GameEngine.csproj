@@ -53,6 +53,7 @@
     <Compile Include="Graphics\Basic\NullGraphicObject.cs" />
     <Compile Include="Graphics\Layouts\BoxLayout.cs" />
     <Compile Include="Graphics\GUIManager.cs" />
+    <Compile Include="Graphics\Views\IItemView.cs" />
     <Compile Include="InputComponent.cs" />
     <Compile Include="Graphics\Layouts\SingleComponentLayout.cs" />
     <Compile Include="Graphics\Basic\Frame.cs" />

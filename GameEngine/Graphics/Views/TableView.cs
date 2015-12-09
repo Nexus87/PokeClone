@@ -25,7 +25,7 @@ namespace GameEngine.Graphics.Views
         public TableView(IItemModel<T> model) : base(model) { }
     }
 
-    public class InternalTableView<T, SpriteFontClass> : AbstractGraphicComponent where SpriteFontClass : ISpriteFont, new()
+    public class InternalTableView<T, SpriteFontClass> : AbstractGraphicComponent, IItemView where SpriteFontClass : ISpriteFont, new()
     {
         private ContentManager content;
         private ItemBox[,] items;
@@ -34,7 +34,7 @@ namespace GameEngine.Graphics.Views
 
         private int startColumn = 0;
         private int startRow = 0;
-        private int ViewportStartColumn
+        public int ViewportStartColumn
         {
             get { return startColumn; }
             set
@@ -45,7 +45,7 @@ namespace GameEngine.Graphics.Views
                 Invalidate();
             }
         }
-        private int ViewportStartRow
+        public int ViewportStartRow
         {
             get { return startRow; }
             set
@@ -147,8 +147,7 @@ namespace GameEngine.Graphics.Views
             // At the moment there is no way to shrink the TableLayout
             if (layout.Rows > ViewportRows || layout.Columns > ViewportColumns)
             {
-                layout = new TableLayout(ViewportRows, ViewportColumns);
-                layout.Init(this);
+                layout.Resize(ViewportRows, ViewportColumns);
             }
 
             FillLayout();
@@ -167,6 +166,7 @@ namespace GameEngine.Graphics.Views
         void model_SizeChanged(object sender, SizeChangedArgs e)
         {
             var newItems = new ItemBox[e.newRows, e.newColumns];
+            layout.Resize(ViewportRows, ViewportColumns);
             items.Copy(newItems);
             items = newItems;
         }
