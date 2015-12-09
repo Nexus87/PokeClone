@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace GameEngine.Graphics
 {
-    public interface ISelectionHandler<T> : IInputHandler
+    public interface ISelectionHandler : IInputHandler
     {
         event EventHandler<EventArgs> SelectionChanged;
         event EventHandler<EventArgs> ItemSelected;
 
-        void Init(IItemModel<T> model);
+        void Init(IItemView view);
         int SelectedRow{ get; }
         int SelectedColumn { get; }
     }

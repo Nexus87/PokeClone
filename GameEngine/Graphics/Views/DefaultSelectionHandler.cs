@@ -3,7 +3,7 @@ using System;
 
 namespace GameEngine.Graphics.Views
 {
-    public class DefaultSelectionHandler<T> : ISelectionHandler<T>
+    public class DefaultSelectionHandler : ISelectionHandler
     {
         public Keys DownKey = Keys.Down;
         public Keys LeftKey = Keys.Left;
@@ -76,7 +76,7 @@ namespace GameEngine.Graphics.Views
         }
 
 
-        public void Init(IItemModel<T> model)
+        public void Init(IItemView model)
         {
             Rows = model.Rows;
             Columns = model.Columns;

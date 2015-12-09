@@ -1,6 +1,6 @@
 ﻿namespace GameEngine.Graphics.Views
 {
-    internal interface IItemView
+    public interface IItemView
     {
         int Columns { get; }
         int Rows { get; }

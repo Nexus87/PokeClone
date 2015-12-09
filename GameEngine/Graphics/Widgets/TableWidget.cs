@@ -12,14 +12,14 @@ namespace GameEngine.Graphics.Widgets
 {
     public class TableWidget<T> : AbstractGraphicComponent, IWidget
     {
-        private ISelectionHandler<T> handler;
+        private ISelectionHandler handler;
         private SingleComponentLayout layout;
         private IItemModel<T> model;
         private TableView<T> view;
 
         public TableWidget()
         {
-            handler = new DefaultSelectionHandler<T>();
+            handler = new DefaultSelectionHandler();
             model = new DefaultTableModel<T>();
             view = new TableView<T>(model);
             layout = new SingleComponentLayout();
@@ -34,7 +34,7 @@ namespace GameEngine.Graphics.Widgets
 
         public TableWidget(Configuration config)
         {
-            handler = new DefaultSelectionHandler<T>(config);
+            handler = new DefaultSelectionHandler(config);
             model = new DefaultTableModel<T>();
             view = new TableView<T>(model);
             layout = new SingleComponentLayout();
@@ -49,7 +49,7 @@ namespace GameEngine.Graphics.Widgets
 
         public event EventHandler<SelectionEventArgs<T>> ItemSelected;
 
-        public ISelectionHandler<T> Handler
+        public ISelectionHandler Handler
         {
             set
             {
@@ -126,7 +126,7 @@ namespace GameEngine.Graphics.Widgets
 
         private void model_SizeChanged(object sender, EventArgs e)
         {
-            handler.Init(model);
+            handler.Init(view);
         }
     }
 }
