@@ -21,7 +21,7 @@ namespace GameEngineTest.Graphics.Layouts
         public GraphicComponentMock()
         {
             var dev = new GraphicsDevice(GraphicsAdapter.DefaultAdapter, GraphicsProfile.Reach, new PresentationParameters());
-            texture = new Texture2D(dev, 10, 10);
+            texture = new Texture2D(dev, 1, 1);
         }
         public override void Setup(ContentManager content)
         {
@@ -55,6 +55,7 @@ namespace GameEngineTest.Graphics.Layouts
             var compMock = new Mock<IGraphicComponent>();
             compMock.SetCoordinates(X, Y, Width, Height);
 
+            testLayout.Init(compMock.Object);
             testLayout.Draw(new GameTime(), batch);
 
             foreach (var obj in batch.Objects)
@@ -68,7 +69,7 @@ namespace GameEngineTest.Graphics.Layouts
             SpriteBatchMock batch = new SpriteBatchMock();
             var compMock = new Mock<IGraphicComponent>();
             compMock.SetCoordinates(X, Y, Width, Height);
-
+            testLayout.Init(compMock.Object);
 
             testLayout.SetMargin(left: Margin);
             testLayout.Draw(new GameTime(), batch);

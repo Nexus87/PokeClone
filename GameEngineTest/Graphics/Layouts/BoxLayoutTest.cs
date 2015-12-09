@@ -87,7 +87,7 @@ namespace GameEngineTest.Graphics.Layouts
             {
                 var obj = spriteBatch.Objects[i];
                 Assert.AreEqual(50.0f * i, obj.Position.X);
-                Assert.AreEqual(50.0f, obj.Position.Y);
+                Assert.AreEqual(0.0f, obj.Position.Y);
                 Assert.AreEqual(50.0f, obj.Size.X);
                 Assert.AreEqual(200.0f, obj.Size.Y);
             }
