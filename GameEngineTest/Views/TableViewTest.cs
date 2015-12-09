@@ -184,6 +184,34 @@ namespace GameEngineTest.Views
             Assert.AreEqual(2, table.SelectedRow);
         }
 
+        [TestCase]
+        public void ZeroSizeSelectionTest()
+        {
+            var data = new TestType { testString = "Data" };
 
+            modelMock.Setup(o => o.Columns).Returns(0);
+            modelMock.Setup(o => o.Rows).Returns(0);
+
+            table = new TableView<TestType>(modelMock.Object);
+
+            Assert.AreEqual(-1, table.SelectedColumn);
+            Assert.AreEqual(-1, table.SelectedRow);
+
+            table.SelectItem(0, 0);
+            Assert.AreEqual(-1, table.SelectedColumn);
+            Assert.AreEqual(-1, table.SelectedRow);
+
+            modelMock.Setup(o => o.Columns).Returns(3);
+            modelMock.Setup(o => o.Rows).Returns(3);
+            modelMock.Raise(o => o.SizeChanged += null, modelMock.Object, new SizeChangedArgs { newColumns = 3, newRows = 3 });
+            modelMock.Raise(o => o.DataChanged += null, modelMock.Object, new DataChangedArgs<TestType> { column = 2, row = 2, newData = data });
+
+            Assert.AreEqual(0, table.SelectedColumn);
+            Assert.AreEqual(0, table.SelectedRow);
+
+            table.SelectItem(2, 2);
+            Assert.AreEqual(2, table.SelectedColumn);
+            Assert.AreEqual(2, table.SelectedRow);
+        }
     }
 }

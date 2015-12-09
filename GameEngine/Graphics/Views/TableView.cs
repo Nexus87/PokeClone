@@ -43,29 +43,44 @@ namespace GameEngine.Graphics.Views
             this.model = model;
             model.DataChanged += model_DataChanged;
             model.SizeChanged += model_SizeChanged;
+            SelectedRow = 0;
+            SelectedColumn = 0;
             items = new ItemBox[model.Rows, model.Columns];
-            layout = new TableLayout(Math.Min(model.Rows, VisibleRows), Math.Min(model.Columns, VisibleColumns));
+
+            layout = new TableLayout(Rows, Columns);
             layout.Init(this);
         }
 
         private void model_DataChanged(object sender, DataChangedArgs<T> e)
         {
-            var newData = e.newData;
+            if (items[e.row, e.column] == null)
+            {
+                var item = new ItemBox(new SpriteFontClass());
+                if (content != null)
+                    item.Setup(content);
+                items[e.row, e.column] = item;
+            }
+
+            items[e.row, e.column].Text = model.DataStringAt(e.row, e.column);
         }
 
         public void SelectItem(int row, int column)
         {
-            if (selectedItem != null)
-                selectedItem.IsSelected = false;
+            if (row == SelectedRow && column == SelectedColumn)
+                return;
 
             if (row >= model.Rows || column >= model.Columns)
                 return;
-            if (row >= items.GetLength(0) || column >= items.GetLength(1))
+
+            // Can't select a non existing entry
+            if (items[row, column] == null)
                 return;
 
-            var oldRow = startRow;
-            var oldColumn = startColumn;
+            SelectedRow = row;
+            SelectedColumn = column;
 
+            int oldRow = startRow;
+            int oldColumn = startColumn;
             // row needs to be between [startRow, startRow + layout.Rows[
             while (row >= startRow + layout.Rows)
                 startRow++;
@@ -77,45 +92,22 @@ namespace GameEngine.Graphics.Views
             while (column < startColumn)
                 startColumn--;
 
-            selectedItem = items[row, column];
-
-            if (selectedItem != null)
-                selectedItem.IsSelected = true;
-
-            if (oldColumn != startColumn || oldRow != startRow)
-                FillLayout();
+            if (oldRow != startRow || oldColumn != startColumn)
+                Invalidate();
         }
 
-        public int SelectedRow
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public int SelectedRow { get; private set; }
+        public int SelectedColumn { get; private set; } 
 
-        public int SelectedColumn
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public int Rows { get {  return Math.Min(VisibleRows, model.Rows); } }
+        public int Columns { get {  return Math.Min(VisibleColumns, model.Columns); } }
 
-        public int Rows
-        {
-            get
-            {
-
-                throw new NotImplementedException();
-            }
-        }
-
-        public int Columns
-        {
-            get
-            {
-
-                throw new NotImplementedException();
-            }
-        }
         public override void Setup(ContentManager content)
         {
             this.content = content;
+            foreach (var item in items)
+                if (item != null)
+                    item.Setup(content);
 
         }
 
@@ -126,14 +118,30 @@ namespace GameEngine.Graphics.Views
 
         protected override void Update()
         {
-            base.Update();
-            InitTable();
-            foreach (var item in items)
-                item.Setup(content);
-
-            layout.Setup(content);
+            SetSelectedItem();
+            if (layout.Rows > Rows || layout.Columns > Columns)
+            {
+                layout = new TableLayout(Rows, Columns);
+                layout.Init(this);
+            }
             FillLayout();
+        }
 
+        private void SetSelectedItem()
+        {
+            if (SelectedColumn == -1)
+                return;
+
+            var item = items[SelectedRow, SelectedColumn];
+
+            // should not happen since this is handled in SelectItem
+            if (item == null)
+                return;
+
+            if (selectedItem != null)
+                selectedItem.IsSelected = false;
+            item.IsSelected = true;
+            selectedItem = item;
         }
 
         private void FillLayout()
@@ -145,16 +153,21 @@ namespace GameEngine.Graphics.Views
             }
         }
 
-        private void InitTable()
-        { 
-            layout.Init(this);
-        }
-
         void model_SizeChanged(object sender, SizeChangedArgs e)
         {
             var newItems = new ItemBox[e.newRows, e.newColumns];
             items.Copy(newItems);
             items = newItems;
+
+            // It is not possible to 1 column but no row
+            if (SelectedColumn == -1 && Columns != 0)
+            {
+                SelectedColumn = SelectedRow = 0;
+            }
+            if (Columns == 0)
+            {
+                SelectedColumn = SelectedRow = -1;
+            }
         }
 
     }

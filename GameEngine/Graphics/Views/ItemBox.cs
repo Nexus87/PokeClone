@@ -17,6 +17,8 @@ namespace GameEngine.Graphics.Views
         private TextureBox arrow;
         private TextBox textBox;
 
+        public string Text { get { return textBox.Text; } set { textBox.Text = value; } }
+        public ItemBox(ISpriteFont spriteFont) : this("", spriteFont) { }
         public ItemBox(String displayedText, ISpriteFont spriteFont)
         {
             arrow = new TextureBox("arrow");
