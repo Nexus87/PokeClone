@@ -56,11 +56,15 @@ namespace GameEngine.Graphics.Layouts
             Invalidate();
         }
 
-        private void Resize(int row, int column)
+        public void Resize(int row, int column)
         {
+            if (row < 0 || column < 0)
+                throw new ArgumentException("Negative values are not allowed");
+
             var comp = new IGraphicComponent[row, column];
             components.Copy(comp);
             components = comp;
+            Invalidate();
         }
 
         public override void Setup(ContentManager content)

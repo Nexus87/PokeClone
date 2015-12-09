@@ -31,7 +31,6 @@ namespace GameEngine.Graphics.Views
         private ItemBox[,] items;
         private TableLayout layout;
         private IItemModel<T> model;
-        private ItemBox selectedItem;
 
         private int startColumn = 0;
         private int startRow = 0;

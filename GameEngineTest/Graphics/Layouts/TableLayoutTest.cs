@@ -86,5 +86,75 @@ namespace GameEngineTest.Graphics.Layouts
             Assert.AreEqual(4*50.0f, spriteBatch.Objects[0].Position.X);
             Assert.AreEqual(4 * 50.0f, spriteBatch.Objects[0].Position.Y);
         }
+
+        [TestCase]
+        public void ResizeTest()
+        {
+            Assert.AreEqual(2, layout.Columns);
+            Assert.AreEqual(2, layout.Rows);
+
+            layout.Resize(3, 2);
+            Assert.AreEqual(2, layout.Columns);
+            Assert.AreEqual(3, layout.Rows);
+
+            layout.Resize(3, 3);
+            Assert.AreEqual(3, layout.Columns);
+            Assert.AreEqual(3, layout.Rows);
+
+            layout.Resize(2, 2);
+            Assert.AreEqual(2, layout.Columns);
+            Assert.AreEqual(2, layout.Rows);
+        }
+
+        [TestCase]
+        public void InvalidResizeTest()
+        {
+            Assert.AreEqual(2, layout.Columns);
+            Assert.AreEqual(2, layout.Rows);
+
+            Assert.Throws<ArgumentException>(delegate { layout.Resize(-1, 2); });
+            Assert.AreEqual(2, layout.Columns);
+            Assert.AreEqual(2, layout.Rows);
+
+            Assert.Throws<ArgumentException>(delegate { layout.Resize(2, -1); });
+            Assert.AreEqual(2, layout.Columns);
+            Assert.AreEqual(2, layout.Rows);
+            
+        }
+
+        [TestCase]
+        public void ResizeDrawTest()
+        {
+            var spriteBatch = new SpriteBatchMock();
+            var component = new Mock<IGraphicComponent>();
+            component.SetCoordinates(0.0f, 00.0f, 180.0f, 180.0f);
+
+            layout.Init(component.Object);
+            Assert.AreEqual(2, layout.Columns);
+            Assert.AreEqual(2, layout.Rows);
+            layout.Draw(spriteBatch);
+            spriteBatch.Objects.Clear();
+
+            layout.Resize(3, 3);
+            Assert.AreEqual(3, layout.Columns);
+            Assert.AreEqual(3, layout.Rows);
+
+            layout.Draw(spriteBatch);
+
+            Assert.AreEqual(4, spriteBatch.Objects.Count);
+            foreach (var obj in spriteBatch.Objects)
+                obj.IsInConstraints(0.0f, 0.0f, 120.0f, 120.0f);
+
+            layout.Resize(1, 1);
+            Assert.AreEqual(1, layout.Columns);
+            Assert.AreEqual(1, layout.Rows);
+            spriteBatch.Objects.Clear();
+
+            layout.Draw(spriteBatch);
+
+            Assert.AreEqual(1, spriteBatch.Objects.Count);
+            foreach (var obj in spriteBatch.Objects)
+                obj.IsInConstraints(0.0f, 0.0f, 180.0f, 180.0f);
+        }
     }
 }
