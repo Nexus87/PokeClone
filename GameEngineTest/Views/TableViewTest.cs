@@ -201,6 +201,50 @@ namespace GameEngineTest.Views
                 for (int j = 0; j < table.Columns; j++)
                     Assert.IsFalse(table.IsCellSelected(i, j));
         }
+
+        [TestCase]
+        public void ViewportTest()
+        {
+            SpriteBatchMock spriteBatch = new SpriteBatchMock();
+            modelMock = new Mock<IItemModel<TestType>>();
+            modelMock.Setup(o => o.Columns).Returns(20);
+            modelMock.Setup(o => o.Rows).Returns(20);
+            modelMock.Setup(o => o.DataStringAt(It.IsAny<int>(), It.IsAny<int>())).Returns<int, int>((a, b) => a + " " + b);
+
+            table = new InternalTableView<TestType, SpriteFontMock>(modelMock.Object);
+            table.X = 0.0f;
+            table.Y = 0.0f;
+            table.Width = 2000.0f;
+            table.Height = 2000.0f;
+
+            Assert.Less(table.ViewportRows, 20);
+            Assert.Less(table.ViewportColumns, 20);
+
+            Assert.AreEqual(0, table.ViewportStartColumn);
+            Assert.AreEqual(0, table.ViewportStartRow);
+
+            table.ViewportStartRow = 1;
+            table.ViewportStartColumn = 1;
+
+            Assert.AreEqual(1, table.ViewportStartColumn);
+            Assert.AreEqual(1, table.ViewportStartRow);
+
+            table.Draw(spriteBatch);
+
+            foreach (var s in spriteBatch.DrawnStrings)
+            {
+                var nums = s.Split(' ');
+                Assert.AreEqual(2, nums.Length);
+                int a = int.Parse(nums[0]);
+                int b = int.Parse(nums[1]);
+
+                Assert.GreaterOrEqual(a, 1);
+                Assert.GreaterOrEqual(b, 1);
+
+                Assert.Less(a, table.ViewportRows + 1);
+                Assert.Less(a, table.ViewportColumns + 1);
+            }
+        }
     }
 
     internal class SpriteFontMock : ISpriteFont

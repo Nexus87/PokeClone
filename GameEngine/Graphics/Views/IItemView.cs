@@ -7,8 +7,6 @@
 
         int ViewportColumns { get; }
         int ViewportRows { get; }
-        int VisibleColumns { get; }
-        int VisibleRows { get; }
         int ViewportStartRow { get; set; }
         int ViewportStartColumn { get; set; }
 

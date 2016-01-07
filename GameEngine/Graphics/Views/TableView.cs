@@ -56,8 +56,8 @@ namespace GameEngine.Graphics.Views
                 Invalidate();
             }
         }
-        public int VisibleColumns { get { return 8; } }
-        public int VisibleRows { get { return 8; } }
+        private const int visibleColumns = 8;
+        private const int visibleRows = 8;
 
         public InternalTableView(IItemModel<T> model)
         {
@@ -122,8 +122,8 @@ namespace GameEngine.Graphics.Views
             return items[row, column] != null && items[row, column].IsSelected;
         }
 
-        public int ViewportRows { get {  return Math.Min(VisibleRows, model.Rows); } }
-        public int ViewportColumns { get {  return Math.Min(VisibleColumns, model.Columns); } }
+        public int ViewportRows { get {  return Math.Min(visibleRows, model.Rows); } }
+        public int ViewportColumns { get {  return Math.Min(visibleColumns, model.Columns); } }
 
         public int Rows { get { return model.Rows; } }
         public int Columns { get { return model.Columns; } }
