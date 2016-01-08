@@ -22,6 +22,8 @@ namespace GameEngine.Graphics.Views
         private int Rows { get; set; }
         private int Columns { get; set; }
 
+        private IItemView view;
+
         public DefaultSelectionHandler() {}
         public DefaultSelectionHandler(Configuration config)
         {
@@ -58,6 +60,7 @@ namespace GameEngine.Graphics.Views
                 return;
 
             SelectedColumn = column;
+            UpdateViewpoint();
             if (SelectionChanged != null)
                 SelectionChanged(this, null);
         }
@@ -71,13 +74,29 @@ namespace GameEngine.Graphics.Views
                 return;
 
             SelectedRow = row;
+            UpdateViewpoint();
             if (SelectionChanged != null)
                 SelectionChanged(this, null);
         }
 
+        private void UpdateViewpoint()
+        {
+            int startRow = view.ViewportStartRow;
+            int startColumn = view.ViewportStartColumn;
 
+            if (SelectedRow < startRow)
+                view.ViewportStartRow = SelectedRow;
+            else if (SelectedRow >= startRow + view.ViewportRows)
+                view.ViewportStartRow = SelectedRow - (view.ViewportRows - 1);
+
+            if (SelectedColumn < startColumn)
+                view.ViewportStartColumn = SelectedColumn;
+            else if (SelectedColumn >= startColumn + view.ViewportColumns)
+                view.ViewportStartColumn = SelectedColumn - (view.ViewportColumns - 1);
+        }
         public void Init(IItemView view)
         {
+            this.view = view;
             Rows = view.Rows;
             Columns = view.Columns;
         }

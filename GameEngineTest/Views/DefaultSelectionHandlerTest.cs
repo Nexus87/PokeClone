@@ -30,9 +30,17 @@ namespace GameEngineTest.Views
             viewMock.SetupGet(o => o.ViewportColumns).Returns(2);
             viewMock.SetupGet(o => o.ViewportRows).Returns(2);
             viewMock.SetupGet(o => o.ViewportStartColumn).Returns(startColumn);
+            viewMock.SetupSet(o => o.ViewportStartColumn = It.IsAny<int>()).Callback<int>(i =>
+            {
+                startColumn = i;
+                viewMock.SetupGet(o => o.ViewportStartColumn).Returns(startColumn);
+            });
             viewMock.SetupGet(o => o.ViewportStartRow).Returns(startRow);
-            viewMock.SetupSet(o => o.ViewportStartColumn = It.IsAny<int>()).Callback<int>(i => startColumn = i);
-            viewMock.SetupSet(o => o.ViewportStartRow = It.IsAny<int>()).Callback<int>(i => startRow = i);
+            viewMock.SetupSet(o => o.ViewportStartRow = It.IsAny<int>()).Callback<int>(i => 
+            {
+                startRow = i;
+                viewMock.SetupGet(o => o.ViewportStartRow).Returns(startRow);
+            });
 
             testObj.Init(viewMock.Object);
         }
@@ -202,24 +210,24 @@ namespace GameEngineTest.Views
                 Assert.AreEqual(0, startRow);
             }
 
-            testObj.HandleInput(Keys.Right);
+            testObj.HandleInput(Keys.Down);
             Assert.AreEqual(viewMock.Object.ViewportRows, testObj.SelectedRow);
             Assert.AreEqual(1, startRow);
 
-            testObj.HandleInput(Keys.Right);
+            testObj.HandleInput(Keys.Down);
             Assert.AreEqual(viewMock.Object.ViewportRows + 1, testObj.SelectedRow);
             Assert.AreEqual(2, startRow);
 
             while (testObj.SelectedRow > startRow)
             {
-                testObj.HandleInput(Keys.Left);
-                Assert.AreEqual(2, startColumn);
+                testObj.HandleInput(Keys.Up);
+                Assert.AreEqual(2, startRow);
             }
 
-            testObj.HandleInput(Keys.Left);
+            testObj.HandleInput(Keys.Up);
             Assert.AreEqual(1, startRow);
 
-            testObj.HandleInput(Keys.Left);
+            testObj.HandleInput(Keys.Up);
             Assert.AreEqual(0, startRow);
         }
     }
