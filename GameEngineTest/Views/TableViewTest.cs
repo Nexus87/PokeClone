@@ -244,6 +244,26 @@ namespace GameEngineTest.Views
                 Assert.Less(a, table.ViewportRows + 1);
                 Assert.Less(a, table.ViewportColumns + 1);
             }
+
+            table.ViewportStartRow = 19;
+            table.ViewportStartColumn = 19;
+
+            spriteBatch.DrawnStrings.Clear();
+            table.Draw(spriteBatch);
+
+            foreach (var s in spriteBatch.DrawnStrings)
+            {
+                var nums = s.Split(' ');
+                Assert.AreEqual(2, nums.Length);
+                int a = int.Parse(nums[0]);
+                int b = int.Parse(nums[1]);
+
+                Assert.GreaterOrEqual(a, 20 - table.ViewportRows);
+                Assert.GreaterOrEqual(b, 20 - table.ViewportColumns);
+
+                Assert.Less(a, 20);
+                Assert.Less(a, 20);
+            }
         }
     }
 

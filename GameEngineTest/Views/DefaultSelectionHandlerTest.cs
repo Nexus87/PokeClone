@@ -1,4 +1,5 @@
 ﻿using GameEngine.Graphics.Views;
+using Microsoft.Xna.Framework.Input;
 using Moq;
 using NUnit.Framework;
 using System;
@@ -39,7 +40,187 @@ namespace GameEngineTest.Views
         [TestCase]
         public void InitialSelectionTest()
         {
+            Assert.AreEqual(0, testObj.SelectedColumn);
+            Assert.AreEqual(0, testObj.SelectedRow);
+        }
 
+        [TestCase]
+        public void HandleInputTest()
+        {
+            Assert.AreEqual(0, testObj.SelectedColumn);
+            Assert.AreEqual(0, testObj.SelectedRow);
+
+            testObj.HandleInput(Keys.Right);
+
+            Assert.AreEqual(1, testObj.SelectedColumn);
+            Assert.AreEqual(0, testObj.SelectedRow);
+
+            testObj.HandleInput(Keys.Down);
+
+            Assert.AreEqual(1, testObj.SelectedColumn);
+            Assert.AreEqual(1, testObj.SelectedRow);
+
+            testObj.HandleInput(Keys.Left);
+            testObj.HandleInput(Keys.Up);
+
+            Assert.AreEqual(0, testObj.SelectedColumn);
+            Assert.AreEqual(0, testObj.SelectedRow);
+
+            testObj.HandleInput(Keys.Left);
+            testObj.HandleInput(Keys.Up);
+
+            Assert.AreEqual(0, testObj.SelectedColumn);
+            Assert.AreEqual(0, testObj.SelectedRow);
+
+            for (int i = 1; i < viewMock.Object.Rows; i++)
+            {
+                testObj.HandleInput(Keys.Down);
+                Assert.AreEqual(0, testObj.SelectedColumn);
+                Assert.AreEqual(i, testObj.SelectedRow);
+            }
+
+            for (int i = 1; i < viewMock.Object.Columns; i++)
+            {
+                testObj.HandleInput(Keys.Right);
+                Assert.AreEqual(i, testObj.SelectedColumn);
+                Assert.AreEqual(viewMock.Object.Rows - 1, testObj.SelectedRow);
+            }
+
+            testObj.HandleInput(Keys.Down);
+            Assert.AreEqual(viewMock.Object.Columns - 1, testObj.SelectedColumn);
+            Assert.AreEqual(viewMock.Object.Rows - 1, testObj.SelectedRow);
+
+            testObj.HandleInput(Keys.Right);
+            Assert.AreEqual(viewMock.Object.Columns - 1, testObj.SelectedColumn);
+            Assert.AreEqual(viewMock.Object.Rows - 1, testObj.SelectedRow);
+        }
+
+        [TestCase]
+        public void EventTest()
+        {
+            bool itemSelectedCalled = false;
+            bool closeCalled = false;
+            bool selectionChangedCalled = false;
+
+            testObj.ItemSelected += delegate { itemSelectedCalled = true;};
+            testObj.CloseRequested += delegate { closeCalled = true; };
+            testObj.SelectionChanged += delegate { selectionChangedCalled = true; };
+
+            Assert.AreEqual(0, testObj.SelectedColumn);
+            Assert.AreEqual(0, testObj.SelectedRow);
+
+            testObj.HandleInput(Keys.Left);
+            Assert.AreEqual(0, testObj.SelectedColumn);
+            Assert.AreEqual(0, testObj.SelectedRow);
+            Assert.False(selectionChangedCalled);
+
+            testObj.HandleInput(Keys.Up);
+            Assert.AreEqual(0, testObj.SelectedColumn);
+            Assert.AreEqual(0, testObj.SelectedRow);
+            Assert.False(selectionChangedCalled);
+
+            Assert.False(itemSelectedCalled);
+            Assert.False(closeCalled);
+
+            testObj.HandleInput(Keys.Right);
+            Assert.True(selectionChangedCalled);
+
+            selectionChangedCalled = false;
+
+            testObj.HandleInput(Keys.Down);
+            Assert.True(selectionChangedCalled);
+            selectionChangedCalled = false;
+
+            for (int i = 2; i < viewMock.Object.Rows; i++)
+            {
+                testObj.HandleInput(Keys.Down);
+                Assert.True(selectionChangedCalled, "Error on step " + i);
+                selectionChangedCalled = false;
+            }
+
+            for (int i = 2; i < viewMock.Object.Columns; i++)
+            {
+                testObj.HandleInput(Keys.Right);
+                Assert.True(selectionChangedCalled, "Error on step " + i);
+                selectionChangedCalled = false;
+            }
+
+            Assert.AreEqual(viewMock.Object.Columns - 1, testObj.SelectedColumn);
+            Assert.AreEqual(viewMock.Object.Rows - 1, testObj.SelectedRow);
+            Assert.False(selectionChangedCalled);
+
+            testObj.HandleInput(Keys.Down);
+            Assert.False(selectionChangedCalled);
+
+            testObj.HandleInput(Keys.Right);
+            Assert.False(selectionChangedCalled);
+
+            testObj.HandleInput(Keys.Enter);
+            Assert.True(itemSelectedCalled);
+            Assert.False(closeCalled);
+
+            itemSelectedCalled = false;
+
+            testObj.HandleInput(Keys.Escape);
+            Assert.True(closeCalled);
+            Assert.False(itemSelectedCalled);
+        }
+
+        [TestCase]
+        public void ChangeViewportTest()
+        {
+            while (testObj.SelectedColumn < viewMock.Object.ViewportColumns - 1)
+            {
+                testObj.HandleInput(Keys.Right);
+                Assert.AreEqual(0, startColumn);
+            }
+
+            testObj.HandleInput(Keys.Right);
+            Assert.AreEqual(viewMock.Object.ViewportColumns, testObj.SelectedColumn);
+            Assert.AreEqual(1, startColumn);
+
+            testObj.HandleInput(Keys.Right);
+            Assert.AreEqual(viewMock.Object.ViewportColumns + 1, testObj.SelectedColumn);
+            Assert.AreEqual(2, startColumn);
+
+            while (testObj.SelectedColumn > startColumn)
+            {
+                testObj.HandleInput(Keys.Left);
+                Assert.AreEqual(2, startColumn);
+            }
+
+            testObj.HandleInput(Keys.Left);
+            Assert.AreEqual(1, startColumn);
+
+            testObj.HandleInput(Keys.Left);
+            Assert.AreEqual(0, startColumn);
+
+            // Same for rows
+            while (testObj.SelectedRow < viewMock.Object.ViewportRows - 1)
+            {
+                testObj.HandleInput(Keys.Down);
+                Assert.AreEqual(0, startRow);
+            }
+
+            testObj.HandleInput(Keys.Right);
+            Assert.AreEqual(viewMock.Object.ViewportRows, testObj.SelectedRow);
+            Assert.AreEqual(1, startRow);
+
+            testObj.HandleInput(Keys.Right);
+            Assert.AreEqual(viewMock.Object.ViewportRows + 1, testObj.SelectedRow);
+            Assert.AreEqual(2, startRow);
+
+            while (testObj.SelectedRow > startRow)
+            {
+                testObj.HandleInput(Keys.Left);
+                Assert.AreEqual(2, startColumn);
+            }
+
+            testObj.HandleInput(Keys.Left);
+            Assert.AreEqual(1, startRow);
+
+            testObj.HandleInput(Keys.Left);
+            Assert.AreEqual(0, startRow);
         }
     }
 }

@@ -76,10 +76,10 @@ namespace GameEngine.Graphics.Views
         }
 
 
-        public void Init(IItemView model)
+        public void Init(IItemView view)
         {
-            Rows = model.Rows;
-            Columns = model.Columns;
+            Rows = view.Rows;
+            Columns = view.Columns;
         }
     }
 }

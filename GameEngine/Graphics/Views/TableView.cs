@@ -39,9 +39,12 @@ namespace GameEngine.Graphics.Views
             get { return startColumn; }
             set
             {
-                if (startColumn == value)
+                int newColumn = Math.Min(value, model.Columns - ViewportColumns);
+
+                if (startColumn == newColumn)
                     return;
-                startColumn = value;
+
+                startColumn = newColumn;
                 Invalidate();
             }
         }
@@ -50,9 +53,11 @@ namespace GameEngine.Graphics.Views
             get { return startRow; }
             set
             {
-                if (startRow == value)
+                int newRow = Math.Min(value, model.Rows - ViewportRows);
+                if (startRow == newRow)
                     return;
-                startRow = value;
+
+                startRow = newRow;
                 Invalidate();
             }
         }
