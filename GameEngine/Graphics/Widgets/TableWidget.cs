@@ -42,9 +42,9 @@ namespace GameEngine.Graphics.Widgets
 
         public event EventHandler<SelectionEventArgs<T>> ItemSelected;
 
-        public ISelectionHandler Handler
+        private ISelectionHandler Handler
         {
-            private set
+            set
             {
                 if (value == null)
                     throw new ArgumentNullException("Handler must not be null");

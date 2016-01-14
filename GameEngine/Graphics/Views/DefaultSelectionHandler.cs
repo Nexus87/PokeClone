@@ -62,7 +62,9 @@ namespace GameEngine.Graphics.Views
             if (column >= Columns || column < 0)
                 return;
 
+            view.SetCellSelection(selectedRow, selectedColumn, false);
             selectedColumn = column;
+            view.SetCellSelection(selectedRow, selectedColumn, true);
             UpdateViewpoint();
             if (SelectionChanged != null)
                 SelectionChanged(this, null);
@@ -76,7 +78,9 @@ namespace GameEngine.Graphics.Views
             if (row >= Rows || row < 0)
                 return;
 
+            view.SetCellSelection(selectedRow, selectedColumn, false);
             selectedRow = row;
+            view.SetCellSelection(selectedRow, selectedColumn, true);
             UpdateViewpoint();
             if (SelectionChanged != null)
                 SelectionChanged(this, null);
@@ -106,6 +110,7 @@ namespace GameEngine.Graphics.Views
             Rows = view.Rows;
             Columns = view.Columns;
             view.OnTableResize += view_OnTableResize;
+            view.SetCellSelection(0, 0, true);
         }
 
         void view_OnTableResize(object sender, TableResizeEventArgs e)

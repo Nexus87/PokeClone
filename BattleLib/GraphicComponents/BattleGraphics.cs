@@ -46,7 +46,7 @@ namespace BattleLib.GraphicComponents
 
             mainMenu = new TableWidget<string>();
 
-            mainMenu.Model = model;
+            //mainMenu.Model = model;
             line2.X = 50.0f;
             line2.Y = 0.4f * Engine.ScreenHeight;
             line2.Width = 0.8f * Engine.ScreenWidth;

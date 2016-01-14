@@ -54,7 +54,7 @@ namespace BattleLib.GraphicComponents.GUI
             list.Add(new Pokemon(data, data.BaseStats) { Name = "PKMN1"});
             list.Add(new Pokemon(data, data.BaseStats) { Name = "PKMN2" });
 
-            PKMNMenu.Model = model;
+            //PKMNMenu.Model = model;
             PKMNMenu.X = 0;
             PKMNMenu.Y = 0;
             PKMNMenu.Width = Engine.ScreenWidth;
@@ -77,7 +77,7 @@ namespace BattleLib.GraphicComponents.GUI
             for (int i = 0; i < 20; i++)
                 model.SetData(new Item { Name = "Item" + i }, i);
 
-            ItemMenu.Model = model;
+            //ItemMenu.Model = model;
 
             itemFrame.AddContent(ItemMenu);
 
@@ -104,7 +104,7 @@ namespace BattleLib.GraphicComponents.GUI
 
             model.SetData(new Move(new MoveData { Name = "Move1" }), 0);
             model.SetData(new Move(new MoveData { Name = "Move2" }), 1);
-            AttackMenu.Model = model;
+            //AttackMenu.Model = model;
 
             attackFrame.AddContent(AttackMenu);
             attackFrame.X = Engine.ScreenWidth / 2.0f;
@@ -131,7 +131,7 @@ namespace BattleLib.GraphicComponents.GUI
             model.SetData("Item", 1, 0);
             model.SetData("Run", 1, 1);
 
-            MainMenu.Model = model;
+            //MainMenu.Model = model;
             mainFrame.AddContent(MainMenu);
 
             mainFrame.X = 0.5f * Engine.ScreenWidth;

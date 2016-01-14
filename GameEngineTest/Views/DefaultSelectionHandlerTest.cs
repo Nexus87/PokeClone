@@ -18,6 +18,9 @@ namespace GameEngineTest.Views
         private int startColumn = 0;
         private int startRow = 0;
 
+        private const int Rows = 10;
+        private const int Columns = 10;
+
         [SetUp]
         public void Setup()
         {
@@ -25,8 +28,8 @@ namespace GameEngineTest.Views
 
             viewMock = new Mock<IItemView>();
             
-            viewMock.SetupGet(o => o.Columns).Returns(10);
-            viewMock.SetupGet(o => o.Rows).Returns(10);
+            viewMock.SetupGet(o => o.Columns).Returns(Columns);
+            viewMock.SetupGet(o => o.Rows).Returns(Rows);
             viewMock.SetupGet(o => o.ViewportColumns).Returns(2);
             viewMock.SetupGet(o => o.ViewportRows).Returns(2);
             viewMock.SetupGet(o => o.ViewportStartColumn).Returns(startColumn);
@@ -52,55 +55,39 @@ namespace GameEngineTest.Views
             Assert.AreEqual(0, testObj.SelectedRow);
         }
 
-        [TestCase]
-        public void HandleInputTest()
+        public static List<TestCaseData> HandleInputTestData = new List<TestCaseData>
         {
-            Assert.AreEqual(0, testObj.SelectedColumn);
-            Assert.AreEqual(0, testObj.SelectedRow);
+            new TestCaseData(0, 0, Keys.Right, 0, 1),
+            new TestCaseData(0, 0, Keys.Down, 1, 0),
+            new TestCaseData(1, 1, Keys.Left, 1, 0),
+            new TestCaseData(1, 1, Keys.Up, 0, 1),
+            new TestCaseData(Rows - 1, 0, Keys.Down, Rows - 1, 0),
+            new TestCaseData(0, Columns - 1, Keys.Right, 0, Columns - 1),
+            new TestCaseData(0, 0, Keys.Up, 0, 0),
+            new TestCaseData(0, 0, Keys.Left, 0, 0)
+        };
 
-            testObj.HandleInput(Keys.Right);
+        [TestCaseSource("HandleInputTestData")]
+        public void HandleInputTest(int row, int column, Keys key, int newRow, int newColumn)
+        {
+            testObj.SelectedRow = row;
+            testObj.SelectedColumn = column;
 
-            Assert.AreEqual(1, testObj.SelectedColumn);
-            Assert.AreEqual(0, testObj.SelectedRow);
+            viewMock.Verify(o => o.SetCellSelection(row, column, true), Times.Once);
+            Assert.AreEqual(column, testObj.SelectedColumn);
+            Assert.AreEqual(row, testObj.SelectedRow);
 
-            testObj.HandleInput(Keys.Down);
+            viewMock.ResetCalls();
+            testObj.HandleInput(key);
 
-            Assert.AreEqual(1, testObj.SelectedColumn);
-            Assert.AreEqual(1, testObj.SelectedRow);
+            Assert.AreEqual(newColumn, testObj.SelectedColumn);
+            Assert.AreEqual(newRow, testObj.SelectedRow);
 
-            testObj.HandleInput(Keys.Left);
-            testObj.HandleInput(Keys.Up);
-
-            Assert.AreEqual(0, testObj.SelectedColumn);
-            Assert.AreEqual(0, testObj.SelectedRow);
-
-            testObj.HandleInput(Keys.Left);
-            testObj.HandleInput(Keys.Up);
-
-            Assert.AreEqual(0, testObj.SelectedColumn);
-            Assert.AreEqual(0, testObj.SelectedRow);
-
-            for (int i = 1; i < viewMock.Object.Rows; i++)
+            if (newColumn != column || newRow != row)
             {
-                testObj.HandleInput(Keys.Down);
-                Assert.AreEqual(0, testObj.SelectedColumn);
-                Assert.AreEqual(i, testObj.SelectedRow);
+                viewMock.Verify(o => o.SetCellSelection(row, column, false), Times.Once);
+                viewMock.Verify(o => o.SetCellSelection(newRow, newColumn, true), Times.Once);
             }
-
-            for (int i = 1; i < viewMock.Object.Columns; i++)
-            {
-                testObj.HandleInput(Keys.Right);
-                Assert.AreEqual(i, testObj.SelectedColumn);
-                Assert.AreEqual(viewMock.Object.Rows - 1, testObj.SelectedRow);
-            }
-
-            testObj.HandleInput(Keys.Down);
-            Assert.AreEqual(viewMock.Object.Columns - 1, testObj.SelectedColumn);
-            Assert.AreEqual(viewMock.Object.Rows - 1, testObj.SelectedRow);
-
-            testObj.HandleInput(Keys.Right);
-            Assert.AreEqual(viewMock.Object.Columns - 1, testObj.SelectedColumn);
-            Assert.AreEqual(viewMock.Object.Rows - 1, testObj.SelectedRow);
         }
 
         [TestCase]
@@ -254,10 +241,18 @@ namespace GameEngineTest.Views
 
             viewMock.SetupGet(o => o.Columns).Returns(column);
             viewMock.SetupGet(o => o.Rows).Returns(row);
+
             viewMock.Raise(o => o.OnTableResize += null, viewMock.Object, new TableResizeEventArgs(row, column));
 
             Assert.AreEqual(selectedColumn, testObj.SelectedColumn);
             Assert.AreEqual(selectedRow, testObj.SelectedRow);
+
+            if (selectedRow != 5 || selectedColumn != 5)
+            {
+                viewMock.Verify(o => o.SetCellSelection(5, 5, false), Times.Once);
+                viewMock.Verify(o => o.SetCellSelection(selectedRow, selectedColumn, true), Times.Once);
+            }
+
 
 
         }
