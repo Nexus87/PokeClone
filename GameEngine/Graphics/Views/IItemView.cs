@@ -1,7 +1,21 @@
-﻿namespace GameEngine.Graphics.Views
+﻿using System;
+namespace GameEngine.Graphics.Views
 {
+    public class TableResizeEventArgs : EventArgs
+    {
+        public int rows;
+        public int columns;
+
+        public TableResizeEventArgs(int rows, int columns)
+        {
+            this.rows = rows;
+            this.columns = columns;
+        }
+    }
     public interface IItemView
     {
+        event EventHandler<TableResizeEventArgs> OnTableResize;
+
         int Columns { get; }
         int Rows { get; }
 

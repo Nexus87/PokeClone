@@ -74,6 +74,27 @@ namespace GameEngineTest.Views
                 obj.IsInConstraints(2* 60.0f, 2 * 60.0f, 60.0f, 60.0f);
         }
 
+        public static List<TestCaseData> TableSizes = new List<TestCaseData>{
+            new TestCaseData(5, 5, true),
+            new TestCaseData(1, 1, true),
+            new TestCaseData(2, 2, false),
+            new TestCaseData(2, 5, true),
+            new TestCaseData(5, 2, true),
+        };
+        [TestCaseSource("TableSizes")]
+        public void ResizeEventTest(int row, int column, bool result)
+        {
+            bool eventCalled = false;
+            table.OnTableResize += (a, b) => { eventCalled = true; };
+
+            modelMock.Setup(o => o.Columns).Returns(column);
+            modelMock.Setup(o => o.Rows).Returns(row);
+
+            Assert.False(eventCalled);
+            modelMock.Raise(o => o.SizeChanged += null, modelMock.Object, new SizeChangedArgs { newColumns = column, newRows = row });
+            Assert.AreEqual(result, eventCalled);
+        }
+
         [TestCaseSource("ModelCoordinates")]
         public void PartialDataTest(int row, int column)
         {

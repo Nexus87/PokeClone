@@ -16,8 +16,11 @@ namespace GameEngine.Graphics.Views
         public event EventHandler<EventArgs> CloseRequested = delegate { };
         public event EventHandler<EventArgs> SelectionChanged = delegate { };
 
-        public int SelectedRow { get; private set; }
-        public int SelectedColumn { get; private set; }
+        public int SelectedRow { get { return selectedRow; } internal set { TrySetRow(value); } }
+        public int SelectedColumn { get { return selectedColumn; } internal set { TrySetColumn(value); } }
+
+        private int selectedRow;
+        private int selectedColumn;
 
         private int Rows { get; set; }
         private int Columns { get; set; }
@@ -53,13 +56,13 @@ namespace GameEngine.Graphics.Views
 
         private void TrySetColumn(int column)
         {
-            if (column == SelectedColumn)
+            if (column == selectedColumn)
                 return;
 
             if (column >= Columns || column < 0)
                 return;
 
-            SelectedColumn = column;
+            selectedColumn = column;
             UpdateViewpoint();
             if (SelectionChanged != null)
                 SelectionChanged(this, null);
@@ -67,13 +70,13 @@ namespace GameEngine.Graphics.Views
 
         private void TrySetRow(int row)
         {
-            if (row == SelectedRow)
+            if (row == selectedRow)
                 return;
 
             if (row >= Rows || row < 0)
                 return;
 
-            SelectedRow = row;
+            selectedRow = row;
             UpdateViewpoint();
             if (SelectionChanged != null)
                 SelectionChanged(this, null);

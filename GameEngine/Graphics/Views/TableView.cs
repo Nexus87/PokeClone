@@ -1,32 +1,16 @@
-﻿using GameEngine.Graphics.Views;
+﻿using GameEngine.Graphics.Layouts;
 using GameEngine.Utils;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Content;
-using GameEngine.Graphics.Basic;
-using GameEngine.Graphics.Layouts;
 using GameEngine.Wrapper;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using System;
 
 namespace GameEngine.Graphics.Views
 {
-    public class SelectionEventArgs<T> : EventArgs
-    {
-        public T SelectedData;
-    }
-
-    public class TableView<T> : InternalTableView<T, XNASpriteFont>
-    {
-        public TableView(IItemModel<T> model) : base(model) { }
-    }
-
     public class InternalTableView<T, SpriteFontClass> : AbstractGraphicComponent, IItemView where SpriteFontClass : ISpriteFont, new()
     {
+        private const int visibleColumns = 8;
+        private const int visibleRows = 8;
         private ContentManager content;
         private ItemBox[,] items;
         private TableLayout layout;
@@ -34,6 +18,30 @@ namespace GameEngine.Graphics.Views
 
         private int startColumn = 0;
         private int startRow = 0;
+
+        public InternalTableView(IItemModel<T> model)
+        {
+            this.model = model;
+            model.DataChanged += model_DataChanged;
+            model.SizeChanged += model_SizeChanged;
+
+            items = new ItemBox[model.Rows, model.Columns];
+            InitItems();
+
+            layout = new TableLayout(ViewportRows, ViewportColumns);
+            layout.Init(this);
+        }
+
+        public event EventHandler<TableResizeEventArgs> OnTableResize = delegate { };
+
+        public int Columns { get { return model.Columns; } }
+
+        public int Rows { get { return model.Rows; } }
+
+        public int ViewportColumns { get { return Math.Min(visibleColumns, model.Columns); } }
+
+        public int ViewportRows { get { return Math.Min(visibleRows, model.Rows); } }
+
         public int ViewportStartColumn
         {
             get { return startColumn; }
@@ -48,6 +56,7 @@ namespace GameEngine.Graphics.Views
                 Invalidate();
             }
         }
+
         public int ViewportStartRow
         {
             get { return startRow; }
@@ -61,20 +70,59 @@ namespace GameEngine.Graphics.Views
                 Invalidate();
             }
         }
-        private const int visibleColumns = 8;
-        private const int visibleRows = 8;
 
-        public InternalTableView(IItemModel<T> model)
+        public bool IsCellSelected(int row, int column)
         {
-            this.model = model;
-            model.DataChanged += model_DataChanged;
-            model.SizeChanged += model_SizeChanged;
-            
-            items = new ItemBox[model.Rows, model.Columns];
-            InitItems();
+            if (row >= model.Rows || column >= model.Columns)
+                return false;
 
-            layout = new TableLayout(ViewportRows, ViewportColumns);
-            layout.Init(this);
+            return items[row, column] != null && items[row, column].IsSelected;
+        }
+
+        public bool SetCellSelection(int row, int column, bool isSelected)
+        {
+            if (row >= model.Rows || column >= model.Columns)
+                return false;
+
+            // Can't select a non existing entry
+            if (items[row, column] == null)
+                return false;
+
+            items[row, column].IsSelected = isSelected;
+            return true;
+        }
+
+        public override void Setup(ContentManager content)
+        {
+            this.content = content;
+            foreach (var item in items)
+                if (item != null)
+                    item.Setup(content);
+        }
+
+        protected override void DrawComponent(GameTime time, ISpriteBatch batch)
+        {
+            layout.Draw(time, batch);
+        }
+
+        protected override void Update()
+        {
+            // At the moment there is no way to shrink the TableLayout
+            if (layout.Rows > ViewportRows || layout.Columns > ViewportColumns)
+            {
+                layout.Resize(ViewportRows, ViewportColumns);
+            }
+
+            FillLayout();
+        }
+
+        private void FillLayout()
+        {
+            for (int i = 0; i < ViewportRows; i++)
+            {
+                for (int j = 0; j < ViewportColumns; j++)
+                    layout.SetComponent(i, j, items[startRow + i, startColumn + j]);
+            }
         }
 
         private void InitItems()
@@ -105,76 +153,29 @@ namespace GameEngine.Graphics.Views
             items[e.row, e.column].Text = model.DataStringAt(e.row, e.column);
         }
 
-        public bool SetCellSelection(int row, int column, bool isSelected)
+        private void model_SizeChanged(object sender, SizeChangedArgs e)
         {
+            if (e.newRows == items.GetLength(0) && e.newColumns == items.GetLength(1))
+                return;
 
-            if (row >= model.Rows || column >= model.Columns)
-                return false;
-
-            // Can't select a non existing entry
-            if (items[row, column] == null)
-                return false;
-
-            items[row, column].IsSelected = isSelected;
-            return true;
-        }
-
-        public bool IsCellSelected(int row, int column)
-        {
-            if (row >= model.Rows || column >= model.Columns)
-                return false;
-
-            return items[row, column] != null && items[row, column].IsSelected;
-        }
-
-        public int ViewportRows { get {  return Math.Min(visibleRows, model.Rows); } }
-        public int ViewportColumns { get {  return Math.Min(visibleColumns, model.Columns); } }
-
-        public int Rows { get { return model.Rows; } }
-        public int Columns { get { return model.Columns; } }
-
-        public override void Setup(ContentManager content)
-        {
-            this.content = content;
-            foreach (var item in items)
-                if (item != null)
-                    item.Setup(content);
-
-        }
-
-        protected override void DrawComponent(GameTime time, ISpriteBatch batch)
-        {
-            layout.Draw(time, batch);
-        }
-
-        protected override void Update()
-        {
-            // At the moment there is no way to shrink the TableLayout
-            if (layout.Rows > ViewportRows || layout.Columns > ViewportColumns)
-            {
-                layout.Resize(ViewportRows, ViewportColumns);
-            }
-
-            FillLayout();
-        }
-
-
-        private void FillLayout()
-        {
-            for (int i = 0; i < ViewportRows; i++)
-            {
-                for (int j = 0; j < ViewportColumns; j++)
-                    layout.SetComponent(i, j, items[startRow + i, startColumn + j]);
-            }
-        }
-
-        void model_SizeChanged(object sender, SizeChangedArgs e)
-        {
             var newItems = new ItemBox[e.newRows, e.newColumns];
             layout.Resize(ViewportRows, ViewportColumns);
             items.Copy(newItems);
             items = newItems;
+            OnTableResize(this, new TableResizeEventArgs(e.newRows, e.newColumns));
         }
+    }
 
+    public class SelectionEventArgs<T> : EventArgs
+    {
+        public T SelectedData;
+    }
+
+    public class TableView<T> : InternalTableView<T, XNASpriteFont>
+    {
+        public TableView(IItemModel<T> model)
+            : base(model)
+        {
+        }
     }
 }
