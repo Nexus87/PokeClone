@@ -233,9 +233,9 @@ namespace GameEngineTest.Views
 
         public static List<TestCaseData> TableSize = new List<TestCaseData>
         {
-            new TestCaseData(3, 3, 3, 3),
-            new TestCaseData(10, 3, 5, 3),
-            new TestCaseData(3, 10, 3, 5),
+            new TestCaseData(3, 3, 2, 2),
+            new TestCaseData(10, 3, 5, 2),
+            new TestCaseData(3, 10, 2, 5),
             new TestCaseData(20, 20, 5, 5),
             new TestCaseData(6, 6, 5, 5),
         };

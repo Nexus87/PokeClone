@@ -1,5 +1,4 @@
-﻿using GameEngine.Graphics.Basic;
-using GameEngine.Graphics.Layouts;
+﻿using GameEngine.Graphics.Layouts;
 using GameEngine.Graphics.Views;
 using GameEngine.Wrapper;
 using Microsoft.Xna.Framework;
@@ -27,9 +26,6 @@ namespace GameEngine.Graphics.Widgets
             layout.AddComponent(view);
 
             InitHandlerEvents();
-            InitModelEvents();
-
-            model_SizeChanged(null, null);
         }
 
         public TableWidget(Configuration config)
@@ -42,16 +38,13 @@ namespace GameEngine.Graphics.Widgets
             layout.AddComponent(view);
 
             InitHandlerEvents();
-            InitModelEvents();
-
-            model_SizeChanged(null, null);
         }
 
         public event EventHandler<SelectionEventArgs<T>> ItemSelected;
 
         public ISelectionHandler Handler
         {
-            set
+            private set
             {
                 if (value == null)
                     throw new ArgumentNullException("Handler must not be null");
@@ -59,24 +52,19 @@ namespace GameEngine.Graphics.Widgets
                 if (handler != null)
                 {
                     handler.ItemSelected -= handler_ItemSelected;
-                    handler.SelectionChanged -= handler_SelectionChanged;
                 }
 
                 handler = value;
                 InitHandlerEvents();
-                handler_SelectionChanged(null, null);
             }
         }
 
         public IItemModel<T> Model
         {
             get { return model; }
-            set
+            private set
             {
                 model = value;
-                //view.Model = model;
-                InitModelEvents();
-                model_SizeChanged(null, null);
             }
         }
 
@@ -108,25 +96,9 @@ namespace GameEngine.Graphics.Widgets
             ItemSelected(this, new SelectionEventArgs<T> { SelectedData = Item });
         }
 
-        private void handler_SelectionChanged(object sender, EventArgs e)
-        {
-            view.SetCellSelection(handler.SelectedRow, handler.SelectedColumn, true);
-        }
-
         private void InitHandlerEvents()
         {
             handler.ItemSelected += handler_ItemSelected;
-            handler.SelectionChanged += handler_SelectionChanged;
-        }
-
-        private void InitModelEvents()
-        {
-            model.DataChanged += model_SizeChanged;
-        }
-
-        private void model_SizeChanged(object sender, EventArgs e)
-        {
-            handler.Init(view);
         }
     }
 }

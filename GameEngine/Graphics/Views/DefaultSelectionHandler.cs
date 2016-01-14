@@ -99,9 +99,31 @@ namespace GameEngine.Graphics.Views
         }
         public void Init(IItemView view)
         {
+            if (this.view != null)
+                this.view.OnTableResize -= view_OnTableResize;
+
             this.view = view;
             Rows = view.Rows;
             Columns = view.Columns;
+            view.OnTableResize += view_OnTableResize;
+        }
+
+        void view_OnTableResize(object sender, TableResizeEventArgs e)
+        {
+            if (e.rows < Rows)
+            {
+                Rows = e.rows;
+                TrySetRow(Rows - 1);
+            }
+
+            if (e.columns < Columns)
+            {
+                Columns = e.columns;
+                TrySetColumn(Columns - 1);
+            }
+
+            Rows = e.rows;
+            Columns = e.columns;
         }
     }
 }
