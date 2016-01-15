@@ -5,29 +5,22 @@ namespace GameEngine.Graphics.Views
 {
     public class DefaultSelectionHandler : ISelectionHandler
     {
+        public Keys BackKey = Keys.Escape;
         public Keys DownKey = Keys.Down;
         public Keys LeftKey = Keys.Left;
         public Keys RightKey = Keys.Right;
         public Keys SelectKey = Keys.Enter;
         public Keys UpKey = Keys.Up;
-        public Keys BackKey = Keys.Escape;
-
-        public event EventHandler<EventArgs> ItemSelected = delegate { };
-        public event EventHandler<EventArgs> CloseRequested = delegate { };
-        public event EventHandler<EventArgs> SelectionChanged = delegate { };
-
-        public int SelectedRow { get { return selectedRow; } internal set { TrySetRow(value); } }
-        public int SelectedColumn { get { return selectedColumn; } internal set { TrySetColumn(value); } }
-
-        private int selectedRow;
         private int selectedColumn;
 
-        private int Rows { get; set; }
-        private int Columns { get; set; }
+        private int selectedRow;
 
         private IItemView view;
 
-        public DefaultSelectionHandler() {}
+        public DefaultSelectionHandler()
+        {
+        }
+
         public DefaultSelectionHandler(Configuration config)
         {
             DownKey = config.KeyDown;
@@ -37,6 +30,17 @@ namespace GameEngine.Graphics.Views
             SelectKey = config.KeySelect;
             BackKey = config.KeyBack;
         }
+
+        public event EventHandler<EventArgs> CloseRequested = delegate { };
+
+        public event EventHandler<EventArgs> ItemSelected = delegate { };
+
+        public event EventHandler<EventArgs> SelectionChanged = delegate { };
+
+        public int SelectedColumn { get { return selectedColumn; } internal set { TrySetColumn(value); } }
+        public int SelectedRow { get { return selectedRow; } internal set { TrySetRow(value); } }
+        private int Columns { get; set; }
+        private int Rows { get; set; }
 
         public virtual void HandleInput(Keys key)
         {
@@ -52,6 +56,18 @@ namespace GameEngine.Graphics.Views
                 ItemSelected(this, null);
             else if (key == BackKey)
                 CloseRequested(this, null);
+        }
+
+        public void Init(IItemView view)
+        {
+            if (this.view != null)
+                this.view.OnTableResize -= view_OnTableResize;
+
+            this.view = view;
+            Rows = view.Rows;
+            Columns = view.Columns;
+            view.OnTableResize += view_OnTableResize;
+            view.SetCellSelection(0, 0, true);
         }
 
         private void TrySetColumn(int column)
@@ -101,19 +117,8 @@ namespace GameEngine.Graphics.Views
             else if (SelectedColumn >= startColumn + view.ViewportColumns)
                 view.ViewportStartColumn = SelectedColumn - (view.ViewportColumns - 1);
         }
-        public void Init(IItemView view)
-        {
-            if (this.view != null)
-                this.view.OnTableResize -= view_OnTableResize;
 
-            this.view = view;
-            Rows = view.Rows;
-            Columns = view.Columns;
-            view.OnTableResize += view_OnTableResize;
-            view.SetCellSelection(0, 0, true);
-        }
-
-        void view_OnTableResize(object sender, TableResizeEventArgs e)
+        private void view_OnTableResize(object sender, TableResizeEventArgs e)
         {
             if (e.rows < Rows)
             {

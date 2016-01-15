@@ -24,8 +24,7 @@ namespace GameEngine.Graphics.Widgets
             layout = new SingleComponentLayout();
 
             layout.AddComponent(view);
-
-            InitHandlerEvents();
+            handler.ItemSelected += handler_ItemSelected;
         }
 
         public TableWidget(Configuration config)
@@ -36,8 +35,7 @@ namespace GameEngine.Graphics.Widgets
             layout = new SingleComponentLayout();
 
             layout.AddComponent(view);
-
-            InitHandlerEvents();
+            handler.ItemSelected += handler_ItemSelected;
         }
 
         public event EventHandler<SelectionEventArgs<T>> ItemSelected;
@@ -55,17 +53,15 @@ namespace GameEngine.Graphics.Widgets
                 }
 
                 handler = value;
-                InitHandlerEvents();
+                handler.ItemSelected += handler_ItemSelected;
+                handler.Init(view);
             }
         }
 
         public IItemModel<T> Model
         {
-            get { return model; }
-            private set
-            {
-                model = value;
-            }
+            get { return view.Model; }
+            set { view.Model = value; }
         }
 
         public void HandleInput(Keys key)
@@ -94,11 +90,6 @@ namespace GameEngine.Graphics.Widgets
         {
             var Item = Model.DataAt(handler.SelectedRow, handler.SelectedColumn);
             ItemSelected(this, new SelectionEventArgs<T> { SelectedData = Item });
-        }
-
-        private void InitHandlerEvents()
-        {
-            handler.ItemSelected += handler_ItemSelected;
         }
     }
 }

@@ -5,6 +5,7 @@ using Moq;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace GameEngineTest.Views
 {
@@ -39,6 +40,48 @@ namespace GameEngineTest.Views
             table.Draw(spriteBatch);
 
             Assert.AreEqual(0, spriteBatch.Objects.Count);
+        }
+
+        [TestCase]
+        public void ChangeModelTest()
+        {
+            var spriteBatch = new SpriteBatchMock();
+            var newModel = new Mock<IItemModel<TestType>>();
+            bool resizeCalled = false;
+
+            newModel.Setup(o => o.Columns).Returns(8);
+            newModel.Setup(o => o.Rows).Returns(8);
+            newModel.Setup(o => o.DataStringAt(It.IsAny<int>(), It.IsAny<int>())).Returns("n");
+
+            table.OnTableResize += (a, b) => { resizeCalled = true; };
+
+            table.Model = newModel.Object;
+            Assert.AreEqual(8, table.Rows);
+            Assert.AreEqual(8, table.Columns);
+            Assert.True(resizeCalled);
+
+            table.Draw(spriteBatch);
+
+            Assert.AreEqual(8 * 8, (from ItemBox s in table.items where s.Text == "n" select s).Count());
+
+            newModel.Setup(o => o.Rows).Returns(4);
+            newModel.Setup(o => o.Columns).Returns(10);
+            newModel.Raise(o => o.SizeChanged += null, newModel.Object, new SizeChangedArgs { newColumns = 10, newRows = 4 });
+            Assert.AreEqual(4, table.Rows);
+            Assert.AreEqual(10, table.Columns);
+
+            newModel.Setup(o => o.DataStringAt(It.IsAny<int>(), It.IsAny<int>())).Returns<int, int>((a, b) => a == 0 && b == 0 ? "m" : "n");
+            newModel.Raise(o => o.DataChanged += null, newModel.Object, new DataChangedArgs<TestType> { newData = new TestType { testString = "m" }, column = 0, row = 0 });
+
+            spriteBatch.DrawnStrings.Clear();
+            table.Draw(spriteBatch);
+
+            Assert.AreEqual(4 * 10, table.items.Length);
+            Assert.AreEqual("m", table.items[0, 0].Text);
+            Assert.AreEqual(4, table.items.GetLength(0));
+            Assert.AreEqual(10, table.items.GetLength(1));
+            // The data in the new cells haven't been changed (no DataChanged event!), so only 4 * 8 values are in the table
+            Assert.AreEqual(4*8 - 1, (from ItemBox s in table.items where s!= null && s.Text == "n" select s).Count());
         }
 
         [TestCase]

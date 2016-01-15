@@ -12,21 +12,19 @@ namespace GameEngine.Graphics.Views
         private const int visibleColumns = 8;
         private const int visibleRows = 8;
         private ContentManager content;
-        private ItemBox[,] items;
+        internal ItemBox[,] items;
         private TableLayout layout;
-        private IItemModel<T> model;
 
+        private IItemModel<T> model;
         private int startColumn = 0;
         private int startRow = 0;
 
         public InternalTableView(IItemModel<T> model)
         {
-            this.model = model;
-            model.DataChanged += model_DataChanged;
-            model.SizeChanged += model_SizeChanged;
+            if (model == null)
+                throw new ArgumentNullException("model must not be null");
 
-            items = new ItemBox[model.Rows, model.Columns];
-            InitItems();
+            SetModel(model);
 
             layout = new TableLayout(ViewportRows, ViewportColumns);
             layout.Init(this);
@@ -34,20 +32,50 @@ namespace GameEngine.Graphics.Views
 
         public event EventHandler<TableResizeEventArgs> OnTableResize = delegate { };
 
-        public int Columns { get { return model.Columns; } }
+        public int Columns { get { return Model.Columns; } }
+        public int Rows { get { return Model.Rows; } }
 
-        public int Rows { get { return model.Rows; } }
+        public int ViewportColumns { get { return Math.Min(visibleColumns, Model.Columns); } }
+        public int ViewportRows { get { return Math.Min(visibleRows, Model.Rows); } }
 
-        public int ViewportColumns { get { return Math.Min(visibleColumns, model.Columns); } }
+        public IItemModel<T> Model { 
+            get { return model; }
+            set
+            {
+                if (value == null)
+                    throw new ArgumentNullException("null is not a valid value for Model");
 
-        public int ViewportRows { get { return Math.Min(visibleRows, model.Rows); } }
+                bool sizeChanged = value.Rows != model.Rows || value.Columns != model.Columns;
+
+                SetModel(value);
+                Invalidate();
+                if (sizeChanged)
+                    OnTableResize(this, new TableResizeEventArgs(value.Rows, value.Columns));
+            }
+        }
+
+        private void SetModel(IItemModel<T> value)
+        {
+            if (model != null)
+            {
+                model.DataChanged -= model_DataChanged;
+                model.SizeChanged -= model_SizeChanged;
+            }
+
+            model = value;
+            model.DataChanged += model_DataChanged;
+            model.SizeChanged += model_SizeChanged;
+
+            items = new ItemBox[model.Rows, model.Columns];
+            InitItems();
+        }
 
         public int ViewportStartColumn
         {
             get { return startColumn; }
             set
             {
-                int newColumn = Math.Min(value, model.Columns - ViewportColumns);
+                int newColumn = Math.Min(value, Model.Columns - ViewportColumns);
 
                 if (startColumn == newColumn)
                     return;
@@ -62,7 +90,7 @@ namespace GameEngine.Graphics.Views
             get { return startRow; }
             set
             {
-                int newRow = Math.Min(value, model.Rows - ViewportRows);
+                int newRow = Math.Min(value, Model.Rows - ViewportRows);
                 if (startRow == newRow)
                     return;
 
@@ -73,7 +101,7 @@ namespace GameEngine.Graphics.Views
 
         public bool IsCellSelected(int row, int column)
         {
-            if (row >= model.Rows || column >= model.Columns)
+            if (row >= Model.Rows || column >= Model.Columns)
                 return false;
 
             return items[row, column] != null && items[row, column].IsSelected;
@@ -81,7 +109,7 @@ namespace GameEngine.Graphics.Views
 
         public bool SetCellSelection(int row, int column, bool isSelected)
         {
-            if (row >= model.Rows || column >= model.Columns)
+            if (row >= Model.Rows || column >= Model.Columns)
                 return false;
 
             // Can't select a non existing entry
@@ -127,11 +155,11 @@ namespace GameEngine.Graphics.Views
 
         private void InitItems()
         {
-            for (int i = 0; i < model.Rows; i++)
+            for (int i = 0; i < Model.Rows; i++)
             {
-                for (int j = 0; j < model.Columns; j++)
+                for (int j = 0; j < Model.Columns; j++)
                 {
-                    var str = model.DataStringAt(i, j);
+                    var str = Model.DataStringAt(i, j);
                     if (str == null)
                         continue;
 
@@ -150,7 +178,7 @@ namespace GameEngine.Graphics.Views
                 items[e.row, e.column] = item;
             }
 
-            items[e.row, e.column].Text = model.DataStringAt(e.row, e.column);
+            items[e.row, e.column].Text = Model.DataStringAt(e.row, e.column);
         }
 
         private void model_SizeChanged(object sender, SizeChangedArgs e)
