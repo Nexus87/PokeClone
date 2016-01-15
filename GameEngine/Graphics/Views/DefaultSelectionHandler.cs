@@ -3,6 +3,10 @@ using System;
 
 namespace GameEngine.Graphics.Views
 {
+    // TODO: Split TrySetColumn/TrySetRow to separate setting selectedColumn/Row and select the cell
+    // in the view/updating the viewport. The way it is done now is a hack to avoid handing -1 to
+    // SetCellSelection when the table size change from 0,0 to something bigger and the other way
+    // around
     public class DefaultSelectionHandler : ISelectionHandler
     {
         public Keys BackKey = Keys.Escape;
@@ -67,9 +71,14 @@ namespace GameEngine.Graphics.Views
             Rows = view.Rows;
             Columns = view.Columns;
             view.OnTableResize += view_OnTableResize;
-            view.SetCellSelection(0, 0, true);
-        }
 
+            // No cell there to select
+            if (view.Rows == 0 || view.Columns == 0)
+                selectedRow = selectedColumn = -1;
+            else
+                view.SetCellSelection(0, 0, true);
+        }
+        
         private void TrySetColumn(int column)
         {
             if (column == selectedColumn)
@@ -78,8 +87,11 @@ namespace GameEngine.Graphics.Views
             if (column >= Columns || column < 0)
                 return;
 
-            view.SetCellSelection(selectedRow, selectedColumn, false);
+            if (selectedRow != -1 && selectedColumn != -1)
+                view.SetCellSelection(selectedRow, selectedColumn, false);
             selectedColumn = column;
+            if (selectedRow == -1 || selectedColumn == -1)
+                return;
             view.SetCellSelection(selectedRow, selectedColumn, true);
             UpdateViewpoint();
             if (SelectionChanged != null)
@@ -94,9 +106,14 @@ namespace GameEngine.Graphics.Views
             if (row >= Rows || row < 0)
                 return;
 
-            view.SetCellSelection(selectedRow, selectedColumn, false);
+            if(selectedRow != -1 && selectedColumn != -1)
+                view.SetCellSelection(selectedRow, selectedColumn, false);
             selectedRow = row;
+            if (selectedRow == -1 || selectedColumn == -1)
+                return;
+
             view.SetCellSelection(selectedRow, selectedColumn, true);
+
             UpdateViewpoint();
             if (SelectionChanged != null)
                 SelectionChanged(this, null);
@@ -120,6 +137,7 @@ namespace GameEngine.Graphics.Views
 
         private void view_OnTableResize(object sender, TableResizeEventArgs e)
         {
+            // On shrink, move selection
             if (e.rows < Rows)
             {
                 Rows = e.rows;
@@ -132,8 +150,19 @@ namespace GameEngine.Graphics.Views
                 TrySetColumn(Columns - 1);
             }
 
+            
             Rows = e.rows;
             Columns = e.columns;
+
+            // Table resize from 0,0 to something bigger
+            if ((SelectedColumn == -1 && SelectedRow == -1) && (e.rows > 0 && e.columns > 0))
+            {
+                SelectedColumn = SelectedRow = 0;
+                view.SetCellSelection(0, 0, true);
+            }
+
+            if (Rows == 0 || Columns == 0)
+                selectedColumn = selectedRow = -1;
         }
     }
 }

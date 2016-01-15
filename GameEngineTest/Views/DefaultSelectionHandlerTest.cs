@@ -53,6 +53,46 @@ namespace GameEngineTest.Views
         {
             Assert.AreEqual(0, testObj.SelectedColumn);
             Assert.AreEqual(0, testObj.SelectedRow);
+
+            viewMock.Verify(o => o.SetCellSelection(0, 0, true), Times.Once);
+        }
+
+        [TestCase]
+        public void EmptyTableTest()
+        {
+            viewMock.Setup(o => o.Rows).Returns(0);
+            viewMock.Setup(o => o.Columns).Returns(0);
+            // Verify, that row and columns are always >= 0
+            viewMock.Setup(o => o.SetCellSelection(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<bool>()))
+                .Callback<int, int, bool>((a, b, c) => { Assert.GreaterOrEqual(a, 0); Assert.GreaterOrEqual(b, 0); });
+            viewMock.ResetCalls();
+
+
+            testObj.Init(viewMock.Object);
+
+            viewMock.Verify(o => o.SetCellSelection(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<bool>()), Times.Never);
+
+            Assert.AreEqual(-1, testObj.SelectedRow);
+            Assert.AreEqual(-1, testObj.SelectedColumn);
+
+            viewMock.Setup(o => o.Rows).Returns(1);
+            viewMock.Setup(o => o.Columns).Returns(1);
+
+            viewMock.Raise(o => o.OnTableResize += null, viewMock.Object, new TableResizeEventArgs(1, 1));
+
+            Assert.AreEqual(0, testObj.SelectedRow);
+            Assert.AreEqual(0, testObj.SelectedColumn);
+
+            viewMock.Verify(o => o.SetCellSelection(0, 0, true), Times.AtLeastOnce);
+            viewMock.ResetCalls();
+
+            viewMock.Setup(o => o.Rows).Returns(0);
+            viewMock.Setup(o => o.Columns).Returns(0);
+            viewMock.Raise(o => o.OnTableResize += null, viewMock.Object, new TableResizeEventArgs(0, 0));
+
+            Assert.AreEqual(-1, testObj.SelectedRow);
+            Assert.AreEqual(-1, testObj.SelectedColumn);
+            viewMock.Verify(o => o.SetCellSelection(It.IsAny<int>(), It.IsAny<int>(), true), Times.Never);
         }
 
         public static List<TestCaseData> HandleInputTestData = new List<TestCaseData>

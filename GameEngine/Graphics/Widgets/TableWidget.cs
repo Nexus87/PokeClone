@@ -13,29 +13,27 @@ namespace GameEngine.Graphics.Widgets
     {
         private ISelectionHandler handler;
         private SingleComponentLayout layout;
-        private IItemModel<T> model;
         private TableView<T> view;
 
         public TableWidget()
         {
-            handler = new DefaultSelectionHandler();
-            model = new DefaultTableModel<T>();
+            
+            var model = new DefaultTableModel<T>();
             view = new TableView<T>(model);
+            Handler = new DefaultSelectionHandler();
             layout = new SingleComponentLayout();
 
             layout.AddComponent(view);
-            handler.ItemSelected += handler_ItemSelected;
         }
 
         public TableWidget(Configuration config)
         {
-            handler = new DefaultSelectionHandler(config);
-            model = new DefaultTableModel<T>();
+            var model = new DefaultTableModel<T>();
             view = new TableView<T>(model);
+            Handler = new DefaultSelectionHandler(config);
             layout = new SingleComponentLayout();
 
             layout.AddComponent(view);
-            handler.ItemSelected += handler_ItemSelected;
         }
 
         public event EventHandler<SelectionEventArgs<T>> ItemSelected;
@@ -66,13 +64,17 @@ namespace GameEngine.Graphics.Widgets
 
         public void HandleInput(Keys key)
         {
-            if (handler != null)
-                handler.HandleInput(key);
+            handler.HandleInput(key);
         }
 
         public void SetData(T data, int row, int column)
         {
-            model.SetData(data, row, column);
+            Model.SetData(data, row, column);
+        }
+
+        public T GetData(int row, int column)
+        {
+            return Model.DataAt(row, column);
         }
 
         public override void Setup(ContentManager content)

@@ -2,6 +2,7 @@
 using BattleLib.Components.BattleState;
 using BattleLib.Components.Menu;
 using BattleLib.GraphicComponents;
+using BattleLib.GraphicComponents.GUI;
 using GameEngine;
 using System;
 
@@ -19,7 +20,8 @@ namespace PokemonGame
         [STAThread]
         static void Main()
         {
-            Engine.Init(new Configuration());
+            var config = new Configuration();
+            Engine.Init(config);
             var engine = Engine.GetInstance();
             var graphic = new BattleGraphics();
             var battleState = new BattleStateComponent(new ClientIdentifier(), new ClientIdentifier(), engine);
@@ -31,9 +33,9 @@ namespace PokemonGame
 
             graphic.Menu = builder.Graphics;
 
-            engine.setGraphicCompomnent(graphic);
-            engine.AddComponent(builder.Input);
-
+            engine.Graphic = graphic;
+            engine.GUI = new BattleGUI(config);
+            Engine.ShowGUI();
             using (var game = new Game1())
                 engine.Run();
         }

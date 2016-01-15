@@ -15,7 +15,7 @@ using System.Collections.Generic;
 
 namespace BattleLib.GraphicComponents.GUI
 {
-    public class BattleGUI : AbstractGraphicComponent, IWidget
+    public class BattleGUI : GameEngine.GUI
     {
         public BattleStateComponent BattleState { get; set; }
         public ClientIdentifier ID { get; set; }
@@ -30,7 +30,7 @@ namespace BattleLib.GraphicComponents.GUI
         private Frame itemFrame = new Frame("border");
 
         private IGraphicComponent currentFrame;
-        private IWidget currentMenu;
+        private IWidget currentWidget;
         private IWidget messageBox;
 
         public BattleGUI(Configuration config)
@@ -44,6 +44,9 @@ namespace BattleLib.GraphicComponents.GUI
             InitAttackMenu();
             InitItemMenu();
             InitPKMNMenu();
+
+            currentFrame = mainFrame;
+            currentWidget = MainMenu;
         }
 
         private void InitPKMNMenu()
@@ -54,7 +57,7 @@ namespace BattleLib.GraphicComponents.GUI
             list.Add(new Pokemon(data, data.BaseStats) { Name = "PKMN1"});
             list.Add(new Pokemon(data, data.BaseStats) { Name = "PKMN2" });
 
-            //PKMNMenu.Model = model;
+            PKMNMenu.Model = model;
             PKMNMenu.X = 0;
             PKMNMenu.Y = 0;
             PKMNMenu.Width = Engine.ScreenWidth;
@@ -67,7 +70,7 @@ namespace BattleLib.GraphicComponents.GUI
         {
             BattleState.SetCharacter(ID, e.SelectedData);
             currentFrame = null;
-            currentMenu = messageBox;
+            currentWidget = messageBox;
         }
 
         private void InitItemMenu()
@@ -77,7 +80,7 @@ namespace BattleLib.GraphicComponents.GUI
             for (int i = 0; i < 20; i++)
                 model.SetData(new Item { Name = "Item" + i }, i);
 
-            //ItemMenu.Model = model;
+            ItemMenu.Model = model;
 
             itemFrame.AddContent(ItemMenu);
 
@@ -94,7 +97,7 @@ namespace BattleLib.GraphicComponents.GUI
         {
             BattleState.SetItem(ID, e.SelectedData);
             currentFrame = null;
-            currentMenu = messageBox;
+            currentWidget = messageBox;
         }
 
         private void InitAttackMenu()
@@ -104,7 +107,7 @@ namespace BattleLib.GraphicComponents.GUI
 
             model.SetData(new Move(new MoveData { Name = "Move1" }), 0);
             model.SetData(new Move(new MoveData { Name = "Move2" }), 1);
-            //AttackMenu.Model = model;
+            AttackMenu.Model = model;
 
             attackFrame.AddContent(AttackMenu);
             attackFrame.X = Engine.ScreenWidth / 2.0f;
@@ -120,7 +123,7 @@ namespace BattleLib.GraphicComponents.GUI
         {
             BattleState.SetMove(ID, e.SelectedData);
             currentFrame = null;
-            currentMenu = messageBox;
+            currentWidget = messageBox;
         }
 
         private void InitMainMenu()
@@ -131,7 +134,7 @@ namespace BattleLib.GraphicComponents.GUI
             model.SetData("Item", 1, 0);
             model.SetData("Run", 1, 1);
 
-            //MainMenu.Model = model;
+            MainMenu.Model = model;
             mainFrame.AddContent(MainMenu);
 
             mainFrame.X = 0.5f * Engine.ScreenWidth;
@@ -148,31 +151,34 @@ namespace BattleLib.GraphicComponents.GUI
             {
                 case "Attack":
                     currentFrame = attackFrame;
-                    currentMenu = AttackMenu;
+                    currentWidget = AttackMenu;
                     break;
                 case "PKMN":
                     currentFrame = PKMNMenu;
-                    currentMenu = PKMNMenu;
+                    currentWidget = PKMNMenu;
                     break;
                 case "Item":
                     currentFrame = itemFrame;
-                    currentMenu = ItemMenu;
+                    currentWidget = ItemMenu;
                     break;
             }
         }
-        public void HandleInput(Keys key)
+        public override void HandleInput(Keys key)
         {
-            currentMenu.HandleInput(key);
+            currentWidget.HandleInput(key);
         }
 
         public override void Setup(ContentManager content)
         {
-            
+            mainFrame.Setup(content);
+            attackFrame.Setup(content);
+            itemFrame.Setup(content);
+            PKMNMenu.Setup(content);
         }
 
-        protected override void DrawComponent(GameTime time, ISpriteBatch batch)
+        public override void Draw(GameTime time, ISpriteBatch batch)
         {
-            throw new NotImplementedException();
+            currentFrame.Draw(time, batch);
         }
     }
 }

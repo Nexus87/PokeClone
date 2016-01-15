@@ -5,28 +5,70 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
+
 namespace GameEngine
 {
     public class Engine : Game
     {
-        public static readonly float ScreenWidth = 1920;
+        public static readonly float AspectRation = ScreenWidth / ScreenHeight;
         public static readonly float ScreenHeight = 1080;
-        
-        public readonly Configuration Config;
-        public static readonly float AspectRation = ScreenWidth/ScreenHeight;
+        public static readonly float ScreenWidth = 1920;
 
-        public readonly GUIManager GUI = new GUIManager();
+        public readonly GUIManager GUIManager = new GUIManager();
+        private static Engine engine;
+        private readonly List<GameComponent> _components = new List<GameComponent>();
+        private readonly List<GameComponent> _suspended = new List<GameComponent>();
+        private readonly Configuration config;
+        private XNASpriteBatch batch;
+        private IInputHandler DefaultInputHandler;
+        private Rectangle display;
+        private InputComponent input;
 
-        public static void ShowGUI()
+        private GraphicsDeviceManager manager;
+        private RenderTarget2D target;
+
+        private Matrix transformation = Matrix.Identity;
+
+        private Engine(Configuration config)
+            : base()
         {
-            engine.GUI.Show();
-            engine.input.handler = engine.GUI;
+            this.config = config;
+
+            input = new InputComponent(this);
+            manager = new GraphicsDeviceManager(this);
+
+            Window.AllowUserResizing = true;
+            Window.ClientSizeChanged += Window_ClientSizeChanged;
+
+            GUIManager.GUIClose += GUI_GUIClose;
+            Content.RootDirectory = "Content";
+
+            AddKeyListener(config.KeyBack);
+            AddKeyListener(config.KeyDown);
+            AddKeyListener(config.KeyLeft);
+            AddKeyListener(config.KeyRight);
+            AddKeyListener(config.KeyUp);
+            AddKeyListener(config.KeySelect);
         }
 
-        public static void Init(Configuration config)
+        public IGraphicComponent Graphic { private get; set; }
+
+        public GUI GUI
         {
-            engine = new Engine(config);
+            set
+            {
+                GUIManager.GUI = value;
+            }
+        }
+
+        public IInputHandler InputHandler
+        {
+            set
+            {
+                DefaultInputHandler = value;
+                if (!GUIManager.IsActive)
+                    input.handler = value;
+            }
         }
 
         public static Engine GetInstance()
@@ -34,19 +76,26 @@ namespace GameEngine
             return engine;
         }
 
-        private static Engine engine;
-        public IInputHandler DefaultInputHandler;
+        public static void ExitProgram() 
+        {
+            engine.Exit();
+        }
+        public static void Init(Configuration config)
+        {
+            engine = new Engine(config);
+        }
 
-        RenderTarget2D target;
-        GraphicsDeviceManager manager;
-        readonly List<GameComponent> _components = new List<GameComponent>();
-        readonly List<GameComponent> _suspended = new List<GameComponent> ();
+        public static void ShowGUI()
+        {
+            engine.GUIManager.Show();
+            engine.input.handler = engine.GUIManager;
+        }
 
-        IGraphicComponent _grapics = null;
-        private Matrix transformation = Matrix.Identity;
-        private XNASpriteBatch _batch;
-        private Rectangle display;
-        private InputComponent input;
+        public void AddComponent(GameComponent component)
+        {
+            component.Initialize();
+            _components.Add(component);
+        }
 
         public void AddKeyListener(Keys key)
         {
@@ -58,25 +107,58 @@ namespace GameEngine
             input.Keys.AddRange(keys);
         }
 
-        private Engine(Configuration config) : base()
+        protected override void Draw(GameTime gameTime)
         {
-            this.Config = config;
-            input = new InputComponent(this);
-            manager = new GraphicsDeviceManager(this);
+            GraphicsDevice.SetRenderTarget(target);
+            GraphicsDevice.Clear(new Color(248, 248, 248, 0));
 
-            Window.AllowUserResizing = true;
-            Window.ClientSizeChanged += Window_ClientSizeChanged;
-            GUI.GUIClose += GUI_GUIClose;
+            batch.Begin();
+            Graphic.Draw(gameTime, batch);
+            GUIManager.Draw(gameTime, batch);
+            batch.End();
 
-            Content.RootDirectory = "Content";
+            GraphicsDevice.SetRenderTarget(null);
+            batch.Begin();
+            batch.Draw(target, destinationRectangle: display);
+            batch.End();
         }
 
-        void GUI_GUIClose(object sender, EventArgs e)
+        protected override void Initialize()
         {
+            foreach (var comp in _components)
+                comp.Initialize();
+            base.Initialize();
+            target = new RenderTarget2D(GraphicsDevice, (int)ScreenWidth, (int)ScreenHeight);
+        }
+
+        protected override void LoadContent()
+        {
+            base.LoadContent();
+            batch = new XNASpriteBatch(GraphicsDevice);
+            if (Graphic == null)
+                throw new InvalidOperationException("Graphic component is not set");
+            Graphic.Setup(Content);
+            GUIManager.Setup(Content);
+        }
+
+        protected override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+            input.Update(gameTime);
+            foreach (var comp in _components)
+            {
+                if (comp.Enabled)
+                    comp.Update(gameTime);
+            }
+        }
+
+        private void GUI_GUIClose(object sender, EventArgs e)
+        {
+            GUIManager.Close();
             input.handler = DefaultInputHandler;
         }
 
-        void Window_ClientSizeChanged(object sender, EventArgs e)
+        private void Window_ClientSizeChanged(object sender, EventArgs e)
         {
             float bufferX = (float)GraphicsDevice.PresentationParameters.BackBufferWidth;
             float bufferY = (float)GraphicsDevice.PresentationParameters.BackBufferHeight;
@@ -96,74 +178,10 @@ namespace GameEngine
                 scaleX = scaleY / (displayRatio * invBufferRatio);
             }
 
-            display.Width = (int) (scaleX * ScreenWidth);
+            display.Width = (int)(scaleX * ScreenWidth);
             display.Height = (int)(scaleY * ScreenHeight);
             display.X = (int)((bufferX - display.Width) / 2.0f);
             display.Y = (int)((bufferY - display.Height) / 2.0f);
         }
-
-        public void setGraphicCompomnent(IGraphicComponent component)
-        {
-            _grapics = component;
-        }
-        public void AddComponent(GameComponent component){
-            
-            component.Initialize();
-            _components.Add (component);
-        }
-
-        public void RemoveComponent(GameComponent component){
-            if (_components.Remove(component) || _suspended.Remove(component))
-            {
-            }
-        }
-
-        protected override void LoadContent()
-        {
-            base.LoadContent();
-            _batch = new XNASpriteBatch(GraphicsDevice);
-            if (_grapics == null)
-                throw new InvalidOperationException("Graphic component is not set");
-            _grapics.Setup(Content);
-
-            //transformation = Matrix.CreateOrthographic(screenWidth, screenHeight, 0, 0);
-        }
-
-        protected override void Draw(GameTime gameTime)
-        {
-            GraphicsDevice.SetRenderTarget(target);
-            GraphicsDevice.Clear(new Color(248, 248, 248, 0));
-            
-            _batch.Begin();
-            _grapics.Draw(gameTime, _batch);
-            _batch.End();
-
-            GraphicsDevice.SetRenderTarget(null);
-            _batch.Begin();
-            _batch.Draw(target, destinationRectangle: display);
-            _batch.End();
-
-        }
-
-        protected override void Initialize()
-        {
-            foreach (var comp in _components)
-                comp.Initialize();
-            base.Initialize();
-            target = new RenderTarget2D(GraphicsDevice, (int)ScreenWidth, (int)ScreenHeight);
-            
-        }
-
-        protected override void Update(GameTime gameTime)
-        {
-            base.Update(gameTime);
-            foreach(var comp in _components)
-            {
-                if(comp.Enabled)
-                    comp.Update(gameTime);
-            }
-
-        }
     }
 }
-

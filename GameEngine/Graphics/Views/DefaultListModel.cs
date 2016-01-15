@@ -13,6 +13,13 @@ namespace GameEngine.Graphics.Views
         public event EventHandler<DataChangedArgs<T>> DataChanged = delegate { };
         public event EventHandler<SizeChangedArgs> SizeChanged = delegate { };
 
+        public DefaultListModel() { }
+
+        public DefaultListModel(int size)
+        {
+            items.Resize(size);
+        }
+
         public virtual int Rows
         {
             get { return items.Count(); }

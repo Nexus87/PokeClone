@@ -15,8 +15,8 @@ namespace GameEngine
             KeyDown = Keys.Down;
             KeyLeft = Keys.Left;
             KeyRight = Keys.Right;
-            KeySelect = Keys.Select;
-            KeyBack = Keys.Back;
+            KeySelect = Keys.Enter;
+            KeyBack = Keys.Escape;
         }
 
         public Keys KeyUp { get; private set; }

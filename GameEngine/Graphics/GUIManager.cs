@@ -1,41 +1,74 @@
-﻿using GameEngine.Graphics.Views;
-using GameEngine.Graphics.Widgets;
-using GameEngine.Wrapper;
+﻿using GameEngine.Wrapper;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GameEngine.Graphics
 {
     public class GUIManager : IInputHandler
     {
+        private GUI gui;
+
+        public GUIManager()
+        {
+            IsActive = false;
+        }
+
         public event EventHandler GUIClose = delegate { };
 
-        IInputHandler handler;
-        public IWidget GUIWidget { private get; set; }
+        public GUI GUI
+        {
+            set
+            {
+                if (gui != null)
+                    gui.OnCloseGUI -= gui_OnRequestExit;
+
+                if (value != null)
+                    value.OnCloseGUI += gui_OnRequestExit;
+
+                gui = value;
+            }
+        }
+
+        internal bool IsActive { get; private set; }
 
         public void HandleInput(Keys key)
         {
-            handler.HandleInput(key);
+            if (gui == null)
+                throw new InvalidOperationException("No GUI set");
+
+            gui.HandleInput(key);
         }
 
-
-        internal void Show()
+        internal void Close()
         {
-            if (GUIWidget == null)
-                return;
-
-            handler = GUIWidget;
+            IsActive = false;
         }
 
         internal void Draw(GameTime time, ISpriteBatch batch)
         {
-            GUIWidget.Draw(time, batch);
+            if (IsActive)
+                gui.Draw(time, batch);
+        }
+
+        internal void Show()
+        {
+            if (gui == null)
+                throw new InvalidOperationException("No GUI set");
+
+            IsActive = true;
+        }
+
+        private void gui_OnRequestExit(object sender, EventArgs e)
+        {
+            GUIClose(this, null);
+        }
+
+        public void Setup(ContentManager Content)
+        {
+            if (gui != null)
+                gui.Setup(Content);
         }
     }
 }
