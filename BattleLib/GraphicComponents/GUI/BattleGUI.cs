@@ -64,6 +64,13 @@ namespace BattleLib.GraphicComponents.GUI
             PKMNMenu.Height = Engine.ScreenHeight;
 
             PKMNMenu.ItemSelected += PKMNMenu_ItemSelected;
+            PKMNMenu.OnExitRequested += BackToMain;
+        }
+
+        void BackToMain(object sender, EventArgs e)
+        {
+            currentFrame = mainFrame;
+            currentWidget = MainMenu;
         }
 
         private void PKMNMenu_ItemSelected(object sender, SelectionEventArgs<Pokemon> e)
@@ -91,6 +98,7 @@ namespace BattleLib.GraphicComponents.GUI
             itemFrame.Height = (2.0f * Engine.ScreenHeight / 3.0f) - itemFrame.Y;
 
             ItemMenu.ItemSelected += ItemMenu_ItemSelected;
+            ItemMenu.OnExitRequested += BackToMain;
         }
 
         private void ItemMenu_ItemSelected(object sender, SelectionEventArgs<Item> e)
@@ -117,6 +125,7 @@ namespace BattleLib.GraphicComponents.GUI
             attackFrame.Height = Engine.ScreenHeight - attackFrame.Y;
 
             AttackMenu.ItemSelected += AttackMenu_ItemSelected;
+            AttackMenu.OnExitRequested += BackToMain;
         }
 
         private void AttackMenu_ItemSelected(object sender, SelectionEventArgs<Move> e)
@@ -143,6 +152,7 @@ namespace BattleLib.GraphicComponents.GUI
             mainFrame.Height = Engine.ScreenHeight - mainFrame.Y;
 
             MainMenu.ItemSelected += MainMenu_ItemSelected;
+            MainMenu.OnExitRequested += delegate { Engine.ExitProgram(); };
         }
 
         void MainMenu_ItemSelected(object sender, SelectionEventArgs<string> e)

@@ -36,7 +36,8 @@ namespace GameEngine.Graphics.Widgets
             layout.AddComponent(view);
         }
 
-        public event EventHandler<SelectionEventArgs<T>> ItemSelected;
+        public event EventHandler<SelectionEventArgs<T>> ItemSelected = delegate { };
+        public event EventHandler OnExitRequested = delegate { };
 
         private ISelectionHandler Handler
         {
@@ -48,12 +49,19 @@ namespace GameEngine.Graphics.Widgets
                 if (handler != null)
                 {
                     handler.ItemSelected -= handler_ItemSelected;
+                    handler.CloseRequested -= handler_CloseRequested;
                 }
 
                 handler = value;
                 handler.ItemSelected += handler_ItemSelected;
+                handler.CloseRequested += handler_CloseRequested;
                 handler.Init(view);
             }
+        }
+
+        void handler_CloseRequested(object sender, EventArgs e)
+        {
+            OnExitRequested(this, null);
         }
 
         public IItemModel<T> Model
