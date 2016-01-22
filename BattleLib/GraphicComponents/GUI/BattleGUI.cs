@@ -137,13 +137,11 @@ namespace BattleLib.GraphicComponents.GUI
 
         private void InitMainMenu()
         {
-            var model = new DefaultTableModel<string>();
-            model.SetData("Attack", 0, 0);
-            model.SetData("PKMN", 0, 1);
-            model.SetData("Item", 1, 0);
-            model.SetData("Run", 1, 1);
+            MainMenu.SetData("Attack", 0, 0);
+            MainMenu.SetData("PKMN", 0, 1);
+            MainMenu.SetData("Item", 1, 0);
+            MainMenu.SetData("Run", 1, 1);
 
-            MainMenu.Model = model;
             mainFrame.AddContent(MainMenu);
 
             mainFrame.X = 0.5f * Engine.ScreenWidth;

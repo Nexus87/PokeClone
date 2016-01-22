@@ -14,6 +14,10 @@ namespace BattleLib.Components.BattleState.Commands
         Move
     }
 
+    public class CommandSummaryArgs : EventArgs
+    {
+
+    }
     public interface ICommand
     {
         CommandType Type { get; }

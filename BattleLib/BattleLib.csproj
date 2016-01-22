@@ -42,6 +42,7 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Components\BattleEventDispatcher.cs" />
     <Compile Include="Components\BattleState\AbstractState.cs" />
     <Compile Include="Components\BattleState\BattleData.cs" />
     <Compile Include="Components\BattleState\BattleModel.cs" />
