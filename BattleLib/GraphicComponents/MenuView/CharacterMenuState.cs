@@ -46,12 +46,12 @@ namespace BattleLib.GraphicComponents.MenuView
         public override void model_OnSelectionChanged(object sender, SelectedIndexChangedEvent e)
         {
             base.model_OnSelectionChanged(sender, e);
-            graphics.DisplayText(currentItem.Text);
+            //graphics.DisplayText(currentItem.Text);
         }
 
         public override void OnHide()
         {
-            graphics.ClearText();
+            //graphics.ClearText();
         }
     }
 }

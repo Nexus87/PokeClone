@@ -11,6 +11,8 @@ namespace GameEngine.Graphics.Basic
         private TextGraphic textGraphic;
         private float prefTextSize;
 
+        public TextBox(String fontName) : this(fontName, new XNASpriteFont()) { }
+
         public TextBox(String fontName, ISpriteFont font)
         {
             textGraphic = new TextGraphic(fontName, font);

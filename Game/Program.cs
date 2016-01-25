@@ -31,7 +31,7 @@ namespace PokemonGame
             builder.BuildDefaultMenu(graphic);
             builder.Input.SetMenu(MenuType.Main);
 
-            graphic.Menu = builder.Graphics;
+            //graphic.Menu = builder.Graphics;
 
             engine.Graphic = graphic;
             engine.GUI = new BattleGUI(config);

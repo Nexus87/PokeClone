@@ -88,6 +88,7 @@
     <Compile Include="GraphicComponents\MenuView\MainMenuState.cs" />
     <Compile Include="GraphicComponents\MenuView\NullMenuState.cs" />
     <Compile Include="GraphicComponents\PokemonDataView.cs" />
+    <Compile Include="GraphicComponents\PokemonSprite.cs" />
     <Compile Include="IBattleRules.cs" />
     <Compile Include="MenuComponentBuilder.cs" />
     <Compile Include="ModelFactory.cs" />

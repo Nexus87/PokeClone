@@ -21,8 +21,24 @@ namespace BattleLib.GraphicComponents
     {
         public event EventHandler OnRequestDone = delegate { };
 
+        private PokemonDataView aiView = new PokemonDataView();
+        private PokemonDataView playerView = new PokemonDataView();
+
+        public BattleGraphics()
+        {
+            aiView.OnHPUpdated += OnHPUpdated;
+            playerView.OnHPUpdated += OnHPUpdated;
+        }
+
+        void OnHPUpdated(object sender, EventArgs e)
+        {
+            OnRequestDone(this, null);
+        }   
+
         public override void Setup(ContentManager content)
         {
+            aiView.Setup(content);
+            playerView.Setup(content);
         }
 
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)
@@ -41,12 +57,22 @@ namespace BattleLib.GraphicComponents
 
         public void SetHP(bool player, int value)
         {
-            throw new NotImplementedException();
+            if (player)
+                playerView.SetHP(value);
+            else
+                aiView.SetHP(value);
         }
 
         public void ChangePkmn(bool player, PokemonWrapper pkmn)
         {
-            throw new NotImplementedException();
+            if (player)
+            {
+                playerView.SetPokemon(pkmn);
+            }
+            else
+            {
+                aiView.SetPokemon(pkmn);
+            }
         }
     }
 }

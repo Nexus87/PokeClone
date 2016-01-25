@@ -17,7 +17,10 @@ namespace GameEngine.Graphics.Basic
         string texture;
         Texture2D image;
 
+        public Texture2D Image { get { return image; } set { image = value; Invalidate(); } }
         Vector2 scale;
+
+        public TextureBox() { }
 
         public TextureBox(String texture)
         {
@@ -26,18 +29,25 @@ namespace GameEngine.Graphics.Basic
 
         public override void Setup(ContentManager content)
         {
+            if (texture == null)
+                return;
+
             image = content.Load<Texture2D>(texture);
-            textureScaling.X = 1.0f / image.Width;
-            textureScaling.Y = 1.0f / image.Height;
         }
 
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)
         {
-            batch.Draw(image, Position, null, Color.White, 0, Vector2.Zero, scale, SpriteEffects.None, 0);
+            if(image != null)
+                batch.Draw(image, Position, null, Color.White, 0, Vector2.Zero, scale, SpriteEffects.None, 0);
         }
 
         protected override void Update()
         {
+            if (image == null)
+                return;
+
+            textureScaling.X = 1.0f / image.Width;
+            textureScaling.Y = 1.0f / image.Height;
 
             scale.X = Width * textureScaling.X;
             scale.Y = Height * textureScaling.Y;
