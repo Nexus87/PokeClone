@@ -15,13 +15,17 @@ namespace BattleLib.Components.BattleState
 
     public class BattleData
     {
+        public BattleData()
+        {
+            PlayerPkmn = new PokemonWrapper();
+            AIPkmn = new PokemonWrapper();
+        }
 
         public PokemonWrapper PlayerPkmn { get; private set; }
         public PokemonWrapper AIPkmn { get; private set; }
 
         public ClientIdentifier player;
         public ClientIdentifier ai;
-
 
         public ICommand playerCommand;
         public ICommand aiCommand;

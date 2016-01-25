@@ -51,6 +51,7 @@
     <Compile Include="Components\BattleState\Commands\ICommand.cs" />
     <Compile Include="Components\BattleState\Commands\ItemCommand.cs" />
     <Compile Include="Components\BattleState\Commands\MoveCommand.cs" />
+    <Compile Include="Components\BattleState\EventCreator.cs" />
     <Compile Include="Components\BattleState\ExecuteState.cs" />
     <Compile Include="Components\BattleState\IBattleState.cs" />
     <Compile Include="Components\BattleState\PokemonWrapper.cs" />
@@ -74,6 +75,7 @@
     <Compile Include="GraphicComponents\GUI\AttackModel.cs" />
     <Compile Include="GraphicComponents\GUI\BattleGUI.cs" />
     <Compile Include="GraphicComponents\GUI\GUIBuilder.cs" />
+    <Compile Include="GraphicComponents\HPLine.cs" />
     <Compile Include="GraphicComponents\MenuView\AbstractMenuState.cs" />
     <Compile Include="GraphicComponents\MenuView\AttackMenu.cs" />
     <Compile Include="GraphicComponents\BattleGraphics.cs" />
@@ -85,6 +87,7 @@
     <Compile Include="GraphicComponents\MessageBox.cs" />
     <Compile Include="GraphicComponents\MenuView\MainMenuState.cs" />
     <Compile Include="GraphicComponents\MenuView\NullMenuState.cs" />
+    <Compile Include="GraphicComponents\PokemonDataView.cs" />
     <Compile Include="IBattleRules.cs" />
     <Compile Include="MenuComponentBuilder.cs" />
     <Compile Include="ModelFactory.cs" />

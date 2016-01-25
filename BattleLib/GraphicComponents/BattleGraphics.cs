@@ -1,4 +1,5 @@
 ﻿using Base;
+using BattleLib.Components.BattleState;
 using BattleLib.GraphicComponents.GUI;
 using BattleLib.GraphicComponents.MenuView;
 using GameEngine;
@@ -18,27 +19,34 @@ namespace BattleLib.GraphicComponents
 {
     public class BattleGraphics : AbstractGraphicComponent
     {
-
-        public MenuGraphics Menu { get; set; }
-        private BattleGUI gui;
-        Frame menuFrame = new Frame("border");
+        public event EventHandler OnRequestDone = delegate { };
 
         public override void Setup(ContentManager content)
         {
         }
 
-
-        public void DisplayText(String text)
-        {
-        }
-
-        public void ClearText()
-        {
-            DisplayText("");
-        }
-
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)
         {
+        }
+
+        public void DisplayMessage(string text)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void PlayAttackAnimation(bool player)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetHP(bool player, int value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ChangePkmn(bool player, PokemonWrapper pkmn)
+        {
+            throw new NotImplementedException();
         }
     }
 }

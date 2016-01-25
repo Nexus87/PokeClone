@@ -13,6 +13,7 @@ namespace GameEngine
         public static readonly float AspectRation = ScreenWidth / ScreenHeight;
         public static readonly float ScreenHeight = 1080;
         public static readonly float ScreenWidth = 1920;
+        public static readonly Color BackgroundColor = new Color(248, 248, 248, 0);
 
         public readonly GUIManager GUIManager = new GUIManager();
         private static Engine engine;
@@ -110,7 +111,7 @@ namespace GameEngine
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.SetRenderTarget(target);
-            GraphicsDevice.Clear(new Color(248, 248, 248, 0));
+            GraphicsDevice.Clear(BackgroundColor);
 
             batch.Begin();
             Graphic.Draw(gameTime, batch);
