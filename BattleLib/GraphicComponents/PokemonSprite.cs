@@ -1,5 +1,6 @@
 ﻿using GameEngine;
 using GameEngine.Graphics;
+using GameEngine.Graphics.Basic;
 using GameEngine.Wrapper;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -14,10 +15,26 @@ namespace BattleLib.GraphicComponents
 {
     class PokemonSprite : AbstractGraphicComponent
     {
+        public event EventHandler OnPokemonAppeared = delegate { };
+        public event EventHandler OnAttackAnimationPlayed = delegate { };
+
         TextureProvider provider = new TextureProvider();
-        Texture2D texture;
+        TextureBox box = new TextureBox();
+
         bool front;
         private int id;
+
+        public void SetPokemon(int id)
+        {
+            this.id = id;
+            Invalidate();
+            OnPokemonAppeared(this, null);
+        }
+
+        public void PlayAttackAnimation()
+        {
+            OnAttackAnimationPlayed(this, null);
+        }
 
         public PokemonSprite(bool front)
         {
@@ -30,12 +47,19 @@ namespace BattleLib.GraphicComponents
 
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)
         {
+            box.Draw(time, batch);
         }
 
         protected override void Update()
         {
             base.Update();
-            texture = front ? provider.getTexturesFront(id) : provider.getTextureBack(id);
+            
+            box.X = X;
+            box.Y = Y;
+            box.Width = Width;
+            box.Height = Height;
+
+            box.Image = front ? provider.getTexturesFront(id) : provider.getTextureBack(id);
         }
     }
 }

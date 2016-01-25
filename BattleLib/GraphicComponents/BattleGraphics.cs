@@ -24,10 +24,33 @@ namespace BattleLib.GraphicComponents
         private PokemonDataView aiView = new PokemonDataView();
         private PokemonDataView playerView = new PokemonDataView();
 
+        private PokemonSprite aiSprite = new PokemonSprite(true);
+        private PokemonSprite playerSprite = new PokemonSprite(false);
+
+        PokemonWrapper tmpPkmn;
+
         public BattleGraphics()
         {
             aiView.OnHPUpdated += OnHPUpdated;
             playerView.OnHPUpdated += OnHPUpdated;
+
+            aiSprite.OnAttackAnimationPlayed += OnHPUpdated;
+            aiSprite.OnPokemonAppeared += aiSprite_OnPokemonAppeared;
+
+            playerSprite.OnAttackAnimationPlayed += OnHPUpdated;
+            playerSprite.OnPokemonAppeared += playerSprite_OnPokemonAppeared;
+        }
+
+        void aiSprite_OnPokemonAppeared(object sender, EventArgs e)
+        {
+            aiView.SetPokemon(tmpPkmn);
+            tmpPkmn = null;
+        }
+
+        void playerSprite_OnPokemonAppeared(object sender, EventArgs e)
+        {
+            playerView.SetPokemon(tmpPkmn);
+            tmpPkmn = null;
         }
 
         void OnHPUpdated(object sender, EventArgs e)
@@ -52,7 +75,10 @@ namespace BattleLib.GraphicComponents
 
         public void PlayAttackAnimation(bool player)
         {
-            throw new NotImplementedException();
+            if (player)
+                playerSprite.PlayAttackAnimation();
+            else
+                aiSprite.PlayAttackAnimation();
         }
 
         public void SetHP(bool player, int value)
@@ -65,13 +91,14 @@ namespace BattleLib.GraphicComponents
 
         public void ChangePkmn(bool player, PokemonWrapper pkmn)
         {
+            tmpPkmn = pkmn;
             if (player)
             {
-                playerView.SetPokemon(pkmn);
+                playerSprite.SetPokemon(pkmn.ID);
             }
             else
             {
-                aiView.SetPokemon(pkmn);
+                aiSprite.SetPokemon(pkmn.ID);
             }
         }
     }
