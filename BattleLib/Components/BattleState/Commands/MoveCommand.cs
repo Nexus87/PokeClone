@@ -30,8 +30,8 @@ namespace BattleLib.Components.BattleState.Commands
 
         public void Execute(IBattleRules rules, BattleData data)
         {
-            Pokemon source = null;
-            Pokemon target = null;
+            PokemonWrapper source = null;
+            PokemonWrapper target = null;
 
             if(id == data.player)
             {

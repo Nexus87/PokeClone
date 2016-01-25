@@ -9,14 +9,9 @@ namespace BattleLib.Components.BattleState
         public String Name { get; set; }
     }
 
-    public class MoveResultArgs : EventArgs
-    {
-
-    }
-
     public class BattleStateComponent : GameComponent
     {
-        public event EventHandler<MoveResultArgs> MoveResult;
+        public event EventHandler OnStateChange;
         BattleData data = new BattleData();
 
         IBattleState currentState;

@@ -14,9 +14,9 @@ namespace BattleLib.Components.BattleState.Commands
         Move
     }
 
-    public class CommandSummaryArgs : EventArgs
+    public class CommandSummary
     {
-
+        public CommandType type;
     }
     public interface ICommand
     {

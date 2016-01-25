@@ -46,7 +46,7 @@ namespace BattleLib.Components
     {
         bool eventDispatched = false;
 
-        
+        public BattleEventDispatcher(Game game) : base(game) { }
 
         LinkedList<BattleEvent> eventQueue = new LinkedList<BattleEvent>();
 

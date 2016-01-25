@@ -30,14 +30,14 @@ namespace BattleLib.Components.BattleState.Commands
 
         public void Execute(IBattleRules rules, BattleData data)
         {
-            Pokemon source = null;
+            PokemonWrapper source = null;
             if (id == data.player)
             {
                 source = data.PlayerPkmn;
                 if (!rules.TryChange(source, newPkmn))
                     return;
 
-                data.PlayerPkmn = newPkmn;
+                data.PlayerPkmn.Pokemon = newPkmn;
             }
             else if (id == data.ai)
             {
@@ -46,7 +46,7 @@ namespace BattleLib.Components.BattleState.Commands
                 if (!rules.TryChange(source, newPkmn))
                     return;
 
-                data.AIPkmn = newPkmn;
+                data.AIPkmn.Pokemon = newPkmn;
             }
             else
                 throw new InvalidOperationException("Source id not found");

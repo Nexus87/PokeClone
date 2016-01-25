@@ -15,33 +15,13 @@ namespace BattleLib.Components.BattleState
 
     public class BattleData
     {
-        internal event EventHandler<PkmnChangedArgs> OnPkmnChange = (a, b) => { };
 
-        private Pokemon playerPkmn;
-        private Pokemon aiPkmn;
+        public PokemonWrapper PlayerPkmn { get; private set; }
+        public PokemonWrapper AIPkmn { get; private set; }
 
         public ClientIdentifier player;
         public ClientIdentifier ai;
 
-        public Pokemon PlayerPkmn
-        {
-            get { return playerPkmn; }
-            set
-            {
-                playerPkmn = value;
-                OnPkmnChange(this, new PkmnChangedArgs { id = player });
-            }
-        }
-
-        public Pokemon AIPkmn
-        {
-            get { return aiPkmn; }
-            set
-            {
-                aiPkmn = value;
-                OnPkmnChange(this, new PkmnChangedArgs { id = ai });
-            }
-        }
 
         public ICommand playerCommand;
         public ICommand aiCommand;

@@ -1,4 +1,5 @@
 ﻿using Base;
+using BattleLib.Components.BattleState;
 using System;
 
 namespace BattleLib
@@ -32,9 +33,9 @@ namespace BattleLib
 
         bool CanEscape();
         bool CanChange();
-        
-        void ExecMove(Pokemon source, Move move, Pokemon target);
-        bool TryChange(Pokemon oldPkmn, Pokemon newPkmn);
-        bool UseItem(Pokemon target, Item item);
+
+        void ExecMove(PokemonWrapper source, Move move, PokemonWrapper target);
+        bool TryChange(PokemonWrapper oldPkmn, Pokemon newPkmn);
+        bool UseItem(PokemonWrapper target, Item item);
     }
 }

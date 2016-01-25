@@ -113,18 +113,6 @@ namespace Base
 		public Stats IV { get; private set; }
 		public Stats Stats { get; private set; }
 
-        public Stats StatModifier { get; private set; }
-        
-        public void ResetModifiers()
-        {
-            StatModifier.Atk = 0;
-            StatModifier.Def = 0;
-            StatModifier.HP = 0;
-            StatModifier.SpAtk = 0;
-            StatModifier.SpDef = 0;
-            StatModifier.Speed = 0;
-        }
-
         public List<Move> Moves { get; private set; }
 
 		public PokemonType Type1 { get{ return BaseData.Type1; }}

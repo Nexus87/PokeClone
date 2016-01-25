@@ -53,6 +53,7 @@
     <Compile Include="Components\BattleState\Commands\MoveCommand.cs" />
     <Compile Include="Components\BattleState\ExecuteState.cs" />
     <Compile Include="Components\BattleState\IBattleState.cs" />
+    <Compile Include="Components\BattleState\PokemonWrapper.cs" />
     <Compile Include="Components\BattleState\WaitForActionState.cs" />
     <Compile Include="Components\BattleState\WaitForCharState.cs" />
     <Compile Include="Components\Input\AbstractListController.cs" />

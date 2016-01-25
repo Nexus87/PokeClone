@@ -33,10 +33,10 @@ namespace BattleLib.Components.BattleState
                 return;
 
             if (data.PlayerPkmn == null && enqueuedPlayerChar != null)
-                data.PlayerPkmn = enqueuedPlayerChar;
+                data.PlayerPkmn.Pokemon = enqueuedPlayerChar;
 
             if (data.AIPkmn == null && enqueuedAiChar != null)
-                data.AIPkmn = enqueuedAiChar;
+                data.AIPkmn.Pokemon = enqueuedAiChar;
 
         }
 

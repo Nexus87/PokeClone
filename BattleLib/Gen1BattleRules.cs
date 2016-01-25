@@ -4,28 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Base;
+using BattleLib.Components.BattleState;
 
 namespace BattleLib
 {
-    internal static class StatsExtension
-    {
-        public static int ModifiedAtk(this Pokemon pkmn)
-        {
-            return pkmn.StatModifier.Atk + pkmn.Stats.Atk;
-        }
-        public static int ModifiedDef(this Pokemon pkmn)
-        {
-            return pkmn.StatModifier.Def + pkmn.Stats.Def;
-        }
-        public static int ModifiedSpAtk(this Pokemon pkmn)
-        {
-            return pkmn.StatModifier.SpAtk + pkmn.Stats.SpAtk;
-        }
-        public static int ModifiedSpDef(this Pokemon pkmn)
-        {
-            return pkmn.StatModifier.SpDef + pkmn.Stats.SpDef;
-        }
-    }
 
     class Gen1BattleRules : IBattleRules
     {
@@ -50,12 +32,12 @@ namespace BattleLib
             return isTrainerBattle;
         }
 
-        public bool TryChange(Pokemon oldPkmn, Pokemon newPkmn)
+        public bool TryChange(PokemonWrapper oldPkmn, Pokemon newPkmn)
         {
             return true;
         }
 
-        public void ExecMove(Pokemon source, Move move, Pokemon target)
+        public void ExecMove(PokemonWrapper source, Move move, PokemonWrapper target)
         {
             switch (move.Data.DamageType)
             {
@@ -71,7 +53,7 @@ namespace BattleLib
             }
         }
 
-        private float CalculateDamage(int attack, int defense, Pokemon source, Move move)
+        private float CalculateDamage(int attack, int defense, PokemonWrapper source, Move move)
         {
             float damage = (2.0f * source.Level + 10.0f) / 250.0f;
             damage *= ((float)attack) / ((float)defense);
@@ -80,7 +62,7 @@ namespace BattleLib
 
             return damage;
         }
-        private float CalculateModifier(Pokemon source, Pokemon target, Move move)
+        private float CalculateModifier(PokemonWrapper source, PokemonWrapper target, Move move)
         {
             float modifier = move.Data.PkmType == source.Type1 || move.Data.PkmType == source.Type2 ?
                 1.5f : 1.0f;
@@ -91,24 +73,24 @@ namespace BattleLib
 
             return modifier;
         }
-        private void HandleSpecialDamage(Pokemon source, Move move, Pokemon target)
+        private void HandleSpecialDamage(PokemonWrapper source, Move move, PokemonWrapper target)
         {
-            float damage = CalculateDamage(source.ModifiedSpAtk(), target.ModifiedSpDef(), source, move);
+            float damage = CalculateDamage(source.SpAtk, target.SpDef, source, move);
             float modifier = CalculateModifier(source, target, move);
         }
 
-        private void HandleStatusDamage(Pokemon source, Move move, Pokemon target)
+        private void HandleStatusDamage(PokemonWrapper source, Move move, PokemonWrapper target)
         {
             throw new NotImplementedException();
         }
 
-        private void HandlePhysicalDamage(Pokemon source, Move move, Pokemon target)
+        private void HandlePhysicalDamage(PokemonWrapper source, Move move, PokemonWrapper target)
         {
-            float damage = CalculateDamage(source.ModifiedAtk(), target.ModifiedDef(), source, move);   
+            float damage = CalculateDamage(source.Atk, target.Def, source, move);   
             float modifier = CalculateModifier(source, target, move);
         }
 
-        public bool UseItem(Pokemon target, Item item)
+        public bool UseItem(PokemonWrapper target, Item item)
         {
             throw new NotImplementedException();
         }
