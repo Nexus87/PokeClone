@@ -1,7 +1,6 @@
 ﻿using Base;
 using BattleLib.Components.BattleState;
 using BattleLib.GraphicComponents.GUI;
-using BattleLib.GraphicComponents.MenuView;
 using GameEngine;
 using GameEngine.Graphics;
 using GameEngine.Graphics.Basic;
@@ -62,6 +61,44 @@ namespace BattleLib.GraphicComponents
         {
             aiView.Setup(content);
             playerView.Setup(content);
+
+            aiSprite.Setup(content);
+            playerSprite.Setup(content);
+
+            initAIGraphic();
+            initPlayerGraphic();
+        }
+
+        private void initPlayerGraphic()
+        {
+            playerView.X = (int)(Engine.ScreenWidth * 0.6f);
+            playerView.Y = (int)(Engine.ScreenHeight * 0.4f);
+
+            playerView.Height = (int)(Engine.ScreenHeight * 0.25f);
+            playerView.Width = (int)(Engine.ScreenWidth * 0.3f);
+
+            playerSprite.X = (int)(Engine.ScreenWidth * 0.2f);
+            playerSprite.Y = (int)(Engine.ScreenHeight * 0.4f);
+
+            playerSprite.Height = (int)(Engine.ScreenHeight * 0.25f);
+            playerSprite.Width = (int)(Engine.ScreenHeight * 0.25f);
+        }
+
+        private void initAIGraphic()
+        {
+
+            aiView.X = (int)(Engine.ScreenWidth * 0.2f);
+            aiView.Y = (int)(Engine.ScreenHeight * 0.1f);
+
+            aiView.Height = (int)(Engine.ScreenHeight * 0.25f);
+            aiView.Width = (int)(Engine.ScreenWidth * 0.3f);
+
+
+            aiSprite.X = (int)(Engine.ScreenWidth * 0.6f);
+            aiSprite.Y = (int)(Engine.ScreenHeight * 0.1f);
+
+            aiSprite.Height = (int)(Engine.ScreenHeight * 0.25f);
+            aiSprite.Width = (int)(Engine.ScreenHeight * 0.25f);
         }
 
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)
@@ -71,11 +108,6 @@ namespace BattleLib.GraphicComponents
 
             aiSprite.Draw(time, batch);
             playerSprite.Draw(time, batch);
-        }
-
-        public void DisplayMessage(string text)
-        {
-            throw new NotImplementedException();
         }
 
         public void PlayAttackAnimation(bool player)

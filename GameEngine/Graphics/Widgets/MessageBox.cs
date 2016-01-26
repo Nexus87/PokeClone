@@ -26,6 +26,8 @@ namespace GameEngine.Graphics.Widgets
         public MessageBox(string border, Configuration config)
         {
             SelectKey = config.KeySelect;
+            frameBox = new TextureBox(border);
+            textBox = new MultlineTextBox(config.MenuFont);
         }
 
         public event EventHandler OnAllLineShowed = delegate { };

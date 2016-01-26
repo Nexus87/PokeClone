@@ -1,6 +1,5 @@
 ﻿using BattleLib;
 using BattleLib.Components.BattleState;
-using BattleLib.Components.Menu;
 using BattleLib.GraphicComponents;
 using BattleLib.GraphicComponents.GUI;
 using GameEngine;
@@ -26,13 +25,6 @@ namespace PokemonGame
             var graphic = new BattleGraphics();
             var battleState = new BattleStateComponent(new ClientIdentifier(), new ClientIdentifier(), engine);
             
-            MenuComponentBuilder builder = new MenuComponentBuilder(engine, battleState);
-
-            builder.BuildDefaultMenu(graphic);
-            builder.Input.SetMenu(MenuType.Main);
-
-            //graphic.Menu = builder.Graphics;
-
             engine.Graphic = graphic;
             engine.GUI = new BattleGUI(config);
             Engine.ShowGUI();

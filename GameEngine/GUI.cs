@@ -12,9 +12,9 @@ namespace GameEngine
 {
     public abstract class GUI : IGraphicComponent, IInputHandler
     {
-        public event EventHandler OnCloseGUI;
-        public event EventHandler<EventArgs> SizeChanged;
-        public event EventHandler<EventArgs> PositionChanged;
+        public event EventHandler OnCloseGUI = delegate { };
+        public event EventHandler<EventArgs> SizeChanged = delegate { };
+        public event EventHandler<EventArgs> PositionChanged = delegate { };
 
         public virtual float X { get; set; }
         public virtual float Y { get; set; }

@@ -50,7 +50,7 @@ namespace BattleLib.GraphicComponents
             innerLine.Width = Width - 2 * border;
             innerLine.Height = Height - 2 * border;
 
-            float factor = ((float)currentHp) / ((float)maxHp);
+            float factor = maxHp == 0 ? 0 : ((float)currentHp) / ((float)maxHp);
 
             hpLine.X = X + border;
             hpLine.Y = Y + border;

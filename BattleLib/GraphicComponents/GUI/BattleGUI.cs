@@ -45,9 +45,18 @@ namespace BattleLib.GraphicComponents.GUI
             InitAttackMenu();
             InitItemMenu();
             InitPKMNMenu();
+            InitMessageBox();
 
             currentFrame = mainFrame;
             currentWidget = MainMenu;
+        }
+
+        private void InitMessageBox()
+        {
+            messageBox.X = 0;
+            messageBox.Y = 2.0f * Engine.ScreenHeight / 3.0f;
+            messageBox.Width = Engine.ScreenWidth;
+            messageBox.Height = Engine.ScreenHeight - messageBox.Y;
         }
 
         private void InitPKMNMenu()
@@ -183,10 +192,12 @@ namespace BattleLib.GraphicComponents.GUI
             attackFrame.Setup(content);
             itemFrame.Setup(content);
             PKMNMenu.Setup(content);
+            messageBox.Setup(content);
         }
 
         public override void Draw(GameTime time, ISpriteBatch batch)
         {
+            messageBox.Draw(time, batch);
             currentFrame.Draw(time, batch);
         }
     }

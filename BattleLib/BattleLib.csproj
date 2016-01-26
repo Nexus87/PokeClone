@@ -57,40 +57,16 @@
     <Compile Include="Components\BattleState\PokemonWrapper.cs" />
     <Compile Include="Components\BattleState\WaitForActionState.cs" />
     <Compile Include="Components\BattleState\WaitForCharState.cs" />
-    <Compile Include="Components\Input\AbstractListController.cs" />
-    <Compile Include="Components\Input\AbstractMenuController.cs" />
-    <Compile Include="Components\Input\AttackMenuController.cs" />
-    <Compile Include="Components\Input\IMenuController.cs" />
-    <Compile Include="Components\Input\ItemMenuController.cs" />
-    <Compile Include="Components\Input\NullController.cs" />
-    <Compile Include="Components\Input\MainMenuController.cs" />
-    <Compile Include="Components\Input\PokemonMenuController.cs" />
-    <Compile Include="Components\Menu\DefaultModel.cs" />
-    <Compile Include="Components\Menu\IMenuModel.cs" />
-    <Compile Include="Components\Input\InputComponent.cs" />
-    <Compile Include="Components\Menu\MenuComponent.cs" />
-    <Compile Include="Components\Menu\NullMenuModel.cs" />
     <Compile Include="Gen1BattleRules.cs" />
     <Compile Include="GraphicComponents\BattleStateView.cs" />
     <Compile Include="GraphicComponents\GUI\AttackModel.cs" />
     <Compile Include="GraphicComponents\GUI\BattleGUI.cs" />
-    <Compile Include="GraphicComponents\GUI\GUIBuilder.cs" />
     <Compile Include="GraphicComponents\HPLine.cs" />
-    <Compile Include="GraphicComponents\MenuView\AbstractMenuState.cs" />
-    <Compile Include="GraphicComponents\MenuView\AttackMenu.cs" />
     <Compile Include="GraphicComponents\BattleGraphics.cs" />
-    <Compile Include="GraphicComponents\MenuView\CharacterMenuState.cs" />
-    <Compile Include="GraphicComponents\MenuView\IMenuState.cs" />
-    <Compile Include="GraphicComponents\MenuView\ItemMenuState.cs" />
-    <Compile Include="GraphicComponents\MenuView\MenuGraphics.cs" />
     <Compile Include="GraphicComponents\MenuItem.cs" />
-    <Compile Include="GraphicComponents\MenuView\MainMenuState.cs" />
-    <Compile Include="GraphicComponents\MenuView\NullMenuState.cs" />
     <Compile Include="GraphicComponents\PokemonDataView.cs" />
     <Compile Include="GraphicComponents\PokemonSprite.cs" />
     <Compile Include="IBattleRules.cs" />
-    <Compile Include="MenuComponentBuilder.cs" />
-    <Compile Include="ModelFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Interfaces\IActionScheduler.cs" />
   </ItemGroup>
@@ -108,8 +84,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="GraphicComponents\Util\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
 </Project>
