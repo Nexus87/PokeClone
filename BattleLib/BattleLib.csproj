@@ -84,7 +84,6 @@
     <Compile Include="GraphicComponents\MenuView\ItemMenuState.cs" />
     <Compile Include="GraphicComponents\MenuView\MenuGraphics.cs" />
     <Compile Include="GraphicComponents\MenuItem.cs" />
-    <Compile Include="GraphicComponents\MessageBox.cs" />
     <Compile Include="GraphicComponents\MenuView\MainMenuState.cs" />
     <Compile Include="GraphicComponents\MenuView\NullMenuState.cs" />
     <Compile Include="GraphicComponents\PokemonDataView.cs" />

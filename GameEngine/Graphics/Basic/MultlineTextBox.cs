@@ -15,7 +15,11 @@ namespace GameEngine.Graphics.Basic
         private int lineNumber;
         private string text;
 
-        public MultlineTextBox(int lineNumber, string fontName, ISpriteFont font)
+        public MultlineTextBox(string fontName, int lineNumber = 2)
+            : this(fontName, lineNumber, new XNASpriteFont())
+        { }
+
+        public MultlineTextBox(string fontName, int lineNumber, ISpriteFont font)
         {
             this.lineNumber = lineNumber;
             for (int i = 0; i < lineNumber; i++)

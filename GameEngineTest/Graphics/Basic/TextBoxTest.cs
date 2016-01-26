@@ -15,7 +15,6 @@ namespace GameEngineTest.Graphics.Basic
     public class TextBoxTest : IGraphicComponentTest
     {
         public TextBox box;
-        public Mock<ISpriteFont> fontMock;
 
         [SetUp]
         public void Setup()

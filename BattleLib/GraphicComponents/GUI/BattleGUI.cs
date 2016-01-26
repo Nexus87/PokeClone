@@ -31,7 +31,7 @@ namespace BattleLib.GraphicComponents.GUI
 
         private IGraphicComponent currentFrame;
         private IWidget currentWidget;
-        private IWidget messageBox;
+        private MessageBox messageBox;
 
         public BattleGUI(Configuration config)
         {
@@ -39,6 +39,7 @@ namespace BattleLib.GraphicComponents.GUI
             AttackMenu = new TableWidget<Move>(config);
             ItemMenu = new TableWidget<Item>(config);
             PKMNMenu = new TableWidget<Pokemon>(config);
+            messageBox = new MessageBox(config);
 
             InitMainMenu();
             InitAttackMenu();

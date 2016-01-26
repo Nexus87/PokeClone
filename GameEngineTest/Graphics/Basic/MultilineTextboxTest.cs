@@ -23,13 +23,13 @@ namespace GameEngineTest.Graphics.Basic
         {
             var fontMock = new Mock<ISpriteFont>();
             fontMock.Setup(o => o.MeasureString(It.IsAny<string>())).Returns<string>(s => new Vector2(16.0f * s.Length, 16.0f));
-            box = new MultlineTextBox(2, "", fontMock.Object);
+            box = new MultlineTextBox("", 2, fontMock.Object);
 
             testObj = box;
             box.Setup(contentMock.Object);
             box.Text = "Very very long text";
 
-            box = new MultlineTextBox(2, "", fontMock.Object);
+            box = new MultlineTextBox("", 2, fontMock.Object);
             box.Setup(contentMock.Object);
 
             float X = 0.0f;

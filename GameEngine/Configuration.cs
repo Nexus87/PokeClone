@@ -17,6 +17,8 @@ namespace GameEngine
             KeyRight = Keys.Right;
             KeySelect = Keys.Enter;
             KeyBack = Keys.Escape;
+            MenuFont = "MenuFont";
+            BoxBorder = "border";
         }
 
         public Keys KeyUp { get; private set; }
@@ -26,6 +28,8 @@ namespace GameEngine
         public Keys KeySelect { get; private set; }
         public Keys KeyBack { get; private set; }
 
+        public string BoxBorder { get; private set; }
+        public string MenuFont { get; private set; }
         public virtual T GetOption<T>(string optionString)
         {
             object ret = null;

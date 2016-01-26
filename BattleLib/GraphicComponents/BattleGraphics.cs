@@ -66,6 +66,11 @@ namespace BattleLib.GraphicComponents
 
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)
         {
+            aiView.Draw(time, batch);
+            playerView.Draw(time, batch);
+
+            aiSprite.Draw(time, batch);
+            playerSprite.Draw(time, batch);
         }
 
         public void DisplayMessage(string text)
