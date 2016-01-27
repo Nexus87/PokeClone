@@ -57,20 +57,40 @@ namespace GameEngine.Graphics.Views
         public int SelectedColumn { get { return needsUpdate ? newColumn : selectedColumn; } internal set { TrySetColumn(value); } }
         public int SelectedRow { get { return needsUpdate ? newRow : selectedRow; } internal set { TrySetRow(value); } }
 
-        public virtual void HandleInput(Keys key)
+        public virtual bool HandleInput(Keys key)
         {
             if (key == UpKey)
+            {
                 TrySetRow(SelectedRow - 1);
+                return true;
+            }
             else if (key == DownKey)
+            {
                 TrySetRow(SelectedRow + 1);
+                return true;
+            }
             else if (key == LeftKey)
+            {
                 TrySetColumn(SelectedColumn - 1);
+                return true;
+            }
             else if (key == RightKey)
+            {
                 TrySetColumn(SelectedColumn + 1);
+                return true;
+            }
             else if (key == SelectKey)
+            {
                 ItemSelected(this, null);
+                return true;
+            }
             else if (key == BackKey)
+            {
                 CloseRequested(this, null);
+                return true;
+            }
+
+            return false;
         }
 
         public void Init(IItemView view)

@@ -33,12 +33,14 @@ namespace GameEngine.Graphics
 
         internal bool IsActive { get; private set; }
 
-        public void HandleInput(Keys key)
+        public bool HandleInput(Keys key)
         {
             if (gui == null)
                 throw new InvalidOperationException("No GUI set");
 
             gui.HandleInput(key);
+
+            return true;
         }
 
         internal void Close()

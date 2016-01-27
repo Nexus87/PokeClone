@@ -25,6 +25,6 @@ namespace GameEngine
 
         public abstract void Draw(GameTime time, ISpriteBatch batch);
         public abstract void Setup(ContentManager content);
-        public abstract void HandleInput(Keys key);
+        public abstract bool HandleInput(Keys key);
     }
 }

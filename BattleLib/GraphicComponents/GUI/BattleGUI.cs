@@ -181,9 +181,9 @@ namespace BattleLib.GraphicComponents.GUI
                     break;
             }
         }
-        public override void HandleInput(Keys key)
+        public override bool HandleInput(Keys key)
         {
-            currentWidget.HandleInput(key);
+            return currentWidget.HandleInput(key);
         }
 
         public override void Setup(ContentManager content)

@@ -9,6 +9,6 @@ namespace GameEngine.Graphics
 {
     public interface IInputHandler
     {
-        void HandleInput(Keys key);
+        bool HandleInput(Keys key);
     }
 }

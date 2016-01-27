@@ -17,7 +17,6 @@ namespace GameEngine.Graphics.Widgets
 
         public TableWidget()
         {
-            
             var model = new DefaultTableModel<T>();
             view = new TableView<T>(model);
             Handler = new DefaultSelectionHandler();
@@ -37,7 +36,18 @@ namespace GameEngine.Graphics.Widgets
         }
 
         public event EventHandler<SelectionEventArgs<T>> ItemSelected = delegate { };
+
         public event EventHandler OnExitRequested = delegate { };
+
+        public event EventHandler<VisibilityChangedArgs> OnVisibilityChanged;
+
+        public bool IsVisible { get; private set; }
+
+        public IItemModel<T> Model
+        {
+            get { return view.Model; }
+            set { view.Model = value; }
+        }
 
         private ISelectionHandler Handler
         {
@@ -59,30 +69,19 @@ namespace GameEngine.Graphics.Widgets
             }
         }
 
-        void handler_CloseRequested(object sender, EventArgs e)
+        public T GetData(int row, int column)
         {
-            OnExitRequested(this, null);
+            return Model.DataAt(row, column);
         }
 
-        public IItemModel<T> Model
+        public bool HandleInput(Keys key)
         {
-            get { return view.Model; }
-            set { view.Model = value; }
-        }
-
-        public void HandleInput(Keys key)
-        {
-            handler.HandleInput(key);
+            return handler.HandleInput(key);
         }
 
         public void SetData(T data, int row, int column)
         {
             Model.SetData(data, row, column);
-        }
-
-        public T GetData(int row, int column)
-        {
-            return Model.DataAt(row, column);
         }
 
         public override void Setup(ContentManager content)
@@ -95,6 +94,11 @@ namespace GameEngine.Graphics.Widgets
         {
             handler.Update();
             layout.Draw(time, batch);
+        }
+
+        private void handler_CloseRequested(object sender, EventArgs e)
+        {
+            OnExitRequested(this, null);
         }
 
         private void handler_ItemSelected(object sender, EventArgs e)
