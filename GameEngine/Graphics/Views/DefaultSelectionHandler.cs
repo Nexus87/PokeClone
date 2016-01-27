@@ -15,9 +15,20 @@ namespace GameEngine.Graphics.Views
         public Keys RightKey = Keys.Right;
         public Keys SelectKey = Keys.Enter;
         public Keys UpKey = Keys.Up;
+        
         private int selectedColumn;
-
         private int selectedRow;
+
+        private void Unselect()
+        {
+            needsUpdate = false;
+            selectedRow = selectedColumn = -1;
+        }
+
+        private bool IsUnselected()
+        {
+            return selectedRow == -1 && selectedColumn == -1;
+        }
 
         private IItemView view;
 
@@ -36,15 +47,15 @@ namespace GameEngine.Graphics.Views
         }
 
         public event EventHandler<EventArgs> CloseRequested = delegate { };
-
         public event EventHandler<EventArgs> ItemSelected = delegate { };
-
         public event EventHandler<EventArgs> SelectionChanged = delegate { };
 
-        public int SelectedColumn { get { return selectedColumn; } internal set { TrySetColumn(value); } }
-        public int SelectedRow { get { return selectedRow; } internal set { TrySetRow(value); } }
-        private int Columns { get; set; }
-        private int Rows { get; set; }
+        private bool needsUpdate = true;
+        private int newRow;
+        private int newColumn;
+
+        public int SelectedColumn { get { return needsUpdate ? newColumn : selectedColumn; } internal set { TrySetColumn(value); } }
+        public int SelectedRow { get { return needsUpdate ? newRow : selectedRow; } internal set { TrySetRow(value); } }
 
         public virtual void HandleInput(Keys key)
         {
@@ -68,55 +79,35 @@ namespace GameEngine.Graphics.Views
                 this.view.OnTableResize -= view_OnTableResize;
 
             this.view = view;
-            Rows = view.Rows;
-            Columns = view.Columns;
             view.OnTableResize += view_OnTableResize;
 
             // No cell there to select
             if (view.Rows == 0 || view.Columns == 0)
-                selectedRow = selectedColumn = -1;
-            else
-                view.SetCellSelection(0, 0, true);
+                Unselect();
         }
         
         private void TrySetColumn(int column)
         {
-            if (column == selectedColumn)
+            if (column == SelectedColumn)
                 return;
 
-            if (column >= Columns || column < 0)
+            if (column >= view.Columns || column < 0)
                 return;
 
-            if (selectedRow != -1 && selectedColumn != -1)
-                view.SetCellSelection(selectedRow, selectedColumn, false);
-            selectedColumn = column;
-            if (selectedRow == -1 || selectedColumn == -1)
-                return;
-            view.SetCellSelection(selectedRow, selectedColumn, true);
-            UpdateViewpoint();
-            if (SelectionChanged != null)
-                SelectionChanged(this, null);
+            newColumn = column;
+            needsUpdate = true;
         }
 
         private void TrySetRow(int row)
         {
-            if (row == selectedRow)
+            if (row == SelectedRow)
                 return;
 
-            if (row >= Rows || row < 0)
+            if (row >= view.Rows || row < 0)
                 return;
 
-            if(selectedRow != -1 && selectedColumn != -1)
-                view.SetCellSelection(selectedRow, selectedColumn, false);
-            selectedRow = row;
-            if (selectedRow == -1 || selectedColumn == -1)
-                return;
-
-            view.SetCellSelection(selectedRow, selectedColumn, true);
-
-            UpdateViewpoint();
-            if (SelectionChanged != null)
-                SelectionChanged(this, null);
+            newRow = row;
+            needsUpdate = true;
         }
 
         private void UpdateViewpoint()
@@ -137,32 +128,49 @@ namespace GameEngine.Graphics.Views
 
         private void view_OnTableResize(object sender, TableResizeEventArgs e)
         {
+            if (e.rows == 0 || e.columns == 0)
+            {
+                Unselect();
+                return;
+            }
+
             // On shrink, move selection
-            if (e.rows < Rows)
+            if (e.rows <= SelectedRow)
             {
-                Rows = e.rows;
-                TrySetRow(Rows - 1);
+                TrySetRow(e.rows - 1);
             }
 
-            if (e.columns < Columns)
+            if (e.columns <= SelectedColumn)
             {
-                Columns = e.columns;
-                TrySetColumn(Columns - 1);
+                TrySetColumn(e.columns - 1);
             }
 
-            
-            Rows = e.rows;
-            Columns = e.columns;
-
-            // Table resize from 0,0 to something bigger
-            if ((SelectedColumn == -1 && SelectedRow == -1) && (e.rows > 0 && e.columns > 0))
+            if (IsUnselected())
             {
-                SelectedColumn = SelectedRow = 0;
-                view.SetCellSelection(0, 0, true);
+                TrySetRow(0);
+                TrySetColumn(0);
             }
 
-            if (Rows == 0 || Columns == 0)
-                selectedColumn = selectedRow = -1;
+
+        }
+
+        public void Update()
+        {
+            if (!needsUpdate)
+                return;
+
+            if (selectedRow != -1 && selectedColumn != -1)
+                view.SetCellSelection(selectedColumn, selectedRow, false);
+
+            if (!view.SetCellSelection(newRow, newColumn, true))
+                return;
+
+            selectedRow = newRow;
+            selectedColumn = newColumn;
+            needsUpdate = false;
+
+            UpdateViewpoint();
+            SelectionChanged(this, null);
         }
     }
 }

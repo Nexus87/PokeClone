@@ -44,7 +44,7 @@ namespace GameEngineTest.Views
                 startRow = i;
                 viewMock.SetupGet(o => o.ViewportStartRow).Returns(startRow);
             });
-
+            viewMock.Setup(o => o.SetCellSelection(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<bool>())).Returns(true);
             testObj.Init(viewMock.Object);
         }
 
@@ -53,6 +53,7 @@ namespace GameEngineTest.Views
         {
             Assert.AreEqual(0, testObj.SelectedColumn);
             Assert.AreEqual(0, testObj.SelectedRow);
+            testObj.Update();
 
             viewMock.Verify(o => o.SetCellSelection(0, 0, true), Times.Once);
         }
@@ -69,7 +70,7 @@ namespace GameEngineTest.Views
 
 
             testObj.Init(viewMock.Object);
-
+            testObj.Update();
             viewMock.Verify(o => o.SetCellSelection(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<bool>()), Times.Never);
 
             Assert.AreEqual(-1, testObj.SelectedRow);
@@ -82,6 +83,7 @@ namespace GameEngineTest.Views
 
             Assert.AreEqual(0, testObj.SelectedRow);
             Assert.AreEqual(0, testObj.SelectedColumn);
+            testObj.Update();
 
             viewMock.Verify(o => o.SetCellSelection(0, 0, true), Times.AtLeastOnce);
             viewMock.ResetCalls();
@@ -92,6 +94,8 @@ namespace GameEngineTest.Views
 
             Assert.AreEqual(-1, testObj.SelectedRow);
             Assert.AreEqual(-1, testObj.SelectedColumn);
+            
+            testObj.Update();
             viewMock.Verify(o => o.SetCellSelection(It.IsAny<int>(), It.IsAny<int>(), true), Times.Never);
         }
 
@@ -112,6 +116,7 @@ namespace GameEngineTest.Views
         {
             testObj.SelectedRow = row;
             testObj.SelectedColumn = column;
+            testObj.Update();
 
             viewMock.Verify(o => o.SetCellSelection(row, column, true), Times.Once);
             Assert.AreEqual(column, testObj.SelectedColumn);
@@ -119,6 +124,7 @@ namespace GameEngineTest.Views
 
             viewMock.ResetCalls();
             testObj.HandleInput(key);
+            testObj.Update();
 
             Assert.AreEqual(newColumn, testObj.SelectedColumn);
             Assert.AreEqual(newRow, testObj.SelectedRow);
@@ -137,19 +143,23 @@ namespace GameEngineTest.Views
             bool closeCalled = false;
             bool selectionChangedCalled = false;
 
+            testObj.Update();
+
             testObj.ItemSelected += delegate { itemSelectedCalled = true;};
             testObj.CloseRequested += delegate { closeCalled = true; };
             testObj.SelectionChanged += delegate { selectionChangedCalled = true; };
-
+            
             Assert.AreEqual(0, testObj.SelectedColumn);
             Assert.AreEqual(0, testObj.SelectedRow);
 
             testObj.HandleInput(Keys.Left);
+            testObj.Update();
             Assert.AreEqual(0, testObj.SelectedColumn);
             Assert.AreEqual(0, testObj.SelectedRow);
             Assert.False(selectionChangedCalled);
 
             testObj.HandleInput(Keys.Up);
+            testObj.Update();
             Assert.AreEqual(0, testObj.SelectedColumn);
             Assert.AreEqual(0, testObj.SelectedRow);
             Assert.False(selectionChangedCalled);
@@ -158,17 +168,20 @@ namespace GameEngineTest.Views
             Assert.False(closeCalled);
 
             testObj.HandleInput(Keys.Right);
+            testObj.Update();
             Assert.True(selectionChangedCalled);
 
             selectionChangedCalled = false;
 
             testObj.HandleInput(Keys.Down);
+            testObj.Update();
             Assert.True(selectionChangedCalled);
             selectionChangedCalled = false;
 
             for (int i = 2; i < viewMock.Object.Rows; i++)
             {
                 testObj.HandleInput(Keys.Down);
+                testObj.Update();
                 Assert.True(selectionChangedCalled, "Error on step " + i);
                 selectionChangedCalled = false;
             }
@@ -176,6 +189,7 @@ namespace GameEngineTest.Views
             for (int i = 2; i < viewMock.Object.Columns; i++)
             {
                 testObj.HandleInput(Keys.Right);
+                testObj.Update();
                 Assert.True(selectionChangedCalled, "Error on step " + i);
                 selectionChangedCalled = false;
             }
@@ -185,18 +199,22 @@ namespace GameEngineTest.Views
             Assert.False(selectionChangedCalled);
 
             testObj.HandleInput(Keys.Down);
+            testObj.Update();
             Assert.False(selectionChangedCalled);
 
             testObj.HandleInput(Keys.Right);
+            testObj.Update();
             Assert.False(selectionChangedCalled);
 
             testObj.HandleInput(Keys.Enter);
+            testObj.Update();
             Assert.True(itemSelectedCalled);
             Assert.False(closeCalled);
 
             itemSelectedCalled = false;
 
             testObj.HandleInput(Keys.Escape);
+            testObj.Update();
             Assert.True(closeCalled);
             Assert.False(itemSelectedCalled);
         }
@@ -207,54 +225,66 @@ namespace GameEngineTest.Views
             while (testObj.SelectedColumn < viewMock.Object.ViewportColumns - 1)
             {
                 testObj.HandleInput(Keys.Right);
+                testObj.Update();
                 Assert.AreEqual(0, startColumn);
             }
 
             testObj.HandleInput(Keys.Right);
+            testObj.Update();
             Assert.AreEqual(viewMock.Object.ViewportColumns, testObj.SelectedColumn);
             Assert.AreEqual(1, startColumn);
 
             testObj.HandleInput(Keys.Right);
+            testObj.Update();
             Assert.AreEqual(viewMock.Object.ViewportColumns + 1, testObj.SelectedColumn);
             Assert.AreEqual(2, startColumn);
 
             while (testObj.SelectedColumn > startColumn)
             {
                 testObj.HandleInput(Keys.Left);
+                testObj.Update();
                 Assert.AreEqual(2, startColumn);
             }
 
             testObj.HandleInput(Keys.Left);
+            testObj.Update();
             Assert.AreEqual(1, startColumn);
 
             testObj.HandleInput(Keys.Left);
+            testObj.Update();
             Assert.AreEqual(0, startColumn);
 
             // Same for rows
             while (testObj.SelectedRow < viewMock.Object.ViewportRows - 1)
             {
                 testObj.HandleInput(Keys.Down);
+                testObj.Update();
                 Assert.AreEqual(0, startRow);
             }
 
             testObj.HandleInput(Keys.Down);
+            testObj.Update();
             Assert.AreEqual(viewMock.Object.ViewportRows, testObj.SelectedRow);
             Assert.AreEqual(1, startRow);
 
             testObj.HandleInput(Keys.Down);
+            testObj.Update();
             Assert.AreEqual(viewMock.Object.ViewportRows + 1, testObj.SelectedRow);
             Assert.AreEqual(2, startRow);
 
             while (testObj.SelectedRow > startRow)
             {
                 testObj.HandleInput(Keys.Up);
+                testObj.Update();
                 Assert.AreEqual(2, startRow);
             }
 
             testObj.HandleInput(Keys.Up);
+            testObj.Update();
             Assert.AreEqual(1, startRow);
 
             testObj.HandleInput(Keys.Up);
+            testObj.Update();
             Assert.AreEqual(0, startRow);
         }
 
@@ -278,11 +308,13 @@ namespace GameEngineTest.Views
 
             Assert.AreEqual(5, testObj.SelectedColumn);
             Assert.AreEqual(5, testObj.SelectedRow);
+            testObj.Update();
 
             viewMock.SetupGet(o => o.Columns).Returns(column);
             viewMock.SetupGet(o => o.Rows).Returns(row);
 
             viewMock.Raise(o => o.OnTableResize += null, viewMock.Object, new TableResizeEventArgs(row, column));
+            testObj.Update();
 
             Assert.AreEqual(selectedColumn, testObj.SelectedColumn);
             Assert.AreEqual(selectedRow, testObj.SelectedRow);

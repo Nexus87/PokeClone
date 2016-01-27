@@ -17,5 +17,7 @@ namespace GameEngine.Graphics
         void Init(IItemView view);
         int SelectedRow{ get; }
         int SelectedColumn { get; }
+
+        void Update();
     }
 }
