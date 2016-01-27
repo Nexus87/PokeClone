@@ -160,7 +160,7 @@ namespace GameEngine.Graphics.Views
                 return;
 
             if (selectedRow != -1 && selectedColumn != -1)
-                view.SetCellSelection(selectedColumn, selectedRow, false);
+                view.SetCellSelection(selectedRow, selectedColumn, false);
 
             if (!view.SetCellSelection(newRow, newColumn, true))
                 return;
