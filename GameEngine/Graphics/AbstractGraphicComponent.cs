@@ -12,8 +12,8 @@ namespace GameEngine.Graphics
         private Vector2 position;
         private Vector2 size;
 
-        public event EventHandler<EventArgs> PositionChanged = (a, b) => { };
-        public event EventHandler<EventArgs> SizeChanged = (a, b) => { };
+        public event EventHandler<GraphicComponentPositionChangedArgs> PositionChanged = (a, b) => { };
+        public event EventHandler<GraphicComponentSizeChangedArgs> SizeChanged = (a, b) => { };
 
         public float Height
         {
@@ -26,7 +26,7 @@ namespace GameEngine.Graphics
                     return;
                 size.Y = value;
                 Invalidate();
-                SizeChanged(this, null);
+                SizeChanged(this, new GraphicComponentSizeChangedArgs(size.X, size.Y));
             }
         }
 
@@ -44,7 +44,7 @@ namespace GameEngine.Graphics
                     return;
                 size.X = value;
                 Invalidate();
-                SizeChanged(this, null);
+                SizeChanged(this, new GraphicComponentSizeChangedArgs(size.X, size.Y));
             }
         }
 
@@ -58,7 +58,7 @@ namespace GameEngine.Graphics
 
                 position.X = value;
                 Invalidate();
-                PositionChanged(this, null);
+                PositionChanged(this, new GraphicComponentPositionChangedArgs(position.X, position.Y));
             }
         }
 
@@ -72,7 +72,7 @@ namespace GameEngine.Graphics
 
                 position.Y = value;
                 Invalidate();
-                PositionChanged(this, null);
+                PositionChanged(this, new GraphicComponentPositionChangedArgs(position.X, position.Y));
             }
         }
 

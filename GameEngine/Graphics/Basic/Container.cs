@@ -23,7 +23,7 @@ namespace GameEngine.Graphics.Basic
             components.Remove(comp);
         }
 
-        public virtual override void Setup(ContentManager content)
+        public override void Setup(ContentManager content)
         {
             foreach (var c in components)
                 c.Setup(content);

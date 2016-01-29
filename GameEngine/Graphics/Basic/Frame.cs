@@ -14,6 +14,7 @@ namespace GameEngine.Graphics.Basic
         {
             Layout.AddComponent(component);
         }
+
         public Frame(String backgroundTexture)
         {
             box = new TextureBox(backgroundTexture);
@@ -24,9 +25,9 @@ namespace GameEngine.Graphics.Basic
             SetMargins(90, 90, 80, 80);
         }
 
-        public event EventHandler<EventArgs> PositionChanged;
+        public event EventHandler<GraphicComponentPositionChangedArgs> PositionChanged = delegate { };
 
-        public event EventHandler<EventArgs> SizeChanged;
+        public event EventHandler<GraphicComponentSizeChangedArgs> SizeChanged = delegate { };
 
         public float Height { get { return box.Height; } set { box.Height = value; } }
         public ILayout Layout { get; set; }
@@ -62,16 +63,14 @@ namespace GameEngine.Graphics.Basic
             Layout.Setup(content);
         }
 
-        private void box_PositionChanged(object sender, EventArgs e)
+        private void box_PositionChanged(object sender, GraphicComponentPositionChangedArgs e)
         {
-            if (PositionChanged != null)
-                PositionChanged(this, null);
+            PositionChanged(this, e);
         }
 
-        private void box_SizeChanged(object sender, EventArgs e)
+        private void box_SizeChanged(object sender, GraphicComponentSizeChangedArgs e)
         {
-            if (SizeChanged != null)
-                SizeChanged(this, null);
+            SizeChanged(this, e);
         }
     }
 }

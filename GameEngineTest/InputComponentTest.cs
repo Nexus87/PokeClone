@@ -37,7 +37,7 @@ namespace GameEngineTest
             managerMock.Setup(o => o.IsKeyDown(It.IsAny<Keys>())).Returns<Keys>( key => keyboardState.IsKeyDown(key));
             managerMock.Setup(o => o.GetState()).Returns(keyboardState);
 
-            handlerMock.Setup(o => o.HandleInput(keys.First()));
+            handlerMock.Setup(o => o.HandleInput(keys.First())).Returns(true);
 
             component.handler = handlerMock.Object;
             component.Keys = keys;
@@ -66,7 +66,7 @@ namespace GameEngineTest
             component.Keys = keys;
 
             foreach(var key in keys)
-                handlerMock.Setup(o => o.HandleInput(key));
+                handlerMock.Setup(o => o.HandleInput(key)).Returns(true);
 
             GameTime time = new GameTime();
 
@@ -85,6 +85,7 @@ namespace GameEngineTest
             var handlerMock = new Mock<IInputHandler>(MockBehavior.Strict);
             var keyboardState = new KeyboardState(new Keys[] { Keys.D });
 
+            handlerMock.Setup(o => o.HandleInput(It.IsAny<Keys>())).Returns(true);
             managerMock.Setup(o => o.IsKeyDown(It.IsAny<Keys>())).Returns<Keys>(key => keyboardState.IsKeyDown(key));
             managerMock.Setup(o => o.GetState()).Returns(keyboardState);
 
@@ -118,7 +119,7 @@ namespace GameEngineTest
             component.Keys = keys;
 
             foreach (var key in keys)
-                handlerMock.Setup(o => o.HandleInput(key));
+                handlerMock.Setup(o => o.HandleInput(key)).Returns(true);
 
             GameTime time = new GameTime();
 

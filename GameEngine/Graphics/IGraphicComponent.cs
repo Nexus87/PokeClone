@@ -6,10 +6,35 @@ using System;
 
 namespace GameEngine.Graphics
 {
+    public class GraphicComponentSizeChangedArgs : EventArgs
+    {
+        public float Width { get; private set; }
+        public float Height { get; private set; }
+
+        public GraphicComponentSizeChangedArgs(float width, float height)
+        {
+            Width = width;
+            Height = height;
+        }
+    }
+
+    public class GraphicComponentPositionChangedArgs : EventArgs
+    {
+        public float X { get; private set; }
+        public float Y { get; private set; }
+
+        public GraphicComponentPositionChangedArgs(float x, float y)
+        {
+            X = x;
+            Y = y;
+        }
+    }
+
+
     public interface IGraphicComponent
     {
-        event EventHandler<EventArgs> SizeChanged;
-        event EventHandler<EventArgs> PositionChanged;
+        event EventHandler<GraphicComponentSizeChangedArgs> SizeChanged;
+        event EventHandler<GraphicComponentPositionChangedArgs> PositionChanged;
 
         float X { get; set; }
         float Y { get; set; }

@@ -121,20 +121,20 @@ namespace GameEngineTest.Graphics.Layouts
             layoutMock.Protected().Verify("UpdateComponents", Times.Never());
             layoutMock.ResetCalls();
 
-            compMock.Raise(o => o.PositionChanged += null, new EventArgs());
+            compMock.Raise(o => o.PositionChanged += null, new GraphicComponentPositionChangedArgs(X, Y));
             testLayout.Draw(new GameTime(), batch);
             testLayout.Draw(new GameTime(), batch);
             layoutMock.Protected().Verify("UpdateComponents", Times.Once());
             layoutMock.ResetCalls();
 
-            compMock.Raise(o => o.SizeChanged += null, new EventArgs());
+            compMock.Raise(o => o.SizeChanged += null, new GraphicComponentSizeChangedArgs(Width, Height));
             testLayout.Draw(new GameTime(), batch);
             testLayout.Draw(new GameTime(), batch);
             layoutMock.Protected().Verify("UpdateComponents", Times.Once());
             layoutMock.ResetCalls();
 
-            compMock.Raise(o => o.SizeChanged += null, new EventArgs());
-            compMock.Raise(o => o.PositionChanged += null, new EventArgs());
+            compMock.Raise(o => o.SizeChanged += null, new GraphicComponentSizeChangedArgs(Width, Height));
+            compMock.Raise(o => o.PositionChanged += null, new GraphicComponentPositionChangedArgs(X, Y));
             testLayout.Draw(new GameTime(), batch);
             testLayout.Draw(new GameTime(), batch);
             layoutMock.Protected().Verify("UpdateComponents", Times.Once());

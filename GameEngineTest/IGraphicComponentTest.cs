@@ -51,31 +51,37 @@ namespace GameEngineTest
         {
             bool sizeEventTriggered = false;
             bool positionEventTriggered = false;
+            GraphicComponentPositionChangedArgs positionArgs = null;
+            GraphicComponentSizeChangedArgs sizeArgs = null;
 
-            testObj.SizeChanged += delegate { sizeEventTriggered = true; };
-            testObj.PositionChanged += delegate { positionEventTriggered = true; };
+            testObj.SizeChanged += (a, b) => { sizeEventTriggered = true; sizeArgs = b; };
+            testObj.PositionChanged += (a, b) => { positionEventTriggered = true; positionArgs = b; };
 
             testObj.Width = 1.0f;
             Assert.IsTrue(sizeEventTriggered);
             Assert.IsFalse(positionEventTriggered);
+            Assert.AreEqual(1.0f, sizeArgs.Width);
 
             sizeEventTriggered = false;
 
             testObj.Height = 1.0f;
             Assert.IsTrue(sizeEventTriggered);
             Assert.IsFalse(positionEventTriggered);
+            Assert.AreEqual(1.0f, sizeArgs.Height);
 
             sizeEventTriggered = false;
 
             testObj.X = 1.0f;
             Assert.IsTrue(positionEventTriggered);
             Assert.IsFalse(sizeEventTriggered);
+            Assert.AreEqual(1.0f, positionArgs.X);
 
             positionEventTriggered = false;
 
             testObj.Y = 1.0f;
             Assert.IsTrue(positionEventTriggered);
             Assert.IsFalse(sizeEventTriggered);
+            Assert.AreEqual(1.0f, positionArgs.Y);
         }
 
         [TestCase]
