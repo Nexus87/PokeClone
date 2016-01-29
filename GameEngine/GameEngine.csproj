@@ -48,6 +48,7 @@
     <Compile Include="Configuration.cs" />
     <Compile Include="GameEngine.cs" />
     <Compile Include="Graphics\AbstractGraphicComponent.cs" />
+    <Compile Include="Graphics\Basic\Container.cs" />
     <Compile Include="Graphics\Layouts\AbstractLayout.cs" />
     <Compile Include="Graphics\Basic\MultlineTextBox.cs" />
     <Compile Include="Graphics\Basic\NullGraphicObject.cs" />
