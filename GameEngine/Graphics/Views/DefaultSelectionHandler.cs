@@ -3,10 +3,6 @@ using System;
 
 namespace GameEngine.Graphics.Views
 {
-    // TODO: Split TrySetColumn/TrySetRow to separate setting selectedColumn/Row and select the cell
-    // in the view/updating the viewport. The way it is done now is a hack to avoid handing -1 to
-    // SetCellSelection when the table size change from 0,0 to something bigger and the other way
-    // around
     public class DefaultSelectionHandler : ISelectionHandler
     {
         public Keys BackKey = Keys.Escape;
@@ -15,20 +11,9 @@ namespace GameEngine.Graphics.Views
         public Keys RightKey = Keys.Right;
         public Keys SelectKey = Keys.Enter;
         public Keys UpKey = Keys.Up;
-        
+
         private int selectedColumn;
         private int selectedRow;
-
-        private void Unselect()
-        {
-            needsUpdate = false;
-            selectedRow = selectedColumn = -1;
-        }
-
-        private bool IsUnselected()
-        {
-            return selectedRow == -1 && selectedColumn == -1;
-        }
 
         private IItemView view;
 
@@ -47,36 +32,34 @@ namespace GameEngine.Graphics.Views
         }
 
         public event EventHandler<EventArgs> CloseRequested = delegate { };
+
         public event EventHandler<EventArgs> ItemSelected = delegate { };
+
         public event EventHandler<EventArgs> SelectionChanged = delegate { };
 
-        private bool needsUpdate = true;
-        private int newRow;
-        private int newColumn;
-
-        public int SelectedColumn { get { return needsUpdate ? newColumn : selectedColumn; } internal set { TrySetColumn(value); } }
-        public int SelectedRow { get { return needsUpdate ? newRow : selectedRow; } internal set { TrySetRow(value); } }
+        public int SelectedColumn { get { return selectedColumn; } internal set { SetSelection(SelectedRow, value); } }
+        public int SelectedRow { get { return selectedRow; } internal set { SetSelection(value, SelectedColumn); } }
 
         public virtual bool HandleInput(Keys key)
         {
             if (key == UpKey)
             {
-                TrySetRow(SelectedRow - 1);
+                SelectedRow = Math.Max(0, SelectedRow - 1);
                 return true;
             }
             else if (key == DownKey)
             {
-                TrySetRow(SelectedRow + 1);
+                SelectedRow++;
                 return true;
             }
             else if (key == LeftKey)
             {
-                TrySetColumn(SelectedColumn - 1);
+                SelectedColumn = Math.Max(0, selectedColumn - 1);
                 return true;
             }
             else if (key == RightKey)
             {
-                TrySetColumn(SelectedColumn + 1);
+                SelectedColumn++;
                 return true;
             }
             else if (key == SelectKey)
@@ -100,34 +83,29 @@ namespace GameEngine.Graphics.Views
 
             this.view = view;
             view.OnTableResize += view_OnTableResize;
-
-            // No cell there to select
-            if (view.Rows == 0 || view.Columns == 0)
-                Unselect();
-        }
-        
-        private void TrySetColumn(int column)
-        {
-            if (column == SelectedColumn)
-                return;
-
-            if (column >= view.Columns || column < 0)
-                return;
-
-            newColumn = column;
-            needsUpdate = true;
+            
+            // At the moment, nothing is selected
+            selectedColumn = selectedRow = -1;
+            if (view.Rows != 0 || view.Columns != 0)
+                SetSelection(0, 0);
         }
 
-        private void TrySetRow(int row)
+        private void SetSelection(int row, int column)
         {
-            if (row == SelectedRow)
+            if (column == selectedColumn && row == selectedRow)
                 return;
 
-            if (row >= view.Rows || row < 0)
+            if (column >= view.Columns || row >= view.Rows)
                 return;
 
-            newRow = row;
-            needsUpdate = true;
+            view.SetCellSelection(selectedRow, selectedColumn, false);
+            view.SetCellSelection(row, column, true);
+
+            selectedColumn = column;
+            selectedRow = row;
+
+            UpdateViewpoint();
+            SelectionChanged(this, null);
         }
 
         private void UpdateViewpoint()
@@ -148,49 +126,25 @@ namespace GameEngine.Graphics.Views
 
         private void view_OnTableResize(object sender, TableResizeEventArgs e)
         {
-            if (e.rows == 0 || e.columns == 0)
+            if (selectedColumn == -1 && selectedRow == -1 && e.rows > 0 && e.columns > 0)
             {
-                Unselect();
+                SetSelection(0, 0);
                 return;
             }
 
+            if (selectedColumn < e.columns && selectedRow < e.rows)
+                return;
+
+            int newColumn = selectedColumn;
+            int newRow = selectedRow;
             // On shrink, move selection
-            if (e.rows <= SelectedRow)
-            {
-                TrySetRow(e.rows - 1);
-            }
+            if (selectedRow >= e.rows)
+                newRow = e.rows - 1;
 
-            if (e.columns <= SelectedColumn)
-            {
-                TrySetColumn(e.columns - 1);
-            }
+            if (selectedColumn >= e.columns)
+                newColumn = e.columns - 1;
 
-            if (IsUnselected())
-            {
-                TrySetRow(0);
-                TrySetColumn(0);
-            }
-
-
-        }
-
-        public void Update()
-        {
-            if (!needsUpdate)
-                return;
-
-            if (selectedRow != -1 && selectedColumn != -1)
-                view.SetCellSelection(selectedRow, selectedColumn, false);
-
-            if (!view.SetCellSelection(newRow, newColumn, true))
-                return;
-
-            selectedRow = newRow;
-            selectedColumn = newColumn;
-            needsUpdate = false;
-
-            UpdateViewpoint();
-            SelectionChanged(this, null);
+            SetSelection(newRow, newColumn);
         }
     }
 }

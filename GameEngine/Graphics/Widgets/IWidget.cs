@@ -11,5 +11,10 @@ namespace GameEngine.Graphics.Widgets
 
     public class VisibilityChangedArgs : EventArgs
     {
+        public bool Visible { get; private set; }
+        public VisibilityChangedArgs(bool visible)
+        {
+            Visible = visible;
+        }
     }
 }

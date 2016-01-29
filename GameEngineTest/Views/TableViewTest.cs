@@ -39,7 +39,9 @@ namespace GameEngineTest.Views
 
             table.Draw(spriteBatch);
 
-            Assert.AreEqual(0, spriteBatch.Objects.Count);
+            Assert.AreEqual(4, spriteBatch.Objects.Count);
+            foreach (var i in table.items)
+                Assert.AreEqual("", i.Text);
         }
 
         [TestCase]
@@ -114,7 +116,7 @@ namespace GameEngineTest.Views
             table.Draw(spriteBatch);
 
             foreach (var obj in spriteBatch.Objects)
-                obj.IsInConstraints(2* 60.0f, 2 * 60.0f, 60.0f, 60.0f);
+                obj.IsInConstraints(0.0f, 0.0f, 3*60.0f, 3*60.0f);
         }
 
         public static List<TestCaseData> TableSizes = new List<TestCaseData>{
@@ -157,7 +159,7 @@ namespace GameEngineTest.Views
             table.Draw(spriteBatch);
 
             foreach (var obj in spriteBatch.Objects)
-                obj.IsInConstraints(column * 100.0f, row * 100.0f, 100.0f, 100.0f);
+                obj.IsInConstraints(0, 0, 200.0f, 200.0f);
         }
 
         [TestCaseSource("ModelCoordinates")]
@@ -226,8 +228,8 @@ namespace GameEngineTest.Views
             int selectRow = row == 0 ? 1 : 0;
             int selectColumn = column == 0 ? 1 : 0;
 
-            Assert.IsFalse(table.SetCellSelection(selectRow, selectColumn, true));
-            Assert.IsFalse(table.SetCellSelection(selectRow, selectColumn, false));
+            Assert.IsTrue(table.SetCellSelection(selectRow, selectColumn, true));
+            Assert.IsTrue(table.SetCellSelection(selectRow, selectColumn, false));
 
             TestTableCellSelection();
         }

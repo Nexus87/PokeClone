@@ -101,7 +101,7 @@ namespace GameEngine.Graphics.Views
 
         public bool IsCellSelected(int row, int column)
         {
-            if (row >= Model.Rows || column >= Model.Columns)
+            if (row >= Model.Rows || column >= Model.Columns || row < 0 || column < 0)
                 return false;
 
             return items[row, column] != null && items[row, column].IsSelected;
@@ -109,7 +109,7 @@ namespace GameEngine.Graphics.Views
 
         public bool SetCellSelection(int row, int column, bool isSelected)
         {
-            if (row >= Model.Rows || column >= Model.Columns)
+            if (row >= Model.Rows || column >= Model.Columns || row < 0 || column < 0)
                 return false;
 
             // Can't select a non existing entry
@@ -135,7 +135,6 @@ namespace GameEngine.Graphics.Views
 
         protected override void Update()
         {
-            // At the moment there is no way to shrink the TableLayout
             if (layout.Rows > ViewportRows || layout.Columns > ViewportColumns)
             {
                 layout.Resize(ViewportRows, ViewportColumns);
@@ -161,7 +160,7 @@ namespace GameEngine.Graphics.Views
                 {
                     var str = Model.DataStringAt(i, j);
                     if (str == null)
-                        continue;
+                        str = "";
 
                     items[i, j] = new ItemBox(str, new SpriteFontClass());
                 }
@@ -170,26 +169,44 @@ namespace GameEngine.Graphics.Views
 
         private void model_DataChanged(object sender, DataChangedArgs<T> e)
         {
-            if (items[e.row, e.column] == null)
-            {
-                var item = new ItemBox(new SpriteFontClass());
-                if (content != null)
-                    item.Setup(content);
-                items[e.row, e.column] = item;
-            }
-
             items[e.row, e.column].Text = Model.DataStringAt(e.row, e.column);
         }
 
         private void model_SizeChanged(object sender, SizeChangedArgs e)
         {
-            if (e.newRows == items.GetLength(0) && e.newColumns == items.GetLength(1))
+            int oldRows = items.GetLength(0);
+            int oldColumnns = items.GetLength(1);
+
+            if (e.newRows == oldRows && e.newColumns == oldColumnns)
                 return;
 
             var newItems = new ItemBox[e.newRows, e.newColumns];
             layout.Resize(ViewportRows, ViewportColumns);
             items.Copy(newItems);
             items = newItems;
+
+            for (int i = oldColumnns; i < e.newColumns; i++)
+            {
+                for (int j = 0; j < e.newRows; j++)
+                {
+                    var tmp = new ItemBox(new SpriteFontClass());
+                    if (content != null)
+                        tmp.Setup(content);
+                    items[j, i] = tmp;
+                }
+            }
+
+            for (int j = oldRows; j < e.newRows; j++)
+            {
+                for (int i = 0; i < e.newColumns; i++)
+                {
+                    var tmp = new ItemBox(new SpriteFontClass());
+                    if (content != null)
+                        tmp.Setup(content);
+                    items[j, i] = tmp;
+                }
+            }
+
             OnTableResize(this, new TableResizeEventArgs(e.newRows, e.newColumns));
         }
     }

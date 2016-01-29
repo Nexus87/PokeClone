@@ -92,7 +92,6 @@ namespace GameEngine.Graphics.Widgets
 
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)
         {
-            handler.Update();
             layout.Draw(time, batch);
         }
 
