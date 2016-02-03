@@ -15,7 +15,8 @@ namespace GameEngine.Graphics.Widgets
         private SingleComponentLayout layout;
         private TableView<T> view;
 
-        public TableWidget(Game game) : base(game)
+        public TableWidget(PokeEngine game)
+            : base(game)
         {
             var model = new DefaultTableModel<T>();
             view = new TableView<T>(model, game);
@@ -25,7 +26,8 @@ namespace GameEngine.Graphics.Widgets
             layout.AddComponent(view);
         }
 
-        public TableWidget(Configuration config, Game game) : base(game)
+        public TableWidget(Configuration config, PokeEngine game)
+            : base(game)
         {
             var model = new DefaultTableModel<T>();
             view = new TableView<T>(model, game);

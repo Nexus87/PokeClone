@@ -9,14 +9,16 @@ namespace GameEngine.Graphics.Basic
 {
     public class Frame : IGraphicComponent
     {
+        public PokeEngine Game { get; private set; }
         private IGraphicComponent box;
         public void AddContent(IGraphicComponent component)
         {
             Layout.AddComponent(component);
         }
 
-        public Frame(String backgroundTexture, Game game) : base(game)
+        public Frame(String backgroundTexture, PokeEngine game)
         {
+            Game = game;
             box = new TextureBox(backgroundTexture, game);
             box.PositionChanged += box_PositionChanged;
             box.SizeChanged += box_SizeChanged;
@@ -25,17 +27,17 @@ namespace GameEngine.Graphics.Basic
             SetMargins(90, 90, 80, 80);
         }
 
-        public override event EventHandler<GraphicComponentPositionChangedArgs> PositionChanged = delegate { };
+        public event EventHandler<GraphicComponentPositionChangedArgs> PositionChanged = delegate { };
 
-        public override event EventHandler<GraphicComponentSizeChangedArgs> SizeChanged = delegate { };
+        public event EventHandler<GraphicComponentSizeChangedArgs> SizeChanged = delegate { };
 
-        public override float Height { get { return box.Height; } set { box.Height = value; } }
+        public float Height { get { return box.Height; } set { box.Height = value; } }
         public ILayout Layout { get; set; }
-        public override float Width { get { return box.Width; } set { box.Width = value; } }
-        public override float X { get { return box.X; } set { box.X = value; } }
-        public override float Y { get { return box.Y; } set { box.Y = value; } }
+        public float Width { get { return box.Width; } set { box.Width = value; } }
+        public float X { get { return box.X; } set { box.X = value; } }
+        public float Y { get { return box.Y; } set { box.Y = value; } }
 
-        public override void Draw(GameTime time, ISpriteBatch batch)
+        public void Draw(GameTime time, ISpriteBatch batch)
         {
             box.Draw(time, batch);
             Layout.Draw(time, batch);
@@ -49,7 +51,7 @@ namespace GameEngine.Graphics.Basic
             Layout.SetMargin(left, right, top, bottom);
         }
 
-        public override void Setup(ContentManager content)
+        public void Setup(ContentManager content)
         {
             if (box == null)
                 return;

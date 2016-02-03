@@ -15,12 +15,13 @@ namespace GameEngine.Graphics.Widgets
         private SingleComponentLayout layout = new SingleComponentLayout();
         private MultlineTextBox textBox;
 
-        public MessageBox(Configuration config, Game game)
+        public MessageBox(Configuration config, PokeEngine game)
             : this(config.BoxBorder, config, game)
         {
         }
 
-        public MessageBox(string border, Configuration config, Game game) : base(game)
+        public MessageBox(string border, Configuration config, PokeEngine game)
+            : base(game)
         {
             SelectKey = config.KeySelect;
             frameBox = new TextureBox(border, game);

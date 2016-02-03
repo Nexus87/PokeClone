@@ -1,4 +1,5 @@
-﻿using GameEngine.Graphics;
+﻿using GameEngine;
+using GameEngine.Graphics;
 using GameEngine.Graphics.Layouts;
 using GameEngine.Wrapper;
 using GameEngineTest.Util;
@@ -18,7 +19,8 @@ namespace GameEngineTest.Graphics.Layouts
     public class GraphicComponentMock : AbstractGraphicComponent
     {
         Texture2D texture;
-        public GraphicComponentMock() : base(new Mock<Game>().Object)
+        public GraphicComponentMock()
+            : base(new Mock<PokeEngine>(new Configuration()).Object)
         {
             var dev = new GraphicsDevice(GraphicsAdapter.DefaultAdapter, GraphicsProfile.Reach, new PresentationParameters());
             texture = new Texture2D(dev, 1, 1);
@@ -37,8 +39,6 @@ namespace GameEngineTest.Graphics.Layouts
     {
         public ILayout testLayout;
 
-        protected Mock<Game> gameMock = new Mock<Game>();
-
         public static List<TestCaseData> ValidData = new List<TestCaseData>
         {
             new TestCaseData(1.0f, 1.0f, 50.0f, 50.0f),
@@ -54,7 +54,7 @@ namespace GameEngineTest.Graphics.Layouts
         public void DrawInConstraintsTest(float X, float Y, float Width, float Height)
         {
             SpriteBatchMock batch = new SpriteBatchMock();
-            var compMock = new Mock<IGraphicComponent>(gameMock.Object);
+            var compMock = new Mock<IGraphicComponent>();
             compMock.SetCoordinates(X, Y, Width, Height);
 
             testLayout.Init(compMock.Object);
@@ -69,7 +69,7 @@ namespace GameEngineTest.Graphics.Layouts
         {
             int Margin = 10;
             SpriteBatchMock batch = new SpriteBatchMock();
-            var compMock = new Mock<IGraphicComponent>(gameMock.Object);
+            var compMock = new Mock<IGraphicComponent>();
             compMock.SetCoordinates(X, Y, Width, Height);
             testLayout.Init(compMock.Object);
 

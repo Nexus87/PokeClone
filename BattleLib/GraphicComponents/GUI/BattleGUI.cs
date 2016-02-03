@@ -33,7 +33,8 @@ namespace BattleLib.GraphicComponents.GUI
         private IWidget currentWidget;
         private MessageBox messageBox;
 
-        public BattleGUI(Configuration config, Game game) : base(game)
+        public BattleGUI(Configuration config, PokeEngine game)
+            : base(game)
         {
             mainFrame = new Frame("border", game);
             attackFrame = new Frame("border", game);
@@ -57,9 +58,9 @@ namespace BattleLib.GraphicComponents.GUI
         private void InitMessageBox()
         {
             messageBox.X = 0;
-            messageBox.Y = 2.0f * Engine.ScreenHeight / 3.0f;
-            messageBox.Width = Engine.ScreenWidth;
-            messageBox.Height = Engine.ScreenHeight - messageBox.Y;
+            messageBox.Y = 2.0f * PokeEngine.ScreenHeight / 3.0f;
+            messageBox.Width = PokeEngine.ScreenWidth;
+            messageBox.Height = PokeEngine.ScreenHeight - messageBox.Y;
         }
 
         private void InitPKMNMenu()
@@ -73,8 +74,8 @@ namespace BattleLib.GraphicComponents.GUI
             PKMNMenu.Model = model;
             PKMNMenu.X = 0;
             PKMNMenu.Y = 0;
-            PKMNMenu.Width = Engine.ScreenWidth;
-            PKMNMenu.Height = Engine.ScreenHeight;
+            PKMNMenu.Width = PokeEngine.ScreenWidth;
+            PKMNMenu.Height = PokeEngine.ScreenHeight;
 
             PKMNMenu.ItemSelected += PKMNMenu_ItemSelected;
             PKMNMenu.OnExitRequested += BackToMain;
@@ -104,11 +105,11 @@ namespace BattleLib.GraphicComponents.GUI
 
             itemFrame.AddContent(ItemMenu);
 
-            itemFrame.X = 3.0f * Engine.ScreenWidth / 8.0f;
-            itemFrame.Y = 1.0f * Engine.ScreenHeight / 8.0f;
+            itemFrame.X = 3.0f * PokeEngine.ScreenWidth / 8.0f;
+            itemFrame.Y = 1.0f * PokeEngine.ScreenHeight / 8.0f;
 
-            itemFrame.Width = Engine.ScreenWidth - itemFrame.X;
-            itemFrame.Height = (2.0f * Engine.ScreenHeight / 3.0f) - itemFrame.Y;
+            itemFrame.Width = PokeEngine.ScreenWidth - itemFrame.X;
+            itemFrame.Height = (2.0f * PokeEngine.ScreenHeight / 3.0f) - itemFrame.Y;
 
             ItemMenu.ItemSelected += ItemMenu_ItemSelected;
             ItemMenu.OnExitRequested += BackToMain;
@@ -131,11 +132,11 @@ namespace BattleLib.GraphicComponents.GUI
             AttackMenu.Model = model;
 
             attackFrame.AddContent(AttackMenu);
-            attackFrame.X = Engine.ScreenWidth / 2.0f;
-            attackFrame.Y = 2.0f * Engine.ScreenHeight / 3.0f;
+            attackFrame.X = PokeEngine.ScreenWidth / 2.0f;
+            attackFrame.Y = 2.0f * PokeEngine.ScreenHeight / 3.0f;
 
-            attackFrame.Width = Engine.ScreenWidth - attackFrame.X;
-            attackFrame.Height = Engine.ScreenHeight - attackFrame.Y;
+            attackFrame.Width = PokeEngine.ScreenWidth - attackFrame.X;
+            attackFrame.Height = PokeEngine.ScreenHeight - attackFrame.Y;
 
             AttackMenu.ItemSelected += AttackMenu_ItemSelected;
             AttackMenu.OnExitRequested += BackToMain;
@@ -157,13 +158,13 @@ namespace BattleLib.GraphicComponents.GUI
 
             mainFrame.AddContent(MainMenu);
 
-            mainFrame.X = 0.5f * Engine.ScreenWidth;
-            mainFrame.Y = 2.0f * Engine.ScreenHeight / 3.0f;
-            mainFrame.Width = Engine.ScreenWidth - mainFrame.X;
-            mainFrame.Height = Engine.ScreenHeight - mainFrame.Y;
+            mainFrame.X = 0.5f * PokeEngine.ScreenWidth;
+            mainFrame.Y = 2.0f * PokeEngine.ScreenHeight / 3.0f;
+            mainFrame.Width = PokeEngine.ScreenWidth - mainFrame.X;
+            mainFrame.Height = PokeEngine.ScreenHeight - mainFrame.Y;
 
             MainMenu.ItemSelected += MainMenu_ItemSelected;
-            MainMenu.OnExitRequested += delegate { Engine.ExitProgram(); };
+            MainMenu.OnExitRequested += delegate { PokeEngine.ExitProgram(); };
         }
 
         void MainMenu_ItemSelected(object sender, SelectionEventArgs<string> e)

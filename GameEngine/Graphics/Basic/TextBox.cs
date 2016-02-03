@@ -11,9 +11,10 @@ namespace GameEngine.Graphics.Basic
         private TextGraphic textGraphic;
         private float prefTextSize;
 
-        public TextBox(String fontName, Game game) : this(fontName, new XNASpriteFont(), game) { }
+        public TextBox(String fontName, PokeEngine game) : this(fontName, new XNASpriteFont(), game) { }
 
-        public TextBox(String fontName, ISpriteFont font, Game game) : base(game)
+        public TextBox(String fontName, ISpriteFont font, PokeEngine game)
+            : base(game)
         {
             textGraphic = new TextGraphic(fontName, font);
             prefTextSize = textGraphic.TextSize;

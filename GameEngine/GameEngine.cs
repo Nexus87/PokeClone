@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace GameEngine
 {
-    public class Engine : Game
+    public class PokeEngine : Game
     {
         public static readonly float AspectRation = ScreenWidth / ScreenHeight;
         public static readonly float ScreenHeight = 1080;
@@ -16,8 +16,9 @@ namespace GameEngine
         public static readonly Color BackgroundColor = new Color(248, 248, 248, 0);
 
         public readonly GUIManager GUIManager = new GUIManager();
-        private static Engine engine;
+        private static PokeEngine engine;
         private readonly List<GameComponent> _components = new List<GameComponent>();
+        private readonly List<IGraphicComponent> graphicComponents = new List<IGraphicComponent>();
         private readonly List<GameComponent> _suspended = new List<GameComponent>();
         private readonly Configuration config;
         private XNASpriteBatch batch;
@@ -30,7 +31,7 @@ namespace GameEngine
 
         private Matrix transformation = Matrix.Identity;
 
-        private Engine(Configuration config)
+        internal PokeEngine(Configuration config)
             : base()
         {
             this.config = config;
@@ -72,7 +73,7 @@ namespace GameEngine
             }
         }
 
-        public static Engine GetInstance()
+        public static PokeEngine GetInstance()
         {
             return engine;
         }
@@ -83,7 +84,7 @@ namespace GameEngine
         }
         public static void Init(Configuration config)
         {
-            engine = new Engine(config);
+            engine = new PokeEngine(config);
         }
 
         public static void ShowGUI()
@@ -96,6 +97,11 @@ namespace GameEngine
         {
             component.Initialize();
             _components.Add(component);
+        }
+
+        public void AddComponent(IGraphicComponent component)
+        {
+            graphicComponents.Add(component);
         }
 
         public void AddKeyListener(Keys key)

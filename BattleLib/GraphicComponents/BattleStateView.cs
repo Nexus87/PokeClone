@@ -32,7 +32,8 @@ namespace BattleLib.GraphicComponents
         Texture2D playerTexture;
         Texture2D aiTexture;
 
-        public BattleStateView(BattleModel model, TextureProvider provider, Game game) : base(game)
+        public BattleStateView(BattleModel model, TextureProvider provider, PokeEngine game)
+            : base(game)
         {
             this.model = model;
             this.provider = provider;

@@ -19,7 +19,8 @@ namespace GameEngine.Graphics.Views
         private int startColumn = 0;
         private int startRow = 0;
 
-        public InternalTableView(IItemModel<T> model, Game game) : base(game)
+        public InternalTableView(IItemModel<T> model, PokeEngine game)
+            : base(game)
         {
             if (model == null)
                 throw new ArgumentNullException("model must not be null");
@@ -218,7 +219,7 @@ namespace GameEngine.Graphics.Views
 
     public class TableView<T> : InternalTableView<T, XNASpriteFont>
     {
-        public TableView(IItemModel<T> model, Game game)
+        public TableView(IItemModel<T> model, PokeEngine game)
             : base(model, game)
         {
         }

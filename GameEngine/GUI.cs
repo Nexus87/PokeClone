@@ -12,17 +12,20 @@ namespace GameEngine
 {
     public abstract class GUI : IGraphicComponent, IInputHandler
     {
-        public GUI(Game game) : base(game) { }
+        public PokeEngine Game { get; protected set; }
+        public GUI(PokeEngine game) { Game = game; }
         public event EventHandler OnCloseGUI = delegate { };
-        public override event EventHandler<GraphicComponentSizeChangedArgs> SizeChanged = delegate { };
-        public override event EventHandler<GraphicComponentPositionChangedArgs> PositionChanged = delegate { };
+        public event EventHandler<GraphicComponentSizeChangedArgs> SizeChanged = delegate { };
+        public event EventHandler<GraphicComponentPositionChangedArgs> PositionChanged = delegate { };
 
-        public override float X { get; set; }
-        public override float Y { get; set; }
+        public float X { get; set; }
+        public float Y { get; set; }
 
-        public override float Width { get; set; }
-        public override float Height { get; set; }
+        public float Width { get; set; }
+        public float Height { get; set; }
 
         public abstract bool HandleInput(Keys key);
+        public abstract void Setup(ContentManager content);
+        public abstract void Draw(GameTime time, ISpriteBatch batch);
     }
 }

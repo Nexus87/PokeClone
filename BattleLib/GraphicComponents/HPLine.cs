@@ -16,13 +16,14 @@ namespace BattleLib.GraphicComponents
         private int maxHp = 0;
         private Line outerLine;
 
-        public HPLine(Game game) : base(game)
+        public HPLine(PokeEngine game)
+            : base(game)
         {
             outerLine = new Line(game);
             innerLine = new Line(game);
             hpLine = new Line(game);
             outerLine.Color = Color.Black;
-            innerLine.Color = Engine.BackgroundColor;
+            innerLine.Color = PokeEngine.BackgroundColor;
         }
 
         public int Current { get { return currentHp; } set { currentHp = value; Invalidate(); } }

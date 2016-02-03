@@ -11,7 +11,7 @@ namespace GameEngine.Graphics.Basic
 {
     public class Container : AbstractGraphicComponent
     {
-        public Container(Game game) : base(game) { }
+        public Container(PokeEngine game) : base(game) { }
         protected List<IGraphicComponent> components = new List<IGraphicComponent>();
 
         protected void AddComponent(IGraphicComponent comp)

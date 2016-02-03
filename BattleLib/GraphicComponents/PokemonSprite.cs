@@ -35,7 +35,8 @@ namespace BattleLib.GraphicComponents
             OnAttackAnimationPlayed(this, null);
         }
 
-        public PokemonSprite(bool front, Game game) : base(game)
+        public PokemonSprite(bool front, PokeEngine game)
+            : base(game)
         {
             this.front = front;
             box = new TextureBox(game);

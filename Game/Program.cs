@@ -20,14 +20,14 @@ namespace PokemonGame
         static void Main()
         {
             var config = new Configuration();
-            Engine.Init(config);
-            var engine = Engine.GetInstance();
+            PokeEngine.Init(config);
+            var engine = PokeEngine.GetInstance();
             var graphic = new BattleGraphics(engine);
             var battleState = new BattleStateComponent(new ClientIdentifier(), new ClientIdentifier(), engine);
             
             engine.Graphic = graphic;
             engine.GUI = new BattleGUI(config, engine);
-            Engine.ShowGUI();
+            PokeEngine.ShowGUI();
             using (var game = new Game1())
                 engine.Run();
         }

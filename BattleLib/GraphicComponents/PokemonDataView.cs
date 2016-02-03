@@ -1,4 +1,5 @@
 ﻿using BattleLib.Components.BattleState;
+using GameEngine;
 using GameEngine.Graphics;
 using GameEngine.Graphics.Basic;
 using GameEngine.Graphics.Layouts;
@@ -16,7 +17,7 @@ namespace BattleLib.GraphicComponents
     class PokemonDataView : AbstractGraphicComponent
     {
         public event EventHandler OnHPUpdated = delegate { };
-        public PokemonDataView(Game game)
+        public PokemonDataView(PokeEngine game)
             : base(game)
         {
             hpLine = new HPLine(game);

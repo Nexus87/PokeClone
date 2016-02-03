@@ -71,7 +71,7 @@ namespace GameEngineTest.Graphics.Layouts
         [TestCaseSource("ValidData")]
         public void ProtectedPropertiesTest(float X, float Y, float Width, float Height, int Margin)
         {
-            var compMock = new Mock<IGraphicComponent>(gameMock.Object);
+            var compMock = new Mock<IGraphicComponent>();
             var testObj = new TestLayout();
             compMock.SetCoordinates(X, Y, Width, Height);
 
@@ -103,7 +103,7 @@ namespace GameEngineTest.Graphics.Layouts
             float Width = 30.0f;
             float Height = 50.0f;
 
-            var compMock = new Mock<IGraphicComponent>(gameMock.Object);
+            var compMock = new Mock<IGraphicComponent>();
             var batch = new SpriteBatchMock();
 
             compMock.Setup(o => o.X).Returns(X);

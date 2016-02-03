@@ -8,15 +8,21 @@ namespace GameEngine.Graphics
 {
     public abstract class AbstractGraphicComponent : IGraphicComponent
     {
-        public AbstractGraphicComponent(Game game) : base(game) { }
+        public PokeEngine Game { get; protected set; }
+        public AbstractGraphicComponent(PokeEngine game)
+        {
+            Game = game;
+            game.AddComponent(this);
+        }
+
         private bool needsUpdate = true;
         private Vector2 position;
         private Vector2 size;
 
-        public override event EventHandler<GraphicComponentPositionChangedArgs> PositionChanged = (a, b) => { };
-        public override event EventHandler<GraphicComponentSizeChangedArgs> SizeChanged = (a, b) => { };
+        public event EventHandler<GraphicComponentPositionChangedArgs> PositionChanged = (a, b) => { };
+        public event EventHandler<GraphicComponentSizeChangedArgs> SizeChanged = (a, b) => { };
 
-        public override float Height
+        public float Height
         {
             get { return size.Y; }
             set
@@ -31,7 +37,7 @@ namespace GameEngine.Graphics
             }
         }
 
-        public override float Width
+        public float Width
         {
             get
             {
@@ -49,7 +55,7 @@ namespace GameEngine.Graphics
             }
         }
 
-        public override float X
+        public float X
         {
             get { return position.X; }
             set
@@ -63,7 +69,7 @@ namespace GameEngine.Graphics
             }
         }
 
-        public override float Y
+        public float Y
         {
             get { return position.Y; }
             set
@@ -80,7 +86,7 @@ namespace GameEngine.Graphics
         protected Vector2 Position { get { return position; } }
         protected Vector2 Size { get { return size; } }
 
-        public override void Draw(GameTime time, ISpriteBatch batch)
+        public void Draw(GameTime time, ISpriteBatch batch)
         {
             if (needsUpdate)
             {
@@ -102,5 +108,8 @@ namespace GameEngine.Graphics
         protected virtual void Update()
         {
         }
+
+
+        public abstract void Setup(ContentManager content);
     }
 }
