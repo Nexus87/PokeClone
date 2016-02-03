@@ -23,7 +23,7 @@ namespace GameEngineTest.Graphics
         [SetUp]
         public void SetUp()
         {
-            componentMock = new Mock<AbstractGraphicComponent>();
+            componentMock = new Mock<AbstractGraphicComponent>(gameMock.Object);
             componentMock.CallBase = true;
             batch = new Mock<ISpriteBatch>();
 

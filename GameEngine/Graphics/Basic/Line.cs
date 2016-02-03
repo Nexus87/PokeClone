@@ -7,6 +7,8 @@ namespace GameEngine.Graphics.Basic
 {
     public class Line : AbstractGraphicComponent
     {
+        public Line(Game game) : base(game) { }
+
         private float circleScale;
         private Texture2D cups;
         private Vector2 cupScale;

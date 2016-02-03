@@ -19,7 +19,7 @@ namespace GameEngineTest.Graphics.Basic
         public void Setup()
         {
             contentMock.SetupLoad();
-            var line = new Line();
+            var line = new Line(gameMock.Object);
             line.Setup(contentMock.Object);
 
             testObj = line;

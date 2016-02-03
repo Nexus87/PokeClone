@@ -19,7 +19,7 @@ namespace GameEngineTest.Graphics.Basic
         {
             var dev = new GraphicsDevice(GraphicsAdapter.DefaultAdapter, GraphicsProfile.Reach, new PresentationParameters());
             contentMock.Setup(o => o.Load<Texture2D>(It.IsAny<string>())).Returns(new Texture2D(dev, 10, 10));
-            var box = new TextureBox();
+            var box = new TextureBox(gameMock.Object);
             box.Setup(contentMock.Object);
             box.Image = new Texture2D(dev, 10, 10);
             testObj = box;
@@ -29,7 +29,7 @@ namespace GameEngineTest.Graphics.Basic
         [TestCase]
         public void EmptyImageTest()
         {
-            testObj = new TextureBox();
+            testObj = new TextureBox(gameMock.Object);
             var spriteBatch = new SpriteBatchMock();
 
             testObj.Draw(spriteBatch);

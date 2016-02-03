@@ -14,7 +14,7 @@ namespace GameEngineTest.Graphics.Basic
         [SetUp]
         public void Setup()
         {
-            testObj = new NullGraphicObject();
+            testObj = new NullGraphicObject(gameMock.Object);
         }
     }
 }

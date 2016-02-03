@@ -19,7 +19,7 @@ namespace GameEngine.Graphics.Views
         private int startColumn = 0;
         private int startRow = 0;
 
-        public InternalTableView(IItemModel<T> model)
+        public InternalTableView(IItemModel<T> model, Game game) : base(game)
         {
             if (model == null)
                 throw new ArgumentNullException("model must not be null");
@@ -162,7 +162,7 @@ namespace GameEngine.Graphics.Views
                     if (str == null)
                         str = "";
 
-                    items[i, j] = new ItemBox(str, new SpriteFontClass());
+                    items[i, j] = new ItemBox(str, new SpriteFontClass(), Game);
                 }
             }
         }
@@ -189,7 +189,7 @@ namespace GameEngine.Graphics.Views
             {
                 for (int j = 0; j < e.newRows; j++)
                 {
-                    var tmp = new ItemBox(new SpriteFontClass());
+                    var tmp = new ItemBox(new SpriteFontClass(), Game);
                     if (content != null)
                         tmp.Setup(content);
                     items[j, i] = tmp;
@@ -200,7 +200,7 @@ namespace GameEngine.Graphics.Views
             {
                 for (int i = 0; i < e.newColumns; i++)
                 {
-                    var tmp = new ItemBox(new SpriteFontClass());
+                    var tmp = new ItemBox(new SpriteFontClass(), Game);
                     if (content != null)
                         tmp.Setup(content);
                     items[j, i] = tmp;
@@ -218,8 +218,8 @@ namespace GameEngine.Graphics.Views
 
     public class TableView<T> : InternalTableView<T, XNASpriteFont>
     {
-        public TableView(IItemModel<T> model)
-            : base(model)
+        public TableView(IItemModel<T> model, Game game)
+            : base(model, game)
         {
         }
     }

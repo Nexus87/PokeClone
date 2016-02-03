@@ -20,12 +20,14 @@ namespace GameEngineTest
         public IGraphicComponent testObj;
         public Mock<ContentManager> contentMock;
         public Mock<ISpriteFont> fontMock;
+        public Mock<Game> gameMock;
 
         public IGraphicComponentTest()
         {
             var serviceMock = new Mock<IServiceProvider>();
             contentMock = new Mock<ContentManager>(serviceMock.Object);
             fontMock = new Mock<ISpriteFont>();
+            gameMock = new Mock<Game>();
         }
 
         public static List<TestCaseData> InvalidData = new List<TestCaseData>{

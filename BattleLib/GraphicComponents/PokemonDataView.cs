@@ -16,11 +16,17 @@ namespace BattleLib.GraphicComponents
     class PokemonDataView : AbstractGraphicComponent
     {
         public event EventHandler OnHPUpdated = delegate { };
-
+        public PokemonDataView(Game game)
+            : base(game)
+        {
+            hpLine = new HPLine(game);
+            name = new TextBox("MenuFont", game);
+            lvl = new TextBox("MenuFont", game);
+        }
         VBoxLayout layout = new VBoxLayout();
-        HPLine hpLine = new HPLine();
-        TextBox name = new TextBox("MenuFont");
-        TextBox lvl = new TextBox("MenuFont");
+        HPLine hpLine;
+        TextBox name;
+        TextBox lvl;
         HpSetter hpSetter = null;
 
         class HpSetter

@@ -20,16 +20,20 @@ namespace BattleLib.GraphicComponents
     {
         public event EventHandler OnRequestDone = delegate { };
 
-        private PokemonDataView aiView = new PokemonDataView();
-        private PokemonDataView playerView = new PokemonDataView();
+        private PokemonDataView aiView;
+        private PokemonDataView playerView;
 
-        private PokemonSprite aiSprite = new PokemonSprite(true);
-        private PokemonSprite playerSprite = new PokemonSprite(false);
+        private PokemonSprite aiSprite;
+        private PokemonSprite playerSprite;
 
         PokemonWrapper tmpPkmn;
 
-        public BattleGraphics()
+        public BattleGraphics(Game game) : base(game)
         {
+            aiView = new PokemonDataView(game);
+            playerView = new PokemonDataView(game);
+            aiSprite = new PokemonSprite(true, game);
+            playerSprite = new PokemonSprite(false, game);
             aiView.OnHPUpdated += OnHPUpdated;
             playerView.OnHPUpdated += OnHPUpdated;
 

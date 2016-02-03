@@ -8,14 +8,15 @@ namespace GameEngine.Graphics
 {
     public abstract class AbstractGraphicComponent : IGraphicComponent
     {
+        public AbstractGraphicComponent(Game game) : base(game) { }
         private bool needsUpdate = true;
         private Vector2 position;
         private Vector2 size;
 
-        public event EventHandler<GraphicComponentPositionChangedArgs> PositionChanged = (a, b) => { };
-        public event EventHandler<GraphicComponentSizeChangedArgs> SizeChanged = (a, b) => { };
+        public override event EventHandler<GraphicComponentPositionChangedArgs> PositionChanged = (a, b) => { };
+        public override event EventHandler<GraphicComponentSizeChangedArgs> SizeChanged = (a, b) => { };
 
-        public float Height
+        public override float Height
         {
             get { return size.Y; }
             set
@@ -30,7 +31,7 @@ namespace GameEngine.Graphics
             }
         }
 
-        public float Width
+        public override float Width
         {
             get
             {
@@ -48,7 +49,7 @@ namespace GameEngine.Graphics
             }
         }
 
-        public float X
+        public override float X
         {
             get { return position.X; }
             set
@@ -62,7 +63,7 @@ namespace GameEngine.Graphics
             }
         }
 
-        public float Y
+        public override float Y
         {
             get { return position.Y; }
             set
@@ -79,7 +80,7 @@ namespace GameEngine.Graphics
         protected Vector2 Position { get { return position; } }
         protected Vector2 Size { get { return size; } }
 
-        public void Draw(GameTime time, ISpriteBatch batch)
+        public override void Draw(GameTime time, ISpriteBatch batch)
         {
             if (needsUpdate)
             {
@@ -89,7 +90,7 @@ namespace GameEngine.Graphics
             DrawComponent(time, batch);
         }
 
-        public abstract void Setup(ContentManager content);
+        //public abstract void Setup(ContentManager content);
 
         protected abstract void DrawComponent(GameTime time, ISpriteBatch batch);
 

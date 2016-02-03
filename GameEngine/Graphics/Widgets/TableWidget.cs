@@ -15,20 +15,20 @@ namespace GameEngine.Graphics.Widgets
         private SingleComponentLayout layout;
         private TableView<T> view;
 
-        public TableWidget()
+        public TableWidget(Game game) : base(game)
         {
             var model = new DefaultTableModel<T>();
-            view = new TableView<T>(model);
+            view = new TableView<T>(model, game);
             Handler = new DefaultSelectionHandler();
             layout = new SingleComponentLayout();
 
             layout.AddComponent(view);
         }
 
-        public TableWidget(Configuration config)
+        public TableWidget(Configuration config, Game game) : base(game)
         {
             var model = new DefaultTableModel<T>();
-            view = new TableView<T>(model);
+            view = new TableView<T>(model, game);
             Handler = new DefaultSelectionHandler(config);
             layout = new SingleComponentLayout();
 

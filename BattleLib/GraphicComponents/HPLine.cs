@@ -11,13 +11,16 @@ namespace BattleLib.GraphicComponents
     {
         private const int border = 10;
         private int currentHp = 0;
-        private Line hpLine = new Line();
-        private Line innerLine = new Line();
+        private Line hpLine;
+        private Line innerLine;
         private int maxHp = 0;
-        private Line outerLine = new Line();
+        private Line outerLine;
 
-        public HPLine()
+        public HPLine(Game game) : base(game)
         {
+            outerLine = new Line(game);
+            innerLine = new Line(game);
+            hpLine = new Line(game);
             outerLine.Color = Color.Black;
             innerLine.Color = Engine.BackgroundColor;
         }

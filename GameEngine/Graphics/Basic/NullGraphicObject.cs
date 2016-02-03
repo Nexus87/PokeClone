@@ -7,6 +7,8 @@ namespace GameEngine.Graphics.Basic
 {
     public class NullGraphicObject : AbstractGraphicComponent
     {
+        public NullGraphicObject(Game game) : base(game) { }
+
         public override void Setup(ContentManager content)
         {
         }

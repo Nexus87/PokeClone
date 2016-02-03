@@ -17,7 +17,7 @@ namespace GameEngineTest.Views
         [SetUp]
         public void Setup()
         {         
-            item = new ItemBox("TestText", fontMock.Object);
+            item = new ItemBox("TestText", fontMock.Object, gameMock.Object);
             fontMock.SetupMeasureString();
             contentMock.SetupLoad();
             item.Setup(contentMock.Object);

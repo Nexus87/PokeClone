@@ -43,12 +43,12 @@ namespace GameEngineTest.Graphics.Layouts
                     component[i, j] = layout.GetComponent(i, j);
             }
 
-            layout.SetComponent(2, 1, new Mock<IGraphicComponent>().Object);
+            layout.SetComponent(2, 1, new Mock<IGraphicComponent>(gameMock.Object).Object);
 
             Assert.AreEqual(3, layout.Rows);
             Assert.AreEqual(2, layout.Columns);
 
-            layout.SetComponent(2, 3, new Mock<IGraphicComponent>().Object);
+            layout.SetComponent(2, 3, new Mock<IGraphicComponent>(gameMock.Object).Object);
 
             Assert.AreEqual(3, layout.Rows);
             Assert.AreEqual(4, layout.Columns);
@@ -65,7 +65,7 @@ namespace GameEngineTest.Graphics.Layouts
         {
             var spriteBatch = new SpriteBatchMock();
             var tableLayout = new TableLayout(5, 5);
-            var component = new Mock<IGraphicComponent>();
+            var component = new Mock<IGraphicComponent>(gameMock.Object);
             var serviceMock = new Mock<IServiceProvider>();
             var contentMock = new Mock<ContentManager>(serviceMock.Object);
             component.SetCoordinates(0.0f, 00.0f, 250.0f, 250.0f);
@@ -126,7 +126,7 @@ namespace GameEngineTest.Graphics.Layouts
         public void ResizeDrawTest()
         {
             var spriteBatch = new SpriteBatchMock();
-            var component = new Mock<IGraphicComponent>();
+            var component = new Mock<IGraphicComponent>(gameMock.Object);
             component.SetCoordinates(0.0f, 00.0f, 180.0f, 180.0f);
 
             layout.Init(component.Object);

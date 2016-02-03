@@ -15,16 +15,16 @@ namespace GameEngine.Graphics.Widgets
         private SingleComponentLayout layout = new SingleComponentLayout();
         private MultlineTextBox textBox;
 
-        public MessageBox(Configuration config)
-            : this(config.BoxBorder, config)
+        public MessageBox(Configuration config, Game game)
+            : this(config.BoxBorder, config, game)
         {
         }
 
-        public MessageBox(string border, Configuration config)
+        public MessageBox(string border, Configuration config, Game game) : base(game)
         {
             SelectKey = config.KeySelect;
-            frameBox = new TextureBox(border);
-            textBox = new MultlineTextBox(config.MenuFont);
+            frameBox = new TextureBox(border, game);
+            textBox = new MultlineTextBox(config.MenuFont, game);
         }
 
         public event EventHandler OnAllLineShowed = delegate { };

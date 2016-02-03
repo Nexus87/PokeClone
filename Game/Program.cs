@@ -22,11 +22,11 @@ namespace PokemonGame
             var config = new Configuration();
             Engine.Init(config);
             var engine = Engine.GetInstance();
-            var graphic = new BattleGraphics();
+            var graphic = new BattleGraphics(engine);
             var battleState = new BattleStateComponent(new ClientIdentifier(), new ClientIdentifier(), engine);
             
             engine.Graphic = graphic;
-            engine.GUI = new BattleGUI(config);
+            engine.GUI = new BattleGUI(config, engine);
             Engine.ShowGUI();
             using (var game = new Game1())
                 engine.Run();

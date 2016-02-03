@@ -34,7 +34,7 @@ namespace GameEngineTest.Graphics.Layouts
         public void PositionTest()
         {
             var spriteBatch = new SpriteBatchMock();
-            var compMock = new Mock<IGraphicComponent>();
+            var compMock = new Mock<IGraphicComponent>(gameMock.Object);
             layout.SetMargin();
             compMock.SetCoordinates(0.0f, 0.0f, 200.0f, 200.0f);
 
@@ -74,7 +74,7 @@ namespace GameEngineTest.Graphics.Layouts
         public void PositionTest()
         {
             var spriteBatch = new SpriteBatchMock();
-            var compMock = new Mock<IGraphicComponent>();
+            var compMock = new Mock<IGraphicComponent>(gameMock.Object);
             layout.SetMargin();
             compMock.SetCoordinates(0.0f, 0.0f, 200.0f, 200.0f);
 

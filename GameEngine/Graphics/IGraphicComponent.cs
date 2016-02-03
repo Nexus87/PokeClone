@@ -31,18 +31,20 @@ namespace GameEngine.Graphics
     }
 
 
-    public interface IGraphicComponent
+    public abstract class IGraphicComponent : DrawableGameComponent
     {
-        event EventHandler<GraphicComponentSizeChangedArgs> SizeChanged;
-        event EventHandler<GraphicComponentPositionChangedArgs> PositionChanged;
+        public IGraphicComponent(Game game) : base(game) { }
 
-        float X { get; set; }
-        float Y { get; set; }
+        public abstract event EventHandler<GraphicComponentSizeChangedArgs> SizeChanged;
+        public abstract event EventHandler<GraphicComponentPositionChangedArgs> PositionChanged;
 
-        float Width { get; set; }
-        float Height { get; set; }
+        public abstract float X { get; set; }
+        public abstract float Y { get; set; }
 
-        void Draw(GameTime time, ISpriteBatch batch);
-        void Setup(ContentManager content);
+        public abstract float Width { get; set; }
+        public abstract float Height { get; set; }
+
+        public abstract void Draw(GameTime time, ISpriteBatch batch);
+        public abstract void Setup(ContentManager content);
     }
 }

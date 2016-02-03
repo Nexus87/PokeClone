@@ -20,9 +20,9 @@ namespace GameEngine.Graphics.Basic
         public Texture2D Image { get { return image; } set { image = value; Invalidate(); } }
         Vector2 scale;
 
-        public TextureBox() { }
+        public TextureBox(Game game) : base(game) { }
 
-        public TextureBox(String texture)
+        public TextureBox(String texture, Game game) : base(game)
         {
             this.texture = texture;
         }

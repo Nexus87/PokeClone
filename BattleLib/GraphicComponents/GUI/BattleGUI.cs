@@ -25,21 +25,24 @@ namespace BattleLib.GraphicComponents.GUI
         private TableWidget<Item> ItemMenu;
         private TableWidget<Pokemon> PKMNMenu;
 
-        private Frame mainFrame = new Frame("border");
-        private Frame attackFrame = new Frame("border");
-        private Frame itemFrame = new Frame("border");
+        private Frame mainFrame;
+        private Frame attackFrame;
+        private Frame itemFrame;
 
         private IGraphicComponent currentFrame;
         private IWidget currentWidget;
         private MessageBox messageBox;
 
-        public BattleGUI(Configuration config)
+        public BattleGUI(Configuration config, Game game) : base(game)
         {
-            MainMenu = new TableWidget<string>(config);
-            AttackMenu = new TableWidget<Move>(config);
-            ItemMenu = new TableWidget<Item>(config);
-            PKMNMenu = new TableWidget<Pokemon>(config);
-            messageBox = new MessageBox(config);
+            mainFrame = new Frame("border", game);
+            attackFrame = new Frame("border", game);
+            itemFrame = new Frame("border", game);
+            MainMenu = new TableWidget<string>(config, game);
+            AttackMenu = new TableWidget<Move>(config, game);
+            ItemMenu = new TableWidget<Item>(config, game);
+            PKMNMenu = new TableWidget<Pokemon>(config, game);
+            messageBox = new MessageBox(config, game);
 
             InitMainMenu();
             InitAttackMenu();

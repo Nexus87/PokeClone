@@ -18,11 +18,11 @@ namespace GameEngine.Graphics.Views
         private TextBox textBox;
 
         public string Text { get { return textBox.Text; } set { textBox.Text = value; } }
-        public ItemBox(ISpriteFont spriteFont) : this("", spriteFont) { }
-        public ItemBox(String displayedText, ISpriteFont spriteFont)
+        public ItemBox(ISpriteFont spriteFont, Game game) : this("", spriteFont, game) { }
+        public ItemBox(String displayedText, ISpriteFont spriteFont, Game game) : base(game)
         {
-            arrow = new TextureBox("arrow");
-            textBox = new TextBox("MenuFont", spriteFont);
+            arrow = new TextureBox("arrow", game);
+            textBox = new TextBox("MenuFont", spriteFont, game);
             textBox.Text = displayedText;
         }
         public override void Setup(ContentManager content)

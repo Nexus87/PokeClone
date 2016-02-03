@@ -15,16 +15,16 @@ namespace GameEngine.Graphics.Basic
         private int lineNumber;
         private string text;
 
-        public MultlineTextBox(string fontName, int lineNumber = 2)
-            : this(fontName, lineNumber, new XNASpriteFont())
+        public MultlineTextBox(string fontName, Game game, int lineNumber = 2)
+            : this(fontName, lineNumber, new XNASpriteFont(), game)
         { }
 
-        public MultlineTextBox(string fontName, int lineNumber, ISpriteFont font)
+        public MultlineTextBox(string fontName, int lineNumber, ISpriteFont font, Game game) : base(game)
         {
             this.lineNumber = lineNumber;
             for (int i = 0; i < lineNumber; i++)
             {
-                var box = new TextBox(fontName, font);
+                var box = new TextBox(fontName, font, game);
                 texts.Add(box);
                 layout.AddComponent(box);
             }

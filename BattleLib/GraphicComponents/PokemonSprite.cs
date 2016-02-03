@@ -19,8 +19,7 @@ namespace BattleLib.GraphicComponents
         public event EventHandler OnAttackAnimationPlayed = delegate { };
 
         TextureProvider provider = new TextureProvider();
-        TextureBox box = new TextureBox();
-
+        TextureBox box;
         bool front;
         private int id;
 
@@ -36,9 +35,10 @@ namespace BattleLib.GraphicComponents
             OnAttackAnimationPlayed(this, null);
         }
 
-        public PokemonSprite(bool front)
+        public PokemonSprite(bool front, Game game) : base(game)
         {
             this.front = front;
+            box = new TextureBox(game);
         }
         public override void Setup(ContentManager content)
         {

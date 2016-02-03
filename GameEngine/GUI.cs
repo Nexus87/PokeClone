@@ -12,19 +12,17 @@ namespace GameEngine
 {
     public abstract class GUI : IGraphicComponent, IInputHandler
     {
+        public GUI(Game game) : base(game) { }
         public event EventHandler OnCloseGUI = delegate { };
-        public event EventHandler<GraphicComponentSizeChangedArgs> SizeChanged = delegate { };
-        public event EventHandler<GraphicComponentPositionChangedArgs> PositionChanged = delegate { };
+        public override event EventHandler<GraphicComponentSizeChangedArgs> SizeChanged = delegate { };
+        public override event EventHandler<GraphicComponentPositionChangedArgs> PositionChanged = delegate { };
 
-        public virtual float X { get; set; }
-        public virtual float Y { get; set; }
+        public override float X { get; set; }
+        public override float Y { get; set; }
 
-        public virtual float Width { get; set; }
+        public override float Width { get; set; }
+        public override float Height { get; set; }
 
-        public virtual float Height { get; set; }
-
-        public abstract void Draw(GameTime time, ISpriteBatch batch);
-        public abstract void Setup(ContentManager content);
         public abstract bool HandleInput(Keys key);
     }
 }
