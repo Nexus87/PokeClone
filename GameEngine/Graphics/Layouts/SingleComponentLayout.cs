@@ -45,5 +45,15 @@ namespace GameEngine.Graphics.Layouts
             component.Width = Width;
             component.Height = Height;
         }
+
+        public override int Rows
+        {
+            get { return 1; }
+        }
+
+        public override int Columns
+        {
+            get { return 1; }
+        }
     }
 }

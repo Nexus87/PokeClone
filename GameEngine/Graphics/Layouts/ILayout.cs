@@ -20,6 +20,8 @@ namespace GameEngine.Graphics.Layouts
         void Setup(ContentManager content);
         void Draw(GameTime time, ISpriteBatch batch);
 
+        int Rows { get; }
+        int Columns { get; }
         void ForceUpdateComponents();
     }
 }

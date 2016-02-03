@@ -92,5 +92,9 @@ namespace GameEngine.Graphics.Layouts
             UpdateComponents();
             needsUpdate = false;
         }
+
+
+        public abstract int Rows { get; }
+        public abstract int Columns { get; }
     }
 }

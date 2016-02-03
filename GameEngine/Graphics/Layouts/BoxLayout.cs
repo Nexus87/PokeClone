@@ -69,6 +69,16 @@ namespace GameEngine.Graphics.Layouts
                 }
             }
         }
+
+        public override int Rows
+        {
+            get { return direction == Direction.Horizontal ? 1 : components.Count; }
+        }
+
+        public override int Columns
+        {
+            get { return direction == Direction.Vertical ? 1 : components.Count; }
+        }
     }
 
     public class HBoxLayout : BoxLayout

@@ -40,6 +40,10 @@ namespace GameEngineTest.Graphics.Layouts
             else
                 Assert.AreEqual(0, this.Height);
         }
+
+        public override int Rows { get { throw new NotImplementedException(); } }
+        public override int Columns { get { throw new NotImplementedException(); } }
+
     }
     [TestFixture]
     public class AbstractLayoutTest : ILayoutTest

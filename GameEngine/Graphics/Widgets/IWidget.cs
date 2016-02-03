@@ -4,13 +4,11 @@ using System;
 
 namespace GameEngine.Graphics.Widgets
 {
-    public interface IWidget : IInputHandler
+    public interface IWidget : IInputHandler, IGraphicComponent
     {
         event EventHandler<VisibilityChangedArgs> OnVisibilityChanged;
 
         bool IsVisible { get; }
-
-        void Draw(GameTime time, ISpriteBatch batch);
     }
 
     public class VisibilityChangedArgs : EventArgs

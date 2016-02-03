@@ -49,12 +49,14 @@
     <Compile Include="GameEngine.cs" />
     <Compile Include="Graphics\AbstractGraphicComponent.cs" />
     <Compile Include="Graphics\Basic\Container.cs" />
+    <Compile Include="Graphics\Dialog.cs" />
     <Compile Include="Graphics\Layouts\AbstractLayout.cs" />
     <Compile Include="Graphics\Basic\MultlineTextBox.cs" />
     <Compile Include="Graphics\Basic\NullGraphicObject.cs" />
     <Compile Include="Graphics\Layouts\BoxLayout.cs" />
     <Compile Include="Graphics\GUIManager.cs" />
     <Compile Include="Graphics\Views\IItemView.cs" />
+    <Compile Include="Graphics\WidgetGrid.cs" />
     <Compile Include="GUI.cs" />
     <Compile Include="InputComponent.cs" />
     <Compile Include="Graphics\Layouts\SingleComponentLayout.cs" />

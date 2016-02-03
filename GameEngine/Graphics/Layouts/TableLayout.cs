@@ -17,8 +17,8 @@ namespace GameEngine.Graphics.Layouts
             components = new IGraphicComponent[rows, columns];
         }
 
-        public int Columns { get { return components.GetLength(1); } }
-        public int Rows { get { return components.GetLength(0); } }
+        public override int Columns { get { return components.GetLength(1); } }
+        public override int Rows { get { return components.GetLength(0); } }
 
         public override void AddComponent(IGraphicComponent component)
         {
