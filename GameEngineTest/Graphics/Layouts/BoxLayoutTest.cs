@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GameEngine.Graphics.Basic;
 
 namespace GameEngineTest.Graphics.Layouts
 {
@@ -21,12 +22,8 @@ namespace GameEngineTest.Graphics.Layouts
         {
             
             layout = new VBoxLayout();
-            for (int i = 0; i < 4; i++)
-            {
-                var mock = new GraphicComponentMock();
-                layout.AddComponent(mock);
-            }
-
+            testContainer = new Container(engineMock.Object);
+            testContainer.FillContainer(4);
             testLayout = layout;
         }
 
@@ -34,12 +31,12 @@ namespace GameEngineTest.Graphics.Layouts
         public void PositionTest()
         {
             var spriteBatch = new SpriteBatchMock();
-            var compMock = new Mock<IGraphicComponent>();
+            var container = new Container(engineMock.Object);
             layout.SetMargin();
-            compMock.SetCoordinates(0.0f, 0.0f, 200.0f, 200.0f);
+            container.SetCoordinates(0.0f, 0.0f, 200.0f, 200.0f);
 
-            layout.Init(compMock.Object);
-            layout.Draw(spriteBatch);
+            layout.LayoutContainer(container);
+            container.Draw(spriteBatch);
 
             spriteBatch.Objects.Sort(delegate(DrawnObject a, DrawnObject b) { return a.Position.Y.CompareTo(b.Position.Y); });
 
@@ -64,9 +61,8 @@ namespace GameEngineTest.Graphics.Layouts
         {
 
             layout = new HBoxLayout();
-            for (int i = 0; i < 4; i++)
-                layout.AddComponent(new GraphicComponentMock());
-
+            testContainer = new Container(engineMock.Object);
+            testContainer.FillContainer(4);
             testLayout = layout;
         }
 
@@ -74,12 +70,12 @@ namespace GameEngineTest.Graphics.Layouts
         public void PositionTest()
         {
             var spriteBatch = new SpriteBatchMock();
-            var compMock = new Mock<IGraphicComponent>();
+            var container = new Container(engineMock.Object);
             layout.SetMargin();
-            compMock.SetCoordinates(0.0f, 0.0f, 200.0f, 200.0f);
+            container.SetCoordinates(0.0f, 0.0f, 200.0f, 200.0f);
 
-            layout.Init(compMock.Object);
-            layout.Draw(spriteBatch);
+            layout.LayoutContainer(container);
+            container.Draw(spriteBatch);
 
             spriteBatch.Objects.Sort(delegate(DrawnObject a, DrawnObject b) { return a.Position.X.CompareTo(b.Position.X); });
 

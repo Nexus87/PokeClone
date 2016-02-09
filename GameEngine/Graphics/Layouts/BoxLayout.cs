@@ -1,4 +1,5 @@
-﻿using GameEngine.Wrapper;
+﻿using GameEngine.Graphics.Basic;
+using GameEngine.Wrapper;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -8,7 +9,6 @@ namespace GameEngine.Graphics.Layouts
 {
     public class BoxLayout : AbstractLayout
     {
-        private readonly List<IGraphicComponent> components = new List<IGraphicComponent>();
         private Direction direction;
 
         public BoxLayout(Direction direction)
@@ -18,32 +18,10 @@ namespace GameEngine.Graphics.Layouts
 
         public enum Direction { Horizontal, Vertical };
 
-        public override void AddComponent(IGraphicComponent component)
-        {
-            components.Add(component);
-            Invalidate();
-        }
 
-        public override void RemoveComponent(IGraphicComponent component)
+        protected override void UpdateComponents(Container container)
         {
-            components.Remove(component);
-            Invalidate();
-        }
-
-        public override void Setup(ContentManager content)
-        {
-            foreach (var component in components)
-                component.Setup(content);
-        }
-
-        protected override void DrawComponents(GameTime time, ISpriteBatch batch)
-        {
-            foreach (var component in components)
-                component.Draw(time, batch);
-        }
-
-        protected override void UpdateComponents()
-        {
+            var components = container.Components;
             if (direction == Direction.Horizontal)
             {
                 float width = Width / components.Count;
@@ -68,21 +46,6 @@ namespace GameEngine.Graphics.Layouts
                     component.Height = height;
                 }
             }
-        }
-
-        public override int Rows
-        {
-            get { return direction == Direction.Horizontal ? 1 : components.Count; }
-        }
-
-        public override int Columns
-        {
-            get { return direction == Direction.Vertical ? 1 : components.Count; }
-        }
-
-        public override void LayoutContainer(Basic.Container container)
-        {
-            throw new System.NotImplementedException();
         }
     }
 
