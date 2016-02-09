@@ -37,9 +37,10 @@ namespace GameEngineTest.Util
             component.Draw(new GameTime(), spriteBatch);
         }
 
-        public static void Draw(this ILayout layout, ISpriteBatch spriteBatch)
+        public static void FillContainer(this Container container, int number)
         {
-            layout.Draw(new GameTime(), spriteBatch);
+            for (int i = 0; i < number; i++)
+                container.AddComponent(new TestGraphicComponent());
         }
 
         public static void SetupLoad(this Mock<ContentManager> contentMock)

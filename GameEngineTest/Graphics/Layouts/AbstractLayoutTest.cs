@@ -45,17 +45,10 @@ namespace GameEngineTest.Graphics.Layouts
 
         public override int Rows { get { throw new NotImplementedException(); } }
         public override int Columns { get { throw new NotImplementedException(); } }
-
-
-        public override void LayoutContainer(GameEngine.Graphics.Basic.Container container)
-        {
-            throw new NotImplementedException();
-        }
     }
     [TestFixture]
     public class AbstractLayoutTest : ILayoutTest
     {
-        public Mock<PokeEngine> engineMock = new Mock<PokeEngine>();
         public Mock<AbstractLayout> layoutMock;
         [SetUp]
         public void Setup()
@@ -63,6 +56,8 @@ namespace GameEngineTest.Graphics.Layouts
             layoutMock = new Mock<AbstractLayout>();
             layoutMock.CallBase = true;
             testLayout = layoutMock.Object;
+            testContainer = new Container(engineMock.Object);
+            testContainer.FillContainer(10);
         }
 
         public static List<TestCaseData> ValidData = new List<TestCaseData>
