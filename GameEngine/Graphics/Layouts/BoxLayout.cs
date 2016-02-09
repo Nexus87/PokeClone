@@ -79,6 +79,11 @@ namespace GameEngine.Graphics.Layouts
         {
             get { return direction == Direction.Vertical ? 1 : components.Count; }
         }
+
+        public override void LayoutContainer(Basic.Container container)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 
     public class HBoxLayout : BoxLayout

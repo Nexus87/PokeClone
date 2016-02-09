@@ -1,4 +1,5 @@
-﻿using GameEngine.Wrapper;
+﻿using GameEngine.Graphics.Basic;
+using GameEngine.Wrapper;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -54,6 +55,14 @@ namespace GameEngine.Graphics.Layouts
         public override int Columns
         {
             get { return 1; }
+        }
+
+        public override void LayoutContainer(Container container)
+        {
+            var comps = container.Components;
+            component = comps.Count == 0 ? null : comps[0];
+            Invalidate();
+            Update();
         }
     }
 }

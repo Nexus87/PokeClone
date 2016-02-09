@@ -1,4 +1,5 @@
-﻿using GameEngine.Wrapper;
+﻿using GameEngine.Graphics.Basic;
+using GameEngine.Wrapper;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using System;
@@ -22,6 +23,7 @@ namespace GameEngine.Graphics.Layouts
         protected float Y { get { return position.Y + marginTop; } }
 
         public abstract void AddComponent(IGraphicComponent component);
+        public abstract void LayoutContainer(Container container);
 
         public void Draw(GameTime time, ISpriteBatch batch)
         {
@@ -63,6 +65,7 @@ namespace GameEngine.Graphics.Layouts
             needsUpdate = true;
         }
 
+        public void Update() { UpdateComponents(); }
         protected abstract void UpdateComponents();
 
         private void parent_ConstraintsChanged(object sender, EventArgs e)

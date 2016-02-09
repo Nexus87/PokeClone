@@ -44,6 +44,11 @@ namespace GameEngineTest.Graphics.Layouts
         public override int Rows { get { throw new NotImplementedException(); } }
         public override int Columns { get { throw new NotImplementedException(); } }
 
+
+        public override void LayoutContainer(GameEngine.Graphics.Basic.Container container)
+        {
+            throw new NotImplementedException();
+        }
     }
     [TestFixture]
     public class AbstractLayoutTest : ILayoutTest

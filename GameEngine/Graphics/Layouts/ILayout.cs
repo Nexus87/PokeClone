@@ -1,4 +1,5 @@
-﻿using GameEngine.Wrapper;
+﻿using GameEngine.Graphics.Basic;
+using GameEngine.Wrapper;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -12,6 +13,7 @@ namespace GameEngine.Graphics.Layouts
 {
     public interface ILayout
     {
+        void LayoutContainer(Container container);
         void Init(IGraphicComponent component);
         void AddComponent(IGraphicComponent component);
         void RemoveComponent(IGraphicComponent component);
@@ -20,6 +22,7 @@ namespace GameEngine.Graphics.Layouts
         void Setup(ContentManager content);
         void Draw(GameTime time, ISpriteBatch batch);
 
+        void Update();
         int Rows { get; }
         int Columns { get; }
         void ForceUpdateComponents();
