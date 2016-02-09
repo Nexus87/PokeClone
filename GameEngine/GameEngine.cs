@@ -53,6 +53,8 @@ namespace GameEngine
             AddKeyListener(config.KeySelect);
         }
 
+        // For testing only
+        internal PokeEngine(){}
         public IGraphicComponent Graphic { private get; set; }
 
         public GUI GUI

@@ -12,6 +12,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using GameEngineTest.Util;
 using Moq.Protected;
+using GameEngine.Graphics.Basic;
+using GameEngine;
 
 namespace GameEngineTest.Graphics.Layouts
 {
@@ -53,6 +55,7 @@ namespace GameEngineTest.Graphics.Layouts
     [TestFixture]
     public class AbstractLayoutTest : ILayoutTest
     {
+        public Mock<PokeEngine> engineMock = new Mock<PokeEngine>();
         public Mock<AbstractLayout> layoutMock;
         [SetUp]
         public void Setup()
@@ -80,74 +83,41 @@ namespace GameEngineTest.Graphics.Layouts
         [TestCaseSource("ValidData")]
         public void ProtectedPropertiesTest(float X, float Y, float Width, float Height, int Margin)
         {
-            var compMock = new Mock<IGraphicComponent>();
+            var container = new Container(engineMock.Object);
             var testObj = new TestLayout();
-            compMock.SetCoordinates(X, Y, Width, Height);
+            container.SetCoordinates(X, Y, Width, Height);
 
-            testObj.Init(compMock.Object);
-
+            testObj.LayoutContainer(container);
             testObj.TestProperties(X, Y, Width, Height);
 
             testObj.SetMargin(left: Margin);
+            testObj.LayoutContainer(container);
             testObj.TestProperties(X + Margin, Y, Width - Margin, Height);
 
             testObj.SetMargin(right: Margin);
+            testObj.LayoutContainer(container);
             testObj.TestProperties(X, Y, Width - Margin, Height);
 
             testObj.SetMargin(top: Margin);
+            testObj.LayoutContainer(container);
             testObj.TestProperties(X, Y + Margin, Width, Height - Margin);
 
             testObj.SetMargin(bottom: Margin);
+            testObj.LayoutContainer(container);
             testObj.TestProperties(X, Y, Width, Height - Margin);
 
             testObj.SetMargin(Margin, Margin, Margin, Margin);
+            testObj.LayoutContainer(container);
             testObj.TestProperties(X + Margin, Y + Margin, Width - 2*Margin, Height - 2*Margin);
         }
 
         [TestCase]
         public void UpdateCalledTest()
         {
-            float X = 1.0f;
-            float Y = 1.0f;
-            float Width = 30.0f;
-            float Height = 50.0f;
-
-            var compMock = new Mock<IGraphicComponent>();
-            var batch = new SpriteBatchMock();
-
-            compMock.Setup(o => o.X).Returns(X);
-            compMock.Setup(o => o.Y).Returns(Y);
-            compMock.Setup(o => o.Width).Returns(Width);
-            compMock.Setup(o => o.Height).Returns(Height);
-
-            testLayout.Init(compMock.Object);
-
-            testLayout.Draw(new GameTime(), batch);
-            layoutMock.Protected().Verify("UpdateComponents", Times.Once());
-            layoutMock.ResetCalls();
-
-            testLayout.Draw(new GameTime(), batch);
-            layoutMock.Protected().Verify("UpdateComponents", Times.Never());
-            layoutMock.ResetCalls();
-
-            compMock.Raise(o => o.PositionChanged += null, new GraphicComponentPositionChangedArgs(X, Y));
-            testLayout.Draw(new GameTime(), batch);
-            testLayout.Draw(new GameTime(), batch);
-            layoutMock.Protected().Verify("UpdateComponents", Times.Once());
-            layoutMock.ResetCalls();
-
-            compMock.Raise(o => o.SizeChanged += null, new GraphicComponentSizeChangedArgs(Width, Height));
-            testLayout.Draw(new GameTime(), batch);
-            testLayout.Draw(new GameTime(), batch);
-            layoutMock.Protected().Verify("UpdateComponents", Times.Once());
-            layoutMock.ResetCalls();
-
-            compMock.Raise(o => o.SizeChanged += null, new GraphicComponentSizeChangedArgs(Width, Height));
-            compMock.Raise(o => o.PositionChanged += null, new GraphicComponentPositionChangedArgs(X, Y));
-            testLayout.Draw(new GameTime(), batch);
-            testLayout.Draw(new GameTime(), batch);
-            layoutMock.Protected().Verify("UpdateComponents", Times.Once());
-            layoutMock.ResetCalls();
+            var container = new Container(engineMock.Object);
+            container.SetCoordinates(200, 200, 200, 200);
+            testLayout.LayoutContainer(container);
+            layoutMock.Protected().Verify("UpdateComponents", Times.Once(), container);
         }
     }
 }

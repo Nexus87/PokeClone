@@ -14,17 +14,7 @@ namespace GameEngine.Graphics.Layouts
     public interface ILayout
     {
         void LayoutContainer(Container container);
-        void Init(IGraphicComponent component);
-        void AddComponent(IGraphicComponent component);
-        void RemoveComponent(IGraphicComponent component);
-
         void SetMargin(int left = 0, int right = 0, int top = 0, int bottom = 0);
-        void Setup(ContentManager content);
-        void Draw(GameTime time, ISpriteBatch batch);
-
         void Update();
-        int Rows { get; }
-        int Columns { get; }
-        void ForceUpdateComponents();
     }
 }

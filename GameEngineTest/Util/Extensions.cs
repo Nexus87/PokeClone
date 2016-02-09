@@ -1,4 +1,5 @@
 ﻿using GameEngine.Graphics;
+using GameEngine.Graphics.Basic;
 using GameEngine.Graphics.Layouts;
 using GameEngine.Wrapper;
 using Microsoft.Xna.Framework;
@@ -21,6 +22,14 @@ namespace GameEngineTest.Util
             compMock.Setup(o => o.Y).Returns(Y);
             compMock.Setup(o => o.Width).Returns(Width);
             compMock.Setup(o => o.Height).Returns(Height);
+        }
+
+        public static void SetCoordinates(this Container container, float X, float Y, float Width, float Height)
+        {
+            container.X = X;
+            container.Y = Y;
+            container.Width = Width;
+            container.Height = Height;
         }
 
         public static void Draw(this IGraphicComponent component, ISpriteBatch spriteBatch)
