@@ -43,6 +43,15 @@ namespace GameEngineTest.Util
                 container.AddComponent(new TestGraphicComponent());
         }
 
+        public static void ClearContainer(this Container container)
+        {
+            var list = container.Components;
+            while (list.Count != 0)
+            {
+                container.RemoveComponent(list[0]);
+                list = container.Components;
+            }
+        }
         public static void SetupLoad(this Mock<ContentManager> contentMock)
         {
             var dev = new GraphicsDevice(GraphicsAdapter.DefaultAdapter, GraphicsProfile.Reach, new PresentationParameters());

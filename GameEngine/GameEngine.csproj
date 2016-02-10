@@ -51,7 +51,7 @@
     <Compile Include="Graphics\Basic\Container.cs" />
     <Compile Include="Graphics\Dialog.cs" />
     <Compile Include="Graphics\Layouts\AbstractLayout.cs" />
-    <Compile Include="Graphics\Basic\MultlineTextBox.cs" />
+    <None Include="Graphics\Basic\MultlineTextBox.cs" />
     <Compile Include="Graphics\Basic\NullGraphicObject.cs" />
     <Compile Include="Graphics\Layouts\BoxLayout.cs" />
     <Compile Include="Graphics\GUIManager.cs" />
@@ -60,7 +60,7 @@
     <Compile Include="GUI.cs" />
     <Compile Include="InputComponent.cs" />
     <Compile Include="Graphics\Layouts\SingleComponentLayout.cs" />
-    <Compile Include="Graphics\Basic\Frame.cs" />
+    <None Include="Graphics\Basic\Frame.cs" />
     <Compile Include="Graphics\IGraphicComponent.cs" />
     <Compile Include="Graphics\Layouts\ILayout.cs" />
     <Compile Include="Graphics\Basic\Line.cs" />
@@ -73,12 +73,12 @@
     <Compile Include="Graphics\Widgets\ISelectionHandler.cs" />
     <Compile Include="Graphics\Views\ItemBox.cs" />
     <Compile Include="Graphics\Widgets\IWidget.cs" />
-    <Compile Include="Graphics\Views\TableView.cs" />
+    <Fakes Include="Graphics\Views\TableView.cs" />
     <Compile Include="Graphics\Basic\TextBox.cs" />
     <Compile Include="Graphics\Basic\TextGraphic.cs" />
     <Compile Include="Graphics\Basic\TextureBox.cs" />
-    <Compile Include="Graphics\Widgets\MessageBox.cs" />
-    <Compile Include="Graphics\Widgets\TableWidget.cs" />
+    <None Include="Graphics\Widgets\MessageBox.cs" />
+    <None Include="Graphics\Widgets\TableWidget.cs" />
     <Compile Include="Utils\Extensions.cs" />
     <Compile Include="Wrapper\InputManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

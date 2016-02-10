@@ -51,7 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Graphics\AbstractGraphicComponentTest.cs" />
-    <Compile Include="Graphics\Basic\MultilineTextboxTest.cs" />
+    <None Include="Graphics\Basic\MultilineTextboxTest.cs" />
     <Compile Include="Graphics\Basic\NullGraphicObjectTest.cs" />
     <Compile Include="Graphics\Basic\LineTest.cs" />
     <Compile Include="Graphics\Basic\TextBoxTest.cs" />
@@ -73,7 +73,7 @@
     <Compile Include="Views\DefaultTableModelTest.cs" />
     <Compile Include="Views\IItemModelTest.cs" />
     <Compile Include="Views\ItemBoxTest.cs" />
-    <Compile Include="Views\TableViewTest.cs" />
+    <None Include="Views\TableViewTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />

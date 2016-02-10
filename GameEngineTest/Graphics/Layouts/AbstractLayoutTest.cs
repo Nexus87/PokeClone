@@ -19,11 +19,7 @@ namespace GameEngineTest.Graphics.Layouts
 {
     class TestLayout : AbstractLayout
     {
-        public override void AddComponent(IGraphicComponent component) { throw new NotImplementedException(); }
-        public override void RemoveComponent(IGraphicComponent component) { throw new NotImplementedException(); }
-        public override void Setup(ContentManager content) { throw new NotImplementedException(); }
-        protected override void DrawComponents(GameTime time, ISpriteBatch batch) { throw new NotImplementedException(); }
-        protected override void UpdateComponents() { throw new NotImplementedException(); }
+        protected override void UpdateComponents(Container container) { }
 
         public void TestProperties(float X, float Y, float Width, float Height)
         {
@@ -43,8 +39,6 @@ namespace GameEngineTest.Graphics.Layouts
                 Assert.AreEqual(0, this.Height);
         }
 
-        public override int Rows { get { throw new NotImplementedException(); } }
-        public override int Columns { get { throw new NotImplementedException(); } }
     }
     [TestFixture]
     public class AbstractLayoutTest : ILayoutTest
@@ -58,6 +52,7 @@ namespace GameEngineTest.Graphics.Layouts
             testLayout = layoutMock.Object;
             testContainer = new Container(engineMock.Object);
             testContainer.FillContainer(10);
+            testContainer.Layout = testLayout;
         }
 
         public static List<TestCaseData> ValidData = new List<TestCaseData>

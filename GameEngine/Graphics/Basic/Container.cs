@@ -14,7 +14,7 @@ namespace GameEngine.Graphics.Basic
     public class Container : AbstractGraphicComponent
     {
         public Container(PokeEngine game) : base(game) { }
-        public ILayout Layout { get; private set; }
+        public ILayout Layout { get; set; }
 
         public ReadOnlyCollection<IGraphicComponent> Components { get { return components.AsReadOnly(); } }
         protected List<IGraphicComponent> components = new List<IGraphicComponent>();
@@ -31,7 +31,7 @@ namespace GameEngine.Graphics.Basic
             Invalidate();
         }
 
-        protected void RemoveComponent(IGraphicComponent comp)
+        public void RemoveComponent(IGraphicComponent comp)
         {
             components.Remove(comp);
             Invalidate();

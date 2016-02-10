@@ -19,11 +19,11 @@ namespace GameEngineTest.Graphics.Layouts
 
         [SetUp]
         public void Setup()
-        {
-            
+        {            
             layout = new VBoxLayout();
             testContainer = new Container(engineMock.Object);
             testContainer.FillContainer(4);
+            testContainer.Layout = layout;
             testLayout = layout;
         }
 
@@ -31,12 +31,11 @@ namespace GameEngineTest.Graphics.Layouts
         public void PositionTest()
         {
             var spriteBatch = new SpriteBatchMock();
-            var container = new Container(engineMock.Object);
             layout.SetMargin();
-            container.SetCoordinates(0.0f, 0.0f, 200.0f, 200.0f);
+            testContainer.SetCoordinates(0.0f, 0.0f, 200.0f, 200.0f);
 
-            layout.LayoutContainer(container);
-            container.Draw(spriteBatch);
+            layout.LayoutContainer(testContainer);
+            testContainer.Draw(spriteBatch);
 
             spriteBatch.Objects.Sort(delegate(DrawnObject a, DrawnObject b) { return a.Position.Y.CompareTo(b.Position.Y); });
 
@@ -63,6 +62,7 @@ namespace GameEngineTest.Graphics.Layouts
             layout = new HBoxLayout();
             testContainer = new Container(engineMock.Object);
             testContainer.FillContainer(4);
+            testContainer.Layout = layout;
             testLayout = layout;
         }
 
@@ -70,12 +70,11 @@ namespace GameEngineTest.Graphics.Layouts
         public void PositionTest()
         {
             var spriteBatch = new SpriteBatchMock();
-            var container = new Container(engineMock.Object);
             layout.SetMargin();
-            container.SetCoordinates(0.0f, 0.0f, 200.0f, 200.0f);
+            testContainer.SetCoordinates(0.0f, 0.0f, 200.0f, 200.0f);
 
-            layout.LayoutContainer(container);
-            container.Draw(spriteBatch);
+            layout.LayoutContainer(testContainer);
+            testContainer.Draw(spriteBatch);
 
             spriteBatch.Objects.Sort(delegate(DrawnObject a, DrawnObject b) { return a.Position.X.CompareTo(b.Position.X); });
 

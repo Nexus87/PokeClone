@@ -21,9 +21,11 @@ namespace GameEngineTest.Util
             float realWidth = Math.Max(0, Width);
             float realHeight = Math.Max(0, Height);
             bool ret = true;
-            ret &= (realWidth.CompareTo(0) == 0) || (Position.X.CompareTo(X) >= 0 && Position.X.CompareTo(X + realWidth) <= 0);
+            ret &= (realWidth.CompareTo(0) == 0) || (Size.X.CompareTo(0) == 0) || 
+                (Position.X.CompareTo(X) >= 0 && Position.X.CompareTo(X + realWidth) <= 0);
             Assert.IsTrue(ret);
-            ret &= (realHeight.CompareTo(0) == 0) || (Position.Y.CompareTo(Y) >= 0 && Position.Y.CompareTo(Y + realHeight) <= 0);
+            ret &= (realHeight.CompareTo(0) == 0) || (Size.Y.CompareTo(0) == 0) || 
+                (Position.Y.CompareTo(Y) >= 0 && Position.Y.CompareTo(Y + realHeight) <= 0);
             Assert.IsTrue(ret);
 
             ret &= Size.X.CompareTo(realWidth) <= 0;

@@ -16,16 +16,17 @@ namespace GameEngineTest.Graphics.Layouts
     [TestFixture]
     public class TableLayoutTest : ILayoutTest
     {
-        TableLayout layout;
+        GridLayout layout;
 
         [SetUp]
         public void Setup()
         {
-            layout = new TableLayout(2, 2);
+            layout = new GridLayout(2, 2);
 
             testLayout = layout;
             testContainer = new Container(engineMock.Object);
             testContainer.FillContainer(4);
+            testContainer.Layout = layout;
         }
 
         //[TestCase]
@@ -62,19 +63,20 @@ namespace GameEngineTest.Graphics.Layouts
         public void NullComponentTest()
         {
             var spriteBatch = new SpriteBatchMock();
-            var tableLayout = new TableLayout(5, 5);
-            var component = new Container(engineMock.Object);
-            
-            component.SetCoordinates(0.0f, 0.0f, 250.0f, 250.0f);
-            tableLayout.LayoutContainer(component);
+            var tableLayout = new GridLayout(5, 5);
 
-            component.Draw(spriteBatch);
+            testContainer.ClearContainer();
+            testContainer.SetCoordinates(0.0f, 0.0f, 250.0f, 250.0f);
+            testContainer.Layout = tableLayout;
+            tableLayout.LayoutContainer(testContainer);
+
+            testContainer.Draw(spriteBatch);
 
             Assert.AreEqual(0, spriteBatch.Objects.Count);
 
             spriteBatch.Objects.Clear();
-            component.FillContainer(1);
-            component.Draw(spriteBatch);
+            testContainer.FillContainer(1);
+            testContainer.Draw(spriteBatch);
 
             Assert.AreEqual(1, spriteBatch.Objects.Count);
             Assert.AreEqual(250.0f, spriteBatch.Objects[0].Size.X);

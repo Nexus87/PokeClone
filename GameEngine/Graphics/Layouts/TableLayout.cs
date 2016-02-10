@@ -7,11 +7,11 @@ using GameEngine.Graphics.Basic;
 
 namespace GameEngine.Graphics.Layouts
 {
-    public class TableLayout : AbstractLayout
+    public class GridLayout : AbstractLayout
     {
         private int Rows { get; set; }
         private int Columns { get; set; }
-        public TableLayout(int rows, int columns)
+        public GridLayout(int rows, int columns)
         {
             if (rows < 0 || columns < 0)
                 throw new ArgumentException("Row and columns need to be positive");
@@ -34,7 +34,7 @@ namespace GameEngine.Graphics.Layouts
             {
                 for (int j = 0; j < Columns; j++)
                 {
-                    var component = components[i, j];
+                    IGraphicComponent component = null; //components[i, j];
                     if (component == null)
                         continue;
 
