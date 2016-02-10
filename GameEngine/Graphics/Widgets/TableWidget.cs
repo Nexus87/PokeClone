@@ -1,4 +1,5 @@
-﻿using GameEngine.Graphics.Layouts;
+﻿using GameEngine.Graphics.Basic;
+using GameEngine.Graphics.Layouts;
 using GameEngine.Graphics.Views;
 using GameEngine.Wrapper;
 using Microsoft.Xna.Framework;
@@ -9,32 +10,23 @@ using System;
 
 namespace GameEngine.Graphics.Widgets
 {
-    public class TableWidget<T> : AbstractGraphicComponent, IWidget
+    public class TableWidget<T> : ForwardingGraphicComponent<TableView<T>>, IWidget
     {
         private ISelectionHandler handler;
-        private SingleComponentLayout layout;
         private TableView<T> view;
 
         public TableWidget(PokeEngine game)
-            : base(game)
+            : base(new TableView<T>(new DefaultTableModel<T>(), game), game)
         {
-            var model = new DefaultTableModel<T>();
-            view = new TableView<T>(model, game);
+            view = InnerComponent;
             Handler = new DefaultSelectionHandler();
-            layout = new SingleComponentLayout();
-
-            layout.AddComponent(view);
         }
 
         public TableWidget(Configuration config, PokeEngine game)
-            : base(game)
+            : base(new TableView<T>(new DefaultTableModel<T>(), game), game)
         {
-            var model = new DefaultTableModel<T>();
-            view = new TableView<T>(model, game);
+            view = InnerComponent;
             Handler = new DefaultSelectionHandler(config);
-            layout = new SingleComponentLayout();
-
-            layout.AddComponent(view);
         }
 
         public event EventHandler<SelectionEventArgs<T>> ItemSelected = delegate { };
@@ -86,17 +78,6 @@ namespace GameEngine.Graphics.Widgets
             Model.SetData(data, row, column);
         }
 
-        public override void Setup(ContentManager content)
-        {
-            layout.Init(this);
-            layout.Setup(content);
-        }
-
-        protected override void DrawComponent(GameTime time, ISpriteBatch batch)
-        {
-            layout.Draw(time, batch);
-        }
-
         private void handler_CloseRequested(object sender, EventArgs e)
         {
             OnExitRequested(this, null);
@@ -106,6 +87,10 @@ namespace GameEngine.Graphics.Widgets
         {
             var Item = Model.DataAt(handler.SelectedRow, handler.SelectedColumn);
             ItemSelected(this, new SelectionEventArgs<T> { SelectedData = Item });
+        }
+
+        protected override void Update()
+        {
         }
     }
 }

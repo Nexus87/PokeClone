@@ -78,8 +78,8 @@
     <Compile Include="Graphics\Basic\TextBox.cs" />
     <Compile Include="Graphics\Basic\TextGraphic.cs" />
     <Compile Include="Graphics\Basic\TextureBox.cs" />
-    <None Include="Graphics\Widgets\MessageBox.cs" />
-    <None Include="Graphics\Widgets\TableWidget.cs" />
+    <Compile Include="Graphics\Widgets\MessageBox.cs" />
+    <Compile Include="Graphics\Widgets\TableWidget.cs" />
     <Compile Include="Utils\Extensions.cs" />
     <Compile Include="Wrapper\InputManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

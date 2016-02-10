@@ -57,22 +57,8 @@ namespace GameEngine.Graphics.Widgets
             textBox.Text = "";
         }
 
-        public override void Setup(ContentManager content)
+        protected override void Update()
         {
-            var boxLayout = new SingleComponentLayout();
-            layout.Init(this);
-            layout.AddComponent(frameBox);
-
-            boxLayout.Init(frameBox);
-            boxLayout.AddComponent(textBox);
-            boxLayout.SetMargin(10, 10, 10, 10);
-
-            layout.Setup(content);
-        }
-
-        protected override void DrawComponent(GameTime time, ISpriteBatch batch)
-        {
-            layout.Draw(time, batch);
         }
     }
 }
