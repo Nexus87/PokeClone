@@ -7,11 +7,10 @@ using System.Text.RegularExpressions;
 
 namespace GameEngine.Graphics.Basic
 {
-    public class MultlineTextBox : AbstractGraphicComponent
+    public class MultlineTextBox : ForwardingGraphicComponent<Container>
     {
         private readonly LinkedList<string> lines = new LinkedList<string>();
         private readonly List<TextBox> texts = new List<TextBox>();
-        private VBoxLayout layout = new VBoxLayout();
         private int lineNumber;
         private string text;
 
@@ -20,14 +19,18 @@ namespace GameEngine.Graphics.Basic
         { }
 
         public MultlineTextBox(string fontName, int lineNumber, ISpriteFont font, PokeEngine game)
-            : base(game)
+            : base(new Container(game), game)
         {
             this.lineNumber = lineNumber;
+
+            var container = InnerComponent;
+            container.Layout = new VBoxLayout();
+
             for (int i = 0; i < lineNumber; i++)
             {
                 var box = new TextBox(fontName, font, game);
                 texts.Add(box);
-                layout.AddComponent(box);
+                container.AddComponent(box);
             }
         }
 
@@ -35,7 +38,7 @@ namespace GameEngine.Graphics.Basic
         {
             // If we don't force the layout to update, DisplayableChars might
             // return 0
-            layout.ForceUpdateComponents();
+            InnerComponent.ForceLayout();
             return texts[0].DisplayableChars();
         }
         public string Text { set { text = value; Invalidate(); } }
@@ -48,20 +51,8 @@ namespace GameEngine.Graphics.Basic
             SetText();
         }
 
-        public override void Setup(ContentManager content)
-        {
-            layout.Init(this);
-            layout.Setup(content);
-        }
-
-        protected override void DrawComponent(GameTime time, ISpriteBatch batch)
-        {
-            layout.Draw(time, batch);
-        }
-
         protected override void Update()
         {
-            base.Update();
             SplitText();
             SetText();
         }

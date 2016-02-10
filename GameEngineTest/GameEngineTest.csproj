@@ -51,7 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Graphics\AbstractGraphicComponentTest.cs" />
-    <None Include="Graphics\Basic\MultilineTextboxTest.cs" />
+    <Compile Include="Graphics\Basic\MultilineTextboxTest.cs" />
     <Compile Include="Graphics\Basic\NullGraphicObjectTest.cs" />
     <Compile Include="Graphics\Basic\LineTest.cs" />
     <Compile Include="Graphics\Basic\TextBoxTest.cs" />

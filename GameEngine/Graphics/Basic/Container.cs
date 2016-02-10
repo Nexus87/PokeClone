@@ -37,6 +37,11 @@ namespace GameEngine.Graphics.Basic
             Invalidate();
         }
 
+        public void ForceLayout()
+        {
+            Layout.LayoutContainer(this);
+        }
+
         public override void Setup(ContentManager content)
         {
             foreach (var c in components)

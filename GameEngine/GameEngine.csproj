@@ -50,8 +50,9 @@
     <Compile Include="Graphics\AbstractGraphicComponent.cs" />
     <Compile Include="Graphics\Basic\Container.cs" />
     <Compile Include="Graphics\Dialog.cs" />
+    <Compile Include="Graphics\ForwardingGraphicComponent.cs" />
     <Compile Include="Graphics\Layouts\AbstractLayout.cs" />
-    <None Include="Graphics\Basic\MultlineTextBox.cs" />
+    <Compile Include="Graphics\Basic\MultlineTextBox.cs" />
     <Compile Include="Graphics\Basic\NullGraphicObject.cs" />
     <Compile Include="Graphics\Layouts\BoxLayout.cs" />
     <Compile Include="Graphics\GUIManager.cs" />

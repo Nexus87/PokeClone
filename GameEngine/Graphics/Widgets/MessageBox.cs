@@ -8,12 +8,12 @@ using System;
 
 namespace GameEngine.Graphics.Widgets
 {
-    public class MessageBox : AbstractGraphicComponent, IWidget
+    public class MessageBox : ForwardingGraphicComponent<MultlineTextBox>, IWidget
     {
         public Keys SelectKey;
         private TextureBox frameBox;
-        private SingleComponentLayout layout = new SingleComponentLayout();
         private MultlineTextBox textBox;
+        private SingleComponentLayout layout = new SingleComponentLayout();
 
         public MessageBox(Configuration config, PokeEngine game)
             : this(config.BoxBorder, config, game)
@@ -21,11 +21,11 @@ namespace GameEngine.Graphics.Widgets
         }
 
         public MessageBox(string border, Configuration config, PokeEngine game)
-            : base(game)
+            : base(new MultlineTextBox(config.MenuFont, game), game)
         {
             SelectKey = config.KeySelect;
             frameBox = new TextureBox(border, game);
-            textBox = new MultlineTextBox(config.MenuFont, game);
+            textBox = InnerComponent;
         }
 
         public event EventHandler OnAllLineShowed = delegate { };
