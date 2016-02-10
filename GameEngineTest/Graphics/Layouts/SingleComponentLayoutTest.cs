@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GameEngineTest.Util;
+using Microsoft.Xna.Framework;
 
 namespace GameEngineTest.Graphics.Layouts
 {
@@ -25,6 +26,7 @@ namespace GameEngineTest.Graphics.Layouts
             testLayout = layout;
             testContainer = new Container(engineMock.Object);
             testContainer.FillContainer(1);
+            testContainer.Layout = layout;
         }
 
         [TestCase]
@@ -32,11 +34,14 @@ namespace GameEngineTest.Graphics.Layouts
         {
             var batch = new SpriteBatchMock();
             testContainer.FillContainer(10);
+            testContainer.SetCoordinates(10.0f, 10.0f, 50.0f, 50.0f);
+
             testLayout.LayoutContainer(testContainer);
 
             testContainer.Draw(batch);
-            Assert.AreEqual(1, batch.Objects);
-            batch.Objects[0].IsInConstraints(testContainer);
+            var Objects = from obj in batch.Objects where obj.Size != Vector2.Zero select obj;
+            Assert.AreEqual(1, Objects.Count());
+            Objects.First().IsInConstraints(testContainer);
         }
     }
 }
