@@ -1,4 +1,5 @@
-﻿using GameEngine.Graphics.Layouts;
+﻿using GameEngine.Graphics.Basic;
+using GameEngine.Graphics.Layouts;
 using GameEngine.Utils;
 using GameEngine.Wrapper;
 using Microsoft.Xna.Framework;
@@ -7,28 +8,25 @@ using System;
 
 namespace GameEngine.Graphics.Views
 {
-    public class InternalTableView<T, SpriteFontClass> : AbstractGraphicComponent, IItemView where SpriteFontClass : ISpriteFont, new()
+    public class InternalTableView<T, SpriteFontClass> : ForwardingGraphicComponent<Container>, IItemView where SpriteFontClass : ISpriteFont, new()
     {
         private const int visibleColumns = 8;
         private const int visibleRows = 8;
         private ContentManager content;
         internal ItemBox[,] items;
-        private TableLayout layout;
 
         private IItemModel<T> model;
         private int startColumn = 0;
         private int startRow = 0;
 
         public InternalTableView(IItemModel<T> model, PokeEngine game)
-            : base(game)
+            : base(new Container(game), game)
         {
             if (model == null)
                 throw new ArgumentNullException("model must not be null");
 
             SetModel(model);
-
-            layout = new TableLayout(ViewportRows, ViewportColumns);
-            layout.Init(this);
+            InnerComponent.Layout = new GridLayout(1, 1);
         }
 
         public event EventHandler<TableResizeEventArgs> OnTableResize = delegate { };
@@ -50,6 +48,7 @@ namespace GameEngine.Graphics.Views
 
                 SetModel(value);
                 Invalidate();
+
                 if (sizeChanged)
                     OnTableResize(this, new TableResizeEventArgs(value.Rows, value.Columns));
             }
@@ -121,35 +120,20 @@ namespace GameEngine.Graphics.Views
             return true;
         }
 
-        public override void Setup(ContentManager content)
-        {
-            this.content = content;
-            foreach (var item in items)
-                if (item != null)
-                    item.Setup(content);
-        }
-
-        protected override void DrawComponent(GameTime time, ISpriteBatch batch)
-        {
-            layout.Draw(time, batch);
-        }
-
         protected override void Update()
         {
-            if (layout.Rows > ViewportRows || layout.Columns > ViewportColumns)
-            {
-                layout.Resize(ViewportRows, ViewportColumns);
-            }
-
             FillLayout();
         }
 
         private void FillLayout()
         {
+            var container = InnerComponent;
+
+            container.RemoveAllComponents();
             for (int i = 0; i < ViewportRows; i++)
             {
                 for (int j = 0; j < ViewportColumns; j++)
-                    layout.SetComponent(i, j, items[startRow + i, startColumn + j]);
+                    container.AddComponent(items[startRow + i, startColumn + j]);
             }
         }
 
@@ -182,31 +166,9 @@ namespace GameEngine.Graphics.Views
                 return;
 
             var newItems = new ItemBox[e.newRows, e.newColumns];
-            layout.Resize(ViewportRows, ViewportColumns);
-            items.Copy(newItems);
+
+            items.Copy(newItems, delegate { return new ItemBox(new SpriteFontClass(), Game); });
             items = newItems;
-
-            for (int i = oldColumnns; i < e.newColumns; i++)
-            {
-                for (int j = 0; j < e.newRows; j++)
-                {
-                    var tmp = new ItemBox(new SpriteFontClass(), Game);
-                    if (content != null)
-                        tmp.Setup(content);
-                    items[j, i] = tmp;
-                }
-            }
-
-            for (int j = oldRows; j < e.newRows; j++)
-            {
-                for (int i = 0; i < e.newColumns; i++)
-                {
-                    var tmp = new ItemBox(new SpriteFontClass(), Game);
-                    if (content != null)
-                        tmp.Setup(content);
-                    items[j, i] = tmp;
-                }
-            }
 
             OnTableResize(this, new TableResizeEventArgs(e.newRows, e.newColumns));
         }

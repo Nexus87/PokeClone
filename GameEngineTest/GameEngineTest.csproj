@@ -73,7 +73,7 @@
     <Compile Include="Views\DefaultTableModelTest.cs" />
     <Compile Include="Views\IItemModelTest.cs" />
     <Compile Include="Views\ItemBoxTest.cs" />
-    <None Include="Views\TableViewTest.cs" />
+    <Compile Include="Views\TableViewTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />

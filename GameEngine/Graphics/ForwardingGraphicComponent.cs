@@ -5,7 +5,7 @@ namespace GameEngine.Graphics
     public abstract class ForwardingGraphicComponent<T> : IGraphicComponent where T : IGraphicComponent
     {
         protected T InnerComponent { get; private set; }
-        private bool needsUpdate;
+        private bool needsUpdate = true;
 
         public event EventHandler<GraphicComponentPositionChangedArgs> PositionChanged = delegate { };
         public event EventHandler<GraphicComponentSizeChangedArgs> SizeChanged = delegate { };

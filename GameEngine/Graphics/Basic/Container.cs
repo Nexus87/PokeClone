@@ -37,6 +37,12 @@ namespace GameEngine.Graphics.Basic
             Invalidate();
         }
 
+        public void RemoveAllComponents()
+        {
+            components.Clear();
+            Invalidate();
+        }
+
         public void ForceLayout()
         {
             Layout.LayoutContainer(this);

@@ -18,6 +18,7 @@ namespace GameEngine.Graphics.Views
         private TextBox textBox;
 
         public string Text { get { return textBox.Text; } set { textBox.Text = value; } }
+
         public ItemBox(ISpriteFont spriteFont, PokeEngine game) : this("", spriteFont, game) { }
         public ItemBox(String displayedText, ISpriteFont spriteFont, PokeEngine game)
             : base(game)
@@ -25,6 +26,9 @@ namespace GameEngine.Graphics.Views
             arrow = new TextureBox("arrow", game);
             textBox = new TextBox("MenuFont", spriteFont, game);
             textBox.Text = displayedText;
+
+            if (game.Content != null)
+                Setup(game.Content);
         }
         public override void Setup(ContentManager content)
         {

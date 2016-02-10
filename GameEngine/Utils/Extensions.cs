@@ -8,6 +8,8 @@ namespace GameEngine.Utils
 {
     static class Extensions
     {
+        public delegate T Creator<T>();
+
         public static void Copy<T>(this T[,] source, T[,] target)
         {
             int rows = Math.Min(source.GetLength(0), target.GetLength(0));
@@ -21,15 +23,21 @@ namespace GameEngine.Utils
             }
         }
 
-        public static void Copy<T, S>(this T[,] source, T[,] target)
+        public static void Copy<T>(this T[,] source, T[,] target, Creator<T> defaultValue)
         {
             int rows = Math.Min(source.GetLength(0), target.GetLength(0));
             int columns = Math.Min(source.GetLength(1), target.GetLength(1));
-            for (int i = 0; i < rows; i++)
+
+            int sourceRows = source.GetLength(0);
+            int sourceColumns = source.GetLength(1);
+            int targetRows = target.GetLength(0);
+            int targetColumns = target.GetLength(1);
+
+            for (int row = 0; row < targetRows; row++)
             {
-                for (int j = 0; j < columns; j++)
+                for (int column = 0; column < targetColumns; column++)
                 {
-                    target[i, j] = source[i, j];
+                    target[row, column] = row >= sourceRows || column >= sourceColumns ? defaultValue() :  source[row, column];
                 }
             }
         }

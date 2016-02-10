@@ -242,6 +242,7 @@ namespace GameEngineTest.Views
             modelMock.Setup(o => o.Columns).Returns(2);
             modelMock.Setup(o => o.Rows).Returns(2);
             modelMock.Setup(o => o.DataStringAt(It.IsAny<int>(), It.IsAny<int>())).Returns<int, int>((a, b) => "Data " + a + " " + b);
+            gameMock.Object.Content = contentMock.Object;
 
             table = new InternalTableView<TestType, SpriteFontMock>(modelMock.Object, gameMock.Object);
             table.Setup(contentMock.Object);

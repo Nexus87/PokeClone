@@ -74,7 +74,7 @@
     <Compile Include="Graphics\Widgets\ISelectionHandler.cs" />
     <Compile Include="Graphics\Views\ItemBox.cs" />
     <Compile Include="Graphics\Widgets\IWidget.cs" />
-    <Fakes Include="Graphics\Views\TableView.cs" />
+    <Compile Include="Graphics\Views\TableView.cs" />
     <Compile Include="Graphics\Basic\TextBox.cs" />
     <Compile Include="Graphics\Basic\TextGraphic.cs" />
     <Compile Include="Graphics\Basic\TextureBox.cs" />
