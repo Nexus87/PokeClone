@@ -27,7 +27,7 @@ namespace GameEngine.Graphics.Views
             textBox = new TextBox("MenuFont", spriteFont, game);
             textBox.Text = displayedText;
 
-            if (game.Content != null)
+            if (game.IsRunning)
                 Setup(game.Content);
         }
         public override void Setup(ContentManager content)

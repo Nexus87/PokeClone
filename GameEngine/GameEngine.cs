@@ -14,7 +14,7 @@ namespace GameEngine
         public static readonly float ScreenHeight = 1080;
         public static readonly float ScreenWidth = 1920;
         public static readonly Color BackgroundColor = new Color(248, 248, 248, 0);
-
+        public bool IsRunning { get; private set; }
         public readonly GUIManager GUIManager = new GUIManager();
         private static PokeEngine engine;
         private readonly List<GameComponent> _components = new List<GameComponent>();
@@ -35,7 +35,7 @@ namespace GameEngine
             : base()
         {
             this.config = config;
-
+            IsRunning = false;
             input = new InputComponent(this);
             manager = new GraphicsDeviceManager(this);
 
@@ -148,6 +148,7 @@ namespace GameEngine
                 throw new InvalidOperationException("Graphic component is not set");
             Graphic.Setup(Content);
             GUIManager.Setup(Content);
+            IsRunning = true;
         }
 
         protected override void Update(GameTime gameTime)

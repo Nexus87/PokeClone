@@ -25,7 +25,7 @@ namespace GameEngine.Graphics
         public float X { get { return InnerComponent.X; } set { InnerComponent.X = value; } }
         public float Y { get { return InnerComponent.Y; } set { InnerComponent.Y = value; } }
 
-        public void Draw(Microsoft.Xna.Framework.GameTime time, Wrapper.ISpriteBatch batch)
+        public virtual void Draw(Microsoft.Xna.Framework.GameTime time, Wrapper.ISpriteBatch batch)
         {
             if (needsUpdate)
             {

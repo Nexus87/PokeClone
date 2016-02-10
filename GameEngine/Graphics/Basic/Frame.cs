@@ -10,19 +10,24 @@ namespace GameEngine.Graphics.Basic
     public class Frame : IGraphicComponent
     {
         public PokeEngine Game { get; private set; }
+
+        private Container container;
         private IGraphicComponent box;
+
         public void AddContent(IGraphicComponent component)
         {
-            Layout.AddComponent(component);
+            container.RemoveAllComponents();
+            container.AddComponent(component);
         }
 
         public Frame(String backgroundTexture, PokeEngine game)
         {
             Game = game;
+            container = new Container(game);
             box = new TextureBox(backgroundTexture, game);
             box.PositionChanged += box_PositionChanged;
             box.SizeChanged += box_SizeChanged;
-            Layout = new SingleComponentLayout();
+            container.Layout = new SingleComponentLayout();
 
             SetMargins(90, 90, 80, 80);
         }
@@ -31,16 +36,16 @@ namespace GameEngine.Graphics.Basic
 
         public event EventHandler<GraphicComponentSizeChangedArgs> SizeChanged = delegate { };
 
-        public float Height { get { return box.Height; } set { box.Height = value; } }
+        public float Height { get { return box.Height; } set { box.Height = container.Height = value; } }
         public ILayout Layout { get; set; }
-        public float Width { get { return box.Width; } set { box.Width = value; } }
-        public float X { get { return box.X; } set { box.X = value; } }
-        public float Y { get { return box.Y; } set { box.Y = value; } }
+        public float Width { get { return box.Width; } set { box.Width = container.Width = value; } }
+        public float X { get { return box.X; } set { box.X = container.X = value; } }
+        public float Y { get { return box.Y; } set { box.Y = container.Y = value; } }
 
         public void Draw(GameTime time, ISpriteBatch batch)
         {
             box.Draw(time, batch);
-            Layout.Draw(time, batch);
+            container.Draw(time, batch);
         }
 
         public void SetMargins(int left = 0, int right = 0, int top = 0, int bottom = 0)
@@ -57,12 +62,7 @@ namespace GameEngine.Graphics.Basic
                 return;
 
             box.Setup(content);
-
-            if (Layout == null)
-                return;
-
-            Layout.Init(box);
-            Layout.Setup(content);
+            container.Setup(content);
         }
 
         private void box_PositionChanged(object sender, GraphicComponentPositionChangedArgs e)

@@ -14,17 +14,25 @@ using System.Threading.Tasks;
 
 namespace BattleLib.GraphicComponents
 {
-    class PokemonDataView : AbstractGraphicComponent
+    class PokemonDataView : ForwardingGraphicComponent<Container>
     {
         public event EventHandler OnHPUpdated = delegate { };
         public PokemonDataView(PokeEngine game)
-            : base(game)
+            : base(new Container(game), game)
         {
+            var container = InnerComponent;
+
             hpLine = new HPLine(game);
             name = new TextBox("MenuFont", game);
             lvl = new TextBox("MenuFont", game);
+
+            container.AddComponent(name);
+            container.AddComponent(hpLine);
+            container.AddComponent(lvl);
+
+            container.Layout = new VBoxLayout();
         }
-        VBoxLayout layout = new VBoxLayout();
+
         HPLine hpLine;
         TextBox name;
         TextBox lvl;
@@ -68,17 +76,7 @@ namespace BattleLib.GraphicComponents
             hpLine.Current = pokemon.HP;
         }
 
-        public override void Setup(ContentManager content)
-        {
-            layout.Init(this);
-            layout.AddComponent(name);
-            layout.AddComponent(hpLine);
-            layout.AddComponent(lvl);
-
-            layout.Setup(content);
-        }
-
-        protected override void DrawComponent(GameTime time, ISpriteBatch batch)
+        public override void Draw(GameTime time, ISpriteBatch batch)
         {
             if (hpSetter != null)
             {
@@ -89,7 +87,11 @@ namespace BattleLib.GraphicComponents
                 }
             }
 
-            layout.Draw(time, batch);
+            base.Draw(time, batch);
+        }
+
+        protected override void Update()
+        {
         }
     }
 }
