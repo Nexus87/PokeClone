@@ -35,7 +35,7 @@ namespace GameEngine.Graphics
             InnerComponent.Draw(time, batch);
         }
 
-        public void Setup(Microsoft.Xna.Framework.Content.ContentManager content)
+        public virtual void Setup(Microsoft.Xna.Framework.Content.ContentManager content)
         {
             InnerComponent.Setup(content);
         }

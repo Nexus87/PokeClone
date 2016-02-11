@@ -12,9 +12,8 @@ namespace GameEngine.Graphics.Views
     {
         private const int visibleColumns = 8;
         private const int visibleRows = 8;
-        private ContentManager content;
         internal ItemBox[,] items;
-
+        private GridLayout layout;
         private IItemModel<T> model;
         private int startColumn = 0;
         private int startRow = 0;
@@ -26,7 +25,8 @@ namespace GameEngine.Graphics.Views
                 throw new ArgumentNullException("model must not be null");
 
             SetModel(model);
-            InnerComponent.Layout = new GridLayout(1, 1);
+            layout = new GridLayout(1, 1);
+            InnerComponent.Layout = layout;
         }
 
         public event EventHandler<TableResizeEventArgs> OnTableResize = delegate { };
@@ -120,6 +120,13 @@ namespace GameEngine.Graphics.Views
             return true;
         }
 
+        public override void Setup(ContentManager content)
+        {
+            foreach (var i in items)
+                i.Setup(content);
+
+            base.Setup(content);
+        }
         protected override void Update()
         {
             FillLayout();
@@ -170,6 +177,9 @@ namespace GameEngine.Graphics.Views
             items.Copy(newItems, delegate { return new ItemBox(new SpriteFontClass(), Game); });
             items = newItems;
 
+            layout.Columns = e.newColumns;
+            layout.Rows = e.newRows;
+            
             OnTableResize(this, new TableResizeEventArgs(e.newRows, e.newColumns));
         }
     }
