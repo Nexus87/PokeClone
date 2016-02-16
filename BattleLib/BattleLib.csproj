@@ -58,7 +58,6 @@
     <Compile Include="Components\BattleState\WaitForActionState.cs" />
     <Compile Include="Components\BattleState\WaitForCharState.cs" />
     <Compile Include="Gen1BattleRules.cs" />
-    <Compile Include="GraphicComponents\BattleStateView.cs" />
     <Compile Include="GraphicComponents\GUI\AttackModel.cs" />
     <Compile Include="GraphicComponents\GUI\BattleGUI.cs" />
     <Compile Include="GraphicComponents\HPLine.cs" />

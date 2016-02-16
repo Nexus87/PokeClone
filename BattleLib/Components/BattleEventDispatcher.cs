@@ -50,9 +50,6 @@ namespace BattleLib.Components
 
         LinkedList<BattleEvent> eventQueue = new LinkedList<BattleEvent>();
 
-        BattleGUI gui;
-        BattleModel model;
-
         public override void Update(GameTime gameTime)
         {
             if (eventDispatched || eventQueue.Count == 0)

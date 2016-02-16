@@ -20,7 +20,6 @@ namespace BattleLib.Components.BattleState
         private Stats stateModifier = new Stats();
 
         public event EventHandler<ConditionChangedEventArgs> OnConditionChanged = delegate { };
-
         public event EventHandler OnPokemonChanged = delegate { };
 
         public event EventHandler<StateChangedEventArgs> OnStateChanged = delegate { };

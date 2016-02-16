@@ -51,6 +51,7 @@ namespace BattleLib.GraphicComponents
                 this.targetHP = targetHP;
                 currentHP = line.Current;
             }
+
             public bool Update(GameTime time)
             {
                 int nextHp = (int)(currentHP + (targetHP - currentHP) * speed * time.ElapsedGameTime.Seconds);
