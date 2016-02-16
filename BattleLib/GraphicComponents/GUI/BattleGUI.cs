@@ -20,90 +20,87 @@ namespace BattleLib.GraphicComponents.GUI
         public BattleStateComponent BattleState { get; set; }
         public ClientIdentifier ID { get; set; }
 
-        private TableWidget<string> MainMenu;
-        private TableWidget<Move> AttackMenu;
-        private TableWidget<Item> ItemMenu;
-        private TableWidget<Pokemon> PKMNMenu;
+        private Dialog mainFrame;
+        private Dialog attackFrame;
+        private Dialog itemFrame;
+        private Dialog pkmnFrame;
+        private Dialog messageFrame;
 
-        private Frame mainFrame;
-        private Frame attackFrame;
-        private Frame itemFrame;
-
-        private IGraphicComponent currentFrame;
-        private IWidget currentWidget;
+        private IWidget currentFrame;
         private MessageBox messageBox;
 
-        public BattleGUI(Configuration config, PokeEngine game)
-            : base(game)
+        public BattleGUI(Configuration config, PokeEngine game) : 
+            base(game)
         {
-            mainFrame = new Frame("border", game);
-            attackFrame = new Frame("border", game);
-            itemFrame = new Frame("border", game);
-            MainMenu = new TableWidget<string>(config, game);
-            AttackMenu = new TableWidget<Move>(config, game);
-            ItemMenu = new TableWidget<Item>(config, game);
-            PKMNMenu = new TableWidget<Pokemon>(config, game);
+            mainFrame = new Dialog("border", game);
+            attackFrame = new Dialog("border", game);
+            itemFrame = new Dialog("border", game);
+            pkmnFrame = new Dialog(game);
+            messageFrame = new Dialog("border", game);
+
             messageBox = new MessageBox(config, game);
 
-            InitMainMenu();
-            InitAttackMenu();
-            InitItemMenu();
-            InitPKMNMenu();
+            InitMainMenu(config, game);
+            InitAttackMenu(config, game);
+            InitItemMenu(config, game);
+            InitPKMNMenu(config, game);
             InitMessageBox();
 
             currentFrame = mainFrame;
-            currentWidget = MainMenu;
         }
 
         private void InitMessageBox()
         {
-            messageBox.X = 0;
-            messageBox.Y = 2.0f * PokeEngine.ScreenHeight / 3.0f;
-            messageBox.Width = PokeEngine.ScreenWidth;
-            messageBox.Height = PokeEngine.ScreenHeight - messageBox.Y;
+            messageFrame.AddWidget(messageBox);
+            messageFrame.X = 0;
+            messageFrame.Y = 2.0f * PokeEngine.ScreenHeight / 3.0f;
+            messageFrame.Width = PokeEngine.ScreenWidth;
+            messageFrame.Height = PokeEngine.ScreenHeight - messageFrame.Y;
         }
 
-        private void InitPKMNMenu()
+        private void InitPKMNMenu(Configuration config, PokeEngine game)
         {
+            var PKMNMenu = new TableWidget<Pokemon>(config, game);
             var model = new DefaultListModel<Pokemon>();
+
             var list = new List<Pokemon>();
             PKData data = new PKData();
             list.Add(new Pokemon(data, data.BaseStats) { Name = "PKMN1"});
             list.Add(new Pokemon(data, data.BaseStats) { Name = "PKMN2" });
 
             PKMNMenu.Model = model;
-            PKMNMenu.X = 0;
-            PKMNMenu.Y = 0;
-            PKMNMenu.Width = PokeEngine.ScreenWidth;
-            PKMNMenu.Height = PokeEngine.ScreenHeight;
+            pkmnFrame.X = 0;
+            pkmnFrame.Y = 0;
+            pkmnFrame.Width = PokeEngine.ScreenWidth;
+            pkmnFrame.Height = PokeEngine.ScreenHeight;
 
             PKMNMenu.ItemSelected += PKMNMenu_ItemSelected;
             PKMNMenu.OnExitRequested += BackToMain;
+
+            pkmnFrame.AddWidget(PKMNMenu);
         }
 
         void BackToMain(object sender, EventArgs e)
         {
             currentFrame = mainFrame;
-            currentWidget = MainMenu;
         }
 
         private void PKMNMenu_ItemSelected(object sender, SelectionEventArgs<Pokemon> e)
         {
             BattleState.SetCharacter(ID, e.SelectedData);
-            currentFrame = null;
-            currentWidget = messageBox;
+            currentFrame = messageFrame;
         }
 
-        private void InitItemMenu()
+        private void InitItemMenu(Configuration config, PokeEngine game)
         {
+
+            var ItemMenu = new TableWidget<Item>(config, game);
             var model = new DefaultListModel<Item>();
             var list = new List<Item>();
             for (int i = 0; i < 20; i++)
                 model.SetData(new Item { Name = "Item" + i }, i);
 
             ItemMenu.Model = model;
-
-            itemFrame.AddContent(ItemMenu);
 
             itemFrame.X = 3.0f * PokeEngine.ScreenWidth / 8.0f;
             itemFrame.Y = 1.0f * PokeEngine.ScreenHeight / 8.0f;
@@ -113,17 +110,28 @@ namespace BattleLib.GraphicComponents.GUI
 
             ItemMenu.ItemSelected += ItemMenu_ItemSelected;
             ItemMenu.OnExitRequested += BackToMain;
+
+            itemFrame.AddWidget(ItemMenu);
         }
 
         private void ItemMenu_ItemSelected(object sender, SelectionEventArgs<Item> e)
         {
             BattleState.SetItem(ID, e.SelectedData);
-            currentFrame = null;
-            currentWidget = messageBox;
+            currentFrame = messageBox;
+            HideDialog();
         }
 
-        private void InitAttackMenu()
+        private void HideDialog()
         {
+            mainFrame.IsVisible = false;
+            pkmnFrame.IsVisible = false;
+            attackFrame.IsVisible = false;
+            itemFrame.IsVisible = false;
+        }
+
+        private void InitAttackMenu(Configuration config, PokeEngine game)
+        {
+            var AttackMenu = new TableWidget<Move>(config, game);
             var model = new AttackModel();
             var list = new List<Move>();
 
@@ -131,7 +139,7 @@ namespace BattleLib.GraphicComponents.GUI
             model.SetData(new Move(new MoveData { Name = "Move2" }), 1);
             AttackMenu.Model = model;
 
-            attackFrame.AddContent(AttackMenu);
+            attackFrame.AddWidget(AttackMenu);
             attackFrame.X = PokeEngine.ScreenWidth / 2.0f;
             attackFrame.Y = 2.0f * PokeEngine.ScreenHeight / 3.0f;
 
@@ -145,18 +153,18 @@ namespace BattleLib.GraphicComponents.GUI
         private void AttackMenu_ItemSelected(object sender, SelectionEventArgs<Move> e)
         {
             BattleState.SetMove(ID, e.SelectedData);
-            currentFrame = null;
-            currentWidget = messageBox;
+            currentFrame = messageBox;
         }
 
-        private void InitMainMenu()
+        private void InitMainMenu(Configuration config, PokeEngine game)
         {
+            var MainMenu = new TableWidget<string>(config, game);
             MainMenu.SetData("Attack", 0, 0);
             MainMenu.SetData("PKMN", 0, 1);
             MainMenu.SetData("Item", 1, 0);
             MainMenu.SetData("Run", 1, 1);
 
-            mainFrame.AddContent(MainMenu);
+            mainFrame.AddWidget(MainMenu);
 
             mainFrame.X = 0.5f * PokeEngine.ScreenWidth;
             mainFrame.Y = 2.0f * PokeEngine.ScreenHeight / 3.0f;
@@ -173,21 +181,18 @@ namespace BattleLib.GraphicComponents.GUI
             {
                 case "Attack":
                     currentFrame = attackFrame;
-                    currentWidget = AttackMenu;
                     break;
                 case "PKMN":
-                    currentFrame = PKMNMenu;
-                    currentWidget = PKMNMenu;
+                    currentFrame = pkmnFrame;
                     break;
                 case "Item":
                     currentFrame = itemFrame;
-                    currentWidget = ItemMenu;
                     break;
             }
         }
         public override bool HandleInput(Keys key)
         {
-            return currentWidget.HandleInput(key);
+            return currentFrame.HandleInput(key);
         }
 
         public override void Setup(ContentManager content)
@@ -195,14 +200,15 @@ namespace BattleLib.GraphicComponents.GUI
             mainFrame.Setup(content);
             attackFrame.Setup(content);
             itemFrame.Setup(content);
-            PKMNMenu.Setup(content);
-            messageBox.Setup(content);
+            pkmnFrame.Setup(content);
+            messageFrame.Setup(content);
         }
 
         public override void Draw(GameTime time, ISpriteBatch batch)
         {
-            messageBox.Draw(time, batch);
-            currentFrame.Draw(time, batch);
+            messageFrame.Draw(time, batch);
+            if(currentFrame != messageBox)
+                currentFrame.Draw(time, batch);
         }
     }
 }

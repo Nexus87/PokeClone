@@ -30,12 +30,11 @@ namespace GameEngine.Graphics.Widgets
         }
 
         public event EventHandler<SelectionEventArgs<T>> ItemSelected = delegate { };
-
         public event EventHandler OnExitRequested = delegate { };
 
         public event EventHandler<VisibilityChangedArgs> OnVisibilityChanged;
 
-        public bool IsVisible { get; private set; }
+        public bool IsVisible { get; set; }
 
         public IItemModel<T> Model
         {

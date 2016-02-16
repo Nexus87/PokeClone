@@ -24,8 +24,7 @@ namespace GameEngine.Graphics
             set
             {
                 InnerComponent.Layout = value;
-                if (texture != null)
-                    value.SetMargin(20, 20, 20, 20);
+                Invalidate();
             }
         }
 
@@ -40,6 +39,7 @@ namespace GameEngine.Graphics
         {
             border = new TextureBox(borderTexture, game);
             texture = borderTexture;
+            InnerComponent.Layout = new SingleComponentLayout();
         }
 
         public override void Setup(ContentManager content)
@@ -50,7 +50,7 @@ namespace GameEngine.Graphics
 
         public event EventHandler<VisibilityChangedArgs> OnVisibilityChanged;
 
-        public bool IsVisible { get; }
+        public bool IsVisible { get; set; }
 
         public bool HandleInput(Keys key)
         {
@@ -62,6 +62,23 @@ namespace GameEngine.Graphics
             }
 
             return false;
+        }
+
+        protected override void Update()
+        {
+            if (texture == null)
+                return;
+
+            Layout.SetMargin(100, 50, 100, 50);
+            border.X = X;
+            border.Y = Y;
+            border.Width = Width;
+            border.Height = Height;
+        }
+        public override void Draw(GameTime time, ISpriteBatch batch)
+        {
+            border.Draw(time, batch);
+            base.Draw(time, batch);
         }
     }
 }

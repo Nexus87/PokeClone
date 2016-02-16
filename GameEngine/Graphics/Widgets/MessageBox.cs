@@ -11,28 +11,19 @@ namespace GameEngine.Graphics.Widgets
     public class MessageBox : ForwardingGraphicComponent<MultlineTextBox>, IWidget
     {
         public Keys SelectKey;
-        private TextureBox frameBox;
         private MultlineTextBox textBox;
-        private SingleComponentLayout layout = new SingleComponentLayout();
 
         public MessageBox(Configuration config, PokeEngine game)
-            : this(config.BoxBorder, config, game)
-        {
-        }
-
-        public MessageBox(string border, Configuration config, PokeEngine game)
             : base(new MultlineTextBox(config.MenuFont, game), game)
         {
             SelectKey = config.KeySelect;
-            frameBox = new TextureBox(border, game);
             textBox = InnerComponent;
         }
 
         public event EventHandler OnAllLineShowed = delegate { };
-
         public event EventHandler<VisibilityChangedArgs> OnVisibilityChanged;
 
-        public bool IsVisible { get; private set; }
+        public bool IsVisible { get; set; }
 
         public void DisplayText(string text)
         {

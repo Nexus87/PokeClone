@@ -8,7 +8,7 @@ namespace GameEngine.Graphics.Widgets
     {
         event EventHandler<VisibilityChangedArgs> OnVisibilityChanged;
 
-        bool IsVisible { get; }
+        bool IsVisible { get; set; }
     }
 
     public class VisibilityChangedArgs : EventArgs
