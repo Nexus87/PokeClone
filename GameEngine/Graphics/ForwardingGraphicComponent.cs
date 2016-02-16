@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GameEngine.Graphics.Basic;
+using System;
 
 namespace GameEngine.Graphics
 {
@@ -46,5 +47,11 @@ namespace GameEngine.Graphics
         }
 
         protected abstract void Update();
+
+
+        public void PlayAnimation(IAnimation animation)
+        {
+            InnerComponent.PlayAnimation(animation);
+        }
     }
 }

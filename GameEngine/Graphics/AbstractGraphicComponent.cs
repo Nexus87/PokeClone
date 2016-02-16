@@ -1,4 +1,5 @@
-﻿using GameEngine.Wrapper;
+﻿using GameEngine.Graphics.Basic;
+using GameEngine.Wrapper;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -85,9 +86,12 @@ namespace GameEngine.Graphics
 
         protected Vector2 Position { get { return position; } }
         protected Vector2 Size { get { return size; } }
-
+        
         public void Draw(GameTime time, ISpriteBatch batch)
         {
+            if (Animation != null)
+                Animation.Update(time, this);
+
             if (needsUpdate)
             {
                 Update();
@@ -109,6 +113,19 @@ namespace GameEngine.Graphics
         {
         }
 
+        public void PlayAnimation(IAnimation animation)
+        {
+            Animation = animation;
+            Animation.AnimationFinished += Animation_AnimationFinished;
+        }
+
+        private void Animation_AnimationFinished(object sender, EventArgs e)
+        {
+            Animation.AnimationFinished -= Animation_AnimationFinished;
+            Animation = null;
+        }
+
+        protected IAnimation Animation { get; set; }
 
         public abstract void Setup(ContentManager content);
     }

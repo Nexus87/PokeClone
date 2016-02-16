@@ -4,6 +4,7 @@ using GameEngine.Graphics.Basic;
 using GameEngine.Wrapper;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
+using System;
 
 namespace BattleLib.GraphicComponents
 {
@@ -26,8 +27,18 @@ namespace BattleLib.GraphicComponents
             innerLine.Color = PokeEngine.BackgroundColor;
         }
 
+        public event EventHandler AnimationDone = delegate { };
+
         public int Current { get { return currentHp; } set { currentHp = value; Invalidate(); } }
+
         public int MaxHP { get { return maxHp; } set { maxHp = value; Invalidate(); } }
+
+        public void AnimationSetHP(int currentHP)
+        {
+            var animation = new HPResizeAnimation(currentHp, this);
+            animation.AnimationFinished += animation_AnimationFinished;
+            PlayAnimation(animation);
+        }
 
         public override void Setup(ContentManager content)
         {
@@ -67,6 +78,60 @@ namespace BattleLib.GraphicComponents
                 hpLine.Color = Color.Yellow;
             else
                 hpLine.Color = Color.Red;
+        }
+
+        private void animation_AnimationFinished(object sender, EventArgs e)
+        {
+            var animation = (IAnimation)sender;
+            animation.AnimationFinished -= animation_AnimationFinished;
+            AnimationDone(this, null);
+        }
+    }
+
+    internal class HPResizeAnimation : IAnimation
+    {
+        private int currentHP = 0;
+        private HPLine line;
+        private bool lower;
+        private int startHP;
+        private int targetHP;
+
+        public HPResizeAnimation(int startHP, int targetHP, HPLine line)
+        {
+            this.startHP = startHP;
+            this.targetHP = targetHP;
+            this.line = line;
+            this.currentHP = startHP;
+
+            if (startHP > targetHP)
+                lower = true;
+        }
+
+        public HPResizeAnimation(int targetHP, HPLine line)
+            : this(line.Current, targetHP, line)
+        {
+        }
+
+        public event EventHandler AnimationFinished;
+
+        public void Update(GameTime time, IGraphicComponent component)
+        {
+            if (targetHP == currentHP)
+            {
+                AnimationFinished(this, null);
+                currentHP = 0;
+                return;
+            }
+
+            if (time.ElapsedGameTime.TotalMilliseconds != 0)
+                return;
+
+            if (lower)
+                currentHP = Math.Max(currentHP - 1, targetHP);
+            else
+                currentHP = Math.Min(currentHP + 1, targetHP);
+
+            line.Current = currentHP;
         }
     }
 }

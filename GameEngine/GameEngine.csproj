@@ -48,7 +48,9 @@
     <Compile Include="Configuration.cs" />
     <Compile Include="GameEngine.cs" />
     <Compile Include="Graphics\AbstractGraphicComponent.cs" />
+    <Compile Include="Graphics\Animations\ResizeAnimation.cs" />
     <Compile Include="Graphics\Basic\Container.cs" />
+    <Compile Include="Graphics\Basic\IAnimation.cs" />
     <Compile Include="Graphics\Dialog.cs" />
     <Compile Include="Graphics\ForwardingGraphicComponent.cs" />
     <Compile Include="Graphics\Layouts\AbstractLayout.cs" />

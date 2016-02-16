@@ -1,4 +1,5 @@
-﻿using GameEngine.Wrapper;
+﻿using GameEngine.Graphics.Basic;
+using GameEngine.Wrapper;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -34,6 +35,8 @@ namespace GameEngine.Graphics
     public interface IGraphicComponent
     {
         PokeEngine Game { get; }
+
+        void PlayAnimation(IAnimation animation);
 
         event EventHandler<GraphicComponentSizeChangedArgs> SizeChanged;
         event EventHandler<GraphicComponentPositionChangedArgs> PositionChanged;
