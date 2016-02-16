@@ -26,7 +26,7 @@ namespace PokemonGame
             var battleState = new BattleStateComponent(new ClientIdentifier(), new ClientIdentifier(), engine);
             
             engine.Graphic = graphic;
-            engine.GUI = new BattleGUI(config, engine);
+            var gui = new BattleGUI(config, engine);
             PokeEngine.ShowGUI();
             using (var game = new Game1())
                 engine.Run();

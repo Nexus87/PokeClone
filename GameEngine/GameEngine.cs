@@ -57,13 +57,6 @@ namespace GameEngine
         internal PokeEngine(){}
         public IGraphicComponent Graphic { private get; set; }
 
-        public GUI GUI
-        {
-            set
-            {
-                GUIManager.GUI = value;
-            }
-        }
 
         public IInputHandler InputHandler
         {

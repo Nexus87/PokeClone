@@ -21,10 +21,21 @@ namespace GameEngine.Graphics.Widgets
         }
 
         public event EventHandler OnAllLineShowed = delegate { };
-        public event EventHandler<VisibilityChangedArgs> OnVisibilityChanged;
+        public event EventHandler<VisibilityChangedArgs> OnVisibilityChanged = delegate { };
 
-        public bool IsVisible { get; set; }
+        public bool IsVisible
+        {
+            get { return isVisible; }
+            set
+            {
+                if (value == isVisible)
+                    return;
 
+                isVisible = value;
+                OnVisibilityChanged(this, new VisibilityChangedArgs(isVisible));
+            }
+        }
+        private bool isVisible;
         public void DisplayText(string text)
         {
             textBox.Text = text;
