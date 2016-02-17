@@ -13,10 +13,12 @@ namespace BattleLib.Components.BattleState
         Pokemon enqueuedPlayerChar = null;
         Pokemon enqueuedAiChar = null;
 
-        public WaitForCharState(ClientIdentifier player, ClientIdentifier ai)
+        BattleStateComponent state;
+        public WaitForCharState(BattleStateComponent state, ClientIdentifier player, ClientIdentifier ai)
         {
             this.player = player;
             this.ai = ai;
+            this.state = state;
         }
 
         public override void Init()
@@ -26,11 +28,11 @@ namespace BattleLib.Components.BattleState
             done = false;
         }
 
-        public override void Update(BattleData data)
+        public override IBattleState Update(BattleData data)
         {
             done = data.PlayerPkmn != null && data.AIPkmn != null;
             if (done)
-                return;
+                return state.actionState;
 
             if (data.PlayerPkmn == null && enqueuedPlayerChar != null)
                 data.PlayerPkmn.Pokemon = enqueuedPlayerChar;
@@ -38,6 +40,7 @@ namespace BattleLib.Components.BattleState
             if (data.AIPkmn == null && enqueuedAiChar != null)
                 data.AIPkmn.Pokemon = enqueuedAiChar;
 
+            return this;
         }
 
         public override void SetCharacter(ClientIdentifier id, Pokemon pkmn)
@@ -58,7 +61,7 @@ namespace BattleLib.Components.BattleState
                 throw new ArgumentException("Source identifier not found\n");
         }
 
-        public override bool IsDone()
+        public bool IsDone()
         {
             return done;
         }

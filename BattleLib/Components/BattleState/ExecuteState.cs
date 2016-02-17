@@ -12,21 +12,24 @@ namespace BattleLib.Components.BattleState
         ICommandScheduler scheduler;
         IBattleRules rules;
 
-        public ExecuteState(ICommandScheduler scheduler, IBattleRules rules)
+        BattleStateComponent state;
+
+        public ExecuteState(BattleStateComponent state, ICommandScheduler scheduler, IBattleRules rules)
         {
             this.scheduler = scheduler;
             this.rules = rules;
+            this.state = state;
         }
         public override void Init()
         {
             done = false;
         }
-        public override bool IsDone()
+        public bool IsDone()
         {
             return done;
         }
 
-        public override void Update(BattleData data)
+        public override IBattleState Update(BattleData data)
         {
             scheduler.AppendCommand(data.playerCommand);
             scheduler.AppendCommand(data.aiCommand);
@@ -38,6 +41,11 @@ namespace BattleLib.Components.BattleState
             data.playerCommand = null;
             
             done = true;
+
+            if (data.AIPkmn.HP == 0 || data.PlayerPkmn.HP == 0)
+                return state.charState;
+
+            return state.actionState;
         }
     }
 }

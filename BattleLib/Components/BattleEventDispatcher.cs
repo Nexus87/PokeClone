@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BattleLib.Components
 {
-    interface BattleEvent
+    public interface BattleEvent
     {
         event EventHandler OnEventProcessed;
         void Dispatch();
@@ -41,12 +41,19 @@ namespace BattleLib.Components
             OnEventProcessed(this, null);
         }
     }
+    public interface IEventDispatcher
+    {
+        void AddEvent(BattleEvent ev);
+    }
 
-    class BattleEventDispatcher : GameComponent
+    public class BattleEventDispatcher : GameComponent, IEventDispatcher
     {
         bool eventDispatched = false;
 
-        public BattleEventDispatcher(Game game) : base(game) { }
+        public BattleEventDispatcher(Game game) : base(game) 
+        {
+            game.Services.AddService(typeof(IEventDispatcher), this);
+        }
 
         LinkedList<BattleEvent> eventQueue = new LinkedList<BattleEvent>();
 
@@ -68,6 +75,11 @@ namespace BattleLib.Components
             var ev = (BattleEvent) sender;
             ev.OnEventProcessed -= OnEventProcessedHandler;
             eventDispatched = false;
+        }
+
+        public void AddEvent(BattleEvent ev)
+        {
+            eventQueue.AddLast(ev);
         }
 
     }

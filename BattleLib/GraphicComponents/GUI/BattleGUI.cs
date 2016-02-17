@@ -15,7 +15,7 @@ using System.Collections.Generic;
 
 namespace BattleLib.GraphicComponents.GUI
 {
-    public class BattleGUI
+    public class BattleGUI : IGUIService
     {
         public BattleStateComponent BattleState { get; set; }
         public ClientIdentifier ID { get; set; }
@@ -30,6 +30,8 @@ namespace BattleLib.GraphicComponents.GUI
 
         public BattleGUI(Configuration config, PokeEngine game)
         {
+            game.Services.AddService(typeof(IGUIService), this);
+
             mainFrame = new Dialog("border", game);
             attackFrame = new Dialog("border", game);
             itemFrame = new Dialog("border", game);
@@ -201,6 +203,16 @@ namespace BattleLib.GraphicComponents.GUI
                     itemFrame.IsVisible = true;
                     break;
             }
+        }
+
+        public void ShowMenu()
+        {
+            mainFrame.IsVisible = true;
+        }
+
+        public void SetText(string Text)
+        {
+            messageBox.DisplayText(Text); 
         }
     }
 }

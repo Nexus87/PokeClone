@@ -16,11 +16,13 @@ namespace BattleLib.Components.BattleState
         ClientIdentifier player;
         ClientIdentifier ai;
 
+        BattleStateComponent state;
         bool done = false;
-        public WaitForActionState(ClientIdentifier player, ClientIdentifier ai)
+        public WaitForActionState(BattleStateComponent state, ClientIdentifier player, ClientIdentifier ai)
         {
             this.player = player;
             this.ai = ai;
+            this.state = state;
         }
 
         public void Init()
@@ -35,12 +37,16 @@ namespace BattleLib.Components.BattleState
             return done;
         }
 
-        public void Update(BattleData data)
+        public IBattleState Update(BattleData data)
         {
             data.playerCommand = playerCommand;
             data.aiCommand = aiCommand;
 
             done = playerCommand != null && aiCommand != null;
+            if (done)
+                return state.exeState;
+
+            return this;
         }
 
         public void SetCharacter(ClientIdentifier id, Pokemon pkmn)

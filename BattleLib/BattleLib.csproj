@@ -62,6 +62,8 @@
     <Compile Include="GraphicComponents\GUI\BattleGUI.cs" />
     <Compile Include="GraphicComponents\HPLine.cs" />
     <Compile Include="GraphicComponents\BattleGraphics.cs" />
+    <Compile Include="GraphicComponents\IBattleGraphicService.cs" />
+    <Compile Include="GraphicComponents\IGUIService.cs" />
     <Compile Include="GraphicComponents\MenuItem.cs" />
     <Compile Include="GraphicComponents\PokemonDataView.cs" />
     <Compile Include="GraphicComponents\PokemonSprite.cs" />

@@ -9,8 +9,7 @@ namespace BattleLib.Components.BattleState
     public abstract class AbstractState : IBattleState
     {
         public virtual void Init() { }
-        public abstract bool IsDone();
-        public abstract void Update(BattleData data);
+        public abstract IBattleState Update(BattleData data);
 
         public virtual void SetCharacter(ClientIdentifier id, Base.Pokemon pkmn) { }
         public virtual void SetMove(ClientIdentifier id, Base.Move move) { }

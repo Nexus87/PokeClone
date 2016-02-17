@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,7 +20,7 @@ namespace BattleLib.Components.BattleState
 
     public class EventCreator
     {
-        private BattleEventDispatcher eventDispatcher;
+        private IEventDispatcher eventDispatcher;
         private BattleData data;
         private PokemonWrapper playerPkmn;
         private PokemonWrapper aiPkmn;
@@ -36,6 +37,11 @@ namespace BattleLib.Components.BattleState
             aiPkmn.OnConditionChanged += OnConditionChanged;
             aiPkmn.OnPokemonChanged += OnPokemonChanged;
             aiPkmn.OnStateChanged += OnStateChanged;
+        }
+
+        void Init(Game game)
+        {
+            eventDispatcher = game.Services.GetService<IEventDispatcher>();
         }
 
         void OnStateChanged(object sender, StateChangedEventArgs e)

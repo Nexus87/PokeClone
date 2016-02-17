@@ -16,7 +16,7 @@ using System.Collections.Generic;
 
 namespace BattleLib.GraphicComponents
 {
-    public class BattleGraphics : AbstractGraphicComponent
+    public class BattleGraphics : AbstractGraphicComponent, IBattleGraphicService
     {
         public event EventHandler OnRequestDone = delegate { };
 
@@ -31,18 +31,19 @@ namespace BattleLib.GraphicComponents
         public BattleGraphics(PokeEngine game)
             : base(game)
         {
+            game.Services.AddService(typeof(IBattleGraphicService), this);
+
             aiView = new PokemonDataView(game);
             playerView = new PokemonDataView(game);
             aiSprite = new PokemonSprite(true, game);
             playerSprite = new PokemonSprite(false, game);
-            aiView.OnHPUpdated += OnHPUpdated;
-            playerView.OnHPUpdated += OnHPUpdated;
 
-            aiSprite.OnAttackAnimationPlayed += OnHPUpdated;
-            aiSprite.OnPokemonAppeared += aiSprite_OnPokemonAppeared;
+            aiView.OnHPUpdated += delegate { OnHPSet(this, null); };
+            playerView.OnHPUpdated += delegate { OnHPSet(this, null); };
 
-            playerSprite.OnAttackAnimationPlayed += OnHPUpdated;
-            playerSprite.OnPokemonAppeared += playerSprite_OnPokemonAppeared;
+            aiSprite.OnPokemonAppeared += delegate { OnPokemonSet(this, null); };
+
+            playerSprite.OnPokemonAppeared += delegate { OnPokemonSet(this, null); };
         }
 
         void aiSprite_OnPokemonAppeared(object sender, EventArgs e)
@@ -142,6 +143,31 @@ namespace BattleLib.GraphicComponents
             {
                 aiSprite.SetPokemon(pkmn.ID);
             }
+        }
+
+        public event EventHandler OnHPSet;
+        public event EventHandler OnPokemonSet;
+
+        public void SetPlayerHP(int HP)
+        {
+            playerView.SetHP(HP);
+        }
+
+        public void SetAIHP(int HP)
+        {
+            aiView.SetHP(HP);
+        }
+
+        public void SetPlayerPKMN(PokemonWrapper pokemon)
+        {
+            playerView.SetPokemon(pokemon);
+            playerSprite.SetPokemon(pokemon.ID);
+        }
+
+        public void SetAIPKMN(PokemonWrapper pokemon)
+        {
+            aiView.SetPokemon(pokemon);
+            aiSprite.SetPokemon(pokemon.ID);
         }
     }
 }
