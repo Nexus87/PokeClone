@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration.cs" />
+    <Compile Include="EventComponent\EventQueue.cs" />
     <Compile Include="GameEngine.cs" />
     <Compile Include="Graphics\AbstractGraphicComponent.cs" />
     <Compile Include="Graphics\Animations\ResizeAnimation.cs" />
@@ -59,6 +60,8 @@
     <Compile Include="Graphics\Layouts\BoxLayout.cs" />
     <Compile Include="Graphics\GUIManager.cs" />
     <Compile Include="Graphics\Views\IItemView.cs" />
+    <Compile Include="EventComponent\IEvent.cs" />
+    <Compile Include="EventComponent\IEventQueue.cs" />
     <Compile Include="InputComponent.cs" />
     <Compile Include="Graphics\Layouts\SingleComponentLayout.cs" />
     <Compile Include="Graphics\IGraphicComponent.cs" />
