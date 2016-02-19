@@ -100,7 +100,6 @@ namespace GameEngine.Graphics
             DrawComponent(time, batch);
         }
 
-        //public abstract void Setup(ContentManager content);
 
         protected abstract void DrawComponent(GameTime time, ISpriteBatch batch);
 

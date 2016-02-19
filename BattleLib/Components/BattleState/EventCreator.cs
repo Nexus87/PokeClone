@@ -1,4 +1,6 @@
-﻿using BattleLib.GraphicComponents;
+﻿using Base;
+using BattleLib.Components.BattleState.Commands;
+using BattleLib.GraphicComponents;
 using GameEngine.EventComponent;
 using Microsoft.Xna.Framework;
 using System;
@@ -9,7 +11,36 @@ using System.Threading.Tasks;
 
 namespace BattleLib.Components.BattleState
 {
+    class AttackDone 
+    {
+        string target;
+        string source;
 
+        bool successful;
+        string reason;
+
+        bool damageDone;
+        int damage;
+
+        string additionalMessage;
+
+        bool specialEffect;
+        List<string> effects;
+
+        bool statusChanged;
+        StatusCondition newCondition;
+    }
+
+    class Record
+    {
+        string actionString;
+        CommandType type;
+        bool successful;
+        string reason;
+
+        List<AttackDone> done;
+
+    }
 
     public class EventCreator
     {
@@ -22,6 +53,7 @@ namespace BattleLib.Components.BattleState
 
         public EventCreator(BattleData data)
         {
+            this.data = data;
             playerPkmn = data.PlayerPkmn;
             aiPkmn = data.AIPkmn;
 
