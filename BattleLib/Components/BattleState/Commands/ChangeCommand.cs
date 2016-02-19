@@ -9,12 +9,12 @@ namespace BattleLib.Components.BattleState.Commands
 {
     public class ChangeCommand : ICommand
     {
-        ClientIdentifier id;
+        public ClientIdentifier Source { get; private set; }
         Pokemon newPkmn;
 
-        public ChangeCommand(ClientIdentifier id, Pokemon newPkmn)
+        public ChangeCommand(ClientIdentifier source, Pokemon newPkmn)
         {
-            this.id = id;
+            this.Source = source;
             this.newPkmn = newPkmn;
         }
 
@@ -31,7 +31,7 @@ namespace BattleLib.Components.BattleState.Commands
         public void Execute(IBattleRules rules, BattleData data)
         {
             PokemonWrapper source = null;
-            if (id == data.player)
+            if (Source == data.player)
             {
                 source = data.PlayerPkmn;
                 if (!rules.TryChange(source, newPkmn))
@@ -39,7 +39,7 @@ namespace BattleLib.Components.BattleState.Commands
 
                 data.PlayerPkmn.Pokemon = newPkmn;
             }
-            else if (id == data.ai)
+            else if (Source == data.ai)
             {
                 source = data.AIPkmn;
 

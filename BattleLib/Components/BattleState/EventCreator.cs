@@ -1,4 +1,5 @@
-﻿using GameEngine.EventComponent;
+﻿using BattleLib.GraphicComponents;
+using GameEngine.EventComponent;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -8,20 +9,13 @@ using System.Threading.Tasks;
 
 namespace BattleLib.Components.BattleState
 {
-    class StateChangedEvent : IEvent
-    {
 
-        public event EventHandler OnEventProcessed;
-
-        public void Dispatch()
-        {
-            throw new NotImplementedException();
-        }
-    }
 
     public class EventCreator
     {
         private IEventQueue eventDispatcher;
+        private IBattleGraphicService graphicService;
+
         private BattleData data;
         private PokemonWrapper playerPkmn;
         private PokemonWrapper aiPkmn;
@@ -31,33 +25,50 @@ namespace BattleLib.Components.BattleState
             playerPkmn = data.PlayerPkmn;
             aiPkmn = data.AIPkmn;
 
-            playerPkmn.OnConditionChanged += OnConditionChanged;
-            playerPkmn.OnPokemonChanged += OnPokemonChanged;
-            playerPkmn.OnStateChanged += OnStateChanged;
-
-            aiPkmn.OnConditionChanged += OnConditionChanged;
-            aiPkmn.OnPokemonChanged += OnPokemonChanged;
-            aiPkmn.OnStateChanged += OnStateChanged;
         }
 
-        void Init(Game game)
+        public void Setup(Game game, IBattleRules rules, ExecuteState state)
         {
             eventDispatcher = game.Services.GetService<IEventQueue>();
+            graphicService = game.Services.GetService<IBattleGraphicService>();
+
+            state.OnCommandStarted += CommandStartHandler;
+            state.OnCommandFinished += CommandFinishedHandler;
+
+            rules.OnDamageTaken += DamageTakenHandler;
+            rules.OnConditionChanged += ConditionChangedHandler;
+            rules.OnActionFailed += ActionFailedHandler;
+            rules.OnStatsChanged += StatsChangedHandler;
         }
 
-        void OnStateChanged(object sender, StateChangedEventArgs e)
+        private void StatsChangedHandler(object sender, OnStatsChangedArgs e)
         {
             throw new NotImplementedException();
         }
 
-        void OnPokemonChanged(object sender, EventArgs e)
+        private void ActionFailedHandler(object sender, EventArgs e)
         {
             throw new NotImplementedException();
         }
 
-        void OnConditionChanged(object sender, ConditionChangedEventArgs e)
+        private void ConditionChangedHandler(object sender, OnConditionChangedArgs e)
         {
-            
+            throw new NotImplementedException();
+        }
+
+        private void DamageTakenHandler(object sender, OnDamageTakenArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void CommandFinishedHandler(object sender, ExecutionEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void CommandStartHandler(object sender, ExecutionEventArgs e)
+        {
+            throw new NotImplementedException();
         }
     }
 }

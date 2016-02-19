@@ -9,12 +9,12 @@ namespace BattleLib.Components.BattleState.Commands
 {
     public class ItemCommand : ICommand
     {
-        ClientIdentifier id;
+        public ClientIdentifier Source { get; private set; }
         Item item;
 
-        public ItemCommand(ClientIdentifier id, Item item)
+        public ItemCommand(ClientIdentifier source, Item item)
         {
-            this.id = id;
+            this.Source = source;
             this.item = item;
         }
 
@@ -30,9 +30,9 @@ namespace BattleLib.Components.BattleState.Commands
 
         public void Execute(IBattleRules rules, BattleData data)
         {
-            if (id == data.player)
+            if (Source == data.player)
                 rules.UseItem(data.PlayerPkmn, item);
-            else if (id == data.ai)
+            else if (Source == data.ai)
                 rules.UseItem(data.AIPkmn, item);
             else
                 throw new InvalidOperationException("Id is unknown.");

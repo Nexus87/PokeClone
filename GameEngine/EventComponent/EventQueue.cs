@@ -9,7 +9,7 @@ namespace GameEngine.EventComponent
 {
     class EventQueue : GameComponent, IEventQueue
     {
-                bool eventDispatched = false;
+        bool eventDispatched = false;
 
         public EventQueue(Game game) : base(game) 
         {

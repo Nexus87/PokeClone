@@ -10,12 +10,12 @@ namespace BattleLib.Components.BattleState.Commands
     public class MoveCommand : ICommand
     {
         Move move;
-        ClientIdentifier id;
+        public ClientIdentifier Source { get; private set; }
 
-        public MoveCommand(ClientIdentifier id, Move move)
+        public MoveCommand(ClientIdentifier source, Move move)
         {
             this.move = move;
-            this.id = id;
+            this.Source = source;
         }
 
         public CommandType Type
@@ -33,12 +33,12 @@ namespace BattleLib.Components.BattleState.Commands
             PokemonWrapper source = null;
             PokemonWrapper target = null;
 
-            if(id == data.player)
+            if (Source == data.player)
             {
                 source = data.PlayerPkmn;
                 target = move.Data.TargetMode == Target.Enemy ? data.AIPkmn : source;
             }
-            else if (id == data.ai)
+            else if (Source == data.ai)
             {
                 source = data.AIPkmn;
                 target = move.Data.TargetMode == Target.Enemy ? data.PlayerPkmn : source;

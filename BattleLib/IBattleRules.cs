@@ -25,8 +25,14 @@ namespace BattleLib
         public Pokemon pkmn;
     }
 
+    public class OnActionFailedArgs : EventArgs
+    {
+        public bool HasMissed;
+        public bool HasResistance;
+    }
     public interface IBattleRules
     {
+        event EventHandler OnActionFailed;
         event EventHandler<OnDamageTakenArgs> OnDamageTaken;
         event EventHandler<OnStatsChangedArgs> OnStatsChanged;
         event EventHandler<OnConditionChangedArgs> OnConditionChanged;

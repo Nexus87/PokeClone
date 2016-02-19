@@ -14,12 +14,9 @@ namespace BattleLib.Components.BattleState.Commands
         Move
     }
 
-    public class CommandSummary
-    {
-        public CommandType type;
-    }
     public interface ICommand
     {
+        ClientIdentifier Source { get; }
         CommandType Type { get; }
         int Priority { get; }
         void Execute(IBattleRules rules, BattleData data);
