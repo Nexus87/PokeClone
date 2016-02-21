@@ -22,6 +22,7 @@ namespace BattleLib
     public class OnConditionChangedArgs : EventArgs
     {
         public StatusCondition condition;
+        public StatusCondition oldCondition;
         public Pokemon pkmn;
     }
 

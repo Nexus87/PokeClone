@@ -9,7 +9,7 @@ namespace BattleLib.Components.BattleState.Commands
 {
     public class MoveCommand : ICommand
     {
-        Move move;
+        public Move move;
         public ClientIdentifier Source { get; private set; }
 
         public MoveCommand(ClientIdentifier source, Move move)
