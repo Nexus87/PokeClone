@@ -71,6 +71,18 @@ namespace BattleLib.Components.BattleState
             rules.OnConditionChanged += ConditionChangedHandler;
             rules.OnActionFailed += ActionFailedHandler;
             rules.OnStatsChanged += StatsChangedHandler;
+            rules.ItemUsed += ItemUsedHandler;
+            rules.MoveUsed += MoveUsedHandler;
+        }
+
+        private void MoveUsedHandler(object sender, MoveUsedArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void ItemUsedHandler(object sender, ItemUsedArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         private void StatsChangedHandler(object sender, OnStatsChangedArgs e)

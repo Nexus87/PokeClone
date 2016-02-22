@@ -12,7 +12,6 @@ namespace GameEngine.Graphics.Layouts
         private float marginLeft;
         private float marginRight;
         private float marginTop;
-        private bool needsUpdate = true;
 
         private Vector2 position;
         private Vector2 size;

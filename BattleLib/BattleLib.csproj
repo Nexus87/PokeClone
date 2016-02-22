@@ -58,6 +58,8 @@
     <Compile Include="Components\BattleState\PokemonWrapper.cs" />
     <Compile Include="Components\BattleState\WaitForActionState.cs" />
     <Compile Include="Components\BattleState\WaitForCharState.cs" />
+    <Compile Include="Events\SetHPEvent.cs" />
+    <Compile Include="Events\SetStatusEvent.cs" />
     <Compile Include="Events\ShowMenuEvent.cs" />
     <Compile Include="Events\ShowMessageEvent.cs" />
     <Compile Include="Gen1BattleRules.cs" />

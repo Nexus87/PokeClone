@@ -9,6 +9,7 @@ namespace BattleLib
         public bool hit;
         public bool critical;
         public bool effective;
+        public int newHP;
         public Pokemon pkmn;
     }
 
@@ -26,10 +27,20 @@ namespace BattleLib
         public Pokemon pkmn;
     }
 
+    public class ItemUsedArgs : EventArgs
+    {
+        public Item item;
+    }
+
     public class OnActionFailedArgs : EventArgs
     {
         public bool HasMissed;
         public bool HasResistance;
+    }
+
+    public class MoveUsedArgs : EventArgs
+    {
+        public Move move;
     }
     public interface IBattleRules
     {
@@ -37,6 +48,8 @@ namespace BattleLib
         event EventHandler<OnDamageTakenArgs> OnDamageTaken;
         event EventHandler<OnStatsChangedArgs> OnStatsChanged;
         event EventHandler<OnConditionChangedArgs> OnConditionChanged;
+        event EventHandler<ItemUsedArgs> ItemUsed;
+        event EventHandler<MoveUsedArgs> MoveUsed;
 
         bool CanEscape();
         bool CanChange();

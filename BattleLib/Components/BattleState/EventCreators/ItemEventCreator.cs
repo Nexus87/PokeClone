@@ -14,18 +14,22 @@ namespace BattleLib.Components.BattleState.EventCreators
     class ItemEventCreator : IEventCreator
     {
         private List<IEvent> events = new List<IEvent>();
+        
         private IEventQueue queue;
-        private ItemCommand command;
         private IGUIService gui;
-        private BattleData data;
-        private PokemonWrapper source;
+        private IBattleGraphicService graphic;
 
-        public ItemEventCreator(IEventQueue queue, IGUIService gui, BattleData data)
+        private BattleData data;
+        private ClientIdentifier identifier;
+
+        public ItemEventCreator(IEventQueue queue, IGUIService gui, IBattleGraphicService graphic, BattleData data)
         {
             this.gui = gui;
             this.queue = queue;
             this.data = data;
+            this.graphic = graphic;
         }
+
         public void ActionFailedHandler()
         {
             events.Add(new ShowMessageEvent(gui, "Failed"));
@@ -33,27 +37,48 @@ namespace BattleLib.Components.BattleState.EventCreators
 
         public void ConditionChangedHandler(OnConditionChangedArgs e)
         {
+            string message;
             if (e.condition == StatusCondition.Normal)
-                events.Add(new ShowMessageEvent(gui, source.Name + " is no longer " + e.oldCondition));
+                message = e.pkmn.Name + " is no longer " + e.oldCondition;
             else
-                events.Add(new ShowMessageEvent(gui, source.Name + " is " + e.condition));
+                message = e.pkmn.Name + " is " + e.condition;
+
+            events.Add(new ShowMessageEvent(gui, message));
+            events.Add(new SetStatusEvent(graphic, identifier == data.player, e.condition));
+        }
+
 
         public void DamageTakenHandler(OnDamageTakenArgs e)
         {
-            
+            events.Add(new SetHPEvent(graphic, identifier == data.player, e.newHP));
         }
 
         public void EndCommand()
         {
-            throw new NotImplementedException();
+            foreach (var e in events)
+                queue.AddEvent(e);
         }
 
         public void StartCommand(ICommand command)
         {
-            throw new NotImplementedException();
+            identifier = command.Source;
+            events.Clear();
         }
 
         public void StatsChangedHandler(OnStatsChangedArgs e)
+        {
+            string message = e.pkmn.Name + "'s " + e.state + (e.lowered ? " was lowered." : " rises.");
+            events.Add(new ShowMessageEvent(gui, message));
+        }
+
+
+        public void ItemUsed(ItemUsedArgs e)
+        {
+            string message = identifier.Name + " uses " + e.item.Name;
+            events.Add(new ShowMessageEvent(gui, message));
+        }
+
+        public void MoveUsed(MoveUsedArgs e)
         {
             throw new NotImplementedException();
         }

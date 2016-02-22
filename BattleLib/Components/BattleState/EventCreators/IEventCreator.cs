@@ -11,6 +11,8 @@ namespace BattleLib.Components.BattleState.EventCreators
     {
         void StartCommand(ICommand command);
 
+        void ItemUsed(ItemUsedArgs e);
+        void MoveUsed(MoveUsedArgs e);
         void DamageTakenHandler(OnDamageTakenArgs e);
         void ConditionChangedHandler(OnConditionChangedArgs e);
         void StatsChangedHandler(OnStatsChangedArgs e);

@@ -97,5 +97,10 @@ namespace BattleLib
         {
             throw new NotImplementedException();
         }
+
+
+        public event EventHandler<ItemUsedArgs> ItemUsed;
+
+        public event EventHandler<MoveUsedArgs> MoveUsed;
     }
 }

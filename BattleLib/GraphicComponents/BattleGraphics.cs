@@ -169,5 +169,18 @@ namespace BattleLib.GraphicComponents
             aiView.SetPokemon(pokemon);
             aiSprite.SetPokemon(pokemon.ID);
         }
+
+
+        public event EventHandler ConditionSet;
+
+        public void SetPlayerPKMNStatus(StatusCondition condition)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetAIPKMNStatus(StatusCondition condition)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
