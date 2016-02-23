@@ -41,11 +41,8 @@ namespace BattleLib.Components.BattleState
         public int HP { get { return Pokemon.HP; } }
 
         public int ID { get { return Pokemon.Id; } }
-
         public int Level { get { return Pokemon.Level; } }
-
         public int MaxHP { get { return Pokemon.Stats.HP; } }
-
         public string Name { get { return Pokemon.Name; } }
 
         public Pokemon Pokemon
@@ -70,9 +67,11 @@ namespace BattleLib.Components.BattleState
             switch (state)
             {
                 case State.HP:
-                    stateModifier.HP += modifier;
+                    if (modifier < 0)
+                        pokemon.HP = Math.Max(pokemon.HP + modifier, 0);
+                    else
+                        pokemon.HP = Math.Min(pokemon.HP + modifier, MaxHP);
                     break;
-
                 case State.Atk:
                     stateModifier.Atk += modifier;
                     break;

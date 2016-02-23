@@ -6,11 +6,18 @@ namespace BattleLib
 {
     public class OnDamageTakenArgs : EventArgs
     {
+        public enum Efficency
+        {
+            notEffective,
+            normal,
+            veryEffective
+        };
+
         public bool hit;
         public bool critical;
-        public bool effective;
+        public Efficency effective;
         public int newHP;
-        public Pokemon pkmn;
+        public PokemonWrapper pkmn;
     }
 
     public class OnStatsChangedArgs : EventArgs

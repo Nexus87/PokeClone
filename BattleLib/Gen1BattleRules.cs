@@ -14,6 +14,8 @@ namespace BattleLib
             this.isTrainerBattle = isTrainerBattle;
         }
 
+        public event EventHandler<ItemUsedArgs> ItemUsed = delegate { };
+        public event EventHandler<MoveUsedArgs> MoveUsed = delegate { };
         public event EventHandler OnActionFailed = delegate { };
         public event EventHandler<OnConditionChangedArgs> OnConditionChanged = delegate { };
         public event EventHandler<OnDamageTakenArgs> OnDamageTaken = delegate { };
@@ -26,7 +28,7 @@ namespace BattleLib
 
         public bool CanEscape()
         {
-            return isTrainerBattle;
+            return !isTrainerBattle;
         }
 
         public void ExecMove(PokemonWrapper source, Move move, PokemonWrapper target)
@@ -67,40 +69,55 @@ namespace BattleLib
             return damage;
         }
 
-        private float CalculateModifier(PokemonWrapper source, PokemonWrapper target, Move move)
+        private float CalculateModifier(PokemonWrapper source, PokemonWrapper target, Move move, OnDamageTakenArgs args)
         {
             float modifier = move.Data.PkmType == source.Type1 || move.Data.PkmType == source.Type2 ?
                 1.5f : 1.0f;
 
-            modifier *= table.GetModifier(move.Data.PkmType, target.Type1);
-            modifier *= table.GetModifier(move.Data.PkmType, target.Type2);
-            // modifier *= critical modifier *= random(0.85, 1.0)
+            float typeModifier = table.GetModifier(move.Data.PkmType, target.Type1);
+            typeModifier *= table.GetModifier(move.Data.PkmType, target.Type2);
 
-            return modifier;
+            //float critical = critical modifier *= random(0.85, 1.0)
+
+            args.effective = typeModifier > 1.0f ? OnDamageTakenArgs.Efficency.veryEffective :
+                typeModifier < 1.0f ? OnDamageTakenArgs.Efficency.notEffective : OnDamageTakenArgs.Efficency.normal;
+ 
+            return modifier * typeModifier;
         }
 
         private void HandlePhysicalDamage(PokemonWrapper source, Move move, PokemonWrapper target)
         {
-            float damage = CalculateDamage(source.Atk, target.Def, source, move);
-            float modifier = CalculateModifier(source, target, move);
+            OnDamageTakenArgs args = new OnDamageTakenArgs();
 
-            
+            float damage = CalculateDamage(source.Atk, target.Def, source, move);
+            float modifier = CalculateModifier(source, target, move, args);
+
+            target.ModifyStat(State.HP, (int) (modifier * damage));
+            args.pkmn = target;
+            args.hit = true;
+            args.newHP = target.HP;
+
+            OnDamageTaken(this, args);
         }
 
         private void HandleSpecialDamage(PokemonWrapper source, Move move, PokemonWrapper target)
         {
+            OnDamageTakenArgs args = new OnDamageTakenArgs();
+
             float damage = CalculateDamage(source.SpAtk, target.SpDef, source, move);
-            float modifier = CalculateModifier(source, target, move);
+            float modifier = CalculateModifier(source, target, move, args);
+
+            target.ModifyStat(State.HP, (int)(modifier * damage));
+            args.pkmn = target;
+            args.hit = true;
+            args.newHP = target.HP;
+
+            OnDamageTaken(this, args);
         }
 
         private void HandleStatusDamage(PokemonWrapper source, Move move, PokemonWrapper target)
         {
             throw new NotImplementedException();
         }
-
-
-        public event EventHandler<ItemUsedArgs> ItemUsed;
-
-        public event EventHandler<MoveUsedArgs> MoveUsed;
     }
 }
