@@ -15,13 +15,17 @@ namespace BattleLib.Components.BattleState
 
     public class PokemonWrapper
     {
-        private Pokemon pokemon;
 
+        public PokemonWrapper(ClientIdentifier id)
+        {
+            this.Identifier = id;
+        }
+
+        private Pokemon pokemon;
         private Stats stateModifier = new Stats();
 
         public event EventHandler<ConditionChangedEventArgs> OnConditionChanged = delegate { };
         public event EventHandler OnPokemonChanged = delegate { };
-
         public event EventHandler<StateChangedEventArgs> OnStateChanged = delegate { };
 
         public int Atk { get { return Pokemon.Stats.Atk + stateModifier.Atk; } }
@@ -41,6 +45,7 @@ namespace BattleLib.Components.BattleState
         public int HP { get { return Pokemon.HP; } }
 
         public int ID { get { return Pokemon.Id; } }
+        public ClientIdentifier Identifier { get; private set; }
         public int Level { get { return Pokemon.Level; } }
         public int MaxHP { get { return Pokemon.Stats.HP; } }
         public string Name { get { return Pokemon.Name; } }
@@ -56,11 +61,12 @@ namespace BattleLib.Components.BattleState
                 OnPokemonChanged(this, null);
             }
         }
-        public PokemonType Type1 { get { return Pokemon.Type1; } }
-        public PokemonType Type2 { get { return Pokemon.Type2; } }
+
         public Stats PokemonStates { get { return Pokemon.Stats; } }
         public int SpAtk { get { return Pokemon.Stats.SpAtk + stateModifier.SpAtk; } }
         public int SpDef { get { return Pokemon.Stats.SpDef + stateModifier.SpDef; } }
+        public PokemonType Type1 { get { return Pokemon.Type1; } }
+        public PokemonType Type2 { get { return Pokemon.Type2; } }
 
         public void ModifyStat(State state, int modifier)
         {
@@ -72,6 +78,7 @@ namespace BattleLib.Components.BattleState
                     else
                         pokemon.HP = Math.Min(pokemon.HP + modifier, MaxHP);
                     break;
+
                 case State.Atk:
                     stateModifier.Atk += modifier;
                     break;

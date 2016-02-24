@@ -1,31 +1,36 @@
 ﻿using Base;
 using BattleLib.Components.BattleState;
 using System;
+using System.Collections.Generic;
 
 namespace BattleLib
 {
-    public class OnDamageTakenArgs : EventArgs
-    {
-        public enum Efficency
-        {
-            notEffective,
-            normal,
-            veryEffective
-        };
 
-        public bool hit;
-        public bool critical;
-        public Efficency effective;
-        public int newHP;
-        public PokemonWrapper pkmn;
+    public enum ChangeFailedReasons
+    {
+        blocked
     }
 
-    public class OnStatsChangedArgs : EventArgs
+    public enum MoveFailedReasons
     {
-        public State state;
-        public bool lowered;
-        public Pokemon pkmn;
+        noEffect,
+        missed,
+
     }
+
+    public enum MoveEfficency
+    {
+        notEffective,
+        normal,
+        veryEffective
+    }
+
+    public class ChangeUsedArgs : EventArgs
+    {
+        bool success;
+        public PokemonWrapper newPokemon;
+    }
+
 
     public class OnConditionChangedArgs : EventArgs
     {
@@ -45,16 +50,32 @@ namespace BattleLib
         public bool HasResistance;
     }
 
+    public class MoveEffect
+    {
+        public PokemonWrapper target;
+
+        public bool damage;
+        public bool critical;
+        public MoveEfficency effective;
+
+        public bool conditionChanged;
+        public StatusCondition oldCondition;
+
+        public bool stateChanged;
+        public State state;
+        public bool lowered;
+
+    }
     public class MoveUsedArgs : EventArgs
     {
         public Move move;
+        public ClientIdentifier source;
+        public List<MoveEffect> effects = new List<MoveEffect>();
     }
+
     public interface IBattleRules
     {
-        event EventHandler OnActionFailed;
-        event EventHandler<OnDamageTakenArgs> OnDamageTaken;
-        event EventHandler<OnStatsChangedArgs> OnStatsChanged;
-        event EventHandler<OnConditionChangedArgs> OnConditionChanged;
+        event EventHandler<ChangeUsedArgs> ChangeUsed;
         event EventHandler<ItemUsedArgs> ItemUsed;
         event EventHandler<MoveUsedArgs> MoveUsed;
 

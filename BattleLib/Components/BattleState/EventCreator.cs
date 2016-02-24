@@ -1,5 +1,6 @@
 ﻿using Base;
 using BattleLib.Components.BattleState.Commands;
+using BattleLib.Events;
 using BattleLib.GraphicComponents;
 using GameEngine.EventComponent;
 using Microsoft.Xna.Framework;
@@ -46,6 +47,7 @@ namespace BattleLib.Components.BattleState
     {
         private IEventQueue eventDispatcher;
         private IBattleGraphicService graphicService;
+        private IGUIService guiService;
 
         private BattleData data;
         private PokemonWrapper playerPkmn;
@@ -63,44 +65,67 @@ namespace BattleLib.Components.BattleState
         {
             eventDispatcher = game.Services.GetService<IEventQueue>();
             graphicService = game.Services.GetService<IBattleGraphicService>();
+            guiService = game.Services.GetService<IGUIService>();
 
             state.OnCommandStarted += CommandStartHandler;
             state.OnCommandFinished += CommandFinishedHandler;
 
-            rules.OnDamageTaken += DamageTakenHandler;
-            rules.OnConditionChanged += ConditionChangedHandler;
-            rules.OnActionFailed += ActionFailedHandler;
-            rules.OnStatsChanged += StatsChangedHandler;
+            rules.ChangeUsed += ChangeUsedHandler;
             rules.ItemUsed += ItemUsedHandler;
             rules.MoveUsed += MoveUsedHandler;
         }
 
-        private void MoveUsedHandler(object sender, MoveUsedArgs e)
+        private void ChangeUsedHandler(object sender, ChangeUsedArgs e)
         {
             throw new NotImplementedException();
+        }
+
+        private void MoveUsedHandler(object sender, MoveUsedArgs e)
+        {
+            var message = e.source.IsPlayer ? "" : "Enemy " + data.GetPkmn(e.source).Name + " uses " + e.move.Data.Name;
+
+            eventDispatcher.AddEvent(new ShowMessageEvent(guiService, message));
+
+            var effectsByTarget = e.effects.GroupBy( effect => effect.target);
+
+            foreach (var t in effectsByTarget)
+            {
+                var sorted = t.OrderBy(effect => !effect.damage).ThenBy(effect => !effect.stateChanged);
+                foreach (var s in sorted)
+                    HandleEffect(s);
+            }
+        }
+
+        private void HandleEffect(MoveEffect s)
+        {
+            if (s.damage)
+            {
+                eventDispatcher.AddEvent(new SetHPEvent(graphicService, s.target.Identifier.IsPlayer, s.target.HP));
+                
+                if (s.critical)
+                    eventDispatcher.AddEvent(new ShowMessageEvent(guiService, "Critical Hit"));
+                
+                if (s.effective != MoveEfficency.normal)
+                    eventDispatcher.AddEvent(new ShowMessageEvent(guiService, s.effective == MoveEfficency.veryEffective ?
+                        "Very effective" : "Not very effective"));
+                return;
+            }
+
+            if (s.stateChanged)
+            {
+                eventDispatcher.AddEvent(new ShowMessageEvent(guiService, s.target.Name + "' s" + s.state +
+                    (s.lowered ? " was lowered" : "rises")));
+                return;
+            }
+
+            if (s.conditionChanged)
+            {
+                eventDispatcher.AddEvent(new ShowMessageEvent(guiService, s.target + " is " + s.target.Condition));
+                return;
+            }
         }
 
         private void ItemUsedHandler(object sender, ItemUsedArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void StatsChangedHandler(object sender, OnStatsChangedArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void ActionFailedHandler(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void ConditionChangedHandler(object sender, OnConditionChangedArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void DamageTakenHandler(object sender, OnDamageTakenArgs e)
         {
             throw new NotImplementedException();
         }

@@ -11,7 +11,7 @@ namespace BattleLib.Components.BattleState
         internal ExecuteState exeState;
         
         private IBattleState currentState;
-        private BattleData data = new BattleData();
+        private BattleData data;
         private EventCreator eventCreator;
 
         public BattleStateComponent(Game game)
@@ -22,6 +22,7 @@ namespace BattleLib.Components.BattleState
         public BattleStateComponent(ClientIdentifier player, ClientIdentifier ai, Game game)
             : base(game)
         {
+            data = new BattleData(player, ai);
             data.player = player;
             data.ai = ai;
         }
@@ -29,13 +30,11 @@ namespace BattleLib.Components.BattleState
         public ClientIdentifier AIIdentifier
         {
             get { return data.ai; }
-            set { data.ai = value; }
         }
 
         public ClientIdentifier PlayerIdentifier
         {
             get { return data.player; }
-            set { data.player = value; }
         }
 
         public override void Initialize()
@@ -79,5 +78,6 @@ namespace BattleLib.Components.BattleState
     public class ClientIdentifier
     {
         public String Name { get; set; }
+        public bool IsPlayer { get; set; }
     }
 }
