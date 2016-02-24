@@ -59,6 +59,7 @@
     <Compile Include="Components\BattleState\PokemonWrapper.cs" />
     <Compile Include="Components\BattleState\WaitForActionState.cs" />
     <Compile Include="Components\BattleState\WaitForCharState.cs" />
+    <Compile Include="Events\Extensions.cs" />
     <Compile Include="Events\SetHPEvent.cs" />
     <Compile Include="Events\SetStatusEvent.cs" />
     <Compile Include="Events\ShowMenuEvent.cs" />

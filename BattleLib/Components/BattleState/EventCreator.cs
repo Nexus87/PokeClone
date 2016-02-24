@@ -84,7 +84,7 @@ namespace BattleLib.Components.BattleState
         {
             var message = e.source.IsPlayer ? "" : "Enemy " + data.GetPkmn(e.source).Name + " uses " + e.move.Data.Name;
 
-            eventDispatcher.AddEvent(new ShowMessageEvent(guiService, message));
+            eventDispatcher.AddShowMessageEvent(guiService, message);
 
             var effectsByTarget = e.effects.GroupBy( effect => effect.target);
 
@@ -100,27 +100,27 @@ namespace BattleLib.Components.BattleState
         {
             if (s.damage)
             {
-                eventDispatcher.AddEvent(new SetHPEvent(graphicService, s.target.Identifier.IsPlayer, s.target.HP));
+                eventDispatcher.AddHPEvent(graphicService, s.target.Identifier.IsPlayer, s.target.HP);
                 
                 if (s.critical)
-                    eventDispatcher.AddEvent(new ShowMessageEvent(guiService, "Critical Hit"));
+                    eventDispatcher.AddShowMessageEvent(guiService, "Critical Hit");
                 
                 if (s.effective != MoveEfficency.normal)
-                    eventDispatcher.AddEvent(new ShowMessageEvent(guiService, s.effective == MoveEfficency.veryEffective ?
-                        "Very effective" : "Not very effective"));
+                    eventDispatcher.AddShowMessageEvent(guiService, s.effective == MoveEfficency.veryEffective ?
+                        "Very effective" : "Not very effective");
                 return;
             }
 
             if (s.stateChanged)
             {
-                eventDispatcher.AddEvent(new ShowMessageEvent(guiService, s.target.Name + "' s" + s.state +
-                    (s.lowered ? " was lowered" : "rises")));
+                eventDispatcher.AddShowMessageEvent(guiService, s.target.Name + "' s" + s.state +
+                    (s.lowered ? " was lowered" : "rises"));
                 return;
             }
 
             if (s.conditionChanged)
             {
-                eventDispatcher.AddEvent(new ShowMessageEvent(guiService, s.target + " is " + s.target.Condition));
+                eventDispatcher.AddShowMessageEvent(guiService, s.target + " is " + s.target.Condition);
                 return;
             }
         }

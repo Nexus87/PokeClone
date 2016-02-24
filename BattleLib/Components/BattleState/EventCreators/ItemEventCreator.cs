@@ -47,12 +47,6 @@ namespace BattleLib.Components.BattleState.EventCreators
             events.Add(new SetStatusEvent(graphic, identifier == data.player, e.condition));
         }
 
-
-        public void DamageTakenHandler(OnDamageTakenArgs e)
-        {
-            events.Add(new SetHPEvent(graphic, identifier == data.player, e.newHP));
-        }
-
         public void EndCommand()
         {
             foreach (var e in events)
@@ -63,12 +57,6 @@ namespace BattleLib.Components.BattleState.EventCreators
         {
             identifier = command.Source;
             events.Clear();
-        }
-
-        public void StatsChangedHandler(OnStatsChangedArgs e)
-        {
-            string message = e.pkmn.Name + "'s " + e.state + (e.lowered ? " was lowered." : " rises.");
-            events.Add(new ShowMessageEvent(gui, message));
         }
 
 
