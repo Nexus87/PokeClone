@@ -62,15 +62,15 @@ namespace BattleLib.GraphicComponents
 
             innerLine.X = X + border;
             innerLine.Y = Y + border;
-            innerLine.Width = Width - 2 * border;
-            innerLine.Height = Height - 2 * border;
+            innerLine.Width = Math.Max(0, Width - 2 * border);
+            innerLine.Height = Math.Max(0, Height - 2 * border);
 
             float factor = maxHp == 0 ? 0 : ((float)currentHp) / ((float)maxHp);
 
             hpLine.X = X + border;
             hpLine.Y = Y + border;
-            hpLine.Width = factor * (Width - 2 * border);
-            hpLine.Height = Height - 2 * border;
+            hpLine.Width = Math.Max(0, factor * (Width - 2 * border));
+            hpLine.Height = Math.Max(0, Height - 2 * border);
 
             if (factor >= 0.50f)
                 hpLine.Color = Color.Green;

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace GameEngineTest.Util
 {
-    class DrawnObject
+    public class DrawnObject
     {
         public Vector2 Position;
         public Vector2 Size;
@@ -42,7 +42,7 @@ namespace GameEngineTest.Util
         }
     }
 
-    class SpriteBatchMock : ISpriteBatch
+    public class SpriteBatchMock : ISpriteBatch
     {
         public readonly List<DrawnObject> Objects = new List<DrawnObject>();
         public readonly LinkedList<string> DrawnStrings = new LinkedList<string>();

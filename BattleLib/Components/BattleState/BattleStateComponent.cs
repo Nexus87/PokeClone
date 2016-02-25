@@ -77,7 +77,36 @@ namespace BattleLib.Components.BattleState
 
     public class ClientIdentifier
     {
+        public ClientIdentifier()
+        {
+            Guid = Guid.NewGuid();
+        }
         public String Name { get; set; }
         public bool IsPlayer { get; set; }
+
+        private Guid Guid;
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+                return false;
+
+            var id = obj as ClientIdentifier;
+            if (id == null)
+                return false;
+
+            return Equals(id);
+            
+        }
+
+        public bool Equals(ClientIdentifier id)
+        {
+            return Guid.Equals(id.Guid);
+        }
+
+        public override int GetHashCode()
+        {
+            return Guid.GetHashCode();
+        }
     }
 }

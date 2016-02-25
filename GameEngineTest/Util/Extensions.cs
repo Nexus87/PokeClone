@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace GameEngineTest.Util
 {
-    static class Extensions
+    public static class Extensions
     {
         public static void SetCoordinates(this Mock<IGraphicComponent> compMock, float X, float Y, float Width, float Height)
         {
