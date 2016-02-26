@@ -12,39 +12,136 @@ using System.Threading.Tasks;
 
 namespace BattleLib.Components.BattleState
 {
-    class AttackDone 
+    interface EventRecord : IComparable<EventRecord>
     {
-        string target;
-        string source;
-
-        bool successful;
-        string reason;
-
-        bool damageDone;
-        int damage;
-
-        string additionalMessage;
-
-        bool specialEffect;
-        List<string> effects;
-
-        bool statusChanged;
-        StatusCondition newCondition;
+        int Priority { get; }
+        ClientIdentifier ID { get; }
+        void AddEvent(IEventQueue queue);
     }
 
-    class Record
+    class DamageEvent : EventRecord
     {
-        string actionString;
-        CommandType type;
-        bool successful;
-        string reason;
+        private HPReductionArgs args;
+        private IBattleGraphicService graphic;
+        private IGUIService gui;
 
-        List<AttackDone> done;
+        public DamageEvent(HPReductionArgs args, IGUIService gui, IBattleGraphicService graphic)
+        {
+            ID = args.target;
+            this.args = args;
+            this.gui = gui;
+            this.graphic = graphic;
+            
+        }
+        public int Priority { get { return 0; } }
 
+        public ClientIdentifier ID { get; private set; }
+
+        public void AddEvent(IEventQueue queue)
+        {
+            if (!args.success)
+            {
+                if (args.resason == MoveFailedReasons.missed)
+                    queue.AddShowMessageEvent(gui, "Attack missed");
+                else
+                    queue.AddShowMessageEvent(gui, "Attack has no effect");
+
+                return;
+            }
+
+            queue.AddHPEvent(graphic, args.target.IsPlayer, args.newHP);
+
+        }
+
+        public int CompareTo(EventRecord other)
+        {
+            return Priority.CompareTo(other.Priority);
+        }
     }
+
+    class StateChangedEvent : EventRecord
+    {
+        private StateChangeArgs args;
+        private IGUIService gui;
+        private string pkmnName;
+
+        public StateChangedEvent(string pkmnName, StateChangeArgs args, IGUIService gui)
+        {
+            this.ID = args.target;
+            this.args = args;
+            this.gui = gui;
+            this.pkmnName = pkmnName;
+        }
+
+        public int Priority { get { return 1; } }
+        public ClientIdentifier ID { get; private set; }
+
+        public void AddEvent(IEventQueue queue)
+        {
+            if (!args.success)
+            {
+                if (args.resason == MoveFailedReasons.noEffect)
+                {
+                    queue.AddShowMessageEvent(gui, "Attack has no effect");
+                }
+                return;
+            }
+
+            if (args.oldState < args.newState)
+                queue.AddShowMessageEvent(gui, pkmnName + "'s " + args.state + " was lowered");
+            else
+                queue.AddShowMessageEvent(gui, pkmnName + "'s " + args.state + "  increased");
+        }
+
+        public int CompareTo(EventRecord other)
+        {
+            return Priority.CompareTo(other.Priority);
+        }
+    }
+
+    class ConditionChangedEvent : EventRecord
+    {
+        private ConditionChangeArgs args;
+        private IGUIService gui;
+        private IBattleGraphicService graphic;
+        private string pkmnName;
+        
+        public ConditionChangedEvent(string pkmnName, ConditionChangeArgs args, IGUIService gui, IBattleGraphicService graphic)
+        {
+            ID = args.target;
+            this.args = args;
+            this.gui = gui;
+            this.graphic = graphic;
+            this.pkmnName = pkmnName;
+        }
+
+        public int Priority { get { return 2; } }
+        public ClientIdentifier ID { get; private set; }
+
+        public void AddEvent(IEventQueue queue)
+        {
+            if (!args.success)
+            {
+                queue.AddShowMessageEvent(gui, "Attack has no effect");
+                return;
+            }
+
+            if (args.newCondition == StatusCondition.Normal)
+                queue.AddShowMessageEvent(gui, pkmnName + " is no longer " + args.oldCondition);
+            else
+                queue.AddShowMessageEvent(gui, pkmnName + " is " + args.newCondition);
+        }
+
+        public int CompareTo(EventRecord other)
+        {
+            return Priority.CompareTo(other.Priority);
+        }
+    }
+
 
     public class EventCreator
     {
+        
         private IEventQueue eventDispatcher;
         private IBattleGraphicService graphicService;
         private IGUIService guiService;
@@ -53,6 +150,7 @@ namespace BattleLib.Components.BattleState
         private PokemonWrapper playerPkmn;
         private PokemonWrapper aiPkmn;
 
+        private readonly List<EventRecord> records = new List<EventRecord>();
         public EventCreator(BattleData data)
         {
             this.data = data;
@@ -73,56 +171,36 @@ namespace BattleLib.Components.BattleState
             rules.ChangeUsed += ChangeUsedHandler;
             rules.ItemUsed += ItemUsedHandler;
             rules.MoveUsed += MoveUsedHandler;
+
+            rules.ConditionChange += ConditionChangeHandler;
+            rules.HPReduction += HPReductionHandler;
+            rules.StateChange += StateChangeHandler;
+        }
+
+        private void StateChangeHandler(object sender, StateChangeArgs e)
+        {
+            records.Add(new StateChangedEvent(data.GetPkmn(e.target).Name, e, guiService));
+        }
+
+        private void HPReductionHandler(object sender, HPReductionArgs e)
+        {
+            records.Add(new DamageEvent(e, guiService, graphicService));
+        }
+
+        private void ConditionChangeHandler(object sender, ConditionChangeArgs e)
+        {
+            records.Add(new ConditionChangedEvent(data.GetPkmn(e.target).Name, e, guiService, graphicService));
+        }
+
+        private void MoveUsedHandler(object sender, MoveUsedArgs e)
+        {
+            var pkmnName = data.GetPkmn(e.source).Name;
+            eventDispatcher.AddShowMessageEvent(guiService, pkmnName + " uses " + e.move);
         }
 
         private void ChangeUsedHandler(object sender, ChangeUsedArgs e)
         {
             throw new NotImplementedException();
-        }
-
-        private void MoveUsedHandler(object sender, MoveUsedArgs e)
-        {
-            var message = e.source.IsPlayer ? "" : "Enemy " + data.GetPkmn(e.source).Name + " uses " + e.move.Data.Name;
-
-            eventDispatcher.AddShowMessageEvent(guiService, message);
-
-            var effectsByTarget = e.effects.GroupBy( effect => effect.target);
-
-            foreach (var t in effectsByTarget)
-            {
-                var sorted = t.OrderBy(effect => !effect.damage).ThenBy(effect => !effect.stateChanged);
-                foreach (var s in sorted)
-                    HandleEffect(s);
-            }
-        }
-
-        private void HandleEffect(MoveEffect s)
-        {
-            if (s.damage)
-            {
-                eventDispatcher.AddHPEvent(graphicService, s.target.Identifier.IsPlayer, s.target.HP);
-                
-                if (s.critical)
-                    eventDispatcher.AddShowMessageEvent(guiService, "Critical Hit");
-                
-                if (s.effective != MoveEfficency.normal)
-                    eventDispatcher.AddShowMessageEvent(guiService, s.effective == MoveEfficency.veryEffective ?
-                        "Very effective" : "Not very effective");
-                return;
-            }
-
-            if (s.stateChanged)
-            {
-                eventDispatcher.AddShowMessageEvent(guiService, s.target.Name + "' s" + s.state +
-                    (s.lowered ? " was lowered" : "rises"));
-                return;
-            }
-
-            if (s.conditionChanged)
-            {
-                eventDispatcher.AddShowMessageEvent(guiService, s.target + " is " + s.target.Condition);
-                return;
-            }
         }
 
         private void ItemUsedHandler(object sender, ItemUsedArgs e)
@@ -132,12 +210,18 @@ namespace BattleLib.Components.BattleState
 
         private void CommandFinishedHandler(object sender, ExecutionEventArgs e)
         {
-            throw new NotImplementedException();
+            var eventsByTarget = records.GroupBy(r => r.ID);
+            
+            foreach (var events in eventsByTarget)
+            {
+                foreach (var ev in events.OrderBy(a => a.Priority))
+                    ev.AddEvent(eventDispatcher);
+            }
         }
 
         private void CommandStartHandler(object sender, ExecutionEventArgs e)
         {
-            throw new NotImplementedException();
+            records.Clear();
         }
     }
 }

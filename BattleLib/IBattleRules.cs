@@ -42,6 +42,7 @@ namespace BattleLib
     public class ItemUsedArgs : EventArgs
     {
         public Item item;
+        public bool success;
     }
 
     public class OnActionFailedArgs : EventArgs
@@ -50,27 +51,11 @@ namespace BattleLib
         public bool HasResistance;
     }
 
-    public class MoveEffect
-    {
-        public PokemonWrapper target;
 
-        public bool damage;
-        public bool critical;
-        public MoveEfficency effective;
-
-        public bool conditionChanged;
-        public StatusCondition oldCondition;
-
-        public bool stateChanged;
-        public State state;
-        public bool lowered;
-
-    }
     public class MoveUsedArgs : EventArgs
     {
         public Move move;
         public ClientIdentifier source;
-        public List<MoveEffect> effects = new List<MoveEffect>();
     }
 
     public interface IBattleRules
@@ -79,11 +64,50 @@ namespace BattleLib
         event EventHandler<ItemUsedArgs> ItemUsed;
         event EventHandler<MoveUsedArgs> MoveUsed;
 
+        event EventHandler<HPReductionArgs> HPReduction;
+        event EventHandler<ConditionChangeArgs> ConditionChange;
+        event EventHandler<StateChangeArgs> StateChange;
+
         bool CanEscape();
         bool CanChange();
 
         void ExecMove(PokemonWrapper source, Move move, PokemonWrapper target);
         bool TryChange(PokemonWrapper oldPkmn, Pokemon newPkmn);
         bool UseItem(PokemonWrapper target, Item item);
+    }
+
+    public class HPReductionArgs : EventArgs
+    {
+        public ClientIdentifier target;
+        public int oldHP;
+        public int newHP;
+
+        public bool success;
+        public MoveFailedReasons resason;
+
+        public bool critical;
+        public MoveEfficency effective;
+
+    }
+
+    class ConditionChangeArgs : EventArgs
+    {
+        public ClientIdentifier target;
+        public bool success;
+        public MoveFailedReasons resason;
+
+        public StatusCondition oldCondition;
+        public StatusCondition newCondition;
+    }
+
+    class StateChangeArgs : EventArgs
+    {
+        public ClientIdentifier target;
+        public bool success;
+        public MoveFailedReasons resason;
+
+        public State state;
+        public int oldState;
+        public int newState;
     }
 }

@@ -101,5 +101,10 @@ namespace BattleLib
         {
             throw new NotImplementedException();
         }
+
+
+        public event EventHandler<HPReductionArgs> HPReduction;
+        public event EventHandler<ConditionChangeArgs> ConditionChange;
+        public event EventHandler<StateChangeArgs> StateChange;
     }
 }
