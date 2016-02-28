@@ -51,6 +51,7 @@ namespace BattleLib.GraphicComponents
         {
             outerLine.Draw(time, batch);
             innerLine.Draw(time, batch);
+            hpLine.Draw(time, batch);
         }
 
         protected override void Update()

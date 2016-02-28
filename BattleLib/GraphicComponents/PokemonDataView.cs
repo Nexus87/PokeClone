@@ -16,11 +16,7 @@ namespace BattleLib.GraphicComponents
 {
     class PokemonDataView : ForwardingGraphicComponent<Container>
     {
-        public event EventHandler OnHPUpdated
-        {
-            add { hpLine.AnimationDone += value; }
-            remove { hpLine.AnimationDone -= value; }
-        }
+        public event EventHandler OnHPUpdated;
 
         public PokemonDataView(PokeEngine game, bool player)
             : base(new Container(game), game)
@@ -33,8 +29,8 @@ namespace BattleLib.GraphicComponents
             lvl = new TextBox("MenuFont", game) { PreferedTextSize = 16.0f };
 
             hpLineContainer.Layout = new HBoxLayout();
-            hpLineContainer.AddComponent(new TextBox("MenuFont", game) { Text = "hp:", PreferedTextSize = 8.0f });
-            hpLineContainer.AddComponent(hpLineContainer);
+            hpLineContainer.AddComponent(new TextBox("MenuFont", game) { Text = "hp:", PreferedTextSize = 12.0f });
+            hpLineContainer.AddComponent(hpLine);
 
             container.AddComponent(name);
             container.AddComponent(hpLineContainer);
@@ -61,7 +57,10 @@ namespace BattleLib.GraphicComponents
 
         public void SetHP(int newHP)
         {
-            PlayAnimation(new SetHPAnimation(newHP, hpLine, hpText));
+            var setHPAnimation = new SetHPAnimation(newHP, hpLine, hpText);
+            setHPAnimation.AnimationFinished += delegate { OnHPUpdated(this, EventArgs.Empty); };
+
+            PlayAnimation(setHPAnimation);
         }
 
         public void SetPokemon(PokemonWrapper pokemon)

@@ -31,7 +31,7 @@ namespace BattleLib.Components.BattleState
         {
             var list = (IEnumerable<ModifyableState>)Enum.GetValues(typeof(ModifyableState));
             foreach (var s in list)
-                modifier.Add(s, 1.0f);
+                modifier[s] = 1.0f;
         }
 
         public float Accuracy { get { return modifier[ModifyableState.Accuracy]; } }
