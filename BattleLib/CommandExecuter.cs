@@ -4,92 +4,12 @@ using System;
 
 namespace BattleLib
 {
-    public enum ChangeFailedReasons
-    {
-        blocked
-    }
-
-    public enum MoveFailedReasons
-    {
-        noEffect,
-        missed,
-
-    }
-
     public enum MoveEfficency
     {
+        noEffect,
         notEffective,
         normal,
         veryEffective
-    }
-
-    public class ChangeUsedArgs : EventArgs
-    {
-        bool success;
-        public PokemonWrapper newPokemon;
-    }
-
-
-    public class OnConditionChangedArgs : EventArgs
-    {
-        public StatusCondition condition;
-        public StatusCondition oldCondition;
-        public Pokemon pkmn;
-    }
-
-    public class ItemUsedArgs : EventArgs
-    {
-        public Item item;
-        public bool success;
-    }
-
-    public class OnActionFailedArgs : EventArgs
-    {
-        public bool HasMissed;
-        public bool HasResistance;
-    }
-
-
-    public class MoveUsedArgs : EventArgs
-    {
-        public Move move;
-        public ClientIdentifier source;
-    }
-
-
-    public class HPReductionArgs : EventArgs
-    {
-        public ClientIdentifier target;
-        public int oldHP;
-        public int newHP;
-
-        public bool success;
-        public MoveFailedReasons resason;
-
-        public bool critical;
-        public MoveEfficency effective;
-
-    }
-
-    public class ConditionChangeArgs : EventArgs
-    {
-        public ClientIdentifier target;
-        public bool success;
-        public MoveFailedReasons resason;
-
-        public StatusCondition oldCondition;
-        public StatusCondition newCondition;
-    }
-
-    public class StateChangeArgs : EventArgs
-    {
-        public ClientIdentifier target;
-        public bool success;
-        public MoveFailedReasons resason;
-
-        public State state;
-        public int oldState;
-        public int newState;
     }
 
     public class CommandExecuter
@@ -97,15 +17,12 @@ namespace BattleLib
         private IBattleRules rules;
         private TypeTable table = new TypeTable();
         private Random rng = new Random();
+        private EventCreator eventCreator;
 
         public CommandExecuter(IBattleRules rules)
         {
             this.rules = rules;
         }
-
-        public event EventHandler<ChangeUsedArgs> ChangeUsed = delegate { };
-        public event EventHandler<ItemUsedArgs> ItemUsed = delegate { };
-        public event EventHandler<MoveUsedArgs> MoveUsed = delegate { };
 
         public bool CanChange()
         {
@@ -119,6 +36,8 @@ namespace BattleLib
 
         public void ExecMove(PokemonWrapper source, Move move, PokemonWrapper target)
         {
+            eventCreator.UsingMove(source, move);
+
             switch (move.Data.DamageType)
             {
                 case DamageCategory.Physical:
@@ -133,19 +52,45 @@ namespace BattleLib
         private void HandleDamage(PokemonWrapper source, PokemonWrapper target, Move move)
         {
             float damage = rules.CalculateBaseDamage(source, target, move);
-            float stab = rules.SameTypeAttackBonus(source, move);
             float typeModifier = rules.GetTypeModifier(source, target, move);
+
+            MoveEfficency effect = GetEffect(typeModifier);
             bool critical = rng.NextDouble().CompareTo(rules.GetCriticalHitChance(move)) < 0;
-            float criticalModifier = critical ? rules.GetCriticalHitModifier() : 1.0f;
 
-            float totalDamage = damage * stab * typeModifier * criticalModifier * rules.GetMiscModifier(source, target, move);
+            damage *= rules.SameTypeAttackBonus(source, move);
+            damage *= typeModifier;
+            damage *= critical ? rules.GetCriticalHitModifier() : 1.0f;
+            damage *= rules.GetMiscModifier(source, target, move);
 
-            target.HP -= (int) totalDamage;
+            target.HP -= (int) damage;
+
+            eventCreator.SetHP(target.Identifier, target.HP);
+            eventCreator.Effective(effect, target);
+            if (critical)
+                eventCreator.Critical();
+
+            if (target.Condition == StatusCondition.KO)
+                eventCreator.SetStatus(StatusCondition.KO);
         }
 
-        public bool TryChange(PokemonWrapper oldPkmn, Pokemon newPkmn)
+        private MoveEfficency GetEffect(float typeModifier)
         {
-            return true;
+            if (typeModifier.CompareTo(0) == 0)
+                return MoveEfficency.noEffect;
+
+            int result = typeModifier.CompareTo(1.0f);
+
+            if (result > 0)
+                return MoveEfficency.veryEffective;
+            else if (result < 0)
+                return MoveEfficency.notEffective;
+
+            return MoveEfficency.normal;
+        }
+
+        public void ChangePokemon(PokemonWrapper oldPkmn, Pokemon newPkmn)
+        {
+            throw new NotImplementedException();
         }
 
         public bool UseItem(PokemonWrapper target, Item item)
@@ -153,38 +98,10 @@ namespace BattleLib
             throw new NotImplementedException();
         }
 
-        private float CalculateDamage(int attack, int defense, PokemonWrapper source, Move move)
-        {
-            float damage = (2.0f * source.Level + 10.0f) / 250.0f;
-            damage *= ((float)attack) / ((float)defense);
-            damage *= (float)move.Data.Damage;
-            damage += 2;
-
-            return damage;
-        }
-
-        private float CalculateModifier(PokemonWrapper source, PokemonWrapper target, Move move)
-        {
-            float modifier = move.Data.PkmType == source.Type1 || move.Data.PkmType == source.Type2 ?
-                1.5f : 1.0f;
-
-            float typeModifier = table.GetModifier(move.Data.PkmType, target.Type1);
-            typeModifier *= table.GetModifier(move.Data.PkmType, target.Type2);
-
-            //float critical = critical modifier *= random(0.85, 1.0)
-
-            return modifier * typeModifier;
-        }
-
-
         private void HandleStatusDamage(PokemonWrapper source, Move move, PokemonWrapper target)
         {
             throw new NotImplementedException();
         }
 
-
-        public event EventHandler<HPReductionArgs> HPReduction;
-        public event EventHandler<ConditionChangeArgs> ConditionChange;
-        public event EventHandler<StateChangeArgs> StateChange;
     }
 }

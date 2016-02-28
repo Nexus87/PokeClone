@@ -12,7 +12,6 @@ namespace BattleLib.Components.BattleState
         
         private IBattleState currentState;
         private BattleData data;
-        private EventCreator eventCreator;
 
         public BattleStateComponent(Game game)
             : base(game)

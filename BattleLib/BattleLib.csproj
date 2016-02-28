@@ -51,9 +51,6 @@
     <Compile Include="Components\BattleState\Commands\ItemCommand.cs" />
     <Compile Include="Components\BattleState\Commands\MoveCommand.cs" />
     <Compile Include="Components\BattleState\EventCreator.cs" />
-    <Compile Include="Components\BattleState\EventCreators\IEventCreator.cs" />
-    <Compile Include="Components\BattleState\EventCreators\ItemEventCreator.cs" />
-    <Compile Include="Components\BattleState\EventCreators\MoveEventCreator.cs" />
     <Compile Include="Components\BattleState\ExecuteState.cs" />
     <Compile Include="Components\BattleState\IBattleState.cs" />
     <Compile Include="Components\BattleState\PokemonWrapper.cs" />

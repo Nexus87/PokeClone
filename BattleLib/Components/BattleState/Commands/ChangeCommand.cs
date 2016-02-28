@@ -30,26 +30,7 @@ namespace BattleLib.Components.BattleState.Commands
 
         public void Execute(CommandExecuter executer, BattleData data)
         {
-            PokemonWrapper source = null;
-            if (Source == data.player)
-            {
-                source = data.PlayerPkmn;
-                if (!executer.TryChange(source, newPkmn))
-                    return;
-
-                data.PlayerPkmn.Pokemon = newPkmn;
-            }
-            else if (Source == data.ai)
-            {
-                source = data.AIPkmn;
-
-                if (!executer.TryChange(source, newPkmn))
-                    return;
-
-                data.AIPkmn.Pokemon = newPkmn;
-            }
-            else
-                throw new InvalidOperationException("Source id not found");
+            executer.ChangePokemon(data.GetPkmn(Source), newPkmn);
         }
     }
 }
