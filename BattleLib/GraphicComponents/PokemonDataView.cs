@@ -16,58 +16,52 @@ namespace BattleLib.GraphicComponents
 {
     class PokemonDataView : ForwardingGraphicComponent<Container>
     {
-        public event EventHandler OnHPUpdated = delegate { };
+        public event EventHandler OnHPUpdated
+        {
+            add { hpLine.AnimationDone += value; }
+            remove { hpLine.AnimationDone -= value; }
+        }
 
         public PokemonDataView(PokeEngine game, bool player)
             : base(new Container(game), game)
         {
             var container = InnerComponent;
-
+            var hpLineContainer = new Container(game);
+            
             hpLine = new HPLine(game);
             name = new TextBox("MenuFont", game);
-            lvl = new TextBox("MenuFont", game);
+            lvl = new TextBox("MenuFont", game) { PreferedTextSize = 16.0f };
+
+            hpLineContainer.Layout = new HBoxLayout();
+            hpLineContainer.AddComponent(new TextBox("MenuFont", game) { Text = "hp:", PreferedTextSize = 8.0f });
+            hpLineContainer.AddComponent(hpLineContainer);
 
             container.AddComponent(name);
-            container.AddComponent(hpLine);
+            container.AddComponent(hpLineContainer);
             container.AddComponent(lvl);
+
+            if (player)
+            {
+                hpText = new TextBox("MenuFont", game) { PreferedTextSize = 16.0f };
+                container.AddComponent(hpText);
+            }
 
             container.Layout = new VBoxLayout();
         }
 
         HPLine hpLine;
+        TextBox hpText;
         TextBox name;
         TextBox lvl;
-        HpSetter hpSetter = null;
 
-        class HpSetter
+        public override void Draw(GameTime time, ISpriteBatch batch)
         {
-            public float speed = 1.0f;
-            private int currentHP;
-            private int targetHP;
-            private HPLine line;
-
-            public HpSetter(HPLine line, int targetHP)
-            {
-                this.line = line;
-                this.targetHP = targetHP;
-                currentHP = line.Current;
-            }
-
-            public bool Update(GameTime time)
-            {
-                int nextHp = (int)(currentHP + (targetHP - currentHP) * speed * time.ElapsedGameTime.Seconds);
-                if (nextHp == currentHP)
-                    return false;
-
-                currentHP = nextHp;
-                line.Current = currentHP;
-                return true;
-            }
+            base.Draw(time, batch);
         }
 
         public void SetHP(int newHP)
         {
-            hpLine.AnimationSetHP(newHP);
+            PlayAnimation(new SetHPAnimation(newHP, hpLine, hpText));
         }
 
         public void SetPokemon(PokemonWrapper pokemon)
@@ -76,24 +70,48 @@ namespace BattleLib.GraphicComponents
             lvl.Text = "Level " + pokemon.Level;
             hpLine.MaxHP = pokemon.MaxHP;
             hpLine.Current = pokemon.HP;
-        }
 
-        public override void Draw(GameTime time, ISpriteBatch batch)
-        {
-            if (hpSetter != null)
-            {
-                if (!hpSetter.Update(time))
-                {
-                    hpSetter = null;
-                    OnHPUpdated(this, null);
-                }
-            }
-
-            base.Draw(time, batch);
+            if (hpText != null)
+                hpText.Text = pokemon.HP + "/  " + hpLine.MaxHP;
         }
 
         protected override void Update()
         {
+        }
+
+        private class SetHPAnimation : IAnimation
+        {
+            private int targetHP;
+            private HPLine line;
+            private TextBox text;
+
+            private int currentHP;
+            private Func<int, int> nextInt;
+
+            public event EventHandler AnimationFinished;
+
+            public SetHPAnimation(int targetHP, HPLine line, TextBox text)
+            {
+                this.targetHP = targetHP;
+                this.line = line;
+                this.text = text;
+                currentHP = line.Current;
+
+                if (line.Current < targetHP)
+                    nextInt = a => a + 1;
+                else
+                    nextInt = a => a - 1;
+            }
+            public void Update(GameTime time, IGraphicComponent component)
+            {
+                currentHP = nextInt(currentHP);
+                line.Current = currentHP;
+                if(text != null)
+                    text.Text = line.Current + "/  " + line.MaxHP;
+
+                if (currentHP == targetHP)
+                    AnimationFinished(this, EventArgs.Empty);
+            }
         }
     }
 }
