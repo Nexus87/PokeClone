@@ -17,7 +17,8 @@ namespace BattleLib.GraphicComponents
     class PokemonDataView : ForwardingGraphicComponent<Container>
     {
         public event EventHandler OnHPUpdated = delegate { };
-        public PokemonDataView(PokeEngine game)
+
+        public PokemonDataView(PokeEngine game, bool player)
             : base(new Container(game), game)
         {
             var container = InnerComponent;
@@ -66,7 +67,7 @@ namespace BattleLib.GraphicComponents
 
         public void SetHP(int newHP)
         {
-            hpSetter = new HpSetter(hpLine, newHP);
+            hpLine.AnimationSetHP(newHP);
         }
 
         public void SetPokemon(PokemonWrapper pokemon)

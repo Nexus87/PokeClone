@@ -26,8 +26,8 @@ namespace BattleLib.GraphicComponents
         {
             game.Services.AddService(typeof(IBattleGraphicService), this);
 
-            aiView = new PokemonDataView(game);
-            playerView = new PokemonDataView(game);
+            aiView = new PokemonDataView(game, false);
+            playerView = new PokemonDataView(game, true);
             aiSprite = new PokemonSprite(true, game);
             playerSprite = new PokemonSprite(false, game);
 

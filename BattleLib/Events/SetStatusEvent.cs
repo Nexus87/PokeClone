@@ -1,4 +1,5 @@
 ﻿using Base;
+using BattleLib.Components.BattleState;
 using BattleLib.GraphicComponents;
 using GameEngine.EventComponent;
 using System;
@@ -11,32 +12,26 @@ namespace BattleLib.Events
 {
     class SetStatusEvent : IEvent
     {
-        public event EventHandler OnEventProcessed = delegate { };
+        public event EventHandler OnEventProcessed
+        {
+            add { graphic.ConditionSet += value; }
+            remove { graphic.ConditionSet -= value; }
+        }
 
         private IBattleGraphicService graphic;
-        private bool player;
         private StatusCondition condition;
+        private ClientIdentifier id;
 
-        public SetStatusEvent(IBattleGraphicService graphic, bool player, StatusCondition condition)
+        public SetStatusEvent(IBattleGraphicService graphic, ClientIdentifier id, StatusCondition condition)
         {
             this.graphic = graphic;
-            this.player = player;
+            this.id = id;
             this.condition = condition;
         }
 
         public void Dispatch()
         {
-            graphic.ConditionSet += ConditionSetHandler;
-            if (player)
-                graphic.SetPlayerPKMNStatus(condition);
-            else
-                graphic.SetAIPKMNStatus(condition);
-        }
-
-        private void ConditionSetHandler(object sender, EventArgs e)
-        {
-            graphic.ConditionSet -= ConditionSetHandler;
-            OnEventProcessed(this, EventArgs.Empty);
+            graphic.SetPokemonStatus(id, condition);
         }
     }
 }

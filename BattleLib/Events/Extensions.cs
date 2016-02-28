@@ -1,4 +1,5 @@
 ﻿using Base;
+using BattleLib.Components.BattleState;
 using BattleLib.GraphicComponents;
 using GameEngine.EventComponent;
 using System;
@@ -11,14 +12,14 @@ namespace BattleLib.Events
 {
     public static class Extensions
     {
-        public static void AddHPEvent(this IEventQueue queue, IBattleGraphicService graphic, bool player, int hp)
+        public static void AddHPEvent(this IEventQueue queue, IBattleGraphicService graphic, ClientIdentifier id, int hp)
         {
-            queue.AddEvent(new SetHPEvent(graphic, player, hp));
+            queue.AddEvent(new SetHPEvent(graphic, id, hp));
         }
 
-        public static void AddStatusEvent(this IEventQueue queue, IBattleGraphicService graphic, bool player, StatusCondition condition)
+        public static void AddStatusEvent(this IEventQueue queue, IBattleGraphicService graphic, ClientIdentifier id, StatusCondition condition)
         {
-            queue.AddEvent(new SetStatusEvent(graphic, player, condition));
+            queue.AddEvent(new SetStatusEvent(graphic, id, condition));
         }
 
         public static void AddShowMenuEvent(this IEventQueue queue, IGUIService service)

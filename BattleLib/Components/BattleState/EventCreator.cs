@@ -45,7 +45,7 @@ namespace BattleLib.Components.BattleState
 
         internal void SetHP(ClientIdentifier id, int hp)
         {
-            eventDispatcher.AddHPEvent(graphicService, id.IsPlayer, hp);
+            eventDispatcher.AddHPEvent(graphicService, id, hp);
         }
 
         internal void Effective(MoveEfficency effect, PokemonWrapper target)

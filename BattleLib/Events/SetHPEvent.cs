@@ -1,4 +1,5 @@
-﻿using BattleLib.GraphicComponents;
+﻿using BattleLib.Components.BattleState;
+using BattleLib.GraphicComponents;
 using GameEngine.EventComponent;
 using System;
 using System.Collections.Generic;
@@ -10,31 +11,26 @@ namespace BattleLib.Events
 {
     class SetHPEvent : IEvent
     {
-        public event EventHandler OnEventProcessed = delegate { };
-        private IBattleGraphicService graphic;
-        private bool player;
-        private int hp;
+        public event EventHandler OnEventProcessed
+        {
+            add { graphic.OnHPSet += value; }
+            remove { graphic.OnHPSet -= value; }
+        }
 
-        public SetHPEvent(IBattleGraphicService graphic, bool player, int hp)
+        private IBattleGraphicService graphic;
+        private int hp;
+        private ClientIdentifier id;
+
+        public SetHPEvent(IBattleGraphicService graphic, ClientIdentifier id, int hp)
         {
             this.graphic = graphic;
-            this.player = player;
+            this.id = id;
             this.hp = hp;
         }
 
         public void Dispatch()
         {
-            graphic.OnHPSet += HPSetHandler;
-            if (player)
-                graphic.SetPlayerHP(hp);
-            else
-                graphic.SetAIHP(hp);
-        }
-
-        private void HPSetHandler(object sender, EventArgs e)
-        {
-            graphic.OnHPSet -= HPSetHandler;
-            OnEventProcessed(this, null);
+            graphic.SetHP(id, hp);
         }
     }
 }

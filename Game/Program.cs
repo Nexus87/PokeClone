@@ -20,10 +20,18 @@ namespace PokemonGame
         static void Main()
         {
             var config = new Configuration();
+            var playerId = new ClientIdentifier();
+            var aiId = new ClientIdentifier();
+            playerId.IsPlayer = true;
+            playerId.Name = "Player";
+
+            aiId.IsPlayer = false;
+            aiId.Name = "AI";
+
             PokeEngine.Init(config);
             var engine = PokeEngine.GetInstance();
-            var graphic = new BattleGraphics(engine);
-            var battleState = new BattleStateComponent(new ClientIdentifier(), new ClientIdentifier(), engine);
+            var graphic = new BattleGraphics(engine, playerId, aiId);
+            var battleState = new BattleStateComponent(playerId, aiId, engine);
             
             engine.Graphic = graphic;
             var gui = new BattleGUI(config, engine);
