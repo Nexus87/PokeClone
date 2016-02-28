@@ -1,16 +1,10 @@
 ﻿using Base;
 using BattleLib.Components.BattleState;
-using BattleLib.GraphicComponents.GUI;
 using GameEngine;
 using GameEngine.Graphics;
-using GameEngine.Graphics.Basic;
-using GameEngine.Graphics.Views;
-using GameEngine.Graphics.Widgets;
 using GameEngine.Wrapper;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 
@@ -18,17 +12,16 @@ namespace BattleLib.GraphicComponents
 {
     public class BattleGraphics : AbstractGraphicComponent, IBattleGraphicService
     {
-        public event EventHandler OnRequestDone = delegate { };
-
-        private PokemonDataView aiView;
-        private PokemonDataView playerView;
+        private readonly Dictionary<ClientIdentifier, PokemonDataView> dataViews = new Dictionary<ClientIdentifier, PokemonDataView>();
+        private readonly Dictionary<ClientIdentifier, PokemonSetter> pokemonSetters = new Dictionary<ClientIdentifier, PokemonSetter>();
+        private readonly Dictionary<ClientIdentifier, PokemonSprite> sprites = new Dictionary<ClientIdentifier, PokemonSprite>();
 
         private PokemonSprite aiSprite;
+        private PokemonDataView aiView;
         private PokemonSprite playerSprite;
+        private PokemonDataView playerView;
 
-        PokemonWrapper tmpPkmn;
-
-        public BattleGraphics(PokeEngine game)
+        public BattleGraphics(PokeEngine game, ClientIdentifier player, ClientIdentifier ai)
             : base(game)
         {
             game.Services.AddService(typeof(IBattleGraphicService), this);
@@ -38,30 +31,76 @@ namespace BattleLib.GraphicComponents
             aiSprite = new PokemonSprite(true, game);
             playerSprite = new PokemonSprite(false, game);
 
-            aiView.OnHPUpdated += delegate { OnHPSet(this, null); };
-            playerView.OnHPUpdated += delegate { OnHPSet(this, null); };
+            dataViews[player] = playerView;
+            dataViews[ai] = aiView;
 
-            aiSprite.OnPokemonAppeared += delegate { OnPokemonSet(this, null); };
+            sprites[player] = playerSprite;
+            sprites[ai] = aiSprite;
 
-            playerSprite.OnPokemonAppeared += delegate { OnPokemonSet(this, null); };
+            pokemonSetters[player] = new PokemonSetter(playerView, playerSprite);
+            pokemonSetters[ai] = new PokemonSetter(playerView, playerSprite);
         }
 
-        void aiSprite_OnPokemonAppeared(object sender, EventArgs e)
+        public event EventHandler ConditionSet;
+
+        public event EventHandler OnHPSet
         {
-            aiView.SetPokemon(tmpPkmn);
-            tmpPkmn = null;
+            add
+            {
+                foreach (var v in dataViews.Values)
+                    v.OnHPUpdated += value;
+            }
+            remove
+            {
+                foreach (var v in dataViews.Values)
+                    v.OnHPUpdated -= value;
+            }
         }
 
-        void playerSprite_OnPokemonAppeared(object sender, EventArgs e)
+        public event EventHandler OnPokemonSet
         {
-            playerView.SetPokemon(tmpPkmn);
-            tmpPkmn = null;
+            add
+            {
+                foreach (var v in pokemonSetters.Values)
+                    v.PokemonSet += value;
+            }
+            remove
+            {
+                foreach (var v in pokemonSetters.Values)
+                    v.PokemonSet -= value;
+            }
         }
 
-        void OnHPUpdated(object sender, EventArgs e)
+        public void ChangePokemon(ClientIdentifier id, PokemonWrapper pkmn)
         {
-            OnRequestDone(this, null);
-        }   
+           pokemonSetters[id].SetPokemon(pkmn);
+        }
+
+        public void PlayAttackAnimation(ClientIdentifier id)
+        {
+            sprites[id].PlayAttackAnimation();
+        }
+
+        public void SetHP(ClientIdentifier id, int value)
+        {
+            dataViews[id].SetHP(value);
+        }
+
+        public void SetPlayerHP(int HP)
+        {
+            playerView.SetHP(HP);
+        }
+
+        public void SetPokemon(ClientIdentifier id, PokemonWrapper pokemon)
+        {
+            sprites[id].SetPokemon(pokemon.ID);
+            dataViews[id].SetPokemon(pokemon);
+        }
+
+        public void SetPokemonStatus(ClientIdentifier id, StatusCondition condition)
+        {
+            throw new NotImplementedException();
+        }
 
         public override void Setup(ContentManager content)
         {
@@ -73,6 +112,30 @@ namespace BattleLib.GraphicComponents
 
             initAIGraphic();
             initPlayerGraphic();
+        }
+
+        protected override void DrawComponent(GameTime time, ISpriteBatch batch)
+        {
+            aiView.Draw(time, batch);
+            playerView.Draw(time, batch);
+
+            aiSprite.Draw(time, batch);
+            playerSprite.Draw(time, batch);
+        }
+
+        private void initAIGraphic()
+        {
+            aiView.X = (int)(PokeEngine.ScreenWidth * 0.2f);
+            aiView.Y = (int)(PokeEngine.ScreenHeight * 0.1f);
+
+            aiView.Height = (int)(PokeEngine.ScreenHeight * 0.25f);
+            aiView.Width = (int)(PokeEngine.ScreenWidth * 0.3f);
+
+            aiSprite.X = (int)(PokeEngine.ScreenWidth * 0.6f);
+            aiSprite.Y = (int)(PokeEngine.ScreenHeight * 0.1f);
+
+            aiSprite.Height = (int)(PokeEngine.ScreenHeight * 0.25f);
+            aiSprite.Width = (int)(PokeEngine.ScreenHeight * 0.25f);
         }
 
         private void initPlayerGraphic()
@@ -90,97 +153,35 @@ namespace BattleLib.GraphicComponents
             playerSprite.Width = (int)(PokeEngine.ScreenHeight * 0.25f);
         }
 
-        private void initAIGraphic()
+        private class PokemonSetter
         {
+            private readonly PokemonSprite sprite;
 
-            aiView.X = (int)(PokeEngine.ScreenWidth * 0.2f);
-            aiView.Y = (int)(PokeEngine.ScreenHeight * 0.1f);
+            private readonly PokemonDataView view;
 
-            aiView.Height = (int)(PokeEngine.ScreenHeight * 0.25f);
-            aiView.Width = (int)(PokeEngine.ScreenWidth * 0.3f);
+            private PokemonWrapper pokemon;
 
-
-            aiSprite.X = (int)(PokeEngine.ScreenWidth * 0.6f);
-            aiSprite.Y = (int)(PokeEngine.ScreenHeight * 0.1f);
-
-            aiSprite.Height = (int)(PokeEngine.ScreenHeight * 0.25f);
-            aiSprite.Width = (int)(PokeEngine.ScreenHeight * 0.25f);
-        }
-
-        protected override void DrawComponent(GameTime time, ISpriteBatch batch)
-        {
-            aiView.Draw(time, batch);
-            playerView.Draw(time, batch);
-
-            aiSprite.Draw(time, batch);
-            playerSprite.Draw(time, batch);
-        }
-
-        public void PlayAttackAnimation(bool player)
-        {
-            if (player)
-                playerSprite.PlayAttackAnimation();
-            else
-                aiSprite.PlayAttackAnimation();
-        }
-
-        public void SetHP(bool player, int value)
-        {
-            if (player)
-                playerView.SetHP(value);
-            else
-                aiView.SetHP(value);
-        }
-
-        public void ChangePkmn(bool player, PokemonWrapper pkmn)
-        {
-            tmpPkmn = pkmn;
-            if (player)
+            public PokemonSetter(PokemonDataView view, PokemonSprite sprite)
             {
-                playerSprite.SetPokemon(pkmn.ID);
+                this.view = view;
+                this.sprite = sprite;
+
+                sprite.OnPokemonAppeared += OnPokemonApprearedHandler;
             }
-            else
+
+            public event EventHandler PokemonSet;
+
+            public void SetPokemon(PokemonWrapper pokemon)
             {
-                aiSprite.SetPokemon(pkmn.ID);
+                sprite.SetPokemon(pokemon.ID);
             }
-        }
 
-        public event EventHandler OnHPSet;
-        public event EventHandler OnPokemonSet;
-
-        public void SetPlayerHP(int HP)
-        {
-            playerView.SetHP(HP);
-        }
-
-        public void SetAIHP(int HP)
-        {
-            aiView.SetHP(HP);
-        }
-
-        public void SetPlayerPKMN(PokemonWrapper pokemon)
-        {
-            playerView.SetPokemon(pokemon);
-            playerSprite.SetPokemon(pokemon.ID);
-        }
-
-        public void SetAIPKMN(PokemonWrapper pokemon)
-        {
-            aiView.SetPokemon(pokemon);
-            aiSprite.SetPokemon(pokemon.ID);
-        }
-
-
-        public event EventHandler ConditionSet;
-
-        public void SetPlayerPKMNStatus(StatusCondition condition)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SetAIPKMNStatus(StatusCondition condition)
-        {
-            throw new NotImplementedException();
+            private void OnPokemonApprearedHandler(object sender, EventArgs e)
+            {
+                view.SetPokemon(pokemon);
+                pokemon = null;
+                PokemonSet(this, EventArgs.Empty);
+            }
         }
     }
 }

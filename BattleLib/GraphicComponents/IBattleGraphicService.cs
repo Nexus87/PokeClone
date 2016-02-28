@@ -14,13 +14,9 @@ namespace BattleLib.GraphicComponents
         event EventHandler OnPokemonSet;
         event EventHandler ConditionSet;
 
-        void SetPlayerHP(int HP);
-        void SetAIHP(int HP);
-
-        void SetPlayerPKMN(PokemonWrapper pokemon);
-        void SetAIPKMN(PokemonWrapper pokemon);
-
-        void SetPlayerPKMNStatus(StatusCondition condition);
-        void SetAIPKMNStatus(StatusCondition condition);
+        void SetHP(ClientIdentifier id, int hp);
+        void SetPokemon(ClientIdentifier id, PokemonWrapper pokemon);
+        void ChangePokemon(ClientIdentifier id, PokemonWrapper pokemon);
+        void SetPokemonStatus(ClientIdentifier id, StatusCondition condition);
     }
 }
