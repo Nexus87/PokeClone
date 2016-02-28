@@ -19,6 +19,6 @@ namespace BattleLib.Components.BattleState.Commands
         ClientIdentifier Source { get; }
         CommandType Type { get; }
         int Priority { get; }
-        void Execute(IBattleRules rules, BattleData data);
+        void Execute(CommandExecuter executer, BattleData data);
     }
 }

@@ -25,110 +25,110 @@ using System.Collections.Generic;
 
 namespace Base
 {
-	public class PokemonBuilder {
+    public class PokemonBuilder {
 
-		public PokemonBuilder(Pokemon source) {
+        public PokemonBuilder(Pokemon source) {
             if (source == null) throw new ArgumentNullException("source", "Argument should not be null");
 
-			Level = source.Level;
-			Name = source.Name;
-			Stats = source.Stats;
-			IV = source.IV;
+            Level = source.Level;
+            Name = source.Name;
+            Stats = source.Stats;
+            IV = source.IV;
             BaseData = source.BaseData;
-		}
+        }
 
-		public PokemonBuilder(PKData source) {
+        public PokemonBuilder(PKData source) {
             if (source == null) throw new ArgumentNullException("source", "Argument should not be null");
 
-			Level = 1;
-			Name = source.Name;
+            Level = 1;
+            Name = source.Name;
             BaseData = source;
-		}
+        }
 
-		public PokemonBuilder() {
-			Level = 1;
-		}
+        public PokemonBuilder() {
+            Level = 1;
+        }
 
-		int Level { get; set; }
-		string Name { get; set; }
-		Stats Stats{ get; set; }
-		Stats IV { get; set; }
+        int Level { get; set; }
+        string Name { get; set; }
+        Stats Stats{ get; set; }
+        Stats IV { get; set; }
         PKData BaseData { get; set; }
 
 
-		public PokemonBuilder SetLevel(int level){
+        public PokemonBuilder SetLevel(int level){
             this.Level = level;
-			return this;
-		}
+            return this;
+        }
 
-		public PokemonBuilder SetName( string name ){
+        public PokemonBuilder SetName( string name ){
             this.Name = name;
-			return this;
-		}
-		public PokemonBuilder SetIV(Stats iv){
+            return this;
+        }
+        public PokemonBuilder SetIV(Stats iv){
             this.IV = iv;
-			return this;
-		}
+            return this;
+        }
 
         public PokemonBuilder SetBaseData(PKData baseData)
         {
             this.BaseData = baseData;
-			return this;
-		}
-		public PokemonBuilder SetStats(Stats stats){
+            return this;
+        }
+        public PokemonBuilder SetStats(Stats stats){
             this.Stats = stats;
-			return this;
-		}
+            return this;
+        }
 
-		public Pokemon Build() {
+        public Pokemon Build() {
             if (Name == null || Stats == null || IV == null || BaseData == null)
-				throw new InvalidOperationException ("Builder does not have all values");
+                throw new InvalidOperationException ("Builder does not have all values");
 
             return new Pokemon(BaseData, Level, Name, Stats, IV);
-		}
-	}
+        }
+    }
 
-	public class Pokemon
-	{
+    public class Pokemon
+    {
 
-		public Pokemon(PKData baseData, int level, string name, Stats stats, Stats iv)
-		{
+        public Pokemon(PKData baseData, int level, string name, Stats stats, Stats iv)
+        {
             this.BaseData = baseData;
-			this.Name = name;
-			this.Level = level;
-			this.Stats = stats;
-			this.IV = iv;
-			Condition = StatusCondition.Normal;
+            this.Name = name;
+            this.Level = level;
+            this.Stats = stats;
+            this.IV = iv;
+            Condition = StatusCondition.Normal;
             Moves = new List<Move>();
-		}
+        }
 
         public Pokemon(PKData baseData, Stats iv) : this(baseData, 1, baseData.Name, baseData.BaseStats, iv)
         {}
 
         public PKData BaseData { get; private set; }
-		public int Level { get; set; }
+        public int Level { get; set; }
         public int HP { get; set; }
         public String Name { get; set; }
         
-		public Stats IV { get; private set; }
-		public Stats Stats { get; private set; }
+        public Stats IV { get; private set; }
+        public Stats Stats { get; private set; }
 
         public List<Move> Moves { get; private set; }
 
-		public PokemonType Type1 { get{ return BaseData.Type1; }}
+        public PokemonType Type1 { get{ return BaseData.Type1; }}
         public PokemonType Type2 { get { return BaseData.Type2; }}
 
-		public StatusCondition Condition { get; set; }
+        public StatusCondition Condition { get; set; }
 
         public override string ToString()
         {
             return Name;
         }
 
-		public bool IsKO ()
-		{
-			return Condition == StatusCondition.KO;
-		}
+        public bool IsKO ()
+        {
+            return Condition == StatusCondition.KO;
+        }
 
 
         public int Id

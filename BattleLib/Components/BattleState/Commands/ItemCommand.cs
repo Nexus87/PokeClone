@@ -28,12 +28,12 @@ namespace BattleLib.Components.BattleState.Commands
             get { throw new NotImplementedException(); }
         }
 
-        public void Execute(IBattleRules rules, BattleData data)
+        public void Execute(CommandExecuter executer, BattleData data)
         {
             if (Source == data.player)
-                rules.UseItem(data.PlayerPkmn, item);
+                executer.UseItem(data.PlayerPkmn, item);
             else if (Source == data.ai)
-                rules.UseItem(data.AIPkmn, item);
+                executer.UseItem(data.AIPkmn, item);
             else
                 throw new InvalidOperationException("Id is unknown.");
         }

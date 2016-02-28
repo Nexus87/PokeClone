@@ -159,7 +159,7 @@ namespace BattleLib.Components.BattleState
 
         }
 
-        public void Setup(Game game, IBattleRules rules, ExecuteState state)
+        public void Setup(Game game, CommandExecuter executer, ExecuteState state)
         {
             eventDispatcher = game.Services.GetService<IEventQueue>();
             graphicService = game.Services.GetService<IBattleGraphicService>();
@@ -168,13 +168,13 @@ namespace BattleLib.Components.BattleState
             state.OnCommandStarted += CommandStartHandler;
             state.OnCommandFinished += CommandFinishedHandler;
 
-            rules.ChangeUsed += ChangeUsedHandler;
-            rules.ItemUsed += ItemUsedHandler;
-            rules.MoveUsed += MoveUsedHandler;
+            executer.ChangeUsed += ChangeUsedHandler;
+            executer.ItemUsed += ItemUsedHandler;
+            executer.MoveUsed += MoveUsedHandler;
 
-            rules.ConditionChange += ConditionChangeHandler;
-            rules.HPReduction += HPReductionHandler;
-            rules.StateChange += StateChangeHandler;
+            executer.ConditionChange += ConditionChangeHandler;
+            executer.HPReduction += HPReductionHandler;
+            executer.StateChange += StateChangeHandler;
         }
 
         private void StateChangeHandler(object sender, StateChangeArgs e)

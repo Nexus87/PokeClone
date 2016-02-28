@@ -28,7 +28,7 @@ namespace BattleLib.Components.BattleState.Commands
             get { return move.Data.Priority; }
         }
 
-        public void Execute(IBattleRules rules, BattleData data)
+        public void Execute(CommandExecuter executer, BattleData data)
         {
             PokemonWrapper source = null;
             PokemonWrapper target = null;
@@ -48,7 +48,7 @@ namespace BattleLib.Components.BattleState.Commands
                 throw new InvalidOperationException("Source id is unknown.");
             }
 
-            rules.ExecMove(source, move, target);
+            executer.ExecMove(source, move, target);
         }
     }
 }

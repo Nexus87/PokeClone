@@ -25,14 +25,14 @@ namespace BattleLib.Components.BattleState
         public EventHandler<ExecutionEventArgs> OnCommandFinished = delegate { };
 
         ICommandScheduler scheduler;
-        IBattleRules rules;
+        CommandExecuter executer;
 
         BattleStateComponent state;
 
-        public ExecuteState(BattleStateComponent state, ICommandScheduler scheduler, IBattleRules rules)
+        public ExecuteState(BattleStateComponent state, ICommandScheduler scheduler, CommandExecuter executer)
         {
             this.scheduler = scheduler;
-            this.rules = rules;
+            this.executer = executer;
             this.state = state;
         }
         public override void Init()
@@ -49,7 +49,7 @@ namespace BattleLib.Components.BattleState
                 var args = new ExecutionEventArgs(command.Source, command);
 
                 OnCommandStarted(this, args);
-                command.Execute(rules, data);
+                command.Execute(executer, data);
                 OnCommandFinished(this, args);
             }
 

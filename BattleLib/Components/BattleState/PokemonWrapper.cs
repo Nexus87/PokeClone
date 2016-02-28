@@ -1,48 +1,58 @@
 ﻿using Base;
 using System;
+using System.Collections.Generic;
 
 namespace BattleLib.Components.BattleState
 {
-    public class ConditionChangedEventArgs : EventArgs
+    public enum ModifyableState
     {
-        public ConditionChangedEventArgs(StatusCondition newCondition)
-        {
-            NewCondition = newCondition;
-        }
-
-        public StatusCondition NewCondition { get; private set; }
+        Atk,
+        Def,
+        SpAtk,
+        SpDef,
+        Speed,
+        Accuracy,
+        Evasion
     }
 
     public class PokemonWrapper
     {
+        private Dictionary<ModifyableState, float> modifier = new Dictionary<ModifyableState, float>();
+
+        private Pokemon pokemon;
 
         public PokemonWrapper(ClientIdentifier id)
         {
-            this.Identifier = id;
+            Identifier = id;
+            ResetModifier();
         }
 
-        private Pokemon pokemon;
-        private Stats stateModifier = new Stats();
+        private void ResetModifier()
+        {
+            var list = (IEnumerable<ModifyableState>)Enum.GetValues(typeof(ModifyableState));
+            foreach (var s in list)
+                modifier.Add(s, 1.0f);
+        }
 
-        public event EventHandler<ConditionChangedEventArgs> OnConditionChanged = delegate { };
-        public event EventHandler OnPokemonChanged = delegate { };
-        public event EventHandler<StateChangedEventArgs> OnStateChanged = delegate { };
-
-        public int Atk { get { return Pokemon.Stats.Atk + stateModifier.Atk; } }
+        public float Accuracy { get { return modifier[ModifyableState.Accuracy]; } }
+        public int Atk { get { return (int)(Pokemon.Stats.Atk * modifier[ModifyableState.Atk]); } }
 
         public StatusCondition Condition
         {
             get { return Pokemon.Condition; }
-            set
-            {
-                Pokemon.Condition = value;
-                OnConditionChanged(this, new ConditionChangedEventArgs(value));
-            }
+            set { Pokemon.Condition = value; }
         }
 
-        public int Def { get { return Pokemon.Stats.Def + stateModifier.Def; } }
+        public int Def { get { return (int)(Pokemon.Stats.Def * modifier[ModifyableState.Def]); } }
 
-        public int HP { get { return Pokemon.HP; } }
+        public float Evasion { get { return modifier[ModifyableState.Evasion]; } }
+        public int HP {
+            get { return Pokemon.HP; }
+            set { Pokemon.HP = Math.Max(0, value);
+                if (Pokemon.HP == 0)
+                    Pokemon.Condition = StatusCondition.KO;
+            }
+        }
 
         public int ID { get { return Pokemon.Id; } }
         public ClientIdentifier Identifier { get; private set; }
@@ -57,62 +67,19 @@ namespace BattleLib.Components.BattleState
             {
                 if (value == null)
                     throw new ArgumentNullException("null is not a valid value");
+                ResetModifier();
                 pokemon = value;
-                OnPokemonChanged(this, null);
             }
         }
 
-        public Stats PokemonStates { get { return Pokemon.Stats; } }
-        public int SpAtk { get { return Pokemon.Stats.SpAtk + stateModifier.SpAtk; } }
-        public int SpDef { get { return Pokemon.Stats.SpDef + stateModifier.SpDef; } }
+        public int SpAtk { get { return (int)(Pokemon.Stats.SpAtk * modifier[ModifyableState.SpAtk]); } }
+        public int SpDef { get { return (int)(Pokemon.Stats.SpDef * modifier[ModifyableState.SpDef]); } }
         public PokemonType Type1 { get { return Pokemon.Type1; } }
         public PokemonType Type2 { get { return Pokemon.Type2; } }
 
-        public void ModifyStat(State state, int modifier)
+        public void SetModifierStage(ModifyableState state, int stage, IBattleRules rules)
         {
-            switch (state)
-            {
-                case State.HP:
-                    if (modifier < 0)
-                        pokemon.HP = Math.Max(pokemon.HP + modifier, 0);
-                    else
-                        pokemon.HP = Math.Min(pokemon.HP + modifier, MaxHP);
-                    break;
-
-                case State.Atk:
-                    stateModifier.Atk += modifier;
-                    break;
-
-                case State.Def:
-                    stateModifier.Def += modifier;
-                    break;
-
-                case State.SpAtk:
-                    stateModifier.SpAtk += modifier;
-                    break;
-
-                case State.SpDef:
-                    stateModifier.SpDef += modifier;
-                    break;
-
-                case State.Speed:
-                    stateModifier.Speed += modifier;
-                    break;
-            }
-
-            OnStateChanged(this, new StateChangedEventArgs(state, modifier));
+            modifier[state] = rules.GetStateModifier(stage);
         }
-    }
-
-    public class StateChangedEventArgs : EventArgs
-    {
-        public StateChangedEventArgs(State modifiedState, int modifier)
-        {
-            this.ModifiedState = modifiedState;
-            this.Modifier = modifier;
-        }
-
-        public State ModifiedState { get; private set; }
-        public int Modifier { get; private set; }
     }
 }

@@ -28,13 +28,13 @@ namespace BattleLib.Components.BattleState.Commands
             get { throw new NotImplementedException(); }
         }
 
-        public void Execute(IBattleRules rules, BattleData data)
+        public void Execute(CommandExecuter executer, BattleData data)
         {
             PokemonWrapper source = null;
             if (Source == data.player)
             {
                 source = data.PlayerPkmn;
-                if (!rules.TryChange(source, newPkmn))
+                if (!executer.TryChange(source, newPkmn))
                     return;
 
                 data.PlayerPkmn.Pokemon = newPkmn;
@@ -43,7 +43,7 @@ namespace BattleLib.Components.BattleState.Commands
             {
                 source = data.AIPkmn;
 
-                if (!rules.TryChange(source, newPkmn))
+                if (!executer.TryChange(source, newPkmn))
                     return;
 
                 data.AIPkmn.Pokemon = newPkmn;

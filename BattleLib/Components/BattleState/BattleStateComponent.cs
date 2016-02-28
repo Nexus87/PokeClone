@@ -44,7 +44,7 @@ namespace BattleLib.Components.BattleState
 
             actionState = new WaitForActionState(this, PlayerIdentifier, AIIdentifier);
             charState = new WaitForCharState(this, PlayerIdentifier, AIIdentifier);
-            exeState = new ExecuteState(this, new Gen1CommandScheduler(), new Gen1BattleRules(false));
+            exeState = new ExecuteState(this, new Gen1CommandScheduler(), new CommandExecuter(new DummyRules()));
 
             currentState = actionState;
         }
@@ -74,7 +74,58 @@ namespace BattleLib.Components.BattleState
             currentState = newState;
         }
     }
+    public class DummyRules : IBattleRules
+    {
+        public float CalculateBaseDamage(PokemonWrapper source, PokemonWrapper target, Move move)
+        {
+            return 1.0f;
+        }
 
+        public bool CanChange()
+        {
+            return false;
+        }
+
+        public bool CanEscape()
+        {
+            return false;
+        }
+
+        public float GetCriticalHitChance(Move move)
+        {
+            return 0.15f;
+        }
+
+        public float GetCriticalHitModifier()
+        {
+            return 2.0f;
+        }
+
+        public float GetHitChance(PokemonWrapper source, PokemonWrapper target, Move move)
+        {
+            return 0.95f;
+        }
+
+        public float GetMiscModifier(PokemonWrapper source, PokemonWrapper target, Move move)
+        {
+            return 1.0f;
+        }
+
+        public float GetStateModifier(int stage)
+        {
+            return 1.0f;
+        }
+
+        public float GetTypeModifier(PokemonWrapper source, PokemonWrapper target, Move move)
+        {
+            return 1.0f;
+        }
+
+        public float SameTypeAttackBonus(PokemonWrapper source, Move move)
+        {
+            return 1.0f;
+        }
+    }
     public class ClientIdentifier
     {
         public ClientIdentifier()
