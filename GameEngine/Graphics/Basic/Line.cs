@@ -5,9 +5,22 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace GameEngine.Graphics.Basic
 {
+    /// <summary>
+    /// Draws a line with rounded cups
+    /// </summary>
+    /// <remarks>
+    /// This component draws a mono color line with a half circle at each ends.
+    /// The half circles can only be guaranteed, while the width
+    /// of the component is large enough, this means Width >= Height.
+    /// If the width is under this limit, the cups will still be round
+    /// but no half circles any more.
+    /// </remarks>
     public class Line : AbstractGraphicComponent
     {
-        public Line(PokeEngine game) : base(game) { }
+        public Line(PokeEngine game) : base(game) 
+        {
+            Color = Color.Black;
+        }
 
         private float circleScale;
         private Texture2D cups;
@@ -17,14 +30,32 @@ namespace GameEngine.Graphics.Basic
         private Vector2 lineScale;
         private Texture2D pixel;
         private Vector2 rightCup;
+
+        /// <summary>
+        /// Color of the line.
+        /// </summary>
+        /// <remarks>
+        /// It is black by default.
+        /// </remarks>
         public Color Color { get; set; }
 
+        /// <summary>
+        /// Setup this component
+        /// </summary>
+        /// <param name="content">Content manager</param>
+        /// <see cref="IGraphicComponent.Setup"/>
         public override void Setup(ContentManager content)
         {
             cups = content.Load<Texture2D>("circle");
             circleScale = 1.0f / cups.Height;
         }
 
+        /// <summary>
+        /// Draws the line
+        /// </summary>
+        /// <param name="time">Game time</param>
+        /// <param name="batch">Sprite batch</param>
+        /// <see cref="AbstractGraphicComponent.DrawComponent"/>
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)
         {
             if (pixel == null)
@@ -36,6 +67,10 @@ namespace GameEngine.Graphics.Basic
             batch.Draw(cups, position: rightCup, scale: cupScale, color: Color);
         }
 
+        /// <summary>
+        /// Updates the component
+        /// </summary>
+        /// <see cref="AbstractGraphicComponent.Update"/>
         protected override void Update()
         {
             if(Width == 0)
@@ -51,6 +86,9 @@ namespace GameEngine.Graphics.Basic
                 
         }
 
+        /// <summary>
+        /// This calculates the coordinates if Width >= Height
+        /// </summary>
         private void LineWithCups()
         {
             // Width >= Height && Width != 0
@@ -68,6 +106,9 @@ namespace GameEngine.Graphics.Basic
             cupScale.X = cupScale.Y = Height * circleScale;
         }
 
+        /// <summary>
+        /// This is called if there is not enough Width for a full circle with radius Height
+        /// </summary>
         private void LineWithFlatCups()
         {
             line =  leftCup = rightCup = Position;
@@ -76,10 +117,18 @@ namespace GameEngine.Graphics.Basic
             cupScale.Y = Height * circleScale;
         }
 
+        /// <summary>
+        /// Loads a 1x1 size texture
+        /// </summary>
+        /// <remarks>
+        /// This function call on the first execution of Draw
+        /// </remarks>
+        /// <param name="device"></param>
         private void Init(GraphicsDevice device)
         {
             pixel = new Texture2D(device, 1, 1, false, SurfaceFormat.Color, 1);
             pixel.SetData(new[] { Color.White });
+
         }
     }
 }

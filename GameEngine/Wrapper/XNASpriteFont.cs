@@ -10,32 +10,34 @@ using Microsoft.Xna.Framework.Content;
 
 namespace GameEngine.Wrapper
 {
-
-    public class XNASpriteFont : ISpriteFont
+    /// <summary>
+    /// Wrapper for XNAs SpriteFont class
+    /// </summary>
+    public sealed class XNASpriteFont : ISpriteFont
     {
+        /// <see cref="ISpriteFont.SpriteFont"/>
         public SpriteFont SpriteFont { get { return Font; } }
+        /// <see cref="Microsoft.Xna.Framework.Graphics.SpriteFont.Characters"/>
         public SpriteFont Font { get; set; }
+        /// <see cref="Microsoft.Xna.Framework.Graphics.SpriteFont.Characters"/>
         public ReadOnlyCollection<char> Characters { get { return Font.Characters; } }
+        /// <see cref="Microsoft.Xna.Framework.Graphics.SpriteFont.DefaultCharacter"/>
         public char? DefaultCharacter { get { return Font.DefaultCharacter; }  set { Font.DefaultCharacter = value; } }
+        /// <see cref="Microsoft.Xna.Framework.Graphics.SpriteFont.LineSpacing"/>
         public int LineSpacing { get { return Font.LineSpacing; }  set { Font.LineSpacing = value; } }
+        /// <see cref="Microsoft.Xna.Framework.Graphics.SpriteFont.Spacing"/>
         public float Spacing { get { return Font.Spacing; }  set { Font.Spacing = value; } }
+        /// <see cref="Microsoft.Xna.Framework.Graphics.SpriteFont.Texture"/>
         public Texture2D Texture { get { return Font.Texture; } }
+        /// <see cref="Microsoft.Xna.Framework.Graphics.SpriteFont.MeasureString(string)"/>
         public Vector2 MeasureString(string text) { return Font.MeasureString(text); }
+        /// <see cref="Microsoft.Xna.Framework.Graphics.SpriteFont.MeasureString(StringBuilder)"/>
         public Vector2 MeasureString(StringBuilder text) { return Font.MeasureString(text); }
 
+        /// <see cref="ISpriteFont.Load"/>
         public void Load(ContentManager content, string fontName)
         {
             Font = content.Load<SpriteFont>(fontName);
-        }
-
-        public static implicit operator XNASpriteFont( SpriteFont font)
-        {
-            return new XNASpriteFont { Font = font };
-        }
-
-        public static implicit operator SpriteFont(XNASpriteFont font)
-        {
-            return font.SpriteFont;
         }
     }
 }
