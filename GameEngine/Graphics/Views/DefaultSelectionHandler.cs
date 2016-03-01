@@ -15,7 +15,7 @@ namespace GameEngine.Graphics.Views
         private int selectedColumn;
         private int selectedRow;
 
-        private IItemView view;
+        private ITableView view;
 
         public DefaultSelectionHandler()
         {
@@ -76,7 +76,7 @@ namespace GameEngine.Graphics.Views
             return false;
         }
 
-        public void Init(IItemView view)
+        public void Init(ITableView view)
         {
             if (this.view != null)
                 this.view.OnTableResize -= view_OnTableResize;

@@ -8,7 +8,7 @@ using System;
 
 namespace GameEngine.Graphics.Views
 {
-    public class InternalTableView<T, SpriteFontClass> : ForwardingGraphicComponent<Container>, IItemView where SpriteFontClass : ISpriteFont, new()
+    public class InternalTableView<T, SpriteFontClass> : ForwardingGraphicComponent<Container>, ITableView where SpriteFontClass : ISpriteFont, new()
     {
         private const int visibleColumns = 8;
         private const int visibleRows = 8;

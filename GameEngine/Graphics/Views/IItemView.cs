@@ -12,7 +12,8 @@ namespace GameEngine.Graphics.Views
             this.columns = columns;
         }
     }
-    public interface IItemView
+
+    public interface ITableView
     {
         event EventHandler<TableResizeEventArgs> OnTableResize;
 

@@ -14,7 +14,7 @@ namespace GameEngine.Graphics
         event EventHandler<EventArgs> ItemSelected;
         event EventHandler<EventArgs> CloseRequested;
 
-        void Init(IItemView view);
+        void Init(ITableView view);
         int SelectedRow{ get; }
         int SelectedColumn { get; }
     }

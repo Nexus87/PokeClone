@@ -14,7 +14,7 @@ namespace GameEngineTest.Views
     public class DefaultSelectionHandlerTest
     {
         private DefaultSelectionHandler testObj;
-        private Mock<IItemView> viewMock;
+        private Mock<ITableView> viewMock;
         private int startColumn = 0;
         private int startRow = 0;
 
@@ -26,7 +26,7 @@ namespace GameEngineTest.Views
         {
             testObj = new DefaultSelectionHandler();
 
-            viewMock = new Mock<IItemView>();
+            viewMock = new Mock<ITableView>();
             
             viewMock.SetupGet(o => o.Columns).Returns(Columns);
             viewMock.SetupGet(o => o.Rows).Returns(Rows);

@@ -22,6 +22,9 @@ namespace GameEngine.Graphics.Layouts
 
         public void LayoutContainer(Container container)
         {
+            if (container == null)
+                throw new ArgumentNullException("container must not be null!");
+
             position.X = container.X;
             position.Y = container.Y;
             size.X = container.Width;

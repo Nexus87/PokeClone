@@ -99,5 +99,51 @@ namespace GameEngineTest.Graphics.Layouts
 
 
         }
+
+        [TestCase]
+        public void NullContainerTest()
+        {
+            Assert.Throws(typeof(ArgumentNullException), delegate { testLayout.LayoutContainer(null); });
+        }
+
+
+        [TestCase]
+        public void TooLargeMarginTest()
+        {
+            Assert.Greater(testContainer.Components.Count, 0);
+
+            testContainer.SetCoordinates(10, 10, 30, 30);
+
+            int leftMargin = (int) testContainer.Width;
+            int rightMargin = (int) testContainer.Width;
+
+            int topMargin = (int)testContainer.Height;
+            int bottomMargin = (int)testContainer.Height;
+
+            testLayout.SetMargin(left: leftMargin, right: rightMargin);
+            testLayout.LayoutContainer(testContainer);
+
+            foreach (var c in testContainer.Components)
+                Assert.IsTrue(c.Width.CompareTo(0) == 0 || c.Height.CompareTo(0) == 0);
+
+            testLayout.SetMargin(top: topMargin, bottom: bottomMargin);
+            testLayout.LayoutContainer(testContainer);
+
+            foreach (var c in testContainer.Components)
+                Assert.IsTrue(c.Width.CompareTo(0) == 0 || c.Height.CompareTo(0) == 0);
+
+
+            testLayout.SetMargin(left: leftMargin + 5, right: rightMargin + 5);
+            testLayout.LayoutContainer(testContainer);
+
+            foreach (var c in testContainer.Components)
+                Assert.IsTrue(c.Width.CompareTo(0) == 0 || c.Height.CompareTo(0) == 0);
+
+            testLayout.SetMargin(top: topMargin + 5, bottom: bottomMargin + 5);
+            testLayout.LayoutContainer(testContainer);
+
+            foreach (var c in testContainer.Components)
+                Assert.IsTrue(c.Width.CompareTo(0) == 0 || c.Height.CompareTo(0) == 0);
+        }
     }
 }
