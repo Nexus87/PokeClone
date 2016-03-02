@@ -17,9 +17,6 @@ namespace GameEngine
         public bool IsRunning { get; private set; }
         public readonly GUIManager GUIManager = new GUIManager();
         private static PokeEngine engine;
-        private readonly List<GameComponent> _components = new List<GameComponent>();
-        private readonly List<IGraphicComponent> graphicComponents = new List<IGraphicComponent>();
-        private readonly List<GameComponent> _suspended = new List<GameComponent>();
         private readonly Configuration config;
         private XNASpriteBatch batch;
         private IInputHandler DefaultInputHandler;
@@ -88,17 +85,6 @@ namespace GameEngine
             engine.input.handler = engine.GUIManager;
         }
 
-        public void AddComponent(GameComponent component)
-        {
-            component.Initialize();
-            _components.Add(component);
-        }
-
-        public void AddComponent(IGraphicComponent component)
-        {
-            graphicComponents.Add(component);
-        }
-
         public void AddKeyListener(Keys key)
         {
             input.Keys.Add(key);
@@ -127,8 +113,6 @@ namespace GameEngine
 
         protected override void Initialize()
         {
-            foreach (var comp in _components)
-                comp.Initialize();
             base.Initialize();
             target = new RenderTarget2D(GraphicsDevice, (int)ScreenWidth, (int)ScreenHeight);
         }
@@ -148,11 +132,6 @@ namespace GameEngine
         {
             base.Update(gameTime);
             input.Update(gameTime);
-            foreach (var comp in _components)
-            {
-                if (comp.Enabled)
-                    comp.Update(gameTime);
-            }
         }
 
         private void GUI_GUIClose(object sender, EventArgs e)

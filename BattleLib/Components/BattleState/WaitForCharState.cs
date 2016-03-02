@@ -10,7 +10,7 @@ namespace BattleLib.Components.BattleState
         EventCreator eventCreator;
 
         int clientsLeft;
-        Dictionary<ClientIdentifier, Pokemon> clients;
+        Dictionary<ClientIdentifier, Pokemon> clients = new Dictionary<ClientIdentifier, Pokemon>();
 
         public void Init(IEnumerable<ClientIdentifier> requestedClients)
         {

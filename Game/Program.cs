@@ -34,10 +34,10 @@ namespace PokemonGame
             var battleState = new BattleStateComponent(playerId, aiId, engine);
             
             engine.Graphic = graphic;
-            var gui = new BattleGUI(config, engine);
+            engine.Components.Add(battleState);
+            var gui = new BattleGUI(config, engine, battleState, playerId);
             PokeEngine.ShowGUI();
-            using (var game = new Game1())
-                engine.Run();
+            engine.Run();
         }
     }
 #endif

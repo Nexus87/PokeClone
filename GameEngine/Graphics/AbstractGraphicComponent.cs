@@ -13,7 +13,6 @@ namespace GameEngine.Graphics
         public AbstractGraphicComponent(PokeEngine game)
         {
             Game = game;
-            game.AddComponent(this);
         }
 
         private bool needsUpdate = true;

@@ -1,6 +1,7 @@
 ﻿using Base;
 using Microsoft.Xna.Framework;
 using System;
+using System.Collections.Generic;
 
 namespace BattleLib.Components.BattleState
 {
@@ -13,6 +14,11 @@ namespace BattleLib.Components.BattleState
         private IBattleState currentState;
         private BattleData data;
         private EventCreator eventCreator;
+
+        public PokemonWrapper GetPokemon(ClientIdentifier id)
+        {
+            return data.GetPkmn(id);
+        }
 
         public BattleStateComponent(ClientIdentifier player, ClientIdentifier ai, Game game)
             : base(game)
@@ -44,6 +50,7 @@ namespace BattleLib.Components.BattleState
             exeState = new ExecuteState(this, new Gen1CommandScheduler(), new CommandExecuter(new DummyRules(), eventCreator));
 
             currentState = charState;
+            charState.Init(new List<ClientIdentifier>{data.player, data.ai});
         }
 
         public void SetCharacter(ClientIdentifier id, Pokemon pkmn)

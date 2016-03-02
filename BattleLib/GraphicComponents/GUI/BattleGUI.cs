@@ -18,9 +18,11 @@ namespace BattleLib.GraphicComponents.GUI
         private Dialog messageFrame;
         private Dialog pkmnFrame;
 
-        public BattleGUI(Configuration config, PokeEngine game)
+        public BattleGUI(Configuration config, PokeEngine game, BattleStateComponent battleState, ClientIdentifier player)
         {
             game.Services.AddService(typeof(IGUIService), this);
+            BattleState = battleState;
+            ID = player;
 
             mainFrame = new Dialog("border", game);
             attackFrame = new Dialog("border", game);
@@ -34,12 +36,13 @@ namespace BattleLib.GraphicComponents.GUI
             InitAttackMenu(config, game);
             InitItemMenu(config, game);
             InitPKMNMenu(config, game);
+
         }
 
         public event EventHandler MenuShowed = delegate { };
         public event EventHandler TextDisplayed = delegate { };
 
-        public BattleStateComponent BattleState { get; set; }
+        public BattleStateComponent BattleState { get; private set; }
         public ClientIdentifier ID { get; set; }
 
         public void SetText(string Text)
@@ -71,7 +74,7 @@ namespace BattleLib.GraphicComponents.GUI
         private void InitAttackMenu(Configuration config, PokeEngine game)
         {
             var AttackMenu = new TableWidget<Move>(config, game);
-            var model = new AttackModel();
+            var model = new AttackModel(BattleState.GetPokemon(ID));
             var list = new List<Move>();
 
             model.SetData(new Move(new MoveData { Name = "Move1" }), 0);
