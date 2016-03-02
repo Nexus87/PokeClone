@@ -1,4 +1,5 @@
-﻿using GameEngine.Graphics;
+﻿using GameEngine.EventComponent;
+using GameEngine.Graphics;
 using GameEngine.Wrapper;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -15,8 +16,9 @@ namespace GameEngine
         public static readonly float ScreenWidth = 1920;
         public static readonly Color BackgroundColor = new Color(248, 248, 248, 0);
         public bool IsRunning { get; private set; }
+
         public readonly GUIManager GUIManager = new GUIManager();
-        private static PokeEngine engine;
+
         private readonly Configuration config;
         private XNASpriteBatch batch;
         private IInputHandler DefaultInputHandler;
@@ -28,8 +30,7 @@ namespace GameEngine
 
         private Matrix transformation = Matrix.Identity;
 
-        internal PokeEngine(Configuration config)
-            : base()
+        public PokeEngine(Configuration config) : base()
         {
             this.config = config;
             IsRunning = false;
@@ -48,6 +49,9 @@ namespace GameEngine
             AddKeyListener(config.KeyRight);
             AddKeyListener(config.KeyUp);
             AddKeyListener(config.KeySelect);
+
+            Components.Add(input);
+            Components.Add(new EventQueue(this));
         }
 
         // For testing only
@@ -65,24 +69,10 @@ namespace GameEngine
             }
         }
 
-        public static PokeEngine GetInstance()
+        public void ShowGUI()
         {
-            return engine;
-        }
-
-        public static void ExitProgram() 
-        {
-            engine.Exit();
-        }
-        public static void Init(Configuration config)
-        {
-            engine = new PokeEngine(config);
-        }
-
-        public static void ShowGUI()
-        {
-            engine.GUIManager.Show();
-            engine.input.handler = engine.GUIManager;
+            GUIManager.Show();
+            input.handler = GUIManager;
         }
 
         public void AddKeyListener(Keys key)
@@ -126,12 +116,6 @@ namespace GameEngine
             Graphic.Setup(Content);
             GUIManager.Setup(Content);
             IsRunning = true;
-        }
-
-        protected override void Update(GameTime gameTime)
-        {
-            base.Update(gameTime);
-            input.Update(gameTime);
         }
 
         private void GUI_GUIClose(object sender, EventArgs e)

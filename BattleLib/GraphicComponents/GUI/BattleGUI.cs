@@ -136,7 +136,7 @@ namespace BattleLib.GraphicComponents.GUI
             mainFrame.Height = PokeEngine.ScreenHeight - mainFrame.Y;
 
             MainMenu.ItemSelected += MainMenu_ItemSelected;
-            MainMenu.OnExitRequested += delegate { PokeEngine.ExitProgram(); };
+            MainMenu.OnExitRequested += delegate { game.Exit(); };
 
             mainFrame.IsVisible = true;
             game.GUIManager.AddWidget(mainFrame);

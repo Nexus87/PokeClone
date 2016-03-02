@@ -28,15 +28,15 @@ namespace PokemonGame
             aiId.IsPlayer = false;
             aiId.Name = "AI";
 
-            PokeEngine.Init(config);
-            var engine = PokeEngine.GetInstance();
+            var engine = new PokeEngine(config);
             var graphic = new BattleGraphics(engine, playerId, aiId);
             var battleState = new BattleStateComponent(playerId, aiId, engine);
-            
+
+            engine.ShowGUI();
             engine.Graphic = graphic;
             engine.Components.Add(battleState);
             var gui = new BattleGUI(config, engine, battleState, playerId);
-            PokeEngine.ShowGUI();
+
             engine.Run();
         }
     }
