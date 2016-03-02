@@ -11,8 +11,8 @@ namespace BattleLib.Components.BattleState
         public virtual void Init() { }
         public abstract IBattleState Update(BattleData data);
 
-        public virtual void SetCharacter(ClientIdentifier id, Base.Pokemon pkmn) { }
-        public virtual void SetMove(ClientIdentifier id, Base.Move move) { }
-        public virtual void SetItem(ClientIdentifier id, Base.Item item) { }
+        public virtual void SetCharacter(ClientIdentifier id, Base.Pokemon pkmn) { throw new InvalidOperationException("Wong operation"); }
+        public virtual void SetMove(ClientIdentifier id, Base.Move move) { throw new InvalidOperationException("Wong operation"); }
+        public virtual void SetItem(ClientIdentifier id, Base.Item item) { throw new InvalidOperationException("Wong operation"); }
     }
 }
