@@ -1,69 +1,57 @@
 ﻿using Base;
 using System;
+using System.Collections.Generic;
 
 namespace BattleLib.Components.BattleState
 {
     public class WaitForCharState : AbstractState
     {
-        bool done = false;
-
-        ClientIdentifier player;
-        ClientIdentifier ai;
-
-        Pokemon enqueuedPlayerChar = null;
-        Pokemon enqueuedAiChar = null;
-
         BattleStateComponent state;
-        public WaitForCharState(BattleStateComponent state, ClientIdentifier player, ClientIdentifier ai)
+        EventCreator eventCreator;
+
+        int clientsLeft;
+        Dictionary<ClientIdentifier, Pokemon> clients;
+
+        public void Init(IEnumerable<ClientIdentifier> requestedClients)
         {
-            this.player = player;
-            this.ai = ai;
+            clients.Clear();
+
+            foreach (var c in requestedClients)
+                clients[c] = null;
+
+            clientsLeft = clients.Count;
+        }
+        
+        public WaitForCharState(BattleStateComponent state, ClientIdentifier player, ClientIdentifier ai, EventCreator eventCreator)
+        {
             this.state = state;
+            this.eventCreator = eventCreator;
         }
 
-        public override void Init()
-        {
-            enqueuedAiChar = null;
-            enqueuedPlayerChar = null;
-            done = false;
-        }
 
         public override IBattleState Update(BattleData data)
         {
-            done = data.PlayerPkmn != null && data.AIPkmn != null;
-            if (done)
-                return state.actionState;
+            if (clientsLeft != 0)
+                return this;
 
-            if (data.PlayerPkmn == null && enqueuedPlayerChar != null)
-                data.PlayerPkmn.Pokemon = enqueuedPlayerChar;
+            foreach (var c in clients)
+            {
+                data.GetPkmn(c.Key).Pokemon = c.Value;
+                eventCreator.SetPokemon(c.Key, c.Value);
+            }
 
-            if (data.AIPkmn == null && enqueuedAiChar != null)
-                data.AIPkmn.Pokemon = enqueuedAiChar;
-
-            return this;
+            return state.actionState;
         }
 
         public override void SetCharacter(ClientIdentifier id, Pokemon pkmn)
         {
-            if (id == player)
-            {
-                if (enqueuedPlayerChar != null)
-                    throw new InvalidOperationException("Character is already set for player.");
-                enqueuedPlayerChar = pkmn;
-            }
-            else if (id == ai)
-            {
-                if (enqueuedAiChar != null)
-                    throw new InvalidOperationException("Character is already set for AI.");
-                enqueuedAiChar = pkmn;
-            }
-            else
-                throw new ArgumentException("Source identifier not found\n");
-        }
+            if (!clients.ContainsKey(id))
+                throw new InvalidOperationException("ClientIdentifier " + id.Name + " not found.");
 
-        public bool IsDone()
-        {
-            return done;
+            if (clients[id] != null)
+                throw new InvalidOperationException("ClientIdentifer " + id.Name + " has already set its char");
+
+            clients[id] = pkmn;
         }
     }
 }

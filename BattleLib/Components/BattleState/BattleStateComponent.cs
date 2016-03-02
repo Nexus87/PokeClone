@@ -12,11 +12,7 @@ namespace BattleLib.Components.BattleState
         
         private IBattleState currentState;
         private BattleData data;
-
-        public BattleStateComponent(Game game)
-            : base(game)
-        {
-        }
+        private EventCreator eventCreator;
 
         public BattleStateComponent(ClientIdentifier player, ClientIdentifier ai, Game game)
             : base(game)
@@ -24,6 +20,7 @@ namespace BattleLib.Components.BattleState
             data = new BattleData(player, ai);
             data.player = player;
             data.ai = ai;
+            eventCreator = new EventCreator(data);
         }
 
         public ClientIdentifier AIIdentifier
@@ -41,11 +38,12 @@ namespace BattleLib.Components.BattleState
             if (AIIdentifier == null || PlayerIdentifier == null)
                 throw new InvalidOperationException("One of the identifier is missing");
 
+            eventCreator.Setup(Game);
             actionState = new WaitForActionState(this, PlayerIdentifier, AIIdentifier);
-            charState = new WaitForCharState(this, PlayerIdentifier, AIIdentifier);
-            exeState = new ExecuteState(this, new Gen1CommandScheduler(), new CommandExecuter(new DummyRules()));
+            charState = new WaitForCharState(this, PlayerIdentifier, AIIdentifier, eventCreator);
+            exeState = new ExecuteState(this, new Gen1CommandScheduler(), new CommandExecuter(new DummyRules(), eventCreator));
 
-            currentState = actionState;
+            currentState = charState;
         }
 
         public void SetCharacter(ClientIdentifier id, Pokemon pkmn)
@@ -65,12 +63,7 @@ namespace BattleLib.Components.BattleState
 
         public override void Update(GameTime gameTime)
         {
-            var newState = currentState.Update(data);
-
-            if (newState != currentState)
-                newState.Init();
-
-            currentState = newState;
+            currentState = currentState.Update(data);
         }
     }
     public class DummyRules : IBattleRules

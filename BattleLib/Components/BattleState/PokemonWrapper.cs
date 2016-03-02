@@ -17,21 +17,15 @@ namespace BattleLib.Components.BattleState
 
     public class PokemonWrapper
     {
-        private Dictionary<ModifyableState, float> modifier = new Dictionary<ModifyableState, float>();
+        public event EventHandler<PokemonChangedArgs> PokemonChanged = delegate { };
 
+        private Dictionary<ModifyableState, float> modifier = new Dictionary<ModifyableState, float>();
         private Pokemon pokemon;
 
         public PokemonWrapper(ClientIdentifier id)
         {
             Identifier = id;
             ResetModifier();
-        }
-
-        private void ResetModifier()
-        {
-            var list = (IEnumerable<ModifyableState>)Enum.GetValues(typeof(ModifyableState));
-            foreach (var s in list)
-                modifier[s] = 1.0f;
         }
 
         public float Accuracy { get { return modifier[ModifyableState.Accuracy]; } }
@@ -44,11 +38,13 @@ namespace BattleLib.Components.BattleState
         }
 
         public int Def { get { return (int)(Pokemon.Stats.Def * modifier[ModifyableState.Def]); } }
-
         public float Evasion { get { return modifier[ModifyableState.Evasion]; } }
-        public int HP {
+        public int HP
+        {
             get { return Pokemon.HP; }
-            set { Pokemon.HP = Math.Max(0, value);
+            set
+            {
+                Pokemon.HP = Math.Max(0, value);
                 if (Pokemon.HP == 0)
                     Pokemon.Condition = StatusCondition.KO;
             }
@@ -67,19 +63,47 @@ namespace BattleLib.Components.BattleState
             {
                 if (value == null)
                     throw new ArgumentNullException("null is not a valid value");
+                if (value == pokemon)
+                    return;
+
                 ResetModifier();
                 pokemon = value;
+
+                PokemonChanged(this, value);
             }
         }
 
         public int SpAtk { get { return (int)(Pokemon.Stats.SpAtk * modifier[ModifyableState.SpAtk]); } }
         public int SpDef { get { return (int)(Pokemon.Stats.SpDef * modifier[ModifyableState.SpDef]); } }
+        
         public PokemonType Type1 { get { return Pokemon.Type1; } }
         public PokemonType Type2 { get { return Pokemon.Type2; } }
 
         public void SetModifierStage(ModifyableState state, int stage, IBattleRules rules)
         {
             modifier[state] = rules.GetStateModifier(stage);
+        }
+
+        private void ResetModifier()
+        {
+            var list = (IEnumerable<ModifyableState>)Enum.GetValues(typeof(ModifyableState));
+            foreach (var s in list)
+                modifier[s] = 1.0f;
+        }
+    }
+
+    public class PokemonChangedArgs : EventArgs
+    {
+        public Pokemon Pokemon { get; private set; }
+        
+        public PokemonChangedArgs(Pokemon pokemon)
+        {
+            this.Pokemon = pokemon;
+        }
+
+        public static implicit operator PokemonChangedArgs(Pokemon pokemon)
+        {
+            return new PokemonChangedArgs(pokemon);
         }
     }
 }

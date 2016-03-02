@@ -28,10 +28,9 @@ namespace BattleLib.Components.BattleState
             this.data = data;
             playerPkmn = data.PlayerPkmn;
             aiPkmn = data.AIPkmn;
-
         }
 
-        public void Setup(Game game, CommandExecuter executer)
+        public void Setup(Game game)
         {
             eventDispatcher = game.Services.GetService<IEventQueue>();
             graphicService = game.Services.GetService<IBattleGraphicService>();
@@ -70,6 +69,11 @@ namespace BattleLib.Components.BattleState
         }
 
         internal void SetStatus(StatusCondition condition)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void SetPokemon(ClientIdentifier ai, Pokemon pokemon)
         {
             throw new NotImplementedException();
         }

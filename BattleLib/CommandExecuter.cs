@@ -19,9 +19,10 @@ namespace BattleLib
         private Random rng = new Random();
         private EventCreator eventCreator;
 
-        public CommandExecuter(IBattleRules rules)
+        public CommandExecuter(IBattleRules rules, EventCreator eventCreator)
         {
             this.rules = rules;
+            this.eventCreator = eventCreator;
         }
 
         public bool CanChange()
