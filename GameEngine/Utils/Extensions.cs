@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GameEngine.Graphics;
+using GameEngine.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -59,6 +61,17 @@ namespace GameEngine.Utils
             }
         }
 
+        public static void SetCoordinates(this IGraphicComponent component, IGraphicComponent constraints)
+        {
+            component.SetCoordinates(constraints.X, constraints.Y, constraints.Width, constraints.Height);
+        }
 
+        public static void SetCoordinates(this IGraphicComponent component, float X, float Y, float width, float height)
+        {
+            component.X = X;
+            component.Y = Y;
+            component.Width = width;
+            component.Height = height;
+        }
     }
 }
