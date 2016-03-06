@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace GameEngineTest.Graphics.Basic
 {
+    [TestFixture]
     public class MultiLayeredComponentTest : IGraphicComponentTest
     {
         private MultiLayeredComponent testComponent;
