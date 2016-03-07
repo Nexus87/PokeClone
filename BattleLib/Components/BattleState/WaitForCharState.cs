@@ -52,6 +52,7 @@ namespace BattleLib.Components.BattleState
                 throw new InvalidOperationException("ClientIdentifer " + id.Name + " has already set its char");
 
             clients[id] = pkmn;
+            clientsLeft--;
         }
     }
 }

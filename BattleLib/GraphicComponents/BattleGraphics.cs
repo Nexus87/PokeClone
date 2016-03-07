@@ -21,10 +21,6 @@ namespace BattleLib.GraphicComponents
         private PokemonSprite playerSprite;
         private PokemonDataView playerView;
 
-        //TODO: Remove
-        private PokemonWrapper playerWrapper;
-        private PokemonWrapper aiWrapper;
-
         public BattleGraphics(PokeEngine game, ClientIdentifier player, ClientIdentifier ai)
             : base(game)
         {
@@ -44,8 +40,6 @@ namespace BattleLib.GraphicComponents
             pokemonSetters[player] = new PokemonSetter(playerView, playerSprite);
             pokemonSetters[ai] = new PokemonSetter(aiView, playerSprite);
 
-            playerWrapper = new PokemonWrapper(player);
-            aiWrapper = new PokemonWrapper(ai);
         }
 
         public event EventHandler ConditionSet;
@@ -116,20 +110,6 @@ namespace BattleLib.GraphicComponents
             initAIGraphic();
             initPlayerGraphic();
 
-            //TODO Remove:
-            var baseData1 = new PKData { Name = "Pikachu" };
-            var states = new Stats() { HP = 30 };
-            Pokemon pkmn1 = new Pokemon(baseData1, 10, "Pikachu", states, states);
-            Pokemon pkmn2 = new Pokemon(baseData1, 5, "Jigglypuff", states, states);
-
-            pkmn1.HP = 10;
-            pkmn2.HP = 25;
-
-            playerWrapper.Pokemon = pkmn1;
-            aiWrapper.Pokemon = pkmn2;
-
-            aiView.SetPokemon(aiWrapper);
-            playerView.SetPokemon(playerWrapper);
         }
 
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)
