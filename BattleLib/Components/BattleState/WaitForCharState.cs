@@ -41,6 +41,7 @@ namespace BattleLib.Components.BattleState
                 eventCreator.SetPokemon(c.Key, pokemon);
             }
 
+            state.actionState.Init(clients.Keys);
             return state.actionState;
         }
 

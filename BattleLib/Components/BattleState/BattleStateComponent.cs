@@ -45,7 +45,7 @@ namespace BattleLib.Components.BattleState
                 throw new InvalidOperationException("One of the identifier is missing");
 
             eventCreator.Setup(Game);
-            actionState = new WaitForActionState(this, PlayerIdentifier, AIIdentifier);
+            actionState = new WaitForActionState(this);
             charState = new WaitForCharState(this, PlayerIdentifier, AIIdentifier, eventCreator);
             exeState = new ExecuteState(this, new Gen1CommandScheduler(), new CommandExecuter(new DummyRules(), eventCreator));
 

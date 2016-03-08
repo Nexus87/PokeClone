@@ -1,100 +1,76 @@
 ﻿using Base;
 using BattleLib.Components.BattleState.Commands;
+using GameEngine.Utils;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BattleLib.Components.BattleState
 {
-    class WaitForActionState : IBattleState
+    internal class WaitForActionState : IBattleState
     {
-        ICommand playerCommand = null;
-        ICommand aiCommand = null;
+        private int clientCnt;
+        private Dictionary<ClientIdentifier, ICommand> commands = new Dictionary<ClientIdentifier, ICommand>();
+        private BattleStateComponent state;
 
-        ClientIdentifier player;
-        ClientIdentifier ai;
-
-        BattleStateComponent state;
-        bool done = false;
-        public WaitForActionState(BattleStateComponent state, ClientIdentifier player, ClientIdentifier ai)
+        public WaitForActionState(BattleStateComponent state)
         {
-            this.player = player;
-            this.ai = ai;
             this.state = state;
         }
 
-        public void Init()
+        public void Init(IEnumerable<ClientIdentifier> clients)
         {
-            playerCommand = null;
-            aiCommand = null;
-            done = false;
-        }
+            commands.Clear();
+            
+            foreach (var c in clients)
+                commands[c] = null;
 
-        public bool IsDone()
-        {
-            return done;
-        }
-
-        public IBattleState Update(BattleData data)
-        {
-            data.playerCommand = playerCommand;
-            data.aiCommand = aiCommand;
-
-            done = playerCommand != null && aiCommand != null;
-            if (done)
-                return state.exeState;
-
-            return this;
+            clientCnt = commands.Count;
         }
 
         public void SetCharacter(ClientIdentifier id, Pokemon pkmn)
         {
-            if (id == player)
-            {
-                Validate(playerCommand, "Player");
-                playerCommand = new BattleLib.Components.BattleState.Commands.ChangeCommand(id, pkmn);
-            }
-            else if (id == ai)
-            {
-                Validate(aiCommand, "AI");
-                aiCommand = new BattleLib.Components.BattleState.Commands.ChangeCommand(id, pkmn);
-            }
-        }
-
-        private void Validate(ICommand target, string Name)
-        {
-            if (target != null)
-                throw new InvalidOperationException(Name + " already made a move for this turn.");
-        }
-
-        public void SetMove(ClientIdentifier id, Base.Move move)
-        {
-            if (id == player)
-            {
-                Validate(playerCommand, "Player");
-                playerCommand = new BattleLib.Components.BattleState.Commands.MoveCommand(id, move);
-            }
-            else if (id == ai)
-            {
-                Validate(aiCommand, "AI");
-                aiCommand = new BattleLib.Components.BattleState.Commands.MoveCommand(id, move);
-            }
+            Validate(id, pkmn, "pkmn");
+            commands[id] = new ChangeCommand(id, pkmn);
+            clientCnt--;
         }
 
         public void SetItem(ClientIdentifier id, Base.Item item)
         {
-            if (id == player)
-            {
-                Validate(playerCommand, "Player");
-                playerCommand = new BattleLib.Components.BattleState.Commands.ItemCommand(id, item);
-            }
-            else if (id == ai)
-            {
-                Validate(aiCommand, "AI");
-                aiCommand = new BattleLib.Components.BattleState.Commands.ItemCommand(id, item);
-            }
+            Validate(id, item, "item");
+            commands[id] = new ItemCommand(id, item);
+            clientCnt--;
+        }
+
+        public void SetMove(ClientIdentifier id, Move move)
+        {
+            Validate(id, move, "move");
+            commands[id] = new MoveCommand(id, move);
+            clientCnt--;
+        }
+
+        public IBattleState Update(BattleData data)
+        {
+            if (clientCnt != 0)
+                return this;
+
+            foreach (var c in commands)
+                data.SetCommand(c.Key, c.Value);
+            
+            commands.Clear();
+
+            return state.exeState;
+
+        }
+
+        private void Validate(ClientIdentifier id, Object obj, string varName)
+        {
+            if (!commands.ContainsKey(id))
+                throw new InvalidOperationException("Id " + id.Name + " not found");
+
+            obj.CheckNull(varName);
+
+            if (commands[id] != null)
+                throw new InvalidOperationException(id.Name + " already made a move for this turn.");
         }
     }
 }

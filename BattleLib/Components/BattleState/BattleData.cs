@@ -19,6 +19,10 @@ namespace BattleLib.Components.BattleState
         {
             this.player = player;
             this.ai = ai;
+            
+            Clients.Add(ai);
+            Clients.Add(player);
+
             PlayerPkmn = new PokemonWrapper(player);
             AIPkmn = new PokemonWrapper(ai);
         }
@@ -28,6 +32,15 @@ namespace BattleLib.Components.BattleState
             return id == player ? PlayerPkmn : AIPkmn;
         }
 
+        public void SetCommand(ClientIdentifier id, ICommand command)
+        {
+            if (id == player)
+                playerCommand = command;
+            else
+                aiCommand = command;
+        }
+
+        public List<ClientIdentifier> Clients = new List<ClientIdentifier>();
         public PokemonWrapper PlayerPkmn { get; private set; }
         public PokemonWrapper AIPkmn { get; private set; }
 
