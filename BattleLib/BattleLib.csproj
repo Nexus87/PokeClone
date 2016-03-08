@@ -42,9 +42,9 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Components\AI\AIComponent.cs" />
     <Compile Include="Components\BattleState\AbstractState.cs" />
     <Compile Include="Components\BattleState\BattleData.cs" />
-    <Compile Include="Components\BattleState\BattleModel.cs" />
     <Compile Include="Components\BattleState\BattleStateComponent.cs" />
     <Compile Include="Components\BattleState\Commands\ChangeCommand.cs" />
     <Compile Include="Components\BattleState\Commands\ICommand.cs" />
@@ -70,7 +70,6 @@
     <Compile Include="GraphicComponents\BattleGraphics.cs" />
     <Compile Include="GraphicComponents\IBattleGraphicService.cs" />
     <Compile Include="GraphicComponents\IGUIService.cs" />
-    <Compile Include="GraphicComponents\MenuItem.cs" />
     <Compile Include="GraphicComponents\PokemonDataView.cs" />
     <Compile Include="GraphicComponents\PokemonSprite.cs" />
     <Compile Include="IBattleRules.cs" />
