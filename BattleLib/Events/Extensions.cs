@@ -31,5 +31,10 @@ namespace BattleLib.Events
         {
             queue.AddEvent(new ShowMessageEvent(service, message));
         }
+
+        public static void AddSetPokemonEvent(this IEventQueue queue, IBattleGraphicService service, ClientIdentifier id, PokemonWrapper pokemon)
+        {
+            queue.AddEvent(new SetPokemonEvent(service, id, pokemon));
+        }
     }
 }

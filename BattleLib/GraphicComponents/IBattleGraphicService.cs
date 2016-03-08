@@ -16,7 +16,6 @@ namespace BattleLib.GraphicComponents
 
         void SetHP(ClientIdentifier id, int hp);
         void SetPokemon(ClientIdentifier id, PokemonWrapper pokemon);
-        void ChangePokemon(ClientIdentifier id, PokemonWrapper pokemon);
         void SetPokemonStatus(ClientIdentifier id, StatusCondition condition);
     }
 }

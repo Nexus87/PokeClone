@@ -20,11 +20,15 @@ namespace GameEngine
 
         public Texture2D getTexturesFront(int id)
         {
+            if (id == -1)
+                return null;
             return Content.Load<Texture2D>("charmander-front");
         }
 
         public Texture2D getTextureBack(int id)
         {
+            if (id == -1)
+                return null;
             return Content.Load<Texture2D>("charmander-back");
         }
     }

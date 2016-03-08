@@ -73,9 +73,9 @@ namespace BattleLib.Components.BattleState
             throw new NotImplementedException();
         }
 
-        internal void SetPokemon(ClientIdentifier ai, Pokemon pokemon)
+        internal void SetPokemon(ClientIdentifier id, PokemonWrapper pokemon)
         {
-            throw new NotImplementedException();
+            eventDispatcher.AddSetPokemonEvent(graphicService, id, pokemon);
         }
     }
 }

@@ -21,7 +21,7 @@ namespace BattleLib.GraphicComponents
         TextureProvider provider = new TextureProvider();
         TextureBox box;
         bool front;
-        private int id;
+        private int id = -1;
 
         public void SetPokemon(int id)
         {

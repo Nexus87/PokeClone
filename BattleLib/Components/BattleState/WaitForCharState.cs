@@ -36,8 +36,9 @@ namespace BattleLib.Components.BattleState
 
             foreach (var c in clients)
             {
-                data.GetPkmn(c.Key).Pokemon = c.Value;
-                eventCreator.SetPokemon(c.Key, c.Value);
+                PokemonWrapper pokemon = data.GetPkmn(c.Key);
+                pokemon.Pokemon = c.Value;
+                eventCreator.SetPokemon(c.Key, pokemon);
             }
 
             return state.actionState;

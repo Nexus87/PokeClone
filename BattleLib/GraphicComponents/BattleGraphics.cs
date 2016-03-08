@@ -13,7 +13,6 @@ namespace BattleLib.GraphicComponents
     public class BattleGraphics : AbstractGraphicComponent, IBattleGraphicService
     {
         private readonly Dictionary<ClientIdentifier, PokemonDataView> dataViews = new Dictionary<ClientIdentifier, PokemonDataView>();
-        private readonly Dictionary<ClientIdentifier, PokemonSetter> pokemonSetters = new Dictionary<ClientIdentifier, PokemonSetter>();
         private readonly Dictionary<ClientIdentifier, PokemonSprite> sprites = new Dictionary<ClientIdentifier, PokemonSprite>();
 
         private PokemonSprite aiSprite;
@@ -37,45 +36,17 @@ namespace BattleLib.GraphicComponents
             sprites[player] = playerSprite;
             sprites[ai] = aiSprite;
 
-            pokemonSetters[player] = new PokemonSetter(playerView, playerSprite);
-            pokemonSetters[ai] = new PokemonSetter(aiView, playerSprite);
+            foreach (var view in dataViews.Values)
+                view.OnHPUpdated += delegate { OnHPSet(this, null); };
+
+            foreach (var sprite in sprites.Values)
+                sprite.OnPokemonAppeared += delegate { OnPokemonSet(this, null); };
 
         }
 
         public event EventHandler ConditionSet;
-
-        public event EventHandler OnHPSet
-        {
-            add
-            {
-                foreach (var v in dataViews.Values)
-                    v.OnHPUpdated += value;
-            }
-            remove
-            {
-                foreach (var v in dataViews.Values)
-                    v.OnHPUpdated -= value;
-            }
-        }
-
-        public event EventHandler OnPokemonSet
-        {
-            add
-            {
-                foreach (var v in pokemonSetters.Values)
-                    v.PokemonSet += value;
-            }
-            remove
-            {
-                foreach (var v in pokemonSetters.Values)
-                    v.PokemonSet -= value;
-            }
-        }
-
-        public void ChangePokemon(ClientIdentifier id, PokemonWrapper pkmn)
-        {
-           pokemonSetters[id].SetPokemon(pkmn);
-        }
+        public event EventHandler OnHPSet;
+        public event EventHandler OnPokemonSet;
 
         public void PlayAttackAnimation(ClientIdentifier id)
         {
@@ -87,11 +58,10 @@ namespace BattleLib.GraphicComponents
             dataViews[id].SetHP(value);
         }
 
-
         public void SetPokemon(ClientIdentifier id, PokemonWrapper pokemon)
         {
-            sprites[id].SetPokemon(pokemon.ID);
             dataViews[id].SetPokemon(pokemon);
+            sprites[id].SetPokemon(pokemon.ID);
         }
 
         public void SetPokemonStatus(ClientIdentifier id, StatusCondition condition)
@@ -109,7 +79,6 @@ namespace BattleLib.GraphicComponents
 
             initAIGraphic();
             initPlayerGraphic();
-
         }
 
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)
@@ -149,37 +118,6 @@ namespace BattleLib.GraphicComponents
 
             playerSprite.Height = (int)(PokeEngine.ScreenHeight * 0.25f);
             playerSprite.Width = (int)(PokeEngine.ScreenHeight * 0.25f);
-        }
-
-        private class PokemonSetter
-        {
-            private readonly PokemonSprite sprite;
-
-            private readonly PokemonDataView view;
-
-            private PokemonWrapper pokemon;
-
-            public PokemonSetter(PokemonDataView view, PokemonSprite sprite)
-            {
-                this.view = view;
-                this.sprite = sprite;
-
-                sprite.OnPokemonAppeared += OnPokemonApprearedHandler;
-            }
-
-            public event EventHandler PokemonSet;
-
-            public void SetPokemon(PokemonWrapper pokemon)
-            {
-                sprite.SetPokemon(pokemon.ID);
-            }
-
-            private void OnPokemonApprearedHandler(object sender, EventArgs e)
-            {
-                view.SetPokemon(pokemon);
-                pokemon = null;
-                PokemonSet(this, EventArgs.Empty);
-            }
         }
     }
 }
