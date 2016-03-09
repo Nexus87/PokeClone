@@ -41,6 +41,7 @@ namespace BattleLib.Components.BattleState
 
         public override IBattleState Update(BattleData data)
         {
+            scheduler.ClearCommands();
             scheduler.AppendCommand(data.playerCommand);
             scheduler.AppendCommand(data.aiCommand);
 
