@@ -31,6 +31,8 @@ namespace BattleLib.Components.BattleState
 
                 currentState = value;
                 StateChanged(this, new StateChangedArgs(currentState.State));
+                if (currentState.State == BattleStates.WaitForAction)
+                    eventCreator.NewTurn();
             }
         }
         private BattleData data;

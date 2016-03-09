@@ -10,6 +10,7 @@ namespace GameEngine.EventComponent
     class EventQueue : GameComponent, IEventQueue
     {
         bool eventDispatched = false;
+        IEvent dispatchedEvent;
 
         public EventQueue(Game game) : base(game) 
         {
@@ -28,13 +29,13 @@ namespace GameEngine.EventComponent
             ev.OnEventProcessed += OnEventProcessedHandler;
 
             eventDispatched = true;
+            dispatchedEvent = ev;
             ev.Dispatch();
         }
 
         private void OnEventProcessedHandler(Object sender, EventArgs args)
         {
-            //var ev = (IEvent)sender;
-            //ev.OnEventProcessed -= OnEventProcessedHandler;
+            dispatchedEvent.OnEventProcessed -= OnEventProcessedHandler;
             eventDispatched = false;
         }
 

@@ -52,6 +52,7 @@ namespace BattleLib.GraphicComponents.GUI
 
         public void ShowMenu()
         {
+            messageBox.ResetText();
             BackToMain(null, null);
             MenuShowed(this, EventArgs.Empty);
         }

@@ -19,7 +19,7 @@ namespace BattleLib
             {
                 Name = "Move",
                 Accuracy = 100,
-                Damage = 5,
+                Damage = 120,
                 DamageType = DamageCategory.Physical,
                 PkmType = PokemonType.Normal,
                 PP = 20
@@ -31,7 +31,7 @@ namespace BattleLib
                 for (int j = 0; j < 4; j++)
                     moves.Add(new Move(moveData));
 
-                pokemons.Add(new Pokemon(data, stats) { Name = "Pkmn" + i, Level = i + 20, Moves = moves });
+                pokemons.Add(new Pokemon(data, stats) { Name = ID.Name + "_Pkmn" + i, Level = i + 20, Moves = moves });
             }
         }
 

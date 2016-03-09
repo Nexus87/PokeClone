@@ -70,12 +70,18 @@ namespace BattleLib.Components.BattleState
 
         internal void SetStatus(StatusCondition condition)
         {
+            
             throw new NotImplementedException();
         }
 
         internal void SetPokemon(ClientIdentifier id, PokemonWrapper pokemon)
         {
             eventDispatcher.AddSetPokemonEvent(graphicService, id, pokemon);
+        }
+
+        internal void NewTurn()
+        {
+            eventDispatcher.AddShowMenuEvent(guiService);
         }
     }
 }
