@@ -5,13 +5,34 @@ using System.Collections.Generic;
 
 namespace BattleLib.Components.BattleState
 {
+    public enum BattleStates 
+    {
+        WaitForPokemon,
+        WaitForAction,
+        Execute
+    }
+
     public class BattleStateComponent : GameComponent
     {
+        public event EventHandler<StateChangedArgs> StateChanged = delegate { };
+
         internal WaitForActionState actionState;
         internal WaitForCharState charState;
         internal ExecuteState exeState;
-        
+
         private IBattleState currentState;
+        private IBattleState CurrentState
+        {
+            get { return currentState; }
+            set
+            {
+                if (currentState == value)
+                    return;
+
+                currentState = value;
+                StateChanged(this, new StateChangedArgs(currentState.State));
+            }
+        }
         private BattleData data;
         private EventCreator eventCreator;
 
@@ -49,28 +70,28 @@ namespace BattleLib.Components.BattleState
             charState = new WaitForCharState(this, PlayerIdentifier, AIIdentifier, eventCreator);
             exeState = new ExecuteState(this, new Gen1CommandScheduler(), new CommandExecuter(new DummyRules(), eventCreator));
 
-            currentState = charState;
+            CurrentState = charState;
             charState.Init(new List<ClientIdentifier>{data.player, data.ai});
         }
 
         public void SetCharacter(ClientIdentifier id, Pokemon pkmn)
         {
-            currentState.SetCharacter(id, pkmn);
+            CurrentState.SetCharacter(id, pkmn);
         }
 
         public void SetItem(ClientIdentifier id, Item item)
         {
-            currentState.SetItem(id, item);
+            CurrentState.SetItem(id, item);
         }
 
         public void SetMove(ClientIdentifier id, Move move)
         {
-            currentState.SetMove(id, move);
+            CurrentState.SetMove(id, move);
         }
 
         public override void Update(GameTime gameTime)
         {
-            currentState = currentState.Update(data);
+            CurrentState = CurrentState.Update(data);
         }
     }
     public class DummyRules : IBattleRules
@@ -159,4 +180,14 @@ namespace BattleLib.Components.BattleState
             return Guid.GetHashCode();
         }
     }
+
+    public class StateChangedArgs : EventArgs
+    {
+        public BattleStates newState;
+        public StateChangedArgs(BattleStates newState)
+        {
+            this.newState = newState;
+        }
+    }
+
 }

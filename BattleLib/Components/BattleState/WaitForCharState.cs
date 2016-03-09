@@ -56,5 +56,10 @@ namespace BattleLib.Components.BattleState
             clients[id] = pkmn;
             clientsLeft--;
         }
+
+        public override BattleStates State
+        {
+            get { return BattleStates.WaitForPokemon; }
+        }
     }
 }

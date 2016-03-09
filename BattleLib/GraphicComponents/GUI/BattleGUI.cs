@@ -168,10 +168,6 @@ namespace BattleLib.GraphicComponents.GUI
             var PKMNMenu = new TableWidget<Pokemon>(config, game);
             var model = new DefaultListModel<Pokemon>();
 
-            PKData data = new PKData();
-            model.SetData(new Pokemon(data, data.BaseStats) { Name = "PKMN1" }, 0);
-            model.SetData(new Pokemon(data, data.BaseStats) { Name = "PKMN2" }, 1);
-
             PKMNMenu.Model = model;
 
             pkmnFrame.X = 0;

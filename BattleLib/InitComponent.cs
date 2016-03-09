@@ -1,4 +1,5 @@
 ﻿using Base;
+using BattleLib.Components.AI;
 using BattleLib.Components.BattleState;
 using BattleLib.GraphicComponents;
 using BattleLib.GraphicComponents.GUI;
@@ -15,22 +16,30 @@ namespace BattleLib
 {
     public class InitComponent : GameComponent
     {
-        ClientIdentifier player = new ClientIdentifier();
-        ClientIdentifier ai = new ClientIdentifier();
+        Client player;
+        Client ai;
+
         private BattleStateComponent battleState;
 
         public InitComponent(Configuration config, PokeEngine game) : base(game)
         {
-            player.Name = "Player";
-            player.IsPlayer = false;
+            var playerID = new ClientIdentifier();
+            var aiID = new ClientIdentifier();
+            playerID.Name = "Player";
+            playerID.IsPlayer = false;
 
-            ai.Name = "AI";
-            ai.IsPlayer = false;
+            aiID.Name = "AI";
+            aiID.IsPlayer = false;
 
-            var graphic = new BattleGraphics(game, player, ai);
-            battleState = new BattleStateComponent(player, ai, game);
-            var gui = new BattleGUI(config, game, battleState, player);
+            player = new Client(playerID);
+            ai = new Client(aiID);
 
+            var graphic = new BattleGraphics(game, playerID, aiID);
+            battleState = new BattleStateComponent(playerID, aiID, game);
+            var gui = new BattleGUI(config, game, battleState, playerID);
+            var aiComponent = new AIComponent(battleState, ai, game);
+
+            game.Components.Add(aiComponent);
             game.Components.Add(battleState);
             game.Graphic = graphic;
             
@@ -47,14 +56,7 @@ namespace BattleLib
             var baseData = new PKData();
             Stats stats = new Stats() { HP = 30 };
 
-            Pokemon playerPkmn = new Pokemon(baseData, 10, "Pikachu", stats, stats);
-            Pokemon aiPkmn = new Pokemon(baseData, 5, "Jigglypuff", stats, stats);
-
-            playerPkmn.HP = 10;
-            aiPkmn.HP = 20;
-
-            battleState.SetCharacter(player, playerPkmn);
-            battleState.SetCharacter(ai, aiPkmn);
+            battleState.SetCharacter(player.ID, player.Pokemons.First());
 
             Game.Components.Remove(this);
         }

@@ -33,8 +33,8 @@ namespace GameEngine.EventComponent
 
         private void OnEventProcessedHandler(Object sender, EventArgs args)
         {
-            var ev = (IEvent)sender;
-            ev.OnEventProcessed -= OnEventProcessedHandler;
+            //var ev = (IEvent)sender;
+            //ev.OnEventProcessed -= OnEventProcessedHandler;
             eventDispatched = false;
         }
 

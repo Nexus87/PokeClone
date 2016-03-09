@@ -98,6 +98,7 @@ namespace Base
             this.Level = level;
             this.Stats = stats;
             this.IV = iv;
+            this.HP = MaxHP;
             Condition = StatusCondition.Normal;
             Moves = new List<Move>();
         }
@@ -108,12 +109,13 @@ namespace Base
         public PKData BaseData { get; private set; }
         public int Level { get; set; }
         public int HP { get; set; }
+        public int MaxHP { get { return Stats.HP; } }
         public String Name { get; set; }
         
         public Stats IV { get; private set; }
         public Stats Stats { get; private set; }
 
-        public List<Move> Moves { get; private set; }
+        public List<Move> Moves { get; set; }
 
         public PokemonType Type1 { get{ return BaseData.Type1; }}
         public PokemonType Type2 { get { return BaseData.Type2; }}

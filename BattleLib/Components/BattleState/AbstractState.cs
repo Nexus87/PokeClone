@@ -8,6 +8,7 @@ namespace BattleLib.Components.BattleState
 {
     public abstract class AbstractState : IBattleState
     {
+        public abstract BattleStates State { get; }
         public virtual void Init() { }
         public abstract IBattleState Update(BattleData data);
 

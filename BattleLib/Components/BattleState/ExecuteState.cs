@@ -59,7 +59,13 @@ namespace BattleLib.Components.BattleState
             if (data.AIPkmn.HP == 0 || data.PlayerPkmn.HP == 0)
                 return state.charState;
 
+            state.actionState.Init(data.Clients);
             return state.actionState;
+        }
+
+        public override BattleStates State
+        {
+            get { return BattleStates.Execute; }
         }
     }
 }

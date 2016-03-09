@@ -72,5 +72,10 @@ namespace BattleLib.Components.BattleState
             if (commands[id] != null)
                 throw new InvalidOperationException(id.Name + " already made a move for this turn.");
         }
+
+        public BattleStates State
+        {
+            get { return BattleStates.WaitForAction; }
+        }
     }
 }

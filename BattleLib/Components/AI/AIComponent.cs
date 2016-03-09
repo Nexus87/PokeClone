@@ -1,4 +1,6 @@
-﻿using GameEngine;
+﻿using Base;
+using BattleLib.Components.BattleState;
+using GameEngine;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -10,10 +12,70 @@ namespace BattleLib.Components.AI
 {
     class AIComponent : GameComponent
     {
-        public AIComponent(PokeEngine game)
+        private BattleStateComponent state;
+        private Action nextAction = null;
+        private ClientIdentifier id;
+        private IReadOnlyList<Pokemon> pokemons;
+        private Pokemon currentPokemon;
+
+        public AIComponent(BattleStateComponent state, Client ai, PokeEngine game)
             : base(game)
         {
+            this.state = state;
+            id = ai.ID;
+            pokemons = ai.Pokemons;
+            state.StateChanged += StateChangedHandler;
+        }
 
+        private void StateChangedHandler(object sender, StateChangedArgs e)
+        {
+            switch (e.newState)
+            {
+                case BattleStates.WaitForAction:
+                    nextAction = ChooseMove;
+                    break;
+                case BattleStates.WaitForPokemon:
+                    nextAction = ChoosePokemon;
+                    break;
+                default:
+                    nextAction = null;
+                    break;
+            }
+        }
+
+        private void ChooseMove()
+        {
+            if (currentPokemon == null)
+                throw new InvalidOperationException("No pokemon is set");
+
+            var move = (from m in currentPokemon.Moves where m.RemainingPP > 0 select m).FirstOrDefault();
+
+            if (move == null)
+                throw new NotImplementedException();
+
+            state.SetMove(id, move);
+        }
+
+        private void ChoosePokemon()
+        {
+            var pkmn = (from p in pokemons where !p.IsKO() select p).FirstOrDefault();
+
+            if (pkmn == null)
+                throw new NotImplementedException();
+
+            currentPokemon = pkmn;
+            state.SetCharacter(id, pkmn);
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+            
+            if (nextAction == null)
+                return;
+
+            nextAction();
+            nextAction = null;
         }
     }
 }
