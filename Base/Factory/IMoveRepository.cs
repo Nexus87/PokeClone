@@ -4,7 +4,7 @@ namespace Base
 {
     public interface IMoveRepository
     {
-        List<int> GetIds();
+        IReadOnlyCollection<int> Ids { get; }
         MoveData GetMoveData(int id);
     }
 }

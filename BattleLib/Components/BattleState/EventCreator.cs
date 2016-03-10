@@ -4,6 +4,7 @@ using BattleLib.Components.BattleState.Commands;
 using BattleLib.Events;
 using BattleLib.GraphicComponents;
 using GameEngine.EventComponent;
+using GameEngine.Utils;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -21,18 +22,17 @@ namespace BattleLib.Components.BattleState
         private IGUIService guiService;
 
         private BattleData data;
-        private PokemonWrapper playerPkmn;
-        private PokemonWrapper aiPkmn;
 
         public EventCreator(BattleData data)
         {
+            data.CheckNull("data");
             this.data = data;
-            playerPkmn = data.PlayerPkmn;
-            aiPkmn = data.AIPkmn;
         }
 
         public void Setup(Game game)
         {
+            game.CheckNull("game");
+
             eventDispatcher = game.Services.GetService<IEventQueue>();
             graphicService = game.Services.GetService<IBattleGraphicService>();
             guiService = game.Services.GetService<IGUIService>();
@@ -48,17 +48,17 @@ namespace BattleLib.Components.BattleState
             eventDispatcher.AddHPEvent(graphicService, id, hp);
         }
 
-        internal void Effective(MoveEfficency effect, PokemonWrapper target)
+        internal void Effective(MoveEfficiency effect, PokemonWrapper target)
         {
             switch (effect)
             {
-                case MoveEfficency.noEffect:
+                case MoveEfficiency.NoEffect:
                     eventDispatcher.AddShowMessageEvent(guiService, "It doesn't affect " + target.Name + "...");
                     break;
-                case MoveEfficency.notEffective:
+                case MoveEfficiency.NotEffective:
                     eventDispatcher.AddShowMessageEvent(guiService, "It's not very effective...");
                     break;
-                case MoveEfficency.veryEffective:
+                case MoveEfficiency.VeryEffective:
                     eventDispatcher.AddShowMessageEvent(guiService, "It's super effective!");
                     break;
             }

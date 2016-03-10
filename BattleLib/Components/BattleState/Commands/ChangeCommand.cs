@@ -30,7 +30,7 @@ namespace BattleLib.Components.BattleState.Commands
 
         public void Execute(CommandExecuter executer, BattleData data)
         {
-            executer.ChangePokemon(data.GetPkmn(Source), newPkmn);
+            executer.ChangePokemon(data.GetPokemon(Source), newPkmn);
         }
     }
 }

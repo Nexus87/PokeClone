@@ -9,15 +9,14 @@ namespace Base
         private string name;
         public Pokemon(PokemonData baseData, int level, string name, Stats stats, Stats iv)
         {
-            this.BaseData = baseData;
+            BaseData = baseData;
             this.name = name;
-            this.Level = level;
-            this.Stats = stats;
-            this.IV = iv;
-            this.HP = MaxHP;
+            Level = level;
+            Stats = stats;
+            IV = iv;
+            HP = MaxHP;
 
             Condition = StatusCondition.Normal;
-            Moves = new List<Move>();
         }
 
         public Pokemon(PokemonData baseData, Stats iv)
@@ -35,16 +34,30 @@ namespace Base
         public Stats IV { get; private set; }
         public int Level { get; set; }
         public int MaxHP { get { return Stats.HP; } }
-        public List<Move> Moves { get; set; }
-        public String Name { get { return name == null ? BaseData.Name : name; } set { name = value; } }
+        public IReadOnlyList<Move> Moves { get { return moves.AsReadOnly(); } }
+        public string Name { get { return name == null ? BaseData.Name : name; } set { name = value; } }
         public int SpAtk { get { return Stats.SpAtk; } }
         public int SpDef { get { return Stats.SpDef; } }
         public int Speed { get { return Stats.Speed; } }
-        public Stats Stats { private get; set; }
+        public Stats Stats { get; set; }
 
         public PokemonType Type1 { get { return BaseData.Type1; } }
         public PokemonType Type2 { get { return BaseData.Type2; } }
 
+        private readonly List<Move> moves = new List<Move>();
+        public void SetMove(int index, Move move)
+        {
+            if (index > 4)
+                throw new InvalidOperationException("Only 4 moves are allowed");
+            else if (index < 0)
+                throw new InvalidOperationException("Index must be positive");
+
+            if (index >= moves.Count)
+                moves.Add(move);
+            else
+                moves[index] = move;
+            
+        }
         public bool IsKO()
         {
             return Condition == StatusCondition.KO;

@@ -19,7 +19,7 @@ namespace Base
         public int? Damage { get { return data.Damage; } }
         public DamageCategory DamageType { get { return data.DamageType; } }
         public string Name { get { return data.Name; } }
-        public PokemonType PkmType { get { return data.PkmType; } }
+        public PokemonType PokemonType { get { return data.PokemonType; } }
         public int PP { get { return data.PP; } }
         public int Priority { get { return data.Priority; } }
         public int RemainingPP { get; set; }

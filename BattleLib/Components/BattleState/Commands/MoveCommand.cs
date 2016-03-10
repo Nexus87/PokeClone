@@ -33,15 +33,15 @@ namespace BattleLib.Components.BattleState.Commands
             PokemonWrapper source = null;
             PokemonWrapper target = null;
 
-            if (Source == data.player)
+            if (Source == data.Player)
             {
-                source = data.PlayerPkmn;
-                target = data.AIPkmn;
+                source = data.PlayerPokemon;
+                target = data.AiPokemon;
             }
-            else if (Source == data.ai)
+            else if (Source == data.Ai)
             {
-                source = data.AIPkmn;
-                target = data.PlayerPkmn;
+                source = data.AiPokemon;
+                target = data.PlayerPokemon;
             }
             else
             {

@@ -15,7 +15,7 @@ namespace BattleLib.Components.BattleState
 
     public class BattleStateComponent : GameComponent
     {
-        public event EventHandler<StateChangedArgs> StateChanged = delegate { };
+        public event EventHandler<StateChangedEventArgs> StateChanged = delegate { };
 
         internal WaitForActionState actionState;
         internal WaitForCharState charState;
@@ -32,7 +32,7 @@ namespace BattleLib.Components.BattleState
                     return;
 
                 currentState = value;
-                StateChanged(this, new StateChangedArgs(currentState.State));
+                StateChanged(this, new StateChangedEventArgs(currentState.State));
                 if (currentState.State == BattleStates.WaitForAction)
                     eventCreator.NewTurn();
             }
@@ -42,27 +42,27 @@ namespace BattleLib.Components.BattleState
 
         public PokemonWrapper GetPokemon(ClientIdentifier id)
         {
-            return data.GetPkmn(id);
+            return data.GetPokemon(id);
         }
 
         public BattleStateComponent(ClientIdentifier player, ClientIdentifier ai, Game game, ITypeTable table)
             : base(game)
         {
             data = new BattleData(player, ai);
-            data.player = player;
-            data.ai = ai;
+            data.Player = player;
+            data.Ai = ai;
             eventCreator = new EventCreator(data);
             this.table = table;
         }
 
         public ClientIdentifier AIIdentifier
         {
-            get { return data.ai; }
+            get { return data.Ai; }
         }
 
         public ClientIdentifier PlayerIdentifier
         {
-            get { return data.player; }
+            get { return data.Player; }
         }
 
         public override void Initialize()
@@ -76,7 +76,7 @@ namespace BattleLib.Components.BattleState
             exeState = new ExecuteState(this, new Gen1CommandScheduler(), new CommandExecuter(new DummyRules(), eventCreator, table));
 
             CurrentState = charState;
-            charState.Init(new List<ClientIdentifier>{data.player, data.ai});
+            charState.Init(new List<ClientIdentifier>{data.Player, data.Ai});
         }
 
         public void SetCharacter(ClientIdentifier id, Pokemon pkmn)
@@ -186,12 +186,12 @@ namespace BattleLib.Components.BattleState
         }
     }
 
-    public class StateChangedArgs : EventArgs
+    public class StateChangedEventArgs : EventArgs
     {
-        public BattleStates newState;
-        public StateChangedArgs(BattleStates newState)
+        public BattleStates NewState { get; private set; }
+        public StateChangedEventArgs(BattleStates newState)
         {
-            this.newState = newState;
+            NewState = newState;
         }
     }
 

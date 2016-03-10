@@ -53,9 +53,7 @@ namespace PokemonRulesTest
 		}
 
         Mock<IPokemonRepository> charRepositoryMock;
-        Mock<IMoveRepository> moveRepositoryMock;
         PokemonFactory factory;
-        MoveFactory moveFactory;
 		Mock<IPokemonRules> rulesMock;
         List<PokemonData> testData = new List<PokemonData>();
         List<Pokemon> testChar = new List<Pokemon>();
@@ -63,12 +61,10 @@ namespace PokemonRulesTest
         [SetUp]
         public void Setup()
         {
-            moveRepositoryMock = new Mock<IMoveRepository>();
             charRepositoryMock = new Mock<IPokemonRepository>();
             rulesMock = new Mock<IPokemonRules>();
 
-            moveFactory = new MoveFactory(moveRepositoryMock.Object);
-            factory = new PokemonFactory(charRepositoryMock.Object, rulesMock.Object, moveFactory);
+            factory = new PokemonFactory(charRepositoryMock.Object, rulesMock.Object);
 
             Stats testStats = new Stats();
             testData.Add(new PokemonData { Id = 0, BaseStats = testStats, Name = "Data1" });

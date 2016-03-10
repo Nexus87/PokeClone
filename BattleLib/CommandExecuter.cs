@@ -6,12 +6,12 @@ using System;
 
 namespace BattleLib
 {
-    public enum MoveEfficency
+    public enum MoveEfficiency
     {
-        noEffect,
-        notEffective,
-        normal,
-        veryEffective
+        NoEffect,
+        NotEffective,
+        Normal,
+        VeryEffective
     }
 
     public class CommandExecuter
@@ -58,7 +58,7 @@ namespace BattleLib
             float damage = rules.CalculateBaseDamage(source, target, move);
             float typeModifier = rules.GetTypeModifier(source, target, move);
 
-            MoveEfficency effect = GetEffect(typeModifier);
+            MoveEfficiency effect = GetEffect(typeModifier);
             bool critical = rng.NextDouble().CompareTo(rules.GetCriticalHitChance(move)) < 0;
 
             damage *= rules.SameTypeAttackBonus(source, move);
@@ -77,22 +77,22 @@ namespace BattleLib
                 eventCreator.SetStatus(StatusCondition.KO);
         }
 
-        private MoveEfficency GetEffect(float typeModifier)
+        private static MoveEfficiency GetEffect(float typeModifier)
         {
             if (typeModifier.CompareTo(0) == 0)
-                return MoveEfficency.noEffect;
+                return MoveEfficiency.NoEffect;
 
             int result = typeModifier.CompareTo(1.0f);
 
             if (result > 0)
-                return MoveEfficency.veryEffective;
+                return MoveEfficiency.VeryEffective;
             else if (result < 0)
-                return MoveEfficency.notEffective;
+                return MoveEfficiency.NotEffective;
 
-            return MoveEfficency.normal;
+            return MoveEfficiency.Normal;
         }
 
-        public void ChangePokemon(PokemonWrapper oldPkmn, Pokemon newPkmn)
+        public void ChangePokemon(PokemonWrapper oldPokemon, Pokemon newPokemon)
         {
             throw new NotImplementedException();
         }

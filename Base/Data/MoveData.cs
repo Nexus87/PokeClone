@@ -18,7 +18,7 @@ namespace Base.Data
         public string Name { get; set; }
 
         [DataMember]
-        public PokemonType PkmType { get; set; }
+        public PokemonType PokemonType { get; set; }
 
         [DataMember]
         public int PP { get; set; }

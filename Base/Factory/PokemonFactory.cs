@@ -27,13 +27,11 @@ namespace Base.Factory
     {
         private IPokemonRepository repository;
         private IPokemonRules rules;
-        private MoveFactory moveFactory;
 
-        public PokemonFactory(IPokemonRepository repository, IPokemonRules rules, MoveFactory moveFactory)
+        public PokemonFactory(IPokemonRepository repository, IPokemonRules rules)
         {
             this.rules = rules;
             this.repository = repository;
-            this.moveFactory = moveFactory;
         }
 
         public IEnumerable<int> Ids { get { return repository.Ids; } }

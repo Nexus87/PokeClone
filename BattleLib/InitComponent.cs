@@ -54,7 +54,7 @@ namespace BattleLib
         {
             base.Update(gameTime);
             // The AI sets the Character itself
-            battleState.SetCharacter(player.ID, player.Pokemons.First());
+            battleState.SetCharacter(player.Id, player.Pokemons.First());
 
             Game.Components.Remove(this);
         }

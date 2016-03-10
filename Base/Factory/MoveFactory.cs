@@ -14,7 +14,7 @@ namespace Base.Factory
             this.repository = repository;
         }
 
-        public IReadOnlyCollection<int> Ids { get { return repository.GetIds().AsReadOnly(); } }
+        public IReadOnlyCollection<int> Ids { get { return repository.Ids; } }
 
         public Move GetMove(int id)
         {

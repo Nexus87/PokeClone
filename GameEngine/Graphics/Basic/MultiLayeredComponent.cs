@@ -53,7 +53,7 @@ namespace GameEngine.Graphics.Basic
             }
         }
 
-        public IGraphicComponent MainComonent
+        public IGraphicComponent MainComponent
         {
             get { return mainComponent; }
             set

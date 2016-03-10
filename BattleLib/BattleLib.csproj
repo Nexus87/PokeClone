@@ -20,7 +20,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>..\Doc\AnalyzeRuleset.ruleset</CodeAnalysisRuleSet>
     <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -66,6 +66,7 @@
     <Compile Include="Events\ShowMessageEvent.cs" />
     <Compile Include="CommandExecuter.cs" />
     <Compile Include="Gen1CommandScheduler.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="GraphicComponents\GUI\AttackModel.cs" />
     <Compile Include="GraphicComponents\GUI\BattleGUI.cs" />
     <Compile Include="GraphicComponents\HPLine.cs" />
@@ -93,6 +94,10 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <CodeAnalysisDictionary Include="..\Doc\CustomDictionary.xml">
+      <Link>CustomDictionary.xml</Link>
+    </CodeAnalysisDictionary>
+  </ItemGroup>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
 </Project>

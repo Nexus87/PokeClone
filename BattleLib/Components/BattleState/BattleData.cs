@@ -1,53 +1,50 @@
-﻿using Base;
-using BattleLib.Components.BattleState.Commands;
+﻿using BattleLib.Components.BattleState.Commands;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BattleLib.Components.BattleState
 {
-    internal class PkmnChangedArgs : EventArgs
-    {
-        public ClientIdentifier id;
-    }
-
     public class BattleData
     {
+        public ClientIdentifier Ai { get; set; }
+
+        public ICommand AiCommand { get; set; }
+
+        public ClientIdentifier Player { get; set; }
+
+        public ICommand PlayerCommand { get; set; }
+
+        private List<ClientIdentifier> clients = new List<ClientIdentifier>();
+
         public BattleData(ClientIdentifier player, ClientIdentifier ai)
         {
-            this.player = player;
-            this.ai = ai;
-            
-            Clients.Add(ai);
-            Clients.Add(player);
+            this.Player = player;
+            this.Ai = ai;
 
-            PlayerPkmn = new PokemonWrapper(player);
-            AIPkmn = new PokemonWrapper(ai);
+            clients.Add(ai);
+            clients.Add(player);
+
+            PlayerPokemon = new PokemonWrapper(player);
+            AiPokemon = new PokemonWrapper(ai);
         }
 
-        public PokemonWrapper GetPkmn(ClientIdentifier id)
+        public PokemonWrapper AiPokemon { get; private set; }
+
+        public IReadOnlyList<ClientIdentifier> Clients { get { return clients.AsReadOnly(); } }
+
+        public PokemonWrapper PlayerPokemon { get; private set; }
+
+        public PokemonWrapper GetPokemon(ClientIdentifier id)
         {
-            return id == player ? PlayerPkmn : AIPkmn;
+            return id == Player ? PlayerPokemon : AiPokemon;
         }
 
         public void SetCommand(ClientIdentifier id, ICommand command)
         {
-            if (id == player)
-                playerCommand = command;
+            if (id == Player)
+                PlayerCommand = command;
             else
-                aiCommand = command;
+                AiCommand = command;
         }
-
-        public List<ClientIdentifier> Clients = new List<ClientIdentifier>();
-        public PokemonWrapper PlayerPkmn { get; private set; }
-        public PokemonWrapper AIPkmn { get; private set; }
-
-        public ClientIdentifier player;
-        public ClientIdentifier ai;
-
-        public ICommand playerCommand;
-        public ICommand aiCommand;
     }
 }

@@ -46,7 +46,7 @@ namespace GameEngineTest.Graphics.Basic
             foreach (var o in batch.Objects)
                 o.IsInConstraints(testComponent);
 
-            Assert.Throws(typeof(ArgumentNullException), delegate { testComponent.MainComonent = null; });
+            Assert.Throws(typeof(ArgumentNullException), delegate { testComponent.MainComponent = null; });
         }
     }
 }

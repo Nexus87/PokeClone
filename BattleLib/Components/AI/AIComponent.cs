@@ -22,14 +22,14 @@ namespace BattleLib.Components.AI
             : base(game)
         {
             this.state = state;
-            id = ai.ID;
+            id = ai.Id;
             pokemons = ai.Pokemons;
             state.StateChanged += StateChangedHandler;
         }
 
-        private void StateChangedHandler(object sender, StateChangedArgs e)
+        private void StateChangedHandler(object sender, StateChangedEventArgs e)
         {
-            switch (e.newState)
+            switch (e.NewState)
             {
                 case BattleStates.WaitForAction:
                     nextAction = ChooseMove;
@@ -46,7 +46,7 @@ namespace BattleLib.Components.AI
         private void ChooseMove()
         {
             if (currentPokemon == null)
-                throw new InvalidOperationException("No pokemon is set");
+                throw new InvalidOperationException("No Pokemon is set");
 
             var move = (from m in currentPokemon.Moves where m.RemainingPP > 0 select m).FirstOrDefault();
 

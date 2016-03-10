@@ -42,8 +42,8 @@ namespace BattleLib.Components.BattleState
         public override IBattleState Update(BattleData data)
         {
             scheduler.ClearCommands();
-            scheduler.AppendCommand(data.playerCommand);
-            scheduler.AppendCommand(data.aiCommand);
+            scheduler.AppendCommand(data.PlayerCommand);
+            scheduler.AppendCommand(data.AiCommand);
 
             foreach (var command in scheduler.ScheduleCommands())
             {
@@ -54,10 +54,10 @@ namespace BattleLib.Components.BattleState
                 OnCommandFinished(this, args);
             }
 
-            data.aiCommand = null;
-            data.playerCommand = null;
+            data.AiCommand = null;
+            data.PlayerCommand = null;
 
-            if (data.AIPkmn.HP == 0 || data.PlayerPkmn.HP == 0)
+            if (data.AiPokemon.HP == 0 || data.PlayerPokemon.HP == 0)
                 return state.charState;
 
             state.actionState.Init(data.Clients);
