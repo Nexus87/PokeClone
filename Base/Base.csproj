@@ -19,6 +19,7 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>full</DebugType>
@@ -31,20 +32,25 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EffectFacade.cs" />
+    <Compile Include="Data\MoveList.cs" />
+    <Compile Include="Factory\CharFactory.cs" />
+    <Compile Include="Factory\MoveFactory.cs" />
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="ICharRepository.cs" />
-    <Compile Include="IMoveRepository.cs" />
+    <Compile Include="Factory\ICharRepository.cs" />
+    <Compile Include="Factory\IMoveRepository.cs" />
     <Compile Include="Item.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Enums.cs" />
-    <Compile Include="Pokemon.cs" />
-    <Compile Include="BaseStats.cs" />
+    <Compile Include="Rules\ICharacterRules.cs" />
+    <Compile Include="Rules\ITypeTable.cs" />
     <Compile Include="Move.cs" />
-    <Compile Include="ISpecialEffect.cs" />
-    <Compile Include="TypeTable.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Data\Enums.cs" />
+    <Compile Include="Pokemon.cs" />
+    <Compile Include="Data\PokemonData.cs" />
+    <Compile Include="Data\MoveData.cs" />
+    <Compile Include="Data\Stats.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

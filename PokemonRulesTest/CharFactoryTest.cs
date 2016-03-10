@@ -1,4 +1,7 @@
 ﻿using Base;
+using Base.Data;
+using Base.Factory;
+using Base.Rules;
 using Moq;
 using NUnit.Framework;
 using PokemonRules;
@@ -8,11 +11,11 @@ using System.Linq;
 namespace PokemonRulesTest
 {
 	static class Extensions {
-		public static bool compare(this PKData d, object obj) {
-			if (obj == null || !(obj is PKData))
+		public static bool compare(this PokemonData d, object obj) {
+            if (obj == null || !(obj is PokemonData))
 				return false;
 
-			var other = (PKData)obj;
+            var other = (PokemonData)obj;
 			return d.Name.Equals(other.Name) &&
 				d.Id == other.Id &&
 				d.BaseStats.HP == other.BaseStats.HP &&
@@ -26,7 +29,7 @@ namespace PokemonRulesTest
 		}
 
 		public static bool compare(this Pokemon p, object obj) {
-			var data = obj as PKData;
+            var data = obj as PokemonData;
 			if (data == null)
 				return false;
 			
@@ -52,7 +55,7 @@ namespace PokemonRulesTest
         Mock<ICharRepository> _charRepositoryMock;
         CharFactory _factory;
 		Mock<ICharacterRules> _rulesMock;
-        List<PKData> _testData = new List<PKData>();
+        List<PokemonData> _testData = new List<PokemonData>();
         List<Pokemon> _testChar = new List<Pokemon>();
 
         [SetUp]
@@ -63,9 +66,9 @@ namespace PokemonRulesTest
 			_factory = new CharFactory(_charRepositoryMock.Object, _rulesMock.Object);
 
             Stats testStats = new Stats();
-            _testData.Add(new PKData{Id = 0, BaseStats = testStats, Name = "Data1"});
-            _testData.Add(new PKData { Id = 1, BaseStats = testStats, Name = "Data2" });
-            _testData.Add(new PKData { Id = 2, BaseStats = testStats, Name = "Data3" });
+            _testData.Add(new PokemonData { Id = 0, BaseStats = testStats, Name = "Data1" });
+            _testData.Add(new PokemonData { Id = 1, BaseStats = testStats, Name = "Data2" });
+            _testData.Add(new PokemonData { Id = 2, BaseStats = testStats, Name = "Data3" });
 
             foreach(var data in _testData)
                 _testChar.Add(new Pokemon(data, testStats));

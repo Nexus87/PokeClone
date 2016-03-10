@@ -1,4 +1,5 @@
 ﻿using Base;
+using Base.Data;
 using BattleLib.Components.BattleState.Commands;
 using BattleLib.Events;
 using BattleLib.GraphicComponents;

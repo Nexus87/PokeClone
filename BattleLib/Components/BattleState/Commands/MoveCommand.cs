@@ -36,12 +36,12 @@ namespace BattleLib.Components.BattleState.Commands
             if (Source == data.player)
             {
                 source = data.PlayerPkmn;
-                target = move.Data.TargetMode == Target.Enemy ? data.AIPkmn : source;
+                target = data.AIPkmn;
             }
             else if (Source == data.ai)
             {
                 source = data.AIPkmn;
-                target = move.Data.TargetMode == Target.Enemy ? data.PlayerPkmn : source;
+                target = data.PlayerPkmn;
             }
             else
             {

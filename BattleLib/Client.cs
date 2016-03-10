@@ -1,4 +1,5 @@
 ﻿using Base;
+using Base.Data;
 using BattleLib.Components.BattleState;
 using System.Collections.Generic;
 
@@ -13,7 +14,7 @@ namespace BattleLib
             this.ID = id;
 
             Stats stats = new Stats { Atk = 10, Def = 10, HP = 30, SpAtk = 10, SpDef = 10, Speed = 10 };
-            PKData data = new PKData() { Id = 0, Type1 = PokemonType.Normal, BaseStats = stats };
+            PokemonData data = new PokemonData() { Id = 0, Type1 = PokemonType.Normal, BaseStats = stats };
 
             MoveData moveData = new MoveData()
             {

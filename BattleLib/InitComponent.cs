@@ -1,4 +1,5 @@
 ﻿using Base;
+using Base.Rules;
 using BattleLib.Components.AI;
 using BattleLib.Components.BattleState;
 using BattleLib.GraphicComponents;
@@ -21,7 +22,7 @@ namespace BattleLib
 
         private BattleStateComponent battleState;
 
-        public InitComponent(Configuration config, PokeEngine game) : base(game)
+        public InitComponent(Configuration config, PokeEngine game, ITypeTable table) : base(game)
         {
             var playerID = new ClientIdentifier();
             var aiID = new ClientIdentifier();
@@ -35,7 +36,7 @@ namespace BattleLib
             ai = new Client(aiID);
 
             var graphic = new BattleGraphics(game, playerID, aiID);
-            battleState = new BattleStateComponent(playerID, aiID, game);
+            battleState = new BattleStateComponent(playerID, aiID, game, table);
             var gui = new BattleGUI(config, game, battleState, playerID);
             var aiComponent = new AIComponent(battleState, ai, game);
 
@@ -52,10 +53,7 @@ namespace BattleLib
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-
-            var baseData = new PKData();
-            Stats stats = new Stats() { HP = 30 };
-
+            // The AI sets the Character itself
             battleState.SetCharacter(player.ID, player.Pokemons.First());
 
             Game.Components.Remove(this);

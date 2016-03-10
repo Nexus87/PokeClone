@@ -1,4 +1,5 @@
 ﻿using Base;
+using Base.Rules;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,7 @@ namespace BattleLib.Components.BattleState
         internal WaitForCharState charState;
         internal ExecuteState exeState;
 
+        private ITypeTable table;
         private IBattleState currentState;
         private IBattleState CurrentState
         {
@@ -43,13 +45,14 @@ namespace BattleLib.Components.BattleState
             return data.GetPkmn(id);
         }
 
-        public BattleStateComponent(ClientIdentifier player, ClientIdentifier ai, Game game)
+        public BattleStateComponent(ClientIdentifier player, ClientIdentifier ai, Game game, ITypeTable table)
             : base(game)
         {
             data = new BattleData(player, ai);
             data.player = player;
             data.ai = ai;
             eventCreator = new EventCreator(data);
+            this.table = table;
         }
 
         public ClientIdentifier AIIdentifier
@@ -70,7 +73,7 @@ namespace BattleLib.Components.BattleState
             eventCreator.Setup(Game);
             actionState = new WaitForActionState(this);
             charState = new WaitForCharState(this, PlayerIdentifier, AIIdentifier, eventCreator);
-            exeState = new ExecuteState(this, new Gen1CommandScheduler(), new CommandExecuter(new DummyRules(), eventCreator));
+            exeState = new ExecuteState(this, new Gen1CommandScheduler(), new CommandExecuter(new DummyRules(), eventCreator, table));
 
             CurrentState = charState;
             charState.Init(new List<ClientIdentifier>{data.player, data.ai});

@@ -66,13 +66,13 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PokemonRules\PokemonRules.csproj">
-      <Project>{45F17BE4-A525-43BF-91D9-2503F69A08FD}</Project>
-      <Name>PokemonRules</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Base\Base.csproj">
       <Project>{DDF413D1-9BE0-446B-82AF-E10242E8B812}</Project>
       <Name>Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Game\PokemonGame.csproj">
+      <Project>{d098c2b1-c3af-4322-9fc9-5ef7db7337ab}</Project>
+      <Name>PokemonGame</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

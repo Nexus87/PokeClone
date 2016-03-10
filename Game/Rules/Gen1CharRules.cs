@@ -1,4 +1,7 @@
 ﻿using Base;
+using Base.Data;
+using Base.Factory;
+using Base.Rules;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -62,7 +65,7 @@ namespace PokemonRules
             character.Level++;
         }
 
-		public Pokemon ToPokemon (PKData data)
+		public Pokemon ToPokemon (PokemonData data)
 		{
 			if (data == null)
 				return null;
@@ -78,9 +81,10 @@ namespace PokemonRules
 				Speed = data.BaseStats.Speed + iStats.Speed
 			};
 
-			var builder = new PokemonBuilder(data);
-			builder.SetIV (iStats).SetStats (stats);
-			return builder.Build ();
+			//var builder = new PokemonBuilder(data);
+			//builder.SetIV (iStats).SetStats (stats);
+			//return builder.Build ();
+            throw new NotImplementedException();
 		}
 
 

@@ -1,4 +1,6 @@
 ﻿using Base;
+using Base.Data;
+using Base.Rules;
 using BattleLib.Components.BattleState;
 using System;
 
@@ -15,14 +17,15 @@ namespace BattleLib
     public class CommandExecuter
     {
         private IBattleRules rules;
-        private TypeTable table = new TypeTable();
+        private ITypeTable table;
         private Random rng = new Random();
         private EventCreator eventCreator;
 
-        public CommandExecuter(IBattleRules rules, EventCreator eventCreator)
+        public CommandExecuter(IBattleRules rules, EventCreator eventCreator, ITypeTable table)
         {
             this.rules = rules;
             this.eventCreator = eventCreator;
+            this.table = table;
         }
 
         public bool CanChange()

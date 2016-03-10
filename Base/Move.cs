@@ -1,40 +1,12 @@
-﻿using System;
-using System.Runtime.Serialization;
+﻿using Base.Data;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Base
 {
-    public enum DamageCategory {
-        Physical,
-        Special,
-        Status
-    }
-
-    public enum Target
-    {
-        Enemy,
-        Self
-    }
-
-    [DataContract]
-    public class MoveData {
-        [DataMember]
-        public string Name { get; set; }
-        [DataMember]
-        public PokemonType PkmType { get; set; }
-        [DataMember]
-        public int? Damage { get; set; }
-        [DataMember]
-        public int? Accuracy { get; set; }
-        [DataMember]
-        public int PP { get; set; }
-        [DataMember]
-        public int Priority { get; set; }
-        [DataMember]
-        public Target TargetMode { get; set; }
-        [DataMember]
-        public DamageCategory DamageType { get; set; }
-    }
-
     public class Move
     {
         public override string ToString()
@@ -44,7 +16,7 @@ namespace Base
 
         public MoveData Data { get; private set; }
         public int RemainingPP { get; set; }
-        public Move (MoveData data)
+        public Move(MoveData data)
         {
             if (data == null) throw new ArgumentNullException("data", "Argument should not be null");
 
@@ -53,4 +25,3 @@ namespace Base
         }
     }
 }
-

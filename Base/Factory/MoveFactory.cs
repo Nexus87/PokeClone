@@ -1,14 +1,14 @@
-﻿using Base;
+﻿using Base.Data;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Json;
 
-namespace PokemonRules
+namespace Base.Factory
 {
     public class MoveFactory
     {
-        DataContractJsonSerializer _serializer = new DataContractJsonSerializer(typeof(MoveData[]));
-        Dictionary<string, MoveData> _moves;
+        private Dictionary<string, MoveData> _moves;
+        private DataContractJsonSerializer _serializer = new DataContractJsonSerializer(typeof(MoveData[]));
 
         public MoveFactory(string file)
         {
@@ -18,7 +18,14 @@ namespace PokemonRules
 
                 foreach (var move in (MoveData[])_serializer.ReadObject(fileIn))
                     _moves.Add(move.Name, move);
+            }
+        }
 
+        public IEnumerable<string> Names
+        {
+            get
+            {
+                return _moves.Keys;
             }
         }
 
@@ -29,14 +36,6 @@ namespace PokemonRules
                 return null;
 
             return new Move(data);
-        }
-
-        public IEnumerable<string> Names
-        {
-            get
-            {
-                return _moves.Keys;
-            }
         }
     }
 }

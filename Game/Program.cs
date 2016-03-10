@@ -1,8 +1,10 @@
-﻿using BattleLib;
+﻿using Base;
+using BattleLib;
 using BattleLib.Components.BattleState;
 using BattleLib.GraphicComponents;
 using BattleLib.GraphicComponents.GUI;
 using GameEngine;
+using PokemonGame.Rules;
 using System;
 
 namespace PokemonGame
@@ -34,7 +36,7 @@ namespace PokemonGame
 
             engine.ShowGUI();
             //engine.Graphic = graphic;
-            engine.Components.Add(new InitComponent(config, engine));
+            engine.Components.Add(new InitComponent(config, engine, new DummyTable()));
             //var gui = new BattleGUI(config, engine, battleState, playerId);
 
             engine.Run();
