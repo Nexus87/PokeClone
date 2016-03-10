@@ -33,12 +33,12 @@ namespace PokemonRulesTest
 			if (data == null)
 				return false;
 			
-			return p.Stats.Atk == data.BaseStats.Atk &&
-				p.Stats.Def == data.BaseStats.Def &&
-				p.Stats.SpAtk == data.BaseStats.SpAtk &&
-				p.Stats.SpDef == data.BaseStats.SpDef &&
-				p.Stats.Speed == data.BaseStats.Speed &&
-				p.Stats.HP == data.BaseStats.HP &&
+			return p.Atk == data.BaseStats.Atk &&
+				p.Def == data.BaseStats.Def &&
+				p.SpAtk == data.BaseStats.SpAtk &&
+				p.SpDef == data.BaseStats.SpDef &&
+				p.Speed == data.BaseStats.Speed &&
+				p.HP == data.BaseStats.HP &&
 				p.Name == data.Name &&
 				p.Type1 == data.Type1 &&
 				p.Type2 == data.Type2;

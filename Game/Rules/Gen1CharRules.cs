@@ -54,14 +54,16 @@ namespace PokemonRules
 
             var baseStates = character.BaseData.BaseStats;
             var ivStates = character.IV;
+            var stats = new Stats();
 
-            character.Stats.HP = newState(baseStates.HP, ivStates.HP + 50.0d, level);
-            character.Stats.Atk = newState(baseStates.Atk, ivStates.Atk, level);
-            character.Stats.Def = newState(baseStates.Def, ivStates.Def, level);
-            character.Stats.SpAtk = newState(baseStates.SpAtk, ivStates.SpAtk, level);
-            character.Stats.SpDef = newState(baseStates.SpDef, ivStates.SpDef, level);
-            character.Stats.Speed = newState(baseStates.Speed, ivStates.Speed, level);
+            stats.HP = newState(baseStates.HP, ivStates.HP + 50.0d, level);
+            stats.Atk = newState(baseStates.Atk, ivStates.Atk, level);
+            stats.Def = newState(baseStates.Def, ivStates.Def, level);
+            stats.SpAtk = newState(baseStates.SpAtk, ivStates.SpAtk, level);
+            stats.SpDef = newState(baseStates.SpDef, ivStates.SpDef, level);
+            stats.Speed = newState(baseStates.Speed, ivStates.Speed, level);
 
+            character.Stats = stats;
             character.Level++;
         }
 

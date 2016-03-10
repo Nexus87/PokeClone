@@ -30,7 +30,7 @@ namespace BattleLib.Components.BattleState
         }
 
         public float Accuracy { get { return modifier[ModifyableState.Accuracy]; } }
-        public int Atk { get { return (int)(Pokemon.Stats.Atk * modifier[ModifyableState.Atk]); } }
+        public int Atk { get { return (int)(Pokemon.Atk * modifier[ModifyableState.Atk]); } }
 
         public StatusCondition Condition
         {
@@ -38,7 +38,7 @@ namespace BattleLib.Components.BattleState
             set { Pokemon.Condition = value; }
         }
 
-        public int Def { get { return (int)(Pokemon.Stats.Def * modifier[ModifyableState.Def]); } }
+        public int Def { get { return (int)(Pokemon.Def * modifier[ModifyableState.Def]); } }
         public float Evasion { get { return modifier[ModifyableState.Evasion]; } }
         public int HP
         {
@@ -54,7 +54,7 @@ namespace BattleLib.Components.BattleState
         public int ID { get { return Pokemon.Id; } }
         public ClientIdentifier Identifier { get; private set; }
         public int Level { get { return Pokemon.Level; } }
-        public int MaxHP { get { return Pokemon.Stats.HP; } }
+        public int MaxHP { get { return Pokemon.MaxHP; } }
         public string Name { get { return Pokemon.Name; } }
 
         public Pokemon Pokemon
@@ -74,8 +74,8 @@ namespace BattleLib.Components.BattleState
             }
         }
 
-        public int SpAtk { get { return (int)(Pokemon.Stats.SpAtk * modifier[ModifyableState.SpAtk]); } }
-        public int SpDef { get { return (int)(Pokemon.Stats.SpDef * modifier[ModifyableState.SpDef]); } }
+        public int SpAtk { get { return (int)(Pokemon.SpAtk * modifier[ModifyableState.SpAtk]); } }
+        public int SpDef { get { return (int)(Pokemon.SpDef * modifier[ModifyableState.SpDef]); } }
         
         public PokemonType Type1 { get { return Pokemon.Type1; } }
         public PokemonType Type2 { get { return Pokemon.Type2; } }
