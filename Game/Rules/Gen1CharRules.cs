@@ -10,7 +10,7 @@ namespace PokemonRules
 {
 	public delegate int RndNumGen(int min, int max) ;
 
-	public class Gen1CharRules : ICharacterRules
+	public class Gen1CharRules : IPokemonRules
 	{
 		readonly RndNumGen _generator;
 		Random _rnd;
@@ -65,7 +65,7 @@ namespace PokemonRules
             character.Level++;
         }
 
-		public Pokemon ToPokemon (PokemonData data)
+		public Pokemon FromPokemonData (PokemonData data)
 		{
 			if (data == null)
 				return null;

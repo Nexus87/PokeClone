@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace Base.Factory
 {
-    public interface ICharRepository
+    public interface IPokemonRepository
     {
         IEnumerable<int> Ids { get; }
-        PokemonData getPKData(int id);
+        PokemonData GetPokemonData(int id);
     }
 }

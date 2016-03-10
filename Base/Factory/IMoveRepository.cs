@@ -1,6 +1,10 @@
-﻿namespace Base
+﻿using Base.Data;
+using System.Collections.Generic;
+namespace Base
 {
-    interface IMoveRepository
+    public interface IMoveRepository
     {
+        List<int> GetIds();
+        MoveData GetMoveData(int id);
     }
 }

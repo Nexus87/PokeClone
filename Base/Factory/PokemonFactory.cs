@@ -23,28 +23,31 @@ using System.Collections.Generic;
 
 namespace Base.Factory
 {
-    public class CharFactory
+    public class PokemonFactory
     {
-        private ICharRepository _repository;
-        private ICharacterRules _rules;
+        private IPokemonRepository repository;
+        private IPokemonRules rules;
+        private MoveFactory moveFactory;
 
-        public CharFactory(ICharRepository repository, ICharacterRules rules)
+        public PokemonFactory(IPokemonRepository repository, IPokemonRules rules, MoveFactory moveFactory)
         {
-            _rules = rules;
-            _repository = repository;
+            this.rules = rules;
+            this.repository = repository;
+            this.moveFactory = moveFactory;
         }
 
-        public IEnumerable<int> Ids { get { return _repository.Ids; } }
+        public IEnumerable<int> Ids { get { return repository.Ids; } }
 
-        public Pokemon GetChar(int id)
+        public Pokemon GetPokemon(int id)
         {
-            return _rules.ToPokemon(_repository.getPKData(id));
+            return GetPokemon(id, 1);
         }
 
-        public Pokemon GetChar(int id, int level)
+        public Pokemon GetPokemon(int id, int level)
         {
-            var charakter = GetChar(id);
-            _rules.ToLevel(charakter, level);
+            Pokemon charakter = rules.FromPokemonData(repository.GetPokemonData(id));
+            rules.ToLevel(charakter, level);
+
             return charakter;
         }
     }

@@ -42,7 +42,7 @@ namespace BattleLib
         {
             eventCreator.UsingMove(source, move);
 
-            switch (move.Data.DamageType)
+            switch (move.DamageType)
             {
                 case DamageCategory.Physical:
                 case DamageCategory.Special:

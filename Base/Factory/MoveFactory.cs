@@ -7,34 +7,18 @@ namespace Base.Factory
 {
     public class MoveFactory
     {
-        private Dictionary<string, MoveData> _moves;
-        private DataContractJsonSerializer _serializer = new DataContractJsonSerializer(typeof(MoveData[]));
+        IMoveRepository repository;
 
-        public MoveFactory(string file)
+        public MoveFactory(IMoveRepository repository)
         {
-            using (FileStream fileIn = new FileStream(file, FileMode.Open))
-            {
-                _moves = new Dictionary<string, MoveData>();
-
-                foreach (var move in (MoveData[])_serializer.ReadObject(fileIn))
-                    _moves.Add(move.Name, move);
-            }
+            this.repository = repository;
         }
 
-        public IEnumerable<string> Names
-        {
-            get
-            {
-                return _moves.Keys;
-            }
-        }
+        public IReadOnlyCollection<int> Ids { get { return repository.GetIds().AsReadOnly(); } }
 
-        public Move GetMove(string name)
+        public Move GetMove(int id)
         {
-            MoveData data = new MoveData();
-            if (!_moves.TryGetValue(name, out data))
-                return null;
-
+            MoveData data = repository.GetMoveData(id);
             return new Move(data);
         }
     }

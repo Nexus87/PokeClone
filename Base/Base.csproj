@@ -36,13 +36,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\MoveList.cs" />
-    <Compile Include="Factory\CharFactory.cs" />
+    <Compile Include="Factory\PokemonFactory.cs" />
     <Compile Include="Factory\MoveFactory.cs" />
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="Factory\ICharRepository.cs" />
+    <Compile Include="Factory\IPokemonRepository.cs" />
     <Compile Include="Factory\IMoveRepository.cs" />
     <Compile Include="Item.cs" />
-    <Compile Include="Rules\ICharacterRules.cs" />
+    <Compile Include="Rules\IPokemonRules.cs" />
     <Compile Include="Rules\ITypeTable.cs" />
     <Compile Include="Move.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

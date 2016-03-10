@@ -40,7 +40,7 @@ namespace BattleLib.Components.BattleState
         
         internal void UsingMove(PokemonWrapper source, Move move)
         {
-            eventDispatcher.AddShowMessageEvent(guiService,source.Name + " uses " + move.Data.Name);
+            eventDispatcher.AddShowMessageEvent(guiService,source.Name + " uses " + move.Name);
         }
 
         internal void SetHP(ClientIdentifier id, int hp)

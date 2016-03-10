@@ -1,27 +1,32 @@
 ﻿using Base.Data;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Base
 {
     public class Move
     {
-        public override string ToString()
-        {
-            return Data.Name;
-        }
-
-        public MoveData Data { get; private set; }
-        public int RemainingPP { get; set; }
+        private MoveData data;
+        
         public Move(MoveData data)
         {
             if (data == null) throw new ArgumentNullException("data", "Argument should not be null");
 
-            Data = data;
+            this.data = data;
             RemainingPP = data.PP;
+        }
+        
+        public int? Accuracy { get { return data.Accuracy; } }
+        public int? Damage { get { return data.Damage; } }
+        public DamageCategory DamageType { get { return data.DamageType; } }
+        public string Name { get { return data.Name; } }
+        public PokemonType PkmType { get { return data.PkmType; } }
+        public int PP { get { return data.PP; } }
+        public int Priority { get { return data.Priority; } }
+        public int RemainingPP { get; set; }
+        
+        public override string ToString()
+        {
+            return data.Name;
         }
     }
 }

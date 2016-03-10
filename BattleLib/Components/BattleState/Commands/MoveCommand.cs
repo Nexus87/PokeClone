@@ -25,7 +25,7 @@ namespace BattleLib.Components.BattleState.Commands
 
         public int Priority
         {
-            get { return move.Data.Priority; }
+            get { return move.Priority; }
         }
 
         public void Execute(CommandExecuter executer, BattleData data)

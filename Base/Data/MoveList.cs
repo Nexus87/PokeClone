@@ -7,6 +7,6 @@ namespace Base.Data
     public class MoveList
     {
         [DataMember]
-        public Tuple<int, string>[] Moves { get; set; }
+        public Tuple<int, int>[] Moves { get; set; }
     }
 }
