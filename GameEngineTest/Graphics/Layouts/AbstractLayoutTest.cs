@@ -23,8 +23,8 @@ namespace GameEngineTest.Graphics.Layouts
 
         public void TestProperties(float X, float Y, float Width, float Height)
         {
-            Assert.GreaterOrEqual(this.X, X);
-            Assert.GreaterOrEqual(this.Y, Y);
+            Assert.GreaterOrEqual(this.XPosition, X);
+            Assert.GreaterOrEqual(this.YPosition, Y);
             Assert.GreaterOrEqual(this.Width, 0);
             Assert.GreaterOrEqual(this.Height, 0);
 

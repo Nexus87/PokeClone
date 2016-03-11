@@ -1,5 +1,6 @@
 ﻿using GameEngine.Graphics.Basic;
 using GameEngine.Wrapper;
+using GameEngine.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using System;
@@ -42,16 +43,15 @@ namespace GameEngine.Graphics.Layouts
         /// <summary>
         /// Returns the X coordinate of the container with regards to the left margin
         /// </summary>
-        protected float X { get { return position.X + marginLeft; } }
+        protected float XPosition { get { return position.X + marginLeft; } }
         /// <summary>
         /// Returns the Y coordinate of the container with regards to the top margin
         /// </summary>
-        protected float Y { get { return position.Y + marginTop; } }
+        protected float YPosition { get { return position.Y + marginTop; } }
 
         public void LayoutContainer(Container container)
         {
-            if (container == null)
-                throw new ArgumentNullException("container must not be null!");
+            container.CheckNull("container");
 
             position.X = container.X;
             position.Y = container.Y;

@@ -64,8 +64,8 @@ namespace GameEngine.Graphics.Layouts
                 else
                     columnCount++;
 
-                components[i].X = X + columnCount * width;
-                components[i].Y = Y + rowCount * height;
+                components[i].X = XPosition + columnCount * width;
+                components[i].Y = YPosition + rowCount * height;
                 components[i].Width = width;
                 components[i].Height = height;
             }

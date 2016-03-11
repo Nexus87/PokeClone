@@ -49,6 +49,7 @@
     <Compile Include="Configuration.cs" />
     <Compile Include="EventComponent\EventQueue.cs" />
     <Compile Include="GameEngine.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Graphics\AbstractGraphicComponent.cs" />
     <Compile Include="Graphics\Animations\ResizeAnimation.cs" />
     <Compile Include="Graphics\Basic\AnimatedTextureBox.cs" />

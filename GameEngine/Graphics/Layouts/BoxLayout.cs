@@ -16,7 +16,7 @@ namespace GameEngine.Graphics.Layouts
             this.direction = direction;
         }
 
-        public enum Direction { Horizontal, Vertical };
+        protected enum Direction { Horizontal, Vertical };
 
 
         protected override void UpdateComponents(Container container)
@@ -28,8 +28,8 @@ namespace GameEngine.Graphics.Layouts
                 for (int i = 0; i < components.Count; i++)
                 {
                     var component = components[i];
-                    component.X = X + i * width;
-                    component.Y = Y;
+                    component.X = XPosition + i * width;
+                    component.Y = YPosition;
                     component.Width = width;
                     component.Height = Height;
                 }
@@ -40,8 +40,8 @@ namespace GameEngine.Graphics.Layouts
                 for (int i = 0; i < components.Count; i++)
                 {
                     var component = components[i];
-                    component.X = X;
-                    component.Y = Y + i * height;
+                    component.X = XPosition;
+                    component.Y = YPosition + i * height;
                     component.Width = Width;
                     component.Height = height;
                 }
