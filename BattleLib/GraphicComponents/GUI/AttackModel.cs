@@ -13,7 +13,7 @@ namespace BattleLib.GraphicComponents.GUI
             pokemon.PokemonChanged += PokemonChangedHandler;
         }
 
-        private void PokemonChangedHandler(object sender, PokemonChangedArgs e)
+        private void PokemonChangedHandler(object sender, PokemonChangedEventArgs e)
         {
             for (int i = 0; i < e.Pokemon.Moves.Count; i++)
                 SetData(e.Pokemon.Moves[i], i, 0);

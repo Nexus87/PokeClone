@@ -34,6 +34,7 @@ namespace GameEngine
             IsRunning = false;
             input = new InputComponent(this);
             GUIManager = new GUIManager();
+            new GraphicsDeviceManager(this);
 
             Window.AllowUserResizing = true;
             Window.ClientSizeChanged += Window_ClientSizeChanged;

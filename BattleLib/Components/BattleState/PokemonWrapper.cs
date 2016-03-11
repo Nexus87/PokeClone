@@ -1,5 +1,6 @@
 ﻿using Base;
 using Base.Data;
+using Base.Rules;
 using System;
 using System.Collections.Generic;
 
@@ -16,11 +17,25 @@ namespace BattleLib.Components.BattleState
         Evasion
     }
 
-    public class PokemonWrapper
+    public class PokemonChangedEventArgs : EventArgs
     {
-        public event EventHandler<PokemonChangedArgs> PokemonChanged = delegate { };
+        public PokemonChangedEventArgs(Pokemon pokemon)
+        {
+            this.Pokemon = pokemon;
+        }
 
+        public Pokemon Pokemon { get; private set; }
+
+        public static implicit operator PokemonChangedEventArgs(Pokemon pokemon)
+        {
+            return new PokemonChangedEventArgs(pokemon);
+        }
+    }
+
+    public class PokemonWrapper : IBattlePokemon
+    {
         private Dictionary<ModifyableState, float> modifier = new Dictionary<ModifyableState, float>();
+
         private Pokemon pokemon;
 
         public PokemonWrapper(ClientIdentifier id)
@@ -28,6 +43,8 @@ namespace BattleLib.Components.BattleState
             Identifier = id;
             ResetModifier();
         }
+
+        public event EventHandler<PokemonChangedEventArgs> PokemonChanged = delegate { };
 
         public float Accuracy { get { return modifier[ModifyableState.Accuracy]; } }
         public int Atk { get { return (int)(Pokemon.Atk * modifier[ModifyableState.Atk]); } }
@@ -40,6 +57,7 @@ namespace BattleLib.Components.BattleState
 
         public int Def { get { return (int)(Pokemon.Def * modifier[ModifyableState.Def]); } }
         public float Evasion { get { return modifier[ModifyableState.Evasion]; } }
+
         public int HP
         {
             get { return Pokemon.HP; }
@@ -76,7 +94,7 @@ namespace BattleLib.Components.BattleState
 
         public int SpAtk { get { return (int)(Pokemon.SpAtk * modifier[ModifyableState.SpAtk]); } }
         public int SpDef { get { return (int)(Pokemon.SpDef * modifier[ModifyableState.SpDef]); } }
-        
+
         public PokemonType Type1 { get { return Pokemon.Type1; } }
         public PokemonType Type2 { get { return Pokemon.Type2; } }
 
@@ -90,21 +108,6 @@ namespace BattleLib.Components.BattleState
             var list = (IEnumerable<ModifyableState>)Enum.GetValues(typeof(ModifyableState));
             foreach (var s in list)
                 modifier[s] = 1.0f;
-        }
-    }
-
-    public class PokemonChangedArgs : EventArgs
-    {
-        public Pokemon Pokemon { get; private set; }
-        
-        public PokemonChangedArgs(Pokemon pokemon)
-        {
-            this.Pokemon = pokemon;
-        }
-
-        public static implicit operator PokemonChangedArgs(Pokemon pokemon)
-        {
-            return new PokemonChangedArgs(pokemon);
         }
     }
 }

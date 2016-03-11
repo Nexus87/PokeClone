@@ -1,15 +1,12 @@
-﻿using BattleLib.Components.BattleState.Commands;
-using System;
+﻿using BattleLib;
+using BattleLib.Components.BattleState.Commands;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace BattleLib
+namespace PokemonGame.Rules
 {
-    public class Gen1CommandScheduler : ICommandScheduler
+    public class DummyScheduler : ICommandScheduler
     {
-        List<ICommand> commands = new List<ICommand>();
+        private List<ICommand> commands = new List<ICommand>();
 
         public void AppendCommand(ICommand command)
         {

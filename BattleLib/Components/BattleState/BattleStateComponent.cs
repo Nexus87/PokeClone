@@ -21,7 +21,8 @@ namespace BattleLib.Components.BattleState
         internal WaitForCharState charState;
         internal ExecuteState exeState;
 
-        private ITypeTable table;
+        private RulesSet rules;
+        private ICommandScheduler scheduler;
         private IBattleState currentState;
         private IBattleState CurrentState
         {
@@ -45,14 +46,15 @@ namespace BattleLib.Components.BattleState
             return data.GetPokemon(id);
         }
 
-        public BattleStateComponent(ClientIdentifier player, ClientIdentifier ai, Game game, ITypeTable table)
+        public BattleStateComponent(ClientIdentifier player, ClientIdentifier ai, Game game, RulesSet rules, ICommandScheduler scheduler)
             : base(game)
         {
             data = new BattleData(player, ai);
             data.Player = player;
             data.Ai = ai;
             eventCreator = new EventCreator(data);
-            this.table = table;
+            this.rules = rules;
+            this.scheduler = scheduler;
         }
 
         public ClientIdentifier AIIdentifier
@@ -73,7 +75,7 @@ namespace BattleLib.Components.BattleState
             eventCreator.Setup(Game);
             actionState = new WaitForActionState(this);
             charState = new WaitForCharState(this, PlayerIdentifier, AIIdentifier, eventCreator);
-            exeState = new ExecuteState(this, new Gen1CommandScheduler(), new CommandExecuter(new DummyRules(), eventCreator, table));
+            exeState = new ExecuteState(this, scheduler, new CommandExecuter(eventCreator, rules));
 
             CurrentState = charState;
             charState.Init(new List<ClientIdentifier>{data.Player, data.Ai});
@@ -99,58 +101,7 @@ namespace BattleLib.Components.BattleState
             CurrentState = CurrentState.Update(data);
         }
     }
-    public class DummyRules : IBattleRules
-    {
-        public float CalculateBaseDamage(PokemonWrapper source, PokemonWrapper target, Move move)
-        {
-            return 1.0f;
-        }
 
-        public bool CanChange()
-        {
-            return false;
-        }
-
-        public bool CanEscape()
-        {
-            return false;
-        }
-
-        public float GetCriticalHitChance(Move move)
-        {
-            return 0.15f;
-        }
-
-        public float GetCriticalHitModifier()
-        {
-            return 2.0f;
-        }
-
-        public float GetHitChance(PokemonWrapper source, PokemonWrapper target, Move move)
-        {
-            return 0.95f;
-        }
-
-        public float GetMiscModifier(PokemonWrapper source, PokemonWrapper target, Move move)
-        {
-            return 1.0f;
-        }
-
-        public float GetStateModifier(int stage)
-        {
-            return 1.0f;
-        }
-
-        public float GetTypeModifier(PokemonWrapper source, PokemonWrapper target, Move move)
-        {
-            return 1.0f;
-        }
-
-        public float SameTypeAttackBonus(PokemonWrapper source, Move move)
-        {
-            return 1.0f;
-        }
-    }
     public class ClientIdentifier
     {
         public ClientIdentifier()

@@ -1,8 +1,10 @@
 ﻿using Base;
+using Base.Rules;
 using BattleLib;
 using BattleLib.Components.BattleState;
 using BattleLib.GraphicComponents;
 using BattleLib.GraphicComponents.GUI;
+using Game.Rules;
 using GameEngine;
 using PokemonGame.Rules;
 using System;
@@ -22,13 +24,7 @@ namespace PokemonGame
         static void Main()
         {
             var config = new Configuration();
-            //    var playerId = new ClientIdentifier();
-            //    var aiId = new ClientIdentifier();
-            //    playerId.IsPlayer = true;
-            //    playerId.Name = "Player";
-
-            //    aiId.IsPlayer = false;
-            //    aiId.Name = "AI";
+            var rules = new RulesSet(new DummyBattleRules(), new DummyPokemonRules(), new DummyTable());
 
             var engine = new PokeEngine(config);
             //    var graphic = new BattleGraphics(engine, playerId, aiId);
@@ -36,7 +32,7 @@ namespace PokemonGame
 
             engine.ShowGUI();
             //engine.Graphic = graphic;
-            engine.Components.Add(new InitComponent(config, engine, new DummyTable()));
+            engine.Components.Add(new InitComponent(config, engine, rules, new DummyScheduler()));
             //var gui = new BattleGUI(config, engine, battleState, playerId);
 
             engine.Run();

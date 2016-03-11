@@ -21,11 +21,11 @@ namespace BattleLib
         private Random rng = new Random();
         private EventCreator eventCreator;
 
-        public CommandExecuter(IBattleRules rules, EventCreator eventCreator, ITypeTable table)
+        public CommandExecuter(EventCreator eventCreator, RulesSet rules)
         {
-            this.rules = rules;
+            this.rules = rules.BattleRules;
             this.eventCreator = eventCreator;
-            this.table = table;
+            this.table = rules.TypeTable;
         }
 
         public bool CanChange()

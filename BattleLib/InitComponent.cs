@@ -22,7 +22,7 @@ namespace BattleLib
 
         private BattleStateComponent battleState;
 
-        public InitComponent(Configuration config, PokeEngine game, ITypeTable table) : base(game)
+        public InitComponent(Configuration config, PokeEngine game, RulesSet rules, ICommandScheduler scheduler) : base(game)
         {
             var playerID = new ClientIdentifier();
             var aiID = new ClientIdentifier();
@@ -36,7 +36,7 @@ namespace BattleLib
             ai = new Client(aiID);
 
             var graphic = new BattleGraphics(game, playerID, aiID);
-            battleState = new BattleStateComponent(playerID, aiID, game, table);
+            battleState = new BattleStateComponent(playerID, aiID, game, rules, scheduler);
             var gui = new BattleGUI(config, game, battleState, playerID);
             var aiComponent = new AIComponent(battleState, ai, game);
 

@@ -4,7 +4,6 @@ using Base.Factory;
 using Base.Rules;
 using Moq;
 using NUnit.Framework;
-using PokemonRules;
 using System.Collections.Generic;
 using System.Linq;
 
