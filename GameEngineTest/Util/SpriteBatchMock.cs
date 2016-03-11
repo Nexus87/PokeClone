@@ -16,6 +16,7 @@ namespace GameEngineTest.Util
         public Vector2 Position;
         public Vector2 Size;
 
+        public Color Color;
         public bool IsInConstraints(float X, float Y, float Width, float Height)
         {
             float realWidth = Math.Max(0, Width);
@@ -47,38 +48,39 @@ namespace GameEngineTest.Util
         public readonly List<DrawnObject> Objects = new List<DrawnObject>();
         public readonly LinkedList<string> DrawnStrings = new LinkedList<string>();
 
-        private void SetData(Vector2 position, Vector2 size)
+        private void SetData(Vector2 position, Vector2 size, Color color)
         {
-            SetData(position, size, Vector2.One);
+            SetData(position, size, Vector2.One, color);
         }
 
-        private void SetData(Vector2 position, Texture2D texture)
+        private void SetData(Vector2 position, Texture2D texture, Color color)
         {
-            SetData(position, texture, Vector2.One);   
+            SetData(position, texture, Vector2.One, color);   
         }
 
-        private void SetData(Vector2 position, Texture2D texture, Vector2 scale)
+        private void SetData(Vector2 position, Texture2D texture, Vector2 scale, Color color)
         {
-            SetData(position, texture.Bounds.Size.ToVector2(), scale);
+            SetData(position, texture.Bounds.Size.ToVector2(), scale, color);
         }
 
-        private void SetData(Vector2 position, Vector2 size, Vector2 scale)
+        private void SetData(Vector2 position, Vector2 size, Vector2 scale, Color color)
         {
             var obj = new DrawnObject();
             obj.Position = position;
             obj.Size = size * scale;
+            obj.Color = color != null ? color : Color.Black;
             Objects.Add(obj);
         }
 
-        private void SetData(Vector2 position, ISpriteFont font, string text, Vector2 scale)
+        private void SetData(Vector2 position, ISpriteFont font, string text, Vector2 scale, Color color)
         {
             DrawnStrings.AddLast(text);
-            SetData(position, font.MeasureString(text), scale);
+            SetData(position, font.MeasureString(text), scale, color);
         }
 
-        private void SetData(Vector2 position, ISpriteFont font, string text)
+        private void SetData(Vector2 position, ISpriteFont font, string text, Color color)
         {
-            SetData(position, font, text, Vector2.One);
+            SetData(position, font, text, Vector2.One, color);
         }
 
         public GraphicsDevice GraphicsDevice
@@ -97,12 +99,12 @@ namespace GameEngineTest.Util
 
         public void Draw(Texture2D texture, Rectangle destinationRectangle, Color color)
         {
-            SetData(destinationRectangle.Location.ToVector2(), destinationRectangle.Size.ToVector2());
+            SetData(destinationRectangle.Location.ToVector2(), destinationRectangle.Size.ToVector2(), color);
         }
 
         public void Draw(Texture2D texture, Vector2 position, Color color)
         {
-            SetData(position, texture);
+            SetData(position, texture, color);
         }
 
         public void Draw(Texture2D texture, Rectangle destinationRectangle, Rectangle? sourceRectangle, Color color)
@@ -122,20 +124,21 @@ namespace GameEngineTest.Util
 
         public void Draw(Texture2D texture, Vector2 position, Rectangle? sourceRectangle, Color color, float rotation, Vector2 origin, float scale, SpriteEffects effects, float layerDepth)
         {
-            SetData(position, texture, new Vector2(scale));
+            SetData(position, texture, new Vector2(scale), color);
         }
 
         public void Draw(Texture2D texture, Vector2 position, Rectangle? sourceRectangle, Color color, float rotation, Vector2 origin, Vector2 scale, SpriteEffects effects, float layerDepth)
         {
-            SetData(position, texture, scale);
+            SetData(position, texture, scale, color);
         }
 
         public void Draw(Texture2D texture, Vector2? position = null, Rectangle? destinationRectangle = null, Rectangle? sourceRectangle = null, Vector2? origin = null, float rotation = 0f, Vector2? scale = null, Color? color = null, SpriteEffects effects = SpriteEffects.None, float layerDepth = 0f)
         {
+            var scaling = scale != null ? scale.Value : Vector2.One;
             if (position == null && destinationRectangle != null)
-                SetData(destinationRectangle.Value.Location.ToVector2(), destinationRectangle.Value.Size.ToVector2(), scale != null ? scale.Value : Vector2.One);
+                SetData(destinationRectangle.Value.Location.ToVector2(), destinationRectangle.Value.Size.ToVector2(), scaling, color.Value);
             else if (destinationRectangle == null && position != null)
-                SetData(position.Value, texture, scale != null ? scale.Value : Vector2.One);
+                SetData(position.Value, texture, scaling, color.Value);
             else
                 throw new InvalidOperationException("Either position or destinationRectangle must be not null");
 
@@ -143,32 +146,32 @@ namespace GameEngineTest.Util
 
         public void DrawString(ISpriteFont spriteFont, string text, Vector2 position, Color color)
         {
-            SetData(position, spriteFont, text);
+            SetData(position, spriteFont, text, color);
         }
 
         public void DrawString(ISpriteFont spriteFont, StringBuilder text, Vector2 position, Color color)
         {
-            SetData(position, spriteFont, text.ToString());
+            SetData(position, spriteFont, text.ToString(), color);
         }
 
         public void DrawString(ISpriteFont spriteFont, string text, Vector2 position, Color color, float rotation, Vector2 origin, float scale, SpriteEffects effects, float layerDepth)
         {
-            SetData(position, spriteFont, text, new Vector2(scale));
+            SetData(position, spriteFont, text, new Vector2(scale), color);
         }
 
         public void DrawString(ISpriteFont spriteFont, string text, Vector2 position, Color color, float rotation, Vector2 origin, Vector2 scale, SpriteEffects effects, float layerDepth)
         {
-            SetData(position, spriteFont, text, scale);
+            SetData(position, spriteFont, text, scale, color);
         }
 
         public void DrawString(ISpriteFont spriteFont, StringBuilder text, Vector2 position, Color color, float rotation, Vector2 origin, float scale, SpriteEffects effects, float layerDepth)
         {
-            SetData(position, spriteFont, text.ToString(), new Vector2(scale));
+            SetData(position, spriteFont, text.ToString(), new Vector2(scale), color);
         }
 
         public void DrawString(ISpriteFont spriteFont, StringBuilder text, Vector2 position, Color color, float rotation, Vector2 origin, Vector2 scale, SpriteEffects effects, float layerDepth)
         {
-            SetData(position, spriteFont, text.ToString(), scale);
+            SetData(position, spriteFont, text.ToString(), scale, color);
         }
 
         public void End()

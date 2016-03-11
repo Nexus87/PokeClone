@@ -1,6 +1,7 @@
 ﻿using BattleLib.GraphicComponents;
 using GameEngineTest;
 using GameEngineTest.Util;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Moq;
 using NUnit.Framework;
@@ -66,6 +67,35 @@ namespace BattleLibTest.GraphicComponents
                 Assert.GreaterOrEqual(line.Current, 0);
                 Assert.LessOrEqual(line.Current, line.MaxHP);
             }
+        }
+
+        public static List<TestCaseData> HPColorTestData = new List<TestCaseData>
+        {
+            new TestCaseData(100, Color.Green),
+            new TestCaseData(50, Color.Green),
+            new TestCaseData(49, Color.Yellow),
+            new TestCaseData(25, Color.Yellow),
+            new TestCaseData(24, Color.Red)
+        };
+
+        [TestCaseSource("HPColorTestData")]
+        public void ColorTest(int hp, Color color)
+        {
+            var spriteBatch = new SpriteBatchMock();
+
+            int maxHP = 100;
+
+            line.Width = 500;
+            line.Height = 500;
+
+            line.MaxHP = maxHP;
+            line.Current = hp;
+
+            line.Draw(spriteBatch);
+
+            var coloredLines = (from obj in spriteBatch.Objects where obj.Color == color select obj).Count();
+
+            Assert.AreNotEqual(0, coloredLines);
         }
     }
 }
