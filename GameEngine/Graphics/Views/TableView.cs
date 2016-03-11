@@ -114,7 +114,11 @@ namespace GameEngine.Graphics.Views
             if (items[row, column] == null)
                 return false;
 
-            items[row, column].IsSelected = isSelected;
+            if (isSelected)
+                items[row, column].Select();
+            else
+                items[row, column].Unselect();
+
             return true;
         }
 

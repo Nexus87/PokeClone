@@ -1,6 +1,7 @@
 ﻿using Base;
 using Base.Data;
 using BattleLib.Components.BattleState;
+using System;
 using System.Collections.Generic;
 
 namespace BattleLib
@@ -8,6 +9,7 @@ namespace BattleLib
     public class Client
     {
         private readonly List<Pokemon> pokemons = new List<Pokemon>();
+        private readonly List<Item> items = new List<Item>();
 
         public Client(ClientIdentifier id)
         {
@@ -36,7 +38,33 @@ namespace BattleLib
             }
         }
 
+        public void UseItem(int index)
+        {
+            if (index < 0 || index >= items.Count)
+                throw new ArgumentException("Index out of bound");
+
+            var item = items[index];
+            item.StackSize--;
+            if (item.StackSize <= 0)
+                items.RemoveAt(index);
+
+            ItemUsed(this, new ItemUsedEventArgs(index, item));
+        }
+        public event EventHandler<ItemUsedEventArgs> ItemUsed = delegate { };
+        public IReadOnlyList<Item> Items { get { return items.AsReadOnly(); } }
         public ClientIdentifier Id { get; private set; }
         public IReadOnlyList<Pokemon> Pokemons { get { return pokemons.AsReadOnly(); } }
+    }
+
+    public class ItemUsedEventArgs : EventArgs
+    {
+        public int Index { get; private set; }
+        public Item Item { get; private set; }
+
+        public ItemUsedEventArgs(int index, Item item)
+        {
+            Index = index;
+            Item = item;
+        }
     }
 }

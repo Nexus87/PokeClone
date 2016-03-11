@@ -1,4 +1,5 @@
 ﻿using BattleLib.GraphicComponents;
+using GameEngine.Graphics;
 using GameEngineTest;
 using GameEngineTest.Util;
 using Microsoft.Xna.Framework;
@@ -96,6 +97,20 @@ namespace BattleLibTest.GraphicComponents
             var coloredLines = (from obj in spriteBatch.Objects where obj.Color == color select obj).Count();
 
             Assert.AreNotEqual(0, coloredLines);
+        }
+
+        [TestCase]
+        public void ZeroMaxHPTest()
+        {
+            var spriteBatch = new SpriteBatchMock();
+            line.SetCoordinates(0, 0, 500, 500);
+
+            line.MaxHP = 0;
+            line.Current = 0;
+
+            line.Draw(spriteBatch);
+            foreach (var obj in spriteBatch.Objects)
+                obj.IsInConstraints(line);
         }
     }
 }

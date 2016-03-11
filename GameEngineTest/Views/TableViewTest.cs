@@ -1,4 +1,5 @@
 ﻿using GameEngine.Graphics.Views;
+using GameEngine.Graphics;
 using GameEngine.Wrapper;
 using GameEngineTest.Util;
 using Moq;
@@ -31,10 +32,8 @@ namespace GameEngineTest.Views
             modelMock.Setup(o => o.Rows).Returns(2);
 
             table = new InternalTableView<TestType, SpriteFontMock>(modelMock.Object, gameMock.Object);
-            table.XPosition = 50.0f;
-            table.YPosition = 50.0f;
-            table.Width = 200.0f;
-            table.Height = 200.0f;
+            table.SetCoordinates(50, 50, 200, 200);
+
             table.Setup(contentMock.Object);
 
             table.Draw(spriteBatch);

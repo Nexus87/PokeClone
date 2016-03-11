@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 
 namespace GameEngine.Graphics.Views
 {
-    internal class ItemBox : AbstractGraphicComponent
+    internal class ItemBox : AbstractGraphicComponent, ISelectableGraphicComponent
     {
-        public bool IsSelected { get; set; }
+        public bool IsSelected { get; private set; }
         private TextureBox arrow;
         private TextBox textBox;
 
@@ -62,6 +62,16 @@ namespace GameEngine.Graphics.Views
             textBox.YPosition = YPosition;
             textBox.Width = Math.Max(Width - arrowWidth, 0);
 
+        }
+
+        public void Select()
+        {
+            IsSelected = true;
+        }
+
+        public void Unselect()
+        {
+            IsSelected = false;
         }
     }
 }

@@ -77,18 +77,16 @@ namespace BattleLib.GraphicComponents.GUI
         {
             var AttackMenu = new TableWidget<Move>(config, game);
             var model = new AttackModel(BattleState.GetPokemon(ID));
-            var list = new List<Move>();
 
-            model.SetData(new Move(new MoveData { Name = "Move1" }), 0);
-            model.SetData(new Move(new MoveData { Name = "Move2" }), 1);
             AttackMenu.Model = model;
 
             attackFrame.AddWidget(AttackMenu);
-            attackFrame.XPosition = PokeEngine.ScreenWidth / 2.0f;
-            attackFrame.YPosition = 2.0f * PokeEngine.ScreenHeight / 3.0f;
-
-            attackFrame.Width = PokeEngine.ScreenWidth - attackFrame.XPosition;
-            attackFrame.Height = PokeEngine.ScreenHeight - attackFrame.YPosition;
+            attackFrame.SetCoordinates(
+                X: PokeEngine.ScreenWidth / 2.0f,
+                Y: 2.0f * PokeEngine.ScreenHeight / 3.0f,
+                Width: PokeEngine.ScreenWidth - PokeEngine.ScreenWidth / 2.0f,
+                Height: PokeEngine.ScreenHeight - 2.0f * PokeEngine.ScreenHeight / 3.0f
+            );
 
             AttackMenu.ItemSelected += AttackMenu_ItemSelected;
             AttackMenu.OnExitRequested += BackToMain;

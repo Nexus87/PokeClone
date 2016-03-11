@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Client.cs" />
+    <Compile Include="ClientIdentifier.cs" />
     <Compile Include="Components\AI\AIComponent.cs" />
     <Compile Include="Components\BattleState\AbstractState.cs" />
     <Compile Include="Components\BattleState\BattleData.cs" />
@@ -66,17 +67,18 @@
     <Compile Include="Events\ShowMessageEvent.cs" />
     <Compile Include="CommandExecuter.cs" />
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="GraphicComponents\GUI\AttackModel.cs" />
-    <Compile Include="GraphicComponents\GUI\BattleGUI.cs" />
+    <Compile Include="GUI\AttackModel.cs" />
+    <Compile Include="GUI\BattleGUI.cs" />
     <Compile Include="GraphicComponents\HPLine.cs" />
     <Compile Include="GraphicComponents\BattleGraphics.cs" />
-    <Compile Include="GraphicComponents\IBattleGraphicService.cs" />
-    <Compile Include="GraphicComponents\IGUIService.cs" />
+    <Compile Include="GUI\ItemModel.cs" />
+    <Compile Include="Services\IBattleGraphicService.cs" />
+    <Compile Include="Services\IGUIService.cs" />
     <Compile Include="GraphicComponents\PokemonDataView.cs" />
     <Compile Include="GraphicComponents\PokemonSprite.cs" />
     <Compile Include="InitComponent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Interfaces\IActionScheduler.cs" />
+    <Compile Include="IActionScheduler.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
