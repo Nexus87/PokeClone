@@ -56,20 +56,20 @@ namespace BattleLib.GraphicComponents
 
         protected override void Update()
         {
-            outerLine.X = X;
-            outerLine.Y = Y;
+            outerLine.XPosition = XPosition;
+            outerLine.YPosition = YPosition;
             outerLine.Width = Width;
             outerLine.Height = Height;
 
-            innerLine.X = X + border;
-            innerLine.Y = Y + border;
+            innerLine.XPosition = XPosition + border;
+            innerLine.YPosition = YPosition + border;
             innerLine.Width = Math.Max(0, Width - 2 * border);
             innerLine.Height = Math.Max(0, Height - 2 * border);
 
             float factor = maxHp == 0 ? 0 : ((float)currentHp) / ((float)maxHp);
 
-            hpLine.X = X + border;
-            hpLine.Y = Y + border;
+            hpLine.XPosition = XPosition + border;
+            hpLine.YPosition = YPosition + border;
             hpLine.Width = Math.Max(0, factor * (Width - 2 * border));
             hpLine.Height = Math.Max(0, Height - 2 * border);
 

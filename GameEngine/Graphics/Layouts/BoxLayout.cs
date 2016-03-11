@@ -11,7 +11,7 @@ namespace GameEngine.Graphics.Layouts
     {
         private Direction direction;
 
-        public BoxLayout(Direction direction)
+        protected BoxLayout(Direction direction)
         {
             this.direction = direction;
         }
@@ -28,8 +28,8 @@ namespace GameEngine.Graphics.Layouts
                 for (int i = 0; i < components.Count; i++)
                 {
                     var component = components[i];
-                    component.X = XPosition + i * width;
-                    component.Y = YPosition;
+                    component.XPosition = XPosition + i * width;
+                    component.YPosition = YPosition;
                     component.Width = width;
                     component.Height = Height;
                 }
@@ -40,8 +40,8 @@ namespace GameEngine.Graphics.Layouts
                 for (int i = 0; i < components.Count; i++)
                 {
                     var component = components[i];
-                    component.X = XPosition;
-                    component.Y = YPosition + i * height;
+                    component.XPosition = XPosition;
+                    component.YPosition = YPosition + i * height;
                     component.Width = Width;
                     component.Height = height;
                 }

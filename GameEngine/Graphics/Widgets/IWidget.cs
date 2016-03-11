@@ -15,7 +15,7 @@ namespace GameEngine.Graphics.Widgets
         /// <summary>
         /// Event is triggered, when IsVisible changes
         /// </summary>
-        event EventHandler<VisibilityChangedArgs> OnVisibilityChanged;
+        event EventHandler<VisibilityChangedEventArgs> OnVisibilityChanged;
 
         /// <summary>
         /// This property shows, if the widget is visible.
@@ -26,7 +26,7 @@ namespace GameEngine.Graphics.Widgets
     /// <summary>
     /// Argument for IWidgets OnVisibleChanged event.
     /// </summary>
-    public class VisibilityChangedArgs : EventArgs
+    public class VisibilityChangedEventArgs : EventArgs
     {
         /// <summary>
         /// The new visibility of the widget.
@@ -36,7 +36,7 @@ namespace GameEngine.Graphics.Widgets
         /// Constructs an instance.
         /// </summary>
         /// <param name="visible">New visibility of the widget</param>
-        public VisibilityChangedArgs(bool visible)
+        public VisibilityChangedEventArgs(bool visible)
         {
             Visible = visible;
         }

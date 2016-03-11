@@ -3,13 +3,13 @@ namespace GameEngine.Graphics.Views
 {
     public class TableResizeEventArgs : EventArgs
     {
-        public int rows;
-        public int columns;
+        public int Rows { get; private set; }
+        public int Columns { get; private set; }
 
         public TableResizeEventArgs(int rows, int columns)
         {
-            this.rows = rows;
-            this.columns = columns;
+            Rows = rows;
+            Columns = columns;
         }
     }
 

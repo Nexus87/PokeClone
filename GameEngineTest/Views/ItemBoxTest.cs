@@ -37,8 +37,8 @@ namespace GameEngineTest.Views
         {
             SpriteBatchMock spriteBatch = new SpriteBatchMock();
 
-            item.X = X;
-            item.Y = Y;
+            item.XPosition = X;
+            item.YPosition = Y;
             item.Width = Width;
             item.Height = Height;
 

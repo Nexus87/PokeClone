@@ -18,16 +18,16 @@ namespace GameEngineTest.Util
     {
         public static void SetCoordinates(this Mock<IGraphicComponent> compMock, float X, float Y, float Width, float Height)
         {
-            compMock.Setup(o => o.X).Returns(X);
-            compMock.Setup(o => o.Y).Returns(Y);
+            compMock.Setup(o => o.XPosition).Returns(X);
+            compMock.Setup(o => o.YPosition).Returns(Y);
             compMock.Setup(o => o.Width).Returns(Width);
             compMock.Setup(o => o.Height).Returns(Height);
         }
 
         public static void SetCoordinates(this Container container, float X, float Y, float Width, float Height)
         {
-            container.X = X;
-            container.Y = Y;
+            container.XPosition = X;
+            container.YPosition = Y;
             container.Width = Width;
             container.Height = Height;
         }

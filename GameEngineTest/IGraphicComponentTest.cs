@@ -41,8 +41,8 @@ namespace GameEngineTest
         {
             Assert.Throws<ArgumentException>(delegate()
                 {
-                    testObj.X = X;
-                    testObj.Y = Y;
+                    testObj.XPosition = X;
+                    testObj.YPosition = Y;
                     testObj.Width = Width;
                     testObj.Height = Height;
                 }
@@ -53,8 +53,8 @@ namespace GameEngineTest
         {
             bool sizeEventTriggered = false;
             bool positionEventTriggered = false;
-            GraphicComponentPositionChangedArgs positionArgs = null;
-            GraphicComponentSizeChangedArgs sizeArgs = null;
+            GraphicComponentPositionChangedEventArgs positionArgs = null;
+            GraphicComponentSizeChangedEventArgs sizeArgs = null;
 
             testObj.SizeChanged += (a, b) => { sizeEventTriggered = true; sizeArgs = b; };
             testObj.PositionChanged += (a, b) => { positionEventTriggered = true; positionArgs = b; };
@@ -73,17 +73,17 @@ namespace GameEngineTest
 
             sizeEventTriggered = false;
 
-            testObj.X = 1.0f;
+            testObj.XPosition = 1.0f;
             Assert.IsTrue(positionEventTriggered);
             Assert.IsFalse(sizeEventTriggered);
-            Assert.AreEqual(1.0f, positionArgs.X);
+            Assert.AreEqual(1.0f, positionArgs.XPosition);
 
             positionEventTriggered = false;
 
-            testObj.Y = 1.0f;
+            testObj.YPosition = 1.0f;
             Assert.IsTrue(positionEventTriggered);
             Assert.IsFalse(sizeEventTriggered);
-            Assert.AreEqual(1.0f, positionArgs.Y);
+            Assert.AreEqual(1.0f, positionArgs.YPosition);
         }
 
         [TestCase]
@@ -94,8 +94,8 @@ namespace GameEngineTest
 
             testObj.Width = 1.0f;
             testObj.Height = 1.0f;
-            testObj.X = 1.0f;
-            testObj.Y = 1.0f;
+            testObj.XPosition = 1.0f;
+            testObj.YPosition = 1.0f;
 
             testObj.SizeChanged += delegate { sizeEventTriggered = true; };
             testObj.PositionChanged += delegate { positionEventTriggered = true; };
@@ -108,11 +108,11 @@ namespace GameEngineTest
             Assert.IsFalse(sizeEventTriggered);
             Assert.IsFalse(positionEventTriggered);
 
-            testObj.X = 1.0f;
+            testObj.XPosition = 1.0f;
             Assert.IsFalse(positionEventTriggered);
             Assert.IsFalse(sizeEventTriggered);
 
-            testObj.Y = 1.0f;
+            testObj.YPosition = 1.0f;
             Assert.IsFalse(positionEventTriggered);
             Assert.IsFalse(sizeEventTriggered);
 
@@ -128,32 +128,32 @@ namespace GameEngineTest
 
             float DefaultValue = 0.0f;
 
-            Assert.AreEqual(DefaultValue, testObj.X);
-            Assert.AreEqual(DefaultValue, testObj.Y);
+            Assert.AreEqual(DefaultValue, testObj.XPosition);
+            Assert.AreEqual(DefaultValue, testObj.YPosition);
             Assert.AreEqual(DefaultValue, testObj.Width);
             Assert.AreEqual(DefaultValue, testObj.Height);
 
-            testObj.X = TestValueX;
-            Assert.AreEqual(TestValueX, testObj.X);
-            Assert.AreEqual(DefaultValue, testObj.Y);
+            testObj.XPosition = TestValueX;
+            Assert.AreEqual(TestValueX, testObj.XPosition);
+            Assert.AreEqual(DefaultValue, testObj.YPosition);
             Assert.AreEqual(DefaultValue, testObj.Width);
             Assert.AreEqual(DefaultValue, testObj.Height);
 
-            testObj.Y = TestValueY;
-            Assert.AreEqual(TestValueX, testObj.X);
-            Assert.AreEqual(TestValueY, testObj.Y);
+            testObj.YPosition = TestValueY;
+            Assert.AreEqual(TestValueX, testObj.XPosition);
+            Assert.AreEqual(TestValueY, testObj.YPosition);
             Assert.AreEqual(DefaultValue, testObj.Width);
             Assert.AreEqual(DefaultValue, testObj.Height);
 
             testObj.Width = TestValueWidth;
-            Assert.AreEqual(TestValueX, testObj.X);
-            Assert.AreEqual(TestValueY, testObj.Y);
+            Assert.AreEqual(TestValueX, testObj.XPosition);
+            Assert.AreEqual(TestValueY, testObj.YPosition);
             Assert.AreEqual(TestValueWidth, testObj.Width);
             Assert.AreEqual(DefaultValue, testObj.Height);
 
             testObj.Height = TestValueHeight;
-            Assert.AreEqual(TestValueX, testObj.X);
-            Assert.AreEqual(TestValueY, testObj.Y);
+            Assert.AreEqual(TestValueX, testObj.XPosition);
+            Assert.AreEqual(TestValueY, testObj.YPosition);
             Assert.AreEqual(TestValueWidth, testObj.Width);
             Assert.AreEqual(TestValueHeight, testObj.Height);
         }
@@ -171,8 +171,8 @@ namespace GameEngineTest
         {
             SpriteBatchMock batch = new SpriteBatchMock();
 
-            testObj.X = X;
-            testObj.Y = Y;
+            testObj.XPosition = X;
+            testObj.YPosition = Y;
             testObj.Width = Width;
             testObj.Height = Height;
 

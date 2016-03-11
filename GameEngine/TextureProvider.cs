@@ -10,7 +10,7 @@ namespace GameEngine
 {
     public class TextureProvider
     {
-        public ContentManager Content { private get; set; }
+        public ContentManager Content { get; set; }
         public TextureProvider(ContentManager content)
         {
             Content = content;
@@ -18,14 +18,14 @@ namespace GameEngine
 
         public TextureProvider() { }
 
-        public Texture2D getTexturesFront(int id)
+        public Texture2D GetTexturesFront(int id)
         {
             if (id == -1)
                 return null;
             return Content.Load<Texture2D>("charmander-front");
         }
 
-        public Texture2D getTextureBack(int id)
+        public Texture2D GetTextureBack(int id)
         {
             if (id == -1)
                 return null;

@@ -30,7 +30,7 @@ namespace GameEngine.Graphics.Views
             if (game.IsRunning)
                 Setup(game.Content);
         }
-        public override void Setup(ContentManager content)
+        public override sealed void Setup(ContentManager content)
         {
             arrow.Setup(content);
             textBox.Setup(content);
@@ -53,13 +53,13 @@ namespace GameEngine.Graphics.Views
             float arrowHeight = textBox.RealTextHeight;
             float arrowWidth = Width.CompareTo(arrowHeight) <= 0 ? 0 : arrowHeight;
 
-            arrow.X = X;
-            arrow.Y = Y;
+            arrow.XPosition = XPosition;
+            arrow.YPosition = YPosition;
             arrow.Width = arrowWidth;
             arrow.Height = arrowHeight;
 
-            textBox.X = X + arrowWidth;
-            textBox.Y = Y;
+            textBox.XPosition = XPosition + arrowWidth;
+            textBox.YPosition = YPosition;
             textBox.Width = Math.Max(Width - arrowWidth, 0);
 
         }

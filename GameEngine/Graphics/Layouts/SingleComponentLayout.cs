@@ -16,8 +16,8 @@ namespace GameEngine.Graphics.Layouts
                 return;
 
             var component = components[0];
-            component.X = XPosition;
-            component.Y = YPosition;
+            component.XPosition = XPosition;
+            component.YPosition = YPosition;
             component.Width = Width;
             component.Height = Height;
         }

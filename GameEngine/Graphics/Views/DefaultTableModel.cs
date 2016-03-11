@@ -16,8 +16,8 @@ namespace GameEngine.Graphics.Views
             items = new T[rows, columns];
         }
 
-        public event EventHandler<DataChangedArgs<T>> DataChanged = delegate { };
-        public event EventHandler<SizeChangedArgs> SizeChanged = delegate { };
+        public event EventHandler<DataChangedEventArgs<T>> DataChanged = delegate { };
+        public event EventHandler<SizeChangedEventArgs> SizeChanged = delegate { };
 
         public int Columns { get { return items.GetLength(1); } }
 
@@ -46,14 +46,14 @@ namespace GameEngine.Graphics.Views
             if (row >= Rows || column >= Columns)
             {
                 Resize(row >= Rows ? row + 1 : Rows, column >= Columns ? column + 1 : Columns);
-                SizeChanged(this, new SizeChangedArgs { newRows = Rows, newColumns = Columns });
+                SizeChanged(this, new SizeChangedEventArgs(Rows, Columns ));
             }
 
             var oldValue = items[row, column];
             items[row, column] = data;
 
             if (!Object.Equals(oldValue, data))
-                DataChanged(this, new DataChangedArgs<T> { column = column, row = row, newData = data });
+                DataChanged(this, new DataChangedEventArgs<T>(row, column, data));
             return true;
         }
 

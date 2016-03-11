@@ -27,9 +27,6 @@ namespace GameEngine.Utils
 
         public static void Copy<T>(this T[,] source, T[,] target, Creator<T> defaultValue)
         {
-            int rows = Math.Min(source.GetLength(0), target.GetLength(0));
-            int columns = Math.Min(source.GetLength(1), target.GetLength(1));
-
             int sourceRows = source.GetLength(0);
             int sourceColumns = source.GetLength(1);
             int targetRows = target.GetLength(0);
@@ -63,13 +60,13 @@ namespace GameEngine.Utils
 
         public static void SetCoordinates(this IGraphicComponent component, IGraphicComponent constraints)
         {
-            component.SetCoordinates(constraints.X, constraints.Y, constraints.Width, constraints.Height);
+            component.SetCoordinates(constraints.XPosition, constraints.YPosition, constraints.Width, constraints.Height);
         }
 
         public static void SetCoordinates(this IGraphicComponent component, float X, float Y, float width, float height)
         {
-            component.X = X;
-            component.Y = Y;
+            component.XPosition = X;
+            component.YPosition = Y;
             component.Width = width;
             component.Height = height;
         }

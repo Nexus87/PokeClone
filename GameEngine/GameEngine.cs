@@ -1,6 +1,7 @@
 ﻿using GameEngine.EventComponent;
 using GameEngine.Graphics;
 using GameEngine.Wrapper;
+using GameEngine.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -17,25 +18,22 @@ namespace GameEngine
         public static readonly Color BackgroundColor = new Color(248, 248, 248, 0);
         public bool IsRunning { get; private set; }
 
-        public readonly GUIManager GUIManager = new GUIManager();
+        public GUIManager GUIManager { get; private set; }
 
-        private readonly Configuration config;
         private XNASpriteBatch batch;
         private IInputHandler DefaultInputHandler;
         private Rectangle display;
         private InputComponent input;
 
-        private GraphicsDeviceManager manager;
         private RenderTarget2D target;
-
-        private Matrix transformation = Matrix.Identity;
 
         public PokeEngine(Configuration config) : base()
         {
-            this.config = config;
+            config.CheckNull("config");
+
             IsRunning = false;
             input = new InputComponent(this);
-            manager = new GraphicsDeviceManager(this);
+            GUIManager = new GUIManager();
 
             Window.AllowUserResizing = true;
             Window.ClientSizeChanged += Window_ClientSizeChanged;
@@ -56,7 +54,8 @@ namespace GameEngine
 
         // For testing only
         internal PokeEngine(){}
-        public IGraphicComponent Graphic { private get; set; }
+
+        public IGraphicComponent Graphic { get; set; }
 
 
         public IInputHandler InputHandler
@@ -66,6 +65,10 @@ namespace GameEngine
                 DefaultInputHandler = value;
                 if (!GUIManager.IsActive)
                     input.handler = value;
+            }
+            get
+            {
+                return input.handler;
             }
         }
 

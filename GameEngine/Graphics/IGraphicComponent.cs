@@ -7,27 +7,27 @@ using System;
 
 namespace GameEngine.Graphics
 {
-    public class GraphicComponentSizeChangedArgs : EventArgs
+    public class GraphicComponentSizeChangedEventArgs : EventArgs
     {
         public float Width { get; private set; }
         public float Height { get; private set; }
 
-        public GraphicComponentSizeChangedArgs(float width, float height)
+        public GraphicComponentSizeChangedEventArgs(float width, float height)
         {
             Width = width;
             Height = height;
         }
     }
 
-    public class GraphicComponentPositionChangedArgs : EventArgs
+    public class GraphicComponentPositionChangedEventArgs : EventArgs
     {
-        public float X { get; private set; }
-        public float Y { get; private set; }
+        public float XPosition { get; private set; }
+        public float YPosition { get; private set; }
 
-        public GraphicComponentPositionChangedArgs(float x, float y)
+        public GraphicComponentPositionChangedEventArgs(float xPosition, float yPosition)
         {
-            X = x;
-            Y = y;
+            XPosition = xPosition;
+            YPosition = yPosition;
         }
     }
 
@@ -61,20 +61,20 @@ namespace GameEngine.Graphics
         /// <summary>
         /// This event signals that either Width or Height has changed
         /// </summary>
-        event EventHandler<GraphicComponentSizeChangedArgs> SizeChanged;
+        event EventHandler<GraphicComponentSizeChangedEventArgs> SizeChanged;
         /// <summary>
         /// This event signals that either X or Y has changed
         /// </summary>
-        event EventHandler<GraphicComponentPositionChangedArgs> PositionChanged;
+        event EventHandler<GraphicComponentPositionChangedEventArgs> PositionChanged;
 
         /// <summary>
         /// Current X position
         /// </summary>
-        float X { get; set; }
+        float XPosition { get; set; }
         /// <summary>
         /// Current Y position
         /// </summary>
-        float Y { get; set; }
+        float YPosition { get; set; }
 
         /// <summary>
         /// Current Width

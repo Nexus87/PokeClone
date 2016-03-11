@@ -59,11 +59,11 @@ namespace GameEngineTest.Graphics.Basic
             testObj.Text = testText;
             Assert.AreEqual(testText, testObj.Text);
             
-            testObj.X = X;
-            Assert.AreEqual(X, testObj.X);
+            testObj.XPosition = X;
+            Assert.AreEqual(X, testObj.XPosition);
 
-            testObj.Y = Y;
-            Assert.AreEqual(Y, testObj.Y);
+            testObj.YPosition = Y;
+            Assert.AreEqual(Y, testObj.YPosition);
 
             testObj.TextSize = testSize;
             Assert.AreEqual(testSize, testObj.TextSize);
@@ -77,8 +77,8 @@ namespace GameEngineTest.Graphics.Basic
             var spriteMock = new SpriteBatchMock();
             float TextWidth = TextHeight * Text.Length;
       
-            testObj.X = X;
-            testObj.Y = Y;
+            testObj.XPosition = X;
+            testObj.YPosition = Y;
             testObj.TextSize = TextHeight;
 
             Assert.AreEqual(TextWidth, testObj.CalculateTextLength(Text));

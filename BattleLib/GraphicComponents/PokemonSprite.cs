@@ -55,12 +55,12 @@ namespace BattleLib.GraphicComponents
         {
             base.Update();
             
-            box.X = X;
-            box.Y = Y;
+            box.XPosition = XPosition;
+            box.YPosition = YPosition;
             box.Width = Width;
             box.Height = Height;
 
-            box.Image = front ? provider.getTexturesFront(id) : provider.getTextureBack(id);
+            box.Image = front ? provider.GetTexturesFront(id) : provider.GetTextureBack(id);
         }
     }
 }

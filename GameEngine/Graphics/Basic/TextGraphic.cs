@@ -35,15 +35,15 @@ namespace GameEngine.Graphics.Basic
             }
         }
         public float TextWidth { get { return CalculateTextLength(text); } }
-        public float X { get { return position.X; } set { position.X = value; } }
-        public float Y { get { return position.Y; } set { position.Y = value; } }
+        public float XPosition { get { return position.X; } set { position.X = value; } }
+        public float YPosition { get { return position.Y; } set { position.Y = value; } }
 
-        public float CalculateTextLength(string text)
+        public float CalculateTextLength(string testText)
         {
             if (font == null)
                 return 0;
 
-            var size = font.MeasureString(text);
+            var size = font.MeasureString(testText);
             return textSize * size.X / size.Y;
         }
 

@@ -53,8 +53,8 @@ namespace GameEngine.Graphics.Layouts
         {
             container.CheckNull("container");
 
-            position.X = container.X;
-            position.Y = container.Y;
+            position.X = container.XPosition;
+            position.Y = container.YPosition;
             size.X = container.Width;
             size.Y = container.Height;
 

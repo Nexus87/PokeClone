@@ -41,8 +41,8 @@ namespace BattleLibTest.GraphicComponents
         [TestCaseSource("HPTestData")]
         public void HPAnimationTest(int hp)
         {
-            line.X = 300;
-            line.Y = 300;
+            line.XPosition = 300;
+            line.YPosition = 300;
             line.Width = 300;
             line.Height = 300;
 

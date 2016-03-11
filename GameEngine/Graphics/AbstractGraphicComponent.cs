@@ -19,8 +19,8 @@ namespace GameEngine.Graphics
         private Vector2 position;
         private Vector2 size;
 
-        public event EventHandler<GraphicComponentPositionChangedArgs> PositionChanged = (a, b) => { };
-        public event EventHandler<GraphicComponentSizeChangedArgs> SizeChanged = (a, b) => { };
+        public event EventHandler<GraphicComponentPositionChangedEventArgs> PositionChanged = (a, b) => { };
+        public event EventHandler<GraphicComponentSizeChangedEventArgs> SizeChanged = (a, b) => { };
 
         public float Height
         {
@@ -33,7 +33,7 @@ namespace GameEngine.Graphics
                     return;
                 size.Y = value;
                 Invalidate();
-                SizeChanged(this, new GraphicComponentSizeChangedArgs(size.X, size.Y));
+                SizeChanged(this, new GraphicComponentSizeChangedEventArgs(size.X, size.Y));
             }
         }
 
@@ -51,11 +51,11 @@ namespace GameEngine.Graphics
                     return;
                 size.X = value;
                 Invalidate();
-                SizeChanged(this, new GraphicComponentSizeChangedArgs(size.X, size.Y));
+                SizeChanged(this, new GraphicComponentSizeChangedEventArgs(size.X, size.Y));
             }
         }
 
-        public float X
+        public float XPosition
         {
             get { return position.X; }
             set
@@ -65,11 +65,11 @@ namespace GameEngine.Graphics
 
                 position.X = value;
                 Invalidate();
-                PositionChanged(this, new GraphicComponentPositionChangedArgs(position.X, position.Y));
+                PositionChanged(this, new GraphicComponentPositionChangedEventArgs(position.X, position.Y));
             }
         }
 
-        public float Y
+        public float YPosition
         {
             get { return position.Y; }
             set
@@ -79,7 +79,7 @@ namespace GameEngine.Graphics
 
                 position.Y = value;
                 Invalidate();
-                PositionChanged(this, new GraphicComponentPositionChangedArgs(position.X, position.Y));
+                PositionChanged(this, new GraphicComponentPositionChangedEventArgs(position.X, position.Y));
             }
         }
 

@@ -20,16 +20,6 @@ namespace GameEngine.Graphics.Layouts
             Columns = columns;
         }
 
-
-        private void Resize(int row, int column)
-        {
-            if (row < 0 || column < 0)
-                throw new ArgumentException("Negative values are not allowed");
-            if (row == Rows && column == Columns)
-                return;
-        }
-
-
         protected override void UpdateComponents(Container container)
         {
             var components = container.Components;
@@ -64,8 +54,8 @@ namespace GameEngine.Graphics.Layouts
                 else
                     columnCount++;
 
-                components[i].X = XPosition + columnCount * width;
-                components[i].Y = YPosition + rowCount * height;
+                components[i].XPosition = XPosition + columnCount * width;
+                components[i].YPosition = YPosition + rowCount * height;
                 components[i].Width = width;
                 components[i].Height = height;
             }

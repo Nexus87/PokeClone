@@ -6,23 +6,36 @@ using System.Threading.Tasks;
 
 namespace GameEngine.Graphics.Views
 {
-    public class DataChangedArgs<T> : EventArgs
+    public class DataChangedEventArgs<T> : EventArgs
     {
-        public int row;
-        public int column;
-        public T newData;
+        public int Row { get; private set; }
+        public int Column { get; private set; }
+        public T NewData { get; private set; }
+
+        public DataChangedEventArgs(int row, int column, T newData)
+        {
+            Row = row;
+            Column = column;
+            NewData = newData;
+        }
     }
 
-    public class SizeChangedArgs : EventArgs
+    public class SizeChangedEventArgs : EventArgs
     {
-        public int newRows;
-        public int newColumns;
+        public int NewRows { get; private set; }
+        public int NewColumns { get; private set; }
+
+        public SizeChangedEventArgs(int newRows, int newColumns)
+        {
+            NewRows = newRows;
+            NewColumns = newColumns;
+        }
     }
 
     public interface IItemModel<T>
     {
-        event EventHandler<DataChangedArgs<T>> DataChanged;
-        event EventHandler<SizeChangedArgs> SizeChanged;
+        event EventHandler<DataChangedEventArgs<T>> DataChanged;
+        event EventHandler<SizeChangedEventArgs> SizeChanged;
         int Rows { get; }
         int Columns { get; }
 

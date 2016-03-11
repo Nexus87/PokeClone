@@ -146,8 +146,8 @@ namespace GameEngineTest.Graphics.Layouts
             var layout = new GridLayout(gridRows, gridColumns);
             container.SetCoordinates(5.0f, 5.0f, 500.0f, 500.0f);
 
-            float X = container.X;
-            float Y = container.Y;
+            float X = container.XPosition;
+            float Y = container.YPosition;
             float Width = container.Width / ((float) realColumns);
             float Height = container.Height / ((float) realRows);
 
@@ -163,8 +163,8 @@ namespace GameEngineTest.Graphics.Layouts
                 if (i % realColumns == 0 && i != 0)
                     rowCount++;
 
-                Assert.AreEqual(X + (i % realColumns) * Width, components[i].X);
-                Assert.AreEqual(Y + rowCount * Height, components[i].Y);
+                Assert.AreEqual(X + (i % realColumns) * Width, components[i].XPosition);
+                Assert.AreEqual(Y + rowCount * Height, components[i].YPosition);
                 Assert.AreEqual(Width, components[i].Width);
                 Assert.AreEqual(Height, components[i].Height);
             }

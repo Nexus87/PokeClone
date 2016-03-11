@@ -31,8 +31,8 @@ namespace GameEngineTest.Views
             modelMock.Setup(o => o.Rows).Returns(2);
 
             table = new InternalTableView<TestType, SpriteFontMock>(modelMock.Object, gameMock.Object);
-            table.X = 50.0f;
-            table.Y = 50.0f;
+            table.XPosition = 50.0f;
+            table.YPosition = 50.0f;
             table.Width = 200.0f;
             table.Height = 200.0f;
             table.Setup(contentMock.Object);
@@ -68,12 +68,12 @@ namespace GameEngineTest.Views
 
             newModel.Setup(o => o.Rows).Returns(4);
             newModel.Setup(o => o.Columns).Returns(10);
-            newModel.Raise(o => o.SizeChanged += null, newModel.Object, new SizeChangedArgs { newColumns = 10, newRows = 4 });
+            newModel.Raise(o => o.SizeChanged += null, newModel.Object, new SizeChangedEventArgs(newColumns: 10, newRows: 4));
             Assert.AreEqual(4, table.Rows);
             Assert.AreEqual(10, table.Columns);
 
             newModel.Setup(o => o.DataStringAt(It.IsAny<int>(), It.IsAny<int>())).Returns<int, int>((a, b) => a == 0 && b == 0 ? "m" : "n");
-            newModel.Raise(o => o.DataChanged += null, newModel.Object, new DataChangedArgs<TestType> { newData = new TestType { testString = "m" }, column = 0, row = 0 });
+            newModel.Raise(o => o.DataChanged += null, newModel.Object, new DataChangedEventArgs<TestType>(newData: new TestType { testString = "m" }, column: 0, row: 0));
 
             spriteBatch.DrawnStrings.Clear();
             table.Draw(spriteBatch);
@@ -99,16 +99,16 @@ namespace GameEngineTest.Views
             modelMock.Setup(o => o.DataStringAt(It.IsAny<int>(), It.IsAny<int>())).Returns<int, int>((a, b) => a == insertRow && b == insertColumn ? data.ToString() : null);
 
             table = new InternalTableView<TestType, SpriteFontMock>(modelMock.Object, gameMock.Object);
-            table.X = 0.0f;
-            table.Y = 0.0f;
+            table.XPosition = 0.0f;
+            table.YPosition = 0.0f;
             table.Width = 180.0f;
             table.Height = 180.0f;
             table.Setup(contentMock.Object);
 
             modelMock.Setup(o => o.Columns).Returns(3);
             modelMock.Setup(o => o.Rows).Returns(3);
-            modelMock.Raise(o => o.SizeChanged += null, modelMock.Object, new SizeChangedArgs { newColumns = 3, newRows = 3 });
-            modelMock.Raise(o => o.DataChanged += null, modelMock.Object, new DataChangedArgs<TestType> { column = 2, row = 2, newData = data });
+            modelMock.Raise(o => o.SizeChanged += null, modelMock.Object, new SizeChangedEventArgs(newColumns: 3, newRows: 3));
+            modelMock.Raise(o => o.DataChanged += null, modelMock.Object, new DataChangedEventArgs<TestType>(column: 2, row: 2, newData: data));
 
             Assert.AreEqual(3, table.Rows);
             Assert.AreEqual(3, table.Columns);
@@ -136,7 +136,7 @@ namespace GameEngineTest.Views
             modelMock.Setup(o => o.Rows).Returns(row);
 
             Assert.False(eventCalled);
-            modelMock.Raise(o => o.SizeChanged += null, modelMock.Object, new SizeChangedArgs { newColumns = column, newRows = row });
+            modelMock.Raise(o => o.SizeChanged += null, modelMock.Object, new SizeChangedEventArgs(newColumns: column, newRows: row));
             Assert.AreEqual(result, eventCalled);
         }
 
@@ -150,8 +150,8 @@ namespace GameEngineTest.Views
             modelMock.Setup(o => o.DataStringAt(It.IsAny<int>(), It.IsAny<int>())).Returns<int, int>((a, b) => a == row && b == column ? "Data" : null);
 
             table = new InternalTableView<TestType, SpriteFontMock>(modelMock.Object, gameMock.Object);
-            table.X = 0.0f;
-            table.Y = 0.0f;
+            table.XPosition = 0.0f;
+            table.YPosition = 0.0f;
             table.Width = 200.0f;
             table.Height = 200.0f;
             table.Setup(contentMock.Object);
@@ -201,8 +201,8 @@ namespace GameEngineTest.Views
 
             modelMock.Setup(o => o.Columns).Returns(3);
             modelMock.Setup(o => o.Rows).Returns(3);
-            modelMock.Raise(o => o.SizeChanged += null, modelMock.Object, new SizeChangedArgs { newColumns = 3, newRows = 3 });
-            modelMock.Raise(o => o.DataChanged += null, modelMock.Object, new DataChangedArgs<TestType> { column = 2, row = 2, newData = data });
+            modelMock.Raise(o => o.SizeChanged += null, modelMock.Object, new SizeChangedEventArgs(newColumns: 3, newRows: 3));
+            modelMock.Raise(o => o.DataChanged += null, modelMock.Object, new DataChangedEventArgs<TestType>(column: 2, row: 2, newData: data));
 
             Assert.AreEqual(3, table.Rows);
             Assert.AreEqual(3, table.Columns);
@@ -279,8 +279,8 @@ namespace GameEngineTest.Views
             modelMock.Setup(o => o.DataStringAt(It.IsAny<int>(), It.IsAny<int>())).Returns<int, int>((a, b) => a + " " + b);
 
             table = new InternalTableView<TestType, SpriteFontMock>(modelMock.Object, gameMock.Object);
-            table.X = 0.0f;
-            table.Y = 0.0f;
+            table.XPosition = 0.0f;
+            table.YPosition = 0.0f;
             table.Width = 2000.0f;
             table.Height = 2000.0f;
 

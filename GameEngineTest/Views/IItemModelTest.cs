@@ -50,16 +50,16 @@ namespace GameEngineTest.Views
         [TestCase]
         public void DataChangedEventTest()
         {
-            DataChangedArgs<TestType> eventArgs = null;
+            DataChangedEventArgs<TestType> eventArgs = null;
             var t = new TestType { testString = "Test" };
 
             testModel.DataChanged += (obj, args) => { eventArgs = args; };
 
             Assert.True(testModel.SetData(t, 0, 0));
             Assert.NotNull(eventArgs);
-            Assert.AreEqual(0, eventArgs.row);
-            Assert.AreEqual(0, eventArgs.column);
-            Assert.AreEqual(t, eventArgs.newData);
+            Assert.AreEqual(0, eventArgs.Row);
+            Assert.AreEqual(0, eventArgs.Column);
+            Assert.AreEqual(t, eventArgs.NewData);
 
             eventArgs = null;
 
@@ -68,15 +68,15 @@ namespace GameEngineTest.Views
 
             Assert.True(testModel.SetData(null, 0, 0));
             Assert.NotNull(eventArgs);
-            Assert.AreEqual(0, eventArgs.row);
-            Assert.AreEqual(0, eventArgs.column);
-            Assert.AreEqual(null, eventArgs.newData);
+            Assert.AreEqual(0, eventArgs.Row);
+            Assert.AreEqual(0, eventArgs.Column);
+            Assert.AreEqual(null, eventArgs.NewData);
         }
 
         [TestCase]
         public void SizeChangedEventTest()
         {
-            SizeChangedArgs eventArgs = null;
+            SizeChangedEventArgs eventArgs = null;
             var t = new TestType { testString = "Test" };
             int rows = testModel.Rows;
             int columns = testModel.Columns;
@@ -87,12 +87,12 @@ namespace GameEngineTest.Views
             if (rows != testModel.Rows)
             {
                 Assert.NotNull(eventArgs);
-                Assert.AreEqual(rows + 1, eventArgs.newRows);
+                Assert.AreEqual(rows + 1, eventArgs.NewRows);
             }
             if (columns != testModel.Columns)
             {
                 Assert.NotNull(eventArgs);
-                Assert.AreEqual(columns + 1, eventArgs.newColumns);
+                Assert.AreEqual(columns + 1, eventArgs.NewColumns);
             }
 
             eventArgs = null;
@@ -103,12 +103,12 @@ namespace GameEngineTest.Views
             if (rows != testModel.Rows)
             {
                 Assert.NotNull(eventArgs);
-                Assert.AreEqual(rows + 1, eventArgs.newRows);
+                Assert.AreEqual(rows + 1, eventArgs.NewRows);
             }
             if (columns != testModel.Columns)
             {
                 Assert.NotNull(eventArgs);
-                Assert.AreEqual(columns, eventArgs.newColumns);
+                Assert.AreEqual(columns, eventArgs.NewColumns);
             }
 
             eventArgs = null;
@@ -119,11 +119,11 @@ namespace GameEngineTest.Views
             if (rows != testModel.Rows)
             {
                 Assert.NotNull(eventArgs);
-                Assert.AreEqual(rows, eventArgs.newRows);
+                Assert.AreEqual(rows, eventArgs.NewRows);
             }
             if (columns != testModel.Columns)
             {
-                Assert.AreEqual(columns + 1, eventArgs.newColumns);
+                Assert.AreEqual(columns + 1, eventArgs.NewColumns);
                 Assert.NotNull(eventArgs);
             }
 

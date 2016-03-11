@@ -30,16 +30,10 @@ namespace BattleLib.GraphicComponents.GUI
             return base.SetData(data, row, column);
         }
 
-        public override Move DataAt(int row, int column)
-        {
-            if (row >= items.Count)
-                return null;
-            return items[row];
-        }
-
         public override string DataStringAt(int row, int column)
         {
-            return items[row] != null ? items[row].ToString() : "----";
+            var data = DataAt(row, 0);
+            return data != null ? data.ToString() : "----";
         }
     }
 }

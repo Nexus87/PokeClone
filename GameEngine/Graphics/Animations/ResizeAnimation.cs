@@ -1,4 +1,5 @@
 ﻿using GameEngine.Graphics.Basic;
+using GameEngine.Utils;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -11,10 +12,10 @@ namespace GameEngine.Graphics.Animations
     public class ResizeAnimation : IAnimation
     {
         public float StartWidth { get; set; }
-        public float StartHeigth { get; set; }
+        public float StartHeight { get; set; }
 
         public float EndWidth { get; set; }
-        public float EndHeigth { get; set; }
+        public float EndHeight { get; set; }
 
         public float SpeedX { get; set; }
         public float SpeedY { get; set; }
@@ -25,10 +26,13 @@ namespace GameEngine.Graphics.Animations
         private bool IsInitialized = false;
         private bool shrinkX;
         private bool shrinkY;
+        
         public void SetStartSize(IGraphicComponent component)
         {
+            component.CheckNull("component");
+
             StartWidth = component.Width;
-            StartHeigth = component.Height;
+            StartHeight = component.Height;
         }
 
 
@@ -36,10 +40,11 @@ namespace GameEngine.Graphics.Animations
 
         public void Update(GameTime time, IGraphicComponent component)
         {
+            component.CheckNull("component");
             if (!IsInitialized)
                 Init();
 
-            if (currentWidth.CompareTo(EndWidth) == 0 && currentHeight.CompareTo(EndHeigth) == 0)
+            if (currentWidth.CompareTo(EndWidth) == 0 && currentHeight.CompareTo(EndHeight) == 0)
                 Finished();
             if (time.ElapsedGameTime.TotalMilliseconds != 0)
                 return;
@@ -50,9 +55,9 @@ namespace GameEngine.Graphics.Animations
                 currentWidth = Math.Min(currentWidth + SpeedX, EndWidth);
 
             if (shrinkY)
-                currentHeight = Math.Max(currentHeight - SpeedY, EndHeigth);
+                currentHeight = Math.Max(currentHeight - SpeedY, EndHeight);
             else
-                currentHeight = Math.Max(currentWidth + SpeedY, EndHeigth);
+                currentHeight = Math.Max(currentWidth + SpeedY, EndHeight);
 
             component.Width = currentWidth;
             component.Height = currentHeight;
@@ -68,10 +73,10 @@ namespace GameEngine.Graphics.Animations
         private void Init()
         {
             currentWidth = StartWidth;
-            currentHeight = StartHeigth;
+            currentHeight = StartHeight;
 
             shrinkX = EndWidth.CompareTo(StartWidth) < 0;
-            shrinkY = EndHeigth.CompareTo(StartHeigth) < 0;
+            shrinkY = EndHeight.CompareTo(StartHeight) < 0;
 
             IsInitialized = true;
         }

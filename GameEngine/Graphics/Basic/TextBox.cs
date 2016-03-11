@@ -9,7 +9,7 @@ namespace GameEngine.Graphics.Basic
     {
         private string text = "";
         private TextGraphic textGraphic;
-        private float prefTextSize;
+        private float preferedTextSize;
 
         public TextBox(String fontName, PokeEngine game) : this(fontName, new XNASpriteFont(), game) { }
 
@@ -17,26 +17,27 @@ namespace GameEngine.Graphics.Basic
             : base(game)
         {
             textGraphic = new TextGraphic(fontName, font);
-            prefTextSize = textGraphic.TextSize;
+            preferedTextSize = textGraphic.TextSize;
         }
 
         public float PreferedTextSize
         { 
-            get { return prefTextSize; } 
+            get { return preferedTextSize; } 
             set 
             {
                 if (value.CompareTo(0) < 0)
                     throw new ArgumentException("PreferedTextSize must be >= 0");
-                if (prefTextSize == value)
+
+                if (preferedTextSize == value)
                     return;
                 
-                prefTextSize = value;
+                preferedTextSize = value;
                 Invalidate();
             } 
         }
 
         public string Text { get { return text; } set { text = value; Invalidate(); } }
-        public float RealTextHeight { get { return prefTextSize <= Height ? prefTextSize : Height; } }
+        public float RealTextHeight { get { return preferedTextSize <= Height ? preferedTextSize : Height; } }
         
         public int DisplayableChars()
         {
@@ -61,8 +62,8 @@ namespace GameEngine.Graphics.Basic
 
         protected override void Update()
         {
-            textGraphic.X = X;
-            textGraphic.Y = Y;
+            textGraphic.XPosition = XPosition;
+            textGraphic.YPosition = YPosition;
             textGraphic.TextSize = RealTextHeight;
 
             float length = textGraphic.CalculateTextLength(" ");

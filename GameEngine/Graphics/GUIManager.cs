@@ -1,5 +1,6 @@
 ﻿using GameEngine.Graphics.Widgets;
 using GameEngine.Wrapper;
+using GameEngine.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
@@ -16,6 +17,8 @@ namespace GameEngine.Graphics
 
         public void AddWidget(IWidget widget)
         {
+            widget.CheckNull("widget");
+
             widget.OnVisibilityChanged += widget_OnVisibilityChanged;
             if (widget.IsVisible)
             {
@@ -26,7 +29,7 @@ namespace GameEngine.Graphics
                 notVisibleWidgets.AddLast(widget);
         }
 
-        void widget_OnVisibilityChanged(object sender, VisibilityChangedArgs e)
+        void widget_OnVisibilityChanged(object sender, VisibilityChangedEventArgs e)
         {
             var widget = (IWidget)sender;
             if (e.Visible == false)
@@ -48,6 +51,8 @@ namespace GameEngine.Graphics
 
         public void RemoveWidget(IWidget widget)
         {
+            widget.CheckNull("widget");
+
             if(widget.IsVisible)
                 widgets.Remove(widget);
             else
@@ -98,12 +103,12 @@ namespace GameEngine.Graphics
             IsActive = true;
         }
 
-        public void Setup(ContentManager Content)
+        public void Setup(ContentManager content)
         {
             foreach (var w in widgets)
-                w.Setup(Content);
+                w.Setup(content);
             foreach (var w in notVisibleWidgets)
-                w.Setup(Content);
+                w.Setup(content);
         }
     }
 }

@@ -93,14 +93,14 @@ namespace BattleLib.GraphicComponents
 
         private void initAIGraphic()
         {
-            aiView.X = (int)(PokeEngine.ScreenWidth * 0.2f);
-            aiView.Y = (int)(PokeEngine.ScreenHeight * 0.1f);
+            aiView.XPosition = (int)(PokeEngine.ScreenWidth * 0.2f);
+            aiView.YPosition = (int)(PokeEngine.ScreenHeight * 0.1f);
 
             aiView.Height = (int)(PokeEngine.ScreenHeight * 0.25f);
             aiView.Width = (int)(PokeEngine.ScreenWidth * 0.3f);
 
-            aiSprite.X = (int)(PokeEngine.ScreenWidth * 0.6f);
-            aiSprite.Y = (int)(PokeEngine.ScreenHeight * 0.1f);
+            aiSprite.XPosition = (int)(PokeEngine.ScreenWidth * 0.6f);
+            aiSprite.YPosition = (int)(PokeEngine.ScreenHeight * 0.1f);
 
             aiSprite.Height = (int)(PokeEngine.ScreenHeight * 0.25f);
             aiSprite.Width = (int)(PokeEngine.ScreenHeight * 0.25f);
@@ -108,14 +108,14 @@ namespace BattleLib.GraphicComponents
 
         private void initPlayerGraphic()
         {
-            playerView.X = (int)(PokeEngine.ScreenWidth * 0.6f);
-            playerView.Y = (int)(PokeEngine.ScreenHeight * 0.4f);
+            playerView.XPosition = (int)(PokeEngine.ScreenWidth * 0.6f);
+            playerView.YPosition = (int)(PokeEngine.ScreenHeight * 0.4f);
 
             playerView.Height = (int)(PokeEngine.ScreenHeight * 0.25f);
             playerView.Width = (int)(PokeEngine.ScreenWidth * 0.3f);
 
-            playerSprite.X = (int)(PokeEngine.ScreenWidth * 0.2f);
-            playerSprite.Y = (int)(PokeEngine.ScreenHeight * 0.4f);
+            playerSprite.XPosition = (int)(PokeEngine.ScreenWidth * 0.2f);
+            playerSprite.YPosition = (int)(PokeEngine.ScreenHeight * 0.4f);
 
             playerSprite.Height = (int)(PokeEngine.ScreenHeight * 0.25f);
             playerSprite.Width = (int)(PokeEngine.ScreenHeight * 0.25f);

@@ -39,13 +39,13 @@ namespace GameEngineTest.Graphics
 
             componentMock.ResetCalls();
 
-            componentMock.Object.X = 1.0f;
+            componentMock.Object.XPosition = 1.0f;
             componentMock.Object.Draw(new GameTime(), sprite);
             componentMock.Protected().Verify("Update", Times.Once());
 
             componentMock.ResetCalls();
 
-            componentMock.Object.Y = 1.0f;
+            componentMock.Object.YPosition = 1.0f;
             componentMock.Object.Draw(new GameTime(), sprite);
             componentMock.Protected().Verify("Update", Times.Once());
 
@@ -72,21 +72,21 @@ namespace GameEngineTest.Graphics
 
             componentMock.ResetCalls();
 
-            componentMock.Object.X = 1.0f;
+            componentMock.Object.XPosition = 1.0f;
             componentMock.Object.Draw(new GameTime(), sprite);
             componentMock.Protected().Verify("Update", Times.Once());
 
-            componentMock.Object.X = 1.0f;
+            componentMock.Object.XPosition = 1.0f;
             componentMock.Object.Draw(new GameTime(), sprite);
             componentMock.Protected().Verify("Update", Times.Once());
 
             componentMock.ResetCalls();
 
-            componentMock.Object.Y = 1.0f;
+            componentMock.Object.YPosition = 1.0f;
             componentMock.Object.Draw(new GameTime(), sprite);
             componentMock.Protected().Verify("Update", Times.Once());
 
-            componentMock.Object.Y = 1.0f;
+            componentMock.Object.YPosition = 1.0f;
             componentMock.Object.Draw(new GameTime(), sprite);
             componentMock.Protected().Verify("Update", Times.Once());
 

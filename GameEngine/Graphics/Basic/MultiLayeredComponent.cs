@@ -58,8 +58,7 @@ namespace GameEngine.Graphics.Basic
             get { return mainComponent; }
             set
             {
-                if (value == null)
-                    throw new ArgumentNullException("MainComponent must not be null");
+                value.CheckNull("value");
 
                 mainComponent = value;
                 Invalidate();

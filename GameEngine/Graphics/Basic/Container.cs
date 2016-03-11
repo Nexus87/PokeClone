@@ -17,7 +17,7 @@ namespace GameEngine.Graphics.Basic
         public ILayout Layout { get; set; }
 
         public ReadOnlyCollection<IGraphicComponent> Components { get { return components.AsReadOnly(); } }
-        protected List<IGraphicComponent> components = new List<IGraphicComponent>();
+        private List<IGraphicComponent> components = new List<IGraphicComponent>();
 
         public void AddComponent(IGraphicComponent comp, int index)
         {

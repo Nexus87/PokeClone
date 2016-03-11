@@ -11,18 +11,16 @@ namespace GameEngine.Graphics.Basic
     {
         private readonly LinkedList<string> lines = new LinkedList<string>();
         private readonly List<TextBox> texts = new List<TextBox>();
-        private int lineNumber;
         private string text;
 
-        public MultlineTextBox(string fontName, PokeEngine game, int lineNumber = 2)
+        public MultlineTextBox(string fontName, PokeEngine game) : this(fontName, game, 2) { }
+        public MultlineTextBox(string fontName, PokeEngine game, int lineNumber)
             : this(fontName, lineNumber, new XNASpriteFont(), game)
         { }
 
         public MultlineTextBox(string fontName, int lineNumber, ISpriteFont font, PokeEngine game)
             : base(new Container(game), game)
         {
-            this.lineNumber = lineNumber;
-
             var container = InnerComponent;
             container.Layout = new VBoxLayout();
 
@@ -83,7 +81,6 @@ namespace GameEngine.Graphics.Basic
 
             while (remaining.Length > limit)
             {
-                var sub = remaining.Substring(0, limit);
                 var match = Regex.Match(remaining.Substring(0, limit), @"\s", RegexOptions.RightToLeft);
                 int length = match.Success ? match.Index : limit;
 
@@ -93,7 +90,7 @@ namespace GameEngine.Graphics.Basic
             }
 
             // remaining has no trailing whitespace, because we trimmed it at the beginning.
-            if(remaining != "")
+            if(remaining.Length != 0)
                 lines.AddLast(remaining);
         }
     }

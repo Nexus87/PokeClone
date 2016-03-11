@@ -9,9 +9,9 @@ namespace GameEngine.Graphics.Views
 {
     public class DefaultListModel<T> : IItemModel<T>
     {
-        protected readonly List<T> items = new List<T>();
-        public event EventHandler<DataChangedArgs<T>> DataChanged = delegate { };
-        public event EventHandler<SizeChangedArgs> SizeChanged = delegate { };
+        private readonly List<T> items = new List<T>();
+        public event EventHandler<DataChangedEventArgs<T>> DataChanged = delegate { };
+        public event EventHandler<SizeChangedEventArgs> SizeChanged = delegate { };
 
         public DefaultListModel() { }
 
@@ -55,13 +55,13 @@ namespace GameEngine.Graphics.Views
             if (row >= Rows)
             {
                 items.Resize(row + 1);
-                SizeChanged(this, new SizeChangedArgs { newColumns = Columns, newRows = Rows });
+                SizeChanged(this, new SizeChangedEventArgs(Rows, Columns));
             }
 
             var oldValue = items[row];
             items[row] = data;
             if (!Object.Equals(oldValue, data))
-                DataChanged(this, new DataChangedArgs<T> { column = column, row = row, newData = data });
+                DataChanged(this, new DataChangedEventArgs<T>(row, column, data));
             return true;
         }
     }

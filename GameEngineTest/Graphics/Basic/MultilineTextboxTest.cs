@@ -37,8 +37,8 @@ namespace GameEngineTest.Graphics.Basic
             float Width = 150.0f;
             float Height = 50.0f;
 
-            box.X = X;
-            box.Y = Y;
+            box.XPosition = X;
+            box.YPosition = Y;
             box.Width = Width;
             box.Height = Height;
 

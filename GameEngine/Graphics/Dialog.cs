@@ -2,6 +2,7 @@
 using GameEngine.Graphics.Layouts;
 using GameEngine.Graphics.Widgets;
 using GameEngine.Wrapper;
+using GameEngine.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
@@ -28,9 +29,10 @@ namespace GameEngine.Graphics
             }
         }
 
-        public void AddWidget(IWidget w)
+        public void AddWidget(IWidget widget)
         {
-            InnerComponent.AddComponent(w);
+            widget.CheckNull("widget");
+            InnerComponent.AddComponent(widget);
         }
 
         public Dialog(PokeEngine game) : this(null, game) { }
@@ -48,7 +50,7 @@ namespace GameEngine.Graphics
             base.Setup(content);
         }
 
-        public event EventHandler<VisibilityChangedArgs> OnVisibilityChanged = delegate { };
+        public event EventHandler<VisibilityChangedEventArgs> OnVisibilityChanged = delegate { };
 
         public bool IsVisible
         {
@@ -59,7 +61,7 @@ namespace GameEngine.Graphics
                     return;
 
                 isVisible = value;
-                OnVisibilityChanged(this, new VisibilityChangedArgs(isVisible));
+                OnVisibilityChanged(this, new VisibilityChangedEventArgs(isVisible));
             }
         }
         private bool isVisible;
@@ -82,8 +84,8 @@ namespace GameEngine.Graphics
                 return;
 
             Layout.SetMargin(100, 50, 100, 50);
-            border.X = X;
-            border.Y = Y;
+            border.XPosition = XPosition;
+            border.YPosition = YPosition;
             border.Width = Width;
             border.Height = Height;
         }

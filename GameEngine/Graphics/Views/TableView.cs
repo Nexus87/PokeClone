@@ -21,8 +21,7 @@ namespace GameEngine.Graphics.Views
         public InternalTableView(IItemModel<T> model, PokeEngine game)
             : base(new Container(game), game)
         {
-            if (model == null)
-                throw new ArgumentNullException("model must not be null");
+            model.CheckNull("model");
 
             SetModel(model);
             layout = new GridLayout(1, 1);
@@ -41,8 +40,7 @@ namespace GameEngine.Graphics.Views
             get { return model; }
             set
             {
-                if (value == null)
-                    throw new ArgumentNullException("null is not a valid value for Model");
+                value.CheckNull("value");
 
                 bool sizeChanged = value.Rows != model.Rows || value.Columns != model.Columns;
 
@@ -159,34 +157,38 @@ namespace GameEngine.Graphics.Views
             }
         }
 
-        private void model_DataChanged(object sender, DataChangedArgs<T> e)
+        private void model_DataChanged(object sender, DataChangedEventArgs<T> e)
         {
-            items[e.row, e.column].Text = Model.DataStringAt(e.row, e.column);
+            items[e.Row, e.Column].Text = Model.DataStringAt(e.Row, e.Column);
         }
 
-        private void model_SizeChanged(object sender, SizeChangedArgs e)
+        private void model_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             int oldRows = items.GetLength(0);
             int oldColumnns = items.GetLength(1);
 
-            if (e.newRows == oldRows && e.newColumns == oldColumnns)
+            if (e.NewRows == oldRows && e.NewColumns == oldColumnns)
                 return;
 
-            var newItems = new ItemBox[e.newRows, e.newColumns];
+            var newItems = new ItemBox[e.NewRows, e.NewColumns];
 
             items.Copy(newItems, delegate { return new ItemBox(new SpriteFontClass(), Game); });
             items = newItems;
 
-            layout.Columns = e.newColumns;
-            layout.Rows = e.newRows;
+            layout.Columns = e.NewColumns;
+            layout.Rows = e.NewRows;
             
-            OnTableResize(this, new TableResizeEventArgs(e.newRows, e.newColumns));
+            OnTableResize(this, new TableResizeEventArgs(e.NewRows, e.NewColumns));
         }
     }
 
     public class SelectionEventArgs<T> : EventArgs
     {
-        public T SelectedData;
+        public T SelectedData { get; private set; }
+        public SelectionEventArgs(T selectedData)
+        {
+            SelectedData = selectedData;
+        }
     }
 
     public class TableView<T> : InternalTableView<T, XNASpriteFont>

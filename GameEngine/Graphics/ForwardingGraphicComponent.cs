@@ -32,7 +32,7 @@ namespace GameEngine.Graphics
         /// Signals that either X or Y has changed.
         /// </summary>
         /// <see cref="IGraphicComponent.PositionChanged"/>
-        public event EventHandler<GraphicComponentPositionChangedArgs> PositionChanged
+        public event EventHandler<GraphicComponentPositionChangedEventArgs> PositionChanged
         {
             add { InnerComponent.PositionChanged += value; }
             remove { InnerComponent.PositionChanged -= value; }
@@ -41,7 +41,7 @@ namespace GameEngine.Graphics
         /// Signals that either Width or Height changed.
         /// </summary>
         /// <see cref="IGraphicComponent.SizeChanged"/>
-        public event EventHandler<GraphicComponentSizeChangedArgs> SizeChanged
+        public event EventHandler<GraphicComponentSizeChangedEventArgs> SizeChanged
         {
             add { InnerComponent.SizeChanged += value; }
             remove { InnerComponent.SizeChanged -= value; }
@@ -52,7 +52,7 @@ namespace GameEngine.Graphics
         /// </summary>
         /// <param name="component">Inner component</param>
         /// <param name="game">Instance of PokeEngine</param>
-        public ForwardingGraphicComponent(T component, PokeEngine game)
+        protected ForwardingGraphicComponent(T component, PokeEngine game)
         {
             Game = game;
             InnerComponent = component;
@@ -77,13 +77,13 @@ namespace GameEngine.Graphics
         /// <summary>
         /// X coordinate of the component
         /// </summary>
-        /// <see cref="IGraphicComponent.X"/>
-        public float X { get { return InnerComponent.X; } set { InnerComponent.X = value; } }
+        /// <see cref="IGraphicComponent.XPosition"/>
+        public float XPosition { get { return InnerComponent.XPosition; } set { InnerComponent.XPosition = value; } }
         /// <summary>
         /// Y coordinate of the component
         /// </summary>
-        /// <see cref="IGraphicComponent.Y"/>
-        public float Y { get { return InnerComponent.Y; } set { InnerComponent.Y = value; } }
+        /// <see cref="IGraphicComponent.YPosition"/>
+        public float YPosition { get { return InnerComponent.YPosition; } set { InnerComponent.YPosition = value; } }
 
         /// <summary>
         /// This function is called when the component needs to be drawn

@@ -38,7 +38,7 @@ namespace GameEngineTest.Util
 
         public bool IsInConstraints(IGraphicComponent component)
         {
-            return IsInConstraints(component.X, component.Y, component.Width, component.Height);
+            return IsInConstraints(component.XPosition, component.YPosition, component.Width, component.Height);
         }
     }
 

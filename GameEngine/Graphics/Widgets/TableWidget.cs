@@ -1,6 +1,7 @@
 ﻿using GameEngine.Graphics.Basic;
 using GameEngine.Graphics.Layouts;
 using GameEngine.Graphics.Views;
+using GameEngine.Utils;
 using GameEngine.Wrapper;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -32,7 +33,7 @@ namespace GameEngine.Graphics.Widgets
         public event EventHandler<SelectionEventArgs<T>> ItemSelected = delegate { };
         public event EventHandler OnExitRequested = delegate { };
 
-        public event EventHandler<VisibilityChangedArgs> OnVisibilityChanged = delegate { };
+        public event EventHandler<VisibilityChangedEventArgs> OnVisibilityChanged = delegate { };
 
         public bool IsVisible { 
             get { return isVisible; }
@@ -42,7 +43,7 @@ namespace GameEngine.Graphics.Widgets
                     return;
 
                 isVisible = value;
-                OnVisibilityChanged(this, new VisibilityChangedArgs(isVisible));
+                OnVisibilityChanged(this, new VisibilityChangedEventArgs(isVisible));
             }
         }
         private bool isVisible;
@@ -56,8 +57,7 @@ namespace GameEngine.Graphics.Widgets
         {
             set
             {
-                if (value == null)
-                    throw new ArgumentNullException("Handler must not be null");
+                value.CheckNull("value");
 
                 if (handler != null)
                 {
@@ -95,7 +95,7 @@ namespace GameEngine.Graphics.Widgets
         private void handler_ItemSelected(object sender, EventArgs e)
         {
             var Item = Model.DataAt(handler.SelectedRow, handler.SelectedColumn);
-            ItemSelected(this, new SelectionEventArgs<T> { SelectedData = Item });
+            ItemSelected(this, new SelectionEventArgs<T>(selectedData: Item));
         }
 
         protected override void Update()
