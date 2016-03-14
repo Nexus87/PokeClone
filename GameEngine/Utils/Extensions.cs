@@ -12,6 +12,16 @@ namespace GameEngine.Utils
     {
         public delegate T Creator<T>();
 
+        public static int Rows<T>(this T[,] table)
+        {
+            return table.GetLength(0);
+        }
+
+        public static int Columns<T>(this T[,] table)
+        {
+            return table.GetLength(1);
+        }
+
         public static void Copy<T>(this T[,] source, T[,] target)
         {
             int rows = Math.Min(source.GetLength(0), target.GetLength(0));

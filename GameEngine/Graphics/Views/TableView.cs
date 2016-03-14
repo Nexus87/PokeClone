@@ -8,8 +8,13 @@ using System;
 
 namespace GameEngine.Graphics.Views
 {
-    public class InternalTableView<T, SpriteFontClass> : ForwardingGraphicComponent<Container>, ITableView where SpriteFontClass : ISpriteFont, new()
+    public class TableView<T> : ForwardingGraphicComponent<Container>, ITableView
     {
+        private static XNASpriteFont DefaultCreator()
+        {
+            return new XNASpriteFont();
+        }
+
         private const int visibleColumns = 8;
         private const int visibleRows = 8;
         internal ItemBox[,] items;
@@ -17,12 +22,16 @@ namespace GameEngine.Graphics.Views
         private IItemModel<T> model;
         private int startColumn = 0;
         private int startRow = 0;
+        private readonly SpriteFontCreator creator;
+        public TableView(IItemModel<T> model, PokeEngine game) : this (model, game, DefaultCreator)
+        {}
 
-        public InternalTableView(IItemModel<T> model, PokeEngine game)
+        public TableView(IItemModel<T> model, PokeEngine game, SpriteFontCreator creator)
             : base(new Container(game), game)
         {
             model.CheckNull("model");
 
+            this.creator = creator;
             SetModel(model);
             layout = new GridLayout(1, 1);
             InnerComponent.Layout = layout;
@@ -156,7 +165,7 @@ namespace GameEngine.Graphics.Views
                     if (str == null)
                         str = "";
 
-                    items[i, j] = new ItemBox(str, new SpriteFontClass(), Game);
+                    items[i, j] = new ItemBox(str, creator(), Game);
                 }
             }
         }
@@ -176,7 +185,7 @@ namespace GameEngine.Graphics.Views
 
             var newItems = new ItemBox[e.NewRows, e.NewColumns];
 
-            items.Copy(newItems, delegate { return new ItemBox(new SpriteFontClass(), Game); });
+            items.Copy(newItems, delegate { return new ItemBox(creator(), Game); });
             items = newItems;
 
             layout.Columns = e.NewColumns;
@@ -192,14 +201,6 @@ namespace GameEngine.Graphics.Views
         public SelectionEventArgs(T selectedData)
         {
             SelectedData = selectedData;
-        }
-    }
-
-    public class TableView<T> : InternalTableView<T, XNASpriteFont>
-    {
-        public TableView(IItemModel<T> model, PokeEngine game)
-            : base(model, game)
-        {
         }
     }
 }

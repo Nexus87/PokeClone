@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 
 namespace GameEngine.Wrapper
 {
+    public delegate ISpriteFont SpriteFontCreator();
+
     /// <summary>
     /// This interface represents a SpriteFont
     /// </summary>

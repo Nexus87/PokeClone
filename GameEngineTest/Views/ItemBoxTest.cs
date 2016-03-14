@@ -28,7 +28,7 @@ namespace GameEngineTest.Views
         [TestCaseSource(typeof(IGraphicComponentTest), "ValidCoordinates")]
         public void SelectedDrawInConstraints(float X, float Y, float Width, float Height)
         {
-            item.IsSelected = true;
+            item.Select();
             DrawInConstraintsTest(X, Y, Height, Width);
         }
 
@@ -48,7 +48,7 @@ namespace GameEngineTest.Views
             
             var text = spriteBatch.Objects[0];
             spriteBatch.Objects.Clear();
-            item.IsSelected = true;
+            item.Select();
 
             item.Draw(spriteBatch);
 

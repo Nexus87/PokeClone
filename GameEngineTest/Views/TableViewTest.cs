@@ -21,7 +21,11 @@ namespace GameEngineTest.Views
         };
 
         private Mock<IItemModel<TestType>> modelMock;
-        private InternalTableView<TestType, SpriteFontMock> table;
+        private TableView<TestType> table;
+        private static ISpriteFont MockCreator()
+        {
+            return new SpriteFontMock();
+        }
 
         [TestCase]
         public void NoDataTest()
@@ -31,7 +35,7 @@ namespace GameEngineTest.Views
             modelMock.Setup(o => o.Columns).Returns(2);
             modelMock.Setup(o => o.Rows).Returns(2);
 
-            table = new InternalTableView<TestType, SpriteFontMock>(modelMock.Object, gameMock.Object);
+            table = new TableView<TestType>(modelMock.Object, gameMock.Object, MockCreator);
             table.SetCoordinates(50, 50, 200, 200);
 
             table.Setup(contentMock.Object);
@@ -97,7 +101,7 @@ namespace GameEngineTest.Views
             modelMock.Setup(o => o.Rows).Returns(2);
             modelMock.Setup(o => o.DataStringAt(It.IsAny<int>(), It.IsAny<int>())).Returns<int, int>((a, b) => a == insertRow && b == insertColumn ? data.ToString() : null);
 
-            table = new InternalTableView<TestType, SpriteFontMock>(modelMock.Object, gameMock.Object);
+            table = new TableView<TestType>(modelMock.Object, gameMock.Object, MockCreator);
             table.XPosition = 0.0f;
             table.YPosition = 0.0f;
             table.Width = 180.0f;
@@ -148,7 +152,7 @@ namespace GameEngineTest.Views
             modelMock.Setup(o => o.Rows).Returns(2);
             modelMock.Setup(o => o.DataStringAt(It.IsAny<int>(), It.IsAny<int>())).Returns<int, int>((a, b) => a == row && b == column ? "Data" : null);
 
-            table = new InternalTableView<TestType, SpriteFontMock>(modelMock.Object, gameMock.Object);
+            table = new TableView<TestType>(modelMock.Object, gameMock.Object, MockCreator);
             table.XPosition = 0.0f;
             table.YPosition = 0.0f;
             table.Width = 200.0f;
@@ -220,7 +224,7 @@ namespace GameEngineTest.Views
             modelMock.Setup(o => o.Rows).Returns(2);
             modelMock.Setup(o => o.DataStringAt(It.IsAny<int>(), It.IsAny<int>())).Returns<int, int>((a, b) => a == row && b == column ? "Data" : null);
 
-            table = new InternalTableView<TestType, SpriteFontMock>(modelMock.Object, gameMock.Object);
+            table = new TableView<TestType>(modelMock.Object, gameMock.Object, MockCreator);
 
             TestTableCellSelection();
 
@@ -243,7 +247,7 @@ namespace GameEngineTest.Views
             modelMock.Setup(o => o.DataStringAt(It.IsAny<int>(), It.IsAny<int>())).Returns<int, int>((a, b) => "Data " + a + " " + b);
             gameMock.Object.Content = contentMock.Object;
 
-            table = new InternalTableView<TestType, SpriteFontMock>(modelMock.Object, gameMock.Object);
+            table = new TableView<TestType>(modelMock.Object, gameMock.Object, MockCreator);
             table.Setup(contentMock.Object);
             testObj = table;
         }
@@ -256,7 +260,7 @@ namespace GameEngineTest.Views
             modelMock.Setup(o => o.Columns).Returns(0);
             modelMock.Setup(o => o.Rows).Returns(0);
 
-            table = new InternalTableView<TestType, SpriteFontMock>(modelMock.Object, gameMock.Object);
+            table = new TableView<TestType>(modelMock.Object, gameMock.Object, MockCreator);
 
             Assert.IsFalse(table.SetCellSelection(0, 0, true));
         }
@@ -277,7 +281,7 @@ namespace GameEngineTest.Views
             modelMock.Setup(o => o.Rows).Returns(20);
             modelMock.Setup(o => o.DataStringAt(It.IsAny<int>(), It.IsAny<int>())).Returns<int, int>((a, b) => a + " " + b);
 
-            table = new InternalTableView<TestType, SpriteFontMock>(modelMock.Object, gameMock.Object);
+            table = new TableView<TestType>(modelMock.Object, gameMock.Object, MockCreator);
             table.XPosition = 0.0f;
             table.YPosition = 0.0f;
             table.Width = 2000.0f;
