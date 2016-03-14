@@ -17,21 +17,26 @@ namespace GameEngine.Graphics.Views
 
         private const int visibleColumns = 8;
         private const int visibleRows = 8;
-        internal ItemBox[,] items;
+        internal ISelectableGraphicComponent[,] items;
         private GridLayout layout;
         private IItemModel<T> model;
         private int startColumn = 0;
         private int startRow = 0;
         private readonly SpriteFontCreator creator;
-        public TableView(IItemModel<T> model, PokeEngine game) : this (model, game, DefaultCreator)
+
+        private ITableRenderer<T> renderer;
+        public TableView(IItemModel<T> model, PokeEngine game)
+            : this(model, new DefaultTableRenderer<T>(game, DefaultCreator), game, DefaultCreator)
         {}
 
-        public TableView(IItemModel<T> model, PokeEngine game, SpriteFontCreator creator)
+        public TableView(IItemModel<T> model, ITableRenderer<T> renderer, PokeEngine game, SpriteFontCreator creator)
             : base(new Container(game), game)
         {
             model.CheckNull("model");
 
+            this.renderer = renderer;
             this.creator = creator;
+
             SetModel(model);
             layout = new GridLayout(1, 1);
             InnerComponent.Layout = layout;
@@ -73,7 +78,7 @@ namespace GameEngine.Graphics.Views
             model.DataChanged += model_DataChanged;
             model.SizeChanged += model_SizeChanged;
 
-            items = new ItemBox[model.Rows, model.Columns];
+            items = new ISelectableGraphicComponent[model.Rows, model.Columns];
             InitItems();
         }
 
@@ -161,18 +166,14 @@ namespace GameEngine.Graphics.Views
             {
                 for (int j = 0; j < Model.Columns; j++)
                 {
-                    var str = Model.DataStringAt(i, j);
-                    if (str == null)
-                        str = "";
-
-                    items[i, j] = new ItemBox(str, creator(), Game);
+                    items[i, j] = renderer.CreateComponent(i, j, Model.DataAt(i, j));
                 }
             }
         }
 
         private void model_DataChanged(object sender, DataChangedEventArgs<T> e)
         {
-            items[e.Row, e.Column].Text = Model.DataStringAt(e.Row, e.Column);
+            items [e.Row, e.Column] = renderer.CreateComponent(e.Row, e.Column, Model.DataAt(e.Row, e.Column));
         }
 
         private void model_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -183,9 +184,9 @@ namespace GameEngine.Graphics.Views
             if (e.NewRows == oldRows && e.NewColumns == oldColumnns)
                 return;
 
-            var newItems = new ItemBox[e.NewRows, e.NewColumns];
+            var newItems = new ISelectableGraphicComponent[e.NewRows, e.NewColumns];
 
-            items.Copy(newItems, delegate { return new ItemBox(creator(), Game); });
+            items.Copy(newItems, (row, column) => renderer.CreateComponent(row, column, default(T)));
             items = newItems;
 
             layout.Columns = e.NewColumns;

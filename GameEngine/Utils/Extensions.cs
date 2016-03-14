@@ -11,6 +11,7 @@ namespace GameEngine.Utils
     static class Extensions
     {
         public delegate T Creator<T>();
+        public delegate T CellCreator<T>(int row, int column);
 
         public static int Rows<T>(this T[,] table)
         {
@@ -35,7 +36,7 @@ namespace GameEngine.Utils
             }
         }
 
-        public static void Copy<T>(this T[,] source, T[,] target, Creator<T> defaultValue)
+        public static void Copy<T>(this T[,] source, T[,] target, CellCreator<T> defaultValue)
         {
             int sourceRows = source.GetLength(0);
             int sourceColumns = source.GetLength(1);
@@ -46,7 +47,7 @@ namespace GameEngine.Utils
             {
                 for (int column = 0; column < targetColumns; column++)
                 {
-                    target[row, column] = row >= sourceRows || column >= sourceColumns ? defaultValue() :  source[row, column];
+                    target[row, column] = row >= sourceRows || column >= sourceColumns ? defaultValue(row, column) :  source[row, column];
                 }
             }
         }

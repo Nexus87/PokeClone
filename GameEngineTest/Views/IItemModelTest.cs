@@ -10,10 +10,16 @@ namespace GameEngineTest.Views
 {
     public class TestType
     {
+        public TestType() { }
+        public TestType(string testString)
+        {
+            this.testString = testString;
+        }
+
         public string testString;
         public override string ToString()
         {
-            return testString + "!";
+            return testString;
         }
     }
 
@@ -28,7 +34,6 @@ namespace GameEngineTest.Views
             Assert.True(testModel.SetData(t, 0, 0));
 
             Assert.AreEqual(t, testModel.DataAt(0, 0));
-            Assert.AreEqual(t.testString + "!", testModel.DataStringAt(0, 0));
 
         }
 
@@ -40,11 +45,10 @@ namespace GameEngineTest.Views
             var t = new TestType { testString = "Test" };
 
             Assert.AreEqual(default(TestType), testModel.DataAt(rows, columns));
-            Assert.AreEqual("", testModel.DataStringAt(rows, columns));
 
             Assert.True(testModel.SetData(t, rows + 1, 0));
             Assert.AreEqual(default(TestType), testModel.DataAt(rows, 0));
-            Assert.AreEqual("", testModel.DataStringAt(rows, columns));
+            Assert.AreEqual(default(TestType), testModel.DataAt(rows, columns));
         }
 
         [TestCase]

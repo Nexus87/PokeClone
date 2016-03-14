@@ -40,7 +40,6 @@ namespace GameEngine.Graphics.Views
         int Columns { get; }
 
         T DataAt(int row, int column);
-        string DataStringAt(int row, int column);
         bool SetData(T data, int row, int column);
     }
 }

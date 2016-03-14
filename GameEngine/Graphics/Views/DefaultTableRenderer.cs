@@ -11,11 +11,13 @@ namespace GameEngine.Graphics.Views
     public class DefaultTableRenderer<T> : ITableRenderer<T>
     {
         PokeEngine game;
+        SpriteFontCreator creator;
         ItemBox[,] boxes = new ItemBox[1,1];
 
-        public DefaultTableRenderer(PokeEngine game)
+        public DefaultTableRenderer(PokeEngine game, SpriteFontCreator creator)
         {
             this.game = game;
+            this.creator = creator;
         }
 
         public ISelectableGraphicComponent CreateComponent(int row, int column, T data)
@@ -29,13 +31,13 @@ namespace GameEngine.Graphics.Views
 
             if(boxes[row, column] == null)
             {
-                var box = new ItemBox(new XNASpriteFont(), game);
+                var box = new ItemBox(creator(), game);
                 box.Setup(game.Content);
                 boxes[row, column] = box;
             }
 
             var ret = boxes[row, column];
-            ret.Text = data.ToString();
+            ret.Text = data == null ? "" : data.ToString();
 
             return ret;
         }

@@ -20,6 +20,8 @@ namespace GameEngineTest.Views
             new TestCaseData(1, 1),
         };
 
+
+        private ITableRenderer<TestType> renderer;
         private Mock<IItemModel<TestType>> modelMock;
         private TableView<TestType> table;
         private static ISpriteFont MockCreator()
@@ -35,7 +37,7 @@ namespace GameEngineTest.Views
             modelMock.Setup(o => o.Columns).Returns(2);
             modelMock.Setup(o => o.Rows).Returns(2);
 
-            table = new TableView<TestType>(modelMock.Object, gameMock.Object, MockCreator);
+            table = new TableView<TestType>(modelMock.Object, renderer, gameMock.Object, MockCreator);
             table.SetCoordinates(50, 50, 200, 200);
 
             table.Setup(contentMock.Object);
@@ -44,7 +46,7 @@ namespace GameEngineTest.Views
 
             Assert.AreEqual(4, spriteBatch.Objects.Count);
             foreach (var i in table.items)
-                Assert.AreEqual("", i.Text);
+                Assert.AreEqual("", ((ItemBox)i).Text);
         }
 
         [TestCase]
@@ -53,10 +55,12 @@ namespace GameEngineTest.Views
             var spriteBatch = new SpriteBatchMock();
             var newModel = new Mock<IItemModel<TestType>>();
             bool resizeCalled = false;
+            var testDataN = new TestType("n");
+            var testDataM = new TestType("m");
 
             newModel.Setup(o => o.Columns).Returns(8);
             newModel.Setup(o => o.Rows).Returns(8);
-            newModel.Setup(o => o.DataStringAt(It.IsAny<int>(), It.IsAny<int>())).Returns("n");
+            newModel.Setup(o => o.DataAt(It.IsAny<int>(), It.IsAny<int>())).Returns(testDataN);
 
             table.OnTableResize += (a, b) => { resizeCalled = true; };
 
@@ -75,14 +79,14 @@ namespace GameEngineTest.Views
             Assert.AreEqual(4, table.Rows);
             Assert.AreEqual(10, table.Columns);
 
-            newModel.Setup(o => o.DataStringAt(It.IsAny<int>(), It.IsAny<int>())).Returns<int, int>((a, b) => a == 0 && b == 0 ? "m" : "n");
+            newModel.Setup(o => o.DataAt(It.IsAny<int>(), It.IsAny<int>())).Returns<int, int>((a, b) => a == 0 && b == 0 ? testDataM : testDataN);
             newModel.Raise(o => o.DataChanged += null, newModel.Object, new DataChangedEventArgs<TestType>(newData: new TestType { testString = "m" }, column: 0, row: 0));
 
             spriteBatch.DrawnStrings.Clear();
             table.Draw(spriteBatch);
 
             Assert.AreEqual(4 * 10, table.items.Length);
-            Assert.AreEqual("m", table.items[0, 0].Text);
+            Assert.AreEqual("m", ((ItemBox)table.items[0, 0]).Text);
             Assert.AreEqual(4, table.items.GetLength(0));
             Assert.AreEqual(10, table.items.GetLength(1));
             // The data in the new cells haven't been changed (no DataChanged event!), so only 4 * 8 values are in the table
@@ -99,9 +103,9 @@ namespace GameEngineTest.Views
             modelMock = new Mock<IItemModel<TestType>>();
             modelMock.Setup(o => o.Columns).Returns(2);
             modelMock.Setup(o => o.Rows).Returns(2);
-            modelMock.Setup(o => o.DataStringAt(It.IsAny<int>(), It.IsAny<int>())).Returns<int, int>((a, b) => a == insertRow && b == insertColumn ? data.ToString() : null);
+            modelMock.Setup(o => o.DataAt(It.IsAny<int>(), It.IsAny<int>())).Returns<int, int>((a, b) => a == insertRow && b == insertColumn ? data : null);
 
-            table = new TableView<TestType>(modelMock.Object, gameMock.Object, MockCreator);
+            table = new TableView<TestType>(modelMock.Object, renderer, gameMock.Object, MockCreator);
             table.XPosition = 0.0f;
             table.YPosition = 0.0f;
             table.Width = 180.0f;
@@ -129,6 +133,7 @@ namespace GameEngineTest.Views
             new TestCaseData(2, 5, true),
             new TestCaseData(5, 2, true),
         };
+
         [TestCaseSource("TableSizes")]
         public void ResizeEventTest(int row, int column, bool result)
         {
@@ -150,9 +155,9 @@ namespace GameEngineTest.Views
             modelMock = new Mock<IItemModel<TestType>>();
             modelMock.Setup(o => o.Columns).Returns(2);
             modelMock.Setup(o => o.Rows).Returns(2);
-            modelMock.Setup(o => o.DataStringAt(It.IsAny<int>(), It.IsAny<int>())).Returns<int, int>((a, b) => a == row && b == column ? "Data" : null);
+            modelMock.Setup(o => o.DataAt(It.IsAny<int>(), It.IsAny<int>())).Returns<int, int>((a, b) => a == row && b == column ? new TestType("Data") : null);
 
-            table = new TableView<TestType>(modelMock.Object, gameMock.Object, MockCreator);
+            table = new TableView<TestType>(modelMock.Object, renderer, gameMock.Object, MockCreator);
             table.XPosition = 0.0f;
             table.YPosition = 0.0f;
             table.Width = 200.0f;
@@ -222,9 +227,9 @@ namespace GameEngineTest.Views
             modelMock = new Mock<IItemModel<TestType>>();
             modelMock.Setup(o => o.Columns).Returns(2);
             modelMock.Setup(o => o.Rows).Returns(2);
-            modelMock.Setup(o => o.DataStringAt(It.IsAny<int>(), It.IsAny<int>())).Returns<int, int>((a, b) => a == row && b == column ? "Data" : null);
+            modelMock.Setup(o => o.DataAt(It.IsAny<int>(), It.IsAny<int>())).Returns<int, int>((a, b) => a == row && b == column ? new TestType("Data") : null);
 
-            table = new TableView<TestType>(modelMock.Object, gameMock.Object, MockCreator);
+            table = new TableView<TestType>(modelMock.Object, renderer, gameMock.Object, MockCreator);
 
             TestTableCellSelection();
 
@@ -244,10 +249,11 @@ namespace GameEngineTest.Views
             modelMock = new Mock<IItemModel<TestType>>();
             modelMock.Setup(o => o.Columns).Returns(2);
             modelMock.Setup(o => o.Rows).Returns(2);
-            modelMock.Setup(o => o.DataStringAt(It.IsAny<int>(), It.IsAny<int>())).Returns<int, int>((a, b) => "Data " + a + " " + b);
+            modelMock.Setup(o => o.DataAt(It.IsAny<int>(), It.IsAny<int>())).Returns<int, int>((a, b) => new TestType("Data " + a + " " + b));
             gameMock.Object.Content = contentMock.Object;
+            renderer = new DefaultTableRenderer<TestType>(gameMock.Object, MockCreator);
 
-            table = new TableView<TestType>(modelMock.Object, gameMock.Object, MockCreator);
+            table = new TableView<TestType>(modelMock.Object, renderer, gameMock.Object, MockCreator);
             table.Setup(contentMock.Object);
             testObj = table;
         }
@@ -260,7 +266,7 @@ namespace GameEngineTest.Views
             modelMock.Setup(o => o.Columns).Returns(0);
             modelMock.Setup(o => o.Rows).Returns(0);
 
-            table = new TableView<TestType>(modelMock.Object, gameMock.Object, MockCreator);
+            table = new TableView<TestType>(modelMock.Object, renderer, gameMock.Object, MockCreator);
 
             Assert.IsFalse(table.SetCellSelection(0, 0, true));
         }
@@ -279,13 +285,10 @@ namespace GameEngineTest.Views
             modelMock = new Mock<IItemModel<TestType>>();
             modelMock.Setup(o => o.Columns).Returns(20);
             modelMock.Setup(o => o.Rows).Returns(20);
-            modelMock.Setup(o => o.DataStringAt(It.IsAny<int>(), It.IsAny<int>())).Returns<int, int>((a, b) => a + " " + b);
+            modelMock.Setup(o => o.DataAt(It.IsAny<int>(), It.IsAny<int>())).Returns<int, int>((a, b) => new TestType(a + " " + b));
 
-            table = new TableView<TestType>(modelMock.Object, gameMock.Object, MockCreator);
-            table.XPosition = 0.0f;
-            table.YPosition = 0.0f;
-            table.Width = 2000.0f;
-            table.Height = 2000.0f;
+            table = new TableView<TestType>(modelMock.Object, renderer, gameMock.Object, MockCreator);
+            table.SetCoordinates(0, 0, 2000, 2000);
 
             Assert.Less(table.ViewportRows, 20);
             Assert.Less(table.ViewportColumns, 20);
