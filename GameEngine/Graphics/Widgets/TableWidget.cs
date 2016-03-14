@@ -16,15 +16,15 @@ namespace GameEngine.Graphics.Widgets
         private ISelectionHandler handler;
         private TableView<T> view;
 
-        public TableWidget(PokeEngine game)
-            : base(new TableView<T>(new DefaultTableModel<T>(), game), game)
+        public TableWidget(int rows, int columns, PokeEngine game)
+            : base(new TableView<T>(rows, columns, new DefaultTableModel<T>(), game), game)
         {
             view = InnerComponent;
             Handler = new DefaultSelectionHandler();
         }
 
-        public TableWidget(Configuration config, PokeEngine game)
-            : base(new TableView<T>(new DefaultTableModel<T>(), game), game)
+        public TableWidget(int rows, int columns, Configuration config, PokeEngine game)
+            : base(new TableView<T>(rows, columns, new DefaultTableModel<T>(), game), game)
         {
             view = InnerComponent;
             Handler = new DefaultSelectionHandler(config);

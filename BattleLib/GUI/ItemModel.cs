@@ -64,5 +64,18 @@ namespace BattleLib.GUI
         {
             throw new InvalidOperationException("Model is read only");
         }
+
+
+        public Item this[int row, int column]
+        {
+            get
+            {
+                return DataAt(row, column);
+            }
+            set
+            {
+                SetData(value, row, column);
+            }
+        }
     }
 }

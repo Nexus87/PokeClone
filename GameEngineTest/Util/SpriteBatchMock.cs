@@ -68,7 +68,7 @@ namespace GameEngineTest.Util
             var obj = new DrawnObject();
             obj.Position = position;
             obj.Size = size * scale;
-            obj.Color = color != null ? color : Color.Black;
+            obj.Color = color;
             Objects.Add(obj);
         }
 

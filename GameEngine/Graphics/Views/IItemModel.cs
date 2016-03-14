@@ -41,5 +41,7 @@ namespace GameEngine.Graphics.Views
 
         T DataAt(int row, int column);
         bool SetData(T data, int row, int column);
+
+        T this[int row, int column] { get; set; }
     }
 }

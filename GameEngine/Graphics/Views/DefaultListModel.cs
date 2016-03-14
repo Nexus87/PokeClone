@@ -64,5 +64,18 @@ namespace GameEngine.Graphics.Views
                 DataChanged(this, new DataChangedEventArgs<T>(row, column, data));
             return true;
         }
+
+
+        public T this[int row, int column]
+        {
+            get
+            {
+                return DataAt(row, column);
+            }
+            set
+            {
+                SetData(value, row, column);
+            }
+        }
     }
 }

@@ -14,41 +14,38 @@ namespace GameEngine.Graphics.Views
         {
             return new XNASpriteFont();
         }
-
-        private const int visibleColumns = 8;
-        private const int visibleRows = 8;
-        internal ISelectableGraphicComponent[,] items;
+        
         private GridLayout layout;
         private IItemModel<T> model;
+
         private int startColumn = 0;
         private int startRow = 0;
-        private readonly SpriteFontCreator creator;
 
         private ITableRenderer<T> renderer;
-        public TableView(IItemModel<T> model, PokeEngine game)
-            : this(model, new DefaultTableRenderer<T>(game, DefaultCreator), game, DefaultCreator)
+        
+        public TableView(int rows, int columns, IItemModel<T> model, PokeEngine game)
+            : this(rows, columns, model, new DefaultTableRenderer<T>(game, DefaultCreator), game)
         {}
 
-        public TableView(IItemModel<T> model, ITableRenderer<T> renderer, PokeEngine game, SpriteFontCreator creator)
+        public TableView(int rows, int columns, IItemModel<T> model, ITableRenderer<T> renderer, PokeEngine game)
             : base(new Container(game), game)
         {
             model.CheckNull("model");
 
+            Rows = rows;
+            Columns = columns;
             this.renderer = renderer;
-            this.creator = creator;
 
             SetModel(model);
-            layout = new GridLayout(1, 1);
+            layout = new GridLayout(Rows, Columns);
             InnerComponent.Layout = layout;
         }
 
         public event EventHandler<TableResizeEventArgs> OnTableResize = delegate { };
 
-        public int Columns { get { return Model.Columns; } }
-        public int Rows { get { return Model.Rows; } }
+        public int Columns { get; set; }
+        public int Rows { get; set; }
 
-        public int ViewportColumns { get { return Math.Min(visibleColumns, Model.Columns); } }
-        public int ViewportRows { get { return Math.Min(visibleRows, Model.Rows); } }
 
         public IItemModel<T> Model { 
             get { return model; }
@@ -60,9 +57,6 @@ namespace GameEngine.Graphics.Views
 
                 SetModel(value);
                 Invalidate();
-
-                if (sizeChanged)
-                    OnTableResize(this, new TableResizeEventArgs(value.Rows, value.Columns));
             }
         }
 
@@ -78,35 +72,36 @@ namespace GameEngine.Graphics.Views
             model.DataChanged += model_DataChanged;
             model.SizeChanged += model_SizeChanged;
 
-            items = new ISelectableGraphicComponent[model.Rows, model.Columns];
-            InitItems();
+            Invalidate();
         }
-
-        public int ViewportStartColumn
+        public int StartColumn
         {
             get { return startColumn; }
             set
             {
-                int newColumn = Math.Min(value, Model.Columns - ViewportColumns);
-
-                if (startColumn == newColumn)
+                if (value >= Columns || value < 0)
+                    throw new ArgumentOutOfRangeException("value is out of bound");
+                
+                if (startColumn == value)
                     return;
 
-                startColumn = newColumn;
+                startColumn = value;
                 Invalidate();
             }
         }
 
-        public int ViewportStartRow
+        public int StartRow
         {
             get { return startRow; }
             set
             {
-                int newRow = Math.Min(value, Model.Rows - ViewportRows);
-                if (startRow == newRow)
+                if (value >= Rows || value < 0)
+                    throw new ArgumentOutOfRangeException("value is out of bound");
+
+                if (startRow == value)
                     return;
 
-                startRow = newRow;
+                startRow = value;
                 Invalidate();
             }
         }
@@ -116,84 +111,58 @@ namespace GameEngine.Graphics.Views
             if (row >= Model.Rows || column >= Model.Columns || row < 0 || column < 0)
                 return false;
 
-            return items[row, column] != null && items[row, column].IsSelected;
+            return renderer[row, column].IsSelected;
         }
+
 
         public bool SetCellSelection(int row, int column, bool isSelected)
         {
             if (row >= Model.Rows || column >= Model.Columns || row < 0 || column < 0)
                 return false;
 
-            // Can't select a non existing entry
-            if (items[row, column] == null)
-                return false;
 
             if (isSelected)
-                items[row, column].Select();
+                renderer[row, column].Select();
             else
-                items[row, column].Unselect();
+                renderer[row, column].Unselect();
 
             return true;
         }
 
         public override void Setup(ContentManager content)
         {
-            foreach (var i in items)
-                i.Setup(content);
-
             base.Setup(content);
         }
+
         protected override void Update()
         {
+            layout.Columns = Columns;
+            layout.Rows = Rows;
             FillLayout();
         }
 
         private void FillLayout()
         {
             var container = InnerComponent;
-
             container.RemoveAllComponents();
-            for (int i = 0; i < ViewportRows; i++)
-            {
-                for (int j = 0; j < ViewportColumns; j++)
-                    container.AddComponent(items[startRow + i, startColumn + j]);
-            }
-        }
 
-        private void InitItems()
-        {
-            for (int i = 0; i < Model.Rows; i++)
+            for (int row = startRow; row < Rows; row++)
             {
-                for (int j = 0; j < Model.Columns; j++)
-                {
-                    items[i, j] = renderer.CreateComponent(i, j, Model.DataAt(i, j));
-                }
+                for (int column = startColumn; column < Columns; column++)
+                    container.AddComponent(renderer.GetComponent(row, column, model[row, column]));
             }
         }
 
         private void model_DataChanged(object sender, DataChangedEventArgs<T> e)
         {
-            items [e.Row, e.Column] = renderer.CreateComponent(e.Row, e.Column, Model.DataAt(e.Row, e.Column));
+            Invalidate();
         }
 
         private void model_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            int oldRows = items.GetLength(0);
-            int oldColumnns = items.GetLength(1);
-
-            if (e.NewRows == oldRows && e.NewColumns == oldColumnns)
-                return;
-
-            var newItems = new ISelectableGraphicComponent[e.NewRows, e.NewColumns];
-
-            items.Copy(newItems, (row, column) => renderer.CreateComponent(row, column, default(T)));
-            items = newItems;
-
-            layout.Columns = e.NewColumns;
-            layout.Rows = e.NewRows;
-            
-            OnTableResize(this, new TableResizeEventArgs(e.NewRows, e.NewColumns));
+            Invalidate();
         }
+
     }
 
     public class SelectionEventArgs<T> : EventArgs

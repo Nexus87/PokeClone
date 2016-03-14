@@ -20,10 +20,8 @@ namespace GameEngine.Graphics.Views
         int Columns { get; }
         int Rows { get; }
 
-        int ViewportColumns { get; }
-        int ViewportRows { get; }
-        int ViewportStartRow { get; set; }
-        int ViewportStartColumn { get; set; }
+        int StartRow { get; set; }
+        int StartColumn { get; set; }
 
         bool IsCellSelected(int row, int column);
         bool SetCellSelection(int row, int column, bool isSelected);

@@ -1,6 +1,7 @@
 ﻿using GameEngine.Graphics;
 using GameEngine.Graphics.Basic;
 using GameEngine.Graphics.Layouts;
+using GameEngine.Graphics.Views;
 using GameEngine.Wrapper;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -53,6 +54,20 @@ namespace GameEngineTest.Util
         public static void SetupMeasureString(this Mock<ISpriteFont> fontMock)
         {
             fontMock.Setup(o => o.MeasureString(It.IsAny<string>())).Returns<string>(s => new Vector2(16.0f * s.Length, 16.0f));
+        }
+
+        public static void SetupModelMock<T>(this Mock<IItemModel<T>> model, int rows, int columns, T data)
+        {
+            model.Setup(o => o.Rows).Returns(rows);
+            model.Setup(o => o.Columns).Returns(columns);
+            model.Setup(o => o.DataAt(It.IsAny<int>(), It.IsAny<int>())).Returns(data);
+        }
+
+        public static void SetupModelMock<T>(this Mock<IItemModel<T>> model, int rows, int columns, Func<int, int, T> retFunc)
+        {
+            model.Setup(o => o.Rows).Returns(rows);
+            model.Setup(o => o.Columns).Returns(columns);
+            model.Setup(o => o.DataAt(It.IsAny<int>(), It.IsAny<int>())).Returns((int a, int b) => retFunc(a, b));
         }
     }
 }

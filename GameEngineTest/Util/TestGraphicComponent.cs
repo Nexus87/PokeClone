@@ -31,4 +31,20 @@ namespace GameEngineTest.Util
             batch.Draw(texture: texture, position: Position, destinationRectangle: null, scale: Size);
         }
     }
+
+    class TestSelectableGraphicComponent : TestGraphicComponent, ISelectableGraphicComponent
+    {
+        public bool IsSelected { get; set; }
+
+        public void Select()
+        {
+            IsSelected = true;
+        }
+
+        public void Unselect()
+        {
+            IsSelected = false;
+        }
+    }
+
 }

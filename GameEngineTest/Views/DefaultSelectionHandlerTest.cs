@@ -30,19 +30,17 @@ namespace GameEngineTest.Views
             
             viewMock.SetupGet(o => o.Columns).Returns(Columns);
             viewMock.SetupGet(o => o.Rows).Returns(Rows);
-            viewMock.SetupGet(o => o.ViewportColumns).Returns(2);
-            viewMock.SetupGet(o => o.ViewportRows).Returns(2);
-            viewMock.SetupGet(o => o.ViewportStartColumn).Returns(startColumn);
-            viewMock.SetupSet(o => o.ViewportStartColumn = It.IsAny<int>()).Callback<int>(i =>
+            viewMock.SetupGet(o => o.StartColumn).Returns(startColumn);
+            viewMock.SetupSet(o => o.StartColumn = It.IsAny<int>()).Callback<int>(i =>
             {
                 startColumn = i;
-                viewMock.SetupGet(o => o.ViewportStartColumn).Returns(startColumn);
+                viewMock.SetupGet(o => o.StartColumn).Returns(startColumn);
             });
-            viewMock.SetupGet(o => o.ViewportStartRow).Returns(startRow);
-            viewMock.SetupSet(o => o.ViewportStartRow = It.IsAny<int>()).Callback<int>(i => 
+            viewMock.SetupGet(o => o.StartRow).Returns(startRow);
+            viewMock.SetupSet(o => o.StartRow = It.IsAny<int>()).Callback<int>(i => 
             {
                 startRow = i;
-                viewMock.SetupGet(o => o.ViewportStartRow).Returns(startRow);
+                viewMock.SetupGet(o => o.StartRow).Returns(startRow);
             });
             viewMock.Setup(o => o.SetCellSelection(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<bool>())).Returns(true);
             testObj.Init(viewMock.Object);
@@ -201,18 +199,18 @@ namespace GameEngineTest.Views
         [TestCase]
         public void ChangeViewportTest()
         {
-            while (testObj.SelectedColumn < viewMock.Object.ViewportColumns - 1)
+            while (testObj.SelectedColumn < viewMock.Object.Columns - 1)
             {
                 testObj.HandleInput(Keys.Right);
                 Assert.AreEqual(0, startColumn);
             }
 
             testObj.HandleInput(Keys.Right);
-            Assert.AreEqual(viewMock.Object.ViewportColumns, testObj.SelectedColumn);
+            Assert.AreEqual(viewMock.Object.Columns, testObj.SelectedColumn);
             Assert.AreEqual(1, startColumn);
 
             testObj.HandleInput(Keys.Right);
-            Assert.AreEqual(viewMock.Object.ViewportColumns + 1, testObj.SelectedColumn);
+            Assert.AreEqual(viewMock.Object.Columns + 1, testObj.SelectedColumn);
             Assert.AreEqual(2, startColumn);
 
             while (testObj.SelectedColumn > startColumn)
@@ -228,18 +226,18 @@ namespace GameEngineTest.Views
             Assert.AreEqual(0, startColumn);
 
             // Same for rows
-            while (testObj.SelectedRow < viewMock.Object.ViewportRows - 1)
+            while (testObj.SelectedRow < viewMock.Object.Rows - 1)
             {
                 testObj.HandleInput(Keys.Down);
                 Assert.AreEqual(0, startRow);
             }
 
             testObj.HandleInput(Keys.Down);
-            Assert.AreEqual(viewMock.Object.ViewportRows, testObj.SelectedRow);
+            Assert.AreEqual(viewMock.Object.Rows, testObj.SelectedRow);
             Assert.AreEqual(1, startRow);
 
             testObj.HandleInput(Keys.Down);
-            Assert.AreEqual(viewMock.Object.ViewportRows + 1, testObj.SelectedRow);
+            Assert.AreEqual(viewMock.Object.Rows + 1, testObj.SelectedRow);
             Assert.AreEqual(2, startRow);
 
             while (testObj.SelectedRow > startRow)

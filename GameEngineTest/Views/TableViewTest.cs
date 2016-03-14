@@ -21,23 +21,21 @@ namespace GameEngineTest.Views
         };
 
 
-        private ITableRenderer<TestType> renderer;
+        private TableRendererMock<TestType> renderer;
         private Mock<IItemModel<TestType>> modelMock;
         private TableView<TestType> table;
-        private static ISpriteFont MockCreator()
-        {
-            return new SpriteFontMock();
-        }
+
 
         [TestCase]
         public void NoDataTest()
         {
             SpriteBatchMock spriteBatch = new SpriteBatchMock();
+
             modelMock = new Mock<IItemModel<TestType>>();
             modelMock.Setup(o => o.Columns).Returns(2);
             modelMock.Setup(o => o.Rows).Returns(2);
 
-            table = new TableView<TestType>(modelMock.Object, renderer, gameMock.Object, MockCreator);
+            table = new TableView<TestType>(8, 8, modelMock.Object, renderer, gameMock.Object);
             table.SetCoordinates(50, 50, 200, 200);
 
             table.Setup(contentMock.Object);
@@ -45,52 +43,48 @@ namespace GameEngineTest.Views
             table.Draw(spriteBatch);
 
             Assert.AreEqual(4, spriteBatch.Objects.Count);
-            foreach (var i in table.items)
-                Assert.AreEqual("", ((ItemBox)i).Text);
+            foreach (var i in renderer.entries)
+                Assert.AreEqual(null, i);
         }
 
-        [TestCase]
-        public void ChangeModelTest()
+        public static List<TestCaseData> ChangeModelTestData = new List<TestCaseData>
+        {
+            new TestCaseData(4, 4, 8, 8),
+            new TestCaseData(0, 0, 4, 4),
+            new TestCaseData(5, 5, 2, 2),
+            new TestCaseData(6, 6, 0, 0)
+        };
+
+        [TestCaseSource("ChangeModelTestData")]
+        public void ChangeModelTest(int oldRows, int oldColumns, int newRows, int newColumns)
         {
             var spriteBatch = new SpriteBatchMock();
+            var oldModel = new Mock<IItemModel<TestType>>();
             var newModel = new Mock<IItemModel<TestType>>();
+            
             bool resizeCalled = false;
+
             var testDataN = new TestType("n");
             var testDataM = new TestType("m");
 
-            newModel.Setup(o => o.Columns).Returns(8);
-            newModel.Setup(o => o.Rows).Returns(8);
-            newModel.Setup(o => o.DataAt(It.IsAny<int>(), It.IsAny<int>())).Returns(testDataN);
+            oldModel.SetupModelMock(oldRows, oldColumns, testDataN);
+            newModel.SetupModelMock(newRows, newColumns, testDataM);
 
-            table.OnTableResize += (a, b) => { resizeCalled = true; };
+            var newTable = new TableView<TestType>(4, 4, oldModel.Object, renderer, gameMock.Object);
+            newTable.OnTableResize += (a, b) => { resizeCalled = true; };;
 
-            table.Model = newModel.Object;
-            Assert.AreEqual(8, table.Rows);
-            Assert.AreEqual(8, table.Columns);
+            newTable.Draw(spriteBatch);
+            renderer.Reset();
+
+            newTable.Model = newModel.Object;
+
+            Assert.AreEqual(newRows, newTable.Rows);
+            Assert.AreEqual(newColumns, newTable.Columns);
             Assert.True(resizeCalled);
 
             table.Draw(spriteBatch);
 
-            Assert.AreEqual(8 * 8, (from ItemBox s in table.items where s.Text == "n" select s).Count());
-
-            newModel.Setup(o => o.Rows).Returns(4);
-            newModel.Setup(o => o.Columns).Returns(10);
-            newModel.Raise(o => o.SizeChanged += null, newModel.Object, new SizeChangedEventArgs(newColumns: 10, newRows: 4));
-            Assert.AreEqual(4, table.Rows);
-            Assert.AreEqual(10, table.Columns);
-
-            newModel.Setup(o => o.DataAt(It.IsAny<int>(), It.IsAny<int>())).Returns<int, int>((a, b) => a == 0 && b == 0 ? testDataM : testDataN);
-            newModel.Raise(o => o.DataChanged += null, newModel.Object, new DataChangedEventArgs<TestType>(newData: new TestType { testString = "m" }, column: 0, row: 0));
-
-            spriteBatch.DrawnStrings.Clear();
-            table.Draw(spriteBatch);
-
-            Assert.AreEqual(4 * 10, table.items.Length);
-            Assert.AreEqual("m", ((ItemBox)table.items[0, 0]).Text);
-            Assert.AreEqual(4, table.items.GetLength(0));
-            Assert.AreEqual(10, table.items.GetLength(1));
-            // The data in the new cells haven't been changed (no DataChanged event!), so only 4 * 8 values are in the table
-            Assert.AreEqual(4*8 - 1, (from ItemBox s in table.items where s!= null && s.Text == "n" select s).Count());
+            Assert.AreEqual(newColumns * newRows, (from TestType s in renderer.entries where  s == testDataM select s).Count());
         }
 
         [TestCase]
@@ -105,7 +99,7 @@ namespace GameEngineTest.Views
             modelMock.Setup(o => o.Rows).Returns(2);
             modelMock.Setup(o => o.DataAt(It.IsAny<int>(), It.IsAny<int>())).Returns<int, int>((a, b) => a == insertRow && b == insertColumn ? data : null);
 
-            table = new TableView<TestType>(modelMock.Object, renderer, gameMock.Object, MockCreator);
+            table = new TableView<TestType>(4, 4, modelMock.Object, renderer, gameMock.Object);
             table.XPosition = 0.0f;
             table.YPosition = 0.0f;
             table.Width = 180.0f;
@@ -157,7 +151,7 @@ namespace GameEngineTest.Views
             modelMock.Setup(o => o.Rows).Returns(2);
             modelMock.Setup(o => o.DataAt(It.IsAny<int>(), It.IsAny<int>())).Returns<int, int>((a, b) => a == row && b == column ? new TestType("Data") : null);
 
-            table = new TableView<TestType>(modelMock.Object, renderer, gameMock.Object, MockCreator);
+            table = new TableView<TestType>(4, 4, modelMock.Object, renderer, gameMock.Object);
             table.XPosition = 0.0f;
             table.YPosition = 0.0f;
             table.Width = 200.0f;
@@ -229,7 +223,7 @@ namespace GameEngineTest.Views
             modelMock.Setup(o => o.Rows).Returns(2);
             modelMock.Setup(o => o.DataAt(It.IsAny<int>(), It.IsAny<int>())).Returns<int, int>((a, b) => a == row && b == column ? new TestType("Data") : null);
 
-            table = new TableView<TestType>(modelMock.Object, renderer, gameMock.Object, MockCreator);
+            table = new TableView<TestType>(4, 4, modelMock.Object, renderer, gameMock.Object);
 
             TestTableCellSelection();
 
@@ -246,14 +240,17 @@ namespace GameEngineTest.Views
         public void Setup()
         {
             contentMock.SetupLoad();
+            
             modelMock = new Mock<IItemModel<TestType>>();
+            
             modelMock.Setup(o => o.Columns).Returns(2);
             modelMock.Setup(o => o.Rows).Returns(2);
             modelMock.Setup(o => o.DataAt(It.IsAny<int>(), It.IsAny<int>())).Returns<int, int>((a, b) => new TestType("Data " + a + " " + b));
-            gameMock.Object.Content = contentMock.Object;
-            renderer = new DefaultTableRenderer<TestType>(gameMock.Object, MockCreator);
 
-            table = new TableView<TestType>(modelMock.Object, renderer, gameMock.Object, MockCreator);
+            gameMock.Object.Content = contentMock.Object;
+            renderer = new TableRendererMock<TestType>();
+
+            table = new TableView<TestType>(4, 4, modelMock.Object, renderer, gameMock.Object);
             table.Setup(contentMock.Object);
             testObj = table;
         }
@@ -266,7 +263,7 @@ namespace GameEngineTest.Views
             modelMock.Setup(o => o.Columns).Returns(0);
             modelMock.Setup(o => o.Rows).Returns(0);
 
-            table = new TableView<TestType>(modelMock.Object, renderer, gameMock.Object, MockCreator);
+            table = new TableView<TestType>(4, 4, modelMock.Object, renderer, gameMock.Object);
 
             Assert.IsFalse(table.SetCellSelection(0, 0, true));
         }
@@ -287,20 +284,20 @@ namespace GameEngineTest.Views
             modelMock.Setup(o => o.Rows).Returns(20);
             modelMock.Setup(o => o.DataAt(It.IsAny<int>(), It.IsAny<int>())).Returns<int, int>((a, b) => new TestType(a + " " + b));
 
-            table = new TableView<TestType>(modelMock.Object, renderer, gameMock.Object, MockCreator);
+            table = new TableView<TestType>(4, 4, modelMock.Object, renderer, gameMock.Object);
             table.SetCoordinates(0, 0, 2000, 2000);
 
-            Assert.Less(table.ViewportRows, 20);
-            Assert.Less(table.ViewportColumns, 20);
+            Assert.Less(table.Rows, 20);
+            Assert.Less(table.Columns, 20);
 
-            Assert.AreEqual(0, table.ViewportStartColumn);
-            Assert.AreEqual(0, table.ViewportStartRow);
+            Assert.AreEqual(0, table.StartColumn);
+            Assert.AreEqual(0, table.StartRow);
 
-            table.ViewportStartRow = 1;
-            table.ViewportStartColumn = 1;
+            table.StartRow = 1;
+            table.StartColumn = 1;
 
-            Assert.AreEqual(1, table.ViewportStartColumn);
-            Assert.AreEqual(1, table.ViewportStartRow);
+            Assert.AreEqual(1, table.StartColumn);
+            Assert.AreEqual(1, table.StartRow);
 
             table.Draw(spriteBatch);
 
@@ -314,12 +311,12 @@ namespace GameEngineTest.Views
                 Assert.GreaterOrEqual(a, 1);
                 Assert.GreaterOrEqual(b, 1);
 
-                Assert.Less(a, table.ViewportRows + 1);
-                Assert.Less(a, table.ViewportColumns + 1);
+                Assert.Less(a, table.Rows + 1);
+                Assert.Less(a, table.Columns + 1);
             }
 
-            table.ViewportStartRow = 19;
-            table.ViewportStartColumn = 19;
+            table.StartRow = 19;
+            table.StartColumn = 19;
 
             spriteBatch.DrawnStrings.Clear();
             table.Draw(spriteBatch);
@@ -331,8 +328,8 @@ namespace GameEngineTest.Views
                 int a = int.Parse(nums[0]);
                 int b = int.Parse(nums[1]);
 
-                Assert.GreaterOrEqual(a, 20 - table.ViewportRows);
-                Assert.GreaterOrEqual(b, 20 - table.ViewportColumns);
+                Assert.GreaterOrEqual(a, 20 - table.Rows);
+                Assert.GreaterOrEqual(b, 20 - table.Columns);
 
                 Assert.Less(a, 20);
                 Assert.Less(a, 20);

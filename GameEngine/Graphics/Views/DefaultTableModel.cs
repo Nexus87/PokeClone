@@ -63,5 +63,18 @@ namespace GameEngine.Graphics.Views
             items.Copy(newItems);
             items = newItems;
         }
+
+
+        public T this[int row, int column]
+        {
+            get
+            {
+                return DataAt(row, column);
+            }
+            set
+            {
+                SetData(value, row, column);
+            }
+        }
     }
 }

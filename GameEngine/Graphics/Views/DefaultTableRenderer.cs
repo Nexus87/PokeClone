@@ -20,25 +20,41 @@ namespace GameEngine.Graphics.Views
             this.creator = creator;
         }
 
-        public ISelectableGraphicComponent CreateComponent(int row, int column, T data)
+        public ISelectableGraphicComponent GetComponent(int row, int column, T data)
         {
-            if(row >= boxes.Rows() || column >= boxes.Columns())
+            var ret = GetComponentImpl(row, column);
+            ret.Text = data == null ? "" : data.ToString();
+
+            return ret;
+        }
+
+
+        public ISelectableGraphicComponent GetComponent(int row, int column)
+        {
+            return GetComponentImpl(row, column);
+        }
+
+        private ItemBox GetComponentImpl(int row, int column)
+        {
+            if (row >= boxes.Rows() || column >= boxes.Columns())
             {
-                var tmp = new ItemBox[row+1, column+1];
+                var tmp = new ItemBox[row + 1, column + 1];
                 boxes.Copy(tmp);
                 boxes = tmp;
             }
 
-            if(boxes[row, column] == null)
+            if (boxes[row, column] == null)
             {
                 var box = new ItemBox(creator(), game);
                 boxes[row, column] = box;
             }
 
-            var ret = boxes[row, column];
-            ret.Text = data == null ? "" : data.ToString();
+            return boxes[row, column];
+        }
 
-            return ret;
+        public ISelectableGraphicComponent this[int row, int column]
+        {
+            get { return GetComponent(row, column); }
         }
     }
 }
