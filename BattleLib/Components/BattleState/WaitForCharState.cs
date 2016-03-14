@@ -22,7 +22,7 @@ namespace BattleLib.Components.BattleState
             clientsLeft = clients.Count;
         }
         
-        public WaitForCharState(BattleStateComponent state, ClientIdentifier player, ClientIdentifier ai, EventCreator eventCreator)
+        public WaitForCharState(BattleStateComponent state, EventCreator eventCreator)
         {
             this.state = state;
             this.eventCreator = eventCreator;

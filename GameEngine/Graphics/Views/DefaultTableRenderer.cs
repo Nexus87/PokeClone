@@ -32,7 +32,6 @@ namespace GameEngine.Graphics.Views
             if(boxes[row, column] == null)
             {
                 var box = new ItemBox(creator(), game);
-                box.Setup(game.Content);
                 boxes[row, column] = box;
             }
 

@@ -34,17 +34,17 @@ namespace BattleLib.Components.BattleState
             clientCnt--;
         }
 
-        public void SetItem(ClientIdentifier id, Base.Item item)
+        public void SetItem(ClientIdentifier id, ClientIdentifier target, Base.Item item)
         {
             Validate(id, item, "item");
             commands[id] = new ItemCommand(id, item);
             clientCnt--;
         }
 
-        public void SetMove(ClientIdentifier id, Move move)
+        public void SetMove(ClientIdentifier id, ClientIdentifier target, Move move)
         {
             Validate(id, move, "move");
-            commands[id] = new MoveCommand(id, move);
+            commands[id] = new MoveCommand(id, target, move);
             clientCnt--;
         }
 

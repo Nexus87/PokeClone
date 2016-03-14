@@ -6,14 +6,10 @@ namespace BattleLib.Components.BattleState
 {
     public class BattleData
     {
-        public ClientIdentifier Ai { get; set; }
+        ClientIdentifier Ai { get; set; }
+        ClientIdentifier Player { get; set; }
 
-        public ICommand AiCommand { get; set; }
-
-        public ClientIdentifier Player { get; set; }
-
-        public ICommand PlayerCommand { get; set; }
-
+        private Dictionary<ClientIdentifier, ICommand> commands = new Dictionary<ClientIdentifier, ICommand>();
         private List<ClientIdentifier> clients = new List<ClientIdentifier>();
 
         public BattleData(ClientIdentifier player, ClientIdentifier ai)
@@ -28,23 +24,27 @@ namespace BattleLib.Components.BattleState
             AiPokemon = new PokemonWrapper(ai);
         }
 
-        public PokemonWrapper AiPokemon { get; private set; }
+        PokemonWrapper AiPokemon { get; set; }
 
         public IReadOnlyList<ClientIdentifier> Clients { get { return clients.AsReadOnly(); } }
-
-        public PokemonWrapper PlayerPokemon { get; private set; }
+        public IEnumerable<ICommand> Commands { get { return commands.Values; } }
+        PokemonWrapper PlayerPokemon { get; set; }
 
         public PokemonWrapper GetPokemon(ClientIdentifier id)
         {
             return id == Player ? PlayerPokemon : AiPokemon;
         }
 
+        public void ClearCommands()
+        {
+            commands.Clear();
+        }
         public void SetCommand(ClientIdentifier id, ICommand command)
         {
-            if (id == Player)
-                PlayerCommand = command;
-            else
-                AiCommand = command;
+            if (!clients.Contains(id))
+                throw new InvalidOperationException("ID " + id.Name + "is unknown");
+
+            commands[id] = command;
         }
     }
 }

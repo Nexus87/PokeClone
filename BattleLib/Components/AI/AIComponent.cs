@@ -15,14 +15,16 @@ namespace BattleLib.Components.AI
         private BattleStateComponent state;
         private Action nextAction = null;
         private ClientIdentifier id;
+        private ClientIdentifier player;
         private IReadOnlyList<Pokemon> pokemons;
         private Pokemon currentPokemon;
 
-        public AIComponent(BattleStateComponent state, Client ai, PokeEngine game)
+        public AIComponent(BattleStateComponent state, Client ai, ClientIdentifier player, PokeEngine game)
             : base(game)
         {
             this.state = state;
             id = ai.Id;
+            this.player = player;
             pokemons = ai.Pokemons;
             state.StateChanged += StateChangedHandler;
         }
@@ -53,7 +55,7 @@ namespace BattleLib.Components.AI
             if (move == null)
                 throw new NotImplementedException();
 
-            state.SetMove(id, move);
+            state.SetMove(id, player, move);
         }
 
         private void ChoosePokemon()

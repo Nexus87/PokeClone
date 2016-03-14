@@ -33,6 +33,8 @@ namespace BattleLib
                 var pkmn = new Pokemon(data, stats) { Name = Id.Name + "_Pkmn" + i, Level = i + 20};
                 for (int j = 0; j < 4; j++)
                     pkmn.SetMove(j, new Move(moveData));
+                pkmn.Stats.HP = 30;
+                pkmn.HP = 30;
 
                 pokemons.Add(pkmn);
             }

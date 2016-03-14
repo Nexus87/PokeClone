@@ -37,8 +37,8 @@ namespace BattleLib
 
             var graphic = new BattleGraphics(game, playerID, aiID);
             battleState = new BattleStateComponent(playerID, aiID, game, rules, scheduler);
-            var gui = new BattleGUI(config, game, battleState, playerID);
-            var aiComponent = new AIComponent(battleState, ai, game);
+            var gui = new BattleGUI(config, game, battleState, playerID, aiID);
+            var aiComponent = new AIComponent(battleState, ai, playerID, game);
 
             game.Components.Add(aiComponent);
             game.Components.Add(battleState);

@@ -22,5 +22,11 @@ namespace PokemonGame.Rules
         {
             return commands;
         }
+
+
+        public void AppendCommands(IEnumerable<ICommand> commands)
+        {
+            this.commands.AddRange(commands);
+        }
     }
 }

@@ -30,12 +30,7 @@ namespace BattleLib.Components.BattleState.Commands
 
         public void Execute(CommandExecuter executer, BattleData data)
         {
-            if (Source == data.Player)
-                executer.UseItem(data.PlayerPokemon, item);
-            else if (Source == data.Ai)
-                executer.UseItem(data.AiPokemon, item);
-            else
-                throw new InvalidOperationException("Id is unknown.");
+            executer.UseItem(data.GetPokemon(Source), item);
         }
     }
 }

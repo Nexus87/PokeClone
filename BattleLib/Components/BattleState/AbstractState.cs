@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Base;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,8 +13,8 @@ namespace BattleLib.Components.BattleState
         public virtual void Init() { }
         public abstract IBattleState Update(BattleData data);
 
-        public virtual void SetCharacter(ClientIdentifier id, Base.Pokemon pkmn) { throw new InvalidOperationException("Wong operation"); }
-        public virtual void SetMove(ClientIdentifier id, Base.Move move) { throw new InvalidOperationException("Wong operation"); }
-        public virtual void SetItem(ClientIdentifier id, Base.Item item) { throw new InvalidOperationException("Wong operation"); }
+        public virtual void SetCharacter(ClientIdentifier id, Pokemon pkmn) { throw new InvalidOperationException("Wong operation"); }
+        public virtual void SetMove(ClientIdentifier id, ClientIdentifier target, Move move) { throw new InvalidOperationException("Wong operation"); }
+        public virtual void SetItem(ClientIdentifier id, ClientIdentifier target, Item item) { throw new InvalidOperationException("Wong operation"); }
     }
 }

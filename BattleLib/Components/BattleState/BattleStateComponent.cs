@@ -50,35 +50,21 @@ namespace BattleLib.Components.BattleState
             : base(game)
         {
             data = new BattleData(player, ai);
-            data.Player = player;
-            data.Ai = ai;
             eventCreator = new EventCreator(data);
             this.rules = rules;
             this.scheduler = scheduler;
         }
 
-        public ClientIdentifier AIIdentifier
-        {
-            get { return data.Ai; }
-        }
-
-        public ClientIdentifier PlayerIdentifier
-        {
-            get { return data.Player; }
-        }
-
         public override void Initialize()
         {
-            if (AIIdentifier == null || PlayerIdentifier == null)
-                throw new InvalidOperationException("One of the identifier is missing");
 
             eventCreator.Setup(Game);
             actionState = new WaitForActionState(this);
-            charState = new WaitForCharState(this, PlayerIdentifier, AIIdentifier, eventCreator);
+            charState = new WaitForCharState(this, eventCreator);
             exeState = new ExecuteState(this, scheduler, new CommandExecuter(eventCreator, rules));
 
             CurrentState = charState;
-            charState.Init(new List<ClientIdentifier>{data.Player, data.Ai});
+            charState.Init(data.Clients);
         }
 
         public void SetCharacter(ClientIdentifier id, Pokemon pkmn)
@@ -86,14 +72,14 @@ namespace BattleLib.Components.BattleState
             CurrentState.SetCharacter(id, pkmn);
         }
 
-        public void SetItem(ClientIdentifier id, Item item)
+        public void SetItem(ClientIdentifier id, ClientIdentifier target, Item item)
         {
-            CurrentState.SetItem(id, item);
+            CurrentState.SetItem(id, target, item);
         }
 
-        public void SetMove(ClientIdentifier id, Move move)
+        public void SetMove(ClientIdentifier id, ClientIdentifier target, Move move)
         {
-            CurrentState.SetMove(id, move);
+            CurrentState.SetMove(id, target, move);
         }
 
         public override void Update(GameTime gameTime)

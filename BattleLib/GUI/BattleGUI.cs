@@ -19,11 +19,12 @@ namespace BattleLib.GraphicComponents.GUI
         private Dialog messageFrame;
         private Dialog pkmnFrame;
 
-        public BattleGUI(Configuration config, PokeEngine game, BattleStateComponent battleState, ClientIdentifier player)
+        public BattleGUI(Configuration config, PokeEngine game, BattleStateComponent battleState, ClientIdentifier player, ClientIdentifier ai)
         {
             game.Services.AddService(typeof(IGUIService), this);
             BattleState = battleState;
             ID = player;
+            this.ai = ai;
 
             mainFrame = new Dialog("border", game);
             attackFrame = new Dialog("border", game);
@@ -42,6 +43,7 @@ namespace BattleLib.GraphicComponents.GUI
 
         public event EventHandler MenuShowed = delegate { };
         public event EventHandler TextDisplayed = delegate { };
+        private ClientIdentifier ai;
 
         public BattleStateComponent BattleState { get; private set; }
         public ClientIdentifier ID { get; set; }
@@ -60,7 +62,7 @@ namespace BattleLib.GraphicComponents.GUI
 
         private void AttackMenu_ItemSelected(object sender, SelectionEventArgs<Move> e)
         {
-            BattleState.SetMove(ID, e.SelectedData);
+            BattleState.SetMove(ID, ai, e.SelectedData);
             attackFrame.IsVisible = false;
         }
 
@@ -186,7 +188,7 @@ namespace BattleLib.GraphicComponents.GUI
 
         private void ItemMenu_ItemSelected(object sender, SelectionEventArgs<Item> e)
         {
-            BattleState.SetItem(ID, e.SelectedData);
+            BattleState.SetItem(ID, ID, e.SelectedData);
             itemFrame.IsVisible = false;
         }
 
