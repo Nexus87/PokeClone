@@ -20,22 +20,27 @@ namespace GameEngine.Graphics.Views
             this.creator = creator;
         }
 
-        public ISelectableGraphicComponent GetComponent(int row, int column, T data)
+        public ISelectableGraphicComponent GetComponent(int row, int column, T data, bool IsSelected)
         {
-            var ret = GetComponentImpl(row, column);
+            CheckBounds(row, column);
+
+            var ret = boxes[row, column];
             ret.Text = data == null ? "" : data.ToString();
+            
+            if (IsSelected)
+                ret.Select();
+            else
+                ret.Unselect();
 
             return ret;
         }
 
 
-        public ISelectableGraphicComponent GetComponent(int row, int column)
+        private void CheckBounds(int row, int column)
         {
-            return GetComponentImpl(row, column);
-        }
+            if (row < 0 || column < 0)
+                throw new ArgumentOutOfRangeException("row and column must be positive");
 
-        private ItemBox GetComponentImpl(int row, int column)
-        {
             if (row >= boxes.Rows() || column >= boxes.Columns())
             {
                 var tmp = new ItemBox[row + 1, column + 1];
@@ -48,13 +53,7 @@ namespace GameEngine.Graphics.Views
                 var box = new ItemBox(creator(), game);
                 boxes[row, column] = box;
             }
-
-            return boxes[row, column];
         }
 
-        public ISelectableGraphicComponent this[int row, int column]
-        {
-            get { return GetComponent(row, column); }
-        }
     }
 }

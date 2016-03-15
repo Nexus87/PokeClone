@@ -8,9 +8,6 @@ namespace GameEngine.Graphics.Views
 {
     public interface ITableRenderer<T>
     {
-        ISelectableGraphicComponent GetComponent(int row, int column, T data);
-        ISelectableGraphicComponent GetComponent(int row, int column);
-
-        ISelectableGraphicComponent this[int row, int column] { get; }
+        ISelectableGraphicComponent GetComponent(int row, int column, T data, bool isSelected);
     }
 }

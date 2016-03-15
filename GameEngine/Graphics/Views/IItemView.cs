@@ -23,7 +23,6 @@ namespace GameEngine.Graphics.Views
         int StartRow { get; set; }
         int StartColumn { get; set; }
 
-        bool IsCellSelected(int row, int column);
         bool SetCellSelection(int row, int column, bool isSelected);
     }
 }

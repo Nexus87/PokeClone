@@ -6,41 +6,35 @@ namespace GameEngineTest.Util
     public class TableRendererMock<T> : ITableRenderer<T>
     {
         public T[,] entries = new T[0, 0];
+        public bool[,] selections = new bool[0,0];
 
-        public GameEngine.Graphics.ISelectableGraphicComponent GetComponent(int row, int column, T data)
+        public GameEngine.Graphics.ISelectableGraphicComponent GetComponent(int row, int column, T data, bool isSelected)
         {
-            ResizeEntries(row, column);
+            entries = Resize(row, column, entries);
+            selections = Resize(row, column, selections);
+
             entries[row, column] = data;
+            selections[row, column] = isSelected;
 
             return new TestSelectableGraphicComponent();
         }
 
-        private void ResizeEntries(int row, int column)
+        private T[,] Resize<T>(int row, int column, T[,] source)
         {
-            if (row >= entries.Rows() || column >= entries.Columns())
+            if (row >= source.Rows() || column >= source.Columns())
             {
                 var tmp = new T[row + 1, column + 1];
-                entries.Copy(tmp);
-                entries = tmp;
+                source.Copy(tmp);
+                return tmp;
             }
+            else
+                return source;
         }
 
         public void Reset()
         {
             entries = new T[0, 0];
-        }
-
-
-        public GameEngine.Graphics.ISelectableGraphicComponent GetComponent(int row, int column)
-        {
-            ResizeEntries(row, column);
-
-            return new TestSelectableGraphicComponent();
-        }
-
-        public GameEngine.Graphics.ISelectableGraphicComponent this[int row, int column]
-        {
-            get { return GetComponent(row, column); }
+            selections = new bool[0, 0];
         }
     }
 }
