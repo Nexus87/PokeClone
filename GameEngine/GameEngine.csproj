@@ -67,10 +67,12 @@
     <Compile Include="Graphics\Layouts\BoxLayout.cs" />
     <Compile Include="Graphics\GUIManager.cs" />
     <Compile Include="Graphics\Views\DefaultTableRenderer.cs" />
+    <Compile Include="Graphics\Views\DefaultTableSelectionModel.cs" />
     <Compile Include="Graphics\Views\IItemView.cs" />
     <Compile Include="EventComponent\IEvent.cs" />
     <Compile Include="EventComponent\IEventQueue.cs" />
     <Compile Include="Graphics\Views\ITableRenderer.cs" />
+    <Compile Include="Graphics\Views\ITableSelectionModel.cs" />
     <Compile Include="InputComponent.cs" />
     <Compile Include="Graphics\Layouts\SingleComponentLayout.cs" />
     <Compile Include="Graphics\IGraphicComponent.cs" />

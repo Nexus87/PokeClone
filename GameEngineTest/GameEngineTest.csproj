@@ -76,6 +76,7 @@
     <Compile Include="Views\DefaultSelectionHandlerTest.cs" />
     <Compile Include="Views\DefaultTableModelTest.cs" />
     <Compile Include="Views\DefaultTableRendererTest.cs" />
+    <Compile Include="Views\DefaultTableSelectionModelTest.cs" />
     <Compile Include="Views\IItemModelTest.cs" />
     <Compile Include="Views\ITableRendererTest.cs" />
     <Compile Include="Views\ItemBoxTest.cs" />
