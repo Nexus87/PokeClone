@@ -15,16 +15,20 @@ namespace GameEngine.Graphics.Widgets
     {
         private ISelectionHandler handler;
         private TableView<T> view;
+        private static ISpriteFont DefaultCreator()
+        {
+            return new XNASpriteFont();
+        }
 
-        public TableWidget(int rows, int columns, PokeEngine game)
-            : base(new TableView<T>(rows, columns, new DefaultTableModel<T>(), game), game)
+        public TableWidget(PokeEngine game)
+            : base(new TableView<T>(new DefaultTableModel<T>(), new DefaultTableRenderer<T>(game, DefaultCreator), new DefaultTableSelectionModel(), game), game)
         {
             view = InnerComponent;
             Handler = new DefaultSelectionHandler();
         }
 
-        public TableWidget(int rows, int columns, Configuration config, PokeEngine game)
-            : base(new TableView<T>(rows, columns, new DefaultTableModel<T>(), game), game)
+        public TableWidget(Configuration config, PokeEngine game)
+            : base(new TableView<T>(new DefaultTableModel<T>(), new DefaultTableRenderer<T>(game, DefaultCreator), new DefaultTableSelectionModel(), game), game)
         {
             view = InnerComponent;
             Handler = new DefaultSelectionHandler(config);

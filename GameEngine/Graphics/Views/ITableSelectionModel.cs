@@ -21,7 +21,7 @@ namespace GameEngine.Graphics.Views
         }
     }
 
-    interface ITableSelectionModel
+    public interface ITableSelectionModel
     {
         event EventHandler<SelectionChangedEventArgs> SelectionChanged;
 

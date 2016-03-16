@@ -24,26 +24,26 @@ namespace GameEngineTest.Views
         [SetUp]
         public void Setup()
         {
-            testObj = new DefaultSelectionHandler();
+            //testObj = new DefaultSelectionHandler();
 
-            viewMock = new Mock<ITableView>();
+            //viewMock = new Mock<ITableView>();
             
-            viewMock.SetupGet(o => o.Columns).Returns(Columns);
-            viewMock.SetupGet(o => o.Rows).Returns(Rows);
-            viewMock.SetupGet(o => o.StartColumn).Returns(startColumn);
-            viewMock.SetupSet(o => o.StartColumn = It.IsAny<int>()).Callback<int>(i =>
-            {
-                startColumn = i;
-                viewMock.SetupGet(o => o.StartColumn).Returns(startColumn);
-            });
-            viewMock.SetupGet(o => o.StartRow).Returns(startRow);
-            viewMock.SetupSet(o => o.StartRow = It.IsAny<int>()).Callback<int>(i => 
-            {
-                startRow = i;
-                viewMock.SetupGet(o => o.StartRow).Returns(startRow);
-            });
-            viewMock.Setup(o => o.SetCellSelection(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<bool>())).Returns(true);
-            testObj.Init(viewMock.Object);
+            //viewMock.SetupGet(o => o.Columns).Returns(Columns);
+            //viewMock.SetupGet(o => o.Rows).Returns(Rows);
+            //viewMock.SetupGet(o => o.StartColumn).Returns(startColumn);
+            //viewMock.SetupSet(o => o.StartColumn = It.IsAny<int>()).Callback<int>(i =>
+            //{
+            //    startColumn = i;
+            //    viewMock.SetupGet(o => o.StartColumn).Returns(startColumn);
+            //});
+            //viewMock.SetupGet(o => o.StartRow).Returns(startRow);
+            //viewMock.SetupSet(o => o.StartRow = It.IsAny<int>()).Callback<int>(i => 
+            //{
+            //    startRow = i;
+            //    viewMock.SetupGet(o => o.StartRow).Returns(startRow);
+            //});
+            //viewMock.Setup(o => o.SetCellSelection(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<bool>())).Returns(true);
+            //testObj.Init(viewMock.Object);
         }
 
         [TestCase]

@@ -114,18 +114,18 @@ namespace GameEngine.Graphics.Views
 
         private void UpdateViewpoint()
         {
-            int startRow = view.StartRow;
-            int startColumn = view.StartColumn;
+            //int startRow = view.StartRow;
+            //int startColumn = view.StartColumn;
 
-            if (SelectedRow < startRow)
-                view.StartRow = SelectedRow;
-            else if (SelectedRow >= startRow + view.Rows)
-                view.StartRow = SelectedRow - (view.Rows - 1);
+            //if (SelectedRow < startRow)
+            //    view.StartRow = SelectedRow;
+            //else if (SelectedRow >= startRow + view.Rows)
+            //    view.StartRow = SelectedRow - (view.Rows - 1);
 
-            if (SelectedColumn < startColumn)
-                view.StartColumn = SelectedColumn;
-            else if (SelectedColumn >= startColumn + view.Columns)
-                view.StartColumn = SelectedColumn - (view.Columns - 1);
+            //if (SelectedColumn < startColumn)
+            //    view.StartColumn = SelectedColumn;
+            //else if (SelectedColumn >= startColumn + view.Columns)
+            //    view.StartColumn = SelectedColumn - (view.Columns - 1);
         }
 
         private void view_OnTableResize(object sender, TableResizeEventArgs e)

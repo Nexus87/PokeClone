@@ -1,6 +1,7 @@
 ﻿using GameEngine.Graphics.Views;
 using GameEngine.Graphics;
 using GameEngine.Wrapper;
+using GameEngine.Utils;
 using GameEngineTest.Util;
 using Moq;
 using NUnit.Framework;
@@ -13,327 +14,226 @@ namespace GameEngineTest.Views
     [TestFixture]
     public class TableViewTest : IGraphicComponentTest
     {
-        public static List<TestCaseData> ModelCoordinates = new List<TestCaseData>{
+        public static List<TestCaseData> ModelSizes = new List<TestCaseData>
+        {
             new TestCaseData(0, 0),
-            new TestCaseData(0, 1),
-            new TestCaseData(1, 0),
-            new TestCaseData(1, 1),
+            new TestCaseData(10, 0),
+            new TestCaseData(0, 10),
+            new TestCaseData(5, 5)
         };
 
-
         private TableRendererMock<TestType> renderer;
+        private Mock<ITableSelectionModel> selectionModelMock;
         private Mock<IItemModel<TestType>> modelMock;
         private TableView<TestType> table;
 
 
-        [TestCase]
-        public void NoDataTest()
-        {
-            SpriteBatchMock spriteBatch = new SpriteBatchMock();
-
-            modelMock = new Mock<IItemModel<TestType>>();
-            modelMock.Setup(o => o.Columns).Returns(2);
-            modelMock.Setup(o => o.Rows).Returns(2);
-
-            table = new TableView<TestType>(8, 8, modelMock.Object, renderer, gameMock.Object);
-            table.SetCoordinates(50, 50, 200, 200);
-
-            table.Setup(contentMock.Object);
-
-            table.Draw(spriteBatch);
-
-            Assert.AreEqual(4, spriteBatch.Objects.Count);
-            foreach (var i in renderer.entries)
-                Assert.AreEqual(null, i);
-        }
-
-        public static List<TestCaseData> ChangeModelTestData = new List<TestCaseData>
-        {
-            new TestCaseData(4, 4, 8, 8),
-            new TestCaseData(0, 0, 4, 4),
-            new TestCaseData(5, 5, 2, 2),
-            new TestCaseData(6, 6, 0, 0)
-        };
-
-        [TestCaseSource("ChangeModelTestData")]
-        public void ChangeModelTest(int oldRows, int oldColumns, int newRows, int newColumns)
-        {
-            var spriteBatch = new SpriteBatchMock();
-            var oldModel = new Mock<IItemModel<TestType>>();
-            var newModel = new Mock<IItemModel<TestType>>();
-            
-            bool resizeCalled = false;
-
-            var testDataN = new TestType("n");
-            var testDataM = new TestType("m");
-
-            oldModel.SetupModelMock(oldRows, oldColumns, testDataN);
-            newModel.SetupModelMock(newRows, newColumns, testDataM);
-
-            var newTable = new TableView<TestType>(4, 4, oldModel.Object, renderer, gameMock.Object);
-            newTable.OnTableResize += (a, b) => { resizeCalled = true; };;
-
-            newTable.Draw(spriteBatch);
-            renderer.Reset();
-
-            newTable.Model = newModel.Object;
-
-            Assert.AreEqual(newRows, newTable.Rows);
-            Assert.AreEqual(newColumns, newTable.Columns);
-            Assert.True(resizeCalled);
-
-            table.Draw(spriteBatch);
-
-            Assert.AreEqual(newColumns * newRows, (from TestType s in renderer.entries where  s == testDataM select s).Count());
-        }
-
-        [TestCase]
-        public void OnModelResizeTest()
-        {
-            SpriteBatchMock spriteBatch = new SpriteBatchMock();
-            var data = new TestType { testString = "Data" };
-            int insertColumn = 2;
-            int insertRow = 2;
-            modelMock = new Mock<IItemModel<TestType>>();
-            modelMock.Setup(o => o.Columns).Returns(2);
-            modelMock.Setup(o => o.Rows).Returns(2);
-            modelMock.Setup(o => o.DataAt(It.IsAny<int>(), It.IsAny<int>())).Returns<int, int>((a, b) => a == insertRow && b == insertColumn ? data : null);
-
-            table = new TableView<TestType>(4, 4, modelMock.Object, renderer, gameMock.Object);
-            table.XPosition = 0.0f;
-            table.YPosition = 0.0f;
-            table.Width = 180.0f;
-            table.Height = 180.0f;
-            table.Setup(contentMock.Object);
-
-            modelMock.Setup(o => o.Columns).Returns(3);
-            modelMock.Setup(o => o.Rows).Returns(3);
-            modelMock.Raise(o => o.SizeChanged += null, modelMock.Object, new SizeChangedEventArgs(newColumns: 3, newRows: 3));
-            modelMock.Raise(o => o.DataChanged += null, modelMock.Object, new DataChangedEventArgs<TestType>(column: 2, row: 2, newData: data));
-
-            Assert.AreEqual(3, table.Rows);
-            Assert.AreEqual(3, table.Columns);
-
-            table.Draw(spriteBatch);
-
-            foreach (var obj in spriteBatch.Objects)
-                obj.IsInConstraints(0.0f, 0.0f, 3*60.0f, 3*60.0f);
-        }
-
-        public static List<TestCaseData> TableSizes = new List<TestCaseData>{
-            new TestCaseData(5, 5, true),
-            new TestCaseData(1, 1, true),
-            new TestCaseData(2, 2, false),
-            new TestCaseData(2, 5, true),
-            new TestCaseData(5, 2, true),
-        };
-
-        [TestCaseSource("TableSizes")]
-        public void ResizeEventTest(int row, int column, bool result)
-        {
-            bool eventCalled = false;
-            table.OnTableResize += (a, b) => { eventCalled = true; };
-
-            modelMock.Setup(o => o.Columns).Returns(column);
-            modelMock.Setup(o => o.Rows).Returns(row);
-
-            Assert.False(eventCalled);
-            modelMock.Raise(o => o.SizeChanged += null, modelMock.Object, new SizeChangedEventArgs(newColumns: column, newRows: row));
-            Assert.AreEqual(result, eventCalled);
-        }
-
-        [TestCaseSource("ModelCoordinates")]
-        public void PartialDataTest(int row, int column)
-        {
-            SpriteBatchMock spriteBatch = new SpriteBatchMock();
-            modelMock = new Mock<IItemModel<TestType>>();
-            modelMock.Setup(o => o.Columns).Returns(2);
-            modelMock.Setup(o => o.Rows).Returns(2);
-            modelMock.Setup(o => o.DataAt(It.IsAny<int>(), It.IsAny<int>())).Returns<int, int>((a, b) => a == row && b == column ? new TestType("Data") : null);
-
-            table = new TableView<TestType>(4, 4, modelMock.Object, renderer, gameMock.Object);
-            table.XPosition = 0.0f;
-            table.YPosition = 0.0f;
-            table.Width = 200.0f;
-            table.Height = 200.0f;
-            table.Setup(contentMock.Object);
-
-            table.Draw(spriteBatch);
-
-            foreach (var obj in spriteBatch.Objects)
-                obj.IsInConstraints(0, 0, 200.0f, 200.0f);
-        }
-
-        [TestCaseSource("ModelCoordinates")]
-        public void SelectCellTest(int a, int b)
-        {
-            TestTableCellSelection();
-
-            Assert.IsTrue(table.SetCellSelection(a, b, true));
-            for (int i = 0; i < table.Rows; i++)
-            {
-                for (int j = 0; j < table.Columns; j++)
-                {
-                    //Assert.AreEqual(i == a && j == b, table.IsCellSelected(i, j));
-                }
-            }
-
-            Assert.IsTrue(table.SetCellSelection(a, b, false));
-            TestTableCellSelection();
-        }
-
-        [TestCase]
-        public void SelectInvalidIndex()
-        {
-            int selectRow = table.Rows;
-            int selectColumn = table.Columns;
-
-            TestTableCellSelection();
-
-            Assert.IsFalse(table.SetCellSelection(selectRow, selectColumn, true));
-            Assert.IsFalse(table.SetCellSelection(selectRow, selectColumn, false));
-        }
-
-        [TestCase]
-        public void SelectionOnModelResizeTest()
-        {
-            var data = new TestType { testString = "Data" };
-            Assert.IsTrue(table.SetCellSelection(1, 1, true));
-            //Assert.IsTrue(table.IsCellSelected(1, 1));
-
-            modelMock.Setup(o => o.Columns).Returns(3);
-            modelMock.Setup(o => o.Rows).Returns(3);
-            modelMock.Raise(o => o.SizeChanged += null, modelMock.Object, new SizeChangedEventArgs(newColumns: 3, newRows: 3));
-            modelMock.Raise(o => o.DataChanged += null, modelMock.Object, new DataChangedEventArgs<TestType>(column: 2, row: 2, newData: data));
-
-            Assert.AreEqual(3, table.Rows);
-            Assert.AreEqual(3, table.Columns);
-
-            //Assert.IsTrue(table.IsCellSelected(1, 1));
-
-            Assert.IsTrue(table.SetCellSelection(2, 2, true));
-            //Assert.IsTrue(table.IsCellSelected(2, 2));
-        }
-
-        [TestCaseSource("ModelCoordinates")]
-        public void SelectNoDataCell(int row, int column)
-        {
-            modelMock = new Mock<IItemModel<TestType>>();
-            modelMock.Setup(o => o.Columns).Returns(2);
-            modelMock.Setup(o => o.Rows).Returns(2);
-            modelMock.Setup(o => o.DataAt(It.IsAny<int>(), It.IsAny<int>())).Returns<int, int>((a, b) => a == row && b == column ? new TestType("Data") : null);
-
-            table = new TableView<TestType>(4, 4, modelMock.Object, renderer, gameMock.Object);
-
-            TestTableCellSelection();
-
-            int selectRow = row == 0 ? 1 : 0;
-            int selectColumn = column == 0 ? 1 : 0;
-
-            Assert.IsTrue(table.SetCellSelection(selectRow, selectColumn, true));
-            Assert.IsTrue(table.SetCellSelection(selectRow, selectColumn, false));
-
-            TestTableCellSelection();
-        }
-
+  
         [SetUp]
         public void Setup()
         {
             contentMock.SetupLoad();
             
             modelMock = new Mock<IItemModel<TestType>>();
-            
-            modelMock.Setup(o => o.Columns).Returns(2);
-            modelMock.Setup(o => o.Rows).Returns(2);
-            modelMock.Setup(o => o.DataAt(It.IsAny<int>(), It.IsAny<int>())).Returns<int, int>((a, b) => new TestType("Data " + a + " " + b));
-
-            gameMock.Object.Content = contentMock.Object;
+            selectionModelMock = new Mock<ITableSelectionModel>();
             renderer = new TableRendererMock<TestType>();
 
-            table = new TableView<TestType>(4, 4, modelMock.Object, renderer, gameMock.Object);
-            table.Setup(contentMock.Object);
-            testObj = table;
+            var componentTestModelMock = new Mock<IItemModel<TestType>>();
+            SetDimension(componentTestModelMock, 5, 5);
+
+            testObj = CreateTable(componentTestModelMock, renderer, selectionModelMock);
         }
 
-        [TestCase]
-        public void ZeroSizeSelectionTest()
+        [TestCaseSource("ModelSizes")]
+        public void RowsColumnsPropertyTest(int rows, int columns)
         {
-            var data = new TestType { testString = "Data" };
+            SetDimension(modelMock, rows, columns);
 
-            modelMock.Setup(o => o.Columns).Returns(0);
-            modelMock.Setup(o => o.Rows).Returns(0);
+            table = CreateTable(modelMock, renderer, selectionModelMock);
 
-            table = new TableView<TestType>(4, 4, modelMock.Object, renderer, gameMock.Object);
+            AssertTableSize(rows, columns);
 
-            Assert.IsFalse(table.SetCellSelection(0, 0, true));
+            var newMock = new Mock<IItemModel<TestType>>();
+            SetDimension(newMock, rows + 1, columns + 1);
+
+            table.Model = newMock.Object;
+
+            AssertTableSize(rows + 1, columns + 1);
         }
 
-        private void TestTableCellSelection()
+        [TestCaseSource("ModelSizes")]
+        public void RowsColumnsOnModelChangedTest(int rows, int columns)
         {
-            for (int i = 0; i < table.Rows; i++)
-                for (int j = 0; j < table.Columns; j++) ;
-                    //Assert.IsFalse(table.IsCellSelected(i, j));
+            SetDimension(modelMock, rows, columns);
+
+            table = CreateTable(modelMock, renderer, selectionModelMock);
+
+            AssertTableSize(rows, columns);
+
+            rows++;
+            columns++;
+
+            SetDimension(modelMock, rows, columns);
+            modelMock.Raise(o => o.SizeChanged += null, modelMock.Object, new SizeChangedEventArgs(rows, columns));
+
+            AssertTableSize(rows, columns);
+
+            rows--;
+            columns--;
+
+            SetDimension(modelMock, rows, columns);
+            modelMock.Raise(o => o.SizeChanged += null, modelMock.Object, new SizeChangedEventArgs(rows, columns));
+
+            AssertTableSize(rows, columns);
         }
 
-        [TestCase]
-        public void ViewportTest()
+        [TestCaseSource("ModelSizes")]
+        public void IndicesDefaultValues(int rows, int columns)
         {
-            SpriteBatchMock spriteBatch = new SpriteBatchMock();
-            modelMock = new Mock<IItemModel<TestType>>();
-            modelMock.Setup(o => o.Columns).Returns(20);
-            modelMock.Setup(o => o.Rows).Returns(20);
-            modelMock.Setup(o => o.DataAt(It.IsAny<int>(), It.IsAny<int>())).Returns<int, int>((a, b) => new TestType(a + " " + b));
+            SetDimension(modelMock, rows, columns);
+            table = CreateTable(modelMock, renderer, selectionModelMock);
 
-            table = new TableView<TestType>(4, 4, modelMock.Object, renderer, gameMock.Object);
-            table.SetCoordinates(0, 0, 2000, 2000);
+            Assert.IsNull(table.StartIndex);
+            Assert.IsNull(table.EndIndex);
+        }
 
-            Assert.Less(table.Rows, 20);
-            Assert.Less(table.Columns, 20);
+        [TestCaseSource("TableSizes")]
+        public void SimpleDrawTest(int rows, int columns)
+        {
+            SetDimension(modelMock, rows, columns);
+            table = CreateTable(modelMock, renderer, selectionModelMock);
 
-            Assert.AreEqual(0, table.StartColumn);
-            Assert.AreEqual(0, table.StartRow);
+            table.Draw(new SpriteBatchMock());
 
-            table.StartRow = 1;
-            table.StartColumn = 1;
+            CheckDrawnComponents(rows, columns);
+        }
 
-            Assert.AreEqual(1, table.StartColumn);
-            Assert.AreEqual(1, table.StartRow);
+        private void CheckDrawnComponents(int rows, int columns)
+        {
+            CheckDrawnComponents(rows, columns, 0, 0, rows - 1, columns - 1);
+        }
 
-            table.Draw(spriteBatch);
+        private void CheckDrawnComponents(int rows, int columns, int startRow, int startColumn, int endRow, int endColumn)
+        {
+            var components = renderer.components;
+            // Assert that the table view has requested enough components
+            Assert.GreaterOrEqual(components.Columns(), rows);
+            Assert.GreaterOrEqual(components.Columns(), columns);
 
-            foreach (var s in spriteBatch.DrawnStrings)
+            //Assert that the right components have been drawn
+            for (int row = 0; row < components.Rows(); row++)
             {
-                var nums = s.Split(' ');
-                Assert.AreEqual(2, nums.Length);
-                int a = int.Parse(nums[0]);
-                int b = int.Parse(nums[1]);
+                for (int column = 0; column < components.Columns(); column++)
+                {
+                    bool isInBound = startRow <= row && row <= endRow
+                        && startColumn <= column && column <= endColumn;
+                    // Only components between columns and rows should be drawn.
+                    Assert.AreEqual(isInBound, components[row, column].WasDrawn);
+                }
+            }
+        }
 
-                Assert.GreaterOrEqual(a, 1);
-                Assert.GreaterOrEqual(b, 1);
+        [TestCaseSource("TableSizes")]
+        public void SimpleDrawnAreaTest(int rows, int columns)
+        {
+            SetDimension(modelMock, rows, columns);
+            table = CreateTable(modelMock, renderer, selectionModelMock);
 
-                Assert.Less(a, table.Rows + 1);
-                Assert.Less(a, table.Columns + 1);
+            table.Draw(new SpriteBatchMock());
+
+            CheckDrawnArea();
+
+        }
+
+        private void CheckDrawnArea()
+        {
+            var components = renderer.components;
+
+            float totalHeigth = 0;
+            float totalWidth = 0;
+            // The cells should fill the whole area of the table view
+
+            // Accumulate the height of all component for every column
+            for (int column = 0; column < components.Columns(); column++)
+            {
+                for (int row = 0; row < components.Rows(); row++)
+                {
+                    totalHeigth += components[row, column].Height;
+                }
+
+                Assert.AreEqual(totalHeigth, table.Height);
             }
 
-            table.StartRow = 19;
-            table.StartColumn = 19;
-
-            spriteBatch.DrawnStrings.Clear();
-            table.Draw(spriteBatch);
-
-            foreach (var s in spriteBatch.DrawnStrings)
+            // Accumulate the width of all component for every row
+            for (int row = 0; row < components.Rows(); row++)
             {
-                var nums = s.Split(' ');
-                Assert.AreEqual(2, nums.Length);
-                int a = int.Parse(nums[0]);
-                int b = int.Parse(nums[1]);
+                for (int column = 0; column < components.Columns(); column++)
+                {
+                    totalWidth += components[row, column].Width;
+                }
 
-                Assert.GreaterOrEqual(a, 20 - table.Rows);
-                Assert.GreaterOrEqual(b, 20 - table.Columns);
-
-                Assert.Less(a, 20);
-                Assert.Less(a, 20);
+                Assert.AreEqual(totalWidth, table.Width);
             }
+        }
+
+        [TestCaseSource("IndicesData")]
+        public void SimpleStartEndIndicesTest(int rows, int columns, TableIndex? startIndex, TableIndex? endIndex)
+        {
+            SetDimension(modelMock, rows, columns);
+            table = CreateTable(modelMock, renderer, selectionModelMock);
+
+            table.StartIndex = startIndex;
+            table.EndIndex = endIndex;
+
+            int startRow = startIndex.HasValue ? startIndex.Value.Row : 0;
+            int startColumn = startIndex.HasValue ? startIndex.Value.Column : 0;
+
+            int endRow = endIndex.HasValue ? endIndex.Value.Row : rows - 1;
+            int endColumn = endIndex.HasValue ? endIndex.Value.Column : columns - 1;
+
+            table.Draw(new SpriteBatchMock());
+
+            CheckDrawnComponents(rows, columns, startRow, startColumn, endRow, endColumn);
+
+        }
+
+        [TestCaseSource("IndicesData")]
+        public void StartEndIndicesAreaTest(int rows, int columns, TableIndex? startIndex, TableIndex? endIndex)
+        {
+            SetDimension(modelMock, rows, columns);
+            table = CreateTable(modelMock, renderer, selectionModelMock);
+
+            table.StartIndex = startIndex;
+            table.EndIndex = endIndex;
+
+            int startRow = startIndex.HasValue ? startIndex.Value.Row : 0;
+            int startColumn = startIndex.HasValue ? startIndex.Value.Column : 0;
+
+            int endRow = endIndex.HasValue ? endIndex.Value.Row : rows - 1;
+            int endColumn = endIndex.HasValue ? endIndex.Value.Column : columns - 1;
+
+            table.Draw(new SpriteBatchMock());
+
+            CheckDrawnArea();
+        }
+
+        private void AssertTableSize(int rows, int columns)
+        {
+            Assert.AreEqual(rows, table.Rows);
+            Assert.AreEqual(columns, table.Columns);
+        }
+
+        private TableView<TestType> CreateTable(Mock<IItemModel<TestType>> modelMock, TableRendererMock<TestType> renderer, Mock<ITableSelectionModel> selectionModelMock)
+        {
+            var table = new TableView<TestType>(modelMock.Object, renderer, selectionModelMock.Object, gameMock.Object);
+            table.SetCoordinates(0, 0, 500, 500);
+            return table;
+        }
+
+        private static void SetDimension(Mock<IItemModel<TestType>> modelMock, int rows, int columns)
+        {
+            modelMock.Setup(o => o.Rows).Returns(rows);
+            modelMock.Setup(o => o.Columns).Returns(columns);
         }
     }
 

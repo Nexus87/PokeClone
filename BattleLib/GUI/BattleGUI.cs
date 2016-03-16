@@ -77,7 +77,7 @@ namespace BattleLib.GraphicComponents.GUI
 
         private void InitAttackMenu(Configuration config, PokeEngine game)
         {
-            var AttackMenu = new TableWidget<Move>(4, 1, config, game);
+            var AttackMenu = new TableWidget<Move>(config, game);
             var model = new AttackModel(BattleState.GetPokemon(ID));
 
             AttackMenu.Model = model;
@@ -86,8 +86,8 @@ namespace BattleLib.GraphicComponents.GUI
             attackFrame.SetCoordinates(
                 X: PokeEngine.ScreenWidth / 2.0f,
                 Y: 2.0f * PokeEngine.ScreenHeight / 3.0f,
-                Width: PokeEngine.ScreenWidth - PokeEngine.ScreenWidth / 2.0f,
-                Height: PokeEngine.ScreenHeight - 2.0f * PokeEngine.ScreenHeight / 3.0f
+                width: PokeEngine.ScreenWidth - PokeEngine.ScreenWidth / 2.0f,
+                height: PokeEngine.ScreenHeight - 2.0f * PokeEngine.ScreenHeight / 3.0f
             );
 
             AttackMenu.ItemSelected += AttackMenu_ItemSelected;
@@ -99,7 +99,7 @@ namespace BattleLib.GraphicComponents.GUI
 
         private void InitItemMenu(Configuration config, PokeEngine game)
         {
-            var ItemMenu = new TableWidget<Item>(8, 1, config, game);
+            var ItemMenu = new TableWidget<Item>(config, game);
             var model = new DefaultListModel<Item>();
             var list = new List<Item>();
             for (int i = 0; i < 20; i++)
@@ -124,7 +124,7 @@ namespace BattleLib.GraphicComponents.GUI
 
         private void InitMainMenu(Configuration config, PokeEngine game)
         {
-            var MainMenu = new TableWidget<string>(2, 2, config, game);
+            var MainMenu = new TableWidget<string>(config, game);
             MainMenu.SetData("Attack", 0, 0);
             MainMenu.SetData("PKMN", 0, 1);
             MainMenu.SetData("Item", 1, 0);
@@ -167,7 +167,7 @@ namespace BattleLib.GraphicComponents.GUI
 
         private void InitPKMNMenu(Configuration config, PokeEngine game)
         {
-            var PKMNMenu = new TableWidget<Pokemon>(6, 1, config, game);
+            var PKMNMenu = new TableWidget<Pokemon>(config, game);
             var model = new DefaultListModel<Pokemon>();
 
             PKMNMenu.Model = model;
