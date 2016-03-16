@@ -8,12 +8,25 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using System;
 
 namespace GameEngineTest.Views
 {
     [TestFixture]
     public class TableViewTest : IGraphicComponentTest
     {
+        class CellData
+        {
+            public int row;
+            public int column;
+
+            public CellData(int row, int column)
+            {
+                this.row = row;
+                this.column = column;
+            }
+        }
+
         public static List<TestCaseData> ModelSizes = new List<TestCaseData>
         {
             new TestCaseData(0, 0),
@@ -22,10 +35,26 @@ namespace GameEngineTest.Views
             new TestCaseData(5, 5)
         };
 
-        private TableRendererMock<TestType> renderer;
+        public static List<TestCaseData> TableSizes = new List<TestCaseData>
+        {
+            new TestCaseData(1, 1),
+            new TestCaseData(5, 1),
+            new TestCaseData(1, 5),
+            new TestCaseData(5, 5)
+        };
+
+        public static List<TestCaseData> IndicesData = new List<TestCaseData>
+        {
+            new TestCaseData(5, 5, null, new TableIndex(4, 4)),
+            new TestCaseData(5, 5, new TableIndex(2, 2), null),
+            new TestCaseData(5, 5, null, null),
+            new TestCaseData(5, 5, new TableIndex(2, 2,), new TableIndex(4, 4))
+        };
+
+        private TableRendererMock<CellData> renderer;
         private Mock<ITableSelectionModel> selectionModelMock;
-        private Mock<IItemModel<TestType>> modelMock;
-        private TableView<TestType> table;
+        private Mock<IItemModel<CellData>> modelMock;
+        private TableView<CellData> table;
 
 
   
@@ -34,14 +63,79 @@ namespace GameEngineTest.Views
         {
             contentMock.SetupLoad();
             
-            modelMock = new Mock<IItemModel<TestType>>();
+            modelMock = new Mock<IItemModel<CellData>>();
             selectionModelMock = new Mock<ITableSelectionModel>();
-            renderer = new TableRendererMock<TestType>();
+            renderer = new TableRendererMock<CellData>();
 
-            var componentTestModelMock = new Mock<IItemModel<TestType>>();
+            var componentTestModelMock = new Mock<IItemModel<CellData>>();
             SetDimension(componentTestModelMock, 5, 5);
 
             testObj = CreateTable(componentTestModelMock, renderer, selectionModelMock);
+        }
+
+        [TestCaseSource("RemoveTestData")]
+        public void ResizeModelDataTest(int rows, int columns, int index, bool isColumnRemoved)
+        {
+            CellData[,] data = new CellData[rows, columns];
+            FillTable(data);
+
+            SetDimension(modelMock, rows, columns);
+            table = CreateTable(modelMock, renderer, selectionModelMock);
+
+            modelMock.Setup(o => o.DataAt(It.IsAny<int>(), It.IsAny<int>()))
+                .Returns<int, int>((a, b) => data[a, b]);
+
+            table.Draw(new SpriteBatchMock());
+            CompareTables(rows, columns, data, renderer.entries);
+
+            if (isColumnRemoved)
+                columns--;
+            else
+                rows--;
+
+            SetDimension(modelMock, rows, columns);
+
+            if (isColumnRemoved)
+            {
+                for(int i = index; i < columns; i++)
+                {
+                    for (int j = 0; j < rows; j++)
+                        data[j, i] = data[j, i + 1];
+                }
+            }
+            else
+            {
+                for (int i = index; i < rows; i++)
+                {
+                    for (int j = 0; j < columns; j++)
+                        data[i, j] = data[i + 1, j];
+                }
+            }
+
+            modelMock.Raise(o => o.SizeChanged += null, modelMock.Object, new SizeChangedEventArgs(rows, columns));
+            table.Draw(new SpriteBatchMock());
+
+            CompareTables(rows, columns, data, renderer.entries);
+
+
+        }
+
+        private void CompareTables(int rows, int columns, CellData[,] data, CellData[,] entries)
+        {
+            for(int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                    Assert.AreEqual(data[i, j], entries[i, j]);
+            }
+        }
+
+        private static void FillTable(CellData[,] data)
+        {
+            for (int i = 0; i < data.Rows(); i++)
+            {
+                for (int j = 0; j < data.Columns(); j++)
+                    data[i, j] = new CellData(i, j);
+            }
         }
 
         [TestCaseSource("ModelSizes")]
@@ -53,7 +147,7 @@ namespace GameEngineTest.Views
 
             AssertTableSize(rows, columns);
 
-            var newMock = new Mock<IItemModel<TestType>>();
+            var newMock = new Mock<IItemModel<CellData>>();
             SetDimension(newMock, rows + 1, columns + 1);
 
             table.Model = newMock.Object;
@@ -223,14 +317,14 @@ namespace GameEngineTest.Views
             Assert.AreEqual(columns, table.Columns);
         }
 
-        private TableView<TestType> CreateTable(Mock<IItemModel<TestType>> modelMock, TableRendererMock<TestType> renderer, Mock<ITableSelectionModel> selectionModelMock)
+        private TableView<CellData> CreateTable(Mock<IItemModel<CellData>> modelMock, TableRendererMock<CellData> renderer, Mock<ITableSelectionModel> selectionModelMock)
         {
-            var table = new TableView<TestType>(modelMock.Object, renderer, selectionModelMock.Object, gameMock.Object);
+            var table = new TableView<CellData>(modelMock.Object, renderer, selectionModelMock.Object, gameMock.Object);
             table.SetCoordinates(0, 0, 500, 500);
             return table;
         }
 
-        private static void SetDimension(Mock<IItemModel<TestType>> modelMock, int rows, int columns)
+        private static void SetDimension(Mock<IItemModel<CellData>> modelMock, int rows, int columns)
         {
             modelMock.Setup(o => o.Rows).Returns(rows);
             modelMock.Setup(o => o.Columns).Returns(columns);
