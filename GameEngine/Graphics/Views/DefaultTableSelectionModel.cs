@@ -10,27 +10,37 @@ namespace GameEngine.Graphics.Views
 {
     public class DefaultTableSelectionModel : ITableSelectionModel
     {
-        private bool[,] selections = new bool[0, 0];
-        private bool? currentSelection;
+        private Tuple<int, int> currentSelection;
 
         public event EventHandler<SelectionChangedEventArgs> SelectionChanged;
 
         public void SelectIndex(int row, int column)
         {
-            throw new NotImplementedException();
+            CheckRange(row, column);
+
+            currentSelection = new Tuple<int, int>(row, column);
+
         }
 
         public void UnselectIndex(int row, int column)
         {
-            throw new NotImplementedException();
+            CheckRange(row, column);
+
+            if (IsSelected(row, column))
+                currentSelection = null;
+        }
+
+        private void CheckRange(int row, int column)
+        {
+            if (row < 0 || column < 0)
+                throw new ArgumentOutOfRangeException("row and column must be positive");
         }
 
         public bool IsSelected(int row, int column)
         {
-            if (row >= selections.Rows() || column >= selections.Columns())
-                return false;
+            CheckRange(row, column);
 
-            return selections[row, column];
+            return currentSelection != null && row == currentSelection.Item1 && column == currentSelection.Item2;
         }
     }
 }
