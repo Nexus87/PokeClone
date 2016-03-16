@@ -11,14 +11,24 @@ namespace GameEngine.Graphics.Views
     public class DefaultTableSelectionModel : ITableSelectionModel
     {
         private Tuple<int, int> currentSelection;
+        private int CurrentRow { get { return currentSelection.Item1; } }
+        private int CurrentColumn { get { return currentSelection.Item2; } }
 
-        public event EventHandler<SelectionChangedEventArgs> SelectionChanged;
+        public event EventHandler<SelectionChangedEventArgs> SelectionChanged = delegate { };
 
         public void SelectIndex(int row, int column)
         {
+            
             CheckRange(row, column);
 
+            if (IsSelected(row, column))
+                return;
+
+            if (currentSelection != null)
+                UnselectIndexImpl(CurrentRow, CurrentColumn);
+
             currentSelection = new Tuple<int, int>(row, column);
+            SelectionChanged(this, new SelectionChangedEventArgs(row, column, true));
 
         }
 
@@ -26,8 +36,16 @@ namespace GameEngine.Graphics.Views
         {
             CheckRange(row, column);
 
-            if (IsSelected(row, column))
-                currentSelection = null;
+            if (!IsSelected(row, column))
+                return;
+
+            UnselectIndexImpl(row, column);
+        }
+
+        private void UnselectIndexImpl(int row, int column)
+        {
+            currentSelection = null;
+            SelectionChanged(this, new SelectionChangedEventArgs(row, column, false));
         }
 
         private void CheckRange(int row, int column)
@@ -40,7 +58,7 @@ namespace GameEngine.Graphics.Views
         {
             CheckRange(row, column);
 
-            return currentSelection != null && row == currentSelection.Item1 && column == currentSelection.Item2;
+            return currentSelection != null && row == CurrentRow && column == CurrentColumn;
         }
     }
 }

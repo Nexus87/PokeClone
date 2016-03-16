@@ -33,6 +33,83 @@ namespace GameEngineTest.Views
         }
 
         [TestCaseSource("ValidIndices")]
+        public void SimpleSelectEventTest(int row, int column)
+        {
+            var args = new List<SelectionChangedEventArgs>();
+            model.SelectionChanged += (obj, arg) => args.Add(arg);
+
+            model.SelectIndex(row, column);
+
+            Assert.AreEqual(1, args.Count);
+            
+            var argument = args[0];
+
+            Assert.AreEqual(row, argument.Row);
+            Assert.AreEqual(column, argument.Column);
+            Assert.True(argument.IsSelected);
+        }
+
+        [TestCaseSource("ValidIndices")]
+        public void SimpleUnselectEventTest(int row, int column)
+        {
+            var args = new List<SelectionChangedEventArgs>();
+            model.SelectionChanged += (obj, arg) => args.Add(arg);
+
+            model.UnselectIndex(row, column);
+            Assert.AreEqual(0, args.Count);
+
+            model.SelectIndex(row, column);
+            args.Clear();
+            model.UnselectIndex(row, column);
+
+            Assert.AreEqual(1, args.Count);
+
+            var argument = args[0];
+            Assert.AreEqual(row, argument.Row);
+            Assert.AreEqual(column, argument.Column);
+            Assert.False(argument.IsSelected);
+        }
+
+        [TestCaseSource("ValidIndices")]
+        public void SameCellSelectionEventTest(int row, int column)
+        {
+            model.SelectIndex(row, column);
+
+            bool wasSelected = false;
+            model.SelectionChanged += (obj, arg) => wasSelected = true;
+
+            model.SelectIndex(row, column);
+
+            Assert.IsFalse(wasSelected);
+        }
+
+        [TestCaseSource("MultipleIndices")]
+        public void MultipleSelectionEventTest(int row, int column, int newRow, int newColumn)
+        {
+            model.SelectIndex(row, column);
+
+            var args = new List<SelectionChangedEventArgs>();
+            model.SelectionChanged += (obj, arg) => args.Add(arg);
+
+            model.SelectIndex(newRow, newColumn);
+
+            Assert.AreEqual(2, args.Count);
+
+            // The cell (row, column) was unselected, (newRow, newColumn) was selected
+            var unselected = (from ev in args where ev.IsSelected == false select ev).FirstOrDefault();
+            var selected = (from ev in args where ev.IsSelected == true select ev).FirstOrDefault();
+
+            Assert.NotNull(unselected);
+            Assert.NotNull(selected);
+
+            Assert.AreEqual(row, unselected.Row);
+            Assert.AreEqual(column, unselected.Column);
+
+            Assert.AreEqual(newRow, selected.Row);
+            Assert.AreEqual(newColumn, selected.Column);
+        }
+
+        [TestCaseSource("ValidIndices")]
         public void SimpleSelectUnselectTest(int row, int column)
         {
             Assert.IsFalse(model.IsSelected(row, column));
