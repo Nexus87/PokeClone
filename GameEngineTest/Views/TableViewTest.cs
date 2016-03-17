@@ -124,6 +124,32 @@ namespace GameEngineTest.Views
         }
 
         [TestCaseSource("SelectionIndices")]
+        public void SelectionChangedEventTest(int rows, int columns, int selectedRow, int selectedColumn)
+        {
+            SetDimension(modelMock, rows, columns);
+            table = CreateTable(modelMock, renderer, selectionModelMock);
+
+            table.Draw(new SpriteBatchMock());
+
+            selectionModelMock.Setup(o => o.IsSelected(It.IsAny<int>(), It.IsAny<int>()))
+                .Returns<int, int>((a, b) => a == selectedRow && b == selectedColumn);
+
+            selectionModelMock.Raise(o => o.SelectionChanged += null, 
+                selectionModelMock.Object, 
+                new SelectionChangedEventArgs(selectedRow, selectedColumn, true)
+                );
+
+            table.Draw(new SpriteBatchMock());
+
+            IterateComponents(0, 0, rows - 1, columns - 1, (data, isInBound) =>
+            {
+                int r = data.Row;
+                int c = data.Column;
+                bool isSelected = data.IsSelected;
+                Assert.AreEqual(r == selectedRow && c == selectedColumn, isSelected);
+            });
+        }
+        [TestCaseSource("SelectionIndices")]
         public void CellSelectionTest(int rows, int columns, int selectedRow, int selectedColumn)
         {
             SetDimension(modelMock, rows, columns);

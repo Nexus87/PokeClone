@@ -16,7 +16,7 @@ namespace GameEngine.Graphics.Basic
         public Container(PokeEngine game) : base(game) { }
         public ILayout Layout { get; set; }
 
-        public ReadOnlyCollection<IGraphicComponent> Components { get { return components.AsReadOnly(); } }
+        public IReadOnlyList<IGraphicComponent> Components { get { return components.AsReadOnly(); } }
         private List<IGraphicComponent> components = new List<IGraphicComponent>();
 
         public void AddComponent(IGraphicComponent comp, int index)

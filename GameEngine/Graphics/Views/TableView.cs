@@ -3,6 +3,8 @@ using GameEngine.Graphics.Layouts;
 using GameEngine.Utils;
 using Microsoft.Xna.Framework.Content;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace GameEngine.Graphics.Views
 {
@@ -49,9 +51,44 @@ namespace GameEngine.Graphics.Views
 
         private void SelectionChangedHandler(object sender, SelectionChangedEventArgs e)
         {
-            Invalidate();
+            int row = e.Row;
+            int column = e.Column;
+
+            // The cell is currently not visible. So nothing needs to be done.
+            if (row < StartRow || row > EndRow || column < StartColumn || column > EndColumn)
+                return;
+
+            var components = InnerComponent.Components;
+            // FillLayout has not yet been called.
+            if (components.Count == 0)
+                return;
+
+            int idx = CalculateIndex(row - StartRow, column - StartColumn, VisibleColumns);
+
+            Debug.Assert(idx < components.Count);
+
+            if (e.IsSelected)
+                ((ISelectableGraphicComponent)components[idx]).Select();
+            else
+                ((ISelectableGraphicComponent)components[idx]).Unselect();
+            
         }
 
+        private int StartRow { get { return StartIndex.HasValue ? StartIndex.Value.Row : 0; } }
+
+        private int StartColumn { get { return StartIndex.HasValue ? StartIndex.Value.Column : 0; } }
+
+        private int EndRow { get { return EndIndex.HasValue ? EndIndex.Value.Row : Rows - 1; } }
+
+        private int EndColumn { get { return EndIndex.HasValue ? EndIndex.Value.Column : Columns - 1; } }
+
+        private int VisibleColumns { get { return EndColumn - StartColumn + 1; } }
+        private int VisibleRows { get { return EndRow - StartRow + 1; } }
+
+        private static int CalculateIndex(int row, int column, int columns)
+        {
+            return column + columns * row;
+        }
         public event EventHandler<TableResizeEventArgs> OnTableResize;
 
         public int Columns { get { return model.Columns; } }
@@ -170,21 +207,13 @@ namespace GameEngine.Graphics.Views
             var container = InnerComponent;
             container.RemoveAllComponents();
 
-            int startRow = StartIndex.HasValue ? StartIndex.Value.Row : 0;
-            int startColumn = StartIndex.HasValue ? StartIndex.Value.Column : 0;
 
-            int endRow = EndIndex.HasValue ? EndIndex.Value.Row : Rows - 1;
-            int endColumn = EndIndex.HasValue ? EndIndex.Value.Column : Columns - 1;
-
-            int realRows = endRow - startRow + 1;
-            int realColumns = endColumn - startColumn + 1;
-
-            layout.Rows = realRows;
-            layout.Columns = realColumns;
+            layout.Rows = VisibleRows;
+            layout.Columns = VisibleColumns;
             
-            for (int row = startRow; row <= endRow; row++)
+            for (int row = StartRow; row <= EndRow; row++)
             {
-                for (int column = startColumn; column <= endColumn; column++)
+                for (int column = StartColumn; column <= EndColumn; column++)
                 {
                     var data = model[row, column];
                     var selection = selectionModel.IsSelected(row, column);

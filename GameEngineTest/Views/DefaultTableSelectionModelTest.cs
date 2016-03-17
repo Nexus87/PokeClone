@@ -21,15 +21,15 @@ namespace GameEngineTest.Views
 
         public static List<TestCaseData> ValidIndices = new List<TestCaseData> 
         { 
-            new TestCaseData(0, 0),
+            new TestCaseData(0, 10),
             new TestCaseData(10, 10),
             new TestCaseData(10, 0)
         };
 
-        [TestCaseSource("ValidIndices")]
-        public void DefaultValueTest(int row, int column)
+        [TestCase]
+        public void DefaultValueTest()
         {
-            Assert.IsFalse(model.IsSelected(row, column));
+            Assert.IsTrue(model.IsSelected(0, 0));
         }
 
         [TestCaseSource("ValidIndices")]
@@ -40,9 +40,9 @@ namespace GameEngineTest.Views
 
             model.SelectIndex(row, column);
 
-            Assert.AreEqual(1, args.Count);
-            
-            var argument = args[0];
+            Assert.AreEqual(2, args.Count);
+
+            var argument = (from a in args where a.IsSelected select a).FirstOrDefault();
 
             Assert.AreEqual(row, argument.Row);
             Assert.AreEqual(column, argument.Column);

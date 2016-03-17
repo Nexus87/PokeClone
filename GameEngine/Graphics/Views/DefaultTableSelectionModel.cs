@@ -10,7 +10,7 @@ namespace GameEngine.Graphics.Views
 {
     public class DefaultTableSelectionModel : ITableSelectionModel
     {
-        private Tuple<int, int> currentSelection;
+        private Tuple<int, int> currentSelection = new Tuple<int, int>(0, 0);
         private int CurrentRow { get { return currentSelection.Item1; } }
         private int CurrentColumn { get { return currentSelection.Item2; } }
 
