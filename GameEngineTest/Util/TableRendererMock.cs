@@ -7,7 +7,7 @@ using System;
 
 namespace GameEngineTest.Util
 {
-    public class TableComponentMock : ISelectableGraphicComponent
+    public class TableComponentMock<T> : ISelectableGraphicComponent
     {
         public bool WasDrawn { get; set; }
         public int Row { get; set; }
@@ -29,7 +29,7 @@ namespace GameEngineTest.Util
         public float Width { get; set; }
 
         public float Height { get; set; }
-
+        public T Data { get; set; }
         public void Draw(GameTime time, ISpriteBatch batch)
         {
             WasDrawn = true;
@@ -49,7 +49,7 @@ namespace GameEngineTest.Util
     {
         public T[,] entries = new T[0, 0];
         public bool[,] selections = new bool[0,0];
-        public TableComponentMock[,] components = new TableComponentMock[0,0];
+        public TableComponentMock<T>[,] components = new TableComponentMock<T>[0,0];
 
         public GameEngine.Graphics.ISelectableGraphicComponent GetComponent(int row, int column, T data, bool isSelected)
         {
@@ -60,10 +60,14 @@ namespace GameEngineTest.Util
             entries[row, column] = data;
             selections[row, column] = isSelected;
 
-            if(components[row, column] == null)
-                components[row, column] = new TableComponentMock { Row = row, Column = column, IsSelected = isSelected, WasDrawn = false };
+            if (components[row, column] == null)
+                components[row, column] = new TableComponentMock<T> { Row = row, Column = column, WasDrawn = false };
 
-            return components[row, column];
+            var component = components[row, column];
+            component.Data = data;
+            component.IsSelected = isSelected;
+
+            return component;
         }
 
         public void ClearDrawnComponents()
@@ -79,7 +83,11 @@ namespace GameEngineTest.Util
         {
             if (row >= source.Rows() || column >= source.Columns())
             {
-                var tmp = new S[row + 1, column + 1];
+                // Always grow
+                int newRows = Math.Max(source.Rows(), row + 1);
+                int newColumns = Math.Max(source.Columns(), column + 1);
+
+                var tmp = new S[newRows, newColumns];
                 source.Copy(tmp);
                 return tmp;
             }

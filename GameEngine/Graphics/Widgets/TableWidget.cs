@@ -53,8 +53,8 @@ namespace GameEngine.Graphics.Widgets
         private bool isVisible;
         public IItemModel<T> Model
         {
-            get { return view.Model; }
-            set { view.Model = value; }
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
         }
 
         private ISelectionHandler Handler
