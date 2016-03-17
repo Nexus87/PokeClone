@@ -25,7 +25,7 @@ namespace GameEngineTest.Views
 
     public abstract class IItemModelTest
     {
-        public IItemModel<TestType> testModel;
+        public ITableModel<TestType> testModel;
 
         [TestCase]
         public void SetGetTest()

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BattleLib.GUI
 {
-    public class ItemModel : IItemModel<Item>
+    public class ItemModel : ITableModel<Item>
     {
         private int oldRowCount;
         private Client player;

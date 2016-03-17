@@ -68,7 +68,7 @@
     <Compile Include="Graphics\GUIManager.cs" />
     <Compile Include="Graphics\Views\DefaultTableRenderer.cs" />
     <Compile Include="Graphics\Views\DefaultTableSelectionModel.cs" />
-    <Compile Include="Graphics\Views\IItemView.cs" />
+    <Compile Include="Graphics\Views\ITableView.cs" />
     <Compile Include="EventComponent\IEvent.cs" />
     <Compile Include="EventComponent\IEventQueue.cs" />
     <Compile Include="Graphics\Views\ITableRenderer.cs" />
@@ -79,12 +79,9 @@
     <Compile Include="Graphics\Layouts\ILayout.cs" />
     <Compile Include="Graphics\Basic\Line.cs" />
     <Compile Include="Graphics\Layouts\GridLayout.cs" />
-    <Compile Include="Graphics\Views\DefaultListModel.cs" />
-    <Compile Include="Graphics\Views\DefaultSelectionHandler.cs" />
     <Compile Include="Graphics\Views\DefaultTableModel.cs" />
     <Compile Include="Graphics\IInputHandler.cs" />
-    <Compile Include="Graphics\Views\IItemModel.cs" />
-    <Compile Include="Graphics\Widgets\ISelectionHandler.cs" />
+    <Compile Include="Graphics\Views\ITableModel.cs" />
     <Compile Include="Graphics\Views\ItemBox.cs" />
     <Compile Include="Graphics\Widgets\IWidget.cs" />
     <Compile Include="Graphics\Views\TableView.cs" />

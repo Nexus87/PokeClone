@@ -20,11 +20,11 @@ namespace GameEngine.Graphics.Views
 
     public class TableView<T> : ForwardingGraphicComponent<Container>, ITableView
     {
-        private IItemModel<T> model;
+        private ITableModel<T> model;
         private ITableRenderer<T> renderer;
         private ITableSelectionModel selectionModel;
 
-        public TableView(IItemModel<T> model, ITableRenderer<T> renderer, ITableSelectionModel selectionModel, PokeEngine game)
+        public TableView(ITableModel<T> model, ITableRenderer<T> renderer, ITableSelectionModel selectionModel, PokeEngine game)
             : base(new Container(game), game)
         {
             renderer.CheckNull("renderer");
@@ -166,7 +166,7 @@ namespace GameEngine.Graphics.Views
         private TableIndex? startIndex = null;
         private TableIndex? endIndex = null;
         private GridLayout layout;
-        private IItemModel<T> Model
+        private ITableModel<T> Model
         {
             get { return model; }
             set
@@ -232,7 +232,7 @@ namespace GameEngine.Graphics.Views
             Invalidate();
         }
 
-        private void SetModel(IItemModel<T> value)
+        private void SetModel(ITableModel<T> value)
         {
             if (model != null)
             {

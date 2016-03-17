@@ -90,7 +90,7 @@ namespace GameEngineTest.Views
 
         private TableRendererMock<CellData> renderer;
         private Mock<ITableSelectionModel> selectionModelMock;
-        private Mock<IItemModel<CellData>> modelMock;
+        private Mock<ITableModel<CellData>> modelMock;
         private TableView<CellData> table;
 
 
@@ -100,11 +100,11 @@ namespace GameEngineTest.Views
         {
             contentMock.SetupLoad();
             
-            modelMock = new Mock<IItemModel<CellData>>();
+            modelMock = new Mock<ITableModel<CellData>>();
             selectionModelMock = new Mock<ITableSelectionModel>();
             renderer = new TableRendererMock<CellData>();
 
-            var componentTestModelMock = new Mock<IItemModel<CellData>>();
+            var componentTestModelMock = new Mock<ITableModel<CellData>>();
             SetDimension(componentTestModelMock, 5, 5);
 
             testObj = new TableView<CellData>(modelMock.Object, renderer, selectionModelMock.Object, gameMock.Object);
@@ -272,7 +272,7 @@ namespace GameEngineTest.Views
 
             AssertTableSize(rows, columns);
 
-            var newMock = new Mock<IItemModel<CellData>>();
+            var newMock = new Mock<ITableModel<CellData>>();
             SetDimension(newMock, rows + 1, columns + 1);
 
             //table.Model = newMock.Object;
@@ -506,14 +506,14 @@ namespace GameEngineTest.Views
             Assert.AreEqual(columns, table.Columns);
         }
 
-        private TableView<CellData> CreateTable(Mock<IItemModel<CellData>> modelMock, TableRendererMock<CellData> renderer, Mock<ITableSelectionModel> selectionModelMock)
+        private TableView<CellData> CreateTable(Mock<ITableModel<CellData>> modelMock, TableRendererMock<CellData> renderer, Mock<ITableSelectionModel> selectionModelMock)
         {
             var table = new TableView<CellData>(modelMock.Object, renderer, selectionModelMock.Object, gameMock.Object);
             table.SetCoordinates(0, 0, 500, 500);
             return table;
         }
 
-        private static void SetDimension(Mock<IItemModel<CellData>> modelMock, int rows, int columns)
+        private static void SetDimension(Mock<ITableModel<CellData>> modelMock, int rows, int columns)
         {
             modelMock.Setup(o => o.Rows).Returns(rows);
             modelMock.Setup(o => o.Columns).Returns(columns);

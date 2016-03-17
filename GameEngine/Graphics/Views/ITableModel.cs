@@ -32,7 +32,7 @@ namespace GameEngine.Graphics.Views
         }
     }
 
-    public interface IItemModel<T>
+    public interface ITableModel<T>
     {
         event EventHandler<DataChangedEventArgs<T>> DataChanged;
         event EventHandler<SizeChangedEventArgs> SizeChanged;

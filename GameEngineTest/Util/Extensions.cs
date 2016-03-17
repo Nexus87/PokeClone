@@ -56,14 +56,14 @@ namespace GameEngineTest.Util
             fontMock.Setup(o => o.MeasureString(It.IsAny<string>())).Returns<string>(s => new Vector2(16.0f * s.Length, 16.0f));
         }
 
-        public static void SetupModelMock<T>(this Mock<IItemModel<T>> model, int rows, int columns, T data)
+        public static void SetupModelMock<T>(this Mock<ITableModel<T>> model, int rows, int columns, T data)
         {
             model.Setup(o => o.Rows).Returns(rows);
             model.Setup(o => o.Columns).Returns(columns);
             model.Setup(o => o.DataAt(It.IsAny<int>(), It.IsAny<int>())).Returns(data);
         }
 
-        public static void SetupModelMock<T>(this Mock<IItemModel<T>> model, int rows, int columns, Func<int, int, T> retFunc)
+        public static void SetupModelMock<T>(this Mock<ITableModel<T>> model, int rows, int columns, Func<int, int, T> retFunc)
         {
             model.Setup(o => o.Rows).Returns(rows);
             model.Setup(o => o.Columns).Returns(columns);

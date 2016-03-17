@@ -100,10 +100,10 @@ namespace BattleLib.GraphicComponents.GUI
         private void InitItemMenu(Configuration config, PokeEngine game)
         {
             var ItemMenu = new TableWidget<Item>(config, game);
-            var model = new DefaultListModel<Item>();
+            var model = new DefaultTableModel<Item>();
             var list = new List<Item>();
             for (int i = 0; i < 20; i++)
-                model.SetData(new Item { Name = "Item" + i }, i);
+                model.SetData(new Item { Name = "Item" + i }, i, 0);
 
             ItemMenu.Model = model;
 
@@ -168,7 +168,7 @@ namespace BattleLib.GraphicComponents.GUI
         private void InitPKMNMenu(Configuration config, PokeEngine game)
         {
             var PKMNMenu = new TableWidget<Pokemon>(config, game);
-            var model = new DefaultListModel<Pokemon>();
+            var model = new DefaultTableModel<Pokemon>();
 
             PKMNMenu.Model = model;
 

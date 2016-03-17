@@ -6,9 +6,9 @@ using System.Collections.Generic;
 
 namespace BattleLib.GraphicComponents.GUI
 {
-    internal class AttackModel : DefaultListModel<Move>
+    internal class AttackModel : DefaultTableModel<Move>
     {
-        public AttackModel(PokemonWrapper pokemon) : base (4)
+        public AttackModel(PokemonWrapper pokemon)
         {
             pokemon.PokemonChanged += PokemonChangedHandler;
         }
@@ -28,12 +28,6 @@ namespace BattleLib.GraphicComponents.GUI
                 throw new ArgumentException("Index out of bound");
 
             return base.SetData(data, row, column);
-        }
-
-        public override string DataStringAt(int row, int column)
-        {
-            var data = DataAt(row, 0);
-            return data != null ? data.ToString() : "----";
         }
     }
 }

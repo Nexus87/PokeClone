@@ -3,7 +3,7 @@ using GameEngine.Utils;
 
 namespace GameEngine.Graphics.Views
 {
-    public class DefaultTableModel<T> : IItemModel<T>
+    public class DefaultTableModel<T> : ITableModel<T>
     {
         private T[,] items;
 
@@ -19,9 +19,9 @@ namespace GameEngine.Graphics.Views
         public event EventHandler<DataChangedEventArgs<T>> DataChanged = delegate { };
         public event EventHandler<SizeChangedEventArgs> SizeChanged = delegate { };
 
-        public int Columns { get { return items.GetLength(1); } }
+        public virtual int Columns { get { return items.GetLength(1); } }
 
-        public int Rows { get { return items.GetLength(0); } }
+        public virtual int Rows { get { return items.GetLength(0); } }
 
         public T DataAt(int row, int column)
         {
@@ -31,17 +31,7 @@ namespace GameEngine.Graphics.Views
             return items[row, column];
         }
 
-        public string DataStringAt(int row, int column)
-        {
-            if (row >= Rows || column >= Columns)
-                return "";
-
-            var item = items[row, column];
-            return item == null ? "" : item.ToString();
-        }
-
-
-        public bool SetData(T data, int row, int column)
+        public virtual bool SetData(T data, int row, int column)
         {
             if (row >= Rows || column >= Columns)
             {

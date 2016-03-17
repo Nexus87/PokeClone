@@ -13,7 +13,6 @@ namespace GameEngine.Graphics.Widgets
 {
     public class TableWidget<T> : ForwardingGraphicComponent<TableView<T>>, IWidget
     {
-        private ISelectionHandler handler;
         private TableView<T> view;
         private static ISpriteFont DefaultCreator()
         {
@@ -24,14 +23,12 @@ namespace GameEngine.Graphics.Widgets
             : base(new TableView<T>(new DefaultTableModel<T>(), new DefaultTableRenderer<T>(game, DefaultCreator), new DefaultTableSelectionModel(), game), game)
         {
             view = InnerComponent;
-            Handler = new DefaultSelectionHandler();
         }
 
         public TableWidget(Configuration config, PokeEngine game)
             : base(new TableView<T>(new DefaultTableModel<T>(), new DefaultTableRenderer<T>(game, DefaultCreator), new DefaultTableSelectionModel(), game), game)
         {
             view = InnerComponent;
-            Handler = new DefaultSelectionHandler(config);
         }
 
         public event EventHandler<SelectionEventArgs<T>> ItemSelected = delegate { };
@@ -51,30 +48,12 @@ namespace GameEngine.Graphics.Widgets
             }
         }
         private bool isVisible;
-        public IItemModel<T> Model
+        public ITableModel<T> Model
         {
             get { throw new NotImplementedException(); }
             set { throw new NotImplementedException(); }
         }
 
-        private ISelectionHandler Handler
-        {
-            set
-            {
-                value.CheckNull("value");
-
-                if (handler != null)
-                {
-                    handler.ItemSelected -= handler_ItemSelected;
-                    handler.CloseRequested -= handler_CloseRequested;
-                }
-
-                handler = value;
-                handler.ItemSelected += handler_ItemSelected;
-                handler.CloseRequested += handler_CloseRequested;
-                handler.Init(view);
-            }
-        }
 
         public T GetData(int row, int column)
         {
@@ -83,7 +62,7 @@ namespace GameEngine.Graphics.Widgets
 
         public bool HandleInput(Keys key)
         {
-            return handler.HandleInput(key);
+            return false;
         }
 
         public void SetData(T data, int row, int column)
@@ -94,12 +73,6 @@ namespace GameEngine.Graphics.Widgets
         private void handler_CloseRequested(object sender, EventArgs e)
         {
             OnExitRequested(this, null);
-        }
-
-        private void handler_ItemSelected(object sender, EventArgs e)
-        {
-            var Item = Model.DataAt(handler.SelectedRow, handler.SelectedColumn);
-            ItemSelected(this, new SelectionEventArgs<T>(selectedData: Item));
         }
 
         protected override void Update()
