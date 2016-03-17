@@ -27,6 +27,23 @@ namespace GameEngineTest.Views
             }
         }
 
+        public static List<TestCaseData> InvalidSelectionIndices = new List<TestCaseData>
+        {
+            new TestCaseData(5, 5, -1, 0),
+            new TestCaseData(5, 5, 0, -1),
+            new TestCaseData(5, 5, -1, -1),
+            new TestCaseData(5, 5, 5, 0),
+            new TestCaseData(5, 5, 0, 5),
+            new TestCaseData(5, 5, 5, 5),
+        };
+
+        public static List<TestCaseData> SelectionIndices = new List<TestCaseData>
+        {
+            new TestCaseData(5, 5, 1, 1),
+            new TestCaseData(5, 5, 3, 4),
+            new TestCaseData(3, 2, 1, 0)
+        };
+
         public static List<TestCaseData> ModelSizes = new List<TestCaseData>
         {
             new TestCaseData(0, 0),
@@ -105,6 +122,27 @@ namespace GameEngineTest.Views
                 table.EndIndex = endIndex;
             });
         }
+
+        [TestCaseSource("SelectionIndices")]
+        public void CellSelectionTest(int rows, int columns, int selectedRow, int selectedColumn)
+        {
+            SetDimension(modelMock, rows, columns);
+            table = CreateTable(modelMock, renderer, selectionModelMock);
+
+            selectionModelMock.Setup(o => o.IsSelected(It.IsAny<int>(), It.IsAny<int>()))
+                .Returns<int, int>((a, b) => a == selectedRow && b == selectedColumn);
+
+            table.Draw(new SpriteBatchMock());
+
+            IterateComponents(0, 0, rows - 1, columns - 1, (data, isInBound) =>
+            {
+                int r = data.Row;
+                int c = data.Column;
+                bool isSelected = data.IsSelected;
+                Assert.AreEqual(r == selectedRow && c == selectedColumn, isSelected);
+            });
+        }
+
         [TestCaseSource("RemoveTestData")]
         public void ResizeModelDataTest(int rows, int columns, int index, bool isColumnRemoved)
         {
@@ -216,6 +254,43 @@ namespace GameEngineTest.Views
             //AssertTableSize(rows + 1, columns + 1);
         }
 
+        [TestCaseSource("SelectionIndices")]
+        public void SimpleSelectionTest(int rows, int columns, int selectedRow, int selectedColumn)
+        {
+            SetDimension(modelMock, rows, columns);
+            selectionModelMock = new Mock<ITableSelectionModel>(MockBehavior.Strict);
+
+            selectionModelMock.Setup(o => o.SelectIndex(selectedRow, selectedColumn));
+            table = CreateTable(modelMock, renderer, selectionModelMock);
+            
+            
+            table.SetCellSelection(selectedRow, selectedColumn, true);
+            selectionModelMock.Verify(o => o.SelectIndex(selectedRow, selectedColumn), Times.Once);
+
+            selectionModelMock.ResetCalls();
+            selectionModelMock.Setup(o => o.UnselectIndex(selectedRow, selectedColumn));
+
+            table.SetCellSelection(selectedRow, selectedColumn, false);
+
+            selectionModelMock.Verify(o => o.UnselectIndex(selectedRow, selectedColumn), Times.Once);
+        }
+
+        [TestCaseSource("InvalidSelectionIndices")]
+        public void InvalidSelectionindicesTest(int rows, int columns, int selectedRow, int selectedColumn)
+        {
+            SetDimension(modelMock, rows, columns);
+            table = CreateTable(modelMock, renderer, selectionModelMock);
+
+            Assert.Throws<ArgumentOutOfRangeException>(delegate
+            {
+                table.SetCellSelection(selectedRow, selectedColumn, true);
+            });
+
+            Assert.Throws<ArgumentOutOfRangeException>(delegate
+            {
+                table.SetCellSelection(selectedRow, selectedColumn, false);
+            });
+        }
         [TestCaseSource("ModelSizes")]
         public void RowsColumnsOnModelChangedTest(int rows, int columns)
         {

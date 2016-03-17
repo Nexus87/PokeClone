@@ -145,6 +145,9 @@ namespace GameEngine.Graphics.Views
 
         public void SetCellSelection(int row, int column, bool isSelected)
         {
+            if (row < 0 || row >= Rows || column < 0 || column >= Columns)
+                throw new ArgumentOutOfRangeException("Selection must be between row and column");
+
             if (isSelected)
                 selectionModel.SelectIndex(row, column);
             else
