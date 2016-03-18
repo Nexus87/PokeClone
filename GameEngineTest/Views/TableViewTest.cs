@@ -27,6 +27,30 @@ namespace GameEngineTest.Views
             }
         }
 
+        public static List<TestCaseData> ResizeIndices = new List<TestCaseData>
+        {
+            new TestCaseData(1, 3, null, null, 
+                             2, 1, null, null),
+
+            new TestCaseData(2, 2, null, new TableIndex(1, 1), 
+                             1, 2, null, new TableIndex(0, 1)),
+
+            new TestCaseData(5, 5, new TableIndex(4, 4), new TableIndex(4, 4), 
+                             4, 4, new TableIndex(3, 3), new TableIndex(3, 3)),
+
+            new TestCaseData(10, 4, new TableIndex(9, 3), null,
+                              9, 3, new TableIndex(8, 2), null)
+        };
+        public static List<TestCaseData> ResizeData = new List<TestCaseData>
+        {
+            new TestCaseData(2, 2, 3, 3),
+            new TestCaseData(2, 1, 4, 5),
+            new TestCaseData(1, 2, 5, 4),
+            new TestCaseData(0, 0, 3, 5),
+            new TestCaseData(5, 4, 1, 2),
+            new TestCaseData(4, 5, 3, 1)
+        };
+
         public static List<TestCaseData> InvalidSelectionIndices = new List<TestCaseData>
         {
             new TestCaseData(5, 5, -1, 0),
@@ -108,6 +132,23 @@ namespace GameEngineTest.Views
             SetDimension(componentTestModelMock, 5, 5);
 
             testObj = new TableView<CellData>(modelMock.Object, renderer, selectionModelMock.Object, gameMock.Object);
+        }
+
+        [TestCaseSource("ResizeData")]
+        public void ResizeEventTest(int rows, int columns, int newRows, int newColumns)
+        {
+            SetDimension(modelMock, rows, columns);
+            table = CreateTable(modelMock, renderer, selectionModelMock);
+            TableResizeEventArgs args = null;
+
+            table.OnTableResize += (obj, evArg) => args = evArg;
+
+            modelMock.Raise(o => o.SizeChanged += null, modelMock.Object, new TableResizeEventArgs(newRows, newColumns));
+
+            Assert.NotNull(args);
+            Assert.AreEqual(newRows, args.Rows);
+            Assert.AreEqual(newColumns, args.Columns);
+
         }
 
         [TestCaseSource("SelectionIndices")]
@@ -238,7 +279,7 @@ namespace GameEngineTest.Views
                 }
             }
 
-            modelMock.Raise(o => o.SizeChanged += null, modelMock.Object, new SizeChangedEventArgs(rows, columns));
+            modelMock.Raise(o => o.SizeChanged += null, modelMock.Object, new TableResizeEventArgs(rows, columns));
             table.Draw(new SpriteBatchMock());
 
             CompareTables(rows, columns, data, renderer.entries);
@@ -345,6 +386,39 @@ namespace GameEngineTest.Views
                 table.SetCellSelection(selectedRow, selectedColumn, false);
             });
         }
+
+        [TestCaseSource("ResizeIndices")]
+        public void IndicesResizeBehavoirTest(int oldRows, int oldColumns, TableIndex? oldStart, TableIndex? oldEnd,
+            int newRows, int newColumns, TableIndex? newStart, TableIndex? newEnd)
+        {
+            SetDimension(modelMock, oldRows, oldColumns);
+            table = CreateTable(modelMock, renderer, selectionModelMock);
+            table.StartIndex = oldStart;
+            table.EndIndex = oldEnd;
+
+            SetDimension(modelMock, newRows, newColumns);
+            modelMock.Raise(o => o.SizeChanged += null,
+                modelMock.Object, new TableResizeEventArgs(newRows, newColumns));
+
+            AssertIndices(newStart, table.StartIndex);
+            AssertIndices(newEnd, table.EndIndex);
+        }
+
+        private static void AssertIndices(TableIndex? index1, TableIndex? index2)
+        {
+            Assert.AreEqual(index1.HasValue, index2.HasValue);
+            
+            // Both are null
+            if (!index1.HasValue)
+                return;
+
+            var idx1 = index1.Value;
+            var idx2 = index2.Value;
+
+            Assert.AreEqual(idx1.Row, idx2.Row);
+            Assert.AreEqual(idx1.Column, idx2.Column);
+        }
+
         [TestCaseSource("ModelSizes")]
         public void RowsColumnsOnModelChangedTest(int rows, int columns)
         {
@@ -358,7 +432,7 @@ namespace GameEngineTest.Views
             columns++;
 
             SetDimension(modelMock, rows, columns);
-            modelMock.Raise(o => o.SizeChanged += null, modelMock.Object, new SizeChangedEventArgs(rows, columns));
+            modelMock.Raise(o => o.SizeChanged += null, modelMock.Object, new TableResizeEventArgs(rows, columns));
 
             AssertTableSize(rows, columns);
 
@@ -366,7 +440,7 @@ namespace GameEngineTest.Views
             columns--;
 
             SetDimension(modelMock, rows, columns);
-            modelMock.Raise(o => o.SizeChanged += null, modelMock.Object, new SizeChangedEventArgs(rows, columns));
+            modelMock.Raise(o => o.SizeChanged += null, modelMock.Object, new TableResizeEventArgs(rows, columns));
 
             AssertTableSize(rows, columns);
         }

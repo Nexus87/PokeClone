@@ -15,7 +15,7 @@ namespace BattleLib.GUI
         private IReadOnlyList<Item> items;
 
         public event EventHandler<DataChangedEventArgs<Item>> DataChanged;
-        public event EventHandler<SizeChangedEventArgs> SizeChanged;
+        public event EventHandler<TableResizeEventArgs> SizeChanged;
 
         public ItemModel(Client player)
         {
@@ -31,7 +31,7 @@ namespace BattleLib.GUI
             if (oldRowCount != items.Count)
             {
                 oldRowCount = items.Count;
-                SizeChanged(this, new SizeChangedEventArgs(Rows, Columns));
+                SizeChanged(this, new TableResizeEventArgs(Rows, Columns));
             }
 
 

@@ -9,10 +9,11 @@ using System.Threading.Tasks;
 
 namespace GameEngineTest.Views
 {
-    public class ITableRendererTest
+    public abstract class ITableRendererTest
     {
         protected ITableRenderer<TestType> testRenderer;
         protected TestType data = new TestType("test");
+
         [TestCase]
         public void DefaultDataTest()
         {
@@ -24,7 +25,6 @@ namespace GameEngineTest.Views
 
             Assert.NotNull(testRenderer.GetComponent(0, 0, data, true));
             Assert.NotNull(testRenderer.GetComponent(0, 0, data, false));
-            
         }
 
         [TestCase]

@@ -89,7 +89,12 @@ namespace GameEngine.Graphics.Views
         {
             return column + columns * row;
         }
-        public event EventHandler<TableResizeEventArgs> OnTableResize;
+
+        public event EventHandler<TableResizeEventArgs> OnTableResize
+        {
+            add { model.SizeChanged += value; }
+            remove { model.SizeChanged -= value; }
+        }
 
         public int Columns { get { return model.Columns; } }
 
@@ -227,9 +232,27 @@ namespace GameEngine.Graphics.Views
             Invalidate();
         }
 
-        private void model_SizeChanged(object sender, SizeChangedEventArgs e)
+        private void model_SizeChanged(object sender, TableResizeEventArgs e)
         {
             Invalidate();
+
+            // Check the start and end index
+            if (StartIndex != null)
+                startIndex = MoveIndexes(startIndex.Value, e.Rows, e.Columns);
+            if (EndIndex != null)
+                endIndex = MoveIndexes(endIndex.Value, e.Rows, e.Columns);
+
+        }
+
+        private TableIndex MoveIndexes(TableIndex index, int rows, int columns)
+        {
+            var ret = new TableIndex(index.Row, index.Column);
+            if (index.Row >= rows)
+                ret.Row = rows - 1;
+            if (index.Column >= columns)
+                ret.Column = columns - 1;
+
+            return ret;
         }
 
         private void SetModel(ITableModel<T> value)

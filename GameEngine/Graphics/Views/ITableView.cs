@@ -50,6 +50,10 @@ namespace GameEngine.Graphics.Views
         /// This means, that the cell with this index is at the top left of the view.
         /// The StartIndex has to be between (0, 0) and the EndIndex. Both limits are included.
         /// StartIndex = null is equal to (0, 0).
+        /// <remarks>
+        /// If Row or Columns change, this property must adapt itself to the new size, to
+        /// adhere to the above constraints.
+        /// </remarks>
         /// </summary>
         /// <exception cref="System.ArgumentOutOfRangeException">If the value is not between the above bounds.</exception>
         TableIndex? StartIndex { get; set; }
@@ -59,6 +63,10 @@ namespace GameEngine.Graphics.Views
         /// The EndIndex has to be between StartIndex and (Rows - 1, Columns - 1). Both limits are included.
         /// EndIndex = null is equal to (Rows - 1, Columns - 1).
         /// </summary>
+        /// <remarks>
+        /// If Row or Columns change, this property must adapt itself to the new size, to
+        /// adhere to the above constraints.
+        /// </remarks>
         /// <exception cref="System.ArgumentOutOfRangeException">If the value is not between the above bounds.</exception>
         TableIndex? EndIndex { get; set; }
 

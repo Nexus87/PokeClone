@@ -20,22 +20,10 @@ namespace GameEngine.Graphics.Views
         }
     }
 
-    public class SizeChangedEventArgs : EventArgs
-    {
-        public int NewRows { get; private set; }
-        public int NewColumns { get; private set; }
-
-        public SizeChangedEventArgs(int newRows, int newColumns)
-        {
-            NewRows = newRows;
-            NewColumns = newColumns;
-        }
-    }
-
     public interface ITableModel<T>
     {
         event EventHandler<DataChangedEventArgs<T>> DataChanged;
-        event EventHandler<SizeChangedEventArgs> SizeChanged;
+        event EventHandler<TableResizeEventArgs> SizeChanged;
         int Rows { get; }
         int Columns { get; }
 

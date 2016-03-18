@@ -17,7 +17,7 @@ namespace GameEngine.Graphics.Views
         }
 
         public event EventHandler<DataChangedEventArgs<T>> DataChanged = delegate { };
-        public event EventHandler<SizeChangedEventArgs> SizeChanged = delegate { };
+        public event EventHandler<TableResizeEventArgs> SizeChanged = delegate { };
 
         public virtual int Columns { get { return items.GetLength(1); } }
 
@@ -36,7 +36,7 @@ namespace GameEngine.Graphics.Views
             if (row >= Rows || column >= Columns)
             {
                 Resize(row >= Rows ? row + 1 : Rows, column >= Columns ? column + 1 : Columns);
-                SizeChanged(this, new SizeChangedEventArgs(Rows, Columns ));
+                SizeChanged(this, new TableResizeEventArgs(Rows, Columns));
             }
 
             var oldValue = items[row, column];

@@ -80,7 +80,7 @@ namespace GameEngineTest.Views
         [TestCase]
         public void SizeChangedEventTest()
         {
-            SizeChangedEventArgs eventArgs = null;
+            TableResizeEventArgs eventArgs = null;
             var t = new TestType { testString = "Test" };
             int rows = testModel.Rows;
             int columns = testModel.Columns;
@@ -91,12 +91,12 @@ namespace GameEngineTest.Views
             if (rows != testModel.Rows)
             {
                 Assert.NotNull(eventArgs);
-                Assert.AreEqual(rows + 1, eventArgs.NewRows);
+                Assert.AreEqual(rows + 1, eventArgs.Rows);
             }
             if (columns != testModel.Columns)
             {
                 Assert.NotNull(eventArgs);
-                Assert.AreEqual(columns + 1, eventArgs.NewColumns);
+                Assert.AreEqual(columns + 1, eventArgs.Columns);
             }
 
             eventArgs = null;
@@ -107,12 +107,12 @@ namespace GameEngineTest.Views
             if (rows != testModel.Rows)
             {
                 Assert.NotNull(eventArgs);
-                Assert.AreEqual(rows + 1, eventArgs.NewRows);
+                Assert.AreEqual(rows + 1, eventArgs.Rows);
             }
             if (columns != testModel.Columns)
             {
                 Assert.NotNull(eventArgs);
-                Assert.AreEqual(columns, eventArgs.NewColumns);
+                Assert.AreEqual(columns, eventArgs.Columns);
             }
 
             eventArgs = null;
@@ -123,11 +123,11 @@ namespace GameEngineTest.Views
             if (rows != testModel.Rows)
             {
                 Assert.NotNull(eventArgs);
-                Assert.AreEqual(rows, eventArgs.NewRows);
+                Assert.AreEqual(rows, eventArgs.Rows);
             }
             if (columns != testModel.Columns)
             {
-                Assert.AreEqual(columns + 1, eventArgs.NewColumns);
+                Assert.AreEqual(columns + 1, eventArgs.Columns);
                 Assert.NotNull(eventArgs);
             }
 
