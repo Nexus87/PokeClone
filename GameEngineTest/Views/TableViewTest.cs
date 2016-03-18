@@ -110,6 +110,34 @@ namespace GameEngineTest.Views
             testObj = new TableView<CellData>(modelMock.Object, renderer, selectionModelMock.Object, gameMock.Object);
         }
 
+        [TestCaseSource("SelectionIndices")]
+        public void SelectionChangedEventTest(int rows, int columns, int selectedRow, int selectedColumn)
+        {
+            SetDimension(modelMock, rows, columns);
+            table = CreateTable(modelMock, renderer, selectionModelMock);
+            SelectionChangedEventArgs arg = null;
+
+            table.SelectionChanged += (obj, evArg) => arg = evArg;
+
+            selectionModelMock.Raise(o => o.SelectionChanged += null, 
+                selectionModelMock.Object, new SelectionChangedEventArgs(selectedRow, selectedColumn, true));
+
+            Assert.NotNull(arg);
+            Assert.AreEqual(selectedRow, arg.Row);
+            Assert.AreEqual(selectedColumn, arg.Column);
+            Assert.IsTrue(arg.IsSelected);
+
+            arg = null;
+
+            selectionModelMock.Raise(o => o.SelectionChanged += null,
+                selectionModelMock.Object, new SelectionChangedEventArgs(selectedRow, selectedColumn, false));
+
+            Assert.NotNull(arg);
+            Assert.AreEqual(selectedRow, arg.Row);
+            Assert.AreEqual(selectedColumn, arg.Column);
+            Assert.IsFalse(arg.IsSelected);
+        }
+
         [TestCaseSource("InvalidIndices")]
         public void InvalidIndicesTest(int rows, int column, TableIndex? startIndex, TableIndex? endIndex)
         {
@@ -124,7 +152,7 @@ namespace GameEngineTest.Views
         }
 
         [TestCaseSource("SelectionIndices")]
-        public void SelectionChangedEventTest(int rows, int columns, int selectedRow, int selectedColumn)
+        public void SelectionModelEventTest(int rows, int columns, int selectedRow, int selectedColumn)
         {
             SetDimension(modelMock, rows, columns);
             table = CreateTable(modelMock, renderer, selectionModelMock);

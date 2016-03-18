@@ -32,6 +32,11 @@ namespace GameEngine.Graphics.Views
         event EventHandler<TableResizeEventArgs> OnTableResize;
 
         /// <summary>
+        /// This event is called, if the selection changed
+        /// </summary>
+        event EventHandler<SelectionChangedEventArgs> SelectionChanged;
+
+        /// <summary>
         /// The total number of columns available
         /// </summary>
         int Columns { get; }

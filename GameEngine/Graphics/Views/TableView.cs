@@ -246,5 +246,12 @@ namespace GameEngine.Graphics.Views
 
             Invalidate();
         }
+
+
+        public event EventHandler<SelectionChangedEventArgs> SelectionChanged
+        {
+            add { selectionModel.SelectionChanged += value; }
+            remove { selectionModel.SelectionChanged -= value; }
+        }
     }
 }
