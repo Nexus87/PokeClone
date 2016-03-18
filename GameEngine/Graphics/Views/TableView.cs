@@ -171,17 +171,15 @@ namespace GameEngine.Graphics.Views
         private TableIndex? startIndex = null;
         private TableIndex? endIndex = null;
         private GridLayout layout;
-        private ITableModel<T> Model
+        public ITableModel<T> Model
         {
             get { return model; }
             set
             {
                 value.CheckNull("value");
 
-                bool sizeChanged = value.Rows != model.Rows || value.Columns != model.Columns;
-
                 SetModel(value);
-                Invalidate();
+                model_SizeChanged(null, new TableResizeEventArgs(Rows, Columns));
             }
         }
 

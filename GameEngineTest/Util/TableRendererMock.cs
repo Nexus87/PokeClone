@@ -99,6 +99,7 @@ namespace GameEngineTest.Util
         {
             entries = new T[0, 0];
             selections = new bool[0, 0];
+            components = new TableComponentMock<T>[0, 0];
         }
     }
 }

@@ -19,11 +19,13 @@ namespace GameEngineTest.Views
         {
             public int row;
             public int column;
+            public int custom;
 
-            public CellData(int row, int column)
+            public CellData(int row, int column, int custom = 0)
             {
                 this.row = row;
                 this.column = column;
+                this.custom = custom;
             }
         }
 
@@ -132,6 +134,48 @@ namespace GameEngineTest.Views
             SetDimension(componentTestModelMock, 5, 5);
 
             testObj = new TableView<CellData>(modelMock.Object, renderer, selectionModelMock.Object, gameMock.Object);
+        }
+
+        [TestCaseSource("ResizeData")]
+        public void SetModelTest(int rows, int columns, int newRows, int newColumns)
+        {
+            SetDimension(modelMock, rows, columns);
+            table = CreateTable(modelMock, renderer, selectionModelMock);
+
+            modelMock.Setup(o => o[It.IsAny<int>(), It.IsAny<int>()])
+                .Returns(new CellData(-1, -1, -1));
+
+            modelMock.Setup(o => o.DataAt(It.IsAny<int>(), It.IsAny<int>()))
+                .Returns(new CellData(-1, -1, -1));
+
+            table.Draw(new SpriteBatchMock());
+
+            renderer.Reset();
+
+            // Set the new model
+            var newModel = new Mock<ITableModel<CellData>>();
+            SetDimension(newModel, newRows, newColumns);
+
+            newModel.Setup(o => o[It.IsAny<int>(), It.IsAny<int>()])
+                .Returns(new CellData(1, 1, 1));
+
+            newModel.Setup(o => o.DataAt(It.IsAny<int>(), It.IsAny<int>()))
+                .Returns(new CellData(1, 1, 1));
+
+            table.Model = newModel.Object;
+
+            Assert.AreEqual(newRows, table.Rows);
+            Assert.AreEqual(newColumns, table.Columns);
+
+            table.Draw(new SpriteBatchMock());
+
+            // Check if the table got his data from the new model
+            Assert.AreEqual(newRows, renderer.entries.Rows());
+            Assert.AreEqual(newColumns, renderer.entries.Columns());
+            foreach (var entry in renderer.entries)
+            {
+                Assert.AreEqual(1, entry.custom);
+            }
         }
 
         [TestCaseSource("ResizeData")]
@@ -342,11 +386,6 @@ namespace GameEngineTest.Views
             AssertTableSize(rows, columns);
 
             var newMock = new Mock<ITableModel<CellData>>();
-            SetDimension(newMock, rows + 1, columns + 1);
-
-            //table.Model = newMock.Object;
-
-            //AssertTableSize(rows + 1, columns + 1);
         }
 
         [TestCaseSource("SelectionIndices")]
@@ -385,6 +424,23 @@ namespace GameEngineTest.Views
             {
                 table.SetCellSelection(selectedRow, selectedColumn, false);
             });
+        }
+
+        [TestCaseSource("ResizeIndices")]
+        public void IndicesNewModelBehavoirTest(int oldRows, int oldColumns, TableIndex? oldStart, TableIndex? oldEnd,
+            int newRows, int newColumns, TableIndex? newStart, TableIndex? newEnd)
+        {
+            SetDimension(modelMock, oldRows, oldColumns);
+            table = CreateTable(modelMock, renderer, selectionModelMock);
+            table.StartIndex = oldStart;
+            table.EndIndex = oldEnd;
+
+            var newModel = new Mock<ITableModel<CellData>>();
+            SetDimension(newModel, newRows, newColumns);
+            table.Model = newModel.Object;
+
+            AssertIndices(newStart, table.StartIndex);
+            AssertIndices(newEnd, table.EndIndex);
         }
 
         [TestCaseSource("ResizeIndices")]
