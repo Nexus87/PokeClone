@@ -55,7 +55,7 @@ namespace GameEngineTest.Graphics.Layouts
             testContainer.Layout = testLayout;
         }
 
-        public static List<TestCaseData> ValidData = new List<TestCaseData>
+        public static List<TestCaseData> ValidPropertyData = new List<TestCaseData>
         {
             new TestCaseData(1.0f, 1.0f, 50.0f, 50.0f, 0),
             new TestCaseData(0.0f, 0.0f, 50.0f, 50.0f, 0),
@@ -70,7 +70,8 @@ namespace GameEngineTest.Graphics.Layouts
             new TestCaseData(0.0f, 0.0f, 50.0f, 0.0f, 10),
             new TestCaseData(0.0f, 0.0f, 0.0f, 0.0f, 10),
         };
-        [TestCaseSource("ValidData")]
+
+        [TestCaseSource("ValidPropertyData")]
         public void ProtectedPropertiesTest(float X, float Y, float Width, float Height, int Margin)
         {
             var container = new Container(engineMock.Object);

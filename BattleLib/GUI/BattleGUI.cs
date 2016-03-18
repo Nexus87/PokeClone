@@ -125,10 +125,10 @@ namespace BattleLib.GraphicComponents.GUI
         private void InitMainMenu(Configuration config, PokeEngine game)
         {
             var MainMenu = new TableWidget<string>(config, game);
-            MainMenu.SetData("Attack", 0, 0);
-            MainMenu.SetData("PKMN", 0, 1);
-            MainMenu.SetData("Item", 1, 0);
-            MainMenu.SetData("Run", 1, 1);
+            MainMenu.Model.SetData("Attack", 0, 0);
+            MainMenu.Model.SetData("PKMN", 0, 1);
+            MainMenu.Model.SetData("Item", 1, 0);
+            MainMenu.Model.SetData("Run", 1, 1);
 
             mainFrame.AddWidget(MainMenu);
 

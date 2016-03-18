@@ -10,30 +10,41 @@ using System.Text;
 using System.Threading.Tasks;
 namespace GameEngine
 {
- 
+
+    public enum CommandKeys
+    {
+        Up,
+        Down,
+        Left,
+        Right,
+        Select,
+        Back
+    }
+
     class InputComponent : GameComponent
     {
         private KeyboardState oldState;
-        internal List<Keys> Keys = new List<Keys>();
+        private IReadOnlyDictionary<Keys, CommandKeys> keyMap;
         internal IInputHandler handler;
         private InputManager manager;
 
-        internal InputComponent(Game game, InputManager manager) : base(game)
+        internal InputComponent(Game game, InputManager manager, Configuration config) : base(game)
         {
             this.manager = manager;
+            keyMap = config.KeyMap;
         }
 
-        public InputComponent(Game game) : this(game, new InputManager()) { }
+        public InputComponent(Game game, Configuration config) : this(game, new InputManager(), config) { }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
             manager.Update();
 
-            foreach (var entry in Keys)
+            foreach (var entry in keyMap)
             {
-                if (manager.IsKeyDown(entry) && !oldState.IsKeyDown(entry))
-                    handler.HandleInput(entry);
+                if (manager.IsKeyDown(entry.Key) && !oldState.IsKeyDown(entry.Key))
+                    handler.HandleInput(entry.Value);
             }
 
             oldState = manager.GetState();

@@ -11,25 +11,21 @@ namespace GameEngine
     {
         public Configuration() 
         {
-            KeyUp = Keys.Up;
-            KeyDown = Keys.Down;
-            KeyLeft = Keys.Left;
-            KeyRight = Keys.Right;
-            KeySelect = Keys.Enter;
-            KeyBack = Keys.Escape;
+            keyMap.Add(Keys.Up, CommandKeys.Up);
+            keyMap.Add(Keys.Down, CommandKeys.Down);
+            keyMap.Add(Keys.Left, CommandKeys.Left);
+            keyMap.Add(Keys.Right, CommandKeys.Right);
+            keyMap.Add(Keys.Enter, CommandKeys.Select);
+            keyMap.Add(Keys.Escape, CommandKeys.Back);
             MenuFont = "MenuFont";
             BoxBorder = "border";
         }
 
-        public Keys KeyUp { get; private set; }
-        public Keys KeyDown { get; private set; }
-        public Keys KeyLeft { get; private set; }
-        public Keys KeyRight { get; private set; }
-        public Keys KeySelect { get; private set; }
-        public Keys KeyBack { get; private set; }
+        protected Dictionary<Keys, CommandKeys> keyMap = new Dictionary<Keys, CommandKeys>();
 
         public string BoxBorder { get; private set; }
         public string MenuFont { get; private set; }
+
         public virtual T GetOption<T>(string optionString)
         {
             object ret = null;
@@ -56,5 +52,7 @@ namespace GameEngine
             }
             return (T) ret;
         }
+
+        public IReadOnlyDictionary<Keys, CommandKeys> KeyMap { get { return keyMap; } }
     }
 }

@@ -66,7 +66,7 @@ namespace GameEngine.Graphics
         }
         private bool isVisible;
 
-        public bool HandleInput(Keys key)
+        public bool HandleInput(CommandKeys key)
         {
             var compontents = InnerComponent.Components;
             

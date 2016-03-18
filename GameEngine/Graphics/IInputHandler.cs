@@ -28,6 +28,6 @@ namespace GameEngine.Graphics
         /// </remarks>
         /// <param name="key">Pressed key.</param>
         /// <returns>True if the input was consumed.</returns>
-        bool HandleInput(Keys key);
+        bool HandleInput(CommandKeys key);
     }
 }

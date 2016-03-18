@@ -32,7 +32,7 @@ namespace GameEngine
             config.CheckNull("config");
 
             IsRunning = false;
-            input = new InputComponent(this);
+            input = new InputComponent(this, config);
             GUIManager = new GUIManager();
             new GraphicsDeviceManager(this);
 
@@ -41,13 +41,6 @@ namespace GameEngine
 
             GUIManager.GUIClose += GUI_GUIClose;
             Content.RootDirectory = "Content";
-
-            AddKeyListener(config.KeyBack);
-            AddKeyListener(config.KeyDown);
-            AddKeyListener(config.KeyLeft);
-            AddKeyListener(config.KeyRight);
-            AddKeyListener(config.KeyUp);
-            AddKeyListener(config.KeySelect);
 
             Components.Add(input);
             Components.Add(new EventQueue(this));
@@ -77,16 +70,6 @@ namespace GameEngine
         {
             GUIManager.Show();
             input.handler = GUIManager;
-        }
-
-        public void AddKeyListener(Keys key)
-        {
-            input.Keys.Add(key);
-        }
-
-        public void AddKeyListener(IEnumerable<Keys> keys)
-        {
-            input.Keys.AddRange(keys);
         }
 
         protected override void Draw(GameTime gameTime)

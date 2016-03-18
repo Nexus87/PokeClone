@@ -24,7 +24,7 @@ namespace GameEngine.Graphics.Views
         public int Column;
     }
 
-    public interface ITableView
+    public interface ITableView<T> : IGraphicComponent
     {
         /// <summary>
         /// This event is issued, if the Columns or Rows Property was changed
@@ -78,5 +78,7 @@ namespace GameEngine.Graphics.Views
         /// <param name="column">Column</param>
         /// <param name="isSelected">Cell selection</param>
         void SetCellSelection(int row, int column, bool isSelected);
+
+        ITableModel<T> Model { get; set; }
     }
 }

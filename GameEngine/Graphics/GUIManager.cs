@@ -77,7 +77,7 @@ namespace GameEngine.Graphics
 
         internal bool IsActive { get; private set; }
 
-        public bool HandleInput(Keys key)
+        public bool HandleInput(CommandKeys key)
         {
             if (focusedWidget == null)
                 return false;

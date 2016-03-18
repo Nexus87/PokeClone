@@ -10,13 +10,11 @@ namespace GameEngine.Graphics.Widgets
 {
     public class MessageBox : ForwardingGraphicComponent<MultlineTextBox>, IWidget
     {
-        public Keys SelectKey;
         private MultlineTextBox textBox;
 
         public MessageBox(Configuration config, PokeEngine game)
             : base(new MultlineTextBox(config.MenuFont, game), game)
         {
-            SelectKey = config.KeySelect;
             textBox = InnerComponent;
         }
 
@@ -41,9 +39,9 @@ namespace GameEngine.Graphics.Widgets
             textBox.Text = text;
         }
 
-        public bool HandleInput(Keys key)
+        public bool HandleInput(CommandKeys key)
         {
-            if (key != SelectKey)
+            if (key != CommandKeys.Select)
                 return false;
 
             if (textBox.HasNext())

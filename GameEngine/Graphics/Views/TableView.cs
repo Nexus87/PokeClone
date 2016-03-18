@@ -18,7 +18,7 @@ namespace GameEngine.Graphics.Views
         public T SelectedData { get; private set; }
     }
 
-    public class TableView<T> : ForwardingGraphicComponent<Container>, ITableView
+    public class TableView<T> : ForwardingGraphicComponent<Container>, ITableView<T>
     {
         private ITableModel<T> model;
         private ITableRenderer<T> renderer;

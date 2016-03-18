@@ -65,6 +65,7 @@
     <Compile Include="Graphics\Layouts\ILayoutTest.cs" />
     <Compile Include="Graphics\Layouts\SingleComponentLayoutTest.cs" />
     <Compile Include="Graphics\Layouts\GridLayoutTest.cs" />
+    <Compile Include="Graphics\Widgets\TableWidgetTest.cs" />
     <Compile Include="IGraphicComponentTest.cs" />
     <Compile Include="InputComponentTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -92,9 +93,7 @@
       <Name>GameEngine</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Graphics\Widgets\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
