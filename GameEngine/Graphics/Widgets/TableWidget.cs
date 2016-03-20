@@ -10,7 +10,6 @@ namespace GameEngine.Graphics.Widgets
     public class TableWidget<T> : AbstractGraphicComponent, IWidget
     {
         private bool isVisible;
-        private TableView<T> view;
 
         public int? VisibleRows { get; set; }
         public int? VisibleColumns { get; set; }
@@ -24,6 +23,9 @@ namespace GameEngine.Graphics.Widgets
         public event EventHandler OnExitRequested = delegate { };
         public event EventHandler<VisibilityChangedEventArgs> OnVisibilityChanged = delegate { };
         private ITableView<T> tableView;
+        private int lastSelectedRow = 0;
+        private int lastSelectedColumns = 0;
+        private int? visibleRows;
 
         public bool IsVisible
         {
@@ -46,7 +48,7 @@ namespace GameEngine.Graphics.Widgets
                 value.CheckNull("value");
                 tableView = value;
                 Invalidate();
-            } 
+            }
         }
 
 
@@ -81,7 +83,78 @@ namespace GameEngine.Graphics.Widgets
 
         public void SelectCell(int row, int column)
         {
-            throw new NotImplementedException();
+            lastSelectedRow = row;
+            lastSelectedColumns = column;
+            tableView.SetCellSelection(row, column, true);
+
+            AdjustColumn(column);
+            AdjustRows(row);
+        }
+        private void AdjustRows(int row)
+        {
+            if (VisibleRows == null || VisibleRows > tableView.Rows)
+                return;
+
+            int endRow = tableView.EndIndex == null ? tableView.Rows - 1 : tableView.EndIndex.Value.Row;
+            int endColumn = tableView.EndIndex == null ? tableView.Columns - 1 : tableView.EndIndex.Value.Column;
+
+            int startRow = tableView.StartIndex == null ? tableView.Rows - 1 : tableView.StartIndex.Value.Row;
+            int startColumn = tableView.StartIndex == null ? tableView.Columns - 1 : tableView.StartIndex.Value.Column;
+
+
+            if (row <= endRow && row >= startRow)
+                return;
+
+            var endIdx = new TableIndex(0, endColumn);
+            var startIdx = new TableIndex(0, startColumn);
+
+            if (row > endRow)
+            {
+                endIdx.Row = row;
+                startIdx.Row = row - VisibleRows.Value + 1;
+            }
+            else if (row < startRow)
+            {
+                startIdx.Row = row;
+                endIdx.Row = row + VisibleRows.Value - 1;
+            }
+
+            tableView.StartIndex = startIdx;
+            tableView.EndIndex = endIdx;
+
+        }
+
+        private void AdjustColumn(int column)
+        {
+            if (VisibleColumns == null || VisibleColumns > tableView.Columns)
+                return;
+
+            int endRow = tableView.EndIndex == null ? tableView.Rows - 1 : tableView.EndIndex.Value.Row;
+            int endColumn = tableView.EndIndex == null ? tableView.Columns - 1 : tableView.EndIndex.Value.Column;
+
+            int startRow = tableView.StartIndex == null ? tableView.Rows - 1 : tableView.StartIndex.Value.Row;
+            int startColumn = tableView.StartIndex == null ? tableView.Columns - 1 : tableView.StartIndex.Value.Column;
+
+
+            if (column <= endColumn && column >= startColumn)
+                return;
+
+            var endIdx = new TableIndex(endRow, 0);
+            var startIdx = new TableIndex(startColumn, 0);
+
+            if (column > endColumn)
+            {
+                endIdx.Column = column;
+                startIdx.Column = column - VisibleColumns.Value + 1;
+            }
+            else if (column < startColumn)
+            {
+                startIdx.Column = column;
+                endIdx.Column = column + VisibleColumns.Value - 1;
+            }
+
+            tableView.StartIndex = startIdx;
+            tableView.EndIndex = endIdx;
         }
     }
 }

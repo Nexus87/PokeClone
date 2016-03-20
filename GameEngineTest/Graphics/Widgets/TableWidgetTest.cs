@@ -52,6 +52,16 @@ namespace GameEngineTest.Graphics.Widgets
             new TestCaseData(15, 15, 2, 1, new TableIndex(3, 2), CommandKeys.Down, new TableIndex(3, 2), new TableIndex(4, 2)),
         };
 
+        public static List<TestCaseData> InvalidSelectionData = new List<TestCaseData>
+        {
+            new TestCaseData(10, 10, -1, 0),
+            new TestCaseData(10, 10, 0, -1),
+            new TestCaseData(10, 10, 10, 0),
+            new TestCaseData(10, 10, 0, 10),
+            new TestCaseData(10, 10, -1, -5),
+            new TestCaseData(10, 10, 13, -1),
+        };
+
         [SetUp]
         public void Setup()
         {
@@ -69,6 +79,14 @@ namespace GameEngineTest.Graphics.Widgets
 
             tableViewMock.VerifyAll();
 
+        }
+
+        [TestCaseSource("InvalidSelectionData")]
+        public void InvalidSelectionTest(int rows, int columns, int selectedRow, int selectedColumn)
+        {
+            SetupTable(table, rows, columns);
+
+            Assert.Throws<ArgumentOutOfRangeException>(delegate { table.SelectCell(selectedRow, selectedColumn); });
         }
 
         [TestCase]
@@ -129,10 +147,10 @@ namespace GameEngineTest.Graphics.Widgets
             TableIndex mockStart = new TableIndex(-1, -1);
             TableIndex mockEnd = new TableIndex();
 
-            tableViewMock.Setup(o => o.StartIndex)
-                .Callback<TableIndex>(idx => mockStart = idx);
-            tableViewMock.Setup(o => o.EndIndex)
-                .Callback<TableIndex>(idx => mockEnd = idx);
+            tableViewMock.SetupSet(o => o.StartIndex)
+                .Callback(idx => mockStart = idx.Value);
+            tableViewMock.SetupSet(o => o.EndIndex)
+                .Callback(idx => mockEnd = idx.Value);
 
             table.VisibleColumns = visibleColumns;
             table.VisibleRows = visibleRows;
