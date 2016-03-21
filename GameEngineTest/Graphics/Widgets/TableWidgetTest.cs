@@ -17,7 +17,7 @@ namespace GameEngineTest.Graphics.Widgets
     [TestFixture]
     public class TableWidgetTest
     {
-        Mock<ITableView<TestType>> tableViewMock = new Mock<ITableView<TestType>>();
+        Mock<TableViewMock> tableViewMock = new Mock<TableViewMock>();
         Mock<ITableModel<TestType>> modelMock = new Mock<ITableModel<TestType>>();
         Mock<ITableRenderer<TestType>> rendererMock = new Mock<ITableRenderer<TestType>>();
 
@@ -42,13 +42,14 @@ namespace GameEngineTest.Graphics.Widgets
         {
             new TestCaseData(15, 15, 2, 1, new TableIndex(3, 2), new TableIndex(3, 2), new TableIndex(4, 2)),
             new TestCaseData(10, 10, 4, 4, new TableIndex(3, 3), new TableIndex(0, 0), new TableIndex(3, 3)),
+            new TestCaseData(10, 10, 3, 3, new TableIndex(8, 8), new TableIndex(7, 7), new TableIndex(9, 9))
         };
 
         public static List<TestCaseData> ViewPortInputTestData = new List<TestCaseData>
         {
             new TestCaseData(15, 15, 2, 1, new TableIndex(3, 2), CommandKeys.Left, new TableIndex(3, 1), new TableIndex(4, 1)),
             new TestCaseData(15, 15, 2, 1, new TableIndex(3, 2), CommandKeys.Right, new TableIndex(3, 3), new TableIndex(4, 3)),
-            new TestCaseData(15, 15, 2, 1, new TableIndex(3, 2), CommandKeys.Up, new TableIndex(2, 2), new TableIndex(2, 2)),
+            new TestCaseData(15, 15, 2, 1, new TableIndex(3, 2), CommandKeys.Up, new TableIndex(2, 2), new TableIndex(3, 2)),
             new TestCaseData(15, 15, 2, 1, new TableIndex(3, 2), CommandKeys.Down, new TableIndex(3, 2), new TableIndex(4, 2)),
         };
 
@@ -65,26 +66,27 @@ namespace GameEngineTest.Graphics.Widgets
         [SetUp]
         public void Setup()
         {
-            table = new TableWidget<TestType>(new PokeEngine());
-            table.SetCoordinates(10, 10, 500, 500);
+            tableViewMock = new Mock<TableViewMock> { CallBase = true };
+            modelMock = new Mock<ITableModel<TestType>>();
+            rendererMock = new Mock<ITableRenderer<TestType>>();
         }
 
         [TestCase]
         public void ForwardingPropertiesTest()
         {
+            table = CreateTableWidget(tableViewMock);
             tableViewMock.SetupSet(o => o.Model = modelMock.Object).Verifiable();
 
-            table.TableView = tableViewMock.Object;
             table.Model = modelMock.Object;
 
-            tableViewMock.VerifyAll();
+            tableViewMock.Verify();
 
         }
 
         [TestCaseSource("InvalidSelectionData")]
         public void InvalidSelectionTest(int rows, int columns, int selectedRow, int selectedColumn)
         {
-            SetupTable(table, rows, columns);
+            table = CreateTableWidget(tableViewMock, rows, columns);
 
             Assert.Throws<ArgumentOutOfRangeException>(delegate { table.SelectCell(selectedRow, selectedColumn); });
         }
@@ -92,34 +94,27 @@ namespace GameEngineTest.Graphics.Widgets
         [TestCase]
         public void ForwardingCoordinatesTest()
         {
-            float x = 0, y = 0, width = 0, height = 0;
-
-            tableViewMock.SetupSet(o => o.XPosition = It.IsAny<float>()).Callback<float>(X => x = X);
-            tableViewMock.SetupSet(o => o.YPosition = It.IsAny<float>()).Callback<float>(Y => y = Y);
-            tableViewMock.SetupSet(o => o.Width = It.IsAny<float>()).Callback<float>(Width => width = Width);
-            tableViewMock.SetupSet(o => o.Height = It.IsAny<float>()).Callback<float>(Height => height = Height);
-
-            table.TableView = tableViewMock.Object;
+            table = CreateTableWidget(tableViewMock);
 
             table.Draw(new SpriteBatchMock());
 
-            Assert.AreEqual(table.XPosition, x);
-            Assert.AreEqual(table.YPosition, y);
-            Assert.AreEqual(table.Width, width);
-            Assert.AreEqual(table.Height, height);
+            var tableMock = tableViewMock.Object;
+
+            Assert.AreEqual(table.XPosition, tableMock.XPosition);
+            Assert.AreEqual(table.YPosition, tableMock.YPosition);
+            Assert.AreEqual(table.Width, tableMock.Width);
+            Assert.AreEqual(table.Height, tableMock.Height);
         }
 
         [TestCaseSource("SelectCellTestData")]
         public void SelectCellTest(int rows, int columns, int selectedRow, int selectedColumn)
         {
+            table = CreateTableWidget(tableViewMock, rows, columns);
             tableViewMock.Setup(o => o.SetCellSelection(selectedRow, selectedColumn, true)).Verifiable();
-            SetupView(tableViewMock, rows, columns);
-
-            table.TableView = tableViewMock.Object;
 
             table.SelectCell(selectedRow, selectedColumn);
 
-            tableViewMock.VerifyAll();
+            tableViewMock.Verify();
 
         }
 
@@ -127,7 +122,7 @@ namespace GameEngineTest.Graphics.Widgets
         public void HandleInputTest(int rows, int columns, int selectedRow, int selectedColumn, 
                                           CommandKeys key, int newRow, int newColumns)
         {
-            SetupTable(table, rows, columns);
+            table = CreateTableWidget(tableViewMock, rows, columns);
             table.SelectCell(selectedRow, selectedColumn);
 
             tableViewMock.ResetCalls();
@@ -135,56 +130,44 @@ namespace GameEngineTest.Graphics.Widgets
 
             table.HandleInput(key);
 
-            tableViewMock.VerifyAll();
+            tableViewMock.Verify();
         }
 
         [TestCaseSource("ViewPortSelectionTestData")]
         public void ViewPortSetCellSelectionTest(int rows, int columns, int visibleRows, int visibleColumns, 
             TableIndex selectedCell, TableIndex start, TableIndex end)
         {
-            SetupTable(table, rows, columns);
-            
-            TableIndex mockStart = new TableIndex(-1, -1);
-            TableIndex mockEnd = new TableIndex();
 
-            tableViewMock.SetupSet(o => o.StartIndex)
-                .Callback(idx => mockStart = idx.Value);
-            tableViewMock.SetupSet(o => o.EndIndex)
-                .Callback(idx => mockEnd = idx.Value);
+            table = CreateTableWidget(tableViewMock, rows, columns, visibleRows, visibleColumns);
+            var view = tableViewMock.Object;   
 
-            table.VisibleColumns = visibleColumns;
-            table.VisibleRows = visibleRows;
-
+            // Changes might only be applied in the Update method.
+            // So we call Draw to make sure, that it is called.
+            table.Draw(new SpriteBatchMock());
             // Start cell is still (0, 0)
-            AssertIndex(mockStart, 0, 0);
-            AssertIndex(mockEnd, visibleRows, visibleColumns);
+            AssertIndex(view.StartIndex.Value, 0, 0);
+            AssertIndex(view.EndIndex.Value, visibleRows -1 , visibleColumns - 1);
 
 
             table.SelectCell(selectedCell.Row, selectedCell.Column);
+            table.Draw(new SpriteBatchMock());
 
-            AssertIndex(start, mockStart);
-            AssertIndex(end, mockEnd);
+            AssertIndex(start, view.StartIndex.Value);
+            AssertIndex(end, view.EndIndex.Value);
         }
 
         [TestCaseSource("ViewPortInputTestData")]
         public void ViewPortInputTest(int rows, int columns, int visibleRows, int visibleColumns, TableIndex startSelection,
             CommandKeys key, TableIndex start, TableIndex end)
         {
-            SetupTable(table, rows, columns);
-
-            TableIndex mockStart = new TableIndex(-1, -1);
-            TableIndex mockEnd = new TableIndex();
-
-            tableViewMock.Setup(o => o.StartIndex)
-                .Callback<TableIndex>(idx => mockStart = idx);
-            tableViewMock.Setup(o => o.EndIndex)
-                .Callback<TableIndex>(idx => mockEnd = idx);
+            table = CreateTableWidget(tableViewMock, rows, columns, visibleRows, visibleColumns);
+            var view = tableViewMock.Object;
 
             table.SelectCell(startSelection.Row, startSelection.Column);
             table.HandleInput(key);
 
-            AssertIndex(start, mockStart);
-            AssertIndex(end, mockEnd);
+            AssertIndex(start, view.StartIndex.Value);
+            AssertIndex(end, view.EndIndex.Value);
         }
 
         private static void AssertIndex(TableIndex idx, TableIndex idx2)
@@ -197,16 +180,24 @@ namespace GameEngineTest.Graphics.Widgets
             Assert.AreEqual(column, idx.Column);
             Assert.AreEqual(row, idx.Row);
         }
-        private void SetupTable(TableWidget<TestType> table, int rows, int columns)
+
+        private TableWidget<TestType> CreateTableWidget(Mock<TableViewMock> view, int rows, int columns, int? visibleRows = null, int? visibleColumns = null)
         {
-            SetupView(tableViewMock, rows, columns);
-            table.TableView = tableViewMock.Object;
+            SetupView(view, rows, columns);
+            return CreateTableWidget(view, visibleRows, visibleColumns);
         }
 
-        private void SetupView(Mock<ITableView<TestType>> tableViewMock, int rows, int columns)
+        private TableWidget<TestType> CreateTableWidget(Mock<TableViewMock> view, int? visibleRows = null, int? visibleColumns = null)
         {
-            tableViewMock.Setup(o => o.Rows).Returns(rows);
-            tableViewMock.Setup(o => o.Columns).Returns(columns);
+            
+            var widget = new TableWidget<TestType>(visibleRows, visibleColumns, view.Object, new PokeEngine());
+            widget.SetCoordinates(10, 10, 500, 500);
+            return widget;
+        }
+        private void SetupView(Mock<TableViewMock> tableViewMock, int rows, int columns)
+        {
+            tableViewMock.Object.Rows = rows;
+            tableViewMock.Object.Columns = columns;
         }
     }
 }

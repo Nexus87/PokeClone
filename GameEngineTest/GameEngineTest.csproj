@@ -72,6 +72,7 @@
     <Compile Include="Util\Extensions.cs" />
     <Compile Include="Util\SpriteBatchMock.cs" />
     <Compile Include="Util\TableRendererMock.cs" />
+    <Compile Include="Util\TableViewMock.cs" />
     <Compile Include="Util\TestGraphicComponent.cs" />
     <Compile Include="Views\DefaultTableModelTest.cs" />
     <Compile Include="Views\DefaultTableRendererTest.cs" />
