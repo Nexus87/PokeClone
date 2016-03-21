@@ -31,6 +31,43 @@ namespace GameEngine.Graphics.Widgets
             tableView = view;
 
             SetStartCell(0, 0);
+
+            view.OnTableResize += TableResizeHandler;
+        }
+
+        private void TableResizeHandler(object sender, TableResizeEventArgs e)
+        {
+            throw new NotImplementedException();
+            // First fix the cursor
+            if (cursorColumn >= e.Columns)
+                cursorColumn = e.Columns - 1;
+            if (cursorRow >= e.Rows)
+                cursorRow = e.Rows - 1;
+
+            // If the cursor has changed, we also should change the selection
+            tableView.SetCellSelection(cursorRow, cursorColumn, true);
+
+            int visibleRows = (EndIndex.Row - StartIndex.Row) + 1;
+            int visibleColumns = (EndIndex.Column - StartIndex.Column) + 1;
+            
+            // If we still display the right number of rows/columns, nothing needs to be done.
+            if (visibleRows == realVisibleRows && VisibleColumns == realVisibleColumns)
+                return;
+
+            if (visibleRows != realVisibleRows)
+            {
+                // If we have enought rows from the start, we can use the current start index
+                if (StartIndex.Row + realVisibleRows < Rows)
+                {
+                    SetStartCell(StartIndex.Row, StartIndex.Column);
+                }
+                else
+                {
+                    SetEndCell(EndIndex.Row, EndIndex.Column);
+                }
+            }
+
+            // At this point, 
         }
 
         public TableWidget(PokeEngine game)

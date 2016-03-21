@@ -63,6 +63,14 @@ namespace GameEngineTest.Graphics.Widgets
             new TestCaseData(10, 10, 13, -1),
         };
 
+        public static List<TestCaseData> ResizeTableTestData = new List<TestCaseData>
+        {
+            new TestCaseData(10, 10, 4, 4, new TableIndex(4, 4), 5, 5, new TableIndex(1, 1), new TableIndex(3, 3)),
+            new TestCaseData(3, 3, 5, 5, new TableIndex(0, 0), 12, 7, new TableIndex(0, 0), new TableIndex(4, 4)),
+            new TestCaseData(12, 6, 5, 3, new TableIndex(0, 0), 3, 2, new TableIndex(0, 0), new TableIndex(2, 1)),
+            new TestCaseData(7, 8, 5, 5, new TableIndex(4, 6), 3, 1, new TableIndex(0, 0), new TableIndex(2, 0))
+        };
+
         [SetUp]
         public void Setup()
         {
@@ -71,6 +79,23 @@ namespace GameEngineTest.Graphics.Widgets
             rendererMock = new Mock<ITableRenderer<TestType>>();
         }
 
+
+        [TestCaseSource("ResizeTableTestData")]
+        public void ResizeTableTest(int rows, int columns, int visibleRows, int visibleColumns, TableIndex selectedIndex, 
+            int newRows, int newColumns, TableIndex startIdx, TableIndex endIdx)
+        {
+            table = CreateTableWidget(tableViewMock, rows, columns, visibleRows, visibleColumns);
+            table.SelectCell(selectedIndex.Row, selectedIndex.Column);
+
+            var view = tableViewMock.Object;
+            view.Rows = newRows;
+            view.Columns = newColumns;
+
+            tableViewMock.Raise(o => o.OnTableResize += null, view, new TableResizeEventArgs(newRows, newColumns));
+
+            AssertIndex(startIdx, view.StartIndex.Value);
+            AssertIndex(endIdx, view.EndIndex.Value);
+        }
         [TestCase]
         public void ForwardingPropertiesTest()
         {

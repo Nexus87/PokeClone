@@ -14,8 +14,8 @@ namespace GameEngineTest.Util
 {
     public class TableViewMock : ITableView<TestType>
     {
-        public event EventHandler<TableResizeEventArgs> OnTableResize;
-        public event EventHandler<SelectionChangedEventArgs> SelectionChanged;
+        public virtual event EventHandler<TableResizeEventArgs> OnTableResize;
+        public virtual event EventHandler<SelectionChangedEventArgs> SelectionChanged;
 
         public int Columns { get; set; }
         public int Rows { get; set; }
