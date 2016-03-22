@@ -71,7 +71,8 @@ namespace GameEngineTest.Graphics.Widgets
             new TestCaseData(7, 8, 5, 5, new TableIndex(4, 6), 3, 1, new TableIndex(0, 0)),
             new TestCaseData(8, 8, 4, 4, new TableIndex(4, 4), 8, 2, new TableIndex(4, 0)),
             new TestCaseData(8, 8, 4, 4, new TableIndex(4, 4), 2, 8, new TableIndex(0, 4)),
-            new TestCaseData(2, 2, 4, 4, new TableIndex(0, 0), 3, 3, new TableIndex(0, 0))
+            new TestCaseData(2, 2, 4, 4, new TableIndex(0, 0), 3, 3, new TableIndex(0, 0)),
+            new TestCaseData(0, 0, 4, 4, null, 4, 4, new TableIndex(0, 0))
         };
 
         [SetUp]
@@ -82,16 +83,23 @@ namespace GameEngineTest.Graphics.Widgets
             rendererMock = new Mock<ITableRenderer<TestType>>();
         }
 
+        [TestCase]
+        public void ZeroSizedTable()
+        {
+            table = CreateTableWidget(tableViewMock, 0, 0);
+        }
 
         [TestCaseSource("ResizeTableTestData")]
-        public void ResizeTableTest(int rows, int columns, int visibleRows, int visibleColumns, TableIndex selectedIndex, 
+        public void ResizeTableTest(int rows, int columns, int visibleRows, int visibleColumns, TableIndex? selectedIndex, 
             int newRows, int newColumns, TableIndex startIdx)
         {
             var endIdx = new TableIndex();
             endIdx.Row = Math.Min(startIdx.Row + visibleRows - 1, newRows - 1);
             endIdx.Column = Math.Min(startIdx.Column + visibleColumns - 1, newColumns - 1);
             table = CreateTableWidget(tableViewMock, rows, columns, visibleRows, visibleColumns);
-            table.SelectCell(selectedIndex.Row, selectedIndex.Column);
+            
+            if(selectedIndex != null)
+                table.SelectCell(selectedIndex.Value.Row, selectedIndex.Value.Column);
 
             var view = tableViewMock.Object;
             view.Rows = newRows;

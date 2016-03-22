@@ -114,6 +114,13 @@ namespace GameEngineTest.Views
             new TestCaseData(5, 5, new TableIndex(4, 4), new TableIndex(3, 3))
         };
 
+        public static List<TestCaseData> ChangeIndexesTestData = new List<TestCaseData>
+        {
+            new TestCaseData(10, 12, null, null, new TableIndex(4, 2), new TableIndex(6, 3)),
+            new TestCaseData(12, 8, null, new TableIndex(4, 2), null, new TableIndex(7, 5)),
+            new TestCaseData(10, 1, new TableIndex(0, 0), new TableIndex(7, 0), new TableIndex(1, 0), new TableIndex(8, 0))
+        };
+
         private TableRendererMock<CellData> renderer;
         private Mock<ITableSelectionModel> selectionModelMock;
         private Mock<ITableModel<CellData>> modelMock;
@@ -136,6 +143,26 @@ namespace GameEngineTest.Views
             testObj = new TableView<CellData>(modelMock.Object, renderer, selectionModelMock.Object, gameMock.Object);
         }
 
+        [TestCaseSource("ChangeIndexesTestData")]
+        public void ChangeIndexesTest(int rows, int columns, TableIndex? startIndex, TableIndex? endIndex, TableIndex? newStart, TableIndex? newEnd)
+        {
+            SetDimension(modelMock, rows, columns);
+            table = CreateTable(modelMock, renderer, selectionModelMock);
+
+            table.StartIndex = startIndex;
+            table.EndIndex = endIndex;
+
+            table.Draw(new SpriteBatchMock());
+
+            table.StartIndex = newStart;
+            table.EndIndex = newEnd;
+
+            renderer.Reset();
+
+            table.Draw(new SpriteBatchMock());
+
+            CheckDrawnComponents(rows, columns, newStart, newEnd);
+        }
         [TestCaseSource("ResizeData")]
         public void SetModelTest(int rows, int columns, int newRows, int newColumns)
         {

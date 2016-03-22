@@ -22,24 +22,33 @@ namespace GameEngineTest.Util
             Rows = rows;
             Columns = columns;
 
-            var endIdx = EndIndex.Value;
-            var startIdx = StartIndex.Value;
+            if (StartIndex != null)
+            {
+                var startIdx = StartIndex.Value;
+                var newStartIdx = new TableIndex(startIdx.Row, startIdx.Column);
 
-            var newEndIdx = new TableIndex(endIdx.Row, endIdx.Column);
-            var newStartIdx = new TableIndex(startIdx.Row, startIdx.Column);
+                // If the table should shrink, we may have to adjust the indexes
+                if (startIdx.Row >= rows)
+                    newStartIdx.Row = rows - 1;
+                if (startIdx.Column >= columns)
+                    newStartIdx.Column = columns - 1;
 
-            // If the table should shrink, we may have to adjust the indexes
-            if (endIdx.Row >= rows)
-                newEndIdx.Row = rows - 1;
-            if (endIdx.Column >= columns)
-                newEndIdx.Column = columns - 1;
-            if (startIdx.Row >= rows)
-                newStartIdx.Row = rows - 1;
-            if (startIdx.Column >= columns)
-                newStartIdx.Column = columns - 1;
+                StartIndex = newStartIdx;
+            }
 
-            StartIndex = newStartIdx;
-            EndIndex = newEndIdx;
+            if (EndIndex != null)
+            {
+                var endIdx = EndIndex.Value;
+                var newEndIdx = new TableIndex(endIdx.Row, endIdx.Column);
+
+                // If the table should shrink, we may have to adjust the indexes
+                if (endIdx.Row >= rows)
+                    newEndIdx.Row = rows - 1;
+                if (endIdx.Column >= columns)
+                    newEndIdx.Column = columns - 1;
+
+                EndIndex = newEndIdx;
+            }
             
             if (OnTableResize != null)
                 OnTableResize(this, new TableResizeEventArgs(rows, columns));
@@ -48,8 +57,45 @@ namespace GameEngineTest.Util
         public int Columns { get; set; }
         public int Rows { get; set; }
 
-        public TableIndex? StartIndex { get; set; }
-        public TableIndex? EndIndex { get; set; }
+        private TableIndex? startIndex;
+        private TableIndex? endIndex;
+        public TableIndex? StartIndex
+        {
+            get { return startIndex; }
+            set
+            {
+                if (value == null)
+                {
+                    startIndex = value;
+                    return;
+                }
+
+                var idx = value.Value;
+                if (idx.Row >= Rows || idx.Column >= Columns)
+                    throw new ArgumentOutOfRangeException();
+
+                startIndex = idx;
+            }
+        }
+
+        public TableIndex? EndIndex
+        {
+            get { return endIndex; }
+            set
+            {
+                if (value == null)
+                {
+                    endIndex = value;
+                    return;
+                }
+
+                var idx = value.Value;
+                if (idx.Row >= Rows || idx.Column >= Columns)
+                    throw new ArgumentOutOfRangeException();
+
+                endIndex = idx;
+            }
+        }
 
         public virtual void SetCellSelection(int row, int column, bool isSelected)
         {

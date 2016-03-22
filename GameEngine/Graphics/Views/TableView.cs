@@ -90,11 +90,7 @@ namespace GameEngine.Graphics.Views
             return column + columns * row;
         }
 
-        public event EventHandler<TableResizeEventArgs> OnTableResize
-        {
-            add { model.SizeChanged += value; }
-            remove { model.SizeChanged -= value; }
-        }
+        public event EventHandler<TableResizeEventArgs> OnTableResize = delegate { };
 
         public int Columns { get { return model.Columns; } }
 
@@ -104,23 +100,29 @@ namespace GameEngine.Graphics.Views
             {
                 if (value == null)
                 {
+                    if (endIndex == null)
+                        return;
+
                     endIndex = value;
+                    Invalidate();
                     return;
                 }
 
                 TableIndex tmp = value.Value;
                 CheckIndexBound(tmp);
                 
-                if (StartIndex == null)
-                {
-                    endIndex = value;
+                if (StartIndex != null)
+                    CheckStartEndBounds(StartIndex.Value, tmp);
+
+                bool needsInvalidation = endIndex == null ||
+                    endIndex.Value.Row != tmp.Row ||
+                    endIndex.Value.Column != tmp.Column;
+
+                if (!needsInvalidation)
                     return;
-                }
-
-                CheckStartEndBounds(StartIndex.Value, tmp);
-
 
                 endIndex = value;
+                Invalidate();
 
             }
         }
@@ -145,9 +147,14 @@ namespace GameEngine.Graphics.Views
             get { return startIndex; }
             set
             {
+                
                 if (value == null)
                 {
+                    if (startIndex == null)
+                        return;
+
                     startIndex = value;
+                    Invalidate();
                     return;
                 }
 
@@ -155,16 +162,18 @@ namespace GameEngine.Graphics.Views
 
                 CheckIndexBound(tmp);
                 
-                if (EndIndex == null)
-                {
-                    startIndex = value;
-                    return;
-                }
+                if (EndIndex != null)
+                    CheckStartEndBounds(tmp, EndIndex.Value);
 
-                CheckStartEndBounds(tmp, EndIndex.Value);
+                bool needsInvalidation = startIndex == null ||
+                    startIndex.Value.Row != tmp.Row ||
+                    startIndex.Value.Column != tmp.Column;
+
+                if (!needsInvalidation)
+                    return;
 
                 startIndex = value;
-
+                Invalidate();
             }
         }
 
@@ -178,8 +187,11 @@ namespace GameEngine.Graphics.Views
             {
                 value.CheckNull("value");
 
+                bool hasSizeChanged = model.Rows != value.Rows || model.Columns != value.Columns;
                 SetModel(value);
-                model_SizeChanged(null, new TableResizeEventArgs(Rows, Columns));
+                
+                if(hasSizeChanged)
+                    model_SizeChanged(null, new TableResizeEventArgs(Rows, Columns));
             }
         }
 
@@ -240,6 +252,7 @@ namespace GameEngine.Graphics.Views
             if (EndIndex != null)
                 endIndex = MoveIndexes(endIndex.Value, e.Rows, e.Columns);
 
+            OnTableResize(this, e);
         }
 
         private TableIndex MoveIndexes(TableIndex index, int rows, int columns)

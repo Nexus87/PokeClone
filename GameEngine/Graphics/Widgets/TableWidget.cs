@@ -30,13 +30,27 @@ namespace GameEngine.Graphics.Widgets
             VisibleColumns = visibleColumns;
             tableView = view;
 
-            SetStartCell(0, 0);
+            if(view.Rows > 0 && view.Columns > 0)
+                SetStartCell(0, 0);
 
             view.OnTableResize += TableResizeHandler;
         }
 
         private void TableResizeHandler(object sender, TableResizeEventArgs e)
         {
+            // If there is nothing to display, reset everything
+            if (e.Rows == 0 || e.Columns == 0)
+            {
+                cursorColumn = cursorRow = 0;
+                tableView.StartIndex = tableView.EndIndex = null;
+                return;
+            }
+
+            // If the table was empty before, we should initialize the indexes with a value.
+            // This makes the following code easier.
+            if (tableView.StartIndex == null || tableView.EndIndex == null)
+                tableView.StartIndex = tableView.EndIndex = new TableIndex();
+
             // First fix the cursor
             if (cursorColumn >= e.Columns)
                 cursorColumn = e.Columns - 1;
@@ -82,9 +96,10 @@ namespace GameEngine.Graphics.Widgets
             }
         }
 
-        public TableWidget(PokeEngine game)
+        public TableWidget(PokeEngine game) : this(null, null, game) { }
+        public TableWidget(int? visibleRows, int? visibleColumns, PokeEngine game)
             : this(
-            null, null,
+            visibleRows, visibleColumns,
             new TableView<T>(
                 new DefaultTableModel<T>(),
                 new DefaultTableRenderer<T>(game, DefaultCreator),

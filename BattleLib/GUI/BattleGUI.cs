@@ -99,7 +99,7 @@ namespace BattleLib.GraphicComponents.GUI
 
         private void InitItemMenu(Configuration config, PokeEngine game)
         {
-            var ItemMenu = new TableWidget<Item>(game);
+            var ItemMenu = new TableWidget<Item>(8, null, game);
             var model = new DefaultTableModel<Item>();
             var list = new List<Item>();
             for (int i = 0; i < 20; i++)
