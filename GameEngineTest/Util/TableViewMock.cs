@@ -17,6 +17,34 @@ namespace GameEngineTest.Util
         public virtual event EventHandler<TableResizeEventArgs> OnTableResize;
         public virtual event EventHandler<SelectionChangedEventArgs> SelectionChanged;
 
+        public void RaiseTableResizeEvent(int rows, int columns)
+        {
+            Rows = rows;
+            Columns = columns;
+
+            var endIdx = EndIndex.Value;
+            var startIdx = StartIndex.Value;
+
+            var newEndIdx = new TableIndex(endIdx.Row, endIdx.Column);
+            var newStartIdx = new TableIndex(startIdx.Row, startIdx.Column);
+
+            // If the table should shrink, we may have to adjust the indexes
+            if (endIdx.Row >= rows)
+                newEndIdx.Row = rows - 1;
+            if (endIdx.Column >= columns)
+                newEndIdx.Column = columns - 1;
+            if (startIdx.Row >= rows)
+                newStartIdx.Row = rows - 1;
+            if (startIdx.Column >= columns)
+                newStartIdx.Column = columns - 1;
+
+            StartIndex = newStartIdx;
+            EndIndex = newEndIdx;
+            
+            if (OnTableResize != null)
+                OnTableResize(this, new TableResizeEventArgs(rows, columns));
+        }
+
         public int Columns { get; set; }
         public int Rows { get; set; }
 

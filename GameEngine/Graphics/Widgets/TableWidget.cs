@@ -37,7 +37,6 @@ namespace GameEngine.Graphics.Widgets
 
         private void TableResizeHandler(object sender, TableResizeEventArgs e)
         {
-            throw new NotImplementedException();
             // First fix the cursor
             if (cursorColumn >= e.Columns)
                 cursorColumn = e.Columns - 1;
@@ -47,27 +46,40 @@ namespace GameEngine.Graphics.Widgets
             // If the cursor has changed, we also should change the selection
             tableView.SetCellSelection(cursorRow, cursorColumn, true);
 
-            int visibleRows = (EndIndex.Row - StartIndex.Row) + 1;
-            int visibleColumns = (EndIndex.Column - StartIndex.Column) + 1;
-            
+            int shownRows = (EndIndex.Row - StartIndex.Row) + 1;
+            int shownColumns = (EndIndex.Column - StartIndex.Column) + 1;
+
+            // Store the current indexes (TableIndex is a struct!)
+            var localStartIdx = StartIndex;
+            var localEndIdx = EndIndex;
             // If we still display the right number of rows/columns, nothing needs to be done.
-            if (visibleRows == realVisibleRows && VisibleColumns == realVisibleColumns)
+            if (shownRows == realVisibleRows && shownColumns == realVisibleColumns)
                 return;
 
-            if (visibleRows != realVisibleRows)
+            if (shownRows != realVisibleRows)
             {
                 // If we have enought rows from the start, we can use the current start index
-                if (StartIndex.Row + realVisibleRows < Rows)
+                if (localStartIdx.Row + realVisibleRows <= Rows)
                 {
-                    SetStartCell(StartIndex.Row, StartIndex.Column);
+                    SetStartCell(localStartIdx.Row, localStartIdx.Column);
                 }
                 else
                 {
-                    SetEndCell(EndIndex.Row, EndIndex.Column);
+                    SetEndCell(localEndIdx.Row, localEndIdx.Column);
                 }
             }
 
-            // At this point, 
+            // The rows are already correct
+            localStartIdx.Row = StartIndex.Row;
+            localEndIdx.Row = EndIndex.Row;
+
+            if (shownColumns != realVisibleColumns)
+            {
+                if (localStartIdx.Column + realVisibleColumns <= Columns)
+                    SetStartCell(localStartIdx.Row, localStartIdx.Column);
+                else
+                    SetEndCell(localEndIdx.Row, localEndIdx.Column);
+            }
         }
 
         public TableWidget(PokeEngine game)
