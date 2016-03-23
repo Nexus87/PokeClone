@@ -73,6 +73,7 @@
     <Compile Include="GraphicComponents\HPLine.cs" />
     <Compile Include="GraphicComponents\BattleGraphics.cs" />
     <Compile Include="GUI\ItemModel.cs" />
+    <Compile Include="GUI\SingleDimensionTableModel.cs" />
     <Compile Include="Services\IBattleGraphicService.cs" />
     <Compile Include="Services\IGUIService.cs" />
     <Compile Include="GraphicComponents\PokemonDataView.cs" />

@@ -77,7 +77,7 @@ namespace BattleLib.Components.BattleState
 
         public Pokemon Pokemon
         {
-            private get { return pokemon; }
+            get { return pokemon; }
             set
             {
                 if (value == null)
