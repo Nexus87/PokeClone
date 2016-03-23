@@ -1,6 +1,7 @@
 ﻿using Base;
 using Base.Data;
 using BattleLib.Components.BattleState;
+using BattleLib.GUI;
 using GameEngine;
 using GameEngine.Graphics;
 using GameEngine.Graphics.Views;
@@ -77,10 +78,18 @@ namespace BattleLib.GraphicComponents.GUI
 
         private void InitAttackMenu(Configuration config, PokeEngine game)
         {
-            var AttackMenu = new TableWidget<Move>(game);
+            
+            
             var model = new AttackModel(BattleState.GetPokemon(ID));
+            
+            var tableView = new TableView<Move>(
+                model, 
+                new DefaultTableRenderer<Move>(game) { DefaultString = "------" }, 
+                new AttackTableSelectionModel(model), 
+                game
+                );
 
-            AttackMenu.Model = model;
+            var AttackMenu = new TableWidget<Move>(null, null, tableView, game);
 
             attackFrame.AddWidget(AttackMenu);
             attackFrame.SetCoordinates(
@@ -92,6 +101,7 @@ namespace BattleLib.GraphicComponents.GUI
 
             AttackMenu.ItemSelected += AttackMenu_ItemSelected;
             AttackMenu.OnExitRequested += BackToMain;
+            AttackMenu.OnExitRequested += delegate { ResetTableWidget(AttackMenu); };
 
             attackFrame.IsVisible = false;
             game.GUIManager.AddWidget(attackFrame);
@@ -115,11 +125,17 @@ namespace BattleLib.GraphicComponents.GUI
 
             ItemMenu.ItemSelected += ItemMenu_ItemSelected;
             ItemMenu.OnExitRequested += BackToMain;
+            ItemMenu.OnExitRequested += delegate { ResetTableWidget(ItemMenu); };
 
             itemFrame.AddWidget(ItemMenu);
             itemFrame.IsVisible = false;
 
             game.GUIManager.AddWidget(itemFrame);
+        }
+
+        private static void ResetTableWidget<T>(TableWidget<T> widget)
+        {
+            widget.SelectCell(0, 0);
         }
 
         private void InitMainMenu(Configuration config, PokeEngine game)
@@ -179,6 +195,7 @@ namespace BattleLib.GraphicComponents.GUI
 
             PKMNMenu.ItemSelected += PKMNMenu_ItemSelected;
             PKMNMenu.OnExitRequested += BackToMain;
+            PKMNMenu.OnExitRequested += delegate { ResetTableWidget(PKMNMenu); };
 
             pkmnFrame.AddWidget(PKMNMenu);
             pkmnFrame.IsVisible = false;

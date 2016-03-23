@@ -8,7 +8,7 @@ namespace BattleLib.GraphicComponents.GUI
 {
     internal class AttackModel : DefaultTableModel<Move>
     {
-        public AttackModel(PokemonWrapper pokemon)
+        public AttackModel(PokemonWrapper pokemon) : base(4, 1)
         {
             pokemon.PokemonChanged += PokemonChangedHandler;
         }
@@ -19,15 +19,8 @@ namespace BattleLib.GraphicComponents.GUI
                 SetData(e.Pokemon.Moves[i], i, 0);
         }
 
+
         public override int Rows { get { return 4; } }
-
-        public override bool SetData(Move data, int row, int column)
-        {
-            // No resize allowed
-            if (row >= 4)
-                throw new ArgumentException("Index out of bound");
-
-            return base.SetData(data, row, column);
-        }
+        public override int Columns { get { return 1; } }
     }
 }

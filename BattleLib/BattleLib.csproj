@@ -68,6 +68,7 @@
     <Compile Include="CommandExecuter.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="GUI\AttackModel.cs" />
+    <Compile Include="GUI\AttackTableSelectionModel.cs" />
     <Compile Include="GUI\BattleGUI.cs" />
     <Compile Include="GraphicComponents\HPLine.cs" />
     <Compile Include="GraphicComponents\BattleGraphics.cs" />

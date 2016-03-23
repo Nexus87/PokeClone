@@ -14,10 +14,17 @@ namespace GameEngine.Graphics.Views
         SpriteFontCreator creator;
         ItemBox[,] boxes = new ItemBox[1,1];
 
+        public string DefaultString { get; set; }
+
+        public DefaultTableRenderer(PokeEngine game) :
+            this(game, delegate { return new XNASpriteFont(); })
+        { }
+
         public DefaultTableRenderer(PokeEngine game, SpriteFontCreator creator)
         {
             this.game = game;
             this.creator = creator;
+            DefaultString = "";
         }
 
         public ISelectableGraphicComponent GetComponent(int row, int column, T data, bool IsSelected)
@@ -25,7 +32,7 @@ namespace GameEngine.Graphics.Views
             CheckBounds(row, column);
 
             var ret = boxes[row, column];
-            ret.Text = data == null ? "" : data.ToString();
+            ret.Text = data == null ? DefaultString : data.ToString();
             
             if (IsSelected)
                 ret.Select();

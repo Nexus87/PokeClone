@@ -16,7 +16,7 @@ namespace GameEngine.Graphics.Views
 
         public event EventHandler<SelectionChangedEventArgs> SelectionChanged = delegate { };
 
-        public bool SelectIndex(int row, int column)
+        public virtual bool SelectIndex(int row, int column)
         {
             
             CheckRange(row, column);
@@ -34,7 +34,7 @@ namespace GameEngine.Graphics.Views
 
         }
 
-        public bool UnselectIndex(int row, int column)
+        public virtual bool UnselectIndex(int row, int column)
         {
             CheckRange(row, column);
 
