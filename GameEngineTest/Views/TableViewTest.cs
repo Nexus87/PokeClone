@@ -289,6 +289,25 @@ namespace GameEngineTest.Views
                 Assert.AreEqual(r == selectedRow && c == selectedColumn, isSelected);
             });
         }
+
+        [TestCase]
+        public void ForwardingSelectionModelReturnValue()
+        {
+            SetDimension(modelMock, 10, 10);
+            table = CreateTable(modelMock, renderer, selectionModelMock);
+
+            selectionModelMock.Setup(o => o.SelectIndex(It.IsAny<int>(), It.IsAny<int>()))
+                .Returns<int, int>( (r,c) => r == 5 && c== 5);
+            selectionModelMock.Setup(o => o.UnselectIndex(It.IsAny<int>(), It.IsAny<int>()))
+                .Returns<int, int>( (r,c) => r == 5 && c== 5);
+
+            Assert.True(table.SetCellSelection(5, 5, true));
+            Assert.False(table.SetCellSelection(2, 2, true));
+
+            Assert.True(table.SetCellSelection(5, 5, false));
+            Assert.False(table.SetCellSelection(2, 2, false));
+        }
+
         [TestCaseSource("SelectionIndices")]
         public void CellSelectionTest(int rows, int columns, int selectedRow, int selectedColumn)
         {
@@ -421,7 +440,7 @@ namespace GameEngineTest.Views
             SetDimension(modelMock, rows, columns);
             selectionModelMock = new Mock<ITableSelectionModel>(MockBehavior.Strict);
 
-            selectionModelMock.Setup(o => o.SelectIndex(selectedRow, selectedColumn));
+            selectionModelMock.Setup(o => o.SelectIndex(selectedRow, selectedColumn)).Returns(true);
             table = CreateTable(modelMock, renderer, selectionModelMock);
             
             
@@ -429,7 +448,7 @@ namespace GameEngineTest.Views
             selectionModelMock.Verify(o => o.SelectIndex(selectedRow, selectedColumn), Times.Once);
 
             selectionModelMock.ResetCalls();
-            selectionModelMock.Setup(o => o.UnselectIndex(selectedRow, selectedColumn));
+            selectionModelMock.Setup(o => o.UnselectIndex(selectedRow, selectedColumn)).Returns(true);
 
             table.SetCellSelection(selectedRow, selectedColumn, false);
 

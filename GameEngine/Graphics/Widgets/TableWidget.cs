@@ -15,11 +15,11 @@ namespace GameEngine.Graphics.Widgets
         /// <summary>
         /// The current column of the selected cell
         /// </summary>
-        private int cursorColumn = 0;
+        internal int cursorColumn = 0;
         /// <summary>
         /// The current row of the selected cell
         /// </summary>
-        private int cursorRow = 0;
+        internal int cursorRow = 0;
 
         private ITableView<T> tableView;
 
@@ -259,10 +259,11 @@ namespace GameEngine.Graphics.Widgets
             if (row >= Rows || column >= Columns || row < 0 || column < 0)
                 throw new ArgumentOutOfRangeException("row/column out of bound");
 
+            if (!tableView.SetCellSelection(row, column, true))
+                return;
+
             cursorRow = row;
             cursorColumn = column;
-
-            tableView.SetCellSelection(row, column, true);
 
             // These indexes should already be set in TableWidget's constructor
             Debug.Assert(tableView.EndIndex.HasValue);
@@ -308,7 +309,9 @@ namespace GameEngine.Graphics.Widgets
 
             // tableViews selection model will take care of deselecting other
             // cells
-            tableView.SetCellSelection(row, cursorColumn, true);
+            if (!tableView.SetCellSelection(row, cursorColumn, true))
+                return;
+
             cursorRow = row;
 
             // We may have to adjust the viewport
@@ -326,7 +329,9 @@ namespace GameEngine.Graphics.Widgets
 
             // tableViews selection model will take care of deselecting other
             // cells
-            tableView.SetCellSelection(cursorRow, column, true);
+            if (!tableView.SetCellSelection(cursorRow, column, true))
+                return;
+
             cursorColumn = column;
 
             // We may have to adjust the viewport

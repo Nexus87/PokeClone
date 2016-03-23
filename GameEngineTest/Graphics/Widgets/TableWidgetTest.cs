@@ -75,6 +75,14 @@ namespace GameEngineTest.Graphics.Widgets
             new TestCaseData(0, 0, 4, 4, null, 4, 4, new TableIndex(0, 0))
         };
 
+        public static List<TestCaseData> InputKeysData = new List<TestCaseData>
+        {
+            new TestCaseData(10, 6, 3, 4, CommandKeys.Left),
+            new TestCaseData(10, 6, 3, 4, CommandKeys.Right),
+            new TestCaseData(10, 6, 3, 4, CommandKeys.Up),
+            new TestCaseData(10, 6, 3, 4, CommandKeys.Down)
+        };
+
         [SetUp]
         public void Setup()
         {
@@ -145,6 +153,44 @@ namespace GameEngineTest.Graphics.Widgets
             Assert.AreEqual(table.Height, tableMock.Height);
         }
 
+        [TestCaseSource("SelectCellTestData")]
+        public void RespectTableViewsSelectionReturnValue(int rows, int columns, int selectedRow, int selectedColumn)
+        {
+            table = CreateTableWidget(tableViewMock, rows, columns);
+            tableViewMock.Setup(o => o.SetCellSelection(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<bool>()))
+                .Returns(false);
+
+            int startCursorRow = table.cursorRow;
+            int startCursorColumn = table.cursorColumn;
+
+            table.SelectCell(selectedRow, selectedColumn);
+
+            Assert.AreEqual(startCursorRow, table.cursorRow);
+            Assert.AreEqual(startCursorColumn, table.cursorColumn);
+
+        }
+
+        [TestCaseSource("InputKeysData")]
+        public void RespectTableViewsInputHandlerReturnValue(int rows, int columns, int selectedRow, int selectedColumn,
+            CommandKeys key)
+        {
+            table = CreateTableWidget(tableViewMock, rows, columns);
+            tableViewMock.Setup(o => o.SetCellSelection(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<bool>()))
+                .Returns(true);
+
+            table.SelectCell(selectedRow, selectedColumn);
+
+            int startCursorRow = table.cursorRow;
+            int startCursorColumn = table.cursorColumn;
+
+            tableViewMock.Setup(o => o.SetCellSelection(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<bool>()))
+                .Returns(false);
+
+            table.HandleInput(key);
+
+            Assert.AreEqual(startCursorRow, table.cursorRow);
+            Assert.AreEqual(startCursorColumn, table.cursorColumn);
+        }
         [TestCaseSource("SelectCellTestData")]
         public void SelectCellTest(int rows, int columns, int selectedRow, int selectedColumn)
         {

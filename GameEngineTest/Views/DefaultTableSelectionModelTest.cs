@@ -38,8 +38,9 @@ namespace GameEngineTest.Views
             var args = new List<SelectionChangedEventArgs>();
             model.SelectionChanged += (obj, arg) => args.Add(arg);
 
-            model.SelectIndex(row, column);
+            bool success = model.SelectIndex(row, column);
 
+            Assert.True(success);
             Assert.AreEqual(2, args.Count);
 
             var argument = (from a in args where a.IsSelected select a).FirstOrDefault();
@@ -55,13 +56,17 @@ namespace GameEngineTest.Views
             var args = new List<SelectionChangedEventArgs>();
             model.SelectionChanged += (obj, arg) => args.Add(arg);
 
-            model.UnselectIndex(row, column);
+            bool success = model.UnselectIndex(row, column);
+            Assert.False(success);
             Assert.AreEqual(0, args.Count);
 
             model.SelectIndex(row, column);
             args.Clear();
-            model.UnselectIndex(row, column);
+            success = false;
 
+            success = model.UnselectIndex(row, column);
+
+            Assert.True(success);
             Assert.AreEqual(1, args.Count);
 
             var argument = args[0];

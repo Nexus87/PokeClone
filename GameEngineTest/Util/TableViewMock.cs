@@ -97,8 +97,9 @@ namespace GameEngineTest.Util
             }
         }
 
-        public virtual void SetCellSelection(int row, int column, bool isSelected)
+        public virtual bool SetCellSelection(int row, int column, bool isSelected)
         {
+            return true;
         }
 
         public virtual ITableModel<TestType> Model { get; set; }

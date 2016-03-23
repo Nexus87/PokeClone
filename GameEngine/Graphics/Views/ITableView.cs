@@ -77,7 +77,8 @@ namespace GameEngine.Graphics.Views
         /// <param name="row">Row</param>
         /// <param name="column">Column</param>
         /// <param name="isSelected">Cell selection</param>
-        void SetCellSelection(int row, int column, bool isSelected);
+        /// <returns>True if the selection was changed</returns>
+        bool SetCellSelection(int row, int column, bool isSelected);
 
         ITableModel<T> Model { get; set; }
     }

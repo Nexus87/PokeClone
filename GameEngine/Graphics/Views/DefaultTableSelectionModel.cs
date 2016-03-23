@@ -16,13 +16,13 @@ namespace GameEngine.Graphics.Views
 
         public event EventHandler<SelectionChangedEventArgs> SelectionChanged = delegate { };
 
-        public void SelectIndex(int row, int column)
+        public bool SelectIndex(int row, int column)
         {
             
             CheckRange(row, column);
 
             if (IsSelected(row, column))
-                return;
+                return true;
 
             if (currentSelection != null)
                 UnselectIndexImpl(CurrentRow, CurrentColumn);
@@ -30,16 +30,19 @@ namespace GameEngine.Graphics.Views
             currentSelection = new Tuple<int, int>(row, column);
             SelectionChanged(this, new SelectionChangedEventArgs(row, column, true));
 
+            return true;
+
         }
 
-        public void UnselectIndex(int row, int column)
+        public bool UnselectIndex(int row, int column)
         {
             CheckRange(row, column);
 
             if (!IsSelected(row, column))
-                return;
+                return false;
 
             UnselectIndexImpl(row, column);
+            return true;
         }
 
         private void UnselectIndexImpl(int row, int column)
