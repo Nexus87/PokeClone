@@ -50,9 +50,6 @@ namespace GameEngineTest.Graphics.Layouts
             layoutMock = new Mock<AbstractLayout>();
             layoutMock.CallBase = true;
             testLayout = layoutMock.Object;
-            testContainer = new Container(engineMock.Object);
-            testContainer.FillContainer(10);
-            testContainer.Layout = testLayout;
         }
 
         public static List<TestCaseData> ValidPropertyData = new List<TestCaseData>

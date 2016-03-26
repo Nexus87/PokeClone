@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Moq;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,6 +35,20 @@ namespace GameEngineTest.Util
         {
             for (int i = 0; i < number; i++)
                 container.AddComponent(new TestGraphicComponent());
+        }
+
+        public static List<TableComponentMock<object>> SetupContainer(this Container container, int number)
+        {
+            var ret = new List<TableComponentMock<object>>();
+
+            for(int i = 0; i < number; i++)
+            {
+                var comp = new TableComponentMock<object>();
+                ret.Add(comp);
+                container.AddComponent(comp);
+            }
+
+            return ret;
         }
 
         public static void ClearContainer(this Container container)
@@ -68,6 +83,29 @@ namespace GameEngineTest.Util
             model.Setup(o => o.Rows).Returns(rows);
             model.Setup(o => o.Columns).Returns(columns);
             model.Setup(o => o.DataAt(It.IsAny<int>(), It.IsAny<int>())).Returns((int a, int b) => retFunc(a, b));
+        }
+
+        public static void IsInConstraints(this IGraphicComponent component, float X, float Y, float Width, float Height)
+        {
+            float realWidth = Math.Max(0, Width);
+            float realHeight = Math.Max(0, Height);
+            bool ret = true;
+            ret &= (realWidth.CompareTo(0) == 0) || (component.Width.CompareTo(0) == 0) ||
+                (component.XPosition.CompareTo(X) >= 0 && component.XPosition.CompareTo(X + realWidth) <= 0);
+            Assert.IsTrue(ret);
+            ret &= (realHeight.CompareTo(0) == 0) || (component.Width.CompareTo(0) == 0) ||
+                (component.YPosition.CompareTo(Y) >= 0 && component.YPosition.CompareTo(Y + realHeight) <= 0);
+            Assert.IsTrue(ret);
+
+            ret &= component.Width.CompareTo(realWidth) <= 0;
+            Assert.IsTrue(ret);
+            ret &= component.Height.CompareTo(realHeight) <= 0;
+            Assert.IsTrue(ret);
+        }
+
+        public static void IsInConstraints(this IGraphicComponent component, IGraphicComponent other)
+        {
+            component.IsInConstraints(other.XPosition, other.YPosition, other.Width, other.Height);
         }
     }
 }

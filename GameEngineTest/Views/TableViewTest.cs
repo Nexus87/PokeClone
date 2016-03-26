@@ -131,8 +131,6 @@ namespace GameEngineTest.Views
         [SetUp]
         public void Setup()
         {
-            contentMock.SetupLoad();
-            
             modelMock = new Mock<ITableModel<CellData>>();
             selectionModelMock = new Mock<ITableSelectionModel>();
             renderer = new TableRendererMock<CellData>();

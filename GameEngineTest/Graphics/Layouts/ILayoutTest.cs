@@ -20,7 +20,6 @@ namespace GameEngineTest.Graphics.Layouts
     public abstract class ILayoutTest
     {
         public ILayout testLayout;
-        public Container testContainer;
 
         public Mock<PokeEngine> engineMock = new Mock<PokeEngine>();
 
@@ -38,13 +37,13 @@ namespace GameEngineTest.Graphics.Layouts
         [TestCaseSource(typeof(ILayoutTest), "ValidData")]
         public void DrawInConstraintsTest(float X, float Y, float Width, float Height)
         {
-            SpriteBatchMock batch = new SpriteBatchMock();
+            var testContainer = new Container(engineMock.Object);
+            var components = testContainer.SetupContainer(10);
             testContainer.SetCoordinates(X, Y, Width, Height);
 
             testLayout.LayoutContainer(testContainer);
-            testContainer.Draw(batch);
 
-            foreach (var obj in batch.Objects)
+            foreach (var obj in components)
                 obj.IsInConstraints(testContainer);
         }
 
@@ -52,51 +51,41 @@ namespace GameEngineTest.Graphics.Layouts
         public void MarginTest(float X, float Y, float Width, float Height)
         {
             int Margin = 10;
-            SpriteBatchMock batch = new SpriteBatchMock();
-
+            var testContainer = new Container(engineMock.Object);
+            var components = testContainer.SetupContainer(10);
             testContainer.SetCoordinates(X, Y, Width, Height);
+
             testLayout.LayoutContainer(testContainer);
 
             testLayout.SetMargin(left: Margin);
             testLayout.LayoutContainer(testContainer);
 
-            testContainer.Draw(batch);
-            foreach (var obj in batch.Objects)
+            foreach (var obj in components)
                 obj.IsInConstraints(X + Margin, Y, Width - Margin, Height);
-            batch.Objects.Clear();
 
             testLayout.SetMargin(right: Margin);
             testLayout.LayoutContainer(testContainer);
 
-            testContainer.Draw(batch);
-            foreach (var obj in batch.Objects)
+            foreach (var obj in components)
                 obj.IsInConstraints(X, Y, Width - Margin, Height);
-            batch.Objects.Clear();
 
             testLayout.SetMargin(top: Margin);
             testLayout.LayoutContainer(testContainer);
 
-            testContainer.Draw(batch);
-            foreach (var obj in batch.Objects)
+            foreach (var obj in components)
                 obj.IsInConstraints(X, Y + Margin, Width, Height - Margin);
-            batch.Objects.Clear();
 
             testLayout.SetMargin(bottom: Margin);
             testLayout.LayoutContainer(testContainer);
 
-            testContainer.Draw(batch);
-            foreach (var obj in batch.Objects)
+            foreach (var obj in components)
                 obj.IsInConstraints(X, Y, Width, Height - Margin);
-            batch.Objects.Clear();
 
             testLayout.SetMargin(Margin, Margin, Margin, Margin); 
             testLayout.LayoutContainer(testContainer);
 
-            testContainer.Draw(batch);
-            foreach (var obj in batch.Objects)
+            foreach (var obj in components)
                 obj.IsInConstraints(X + Margin, Y + Margin, Width - 2*Margin, Height - 2*Margin);
-            batch.Objects.Clear();
-
 
         }
 
@@ -110,7 +99,8 @@ namespace GameEngineTest.Graphics.Layouts
         [TestCase]
         public void TooLargeMarginTest()
         {
-            Assert.Greater(testContainer.Components.Count, 0);
+            var testContainer = new Container(engineMock.Object);
+            var components = testContainer.SetupContainer(10);
 
             testContainer.SetCoordinates(10, 10, 30, 30);
 

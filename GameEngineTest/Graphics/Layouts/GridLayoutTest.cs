@@ -24,9 +24,6 @@ namespace GameEngineTest.Graphics.Layouts
             layout = new GridLayout(2, 2);
 
             testLayout = layout;
-            testContainer = new Container(engineMock.Object);
-            testContainer.FillContainer(4);
-            testContainer.Layout = layout;
         }
 
 
@@ -60,33 +57,30 @@ namespace GameEngineTest.Graphics.Layouts
         [TestCaseSource("PositionData")]
         public void PositionTest(int componentCnt, int gridRows, int gridColumns, int realRows, int realColumns)
         {
-            var batch = new SpriteBatchMock();
             var container = new Container(engineMock.Object);
             var layout = new GridLayout(gridRows, gridColumns);
 
             container.SetCoordinates(5.0f, 5.0f, 500.0f, 500.0f);
-            container.FillContainer(componentCnt);
+            var components = container.SetupContainer(componentCnt);
             container.Layout = layout;
 
             layout.LayoutContainer(container);
-            container.Draw(batch);
 
-            Assert.AreEqual(componentCnt, batch.Objects.Count);
+            Assert.AreEqual(componentCnt, components.Count);
 
-            var rows = (from obj in batch.Objects select obj.Position.Y).Distinct();
-            var columns = (from obj in batch.Objects select obj.Position.X).Distinct();
+            var rows = (from obj in components select obj.YPosition).Distinct();
+            var columns = (from obj in components select obj.XPosition).Distinct();
 
             Assert.AreEqual(realRows, rows.Count());
             Assert.AreEqual(realColumns, columns.Count());
 
-            foreach (var obj in batch.Objects)
+            foreach (var obj in components)
                 obj.IsInConstraints(container);
         }
 
         [TestCaseSource("PositionData")]
         public void PropertySetterTest(int componentCnt, int gridRows, int gridColumns, int realRows, int realColumns)
         {
-            var batch = new SpriteBatchMock();
             var container = new Container(engineMock.Object);
             var layout = new GridLayout(1, 1);
 
@@ -94,48 +88,41 @@ namespace GameEngineTest.Graphics.Layouts
             layout.Rows = gridRows;
 
             container.SetCoordinates(5.0f, 5.0f, 500.0f, 500.0f);
-            container.FillContainer(componentCnt);
+            var components = container.SetupContainer(componentCnt);
             container.Layout = layout;
 
             layout.LayoutContainer(container);
-            container.Draw(batch);
 
-            Assert.AreEqual(componentCnt, batch.Objects.Count);
+            Assert.AreEqual(componentCnt, components.Count);
 
-            var rows = (from obj in batch.Objects select obj.Position.Y).Distinct();
-            var columns = (from obj in batch.Objects select obj.Position.X).Distinct();
+            var rows = (from obj in components select obj.YPosition).Distinct();
+            var columns = (from obj in components select obj.XPosition).Distinct();
 
             Assert.AreEqual(realRows, rows.Count());
             Assert.AreEqual(realColumns, columns.Count());
 
-            foreach (var obj in batch.Objects)
+            foreach (var obj in components)
                 obj.IsInConstraints(container);
         }
         
         [TestCase]
         public void NullComponentTest()
         {
-            var spriteBatch = new SpriteBatchMock();
             var tableLayout = new GridLayout(5, 5);
+            var testContainer = new Container(engineMock.Object);
 
-            testContainer.ClearContainer();
             testContainer.SetCoordinates(0.0f, 0.0f, 250.0f, 250.0f);
             testContainer.Layout = tableLayout;
             tableLayout.LayoutContainer(testContainer);
 
-            testContainer.Draw(spriteBatch);
+            var container = testContainer.SetupContainer(1);
+            tableLayout.LayoutContainer(testContainer);
 
-            Assert.AreEqual(0, spriteBatch.Objects.Count);
-
-            spriteBatch.Objects.Clear();
-            testContainer.FillContainer(1);
-            testContainer.Draw(spriteBatch);
-
-            Assert.AreEqual(1, spriteBatch.Objects.Count);
-            Assert.AreEqual(250.0f, spriteBatch.Objects[0].Size.X);
-            Assert.AreEqual(250.0f, spriteBatch.Objects[0].Size.Y);
-            Assert.AreEqual(0, spriteBatch.Objects[0].Position.X);
-            Assert.AreEqual(0, spriteBatch.Objects[0].Position.Y);
+            Assert.AreEqual(1, container.Count);
+            Assert.AreEqual(250.0f, container[0].Width);
+            Assert.AreEqual(250.0f, container[0].Height);
+            Assert.AreEqual(0, container[0].XPosition);
+            Assert.AreEqual(0, container[0].YPosition);
         }
 
         [TestCaseSource("PositionData")]

@@ -21,31 +21,26 @@ namespace GameEngineTest.Graphics.Layouts
         public void Setup()
         {            
             layout = new VBoxLayout();
-            testContainer = new Container(engineMock.Object);
-            testContainer.FillContainer(4);
-            testContainer.Layout = layout;
             testLayout = layout;
         }
 
-        [TestCase]
-        public void PositionTest()
+        [TestCase(4, 0, 0, 200, 200)]
+        public void PositionTest(int cnt, float x, float y, float width, float height)
         {
-            var spriteBatch = new SpriteBatchMock();
+            var container = new Container(engineMock.Object);
+            var components = container.SetupContainer(cnt);
             layout.SetMargin();
-            testContainer.SetCoordinates(0.0f, 0.0f, 200.0f, 200.0f);
+            container.SetCoordinates(x, y, width, height);
 
-            layout.LayoutContainer(testContainer);
-            testContainer.Draw(spriteBatch);
-
-            spriteBatch.Objects.Sort(delegate(DrawnObject a, DrawnObject b) { return a.Position.Y.CompareTo(b.Position.Y); });
-
-            for (int i = 0; i < spriteBatch.Objects.Count; i++ )
+            layout.LayoutContainer(container);
+            
+            for (int i = 0; i < components.Count; i++ )
             {
-                var obj = spriteBatch.Objects[i];
-                Assert.AreEqual(0.0f, obj.Position.X);
-                Assert.AreEqual(50.0f * i, obj.Position.Y);
-                Assert.AreEqual(200.0f, obj.Size.X);
-                Assert.AreEqual(50.0f, obj.Size.Y);
+                var comp = components[i];
+                Assert.AreEqual(x, comp.XPosition);
+                Assert.AreEqual((height / cnt) * i, comp.YPosition);
+                Assert.AreEqual(width, comp.Width);
+                Assert.AreEqual(height / cnt, comp.Height);
             }
         }
     }
@@ -60,31 +55,27 @@ namespace GameEngineTest.Graphics.Layouts
         {
 
             layout = new HBoxLayout();
-            testContainer = new Container(engineMock.Object);
-            testContainer.FillContainer(4);
-            testContainer.Layout = layout;
             testLayout = layout;
         }
 
-        [TestCase]
-        public void PositionTest()
+        [TestCase(4, 0, 0, 200, 200)]
+        public void PositionTest(int cnt, float x, float y, float width, float height)
         {
-            var spriteBatch = new SpriteBatchMock();
+            var container = new Container(engineMock.Object);
+            var components = container.SetupContainer(cnt);
             layout.SetMargin();
-            testContainer.SetCoordinates(0.0f, 0.0f, 200.0f, 200.0f);
+            container.SetCoordinates(x, y, width, height);
 
-            layout.LayoutContainer(testContainer);
-            testContainer.Draw(spriteBatch);
+            layout.LayoutContainer(container);
 
-            spriteBatch.Objects.Sort(delegate(DrawnObject a, DrawnObject b) { return a.Position.X.CompareTo(b.Position.X); });
 
-            for (int i = 0; i < spriteBatch.Objects.Count; i++)
+            for (int i = 0; i < components.Count; i++)
             {
-                var obj = spriteBatch.Objects[i];
-                Assert.AreEqual(50.0f * i, obj.Position.X);
-                Assert.AreEqual(0.0f, obj.Position.Y);
-                Assert.AreEqual(50.0f, obj.Size.X);
-                Assert.AreEqual(200.0f, obj.Size.Y);
+                var comp = components[i];
+                Assert.AreEqual((width / cnt) * i, comp.XPosition);
+                Assert.AreEqual(y, comp.YPosition);
+                Assert.AreEqual(width / cnt, comp.Width);
+                Assert.AreEqual(height, comp.Height);
             }
         }
     }
