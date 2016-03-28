@@ -1,4 +1,5 @@
 ﻿using Base;
+using Base.Data;
 using System;
 using System.Collections.Generic;
 
@@ -12,12 +13,16 @@ namespace BattleLib.Components.BattleState
         int clientsLeft;
         Dictionary<ClientIdentifier, Pokemon> clients = new Dictionary<ClientIdentifier, Pokemon>();
 
-        public void Init(IEnumerable<ClientIdentifier> requestedClients)
+        public override void Init(BattleData data)
         {
             clients.Clear();
 
-            foreach (var c in requestedClients)
-                clients[c] = null;
+            foreach(var id in data.Clients)
+            {
+                PokemonWrapper pkmn = data.GetPokemon(id);
+                if (pkmn.Pokemon == null || pkmn.Condition == StatusCondition.KO)
+                    clients[id] = null;
+            }
 
             clientsLeft = clients.Count;
         }
@@ -41,8 +46,7 @@ namespace BattleLib.Components.BattleState
                 eventCreator.SetPokemon(c.Key, pokemon);
             }
 
-            state.actionState.Init(clients.Keys);
-            return state.actionState;
+            return state.ActionState;
         }
 
         public override void SetCharacter(ClientIdentifier id, Pokemon pkmn)

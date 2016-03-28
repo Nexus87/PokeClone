@@ -17,16 +17,6 @@ namespace BattleLib.Components.BattleState
             this.state = state;
         }
 
-        public void Init(IEnumerable<ClientIdentifier> clients)
-        {
-            commands.Clear();
-            
-            foreach (var c in clients)
-                commands[c] = null;
-
-            clientCnt = commands.Count;
-        }
-
         public void SetCharacter(ClientIdentifier id, Pokemon pkmn)
         {
             Validate(id, pkmn, "pkmn");
@@ -58,7 +48,7 @@ namespace BattleLib.Components.BattleState
             
             commands.Clear();
 
-            return state.exeState;
+            return state.ExecutionState;
 
         }
 
@@ -71,6 +61,16 @@ namespace BattleLib.Components.BattleState
 
             if (commands[id] != null)
                 throw new InvalidOperationException(id.Name + " already made a move for this turn.");
+        }
+
+        public void Init(BattleData data)
+        {
+            commands.Clear();
+
+            foreach (var c in data.Clients)
+                commands[c] = null;
+
+            clientCnt = commands.Count;
         }
 
         public BattleStates State

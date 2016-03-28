@@ -17,9 +17,9 @@ namespace BattleLib.Components.BattleState
     {
         public event EventHandler<StateChangedEventArgs> StateChanged = delegate { };
 
-        internal WaitForActionState actionState;
-        internal WaitForCharState charState;
-        internal ExecuteState exeState;
+        public IBattleState ActionState { get; set; }
+        public IBattleState CharacterSetState { get; set; }
+        public IBattleState ExecutionState { get; set; }
 
         private RulesSet rules;
         private ICommandScheduler scheduler;
@@ -33,6 +33,7 @@ namespace BattleLib.Components.BattleState
                     return;
 
                 currentState = value;
+                currentState.Init(data);
                 StateChanged(this, new StateChangedEventArgs(currentState.State));
                 if (currentState.State == BattleStates.WaitForAction)
                     eventCreator.NewTurn();
@@ -46,25 +47,25 @@ namespace BattleLib.Components.BattleState
             return data.GetPokemon(id);
         }
 
+        
         public BattleStateComponent(ClientIdentifier player, ClientIdentifier ai, Game game, RulesSet rules, ICommandScheduler scheduler)
             : base(game)
         {
             data = new BattleData(player, ai);
             eventCreator = new EventCreator(data);
+
             this.rules = rules;
             this.scheduler = scheduler;
+            ActionState = new WaitForActionState(this);
+            CharacterSetState = new WaitForCharState(this, eventCreator);
+            ExecutionState = new ExecuteState(this, scheduler, new CommandExecuter(eventCreator, rules));
         }
 
         public override void Initialize()
         {
 
             eventCreator.Setup(Game);
-            actionState = new WaitForActionState(this);
-            charState = new WaitForCharState(this, eventCreator);
-            exeState = new ExecuteState(this, scheduler, new CommandExecuter(eventCreator, rules));
-
-            CurrentState = charState;
-            charState.Init(data.Clients);
+            CurrentState = CharacterSetState;
         }
 
         public void SetCharacter(ClientIdentifier id, Pokemon pkmn)

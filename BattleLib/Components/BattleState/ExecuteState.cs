@@ -35,9 +35,6 @@ namespace BattleLib.Components.BattleState
             this.executer = executer;
             this.state = state;
         }
-        public override void Init()
-        {
-        }
 
         public override IBattleState Update(BattleData data)
         {
@@ -58,12 +55,10 @@ namespace BattleLib.Components.BattleState
             foreach (var id in data.Clients)
             {
                 if(data.GetPokemon(id).HP == 0)
-                    return state.charState;
+                    return state.CharacterSetState;
             }
                 
-
-            state.actionState.Init(data.Clients);
-            return state.actionState;
+            return state.ActionState;
         }
 
         public override BattleStates State

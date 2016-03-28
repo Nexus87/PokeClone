@@ -5,6 +5,8 @@ namespace BattleLib.Components.BattleState
     public interface IBattleState
     {
         BattleStates State { get; }
+
+        void Init(BattleData data);
         IBattleState Update(BattleData data);
 
         void SetCharacter(ClientIdentifier id, Pokemon pkmn);
