@@ -87,8 +87,7 @@ namespace GameEngineTest.Util
         {
             get
             {
-                var dev = new GraphicsDevice(GraphicsAdapter.DefaultAdapter, GraphicsProfile.Reach, new PresentationParameters());
-                return dev;
+                return Extensions.dev; ;
             }
         }
 

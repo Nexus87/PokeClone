@@ -138,7 +138,7 @@ namespace GameEngineTest.Graphics.Layouts
             float Width = container.Width / ((float) realColumns);
             float Height = container.Height / ((float) realRows);
 
-            container.FillContainer(componentCnt);
+            container.SetupContainer(componentCnt);
             container.Layout = layout;
 
             layout.LayoutContainer(container);

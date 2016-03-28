@@ -17,11 +17,10 @@ namespace GameEngineTest.Graphics.Basic
         [SetUp]
         public void Setup()
         {
-            var dev = new GraphicsDevice(GraphicsAdapter.DefaultAdapter, GraphicsProfile.Reach, new PresentationParameters());
-            contentMock.Setup(o => o.Load<Texture2D>(It.IsAny<string>())).Returns(new Texture2D(dev, 10, 10));
+            contentMock.Setup(o => o.Load<Texture2D>(It.IsAny<string>())).Returns(new Texture2D(Extensions.dev, 10, 10));
             var box = new TextureBox(gameMock.Object);
             box.Setup(contentMock.Object);
-            box.Image = new Texture2D(dev, 10, 10);
+            box.Image = new Texture2D(Extensions.dev, 10, 10);
             testObj = box;
         }
         // No special tests needed here

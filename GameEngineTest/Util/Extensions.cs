@@ -18,6 +18,7 @@ namespace GameEngineTest.Util
 {
     public static class Extensions
     {
+        public readonly static GraphicsDevice dev = new GraphicsDevice(GraphicsAdapter.DefaultAdapter, GraphicsProfile.Reach, new PresentationParameters());
         public static void SetCoordinates(this Mock<IGraphicComponent> compMock, float X, float Y, float Width, float Height)
         {
             compMock.Setup(o => o.XPosition).Returns(X);
@@ -29,12 +30,6 @@ namespace GameEngineTest.Util
         public static void Draw(this IGraphicComponent component, ISpriteBatch spriteBatch)
         {
             component.Draw(new GameTime(), spriteBatch);
-        }
-
-        public static void FillContainer(this Container container, int number)
-        {
-            for (int i = 0; i < number; i++)
-                container.AddComponent(new TestGraphicComponent());
         }
 
         public static List<TableComponentMock<object>> SetupContainer(this Container container, int number)
@@ -62,7 +57,6 @@ namespace GameEngineTest.Util
         }
         public static void SetupLoad(this Mock<ContentManager> contentMock)
         {
-            var dev = new GraphicsDevice(GraphicsAdapter.DefaultAdapter, GraphicsProfile.Reach, new PresentationParameters());
             contentMock.Setup(o => o.Load<Texture2D>(It.IsAny<string>())).Returns(new Texture2D(dev, 10, 10));
         }
 
