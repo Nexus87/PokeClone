@@ -23,8 +23,6 @@ namespace GameEngineTest.Graphics.Basic
             fontMock.Setup(o => o.MeasureString(It.IsAny<string>())).Returns<string>(s => new Vector2(16.0f * s.Length, 16.0f));
             box = new TextBox("", fontMock.Object, gameMock.Object);
             box.Text = "TestString";
-            testObj = box;
-            testObj.Setup(contentMock.Object);
         }
 
         static public List<TestCaseData> ValidData = new List<TestCaseData>{
@@ -73,6 +71,13 @@ namespace GameEngineTest.Graphics.Basic
 
             int num = box.DisplayableChars();
             Assert.LessOrEqual(num * TextSize, Width);
+        }
+
+        protected override GameEngine.Graphics.IGraphicComponent CreateComponent()
+        {
+            fontMock = new Mock<ISpriteFont>();
+            fontMock.Setup(o => o.MeasureString(It.IsAny<string>())).Returns<string>(s => new Vector2(16.0f * s.Length, 16.0f));
+            return new TextBox("", fontMock.Object, gameMock.Object);
         }
     }
 }

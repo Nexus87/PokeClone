@@ -11,10 +11,9 @@ namespace GameEngineTest.Graphics.Basic
     [TestFixture]
     public class NullGraphicObjectTest : IGraphicComponentTest
     {
-        [SetUp]
-        public void Setup()
+        protected override GameEngine.Graphics.IGraphicComponent CreateComponent()
         {
-            testObj = new NullGraphicObject(gameMock.Object);
+            return new NullGraphicObject(gameMock.Object);
         }
     }
 }

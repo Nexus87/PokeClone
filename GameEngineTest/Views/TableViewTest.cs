@@ -138,7 +138,7 @@ namespace GameEngineTest.Views
             var componentTestModelMock = new Mock<ITableModel<CellData>>();
             SetDimension(componentTestModelMock, 5, 5);
 
-            testObj = new TableView<CellData>(modelMock.Object, renderer, selectionModelMock.Object, gameMock.Object);
+            
         }
 
         [TestCaseSource("ChangeIndexesTestData")]
@@ -719,6 +719,11 @@ namespace GameEngineTest.Views
         {
             modelMock.Setup(o => o.Rows).Returns(rows);
             modelMock.Setup(o => o.Columns).Returns(columns);
+        }
+
+        protected override IGraphicComponent CreateComponent()
+        {
+            return new TableView<CellData>(modelMock.Object, renderer, selectionModelMock.Object, gameMock.Object);
         }
     }
 

@@ -27,7 +27,6 @@ namespace GameEngineTest.Graphics
             componentMock.CallBase = true;
             batch = new Mock<ISpriteBatch>();
 
-            testObj = componentMock.Object;
         }
 
         [TestCase]
@@ -120,5 +119,14 @@ namespace GameEngineTest.Graphics
             componentMock.Protected().Verify("DrawComponent", Times.Once(), time, sprite);
         }
 
+
+        protected override IGraphicComponent CreateComponent()
+        {
+            componentMock = new Mock<AbstractGraphicComponent>(gameMock.Object);
+            componentMock.CallBase = true;
+            batch = new Mock<ISpriteBatch>();
+
+            return componentMock.Object;
+        }
     }
 }

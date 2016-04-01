@@ -28,7 +28,6 @@ namespace BattleLibTest.GraphicComponents
             line.Current = 50;
             line.Setup(contentMock.Object);
 
-            testObj = line;
         }
 
         public static List<TestCaseData> HPTestData = new List<TestCaseData>
@@ -94,7 +93,7 @@ namespace BattleLibTest.GraphicComponents
 
             line.Draw(spriteBatch);
 
-            var coloredLines = (from obj in spriteBatch.Objects where obj.Color == color select obj).Count();
+            var coloredLines = (from obj in spriteBatch.DrawnObjects where obj.Color == color select obj).Count();
 
             Assert.AreNotEqual(0, coloredLines);
         }
@@ -109,8 +108,18 @@ namespace BattleLibTest.GraphicComponents
             line.Current = 0;
 
             line.Draw(spriteBatch);
-            foreach (var obj in spriteBatch.Objects)
+            foreach (var obj in spriteBatch.DrawnObjects)
                 obj.IsInConstraints(line);
+        }
+
+        protected override IGraphicComponent CreateComponent()
+        {
+            line = new HPLine(gameMock.Object);
+            line.MaxHP = 100;
+            line.Current = 50;
+            line.Setup(contentMock.Object);
+
+            return line;
         }
     }
 }

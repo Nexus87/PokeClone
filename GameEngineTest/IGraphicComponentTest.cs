@@ -17,10 +17,11 @@ namespace GameEngineTest
 
     public abstract class IGraphicComponentTest
     {
-        public IGraphicComponent testObj;
         public Mock<ContentManager> contentMock;
         public Mock<ISpriteFont> fontMock;
         public Mock<PokeEngine> gameMock;
+
+        protected abstract IGraphicComponent CreateComponent();
 
         public IGraphicComponentTest()
         {
@@ -36,150 +37,197 @@ namespace GameEngineTest
             new TestCaseData(0.0f, 0.0f, -1.0f, -1.0f)
         };
 
-        [TestCaseSource(typeof(IGraphicComponentTest), "InvalidData")]
-        public void InvalidCoordinatesTest(float X, float Y, float Width, float Height)
+        [TestCase(-1)]
+        public void Width_SetInvalidData_ThrowsException(float value)
         {
-            Assert.Throws<ArgumentException>(delegate()
-                {
-                    testObj.XPosition = X;
-                    testObj.YPosition = Y;
-                    testObj.Width = Width;
-                    testObj.Height = Height;
-                }
-            );
+            var testComponent = CreateComponent();
+            Assert.Throws<ArgumentException>(() => testComponent.Width = value);
         }
-        [TestCase]
-        public void ChangeEventTest()
+
+        [TestCase(-1)]
+        public void Height_SetInvalidData_ThrowsException(float value)
         {
-            bool sizeEventTriggered = false;
-            bool positionEventTriggered = false;
-            GraphicComponentPositionChangedEventArgs positionArgs = null;
-            GraphicComponentSizeChangedEventArgs sizeArgs = null;
-
-            testObj.SizeChanged += (a, b) => { sizeEventTriggered = true; sizeArgs = b; };
-            testObj.PositionChanged += (a, b) => { positionEventTriggered = true; positionArgs = b; };
-
-            testObj.Width = 1.0f;
-            Assert.IsTrue(sizeEventTriggered);
-            Assert.IsFalse(positionEventTriggered);
-            Assert.AreEqual(1.0f, sizeArgs.Width);
-
-            sizeEventTriggered = false;
-
-            testObj.Height = 1.0f;
-            Assert.IsTrue(sizeEventTriggered);
-            Assert.IsFalse(positionEventTriggered);
-            Assert.AreEqual(1.0f, sizeArgs.Height);
-
-            sizeEventTriggered = false;
-
-            testObj.XPosition = 1.0f;
-            Assert.IsTrue(positionEventTriggered);
-            Assert.IsFalse(sizeEventTriggered);
-            Assert.AreEqual(1.0f, positionArgs.XPosition);
-
-            positionEventTriggered = false;
-
-            testObj.YPosition = 1.0f;
-            Assert.IsTrue(positionEventTriggered);
-            Assert.IsFalse(sizeEventTriggered);
-            Assert.AreEqual(1.0f, positionArgs.YPosition);
+            var testComponent = CreateComponent();
+            Assert.Throws<ArgumentException>(() => testComponent.Height = value);
         }
 
         [TestCase]
-        public void NoEventTriggeredTest()
+        public void Height_SetData_RaiseSizeChangedEvent()
         {
-            bool sizeEventTriggered = false;
-            bool positionEventTriggered = false;
+            var testComponent = CreateComponent();
+            bool sizeChangedRaised = false;
+            GraphicComponentSizeChangedEventArgs eventArgs = null;
 
-            testObj.Width = 1.0f;
-            testObj.Height = 1.0f;
-            testObj.XPosition = 1.0f;
-            testObj.YPosition = 1.0f;
+            testComponent.SizeChanged += (obj, args) => { sizeChangedRaised = true; eventArgs = args; };
 
-            testObj.SizeChanged += delegate { sizeEventTriggered = true; };
-            testObj.PositionChanged += delegate { positionEventTriggered = true; };
+            testComponent.Height += 1.0f;
 
-            testObj.Width = 1.0f;
-            Assert.IsFalse(sizeEventTriggered);
-            Assert.IsFalse(positionEventTriggered);
-
-            testObj.Height = 1.0f;
-            Assert.IsFalse(sizeEventTriggered);
-            Assert.IsFalse(positionEventTriggered);
-
-            testObj.XPosition = 1.0f;
-            Assert.IsFalse(positionEventTriggered);
-            Assert.IsFalse(sizeEventTriggered);
-
-            testObj.YPosition = 1.0f;
-            Assert.IsFalse(positionEventTriggered);
-            Assert.IsFalse(sizeEventTriggered);
-
+            Assert.True(sizeChangedRaised);
+            Assert.NotNull(eventArgs);
+            Assert.AreEqual(testComponent.Height, eventArgs.Height);
+            Assert.AreEqual(testComponent.Width, eventArgs.Width);
         }
 
         [TestCase]
-        public void PropertySetterTest()
+        public void Width_SetData_RaiseSizeChangedEvent()
         {
-            float TestValueX = 1.0f;
-            float TestValueY = 2.0f;
-            float TestValueWidth = 3.0f;
-            float TestValueHeight = 4.0f;
+            var testComponent = CreateComponent();
+            bool sizeChangedRaised = false;
+            GraphicComponentSizeChangedEventArgs eventArgs = null;
 
-            float DefaultValue = 0.0f;
+            testComponent.SizeChanged += (obj, args) => { sizeChangedRaised = true; eventArgs = args; };
 
-            Assert.AreEqual(DefaultValue, testObj.XPosition);
-            Assert.AreEqual(DefaultValue, testObj.YPosition);
-            Assert.AreEqual(DefaultValue, testObj.Width);
-            Assert.AreEqual(DefaultValue, testObj.Height);
+            testComponent.Width += 1.0f;
 
-            testObj.XPosition = TestValueX;
-            Assert.AreEqual(TestValueX, testObj.XPosition);
-            Assert.AreEqual(DefaultValue, testObj.YPosition);
-            Assert.AreEqual(DefaultValue, testObj.Width);
-            Assert.AreEqual(DefaultValue, testObj.Height);
-
-            testObj.YPosition = TestValueY;
-            Assert.AreEqual(TestValueX, testObj.XPosition);
-            Assert.AreEqual(TestValueY, testObj.YPosition);
-            Assert.AreEqual(DefaultValue, testObj.Width);
-            Assert.AreEqual(DefaultValue, testObj.Height);
-
-            testObj.Width = TestValueWidth;
-            Assert.AreEqual(TestValueX, testObj.XPosition);
-            Assert.AreEqual(TestValueY, testObj.YPosition);
-            Assert.AreEqual(TestValueWidth, testObj.Width);
-            Assert.AreEqual(DefaultValue, testObj.Height);
-
-            testObj.Height = TestValueHeight;
-            Assert.AreEqual(TestValueX, testObj.XPosition);
-            Assert.AreEqual(TestValueY, testObj.YPosition);
-            Assert.AreEqual(TestValueWidth, testObj.Width);
-            Assert.AreEqual(TestValueHeight, testObj.Height);
+            Assert.True(sizeChangedRaised);
+            Assert.NotNull(eventArgs);
+            Assert.AreEqual(testComponent.Height, eventArgs.Height);
+            Assert.AreEqual(testComponent.Width, eventArgs.Width);
         }
 
-        public static List<TestCaseData> ValidCoordinates = new List<TestCaseData>{
-            new TestCaseData(5.0f, 5.0f, 150.0f, 10.0f ),
-            new TestCaseData( 0.0f, 0.0f, 150.0f, 10.0f ),
-            new TestCaseData( 0.0f, 0.0f, 0.0f, 10.0f ),
-            new TestCaseData( 0.0f, 0.0f, 150.0f, 0.0f),
-            new TestCaseData( 0.0f, 0.0f, 50.0f, 150.0f)
-        };
-
-        [Test, TestCaseSource(typeof(IGraphicComponentTest), "ValidCoordinates")]
-        public void DrawInConstraintsTest(float X, float Y, float Width, float Height)
+        [TestCase]
+        public void XPosition_SetData_RaisePositionChangedEvent()
         {
-            SpriteBatchMock batch = new SpriteBatchMock();
+            var testComponent = CreateComponent();
+            bool positionChangedRaised = false;
+            GraphicComponentPositionChangedEventArgs eventArgs = null;
+            testComponent.PositionChanged += (obj, args) => { positionChangedRaised = true; eventArgs = args; };
 
-            testObj.XPosition = X;
-            testObj.YPosition = Y;
-            testObj.Width = Width;
-            testObj.Height = Height;
+            testComponent.XPosition += 1.0f;
 
-            testObj.Draw(new GameTime(), batch);
+            Assert.True(positionChangedRaised);
+            Assert.NotNull(eventArgs);
+            Assert.AreEqual(testComponent.XPosition, eventArgs.XPosition);
+            Assert.AreEqual(testComponent.YPosition, eventArgs.YPosition);
+        }
 
-            foreach (var obj in batch.Objects)
-                Assert.IsTrue(obj.IsInConstraints(testObj));
+        [TestCase]
+        public void YPosition_SetData_RaisePositionChangedEvent()
+        {
+            var testComponent = CreateComponent();
+            bool positionChangedRaised = false;
+            GraphicComponentPositionChangedEventArgs eventArgs = null;
+            testComponent.PositionChanged += (obj, args) => { positionChangedRaised = true; eventArgs = args; };
+
+            testComponent.YPosition += 1.0f;
+
+            Assert.True(positionChangedRaised);
+            Assert.NotNull(eventArgs);
+            Assert.AreEqual(testComponent.XPosition, eventArgs.XPosition);
+            Assert.AreEqual(testComponent.YPosition, eventArgs.YPosition);
+        }
+
+        [TestCase]
+        public void Width_SetSameData_NoEventRaised()
+        {
+            bool sizeEventRaised = false;
+            var testComponent = CreateComponent();
+            float currentWidth = testComponent.Width;
+            testComponent.SizeChanged += delegate { sizeEventRaised = true; };
+
+            testComponent.Width = currentWidth;
+
+            Assert.False(sizeEventRaised);
+        }
+
+        [TestCase]
+        public void Height_SetSameData_NoEventRaised()
+        {
+            bool sizeEventRaised = false;
+            var testComponent = CreateComponent();
+            float currentHeight = testComponent.Height;
+            testComponent.SizeChanged += delegate { sizeEventRaised = true; };
+
+            testComponent.Height = currentHeight;
+
+            Assert.False(sizeEventRaised);
+        }
+
+        [TestCase]
+        public void XPosition_SetSameData_NoEventRaised()
+        {
+            bool positionEventRaised = false;
+            var testComponent = CreateComponent();
+            float xPosition = testComponent.XPosition;
+            testComponent.PositionChanged += delegate { positionEventRaised = true; };
+
+            testComponent.XPosition = xPosition;
+
+            Assert.False(positionEventRaised);
+        }
+
+        [TestCase]
+        public void YPosition_SetSameData_NoEventRaised()
+        {
+            bool positionEventRaised = false;
+            var testComponent = CreateComponent();
+            float yPosition = testComponent.YPosition;
+            testComponent.PositionChanged += delegate { positionEventRaised = true; };
+
+            testComponent.YPosition = yPosition;
+
+            Assert.False(positionEventRaised);
+        }
+
+        [TestCase]
+        public void Height_SetProperty_Succeeds()
+        {
+            var testComponent = CreateComponent();
+            var newHeight = testComponent.Height + 10.0f;
+
+            testComponent.Height = newHeight;
+
+            Assert.AreEqual(newHeight, testComponent.Height);
+        }
+
+        [TestCase]
+        public void Width_SetProperty_Succeeds()
+        {
+            var testComponent = CreateComponent();
+            var newWidth = testComponent.Width + 10.0f;
+
+            testComponent.Width = newWidth;
+
+            Assert.AreEqual(newWidth, testComponent.Width);
+        }
+
+        [TestCase]
+        public void XPosition_SetProperty_Succeeds()
+        {
+            var testComponent = CreateComponent();
+            var newX = testComponent.XPosition + 10.0f;
+
+            testComponent.XPosition = newX;
+
+            Assert.AreEqual(newX, testComponent.XPosition);
+        }
+
+        [TestCase]
+        public void YPosition_SetProperty_Succeeds()
+        {
+            var testComponent = CreateComponent();
+            var newY = testComponent.YPosition + 10.0f;
+
+            testComponent.YPosition = newY;
+
+            Assert.AreEqual(newY, testComponent.YPosition);
+        }
+
+        [TestCase( 5.0f, 5.0f, 150.0f,  10.0f )]
+        [TestCase( 0.0f, 0.0f, 150.0f,  10.0f )]
+        [TestCase( 0.0f, 0.0f,   0.0f,  10.0f )]
+        [TestCase( 0.0f, 0.0f, 150.0f,   0.0f )]
+        [TestCase( 0.0f, 0.0f,  50.0f, 150.0f )]
+        public void Draw_WithValidData_DrawnObjectAreInConstraints(float x, float y, float width, float height)
+        {
+            var testComponent = CreateComponent();
+            var batch = new SpriteBatchMock();
+            testComponent.SetCoordinates(x, y, width, height);
+
+            testComponent.Draw(batch);
+
+            foreach (var obj in batch.DrawnObjects)
+                obj.IsInConstraints(testComponent);
         }
     }
 }

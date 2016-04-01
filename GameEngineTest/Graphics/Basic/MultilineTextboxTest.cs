@@ -18,6 +18,7 @@ namespace GameEngineTest.Graphics.Basic
         MultlineTextBox box;
         SpriteBatchMock spriteBatch;
         int displayableChars;
+
         [SetUp]
         public void Setup()
         {
@@ -25,7 +26,6 @@ namespace GameEngineTest.Graphics.Basic
             fontMock.Setup(o => o.MeasureString(It.IsAny<string>())).Returns<string>(s => new Vector2(16.0f * s.Length, 16.0f));
             box = new MultlineTextBox("", 2, fontMock.Object, gameMock.Object);
 
-            testObj = box;
             box.Setup(contentMock.Object);
             box.Text = "Very very long text";
 
@@ -248,6 +248,14 @@ namespace GameEngineTest.Graphics.Basic
             Assert.AreEqual(2, spriteBatch.DrawnStrings.Count);
             foreach (var str in spriteBatch.DrawnStrings)
                 Assert.AreEqual("", str);
+        }
+
+        protected override GameEngine.Graphics.IGraphicComponent CreateComponent()
+        {
+            var fontMock = new Mock<ISpriteFont>();
+            fontMock.Setup(o => o.MeasureString(It.IsAny<string>())).Returns<string>(s => new Vector2(16.0f * s.Length, 16.0f));
+            box = new MultlineTextBox("", 2, fontMock.Object, gameMock.Object);
+            return box;
         }
     }
 }

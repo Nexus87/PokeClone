@@ -1,4 +1,5 @@
-﻿using GameEngine.Graphics.Views;
+﻿using GameEngine.Graphics;
+using GameEngine.Graphics.Views;
 using GameEngineTest.Util;
 using NUnit.Framework;
 using System;
@@ -21,18 +22,24 @@ namespace GameEngineTest.Views
             fontMock.SetupMeasureString();
             contentMock.SetupLoad();
             item.Setup(contentMock.Object);
-
-            testObj = item;
         }
 
-        [TestCaseSource(typeof(IGraphicComponentTest), "ValidCoordinates")]
+        [TestCase(5.0f, 5.0f, 150.0f, 10.0f)]
+        [TestCase(0.0f, 0.0f, 150.0f, 10.0f)]
+        [TestCase(0.0f, 0.0f, 0.0f, 10.0f)]
+        [TestCase(0.0f, 0.0f, 150.0f, 0.0f)]
+        [TestCase(0.0f, 0.0f, 50.0f, 150.0f)]
         public void SelectedDrawInConstraints(float X, float Y, float Width, float Height)
         {
             item.Select();
-            DrawInConstraintsTest(X, Y, Height, Width);
+            Draw_WithValidData_DrawnObjectAreInConstraints(X, Y, Height, Width);
         }
 
-        [TestCaseSource(typeof(IGraphicComponentTest), "ValidCoordinates")]
+        [TestCase(5.0f, 5.0f, 150.0f, 10.0f)]
+        [TestCase(0.0f, 0.0f, 150.0f, 10.0f)]
+        [TestCase(0.0f, 0.0f, 0.0f, 10.0f)]
+        [TestCase(0.0f, 0.0f, 150.0f, 0.0f)]
+        [TestCase(0.0f, 0.0f, 50.0f, 150.0f)]
         public void ArrowPositionTest(float X, float Y, float Width, float Height)
         {
             SpriteBatchMock spriteBatch = new SpriteBatchMock();
@@ -44,18 +51,18 @@ namespace GameEngineTest.Views
 
             item.Draw(spriteBatch);
 
-            Assert.AreEqual(1, spriteBatch.Objects.Count);
+            Assert.AreEqual(1, spriteBatch.DrawnObjects.Count);
             
-            var text = spriteBatch.Objects[0];
-            spriteBatch.Objects.Clear();
+            var text = spriteBatch.DrawnObjects[0];
+            spriteBatch.DrawnObjects.Clear();
             item.Select();
 
             item.Draw(spriteBatch);
 
-            Assert.AreEqual(2, spriteBatch.Objects.Count);
+            Assert.AreEqual(2, spriteBatch.DrawnObjects.Count);
             
-            var first = spriteBatch.Objects[0];
-            var second = spriteBatch.Objects[1];
+            var first = spriteBatch.DrawnObjects[0];
+            var second = spriteBatch.DrawnObjects[1];
 
             // One of them is the text, the other one is the arrow
             // none of them is allowed to be left of the initial text
@@ -64,6 +71,11 @@ namespace GameEngineTest.Views
 
             Assert.IsTrue((first.Position.Equals(text.Position) && first.Size.Equals(text.Size)) ||
                 (second.Position.Equals(text.Position) && second.Size.Equals(text.Size)));
+        }
+
+        protected override IGraphicComponent CreateComponent()
+        {
+            return new ItemBox("TestText", fontMock.Object, gameMock.Object);
         }
     }
 }

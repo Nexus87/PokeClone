@@ -17,35 +17,33 @@ namespace GameEngineTest.Util
         public Vector2 Size;
 
         public Color Color;
-        public bool IsInConstraints(float X, float Y, float Width, float Height)
+        public void IsInConstraints(float X, float Y, float Width, float Height)
         {
             float realWidth = Math.Max(0, Width);
             float realHeight = Math.Max(0, Height);
-            bool ret = true;
-            ret &= (realWidth.CompareTo(0) == 0) || (Size.X.CompareTo(0) == 0) || 
-                (Position.X.CompareTo(X) >= 0 && Position.X.CompareTo(X + realWidth) <= 0);
-            Assert.IsTrue(ret);
-            ret &= (realHeight.CompareTo(0) == 0) || (Size.Y.CompareTo(0) == 0) || 
-                (Position.Y.CompareTo(Y) >= 0 && Position.Y.CompareTo(Y + realHeight) <= 0);
-            Assert.IsTrue(ret);
 
-            ret &= Size.X.CompareTo(realWidth) <= 0;
-            Assert.IsTrue(ret);
-            ret &= Size.Y.CompareTo(realHeight) <= 0;
-            Assert.IsTrue(ret);
+            if (Size.X == 0 || Size.Y == 0)
+                return;
 
-            return ret;
+            Assert.GreaterOrEqual(Position.X, X);
+            Assert.GreaterOrEqual(Position.Y, Y);
+
+            Assert.LessOrEqual(Position.X, X + realWidth);
+            Assert.LessOrEqual(Position.Y, Y + realHeight);
+
+            Assert.LessOrEqual(Position.X + Size.X, X + realWidth);
+            Assert.LessOrEqual(Position.Y + Size.Y, Y + realHeight);
         }
 
-        public bool IsInConstraints(IGraphicComponent component)
+        public void IsInConstraints(IGraphicComponent component)
         {
-            return IsInConstraints(component.XPosition, component.YPosition, component.Width, component.Height);
+            IsInConstraints(component.XPosition, component.YPosition, component.Width, component.Height);
         }
     }
 
     public class SpriteBatchMock : ISpriteBatch
     {
-        public readonly List<DrawnObject> Objects = new List<DrawnObject>();
+        public readonly List<DrawnObject> DrawnObjects = new List<DrawnObject>();
         public readonly LinkedList<string> DrawnStrings = new LinkedList<string>();
 
         private void SetData(Vector2 position, Vector2 size, Color color)
@@ -69,7 +67,7 @@ namespace GameEngineTest.Util
             obj.Position = position;
             obj.Size = size * scale;
             obj.Color = color;
-            Objects.Add(obj);
+            DrawnObjects.Add(obj);
         }
 
         private void SetData(Vector2 position, ISpriteFont font, string text, Vector2 scale, Color color)
@@ -182,6 +180,12 @@ namespace GameEngineTest.Util
         public void Dispose()
         {
             throw new NotImplementedException();
+        }
+
+        public void Reset()
+        {
+            DrawnObjects.Clear();
+            DrawnStrings.Clear();
         }
     }
 }

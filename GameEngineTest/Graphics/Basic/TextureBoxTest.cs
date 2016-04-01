@@ -1,4 +1,5 @@
-﻿using GameEngine.Graphics.Basic;
+﻿using GameEngine.Graphics;
+using GameEngine.Graphics.Basic;
 using GameEngineTest.Util;
 using Microsoft.Xna.Framework.Graphics;
 using Moq;
@@ -17,23 +18,31 @@ namespace GameEngineTest.Graphics.Basic
         [SetUp]
         public void Setup()
         {
-            contentMock.Setup(o => o.Load<Texture2D>(It.IsAny<string>())).Returns(new Texture2D(Extensions.dev, 10, 10));
-            var box = new TextureBox(gameMock.Object);
-            box.Setup(contentMock.Object);
-            box.Image = new Texture2D(Extensions.dev, 10, 10);
-            testObj = box;
+            contentMock.Setup(o => o.Load<Texture2D>(It.IsAny<string>())).Returns(new Texture2D(GameEngineTest.Util.Extensions.dev, 10, 10));
         }
-        // No special tests needed here
 
         [TestCase]
         public void EmptyImageTest()
         {
-            testObj = new TextureBox(gameMock.Object);
+            var testObj = CreateEmptyBox();
             var spriteBatch = new SpriteBatchMock();
 
             testObj.Draw(spriteBatch);
 
-            Assert.IsEmpty(spriteBatch.Objects);
+            Assert.IsEmpty(spriteBatch.DrawnObjects);
+        }
+
+        private TextureBox CreateEmptyBox()
+        {
+            return new TextureBox(gameMock.Object);
+        }
+        protected override IGraphicComponent CreateComponent()
+        {
+            var box = CreateEmptyBox();
+            box.Setup(contentMock.Object);
+            box.Image = new Texture2D(GameEngineTest.Util.Extensions.dev, 10, 10);
+
+            return box;
         }
     }
 }

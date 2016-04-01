@@ -25,7 +25,6 @@ namespace GameEngineTest.Graphics.Basic
             testComponent.Foreground = new TextureBox(gameMock.Object);
             testComponent.Setup(contentMock.Object);
 
-            testObj = testComponent;
         }
 
         [TestCase]
@@ -37,17 +36,27 @@ namespace GameEngineTest.Graphics.Basic
             testComponent.Background = null;
             testComponent.Draw(batch);
 
-            foreach (var o in batch.Objects)
+            foreach (var o in batch.DrawnObjects)
                 o.IsInConstraints(testComponent);
 
-            batch.Objects.Clear();
+            batch.DrawnObjects.Clear();
             testComponent.Foreground = null;
             testComponent.Draw(batch);
 
-            foreach (var o in batch.Objects)
+            foreach (var o in batch.DrawnObjects)
                 o.IsInConstraints(testComponent);
 
             Assert.Throws(typeof(ArgumentNullException), delegate { testComponent.MainComponent = null; });
+        }
+
+        protected override IGraphicComponent CreateComponent()
+        {
+            testComponent = new MultiLayeredComponent(new TextureBox(gameMock.Object), gameMock.Object);
+            testComponent.Background = new TextureBox(gameMock.Object);
+            testComponent.Foreground = new TextureBox(gameMock.Object);
+            testComponent.Setup(contentMock.Object);
+
+            return testComponent;
         }
     }
 }

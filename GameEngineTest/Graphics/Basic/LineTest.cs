@@ -15,14 +15,13 @@ namespace GameEngineTest.Graphics.Basic
     [TestFixture]
     public class LineTest : IGraphicComponentTest
     {
-        [SetUp]
-        public void Setup()
+        protected override GameEngine.Graphics.IGraphicComponent CreateComponent()
         {
             contentMock.SetupLoad();
             var line = new Line(gameMock.Object);
             line.Setup(contentMock.Object);
 
-            testObj = line;
+            return line;
         }
     }
 }

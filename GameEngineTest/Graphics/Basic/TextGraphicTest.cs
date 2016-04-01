@@ -88,7 +88,7 @@ namespace GameEngineTest.Graphics.Basic
             
             testObj.Draw(spriteMock);
 
-            foreach (var obj in spriteMock.Objects)
+            foreach (var obj in spriteMock.DrawnObjects)
                 obj.IsInConstraints(X, Y, TextWidth, TextHeight);
 
         }
