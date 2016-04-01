@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using System;
+using Microsoft.Xna.Framework.Content;
 
 namespace GameEngineTest.Views
 {
@@ -749,9 +750,9 @@ namespace GameEngineTest.Views
             get { return spriteFont.Texture; }
         }
 
-        public void Load(Microsoft.Xna.Framework.Content.ContentManager content, string fontName)
+        public void Load(ContentManager content, string fontName)
         {
-            spriteFont.Load(content, fontName);
+            spriteFont.LoadContent();
         }
 
         public Microsoft.Xna.Framework.Vector2 MeasureString(StringBuilder text)
@@ -762,6 +763,11 @@ namespace GameEngineTest.Views
         public Microsoft.Xna.Framework.Vector2 MeasureString(string text)
         {
             return spriteFont.MeasureString(text);
+        }
+
+
+        public void LoadContent()
+        {
         }
     }
 }

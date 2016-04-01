@@ -102,7 +102,7 @@ namespace GameEngine.Graphics.Widgets
             visibleRows, visibleColumns,
             new TableView<T>(
                 new DefaultTableModel<T>(),
-                new DefaultTableRenderer<T>(game, DefaultCreator),
+                new DefaultTableRenderer<T>(game),
                 new DefaultTableSelectionModel(),
                 game),
             game)
@@ -290,15 +290,6 @@ namespace GameEngine.Graphics.Widgets
             tableView.YPosition = YPosition;
             tableView.Width = Width;
             tableView.Height = Height;
-        }
-
-        /// <summary>
-        /// Default creator function for the DefaultTableCellRenderer
-        /// </summary>
-        /// <returns>Created XNASpriteFont instance</returns>
-        private static XNASpriteFont DefaultCreator()
-        {
-            return new XNASpriteFont();
         }
 
         private void SetCursorRow(int row)

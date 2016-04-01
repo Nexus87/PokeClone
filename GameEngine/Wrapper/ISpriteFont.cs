@@ -46,10 +46,14 @@ namespace GameEngine.Wrapper
         Vector2 MeasureString(string text);
 
         /// <summary>
-        /// Loads the font from the content manager
+        /// Loads the SpriteFont.
+        /// <remarks>
+        /// Only after calling this function, it can be ensured, that the other methods return
+        /// sensible values.
+        /// Should only be called after the LoadContent phase of the PokeEngine. Calling it
+        /// in the Setup method of IGraphicComponents is safe.
+        /// </remarks>
         /// </summary>
-        /// <param name="content">Content Manager</param>
-        /// <param name="fontName">Font name</param>
-        void Load(ContentManager content, string fontName);
+        void LoadContent();
     }
 }

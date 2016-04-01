@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace GameEngine.Graphics.Views
 {
-    internal class ItemBox : AbstractGraphicComponent, ISelectableGraphicComponent
+    internal class ItemBox : AbstractGraphicComponent, ISelectableGraphicComponent, ITextGraphicComponent
     {
         public bool IsSelected { get; private set; }
-        private TextureBox arrow;
-        private TextBox textBox;
+        private IGraphicComponent arrow;
+        private ITextGraphicComponent textBox;
 
         public string Text { get { return textBox.Text; } set { textBox.Text = value; } }
 
@@ -72,6 +72,41 @@ namespace GameEngine.Graphics.Views
         public void Unselect()
         {
             IsSelected = false;
+        }
+
+        public int DisplayableChars()
+        {
+            return textBox.DisplayableChars();
+        }
+
+        public float PreferedTextHeight
+        {
+            get
+            {
+                return textBox.PreferedTextHeight;
+            }
+            set
+            {
+                textBox.PreferedTextHeight = value;
+            }
+        }
+
+        public float RealTextHeight
+        {
+            get { return textBox.RealTextHeight; }
+        }
+
+
+        public ISpriteFont SpriteFont
+        {
+            get
+            {
+                return textBox.SpriteFont;
+            }
+            set
+            {
+                textBox.SpriteFont = value;
+            }
         }
     }
 }

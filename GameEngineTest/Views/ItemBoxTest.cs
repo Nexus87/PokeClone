@@ -29,17 +29,6 @@ namespace GameEngineTest.Views
         [TestCase(0.0f, 0.0f, 0.0f, 10.0f)]
         [TestCase(0.0f, 0.0f, 150.0f, 0.0f)]
         [TestCase(0.0f, 0.0f, 50.0f, 150.0f)]
-        public void SelectedDrawInConstraints(float X, float Y, float Width, float Height)
-        {
-            item.Select();
-            Draw_WithValidData_DrawnObjectAreInConstraints(X, Y, Height, Width);
-        }
-
-        [TestCase(5.0f, 5.0f, 150.0f, 10.0f)]
-        [TestCase(0.0f, 0.0f, 150.0f, 10.0f)]
-        [TestCase(0.0f, 0.0f, 0.0f, 10.0f)]
-        [TestCase(0.0f, 0.0f, 150.0f, 0.0f)]
-        [TestCase(0.0f, 0.0f, 50.0f, 150.0f)]
         public void ArrowPositionTest(float X, float Y, float Width, float Height)
         {
             SpriteBatchMock spriteBatch = new SpriteBatchMock();
@@ -75,7 +64,9 @@ namespace GameEngineTest.Views
 
         protected override IGraphicComponent CreateComponent()
         {
-            return new ItemBox("TestText", fontMock.Object, gameMock.Object);
+            var box = new ItemBox("TestText", fontMock.Object, gameMock.Object);
+            box.Select();
+            return box;
         }
     }
 }

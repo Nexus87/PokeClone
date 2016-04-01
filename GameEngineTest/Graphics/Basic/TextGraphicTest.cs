@@ -28,7 +28,7 @@ namespace GameEngineTest.Graphics.Basic
             testObj = new TextGraphic("FontName", spriteFontMock.Object);
 
             spriteFontMock.Setup(o => o.MeasureString(It.IsAny<string>())).Returns<string>(s => new Vector2(16.0f * s.Length, 16.0f));
-            testObj.Setup(contentMock.Object);
+            testObj.Setup();
         }
 
         public static List<TestCaseData> InvalidData = new List<TestCaseData>{

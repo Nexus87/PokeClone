@@ -34,6 +34,7 @@ namespace GameEngine.Graphics.Basic
                 Invalidate();
             }
         }
+
         public float TextWidth { get { return CalculateTextLength(text); } }
         public float XPosition { get { return position.X; } set { position.X = value; } }
         public float YPosition { get { return position.Y; } set { position.Y = value; } }
@@ -59,9 +60,9 @@ namespace GameEngine.Graphics.Basic
             return CalculateTextLength(" ");
         }
 
-        public void Setup(ContentManager content)
+        public void Setup()
         {
-            font.Load(content, fontName);
+            font.LoadContent();
         }
 
         private void Invalidate()
@@ -79,5 +80,7 @@ namespace GameEngine.Graphics.Basic
             scale = textSize / size.Y;
             needsUpdate = false;
         }
+
+        public ISpriteFont SpriteFont { get; set; }
     }
 }

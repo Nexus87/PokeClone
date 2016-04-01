@@ -5,13 +5,13 @@ using System;
 
 namespace GameEngine.Graphics.Basic
 {
-    public class TextBox : AbstractGraphicComponent
+    public class TextBox : AbstractGraphicComponent, ITextGraphicComponent
     {
         private string text = "";
         private TextGraphic textGraphic;
         private float preferedTextSize;
 
-        public TextBox(String fontName, PokeEngine game) : this(fontName, new XNASpriteFont(), game) { }
+        public TextBox(String fontName, PokeEngine game) : this(fontName, new XNASpriteFont(fontName, game.Content), game) { }
 
         public TextBox(String fontName, ISpriteFont font, PokeEngine game)
             : base(game)
@@ -20,7 +20,7 @@ namespace GameEngine.Graphics.Basic
             preferedTextSize = textGraphic.TextSize;
         }
 
-        public float PreferedTextSize
+        public float PreferedTextHeight
         { 
             get { return preferedTextSize; } 
             set 
@@ -57,7 +57,7 @@ namespace GameEngine.Graphics.Basic
 
         public override void Setup(ContentManager content)
         {
-            textGraphic.Setup(content);
+            textGraphic.Setup();
         }
 
         protected override void Update()
@@ -76,5 +76,8 @@ namespace GameEngine.Graphics.Basic
             int cnt = (int)Math.Floor(Width / length);
             textGraphic.Text = text.Substring(0, Math.Min(text.Length, cnt));
         }
+
+
+        public ISpriteFont SpriteFont { get { return textGraphic.SpriteFont; } set { textGraphic.SpriteFont = value; } }
     }
 }

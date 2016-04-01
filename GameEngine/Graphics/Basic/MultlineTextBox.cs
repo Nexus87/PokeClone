@@ -15,7 +15,7 @@ namespace GameEngine.Graphics.Basic
 
         public MultlineTextBox(string fontName, PokeEngine game) : this(fontName, game, 2) { }
         public MultlineTextBox(string fontName, PokeEngine game, int lineNumber)
-            : this(fontName, lineNumber, new XNASpriteFont(), game)
+            : this(fontName, lineNumber, new XNASpriteFont(fontName, game.Content), game)
         { }
 
         public MultlineTextBox(string fontName, int lineNumber, ISpriteFont font, PokeEngine game)

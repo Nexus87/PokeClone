@@ -55,6 +55,7 @@
     <Compile Include="Graphics\Basic\AnimatedTextureBox.cs" />
     <Compile Include="Graphics\Basic\Container.cs" />
     <Compile Include="Graphics\Basic\IAnimation.cs" />
+    <Compile Include="Graphics\Basic\ITextGraphicComponent.cs" />
     <Compile Include="Graphics\Basic\MultiLayeredComponent.cs" />
     <Compile Include="Graphics\Dialog.cs" />
     <Compile Include="Graphics\Extensions.cs" />
@@ -96,8 +97,10 @@
     <Compile Include="TextureProvider.cs" />
     <Compile Include="Wrapper\ISpriteBatch.cs" />
     <Compile Include="Wrapper\ISpriteFont.cs" />
+    <Compile Include="Wrapper\ITexture2D.cs" />
     <Compile Include="Wrapper\XNASpriteBatch.cs" />
     <Compile Include="Wrapper\XNASpriteFont.cs" />
+    <Compile Include="Wrapper\XNATexture2D.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">

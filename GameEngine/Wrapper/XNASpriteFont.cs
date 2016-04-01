@@ -15,6 +15,15 @@ namespace GameEngine.Wrapper
     /// </summary>
     public sealed class XNASpriteFont : ISpriteFont
     {
+        private string fontName;
+        private ContentManager content;
+        
+        public XNASpriteFont(string fontName, ContentManager content)
+        {
+            this.fontName = fontName;
+            this.content = content;
+        }
+
         /// <see cref="ISpriteFont.SpriteFont"/>
         public SpriteFont SpriteFont { get { return Font; } }
         /// <see cref="Microsoft.Xna.Framework.Graphics.SpriteFont.Characters"/>
@@ -35,7 +44,7 @@ namespace GameEngine.Wrapper
         public Vector2 MeasureString(StringBuilder text) { return Font.MeasureString(text); }
 
         /// <see cref="ISpriteFont.Load"/>
-        public void Load(ContentManager content, string fontName)
+        public void LoadContent()
         {
             Font = content.Load<SpriteFont>(fontName);
         }

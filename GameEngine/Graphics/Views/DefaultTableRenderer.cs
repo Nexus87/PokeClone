@@ -11,13 +11,14 @@ namespace GameEngine.Graphics.Views
     public class DefaultTableRenderer<T> : ITableRenderer<T>
     {
         PokeEngine game;
+        ISpriteFont font;
         SpriteFontCreator creator;
         ItemBox[,] boxes = new ItemBox[1,1];
 
         public string DefaultString { get; set; }
 
         public DefaultTableRenderer(PokeEngine game) :
-            this(game, delegate { return new XNASpriteFont(); })
+            this(game, delegate { return new XNASpriteFont("MenuFont", game.Content); })
         { }
 
         public DefaultTableRenderer(PokeEngine game, SpriteFontCreator creator)

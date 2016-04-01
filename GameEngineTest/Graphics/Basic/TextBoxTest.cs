@@ -42,11 +42,11 @@ namespace GameEngineTest.Graphics.Basic
         {
             box.Width = Width;
             box.Height = Height;
-            box.PreferedTextSize = TextSize;
+            box.PreferedTextHeight = TextSize;
 
             Assert.AreEqual(Width, box.Width);
             Assert.AreEqual(Height, box.Height);
-            Assert.AreEqual(TextSize, box.PreferedTextSize);
+            Assert.AreEqual(TextSize, box.PreferedTextHeight);
 
             Assert.LessOrEqual(box.RealTextHeight, Height);
             if (TextSize <= Height)
@@ -57,7 +57,7 @@ namespace GameEngineTest.Graphics.Basic
         public void InvalidTextSizeTest(float TextSize)
         {
             float size = box.RealTextHeight;
-            Assert.Throws<ArgumentException>(() => box.PreferedTextSize = TextSize);
+            Assert.Throws<ArgumentException>(() => box.PreferedTextHeight = TextSize);
             Assert.AreEqual(size, box.RealTextHeight);
         }
 
@@ -67,7 +67,7 @@ namespace GameEngineTest.Graphics.Basic
         {
             box.Width = Width;
             box.Height = Heigth;
-            box.PreferedTextSize = TextSize;
+            box.PreferedTextHeight = TextSize;
 
             int num = box.DisplayableChars();
             Assert.LessOrEqual(num * TextSize, Width);
