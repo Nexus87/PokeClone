@@ -18,7 +18,8 @@ namespace GameEngineTest.Views
         [SetUp]
         public void Setup()
         {         
-            item = new ItemBox("TestText", fontMock.Object, gameMock.Object);
+            
+            //item = new ItemBox("TestText", fontMock.Object, gameMock.Object);
             fontMock.SetupMeasureString();
             contentMock.SetupLoad();
             item.Setup(contentMock.Object);
@@ -64,7 +65,8 @@ namespace GameEngineTest.Views
 
         protected override IGraphicComponent CreateComponent()
         {
-            var box = new ItemBox("TestText", fontMock.Object, gameMock.Object);
+            //var box = new ItemBox("TestText", fontMock.Object, gameMock.Object);
+            ItemBox box = null;
             box.Select();
             return box;
         }

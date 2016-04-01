@@ -1,4 +1,5 @@
-﻿using GameEngine.Utils;
+﻿using GameEngine.Graphics.Basic;
+using GameEngine.Utils;
 using GameEngine.Wrapper;
 using System;
 using System.Collections.Generic;
@@ -58,7 +59,7 @@ namespace GameEngine.Graphics.Views
 
             if (boxes[row, column] == null)
             {
-                var box = new ItemBox(creator(), game);
+                var box = new ItemBox(new TextureBox("arrow", game), new TextBox("MenuFont", game), game);
                 boxes[row, column] = box;
             }
         }

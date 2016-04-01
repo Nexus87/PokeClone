@@ -19,16 +19,11 @@ namespace GameEngine.Graphics.Views
 
         public string Text { get { return textBox.Text; } set { textBox.Text = value; } }
 
-        public ItemBox(ISpriteFont spriteFont, PokeEngine game) : this("", spriteFont, game) { }
-        public ItemBox(String displayedText, ISpriteFont spriteFont, PokeEngine game)
+        public ItemBox(IGraphicComponent arrow, ITextGraphicComponent textBox, PokeEngine game)
             : base(game)
         {
-            arrow = new TextureBox("arrow", game);
-            textBox = new TextBox("MenuFont", spriteFont, game);
-            textBox.Text = displayedText;
-
-            if (game.IsRunning)
-                Setup(game.Content);
+            this.arrow = arrow;
+            this.textBox = textBox;
         }
         public override sealed void Setup(ContentManager content)
         {
