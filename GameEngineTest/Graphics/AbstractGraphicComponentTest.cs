@@ -1,5 +1,6 @@
 ﻿using GameEngine.Graphics;
 using GameEngine.Wrapper;
+using GameEngineTest.Util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -17,116 +18,142 @@ namespace GameEngineTest.Graphics
     [TestFixture]
     public class AbstractGraphicComponentTest : IGraphicComponentTest
     {
-        Mock<AbstractGraphicComponent> componentMock;
-        Mock<ISpriteBatch> batch;
-
-        [SetUp]
-        public void SetUp()
+        private Mock<AbstractGraphicComponent> CreateComponentMock()
         {
-            componentMock = new Mock<AbstractGraphicComponent>(gameMock.Object);
+            var componentMock = new Mock<AbstractGraphicComponent>(gameMock.Object);
             componentMock.CallBase = true;
-            batch = new Mock<ISpriteBatch>();
 
+            return componentMock;
         }
 
-        [TestCase]
-        public void ExecuteUpdateTest()
+        private Mock<AbstractGraphicComponent> CreateComponentWithoutInvalidation()
         {
-            var sprite = batch.Object;
-            componentMock.Object.Draw(new GameTime(), sprite);
-            componentMock.Protected().Verify("Update", Times.Once());
+            var mock = CreateComponentMock();
+            ResetInvalidation(mock);
+            return mock;
 
+        }
+        private void ResetInvalidation(Mock<AbstractGraphicComponent> componentMock)
+        {
+            componentMock.Object.Draw(spriteBatchStub);
             componentMock.ResetCalls();
+        }
 
-            componentMock.Object.XPosition = 1.0f;
-            componentMock.Object.Draw(new GameTime(), sprite);
-            componentMock.Protected().Verify("Update", Times.Once());
+        private readonly ISpriteBatch spriteBatchStub = new Mock<ISpriteBatch>().Object;
 
-            componentMock.ResetCalls();
 
-            componentMock.Object.YPosition = 1.0f;
-            componentMock.Object.Draw(new GameTime(), sprite);
-            componentMock.Protected().Verify("Update", Times.Once());
+        [TestCase]
+        public void Draw_FirstCall_TriggerUpdateMethod()
+        {
+            var componentMock = CreateComponentMock();
 
-            componentMock.ResetCalls();
+            componentMock.Object.Draw(spriteBatchStub);
 
-            componentMock.Object.Width = 1.0f;
-            componentMock.Object.Draw(new GameTime(), sprite);
-            componentMock.Protected().Verify("Update", Times.Once());
-
-            componentMock.ResetCalls();
-
-            componentMock.Object.Height = 1.0f;
-            componentMock.Object.Draw(new GameTime(), sprite);
             componentMock.Protected().Verify("Update", Times.Once());
         }
 
         [TestCase]
-        public void MultipleChangedUpdateTest()
+        public void Draw_SetXPosition_TriggerUpdateMethod()
         {
-            var sprite = batch.Object;
+            var componentMock = CreateComponentWithoutInvalidation();
+            componentMock.Object.XPosition += 10.0f;
 
-            componentMock.Object.Draw(new GameTime(), sprite);
-            componentMock.Protected().Verify("Update", Times.Once());
+            componentMock.Object.Draw(spriteBatchStub);
 
-            componentMock.ResetCalls();
-
-            componentMock.Object.XPosition = 1.0f;
-            componentMock.Object.Draw(new GameTime(), sprite);
-            componentMock.Protected().Verify("Update", Times.Once());
-
-            componentMock.Object.XPosition = 1.0f;
-            componentMock.Object.Draw(new GameTime(), sprite);
-            componentMock.Protected().Verify("Update", Times.Once());
-
-            componentMock.ResetCalls();
-
-            componentMock.Object.YPosition = 1.0f;
-            componentMock.Object.Draw(new GameTime(), sprite);
-            componentMock.Protected().Verify("Update", Times.Once());
-
-            componentMock.Object.YPosition = 1.0f;
-            componentMock.Object.Draw(new GameTime(), sprite);
-            componentMock.Protected().Verify("Update", Times.Once());
-
-            componentMock.ResetCalls();
-
-            componentMock.Object.Width = 1.0f;
-            componentMock.Object.Draw(new GameTime(), sprite);
-            componentMock.Protected().Verify("Update", Times.Once());
-
-            componentMock.Object.Width = 1.0f;
-            componentMock.Object.Draw(new GameTime(), sprite);
-            componentMock.Protected().Verify("Update", Times.Once());
-
-            componentMock.ResetCalls();
-
-            componentMock.Object.Height = 1.0f;
-            componentMock.Object.Draw(new GameTime(), sprite);
-            componentMock.Protected().Verify("Update", Times.Once());
-
-            componentMock.Object.Height = 1.0f;
-            componentMock.Object.Draw(new GameTime(), sprite);
             componentMock.Protected().Verify("Update", Times.Once());
         }
 
         [TestCase]
-        public void DrawComponentCalled()
+        public void Draw_SetYPosition_TriggerUpdateMethod()
         {
+            var componentMock = CreateComponentWithoutInvalidation();
+            componentMock.Object.YPosition += 10.0f;
+
+            componentMock.Object.Draw(spriteBatchStub);
+
+            componentMock.Protected().Verify("Update", Times.Once());
+        }
+
+        [TestCase]
+        public void Draw_SetWidth_TriggerUpdateMethod()
+        {
+            var componentMock = CreateComponentWithoutInvalidation();
+            componentMock.Object.Width += 10.0f;
+
+            componentMock.Object.Draw(spriteBatchStub);
+
+            componentMock.Protected().Verify("Update", Times.Once());
+        }
+
+        [TestCase]
+        public void Draw_SetHeight_TriggerUpdateMethod()
+        {
+            var componentMock = CreateComponentWithoutInvalidation();
+            componentMock.Object.Height += 10.0f;
+
+            componentMock.Object.Draw(spriteBatchStub);
+
+            componentMock.Protected().Verify("Update", Times.Once());
+        }
+
+        [TestCase]
+        public void Draw_SetSameXPostion_NoUpdateCall()
+        {
+            var componentMock = CreateComponentWithoutInvalidation();
+            componentMock.Object.XPosition = componentMock.Object.XPosition;
+
+            componentMock.Object.Draw(spriteBatchStub);
+
+            componentMock.Protected().Verify("Update", Times.Never());
+        }
+
+        [TestCase]
+        public void Draw_SetSameYPostion_NoUpdateCall()
+        {
+            var componentMock = CreateComponentWithoutInvalidation();
+            componentMock.Object.YPosition = componentMock.Object.YPosition;
+
+            componentMock.Object.Draw(spriteBatchStub);
+
+            componentMock.Protected().Verify("Update", Times.Never());
+        }
+
+        [TestCase]
+        public void Draw_SetSameWidth_NoUpdateCall()
+        {
+            var componentMock = CreateComponentWithoutInvalidation();
+            componentMock.Object.Width = componentMock.Object.Width;
+
+            componentMock.Object.Draw(spriteBatchStub);
+
+            componentMock.Protected().Verify("Update", Times.Never());
+        }
+
+        [TestCase]
+        public void Draw_SetSameHeight_NoUpdateCall()
+        {
+            var componentMock = CreateComponentWithoutInvalidation();
+            componentMock.Object.Height = componentMock.Object.Height;
+
+            componentMock.Object.Draw(spriteBatchStub);
+
+            componentMock.Protected().Verify("Update", Times.Never());
+        }
+
+        [TestCase]
+        public void Draw_Call_DrawComponentCalled()
+        {
+            var componentMock = CreateComponentWithoutInvalidation();
             var time = new GameTime();
-            var sprite = batch.Object;
-            componentMock.Object.Draw(time, sprite);
-            componentMock.Protected().Verify("DrawComponent", Times.Once(), time, sprite);
+
+            componentMock.Object.Draw(time, spriteBatchStub);
+            componentMock.Protected().Verify("DrawComponent", Times.Once(), time, spriteBatchStub);
         }
 
 
         protected override IGraphicComponent CreateComponent()
         {
-            componentMock = new Mock<AbstractGraphicComponent>(gameMock.Object);
-            componentMock.CallBase = true;
-            batch = new Mock<ISpriteBatch>();
-
-            return componentMock.Object;
+            return CreateComponentMock().Object;
         }
     }
 }
