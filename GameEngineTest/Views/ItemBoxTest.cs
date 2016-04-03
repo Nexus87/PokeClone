@@ -1,4 +1,5 @@
 ﻿using GameEngine.Graphics;
+using GameEngine.Graphics.Basic;
 using GameEngine.Graphics.Views;
 using GameEngineTest.Util;
 using NUnit.Framework;
@@ -13,16 +14,24 @@ namespace GameEngineTest.Views
     [TestFixture]
     public class ItemBoxTest : IGraphicComponentTest
     {
-        ItemBox item;
-        
-        [SetUp]
-        public void Setup()
-        {         
-            
-            //item = new ItemBox("TestText", fontMock.Object, gameMock.Object);
-            fontMock.SetupMeasureString();
-            contentMock.SetupLoad();
-            item.Setup(contentMock.Object);
+
+        [TestCase(5.0f, 5.0f, 150.0f, 10.0f)]
+        [TestCase(0.0f, 0.0f, 150.0f, 10.0f)]
+        [TestCase(0.0f, 0.0f, 0.0f, 10.0f)]
+        [TestCase(0.0f, 0.0f, 150.0f, 0.0f)]
+        [TestCase(0.0f, 0.0f, 50.0f, 150.0f)]
+        public void Draw_UnselectedDraw_ArrowNotDrawn(float x, float y, float width, float height)
+        {
+            SpriteBatchMock spriteBatch = new SpriteBatchMock();
+            var arrow = new TableComponentMock<TestType>();
+            var textBox = new TableComponentMock<TestType>();
+
+            var item = CreateItemBox(arrow, textBox);
+            item.SetCoordinates(x, y, width, height);
+
+            item.Draw(spriteBatch);
+
+            Assert.False(arrow.WasDrawn);
         }
 
         [TestCase(5.0f, 5.0f, 150.0f, 10.0f)]
@@ -30,43 +39,35 @@ namespace GameEngineTest.Views
         [TestCase(0.0f, 0.0f, 0.0f, 10.0f)]
         [TestCase(0.0f, 0.0f, 150.0f, 0.0f)]
         [TestCase(0.0f, 0.0f, 50.0f, 150.0f)]
-        public void ArrowPositionTest(float X, float Y, float Width, float Height)
+        public void Draw_SelectedDraw_ArroLeftOfText(float x, float y, float width, float height)
         {
             SpriteBatchMock spriteBatch = new SpriteBatchMock();
+            var arrow = new TableComponentMock<TestType>();
+            var textBox = new TableComponentMock<TestType>();
 
-            item.XPosition = X;
-            item.YPosition = Y;
-            item.Width = Width;
-            item.Height = Height;
-
-            item.Draw(spriteBatch);
-
-            Assert.AreEqual(1, spriteBatch.DrawnObjects.Count);
-            
-            var text = spriteBatch.DrawnObjects[0];
-            spriteBatch.DrawnObjects.Clear();
+            var item = CreateItemBox(arrow, textBox);
+            item.SetCoordinates(x, y, width, height);
             item.Select();
 
             item.Draw(spriteBatch);
 
-            Assert.AreEqual(2, spriteBatch.DrawnObjects.Count);
-            
-            var first = spriteBatch.DrawnObjects[0];
-            var second = spriteBatch.DrawnObjects[1];
+            Assert.LessOrEqual(arrow.XPosition, textBox.XPosition);
+        }
 
-            // One of them is the text, the other one is the arrow
-            // none of them is allowed to be left of the initial text
-            Assert.LessOrEqual(first.Position.X, text.Position.X);
-            Assert.LessOrEqual(second.Position.X, text.Position.X);
+        private ItemBox CreateItemBox(IGraphicComponent arrow = null, ITextGraphicComponent text = null)
+        {
+            if (arrow == null)
+                arrow = new TableComponentMock<TestType>();
+            if (text == null)
+                text = new TableComponentMock<TestType>();
 
-            Assert.IsTrue((first.Position.Equals(text.Position) && first.Size.Equals(text.Size)) ||
-                (second.Position.Equals(text.Position) && second.Size.Equals(text.Size)));
+            return new ItemBox(arrow, text, gameMock.Object);
+
         }
 
         protected override IGraphicComponent CreateComponent()
         {
-            //var box = new ItemBox("TestText", fontMock.Object, gameMock.Object);
-            ItemBox box = null;
+            ItemBox box = CreateItemBox();
             box.Select();
             return box;
         }

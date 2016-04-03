@@ -1,4 +1,5 @@
 ﻿using GameEngine.Graphics;
+using GameEngine.Graphics.Basic;
 using GameEngine.Graphics.Views;
 using GameEngine.Utils;
 using GameEngine.Wrapper;
@@ -7,7 +8,7 @@ using System;
 
 namespace GameEngineTest.Util
 {
-    public class TableComponentMock<T> : ISelectableGraphicComponent
+    public class TableComponentMock<T> : ISelectableGraphicComponent, ITextGraphicComponent
     {
         public bool WasDrawn { get; set; }
         public int Row { get; set; }
@@ -41,8 +42,39 @@ namespace GameEngineTest.Util
         }
 
         public bool IsSelected { get; set; }
+
+        public float PreferedTextHeight { get;set; }
+
+        public float RealTextHeight
+        {
+            get
+            {
+                return Math.Min(Height, PreferedTextHeight);
+            }
+        }
+
+        public string Text { get; set; }
+
+        public ISpriteFont SpriteFont
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         public void Select() { IsSelected = true; } 
         public void Unselect() { IsSelected = false; }
+
+        public int DisplayableChars()
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class TableRendererMock<T> : ITableRenderer<T>
