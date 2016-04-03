@@ -12,7 +12,6 @@ namespace GameEngine.Graphics.Views
     public class DefaultTableRenderer<T> : ITableRenderer<T>
     {
         PokeEngine game;
-        ISpriteFont font;
         SpriteFontCreator creator;
         ItemBox[,] boxes = new ItemBox[1,1];
 
@@ -60,6 +59,7 @@ namespace GameEngine.Graphics.Views
             if (boxes[row, column] == null)
             {
                 var box = new ItemBox(new TextureBox("arrow", game), new TextBox("MenuFont", game), game);
+                box.Setup(game.Content);
                 boxes[row, column] = box;
             }
         }
