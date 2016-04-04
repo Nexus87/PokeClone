@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace GameEngine.Graphics.Views
 {
-    internal class ItemBox : AbstractGraphicComponent, ISelectableGraphicComponent, ITextGraphicComponent
+    internal class ItemBox : AbstractGraphicComponent, ISelectableTextComponent
     {
         public bool IsSelected { get; private set; }
         private IGraphicComponent arrow;

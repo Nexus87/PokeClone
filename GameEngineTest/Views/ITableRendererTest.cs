@@ -11,13 +11,14 @@ namespace GameEngineTest.Views
 {
     public abstract class ITableRendererTest
     {
-        protected ITableRenderer<TestType> testRenderer;
-        protected TestType data = new TestType("test");
+        private TestType data = new TestType("test");
 
+        protected abstract ITableRenderer<TestType> CreateRenderer();
         [TestCase]
         public void DefaultDataTest()
         {
             // Table renderer need to handle null as data
+            var testRenderer = CreateRenderer();
 
             data = null;
             Assert.DoesNotThrow(delegate { testRenderer.GetComponent(0, 0, data, true); });
@@ -30,6 +31,8 @@ namespace GameEngineTest.Views
         [TestCase]
         public void IsSelectedTest()
         {
+            var testRenderer = CreateRenderer();
+
             Assert.IsTrue(testRenderer.GetComponent(0, 0, data, true).IsSelected);
             Assert.IsFalse(testRenderer.GetComponent(0, 0, data, false).IsSelected);
         }
@@ -48,6 +51,8 @@ namespace GameEngineTest.Views
         [TestCaseSource(typeof(ITableRendererTest), "InvalidIndices")]
         public void InvalidIndicesTest(int row, int column)
         {
+            var testRenderer = CreateRenderer();
+
             Assert.Throws(typeof(ArgumentOutOfRangeException), delegate { testRenderer.GetComponent(row, column, data, true); });
             Assert.Throws(typeof(ArgumentOutOfRangeException), delegate { testRenderer.GetComponent(row, column, data, false); });
         }

@@ -62,6 +62,7 @@
     <Compile Include="Graphics\ForwardingGraphicComponent.cs" />
     <Compile Include="Graphics\ISelectable.cs" />
     <Compile Include="Graphics\ISelectableGraphicComponent.cs" />
+    <Compile Include="Graphics\ISelectableTextComponent.cs" />
     <Compile Include="Graphics\Layouts\AbstractLayout.cs" />
     <Compile Include="Graphics\Basic\MultlineTextBox.cs" />
     <Compile Include="Graphics\Basic\NullGraphicObject.cs" />

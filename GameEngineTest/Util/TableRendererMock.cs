@@ -8,7 +8,7 @@ using System;
 
 namespace GameEngineTest.Util
 {
-    public class TableComponentMock<T> : ISelectableGraphicComponent, ITextGraphicComponent
+    public class TableComponentMock<T> : ISelectableTextComponent
     {
         public bool WasDrawn { get; set; }
         public int Row { get; set; }

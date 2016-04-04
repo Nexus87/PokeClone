@@ -12,19 +12,14 @@ namespace GameEngine.Graphics.Views
     public class DefaultTableRenderer<T> : ITableRenderer<T>
     {
         PokeEngine game;
-        SpriteFontCreator creator;
-        ItemBox[,] boxes = new ItemBox[1,1];
+        ISelectableTextComponent[,] boxes = new ISelectableTextComponent[1, 1];
 
         public string DefaultString { get; set; }
 
-        public DefaultTableRenderer(PokeEngine game) :
-            this(game, delegate { return new XNASpriteFont("MenuFont", game.Content); })
-        { }
 
-        public DefaultTableRenderer(PokeEngine game, SpriteFontCreator creator)
+        public DefaultTableRenderer(PokeEngine game)
         {
             this.game = game;
-            this.creator = creator;
             DefaultString = "";
         }
 
@@ -51,17 +46,22 @@ namespace GameEngine.Graphics.Views
 
             if (row >= boxes.Rows() || column >= boxes.Columns())
             {
-                var tmp = new ItemBox[row + 1, column + 1];
+                var tmp = new ISelectableTextComponent[row + 1, column + 1];
                 boxes.Copy(tmp);
                 boxes = tmp;
             }
 
             if (boxes[row, column] == null)
             {
-                var box = new ItemBox(new TextureBox("arrow", game), new TextBox("MenuFont", game), game);
+                var box = CreateComponent(); 
                 box.Setup(game.Content);
                 boxes[row, column] = box;
             }
+        }
+
+        protected virtual ISelectableTextComponent CreateComponent()
+        {
+            return new ItemBox(new TextureBox("arrow", game), new TextBox("MenuFont", game), game);
         }
 
     }

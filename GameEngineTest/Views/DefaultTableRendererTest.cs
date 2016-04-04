@@ -1,4 +1,5 @@
 ﻿using GameEngine;
+using GameEngine.Graphics;
 using GameEngine.Graphics.Views;
 using GameEngine.Wrapper;
 using GameEngineTest.Util;
@@ -15,17 +16,15 @@ namespace GameEngineTest.Views
     [TestFixture]
     public class DefaultTableRendererTest : ITableRendererTest
     {
-        private DefaultTableRenderer<TestType> renderer;
-
-        [SetUp]
-        public void Setup()
+        protected class TestTableRenderer : DefaultTableRenderer<TestType>
         {
-            var fontMock = new Mock<ISpriteFont>();
-            fontMock.SetupMeasureString();
-            renderer = new DefaultTableRenderer<TestType>(new PokeEngine(), delegate { return fontMock.Object; });
-
-            testRenderer = renderer;
+            public TestTableRenderer(PokeEngine game) : base(game) { }
+            protected override ISelectableTextComponent CreateComponent()
+            {
+                return new TableComponentMock<TestType>();
+            }
         }
+
 
         public static List<TestCaseData> TestData = new List<TestCaseData>
         {
@@ -34,27 +33,15 @@ namespace GameEngineTest.Views
             new TestCaseData(new TestType(""), "")
         };
 
-        /// <summary>
-        /// Test if the ISelectableGraphicComponent that the DefaultRenderer returns is
-        /// of the type ItemBox
-        /// </summary>
-        [TestCase]
-        public void ComponentTypeTest()
-        {
-            var data = new TestType("test");
-            var component = renderer.GetComponent(0, 0, data, false);
-
-            Assert.IsInstanceOf<ItemBox>(component);
-        }
-
         [TestCaseSource("TestData")]
         public void DataTest(TestType data, string expectedString)
         {
+            var renderer = CreateTestRenderer();
             var component = renderer.GetComponent(0, 0, data, false);
 
-            Assert.IsInstanceOf<ItemBox>(component);
+            Assert.IsInstanceOf<ISelectableTextComponent>(component);
 
-            Assert.AreEqual(expectedString, ((ItemBox)component).Text);
+            Assert.AreEqual(expectedString, ((ISelectableTextComponent)component).Text);
         }
 
         public static List<TestCaseData> ValidIndices = new List<TestCaseData>
@@ -67,12 +54,22 @@ namespace GameEngineTest.Views
         [TestCaseSource("ValidIndices")]
         public void GetComponentTest(int row, int column)
         {
+            var renderer = CreateTestRenderer();
             var data = new TestType("test");
 
             var component = renderer.GetComponent(row, column, data, false);
 
             Assert.NotNull(component);
         }
-        
+
+        private DefaultTableRenderer<TestType> CreateTestRenderer()
+        {
+            return new TestTableRenderer(new PokeEngine());
+        }
+
+        protected override ITableRenderer<TestType> CreateRenderer()
+        {
+            return CreateTestRenderer();
+        }
     }
 }
