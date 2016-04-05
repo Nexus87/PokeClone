@@ -8,7 +8,7 @@ namespace GameEngine.Graphics.Basic
 {
     internal class AnimatedTextureBox : ForwardingGraphicComponent<TextureBox>
     {
-        public readonly List<Texture2D> Textures = new List<Texture2D>();
+        public readonly List<ITexture2D> Textures = new List<ITexture2D>();
         private int currentIndex = 0;
         private int seconds = 0;
 

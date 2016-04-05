@@ -9,16 +9,14 @@ namespace GameEngine.Graphics.Basic
     public class TextGraphic
     {
         private ISpriteFont font;
-        private string fontName;
         private bool needsUpdate = false;
         private Vector2 position;
         private float scale;
         private string text = "";
         private float textSize = 32.0f;
 
-        public TextGraphic(string fontName, ISpriteFont font)
+        public TextGraphic(ISpriteFont font)
         {
-            this.fontName = fontName;
             this.font = font;
         }
 

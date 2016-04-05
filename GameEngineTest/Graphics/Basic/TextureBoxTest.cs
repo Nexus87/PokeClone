@@ -1,6 +1,8 @@
 ﻿using GameEngine.Graphics;
 using GameEngine.Graphics.Basic;
+using GameEngine.Wrapper;
 using GameEngineTest.Util;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Moq;
 using NUnit.Framework;
@@ -39,8 +41,13 @@ namespace GameEngineTest.Graphics.Basic
         protected override IGraphicComponent CreateComponent()
         {
             var box = CreateEmptyBox();
+            var textureStub = new Mock<ITexture2D>();
+            textureStub.Setup(o => o.Height).Returns(10);
+            textureStub.Setup(o => o.Width).Returns(10);
+            textureStub.Setup(o => o.Bounds).Returns(new Rectangle(0, 0, 10, 10));
             box.Setup(contentMock.Object);
-            box.Image = new Texture2D(GameEngineTest.Util.Extensions.dev, 10, 10);
+
+            box.Image = textureStub.Object;
 
             return box;
         }

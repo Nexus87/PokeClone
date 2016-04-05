@@ -11,12 +11,12 @@ namespace GameEngine.Graphics.Basic
         private TextGraphic textGraphic;
         private float preferedTextSize;
 
-        public TextBox(String fontName, PokeEngine game) : this(fontName, new XNASpriteFont(fontName, game.Content), game) { }
+        public TextBox(String fontName, PokeEngine game) : this(new XNASpriteFont(fontName, game.Content), game) { }
 
-        public TextBox(String fontName, ISpriteFont font, PokeEngine game)
+        public TextBox(ISpriteFont font, PokeEngine game)
             : base(game)
         {
-            textGraphic = new TextGraphic(fontName, font);
+            textGraphic = new TextGraphic(font);
             preferedTextSize = textGraphic.TextSize;
         }
 

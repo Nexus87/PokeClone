@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Content;
+﻿using GameEngine.Wrapper;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -18,18 +19,22 @@ namespace GameEngine
 
         public TextureProvider() { }
 
-        public Texture2D GetTexturesFront(int id)
+        public ITexture2D GetTexturesFront(int id)
         {
             if (id == -1)
                 return null;
-            return Content.Load<Texture2D>("charmander-front");
+            var texture = new XNATexture2D("charmander-front", Content);
+            texture.LoadContent();
+            return texture;
         }
 
-        public Texture2D GetTextureBack(int id)
+        public ITexture2D GetTextureBack(int id)
         {
             if (id == -1)
                 return null;
-            return Content.Load<Texture2D>("charmander-back");
+            var texture = new XNATexture2D("charmander-back", Content);
+            texture.LoadContent();
+            return texture;
         }
     }
 }

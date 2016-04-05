@@ -17,7 +17,6 @@ namespace GameEngine.Graphics
     public class Dialog : ForwardingGraphicComponent<Container>, IWidget
     {
         TextureBox border;
-        string texture;
 
         public ILayout Layout
         {
@@ -37,10 +36,9 @@ namespace GameEngine.Graphics
 
         public Dialog(PokeEngine game) : this(null, game) { }
 
-        public Dialog(string borderTexture, PokeEngine game) : base(new Container(game), game)
+        public Dialog(ITexture2D borderTexture, PokeEngine game) : base(new Container(game), game)
         {
             border = new TextureBox(borderTexture, game);
-            texture = borderTexture;
             InnerComponent.Layout = new SingleComponentLayout();
         }
 
@@ -80,7 +78,7 @@ namespace GameEngine.Graphics
 
         protected override void Update()
         {
-            if (texture == null)
+            if (border.Image == null)
                 return;
 
             Layout.SetMargin(100, 50, 100, 50);

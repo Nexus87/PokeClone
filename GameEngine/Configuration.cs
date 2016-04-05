@@ -17,14 +17,16 @@ namespace GameEngine
             keyMap.Add(Keys.Right, CommandKeys.Right);
             keyMap.Add(Keys.Enter, CommandKeys.Select);
             keyMap.Add(Keys.Escape, CommandKeys.Back);
-            MenuFont = "MenuFont";
-            BoxBorder = "border";
+            DefaultFont = "MenuFont";
+            DefaultBorderTexture = "border";
+            DefaultArrowTexture = "arrow";
         }
 
         protected Dictionary<Keys, CommandKeys> keyMap = new Dictionary<Keys, CommandKeys>();
 
-        public string BoxBorder { get; private set; }
-        public string MenuFont { get; private set; }
+        public string DefaultBorderTexture { get; private set; }
+        public string DefaultFont { get; private set; }
+        public string DefaultArrowTexture { get; private set; }
 
         public virtual T GetOption<T>(string optionString)
         {

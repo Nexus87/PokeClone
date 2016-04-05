@@ -15,10 +15,10 @@ namespace GameEngine.Graphics.Basic
 
         public MultlineTextBox(string fontName, PokeEngine game) : this(fontName, game, 2) { }
         public MultlineTextBox(string fontName, PokeEngine game, int lineNumber)
-            : this(fontName, lineNumber, new XNASpriteFont(fontName, game.Content), game)
+            : this(new XNASpriteFont(fontName, game.Content), lineNumber, game)
         { }
 
-        public MultlineTextBox(string fontName, int lineNumber, ISpriteFont font, PokeEngine game)
+        public MultlineTextBox(ISpriteFont font, int lineNumber, PokeEngine game)
             : base(new Container(game), game)
         {
             var container = InnerComponent;
@@ -26,7 +26,7 @@ namespace GameEngine.Graphics.Basic
 
             for (int i = 0; i < lineNumber; i++)
             {
-                var box = new TextBox(fontName, font, game);
+                var box = new TextBox(font, game);
                 texts.Add(box);
                 container.AddComponent(box);
             }

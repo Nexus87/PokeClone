@@ -25,7 +25,7 @@ namespace GameEngineTest.Graphics.Basic
             var spriteFontMock = new Mock<ISpriteFont>();
             var serviceMock = new Mock<IServiceProvider>();
             var contentMock = new Mock<ContentManager>(serviceMock.Object);
-            testObj = new TextGraphic("FontName", spriteFontMock.Object);
+            testObj = new TextGraphic(spriteFontMock.Object);
 
             spriteFontMock.Setup(o => o.MeasureString(It.IsAny<string>())).Returns<string>(s => new Vector2(16.0f * s.Length, 16.0f));
             testObj.Setup();

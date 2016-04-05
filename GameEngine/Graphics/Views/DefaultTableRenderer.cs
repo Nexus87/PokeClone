@@ -13,12 +13,17 @@ namespace GameEngine.Graphics.Views
     {
         PokeEngine game;
         ISelectableTextComponent[,] boxes = new ISelectableTextComponent[1, 1];
+        private ISpriteFont spriteFont;
+        private ITexture2D arrowTexture;
 
         public string DefaultString { get; set; }
 
 
-        public DefaultTableRenderer(PokeEngine game)
+        public DefaultTableRenderer(PokeEngine game, ISpriteFont font = null, ITexture2D arrow = null)
         {
+            spriteFont = font == null ? game.DefaultFont : font;
+            arrowTexture = arrow == null ? game.DefaultArrowTexture : arrow;
+                
             this.game = game;
             DefaultString = "";
         }
@@ -61,7 +66,7 @@ namespace GameEngine.Graphics.Views
 
         protected virtual ISelectableTextComponent CreateComponent()
         {
-            return new ItemBox(new TextureBox("arrow", game), new TextBox("MenuFont", game), game);
+            return new ItemBox(new TextureBox(arrowTexture, game), new TextBox(spriteFont, game), game);
         }
 
     }

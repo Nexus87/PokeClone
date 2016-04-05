@@ -13,33 +13,31 @@ namespace GameEngine.Graphics.Basic
     public class TextureBox : AbstractGraphicComponent
     {
         Vector2 textureScaling;
+        ITexture2D image;
 
-        string texture;
-        Texture2D image;
-
-        public Texture2D Image { get { return image; } set { image = value; Invalidate(); } }
+        public ITexture2D Image { get { return image; } set { image = value; Invalidate(); } }
         Vector2 scale;
 
         public TextureBox(PokeEngine game) : base(game) { }
 
-        public TextureBox(String texture, PokeEngine game)
+        public TextureBox(ITexture2D texture, PokeEngine game)
             : base(game)
         {
-            this.texture = texture;
+            this.image = texture;
         }
 
         public override void Setup(ContentManager content)
         {
-            if (texture == null)
+            if (image == null)
                 return;
 
-            image = content.Load<Texture2D>(texture);
+            image.LoadContent();
         }
 
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)
         {
             if(image != null)
-                batch.Draw(image, Position, null, Color.White, 0, Vector2.Zero, scale, SpriteEffects.None, 0);
+                batch.Draw(image.Texture, Position, null, Color.White, 0, Vector2.Zero, scale, SpriteEffects.None, 0);
         }
 
         protected override void Update()

@@ -18,6 +18,10 @@ namespace GameEngine
         public static readonly Color BackgroundColor = new Color(248, 248, 248, 0);
         public bool IsRunning { get; private set; }
 
+        public ISpriteFont DefaultFont { get; private set; }
+        public ITexture2D DefaultArrowTexture { get; private set; }
+        public ITexture2D DefaultBorderTexture { get; private set; }
+
         public GUIManager GUIManager { get; private set; }
 
         private XNASpriteBatch batch;
@@ -34,6 +38,10 @@ namespace GameEngine
             IsRunning = false;
             input = new InputComponent(this, config);
             GUIManager = new GUIManager();
+            DefaultArrowTexture = new XNATexture2D(config.DefaultArrowTexture, Content);
+            DefaultFont = new XNASpriteFont(config.DefaultFont, Content);
+            DefaultBorderTexture = new XNATexture2D(config.DefaultBorderTexture, Content);
+
             new GraphicsDeviceManager(this);
 
             Window.AllowUserResizing = true;
@@ -98,6 +106,9 @@ namespace GameEngine
         {
             base.LoadContent();
             batch = new XNASpriteBatch(GraphicsDevice);
+            DefaultArrowTexture.LoadContent();
+            DefaultFont.LoadContent();
+            DefaultBorderTexture.LoadContent();
             if (Graphic == null)
                 throw new InvalidOperationException("Graphic component is not set");
             Graphic.Setup(Content);

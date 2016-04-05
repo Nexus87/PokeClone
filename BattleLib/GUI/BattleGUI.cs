@@ -27,11 +27,11 @@ namespace BattleLib.GraphicComponents.GUI
             ID = player;
             this.ai = ai;
 
-            mainFrame = new Dialog("border", game);
-            attackFrame = new Dialog("border", game);
-            itemFrame = new Dialog("border", game);
+            mainFrame = new Dialog(game.DefaultBorderTexture, game);
+            attackFrame = new Dialog(game.DefaultBorderTexture, game);
+            itemFrame = new Dialog(game.DefaultBorderTexture, game);
             pkmnFrame = new Dialog(game);
-            messageFrame = new Dialog("border", game);
+            messageFrame = new Dialog(game.DefaultBorderTexture, game);
 
             InitMessageBox(config, game);
 
