@@ -17,13 +17,18 @@ namespace GameEngine.Graphics.Basic
     /// </remarks>
     public class Line : AbstractGraphicComponent
     {
-        public Line(PokeEngine game) : base(game) 
+        public Line(ITexture2D pixel, ITexture2D cupTexture, PokeEngine game)
+            : base(game)
         {
+            this.pixel = pixel;
+            this.cupTexture = cupTexture;
             Color = Color.Black;
         }
 
+        public Line(PokeEngine game) : this(null, null, game) { }
+
         private float circleScale;
-        private ITexture2D cups;
+        private ITexture2D cupTexture;
         private Vector2 cupScale;
         private Vector2 leftCup;
         private Vector2 line;
@@ -46,8 +51,10 @@ namespace GameEngine.Graphics.Basic
         /// <see cref="IGraphicComponent.Setup"/>
         public override void Setup()
         {
-            cups = new XNATexture2D(Game.Content.Load<Texture2D>("circle"));
-            circleScale = 1.0f / cups.Height;
+            if(cupTexture == null)
+                cupTexture = new XNATexture2D(Game.Content.Load<Texture2D>("circle"));
+            cupTexture.LoadContent();
+            circleScale = 1.0f / cupTexture.Height;
         }
 
         /// <summary>
@@ -63,8 +70,8 @@ namespace GameEngine.Graphics.Basic
 
             batch.Draw(pixel, position: line, scale: lineScale, color: Color);
 
-            batch.Draw(cups, position: leftCup, scale: cupScale, color: Color);
-            batch.Draw(cups, position: rightCup, scale: cupScale, color: Color);
+            batch.Draw(cupTexture, position: leftCup, scale: cupScale, color: Color);
+            batch.Draw(cupTexture, position: rightCup, scale: cupScale, color: Color);
         }
 
         /// <summary>
