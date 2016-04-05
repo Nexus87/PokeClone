@@ -8,21 +8,34 @@ using System;
 
 namespace BattleLib.GraphicComponents
 {
-    internal class HPLine : AbstractGraphicComponent
+    public interface ILine : IGraphicComponent
+    {
+        Color Color { get; set; }
+    }
+
+    public class DefaultLine : Line, ILine
+    {
+        public DefaultLine(PokeEngine game) : base(game) { }
+    }
+
+    public class HPLine : AbstractGraphicComponent
     {
         private const int border = 10;
         private int currentHp = 0;
-        private Line hpLine;
-        private Line innerLine;
+        private ILine hpLine;
+        private ILine innerLine;
         private int maxHp = 0;
-        private Line outerLine;
+        private ILine outerLine;
 
         public HPLine(PokeEngine game)
-            : base(game)
+            : this(new DefaultLine(game), new DefaultLine(game), new DefaultLine(game), game)
+        { }
+        public HPLine(ILine outerLine, ILine innerLine, ILine hpLine, PokeEngine game) :
+            base(game)
         {
-            outerLine = new Line(game);
-            innerLine = new Line(game);
-            hpLine = new Line(game);
+            this.outerLine = outerLine;
+            this.innerLine = innerLine;
+            this.hpLine = hpLine;
             outerLine.Color = Color.Black;
             innerLine.Color = PokeEngine.BackgroundColor;
         }
@@ -33,9 +46,9 @@ namespace BattleLib.GraphicComponents
 
         public int MaxHP { get { return maxHp; } set { maxHp = value; Invalidate(); } }
 
-        public void AnimationSetHP(int currentHP)
+        public void AnimationSetHP(int newHP)
         {
-            var animation = new HPResizeAnimation(currentHp, this);
+            var animation = new HPResizeAnimation(newHP, this);
             animation.AnimationFinished += animation_AnimationFinished;
             PlayAnimation(animation);
         }
@@ -89,7 +102,7 @@ namespace BattleLib.GraphicComponents
         }
     }
 
-    internal class HPResizeAnimation : IAnimation
+    public class HPResizeAnimation : IAnimation
     {
         private int currentHP = 0;
         private HPLine line;

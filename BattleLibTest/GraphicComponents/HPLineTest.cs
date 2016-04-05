@@ -22,7 +22,11 @@ namespace BattleLibTest.GraphicComponents
         [SetUp]
         public void Setup()
         {
-            line = new HPLine(gameMock.Object);
+            var outerLineStub = new Mock<ILine>();
+            var innerLineStub = new Mock<ILine>();
+            var hpLineStub = new Mock<ILine>();
+
+            line = new HPLine(outerLineStub.Object, innerLineStub.Object, hpLineStub.Object, gameMock.Object);
             line.MaxHP = 100;
             line.Current = 50;
             line.Setup();
@@ -81,6 +85,11 @@ namespace BattleLibTest.GraphicComponents
         public void ColorTest(int hp, Color color)
         {
             var spriteBatch = new SpriteBatchMock();
+            var outerLineStub = new Mock<ILine>();
+            var innerLineStub = new Mock<ILine>();
+            var hpLineStub = new Mock<ILine>();
+
+            line = new HPLine(outerLineStub.Object, innerLineStub.Object, hpLineStub.Object, gameMock.Object);
 
             int maxHP = 100;
 
@@ -92,9 +101,7 @@ namespace BattleLibTest.GraphicComponents
 
             line.Draw(spriteBatch);
 
-            var coloredLines = (from obj in spriteBatch.DrawnObjects where obj.Color == color select obj).Count();
-
-            Assert.AreNotEqual(0, coloredLines);
+            hpLineStub.VerifySet(o => o.Color = color, Times.Once);
         }
 
         [TestCase]
@@ -113,7 +120,11 @@ namespace BattleLibTest.GraphicComponents
 
         protected override IGraphicComponent CreateComponent()
         {
-            line = new HPLine(gameMock.Object);
+            var outerLineStub = new Mock<ILine>();
+            var innerLineStub = new Mock<ILine>();
+            var hpLineStub = new Mock<ILine>();
+
+            line = new HPLine(outerLineStub.Object, innerLineStub.Object, hpLineStub.Object, gameMock.Object);
             line.MaxHP = 100;
             line.Current = 50;
             line.Setup();
