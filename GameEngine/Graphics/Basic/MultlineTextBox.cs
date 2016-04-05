@@ -1,5 +1,6 @@
 ﻿using GameEngine.Graphics.Layouts;
 using GameEngine.Wrapper;
+using GameEngine.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using System.Collections.Generic;
@@ -13,14 +14,15 @@ namespace GameEngine.Graphics.Basic
         private readonly List<TextBox> texts = new List<TextBox>();
         private string text;
 
-        public MultlineTextBox(string fontName, PokeEngine game) : this(fontName, game, 2) { }
-        public MultlineTextBox(string fontName, PokeEngine game, int lineNumber)
-            : this(new XNASpriteFont(fontName, game.Content), lineNumber, game)
+        public MultlineTextBox(PokeEngine game) : this(2, game) { }
+        public MultlineTextBox(int lineNumber, PokeEngine game)
+            : this(game.DefaultFont, lineNumber, game)
         { }
 
         public MultlineTextBox(ISpriteFont font, int lineNumber, PokeEngine game)
             : base(new Container(game), game)
         {
+            font.CheckNull("font");
             var container = InnerComponent;
             container.Layout = new VBoxLayout();
 
