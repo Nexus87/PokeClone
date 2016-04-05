@@ -37,7 +37,7 @@ namespace GameEngine.Graphics.Basic
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)
         {
             if(image != null)
-                batch.Draw(image.Texture, Position, null, Color.White, 0, Vector2.Zero, scale, SpriteEffects.None, 0);
+                batch.Draw(image, Position, null, Color.White, 0, Vector2.Zero, scale, SpriteEffects.None, 0);
         }
 
         protected override void Update()

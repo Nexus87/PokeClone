@@ -15,7 +15,13 @@ namespace GameEngine.Wrapper
     {
         private string textureName;
         private ContentManager content;
-        public new Texture2D Texture { get; private set; }
+        public Texture2D Texture { get; private set; }
+
+        public XNATexture2D(Texture2D texture)
+        {
+            texture.CheckNull("texture");
+            Texture = texture;
+        }
 
         public XNATexture2D(string textureName, ContentManager content)
         {

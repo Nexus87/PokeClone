@@ -51,12 +51,12 @@ namespace GameEngineTest.Util
             SetData(position, size, Vector2.One, color);
         }
 
-        private void SetData(Vector2 position, Texture2D texture, Color color)
+        private void SetData(Vector2 position, ITexture2D texture, Color color)
         {
             SetData(position, texture, Vector2.One, color);   
         }
 
-        private void SetData(Vector2 position, Texture2D texture, Vector2 scale, Color color)
+        private void SetData(Vector2 position, ITexture2D texture, Vector2 scale, Color color)
         {
             SetData(position, texture.Bounds.Size.ToVector2(), scale, color);
         }
@@ -94,42 +94,42 @@ namespace GameEngineTest.Util
             throw new NotImplementedException();
         }
 
-        public void Draw(Texture2D texture, Rectangle destinationRectangle, Color color)
+        public void Draw(ITexture2D texture, Rectangle destinationRectangle, Color color)
         {
             SetData(destinationRectangle.Location.ToVector2(), destinationRectangle.Size.ToVector2(), color);
         }
 
-        public void Draw(Texture2D texture, Vector2 position, Color color)
+        public void Draw(ITexture2D texture, Vector2 position, Color color)
         {
             SetData(position, texture, color);
         }
 
-        public void Draw(Texture2D texture, Rectangle destinationRectangle, Rectangle? sourceRectangle, Color color)
+        public void Draw(ITexture2D texture, Rectangle destinationRectangle, Rectangle? sourceRectangle, Color color)
         {
             Draw(texture, destinationRectangle, color);
         }
 
-        public void Draw(Texture2D texture, Vector2 position, Rectangle? sourceRectangle, Color color)
+        public void Draw(ITexture2D texture, Vector2 position, Rectangle? sourceRectangle, Color color)
         {
             Draw(texture, position, color);   
         }
 
-        public void Draw(Texture2D texture, Rectangle destinationRectangle, Rectangle? sourceRectangle, Color color, float rotation, Vector2 origin, SpriteEffects effects, float layerDepth)
+        public void Draw(ITexture2D texture, Rectangle destinationRectangle, Rectangle? sourceRectangle, Color color, float rotation, Vector2 origin, SpriteEffects effects, float layerDepth)
         {
             Draw(texture, destinationRectangle, color);
         }
 
-        public void Draw(Texture2D texture, Vector2 position, Rectangle? sourceRectangle, Color color, float rotation, Vector2 origin, float scale, SpriteEffects effects, float layerDepth)
+        public void Draw(ITexture2D texture, Vector2 position, Rectangle? sourceRectangle, Color color, float rotation, Vector2 origin, float scale, SpriteEffects effects, float layerDepth)
         {
             SetData(position, texture, new Vector2(scale), color);
         }
 
-        public void Draw(Texture2D texture, Vector2 position, Rectangle? sourceRectangle, Color color, float rotation, Vector2 origin, Vector2 scale, SpriteEffects effects, float layerDepth)
+        public void Draw(ITexture2D texture, Vector2 position, Rectangle? sourceRectangle, Color color, float rotation, Vector2 origin, Vector2 scale, SpriteEffects effects, float layerDepth)
         {
             SetData(position, texture, scale, color);
         }
 
-        public void Draw(Texture2D texture, Vector2? position = null, Rectangle? destinationRectangle = null, Rectangle? sourceRectangle = null, Vector2? origin = null, float rotation = 0f, Vector2? scale = null, Color? color = null, SpriteEffects effects = SpriteEffects.None, float layerDepth = 0f)
+        public void Draw(ITexture2D texture, Vector2? position = null, Rectangle? destinationRectangle = null, Rectangle? sourceRectangle = null, Vector2? origin = null, float rotation = 0f, Vector2? scale = null, Color? color = null, SpriteEffects effects = SpriteEffects.None, float layerDepth = 0f)
         {
             var scaling = scale != null ? scale.Value : Vector2.One;
             Color realColor = color.HasValue ? color.Value : Color.Black;

@@ -23,12 +23,12 @@ namespace GameEngine.Graphics.Basic
         }
 
         private float circleScale;
-        private Texture2D cups;
+        private ITexture2D cups;
         private Vector2 cupScale;
         private Vector2 leftCup;
         private Vector2 line;
         private Vector2 lineScale;
-        private Texture2D pixel;
+        private ITexture2D pixel;
         private Vector2 rightCup;
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace GameEngine.Graphics.Basic
         /// <see cref="IGraphicComponent.Setup"/>
         public override void Setup(ContentManager content)
         {
-            cups = content.Load<Texture2D>("circle");
+            cups = new XNATexture2D(content.Load<Texture2D>("circle"));
             circleScale = 1.0f / cups.Height;
         }
 
@@ -126,7 +126,7 @@ namespace GameEngine.Graphics.Basic
         /// <param name="device"></param>
         private void Init(GraphicsDevice device)
         {
-            pixel = new Texture2D(device, 1, 1, false, SurfaceFormat.Color, 1);
+            pixel = new XNATexture2D(new Texture2D(device, 1, 1, false, SurfaceFormat.Color, 1));
             pixel.SetData(new[] { Color.White });
 
         }
