@@ -25,11 +25,11 @@ namespace BattleLib.GraphicComponents
             var hpLineContainer = new Container(game);
             
             hpLine = new HPLine(game);
-            name = new TextBox("MenuFont", game);
-            lvl = new TextBox("MenuFont", game) { PreferedTextHeight = 16.0f };
+            name = new TextBox(game);
+            lvl = new TextBox(game) { PreferedTextHeight = 16.0f };
 
             hpLineContainer.Layout = new HBoxLayout();
-            hpLineContainer.AddComponent(new TextBox("MenuFont", game) { Text = "hp:", PreferedTextHeight = 12.0f });
+            hpLineContainer.AddComponent(new TextBox(game) { Text = "hp:", PreferedTextHeight = 12.0f });
             hpLineContainer.AddComponent(hpLine);
 
             container.AddComponent(name);
@@ -38,7 +38,7 @@ namespace BattleLib.GraphicComponents
 
             if (player)
             {
-                hpText = new TextBox("MenuFont", game) { PreferedTextHeight = 16.0f };
+                hpText = new TextBox(game) { PreferedTextHeight = 16.0f };
                 container.AddComponent(hpText);
             }
 
