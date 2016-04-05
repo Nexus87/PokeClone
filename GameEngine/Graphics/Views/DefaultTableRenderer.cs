@@ -46,9 +46,10 @@ namespace GameEngine.Graphics.Views
 
         private void CheckBounds(int row, int column)
         {
-            if (row < 0 || column < 0)
-                throw new ArgumentOutOfRangeException("row and column must be positive");
-
+            if (row < 0)
+                throw new ArgumentOutOfRangeException("row", "row must be positive");
+            if(column < 0)
+                throw new ArgumentOutOfRangeException("column", "column must be positive");
             if (row >= boxes.Rows() || column >= boxes.Columns())
             {
                 var tmp = new ISelectableTextComponent[row + 1, column + 1];

@@ -1,4 +1,5 @@
 ﻿using GameEngine.Graphics.Basic;
+using GameEngine.Utils;
 using GameEngine.Wrapper;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -29,7 +30,7 @@ namespace GameEngine.Graphics
             {
                 if (value.CompareTo(0) < 0)
                     throw new ArgumentException("Height must be >=0");
-                if (size.Y == value)
+                if (size.Y.AlmostEqual(value))
                     return;
                 size.Y = value;
                 Invalidate();
@@ -47,7 +48,7 @@ namespace GameEngine.Graphics
             {
                 if (value.CompareTo(0) < 0)
                     throw new ArgumentException("Width must be >=0");
-                if (size.X == value)
+                if (size.X.AlmostEqual(value))
                     return;
                 size.X = value;
                 Invalidate();
@@ -60,7 +61,7 @@ namespace GameEngine.Graphics
             get { return position.X; }
             set
             {
-                if (position.X == value)
+                if (position.X.AlmostEqual(value))
                     return;
 
                 position.X = value;
@@ -74,7 +75,7 @@ namespace GameEngine.Graphics
             get { return position.Y; }
             set
             {
-                if (position.Y == value)
+                if (position.Y.AlmostEqual(value))
                     return;
 
                 position.Y = value;

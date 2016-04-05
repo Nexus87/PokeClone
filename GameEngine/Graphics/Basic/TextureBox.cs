@@ -1,29 +1,24 @@
 ﻿using GameEngine.Wrapper;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GameEngine.Graphics.Basic
 {
     public class TextureBox : AbstractGraphicComponent
     {
-        Vector2 textureScaling;
-        ITexture2D image;
+        private ITexture2D image;
 
         public ITexture2D Image { get { return image; } set { image = value; Invalidate(); } }
-        Vector2 scale;
+        private Vector2 scale;
 
-        public TextureBox(PokeEngine game) : base(game) { }
+        public TextureBox(PokeEngine game) : base(game)
+        {
+        }
 
-        public TextureBox(ITexture2D texture, PokeEngine game)
+        public TextureBox(ITexture2D image, PokeEngine game)
             : base(game)
         {
-            this.image = texture;
+            this.image = image;
         }
 
         public override void Setup()
@@ -36,7 +31,7 @@ namespace GameEngine.Graphics.Basic
 
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)
         {
-            if(image != null)
+            if (image != null)
                 batch.Draw(image, Position, null, Color.White, 0, Vector2.Zero, scale, SpriteEffects.None, 0);
         }
 
@@ -44,12 +39,12 @@ namespace GameEngine.Graphics.Basic
         {
             if (image == null)
                 return;
+            
+            var imageWidthScale = 1.0f / image.Width;
+            var imageHeightScale = 1.0f / image.Height;
 
-            textureScaling.X = 1.0f / image.Width;
-            textureScaling.Y = 1.0f / image.Height;
-
-            scale.X = Width * textureScaling.X;
-            scale.Y = Height * textureScaling.Y;
+            scale.X = Width * imageWidthScale;
+            scale.Y = Height * imageHeightScale;
         }
     }
 }

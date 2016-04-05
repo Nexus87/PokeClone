@@ -13,6 +13,15 @@ namespace GameEngine.Utils
         public delegate T Creator<T>();
         public delegate T CellCreator<T>(int row, int column);
 
+        public static bool AlmostEqual(this float f1, float f2)
+        {
+            return AlmostEqual(f1, f2, 0.0001f);
+        }
+
+        public static bool AlmostEqual(this float f1, float f2, float epsilon)
+        {
+            return Math.Abs(f1 - f2) < epsilon;
+        }
         public static int Rows<T>(this T[,] table)
         {
             return table.GetLength(0);

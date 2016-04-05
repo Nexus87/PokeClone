@@ -1,4 +1,5 @@
-﻿using GameEngine.Wrapper;
+﻿using GameEngine.Utils;
+using GameEngine.Wrapper;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using System;
@@ -8,7 +9,7 @@ namespace GameEngine.Graphics.Basic
     public class TextBox : AbstractGraphicComponent, ITextGraphicComponent
     {
         private string text = "";
-        private TextGraphic textGraphic;
+        private readonly TextGraphic textGraphic;
         private float preferedTextSize;
 
         public TextBox(PokeEngine game) : this(game.DefaultFont, game) { }
@@ -25,10 +26,10 @@ namespace GameEngine.Graphics.Basic
             get { return preferedTextSize; } 
             set 
             {
-                if (value.CompareTo(0) < 0)
+                if (value < 0)
                     throw new ArgumentException("PreferedTextSize must be >= 0");
 
-                if (preferedTextSize == value)
+                if (preferedTextSize.AlmostEqual(value))
                     return;
                 
                 preferedTextSize = value;
@@ -46,7 +47,7 @@ namespace GameEngine.Graphics.Basic
             if (charWidth.CompareTo(0) == 0)
                 return 0;
 
-            int num = (int)Math.Floor(Width / charWidth);
+            var num = (int)Math.Floor(Width / charWidth);
             return num;
         }
 
@@ -73,7 +74,7 @@ namespace GameEngine.Graphics.Basic
                 return;
             }
 
-            int cnt = (int)Math.Floor(Width / length);
+            var cnt = (int)Math.Floor(Width / length);
             textGraphic.Text = text.Substring(0, Math.Min(text.Length, cnt));
         }
 

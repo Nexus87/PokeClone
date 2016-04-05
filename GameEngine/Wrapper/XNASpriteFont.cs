@@ -43,7 +43,7 @@ namespace GameEngine.Wrapper
         /// <see cref="Microsoft.Xna.Framework.Graphics.SpriteFont.MeasureString(StringBuilder)"/>
         public Vector2 MeasureString(StringBuilder text) { return Font.MeasureString(text); }
 
-        /// <see cref="ISpriteFont.Load"/>
+        /// <see cref="ISpriteFont.LoadContent"/>
         public void LoadContent()
         {
             Font = content.Load<SpriteFont>(fontName);

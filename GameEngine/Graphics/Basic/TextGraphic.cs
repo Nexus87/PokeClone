@@ -9,7 +9,7 @@ namespace GameEngine.Graphics.Basic
     public class TextGraphic
     {
         private ISpriteFont font;
-        private bool needsUpdate = false;
+        private bool needsUpdate;
         private Vector2 position;
         private float scale;
         private string text = "";
@@ -20,7 +20,7 @@ namespace GameEngine.Graphics.Basic
             this.font = font;
         }
 
-        public String Text { get { return text; } set { text = value; Invalidate(); } }
+        public string Text { get { return text; } set { text = value; Invalidate(); } }
         public float TextSize
         {
             get { return textSize; }

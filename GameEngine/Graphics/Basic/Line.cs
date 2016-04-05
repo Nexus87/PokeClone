@@ -1,4 +1,5 @@
-﻿using GameEngine.Wrapper;
+﻿using GameEngine.Utils;
+using GameEngine.Wrapper;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -47,7 +48,6 @@ namespace GameEngine.Graphics.Basic
         /// <summary>
         /// Setup this component
         /// </summary>
-        /// <param name="content">Content manager</param>
         /// <see cref="IGraphicComponent.Setup"/>
         public override void Setup()
         {
@@ -80,7 +80,7 @@ namespace GameEngine.Graphics.Basic
         /// <see cref="AbstractGraphicComponent.Update"/>
         protected override void Update()
         {
-            if(Width == 0)
+            if(Width.AlmostEqual(0))
             {
                 lineScale.X = 0;
                 cupScale.X = 0;

@@ -1,7 +1,5 @@
 ﻿using GameEngine.Wrapper;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 
 namespace GameEngine.Graphics.Basic
@@ -9,8 +7,8 @@ namespace GameEngine.Graphics.Basic
     internal class AnimatedTextureBox : ForwardingGraphicComponent<TextureBox>
     {
         public readonly List<ITexture2D> Textures = new List<ITexture2D>();
-        private int currentIndex = 0;
-        private int seconds = 0;
+        private int currentIndex;
+        private int seconds;
 
         public AnimatedTextureBox(PokeEngine game) : base(new TextureBox(game), game)
         {

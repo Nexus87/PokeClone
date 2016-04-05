@@ -18,7 +18,7 @@ namespace GameEngine.EventComponent
         /// <summary>
         /// Add a new event to the event queue
         /// </summary>
-        /// <param name="event">Event</param>
+        /// <param name="newEvent">Event</param>
         void AddEvent(IEvent newEvent);
     }
 }

@@ -1,23 +1,20 @@
 ﻿using GameEngine.Graphics.Layouts;
 using GameEngine.Wrapper;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GameEngine.Graphics.Basic
 {
     public class Container : AbstractGraphicComponent
     {
-        public Container(PokeEngine game) : base(game) { }
+        public Container(PokeEngine game) : base(game)
+        {
+        }
+
         public ILayout Layout { get; set; }
 
         public IReadOnlyList<IGraphicComponent> Components { get { return components.AsReadOnly(); } }
-        private List<IGraphicComponent> components = new List<IGraphicComponent>();
+        private readonly List<IGraphicComponent> components = new List<IGraphicComponent>();
 
         public void AddComponent(IGraphicComponent comp, int index)
         {
