@@ -27,7 +27,7 @@ namespace GameEngine.Graphics.Basic
 
         public Line(PokeEngine game) : this(null, null, game) { }
 
-        private float circleScale;
+        private float circleTextureScale;
         private ITexture2D cupTexture;
         private Vector2 cupScale;
         private Vector2 leftCup;
@@ -54,7 +54,7 @@ namespace GameEngine.Graphics.Basic
             if(cupTexture == null)
                 cupTexture = new XNATexture2D(Game.Content.Load<Texture2D>("circle"));
             cupTexture.LoadContent();
-            circleScale = 1.0f / cupTexture.Height;
+            circleTextureScale = 1.0f / cupTexture.Height;
         }
 
         /// <summary>
@@ -87,41 +87,56 @@ namespace GameEngine.Graphics.Basic
                 return;
             }
             else if (Width.CompareTo(Height) < 0)
-                LineWithFlatCups();
+                SetComponentsFlatCups();
             else
-                LineWithCups();
+                SetComponentsWithCups();
                 
         }
 
         /// <summary>
         /// This calculates the coordinates if Width >= Height
         /// </summary>
-        private void LineWithCups()
+        private void SetComponentsWithCups()
         {
-            // Width >= Height && Width != 0
-            lineScale.Y = Height;
-            lineScale.X = Width - Height; // >= 0
+            SetLineCoordinates();
+            SetCupsCoordinates();
+        }
 
-            line.X = Position.X + Height / 2.0f;
-            line.Y = Position.Y;
+        private void SetCupsCoordinates()
+        {
+            cupScale.X = cupScale.Y = Height * circleTextureScale;
 
             leftCup = Position;
+
             rightCup.Y = Position.Y;
             rightCup.X = Position.X + Width - Height;
 
             rightCup.X = rightCup.X.CompareTo(leftCup.X) > 0 ? rightCup.X : leftCup.X;
-            cupScale.X = cupScale.Y = Height * circleScale;
+        }
+
+        private void SetLineCoordinates()
+        {
+            // Width >= Height && Width != 0
+            float cupRadius = 0.5f * Height;
+
+            lineScale.Y = Height;
+            lineScale.X = Width - 2 * cupRadius; // >= 0
+
+            line.X = Position.X + cupRadius;
+            line.Y = Position.Y;
         }
 
         /// <summary>
         /// This is called if there is not enough Width for a full circle with radius Height
         /// </summary>
-        private void LineWithFlatCups()
+        private void SetComponentsFlatCups()
         {
             line =  leftCup = rightCup = Position;
-            lineScale.X = lineScale.Y = 0;
-            cupScale.X = Width * circleScale;
-            cupScale.Y = Height * circleScale;
+
+            lineScale = Vector2.Zero;
+
+            cupScale.X = Width * circleTextureScale;
+            cupScale.Y = Height * circleTextureScale;
         }
 
         /// <summary>
