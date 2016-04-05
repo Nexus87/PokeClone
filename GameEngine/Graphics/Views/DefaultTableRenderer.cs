@@ -59,7 +59,7 @@ namespace GameEngine.Graphics.Views
             if (boxes[row, column] == null)
             {
                 var box = CreateComponent(); 
-                box.Setup(game.Content);
+                box.Setup();
                 boxes[row, column] = box;
             }
         }

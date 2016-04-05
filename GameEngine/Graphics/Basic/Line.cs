@@ -44,9 +44,9 @@ namespace GameEngine.Graphics.Basic
         /// </summary>
         /// <param name="content">Content manager</param>
         /// <see cref="IGraphicComponent.Setup"/>
-        public override void Setup(ContentManager content)
+        public override void Setup()
         {
-            cups = new XNATexture2D(content.Load<Texture2D>("circle"));
+            cups = new XNATexture2D(Game.Content.Load<Texture2D>("circle"));
             circleScale = 1.0f / cups.Height;
         }
 

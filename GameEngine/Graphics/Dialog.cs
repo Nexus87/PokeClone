@@ -42,10 +42,10 @@ namespace GameEngine.Graphics
             InnerComponent.Layout = new SingleComponentLayout();
         }
 
-        public override void Setup(ContentManager content)
+        public override void Setup()
         {
-            border.Setup(content);
-            base.Setup(content);
+            border.Setup();
+            base.Setup();
         }
 
         public event EventHandler<VisibilityChangedEventArgs> OnVisibilityChanged = delegate { };

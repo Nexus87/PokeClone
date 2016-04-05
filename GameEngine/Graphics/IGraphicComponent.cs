@@ -100,7 +100,6 @@ namespace GameEngine.Graphics
         /// If the component is registered to the PokeEngine, the function will
         /// be after Run().
         /// </remarks>
-        /// <param name="content"></param>
-        void Setup(ContentManager content);
+        void Setup();
     }
 }

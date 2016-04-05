@@ -40,11 +40,11 @@ namespace BattleLib.GraphicComponents
             PlayAnimation(animation);
         }
 
-        public override void Setup(ContentManager content)
+        public override void Setup()
         {
-            outerLine.Setup(content);
-            innerLine.Setup(content);
-            hpLine.Setup(content);
+            outerLine.Setup();
+            innerLine.Setup();
+            hpLine.Setup();
         }
 
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)

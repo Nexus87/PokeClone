@@ -274,9 +274,9 @@ namespace GameEngine.Graphics.Widgets
                 SetStartCell(row, column);
         }
 
-        public override void Setup(ContentManager content)
+        public override void Setup()
         {
-            tableView.Setup(content);
+            tableView.Setup();
         }
 
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)

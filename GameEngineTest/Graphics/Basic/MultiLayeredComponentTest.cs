@@ -23,7 +23,7 @@ namespace GameEngineTest.Graphics.Basic
             testComponent = new MultiLayeredComponent(new TextureBox(gameMock.Object), gameMock.Object);
             testComponent.Background = new TextureBox(gameMock.Object);
             testComponent.Foreground = new TextureBox(gameMock.Object);
-            testComponent.Setup(contentMock.Object);
+            testComponent.Setup();
 
         }
 
@@ -54,7 +54,7 @@ namespace GameEngineTest.Graphics.Basic
             testComponent = new MultiLayeredComponent(new TextureBox(gameMock.Object), gameMock.Object);
             testComponent.Background = new TextureBox(gameMock.Object);
             testComponent.Foreground = new TextureBox(gameMock.Object);
-            testComponent.Setup(contentMock.Object);
+            testComponent.Setup();
 
             return testComponent;
         }

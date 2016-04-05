@@ -30,9 +30,9 @@ namespace GameEngine.Graphics.Basic
             base.Draw(time, batch);
         }
 
-        public override void Setup(ContentManager content)
+        public override void Setup()
         {
-            base.Setup(content);
+            base.Setup();
         }
 
         protected override void Update()

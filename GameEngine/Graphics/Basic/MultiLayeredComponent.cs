@@ -65,11 +65,11 @@ namespace GameEngine.Graphics.Basic
             }
         }
 
-        public override void Setup(ContentManager content)
+        public override void Setup()
         {
-            foreground.Setup(content);
-            background.Setup(content);
-            mainComponent.Setup(content);
+            foreground.Setup();
+            background.Setup();
+            mainComponent.Setup();
         }
 
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)

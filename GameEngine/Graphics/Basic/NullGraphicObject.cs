@@ -9,7 +9,7 @@ namespace GameEngine.Graphics.Basic
     {
         public NullGraphicObject(PokeEngine game) : base(game) { }
 
-        public override void Setup(ContentManager content)
+        public override void Setup()
         {
         }
 

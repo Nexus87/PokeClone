@@ -126,7 +126,7 @@ namespace GameEngineTest.Util
         {
         }
 
-        public virtual void Setup(ContentManager content)
+        public virtual void Setup()
         {
         }
     }

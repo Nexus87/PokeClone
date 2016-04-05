@@ -26,7 +26,7 @@ namespace GameEngine.Graphics.Basic
             this.image = texture;
         }
 
-        public override void Setup(ContentManager content)
+        public override void Setup()
         {
             if (image == null)
                 return;

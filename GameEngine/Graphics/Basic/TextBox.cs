@@ -55,7 +55,7 @@ namespace GameEngine.Graphics.Basic
             textGraphic.Draw(batch);
         }
 
-        public override void Setup(ContentManager content)
+        public override void Setup()
         {
             textGraphic.Setup();
         }

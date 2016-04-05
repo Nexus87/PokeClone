@@ -22,11 +22,10 @@ namespace BattleLibTest.GraphicComponents
         [SetUp]
         public void Setup()
         {
-            contentMock.SetupLoad();
             line = new HPLine(gameMock.Object);
             line.MaxHP = 100;
             line.Current = 50;
-            line.Setup(contentMock.Object);
+            line.Setup();
 
         }
 
@@ -117,7 +116,7 @@ namespace BattleLibTest.GraphicComponents
             line = new HPLine(gameMock.Object);
             line.MaxHP = 100;
             line.Current = 50;
-            line.Setup(contentMock.Object);
+            line.Setup();
 
             return line;
         }

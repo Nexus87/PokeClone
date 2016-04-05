@@ -17,9 +17,8 @@ namespace GameEngineTest.Graphics.Basic
     {
         protected override GameEngine.Graphics.IGraphicComponent CreateComponent()
         {
-            contentMock.SetupLoad();
             var line = new Line(gameMock.Object);
-            line.Setup(contentMock.Object);
+            line.Setup();
 
             return line;
         }

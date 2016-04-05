@@ -125,6 +125,6 @@ namespace GameEngine.Graphics
 
         protected IAnimation Animation { get; set; }
 
-        public abstract void Setup(ContentManager content);
+        public abstract void Setup();
     }
 }

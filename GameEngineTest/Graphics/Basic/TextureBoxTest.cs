@@ -17,11 +17,6 @@ namespace GameEngineTest.Graphics.Basic
     [TestFixture]
     public class TextureBoxTest : IGraphicComponentTest
     {
-        [SetUp]
-        public void Setup()
-        {
-            contentMock.Setup(o => o.Load<Texture2D>(It.IsAny<string>())).Returns(new Texture2D(GameEngineTest.Util.Extensions.dev, 10, 10));
-        }
 
         [TestCase]
         public void EmptyImageTest()
@@ -45,7 +40,7 @@ namespace GameEngineTest.Graphics.Basic
             textureStub.Setup(o => o.Height).Returns(10);
             textureStub.Setup(o => o.Width).Returns(10);
             textureStub.Setup(o => o.Bounds).Returns(new Rectangle(0, 0, 10, 10));
-            box.Setup(contentMock.Object);
+            box.Setup();
 
             box.Image = textureStub.Object;
 

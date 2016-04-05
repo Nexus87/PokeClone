@@ -41,9 +41,9 @@ namespace BattleLib.GraphicComponents
             this.front = front;
             box = new TextureBox(game);
         }
-        public override void Setup(ContentManager content)
+        public override void Setup()
         {
-            provider.Content = content;
+            provider.Content = Game.Content;
         }
 
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)

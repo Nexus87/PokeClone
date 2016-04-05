@@ -104,11 +104,10 @@ namespace GameEngine.Graphics
         /// <summary>
         /// This function loads the content, needed for this component
         /// </summary>
-        /// <param name="content">Content manager</param>
         /// <see cref="IGraphicComponent.Setup"/>
-        public virtual void Setup(ContentManager content)
+        public virtual void Setup()
         {
-            InnerComponent.Setup(content);
+            InnerComponent.Setup();
         }
 
         /// <summary>

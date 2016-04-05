@@ -17,7 +17,6 @@ namespace GameEngineTest
 
     public abstract class IGraphicComponentTest
     {
-        public Mock<ContentManager> contentMock;
         public Mock<ISpriteFont> fontMock;
         public Mock<PokeEngine> gameMock;
 
@@ -26,7 +25,6 @@ namespace GameEngineTest
         public IGraphicComponentTest()
         {
             var serviceMock = new Mock<IServiceProvider>();
-            contentMock = new Mock<ContentManager>(serviceMock.Object);
             fontMock = new Mock<ISpriteFont>();
             gameMock = new Mock<PokeEngine>(new Configuration());
         }

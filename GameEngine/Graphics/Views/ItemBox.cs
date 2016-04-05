@@ -25,10 +25,11 @@ namespace GameEngine.Graphics.Views
             this.arrow = arrow;
             this.textBox = textBox;
         }
-        public override sealed void Setup(ContentManager content)
+
+        public override void Setup()
         {
-            arrow.Setup(content);
-            textBox.Setup(content);
+            arrow.Setup();
+            textBox.Setup();
         }
 
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)

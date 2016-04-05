@@ -36,7 +36,7 @@ namespace GameEngineTest.Util
             WasDrawn = true;
         }
 
-        public void Setup(Microsoft.Xna.Framework.Content.ContentManager content)
+        public void Setup()
         {
             
         }

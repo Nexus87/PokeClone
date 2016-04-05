@@ -26,11 +26,11 @@ namespace GameEngineTest.Graphics.Basic
             fontMock.Setup(o => o.MeasureString(It.IsAny<string>())).Returns<string>(s => new Vector2(16.0f * s.Length, 16.0f));
             box = new MultlineTextBox(fontMock.Object, 2, gameMock.Object);
 
-            box.Setup(contentMock.Object);
+            box.Setup();
             box.Text = "Very very long text";
 
             box = new MultlineTextBox(fontMock.Object, 2, gameMock.Object);
-            box.Setup(contentMock.Object);
+            box.Setup();
 
             float X = 0.0f;
             float Y = 0.0f;

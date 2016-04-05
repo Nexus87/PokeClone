@@ -111,8 +111,8 @@ namespace GameEngine
             DefaultBorderTexture.LoadContent();
             if (Graphic == null)
                 throw new InvalidOperationException("Graphic component is not set");
-            Graphic.Setup(Content);
-            GUIManager.Setup(Content);
+            Graphic.Setup();
+            GUIManager.Setup();
             IsRunning = true;
         }
 

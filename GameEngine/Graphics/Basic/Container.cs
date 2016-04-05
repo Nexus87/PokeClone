@@ -48,10 +48,10 @@ namespace GameEngine.Graphics.Basic
             Layout.LayoutContainer(this);
         }
 
-        public override void Setup(ContentManager content)
+        public override void Setup()
         {
             foreach (var c in components)
-                c.Setup(content);
+                c.Setup();
         }
 
         protected override void Update()

@@ -70,13 +70,13 @@ namespace BattleLib.GraphicComponents
             throw new NotImplementedException();
         }
 
-        public override void Setup(ContentManager content)
+        public override void Setup()
         {
-            aiView.Setup(content);
-            playerView.Setup(content);
+            aiView.Setup();
+            playerView.Setup();
 
-            aiSprite.Setup(content);
-            playerSprite.Setup(content);
+            aiSprite.Setup();
+            playerSprite.Setup();
 
             initAIGraphic();
             initPlayerGraphic();

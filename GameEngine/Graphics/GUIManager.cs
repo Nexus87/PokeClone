@@ -103,12 +103,12 @@ namespace GameEngine.Graphics
             IsActive = true;
         }
 
-        public void Setup(ContentManager content)
+        public void Setup()
         {
             foreach (var w in widgets)
-                w.Setup(content);
+                w.Setup();
             foreach (var w in notVisibleWidgets)
-                w.Setup(content);
+                w.Setup();
         }
     }
 }
