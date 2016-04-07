@@ -32,13 +32,13 @@ namespace GameEngineTest.Util
             component.Draw(new GameTime(), spriteBatch);
         }
 
-        public static List<TableComponentMock<object>> SetupContainer(this Container container, int number)
+        public static List<GraphicComponentMock> SetupContainer(this Container container, int number)
         {
-            var ret = new List<TableComponentMock<object>>();
+            var ret = new List<GraphicComponentMock>();
 
             for(int i = 0; i < number; i++)
             {
-                var comp = new TableComponentMock<object>();
+                var comp = new GraphicComponentMock();
                 ret.Add(comp);
                 container.AddComponent(comp);
             }

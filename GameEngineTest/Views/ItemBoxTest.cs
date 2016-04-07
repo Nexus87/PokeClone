@@ -23,8 +23,8 @@ namespace GameEngineTest.Views
         public void Draw_UnselectedDraw_ArrowNotDrawn(float x, float y, float width, float height)
         {
             SpriteBatchMock spriteBatch = new SpriteBatchMock();
-            var arrow = new TableComponentMock<TestType>();
-            var textBox = new TableComponentMock<TestType>();
+            var arrow = new GraphicComponentMock();
+            var textBox = new TextGraphicComponentMock();
 
             var item = CreateItemBox(arrow, textBox);
             item.SetCoordinates(x, y, width, height);
@@ -42,8 +42,8 @@ namespace GameEngineTest.Views
         public void Draw_SelectedDraw_ArroLeftOfText(float x, float y, float width, float height)
         {
             SpriteBatchMock spriteBatch = new SpriteBatchMock();
-            var arrow = new TableComponentMock<TestType>();
-            var textBox = new TableComponentMock<TestType>();
+            var arrow = new GraphicComponentMock();
+            var textBox = new TextGraphicComponentMock();
 
             var item = CreateItemBox(arrow, textBox);
             item.SetCoordinates(x, y, width, height);
@@ -57,9 +57,9 @@ namespace GameEngineTest.Views
         private ItemBox CreateItemBox(IGraphicComponent arrow = null, ITextGraphicComponent text = null)
         {
             if (arrow == null)
-                arrow = new TableComponentMock<TestType>();
+                arrow = new GraphicComponentMock();
             if (text == null)
-                text = new TableComponentMock<TestType>();
+                text = new TextGraphicComponentMock();
 
             return new ItemBox(arrow, text, gameMock.Object);
 

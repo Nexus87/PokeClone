@@ -70,9 +70,12 @@
     <Compile Include="InputComponentTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\Extensions.cs" />
+    <Compile Include="Util\GraphicComponentMock.cs" />
     <Compile Include="Util\SpriteBatchMock.cs" />
+    <Compile Include="Util\TableComponentMock.cs" />
     <Compile Include="Util\TableRendererMock.cs" />
     <Compile Include="Util\TableViewMock.cs" />
+    <Compile Include="Util\TextGraphicComponentMock.cs" />
     <Compile Include="Views\DefaultTableModelTest.cs" />
     <Compile Include="Views\DefaultTableRendererTest.cs" />
     <Compile Include="Views\DefaultTableSelectionModelTest.cs" />

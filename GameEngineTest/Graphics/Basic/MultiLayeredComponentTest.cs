@@ -19,7 +19,7 @@ namespace GameEngineTest.Graphics.Basic
         [TestCase]
         public void Draw_NoBackground_NoBackgroundDrawn()
         {
-            var backgroundComponent = new TableComponentMock<TestType>();
+            var backgroundComponent = new GraphicComponentMock();
             var testComponent = CreateComponent(background: backgroundComponent);
             var batch = new SpriteBatchMock();
             testComponent.SetCoordinates(100, 100, 500, 500);
@@ -33,7 +33,7 @@ namespace GameEngineTest.Graphics.Basic
         [TestCase]
         public void Draw_NoForeground_NoForegroundDrawn()
         {
-            var foregroundComponent = new TableComponentMock<TestType>();
+            var foregroundComponent = new GraphicComponentMock();
             var testComponent = CreateComponent(foreground: foregroundComponent);
             var batch = new SpriteBatchMock();
             testComponent.SetCoordinates(100, 100, 500, 500);
@@ -59,9 +59,9 @@ namespace GameEngineTest.Graphics.Basic
             float y = 200;
             float width = 300;
             float height = 400;
-            var foregroundComponent = new TableComponentMock<TestType>();
-            var backgroundComponent = new TableComponentMock<TestType>();
-            var mainComponent = new TableComponentMock<TestType>();
+            var foregroundComponent = new GraphicComponentMock();
+            var backgroundComponent = new GraphicComponentMock();
+            var mainComponent = new GraphicComponentMock();
 
             var testComponent = CreateComponent(mainComponent, backgroundComponent, foregroundComponent);
 
@@ -86,7 +86,7 @@ namespace GameEngineTest.Graphics.Basic
         private MultiLayeredComponent CreateComponent(IGraphicComponent mainComponent = null, IGraphicComponent background = null, IGraphicComponent foreground = null)
         {
             if (mainComponent == null)
-                mainComponent = new TableComponentMock<TestType>();
+                mainComponent = new GraphicComponentMock();
             var testComponent = new MultiLayeredComponent(mainComponent, gameMock.Object);
             testComponent.Background = background;
             testComponent.Foreground = foreground;
@@ -96,9 +96,9 @@ namespace GameEngineTest.Graphics.Basic
 
         protected override IGraphicComponent CreateComponent()
         {
-            var mainComponent = new TableComponentMock<TestType>();
-            var backgroundComponent = new TableComponentMock<TestType>();
-            var foregroundComponent = new TableComponentMock<TestType>();
+            var mainComponent = new GraphicComponentMock();
+            var backgroundComponent = new GraphicComponentMock();
+            var foregroundComponent = new GraphicComponentMock();
 
             return CreateComponent(mainComponent, backgroundComponent, foregroundComponent);
         }
