@@ -45,6 +45,30 @@ namespace GameEngineTest.Graphics.Basic
         }
 
         [TestCase]
+        public void Draw_AllComponentsSet_RightOrder()
+        {
+            int drawCounter = 0;
+            int foregroundNumber = -1;
+            int mainComponentNumber = -1;
+            int backgroundNumber = -1;
+
+            var foregroundComponent = new GraphicComponentMock();
+            var mainComponent = new GraphicComponentMock();
+            var backgroundComponent = new GraphicComponentMock();
+
+            var testComponent = CreateComponent(mainComponent, backgroundComponent, foregroundComponent);
+            foregroundComponent.DrawCallback = () => { drawCounter++; foregroundNumber = drawCounter; };
+            mainComponent.DrawCallback = () => { drawCounter++; mainComponentNumber = drawCounter; };
+            backgroundComponent.DrawCallback = () => { drawCounter++; backgroundNumber = drawCounter; };
+
+            testComponent.Draw(new SpriteBatchMock());
+
+            Assert.AreEqual(1, backgroundNumber);
+            Assert.AreEqual(2, mainComponentNumber);
+            Assert.AreEqual(3, foregroundNumber);
+        }
+
+        [TestCase]
         public void MainComponent_SetNull_ThrowsException()
         {
             var testComponent = CreateComponent();
