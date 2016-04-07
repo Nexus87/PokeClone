@@ -8,55 +8,99 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GameEngineTest.Views;
 
 namespace GameEngineTest.Graphics.Basic
 {
     [TestFixture]
     public class MultiLayeredComponentTest : IGraphicComponentTest
     {
-        private MultiLayeredComponent testComponent;
-
-        [SetUp]
-        public void Setup()
-        {
-            
-            testComponent = new MultiLayeredComponent(new TextureBox(gameMock.Object), gameMock.Object);
-            testComponent.Background = new TextureBox(gameMock.Object);
-            testComponent.Foreground = new TextureBox(gameMock.Object);
-            testComponent.Setup();
-
-        }
 
         [TestCase]
-        public void NullTest()
+        public void Draw_NoBackground_NoBackgroundDrawn()
         {
+            var backgroundComponent = new TableComponentMock<TestType>();
+            var testComponent = CreateComponent(background: backgroundComponent);
             var batch = new SpriteBatchMock();
             testComponent.SetCoordinates(100, 100, 500, 500);
 
             testComponent.Background = null;
             testComponent.Draw(batch);
 
-            foreach (var o in batch.DrawnObjects)
-                o.IsInConstraints(testComponent);
+            Assert.False(backgroundComponent.WasDrawn);
+        }
 
-            batch.DrawnObjects.Clear();
+        [TestCase]
+        public void Draw_NoForeground_NoForegroundDrawn()
+        {
+            var foregroundComponent = new TableComponentMock<TestType>();
+            var testComponent = CreateComponent(foreground: foregroundComponent);
+            var batch = new SpriteBatchMock();
+            testComponent.SetCoordinates(100, 100, 500, 500);
+
             testComponent.Foreground = null;
             testComponent.Draw(batch);
 
-            foreach (var o in batch.DrawnObjects)
-                o.IsInConstraints(testComponent);
+            Assert.False(foregroundComponent.WasDrawn);
+        }
 
-            Assert.Throws(typeof(ArgumentNullException), delegate { testComponent.MainComponent = null; });
+        [TestCase]
+        public void MainComponent_SetNull_ThrowsException()
+        {
+            var testComponent = CreateComponent();
+
+            Assert.Throws<ArgumentNullException>(() => testComponent.MainComponent = null);
+        }
+
+        [TestCase]
+        public void SetCoordinates_ValidCoordinates_InnerComponentsAreUpdated()
+        {
+            float x = 100;
+            float y = 200;
+            float width = 300;
+            float height = 400;
+            var foregroundComponent = new TableComponentMock<TestType>();
+            var backgroundComponent = new TableComponentMock<TestType>();
+            var mainComponent = new TableComponentMock<TestType>();
+
+            var testComponent = CreateComponent(mainComponent, backgroundComponent, foregroundComponent);
+
+            testComponent.SetCoordinates(x, y, width, height);
+
+            testComponent.Draw(new SpriteBatchMock());
+
+            AssertCoordinatesEqual(foregroundComponent, testComponent);
+            AssertCoordinatesEqual(backgroundComponent, testComponent);
+            AssertCoordinatesEqual(mainComponent, testComponent);
+        }
+
+
+        private void AssertCoordinatesEqual(IGraphicComponent firstComponent, IGraphicComponent secondComponent)
+        {
+            Assert.AreEqual(firstComponent.XPosition, secondComponent.XPosition);
+            Assert.AreEqual(firstComponent.YPosition, secondComponent.YPosition);
+            Assert.AreEqual(firstComponent.Width, secondComponent.Width);
+            Assert.AreEqual(firstComponent.Height, secondComponent.Height);
+        }
+
+        private MultiLayeredComponent CreateComponent(IGraphicComponent mainComponent = null, IGraphicComponent background = null, IGraphicComponent foreground = null)
+        {
+            if (mainComponent == null)
+                mainComponent = new TableComponentMock<TestType>();
+            var testComponent = new MultiLayeredComponent(mainComponent, gameMock.Object);
+            testComponent.Background = background;
+            testComponent.Foreground = foreground;
+
+            return testComponent;
         }
 
         protected override IGraphicComponent CreateComponent()
         {
-            testComponent = new MultiLayeredComponent(new TextureBox(gameMock.Object), gameMock.Object);
-            testComponent.Background = new TextureBox(gameMock.Object);
-            testComponent.Foreground = new TextureBox(gameMock.Object);
-            testComponent.Setup();
+            var mainComponent = new TableComponentMock<TestType>();
+            var backgroundComponent = new TableComponentMock<TestType>();
+            var foregroundComponent = new TableComponentMock<TestType>();
 
-            return testComponent;
+            return CreateComponent(mainComponent, backgroundComponent, foregroundComponent);
         }
     }
 }
