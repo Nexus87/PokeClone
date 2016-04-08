@@ -14,9 +14,10 @@ namespace GameEngine.Graphics
         protected AbstractGraphicComponent(PokeEngine game)
         {
             Game = game;
+            NeedsUpdate = true;
         }
 
-        private bool needsUpdate = true;
+        protected bool NeedsUpdate { get; set; }
         private Vector2 position;
         private Vector2 size;
 
@@ -92,10 +93,10 @@ namespace GameEngine.Graphics
             if (Animation != null)
                 Animation.Update(time, this);
 
-            if (needsUpdate)
+            if (NeedsUpdate)
             {
                 Update();
-                needsUpdate = false;
+                NeedsUpdate = false;
             }
             DrawComponent(time, batch);
         }
@@ -105,7 +106,7 @@ namespace GameEngine.Graphics
 
         protected void Invalidate()
         {
-            needsUpdate = true;
+            NeedsUpdate = true;
         }
 
         protected virtual void Update()

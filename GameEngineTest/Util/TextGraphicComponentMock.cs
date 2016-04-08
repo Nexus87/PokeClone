@@ -9,9 +9,12 @@ namespace GameEngineTest.Util
 {
     public class TextGraphicComponentMock : GraphicComponentMock, ITextGraphicComponent
     {
+        public Func<int> DisplayableCharsFunc = null;
         public int DisplayableChars()
         {
-            throw new NotImplementedException();
+            if (DisplayableCharsFunc == null)
+                return 0;
+            return DisplayableCharsFunc();
         }
 
         public float PreferedTextHeight { get;set;  }

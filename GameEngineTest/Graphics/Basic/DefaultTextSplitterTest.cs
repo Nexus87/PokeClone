@@ -12,6 +12,9 @@ namespace GameEngineTest.Graphics.Basic
     public class DefaultTextSplitterTest
     {
         [TestCase(" ")]
+        [TestCase("\t")]
+        [TestCase("\n")]
+        [TestCase("  ")]
         public void SplitText_SimpleTextWithSeparator_GetStringReturnsStrings(string seperator)
         {
             int charsPerLine = 5;
@@ -26,6 +29,9 @@ namespace GameEngineTest.Graphics.Basic
         }
 
         [TestCase(" ")]
+        [TestCase("\t")]
+        [TestCase("\n")]
+        [TestCase("  ")]
         public void SplitText_SimpleTextWithSeparator_LineCount(string separator)
         {
             int charsPerLine = 5;
@@ -39,6 +45,9 @@ namespace GameEngineTest.Graphics.Basic
         }
 
         [TestCase(" ")]
+        [TestCase("\t")]
+        [TestCase("\n")]
+        [TestCase("  ")]
         public void SplitText_SeparatorAtTheEnd_IgnoreSeparator(string separator)
         {
             int charsPerLine = 5;

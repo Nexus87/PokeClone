@@ -18,7 +18,7 @@ namespace GameEngineTest.Graphics.Basic
     public class TestableMultilineTextBox : MultlineTextBox
     {
 
-        public TestableMultilineTextBox(int lines) : base(new SpriteFontMock(), lines, new PokeEngine()) 
+        public TestableMultilineTextBox(int lines, ITextSplitter splitter) : base(new SpriteFontMock(), splitter, lines, new PokeEngine()) 
         { 
         }
 
@@ -33,255 +33,110 @@ namespace GameEngineTest.Graphics.Basic
         }
     }
 
+    public class SplitterStub : ITextSplitter
+    {
+        public List<string> Strings = new List<string>();
+        public Action SplitTextCallback = null;
+        public string GetString(int index)
+        {
+            return index < Strings.Count ? Strings[index] : "";
+        }
+
+        public int Count
+        {
+            get { return Strings.Count; }
+        }
+
+        public void SplitText(int charsPerLine, string text)
+        {
+            if (SplitTextCallback != null)
+                SplitTextCallback();
+        }
+    }
+
     [TestFixture]
     public class MultilineTextboxTest : IGraphicComponentTest
     {
-        MultlineTextBox box;
-        SpriteBatchMock spriteBatch;
-        int displayableChars;
-
-        [SetUp]
-        public void Setup()
+        private readonly string SAMPLE_STRING = "SomeText";
+        [TestCase]
+        public void HasNext_NoLine_ReturnsFalse()
         {
-            var fontMock = new Mock<ISpriteFont>();
-            fontMock.Setup(o => o.MeasureString(It.IsAny<string>())).Returns<string>(s => new Vector2(16.0f * s.Length, 16.0f));
-            box = new MultlineTextBox(fontMock.Object, 2, gameMock.Object);
+            var splitter = new SplitterStub();
+            var textBox = CreateTextBox(splitter);
 
-            box.Setup();
-            box.Text = "Very very long text";
-
-            box = new MultlineTextBox(fontMock.Object, 2, gameMock.Object);
-            box.Setup();
-
-            float X = 0.0f;
-            float Y = 0.0f;
-            float Width = 150.0f;
-            float Height = 50.0f;
-
-            box.XPosition = X;
-            box.YPosition = Y;
-            box.Width = Width;
-            box.Height = Height;
-
-            spriteBatch = new SpriteBatchMock();
-            displayableChars = box.CharsPerLine();
+            Assert.IsFalse(textBox.HasNext());
         }
 
         [TestCase]
-        public void NoSplitTest()
+        public void SetText_ValidText_CallsSplitter()
         {
-            string simple = new string('a', displayableChars);
-            string testString = simple;
+            var splitterMock = new Mock<ITextSplitter>();
+            var textBox = CreateTextBox(splitterMock.Object);
 
-            box.Text = testString;
-            box.Draw(spriteBatch);
+            // Return 0 so we don't have to provide the splitted text
+            splitterMock.Setup(o => o.Count).Returns(0);
+            textBox.Text = SAMPLE_STRING;
 
-            Assert.AreEqual(2, spriteBatch.DrawnStrings.Count);
-            Assert.AreEqual(simple, spriteBatch.DrawnStrings.First.Value);
-            Assert.AreEqual("", spriteBatch.DrawnStrings.Last.Value);
+            textBox.Draw(new SpriteBatchMock());
 
-            // Separator at start
-            spriteBatch.DrawnStrings.Clear();
-            box.Text = " " + simple;
-            box.Draw(spriteBatch);
-
-            Assert.AreEqual(2, spriteBatch.DrawnStrings.Count);
-            Assert.AreEqual(simple, spriteBatch.DrawnStrings.First.Value);
-            Assert.AreEqual("", spriteBatch.DrawnStrings.Last.Value);
-            
-            // 2 Separators at start and end
-            spriteBatch.DrawnStrings.Clear();
-            box.Text = " " + " " + simple + " " + " ";
-            box.Draw(spriteBatch);
-
-            Assert.AreEqual(2, spriteBatch.DrawnStrings.Count);
-            Assert.AreEqual(simple, spriteBatch.DrawnStrings.First.Value);
-            Assert.AreEqual("", spriteBatch.DrawnStrings.Last.Value);
-            Assert.IsFalse(box.HasNext());
-
-            // Separator at end
-            spriteBatch.DrawnStrings.Clear();
-            box.Text = simple + " ";
-            box.Draw(spriteBatch);
-
-            Assert.AreEqual(2, spriteBatch.DrawnStrings.Count);
-            Assert.AreEqual(simple, spriteBatch.DrawnStrings.First.Value);
-            Assert.AreEqual("", spriteBatch.DrawnStrings.Last.Value);
-
-            // 2 Separators at end
-            spriteBatch.DrawnStrings.Clear();
-            box.Text = simple + " " + " ";
-            box.Draw(spriteBatch);
-
-            Assert.AreEqual(2, spriteBatch.DrawnStrings.Count);
-            Assert.AreEqual(simple, spriteBatch.DrawnStrings.First.Value);
-            Assert.AreEqual("", spriteBatch.DrawnStrings.Last.Value);
-            Assert.IsFalse(box.HasNext());
-
-            // 2 Separators at start
-            spriteBatch.DrawnStrings.Clear();
-            box.Text = " " + " " + simple;
-            box.Draw(spriteBatch);
-
-            Assert.AreEqual(2, spriteBatch.DrawnStrings.Count);
-            Assert.AreEqual(simple, spriteBatch.DrawnStrings.First.Value);
-            Assert.AreEqual("", spriteBatch.DrawnStrings.Last.Value);
-            Assert.IsFalse(box.HasNext());
-
-        }
-
-        public static List<TestCaseData> Separators = new List<TestCaseData>{
-            new TestCaseData(" "),
-            new TestCaseData("\t"),
-            new TestCaseData("\n"),
-            new TestCaseData("  ")
-        };
-
-        [TestCaseSource("Separators")]
-        public void LineBreaksTest(string s)
-        {
-            //Make sure a the text must be split
-            Assert.Greater(displayableChars, 4);
-            Assert.Less(displayableChars, 2 * 4 + 1);
-
-            string simple = new string('a', 3);
-            string testString;
-
-            testString = simple + s + simple;
-
-            box.Text = testString;
-            box.Draw(spriteBatch);
-
-            Assert.AreEqual(2, spriteBatch.DrawnStrings.Count);
-            foreach (var str in spriteBatch.DrawnStrings)
-                Assert.AreEqual(simple, str);
-        }
-
-        [TestCaseSource("Separators")]
-        public void LineBreatAtEndTest(string s)
-        {
-            Assert.IsTrue(displayableChars > 1);
-            string simple = new string('a', displayableChars - 1);
-            string testString;
-
-            testString = simple + s + simple;
-
-            box.Text = testString;
-            box.Draw(spriteBatch);
-
-            Assert.AreEqual(2, spriteBatch.DrawnStrings.Count);
-            foreach (var str in spriteBatch.DrawnStrings)
-                Assert.AreEqual(simple, str);
-        }
-
-        [TestCaseSource("Separators")]
-        public void LineBreakAtBeginningTest(string s)
-        {
-            string simple = new string('a', displayableChars - 1);
-            string testString = simple + "a" + s + simple;
-            
-            // First test:
-            // testString.Count == 2 * displayableChars
-            box.Text = testString;
-            box.Draw(spriteBatch);
-
-            Assert.AreEqual(2, spriteBatch.DrawnStrings.Count);
-            Assert.Contains(simple + "a", spriteBatch.DrawnStrings);
-            Assert.Contains(simple, spriteBatch.DrawnStrings);
-
-            spriteBatch.DrawnStrings.Clear();
-
-            // Second test
-            // testString.Count > 2 * displayableChars, but after the split
-            // they should fit in two lines
-            box.Text = testString + "a";
-            box.Draw(spriteBatch);
-
-            Assert.AreEqual(2, spriteBatch.DrawnStrings.Count);
-            foreach (var str in spriteBatch.DrawnStrings)
-                Assert.AreEqual(simple + "a", str);
-
-        }
-
-        [TestCaseSource("Separators")]
-        public void LineBreakAtEndOfText(string s)
-        {
-            string simple = new string('a', displayableChars);
-            string testString = simple + simple + s;
-
-            box.Text = testString;
-            box.Draw(spriteBatch);
-
-            Assert.AreEqual(2, spriteBatch.DrawnStrings.Count);
-            foreach (var str in spriteBatch.DrawnStrings)
-                Assert.AreEqual(simple, str);
-
-            Assert.IsFalse(box.HasNext());
-        }
-
-        public static List<int> NumberOfLines = new List<int> { 0, 1, 2, 3, 4 };
-        
-        [TestCaseSource("NumberOfLines")]
-        public void NextLineTest(int number)
-        {
-            List<string> lines = new List<string>();
-            string testString = "";
-            for (int i = 0; i < number; i++)
-            {
-                var s = new string((char)('a' + i), displayableChars - 1);
-                testString += s + " ";
-                lines.Add(s);
-            }
-
-            while (lines.Count < 2 || lines.Count % 2 != 0)
-            {
-                lines.Add("");
-            }
-
-            box.Text = testString;
-            for (int i = 0; i < number; i += 2)
-            {
-                box.Draw(spriteBatch);
-                Assert.AreEqual(2, spriteBatch.DrawnStrings.Count);
-                Assert.Contains(lines[i], spriteBatch.DrawnStrings);
-                Assert.Contains(lines[i+1], spriteBatch.DrawnStrings);
-
-                // If this is not the last run, there must be lines left
-                if (i + 2 < number)
-                    Assert.IsTrue(box.HasNext());
-                box.NextLine();
-                spriteBatch.DrawnStrings.Clear();
-            }
-
-            Assert.IsFalse(box.HasNext());
-            box.Draw(spriteBatch);
-            Assert.AreEqual(2, spriteBatch.DrawnStrings.Count);
-            foreach(var str in spriteBatch.DrawnStrings)
-                Assert.AreEqual("", str);
+            splitterMock.Verify(o => o.SplitText(It.IsAny<int>(), SAMPLE_STRING), Times.AtLeastOnce());
         }
 
         [TestCase]
-        public void NullTextTest()
+        public void HasNext_SetTextWithoutCallingDraw_ReturnsTrue()
         {
-            box.Text = null;
-            box.Draw(spriteBatch);
+            var splittedText = new List<string> { "String", "String", "String" };
+            var splitterStub = CreateSplitterStub();
+            splitterStub.SplitTextCallback = () => splitterStub.Strings = splittedText;
+            var textBox = CreateTextBox(splitterStub);
+            
+            textBox.Text = SAMPLE_STRING;
 
-            Assert.AreEqual(2, spriteBatch.DrawnStrings.Count);
-            foreach (var str in spriteBatch.DrawnStrings)
-                Assert.AreEqual("", str);
+            Assert.IsTrue(textBox.HasNext());
         }
 
-        private TestableMultilineTextBox CreateTextBox()
+        [TestCase]
+        public void HasNext_ReduceTheNumberOfCharsPerLine_ReturnsTrueAfterChange()
         {
-            return new TestableMultilineTextBox(2);
+            var splittedText = new List<string> { "String", "String", "String" };
+            var initialLines = new List<string> { "Text", "Text" };
+
+            var splitterStub = CreateSplitterStub(initialLines);
+            var textBox = CreateTextBox(splitterStub, 2);
+
+            textBox.Text = SAMPLE_STRING;
+
+            Assert.IsFalse(textBox.HasNext());
+
+            splitterStub.SplitTextCallback = () => splitterStub.Strings = splittedText;
+            textBox.SetCoordinates(10, 10, 100, 100);
+
+            Assert.IsTrue(textBox.HasNext());
+        }
+
+        private SplitterStub CreateSplitterStub(List<string> initialLines = null)
+        {
+            var splitter = new SplitterStub();
+            if (initialLines != null)
+                splitter.Strings = initialLines;
+
+            return splitter;
+        }
+        private TestableMultilineTextBox CreateTextBox(ITextSplitter splitter, int numberOfLines = 2)
+        {
+            var box = new TestableMultilineTextBox(numberOfLines, splitter);
+            box.SetCoordinates(10, 10, 300, 400);
+            box.Setup();
+            return box;
         }
 
         protected override IGraphicComponent CreateComponent()
         {
             var fontMock = new Mock<ISpriteFont>();
             fontMock.Setup(o => o.MeasureString(It.IsAny<string>())).Returns<string>(s => new Vector2(16.0f * s.Length, 16.0f));
-            box = new MultlineTextBox(fontMock.Object, 2, gameMock.Object);
+            var box = new MultlineTextBox(fontMock.Object, new DefaultTextSplitter(), 2, gameMock.Object);
             box.Text = "Text Text Text Text Text Text";
+            box.Setup();
             return box;
         }
     }
