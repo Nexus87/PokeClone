@@ -5,16 +5,20 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System.Linq;
 
 namespace GameEngine.Graphics.Basic
 {
     public class MultlineTextBox : ForwardingGraphicComponent<Container>
     {
-        private readonly LinkedList<string> lines = new LinkedList<string>();
-        private readonly List<TextBox> texts = new List<TextBox>();
+        private readonly List<ITextGraphicComponent> texts = new List<ITextGraphicComponent>();
         private string text;
+        private ITextSplitter splitter = new DefaultTextSplitter();
+        private int currentLineIndex = 0;
 
-        public MultlineTextBox(PokeEngine game) : this(2, game) { }
+        public MultlineTextBox(PokeEngine game) : this(2, game) 
+        { }
+        
         public MultlineTextBox(int lineNumber, PokeEngine game)
             : this(game.DefaultFont, lineNumber, game)
         { }
@@ -23,12 +27,13 @@ namespace GameEngine.Graphics.Basic
             : base(new Container(game), game)
         {
             font.CheckNull("font");
+            
             var container = InnerComponent;
             container.Layout = new VBoxLayout();
 
             for (int i = 0; i < lineNumber; i++)
             {
-                var box = new TextBox(font, game);
+                var box = CreateTextComponent(font);
                 texts.Add(box);
                 container.AddComponent(box);
             }
@@ -41,59 +46,55 @@ namespace GameEngine.Graphics.Basic
             InnerComponent.ForceLayout();
             return texts[0].DisplayableChars();
         }
-        public string Text { set { text = value; Invalidate(); } }
+
+        public string Text {
+            set
+            { 
+                text = value;
+                currentLineIndex = 0;
+                Invalidate();
+            }
+            get
+            {
+                return text;
+            }
+        
+        }
+        
         public bool HasNext()
         {
-            return lines.Count != 0;
+            if (splitter.Count == 0)
+                return false;
+
+            return currentLineIndex + texts.Count < splitter.Count;
         }
+
         public void NextLine()
         {
-            SetText();
+            currentLineIndex += texts.Count;
+            Invalidate();
         }
 
         protected override void Update()
         {
             SplitText();
-            SetText();
+            UpdateTextComponents();
         }
 
-        private void SetText()
+        private void UpdateTextComponents()
         {
-            int i = 0;
-
-            while (lines.Count > 0 && i < texts.Count)
-            {
-                texts[i].Text = lines.First.Value;
-                lines.RemoveFirst();
-                i++;
-            }
-
-            for (; i < texts.Count; i++)
-                texts[i].Text = "";
+            for (int i = 0; i < texts.Count; i++)
+                texts[i].Text = splitter.GetString(i + currentLineIndex);
         }
 
         private void SplitText()
         {
-            if (text == null)
-                return;
-            string remaining = text.Trim();
-            int limit = CharsPerLine();
-            if (limit == 0)
-                return;
+            splitter.SplitText(texts[0].DisplayableChars(), text);
+        }
 
-            while (remaining.Length > limit)
-            {
-                var match = Regex.Match(remaining.Substring(0, limit), @"\s", RegexOptions.RightToLeft);
-                int length = match.Success ? match.Index : limit;
-
-
-                lines.AddLast(remaining.Substring(0, length).Trim());
-                remaining = remaining.Substring(length).TrimStart();
-            }
-
-            // remaining has no trailing whitespace, because we trimmed it at the beginning.
-            if(remaining.Length != 0)
-                lines.AddLast(remaining);
+        protected virtual ITextGraphicComponent CreateTextComponent(ISpriteFont font)
+        {
+            return new TextBox(font, Game);
         }
     }
 }

@@ -1,6 +1,9 @@
-﻿using GameEngine.Graphics.Basic;
+﻿using GameEngine;
+using GameEngine.Graphics;
+using GameEngine.Graphics.Basic;
 using GameEngine.Wrapper;
 using GameEngineTest.Util;
+using GameEngineTest.Views;
 using Microsoft.Xna.Framework;
 using Moq;
 using NUnit.Framework;
@@ -12,6 +15,24 @@ using System.Threading.Tasks;
 
 namespace GameEngineTest.Graphics.Basic
 {
+    public class TestableMultilineTextBox : MultlineTextBox
+    {
+
+        public TestableMultilineTextBox(int lines) : base(new SpriteFontMock(), lines, new PokeEngine()) 
+        { 
+        }
+
+        public List<TextGraphicComponentMock> CreatedComponents = new List<TextGraphicComponentMock>();
+
+        protected override ITextGraphicComponent CreateTextComponent(ISpriteFont font)
+        {
+            var component = new TextGraphicComponentMock();
+            CreatedComponents.Add(component);
+
+            return component;
+        }
+    }
+
     [TestFixture]
     public class MultilineTextboxTest : IGraphicComponentTest
     {
@@ -250,7 +271,12 @@ namespace GameEngineTest.Graphics.Basic
                 Assert.AreEqual("", str);
         }
 
-        protected override GameEngine.Graphics.IGraphicComponent CreateComponent()
+        private TestableMultilineTextBox CreateTextBox()
+        {
+            return new TestableMultilineTextBox(2);
+        }
+
+        protected override IGraphicComponent CreateComponent()
         {
             var fontMock = new Mock<ISpriteFont>();
             fontMock.Setup(o => o.MeasureString(It.IsAny<string>())).Returns<string>(s => new Vector2(16.0f * s.Length, 16.0f));

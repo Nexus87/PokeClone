@@ -57,12 +57,14 @@
     <Compile Include="Graphics\Basic\IAnimation.cs" />
     <Compile Include="Graphics\Basic\ITextGraphicComponent.cs" />
     <Compile Include="Graphics\Basic\MultiLayeredComponent.cs" />
+    <Compile Include="Graphics\DefaultTextSplitter.cs" />
     <Compile Include="Graphics\Dialog.cs" />
     <Compile Include="Graphics\Extensions.cs" />
     <Compile Include="Graphics\ForwardingGraphicComponent.cs" />
     <Compile Include="Graphics\ISelectable.cs" />
     <Compile Include="Graphics\ISelectableGraphicComponent.cs" />
     <Compile Include="Graphics\ISelectableTextComponent.cs" />
+    <Compile Include="Graphics\ITextSplitter.cs" />
     <Compile Include="Graphics\Layouts\AbstractLayout.cs" />
     <Compile Include="Graphics\Basic\MultlineTextBox.cs" />
     <Compile Include="Graphics\Basic\NullGraphicObject.cs" />

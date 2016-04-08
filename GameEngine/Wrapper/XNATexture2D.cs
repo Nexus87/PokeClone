@@ -93,7 +93,8 @@ namespace GameEngine.Wrapper
 
         public void LoadContent()
         {
-            Texture = content.Load<Texture2D>(textureName);
+            if(Texture == null)
+                Texture = content.Load<Texture2D>(textureName);
         }
     }
 }
