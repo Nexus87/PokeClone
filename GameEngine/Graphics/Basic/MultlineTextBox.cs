@@ -62,7 +62,6 @@ namespace GameEngine.Graphics.Basic
                 Update();
                 NeedsUpdate = false;
             }
-
             return currentLineIndex + lineNumber < splitter.Count;
         }
 
@@ -77,10 +76,16 @@ namespace GameEngine.Graphics.Basic
 
         protected override void Update()
         {
-            container.SetCoordinates(this);
-            container.ForceLayout();
+            UpdateContainer();
             SplitText();
             UpdateTextComponents();
+        }
+
+        private void UpdateContainer()
+        {
+            container.SetCoordinates(this);
+            // Layout the container now, otherwise DisplayableChars might return a wrong value
+            container.ForceLayout();
         }
 
         private void UpdateTextComponents()

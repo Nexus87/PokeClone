@@ -91,7 +91,7 @@ namespace GameEngineTest.Graphics.Basic
         }
 
         [TestCase]
-        public void SplitText_SameStringTwice_Split()
+        public void SplitText_SameStingAndCharsPerLineTwice_Split()
         {
             int charsPerLine = 5;
             string firstLine = new string('a', charsPerLine);
@@ -107,6 +107,21 @@ namespace GameEngineTest.Graphics.Basic
             Assert.AreEqual(secondLine, splitter.GetString(1));
         }
 
+
+        [TestCase]
+        public void SplitText_SameStingDiffrentCharsPerLineTwice_Split()
+        {
+            int charsPerLine = 5;
+            string firstLine = new string('a', charsPerLine);
+            string secondLine = new string('b', charsPerLine);
+            var stringToSplit = firstLine + secondLine;
+            var splitter = CreateSplitter();
+
+            splitter.SplitText(charsPerLine, stringToSplit);
+            splitter.SplitText(1, stringToSplit);
+
+            Assert.Less(2, splitter.Count);
+        }
         [TestCase]
         public void SplitText_NullString_NoLines()
         {

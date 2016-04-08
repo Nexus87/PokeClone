@@ -12,9 +12,10 @@ namespace GameEngine.Graphics
         List<string> lines = new List<string>();
 
         string lastSplittedText = null;
+        int lastCharsPerLine = 0;
         public void SplitText(int charsPerLine, string text)
         {
-            if (EqualsLastText(text))
+            if (EqualsLastText(text, charsPerLine))
                 return;
 
             lines.Clear();
@@ -47,10 +48,13 @@ namespace GameEngine.Graphics
             return text != null && charsPerLine != 0;
         }
 
-        private bool EqualsLastText(string text)
+        private bool EqualsLastText(string text, int charsPerLine)
         {
             if (text != null)
                 text = text.Trim();
+
+            if (charsPerLine != lastCharsPerLine)
+                return false;
 
             return Object.Equals(text, lastSplittedText);
         }
