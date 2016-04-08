@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="EventComponent\EventComponentTest.cs" />
     <Compile Include="Graphics\AbstractGraphicComponentTest.cs" />
+    <Compile Include="Graphics\Basic\DefaultTextSplitterTest.cs" />
     <Compile Include="Graphics\Basic\MultiLayeredComponentTest.cs" />
     <Compile Include="Graphics\Basic\MultilineTextboxTest.cs" />
     <Compile Include="Graphics\Basic\NullGraphicObjectTest.cs" />
