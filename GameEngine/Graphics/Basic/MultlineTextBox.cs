@@ -68,7 +68,11 @@ namespace GameEngine.Graphics.Basic
 
         public void NextLine()
         {
+            if (!HasNext())
+                return;
+
             currentLineIndex += lineNumber;
+            Invalidate();
         }
 
         protected override void Update()

@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 using Moq;
 using NUnit.Framework;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,11 @@ namespace GameEngineTest.Graphics.Basic
 
         public TestableMultilineTextBox(int lines, ITextSplitter splitter) : base(new SpriteFontMock(), splitter, lines, new PokeEngine()) 
         { 
+        }
+
+        public ICollection ComponentStrings()
+        {
+            return (from c in CreatedComponents select c.Text).ToList();
         }
 
         public List<TextGraphicComponentMock> CreatedComponents = new List<TextGraphicComponentMock>();
@@ -114,6 +120,76 @@ namespace GameEngineTest.Graphics.Basic
             Assert.IsTrue(textBox.HasNext());
         }
 
+        [TestCase]
+        public void Draw_SetValidText_SplittedTextIsDrawn()
+        {
+            var firstLine = "String1";
+            var secondLine = "String2";
+
+            var splitterStub = CreateSplitterStub(new List<string> { firstLine, secondLine });
+            var textBox = CreateTextBox(splitterStub, 2);
+
+            textBox.Text = SAMPLE_STRING;
+            textBox.Draw(new SpriteBatchMock());
+
+            Assert.Contains(firstLine, textBox.ComponentStrings());
+            Assert.Contains(secondLine, textBox.ComponentStrings());
+        }
+
+        [TestCase]
+        public void NextLine_HasNoNextLines_DoesNothing()
+        {
+            var firstLine = "String1";
+            var secondLine = "String2";
+
+            var splitterStub = CreateSplitterStub(new List<string> { firstLine, secondLine });
+            var textBox = CreateTextBox(splitterStub, 2);
+
+            textBox.Text = SAMPLE_STRING;
+            textBox.NextLine();
+            textBox.Draw(new SpriteBatchMock());
+
+            Assert.Contains(firstLine, textBox.ComponentStrings());
+            Assert.Contains(secondLine, textBox.ComponentStrings());
+        }
+
+        [TestCase]
+        public void NextLine_OnlyOneLineLeft_AllButFirstLineEmpty()
+        {
+            var firstLine = "String1";
+            var secondLine = "String2";
+            var thirdLine = "String3";
+
+            var splitterStub = CreateSplitterStub(new List<string> { firstLine, secondLine, thirdLine });
+            var textBox = CreateTextBox(splitterStub, 2);
+
+            textBox.Text = SAMPLE_STRING;
+            textBox.NextLine();
+            textBox.Draw(new SpriteBatchMock());
+
+            Assert.Contains(thirdLine, textBox.ComponentStrings());
+            Assert.Contains("", textBox.ComponentStrings());
+        }
+
+        [TestCase]
+        public void NextLine_EnoughLines_NextLinesAreDrawn()
+        {
+            var firstLine = "String1";
+            var secondLine = "String2";
+            var thirdLine = "String3";
+            var fourthLine = "String4";
+
+            var splitterStub = CreateSplitterStub(new List<string> { firstLine, secondLine, thirdLine, fourthLine });
+            var textBox = CreateTextBox(splitterStub, 2);
+
+            textBox.Text = SAMPLE_STRING;
+            textBox.NextLine();
+            textBox.Draw(new SpriteBatchMock());
+
+            Assert.Contains(thirdLine, textBox.ComponentStrings());
+            Assert.Contains(fourthLine, textBox.ComponentStrings());
+        }
+
         private SplitterStub CreateSplitterStub(List<string> initialLines = null)
         {
             var splitter = new SplitterStub();
@@ -132,12 +208,7 @@ namespace GameEngineTest.Graphics.Basic
 
         protected override IGraphicComponent CreateComponent()
         {
-            var fontMock = new Mock<ISpriteFont>();
-            fontMock.Setup(o => o.MeasureString(It.IsAny<string>())).Returns<string>(s => new Vector2(16.0f * s.Length, 16.0f));
-            var box = new MultlineTextBox(fontMock.Object, new DefaultTextSplitter(), 2, gameMock.Object);
-            box.Text = "Text Text Text Text Text Text";
-            box.Setup();
-            return box;
+            return CreateTextBox(new SplitterStub());
         }
     }
 }
