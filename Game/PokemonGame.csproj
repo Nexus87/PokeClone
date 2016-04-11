@@ -109,11 +109,7 @@
       <Project>{04216bd8-0ba1-4ecd-8172-cdeb9c3d69d0}</Project>
       <Name>BattleLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ContentBuilder\ContentBuilder.csproj" Condition="'$(Configuration)'=='Debug' Or '$(Configuration)'=='Release'">
-      <Project>{f9df2e61-083f-4f11-a983-b4dbd0c1ef91}</Project>
-      <Name>ContentBuilder</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ContentPrebuild\ContentPrebuild.csproj" Condition="'$(Configuration)'=='DebugContentPrebuild'">
+    <ProjectReference Include="..\ContentPrebuild\ContentPrebuild.csproj">
       <Project>{a9d94ac4-f8e1-4858-a0e6-d968354388f9}</Project>
       <Name>ContentPrebuild</Name>
     </ProjectReference>
