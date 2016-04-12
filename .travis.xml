@@ -1,0 +1,10 @@
+language: csharp
+solution: PokeClone.sln
+install:
+  - nuget restore PokeClone.sln
+  - nuget install NUnit.Runners -Version 3.2.0 -OutputDirectory testrunner
+mono:
+  - latest
+script:
+  - xbuild /p:Configuration=DebugContentPrebuild PokeClone.sln
+  - mono ./testrunner/NUnit.Runners.3.2.0/tools/nunit3-console.exe ./BattleLibTest/bin/DebugContentPrebuild/BattleLibTest.dll ./GameEngineTest/bin/DebugContentPrebuild/GameEngineTest.dll
