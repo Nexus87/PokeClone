@@ -84,12 +84,14 @@
     <Compile Include="Graphics\Layouts\ILayoutTest.cs" />
     <Compile Include="Graphics\Layouts\SingleComponentLayoutTest.cs" />
     <Compile Include="Graphics\Layouts\GridLayoutTest.cs" />
+    <Compile Include="Graphics\TableGridTest.cs" />
     <Compile Include="Graphics\Widgets\TableWidgetTest.cs" />
     <Compile Include="IGraphicComponentTest.cs" />
     <Compile Include="InputComponentTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\Extensions.cs" />
     <Compile Include="Util\GraphicComponentMock.cs" />
+    <Compile Include="Util\SelectableGraphicComponentMock.cs" />
     <Compile Include="Util\SpriteBatchMock.cs" />
     <Compile Include="Util\TableComponentMock.cs" />
     <Compile Include="Util\TableRendererMock.cs" />

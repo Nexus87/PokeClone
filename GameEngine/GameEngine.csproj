@@ -88,6 +88,7 @@
     <Compile Include="Graphics\Basic\NullGraphicObject.cs" />
     <Compile Include="Graphics\Layouts\BoxLayout.cs" />
     <Compile Include="Graphics\GUIManager.cs" />
+    <Compile Include="Graphics\TableGrid.cs" />
     <Compile Include="Graphics\Views\DefaultTableRenderer.cs" />
     <Compile Include="Graphics\Views\DefaultTableSelectionModel.cs" />
     <Compile Include="Graphics\Views\ITableView.cs" />
