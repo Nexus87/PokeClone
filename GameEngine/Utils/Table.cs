@@ -1,26 +1,19 @@
 ﻿using GameEngine.Graphics.Views;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GameEngine.Utils
 {
     public class Table<T> : ITable<T>
     {
-        private const int INITAL_ROWS = 8;
-        private const int INITAL_COLUMNS = 8;
+        const int INITAL_ROWS = 8;
+        const int INITAL_COLUMNS = 8;
 
         public int Rows { get; private set; }
         public int Columns { get; private set; }
-        private int rows = 0;
-        private int columns = 0;
-        private T[,] innerTable = new T[INITAL_ROWS, INITAL_COLUMNS];
-
-        public Table()
-        {
-        }
+        int rows;
+        int columns;
+        T[,] innerTable = new T[INITAL_ROWS, INITAL_COLUMNS];
 
         public T this[int row, int column]
         {
@@ -105,15 +98,23 @@ namespace GameEngine.Utils
 
         public ITable<T> CreateSubtable(TableIndex startIndex, TableIndex endIndex)
         {
-            return null;
+            return new SubTable<T>(innerTable, startIndex, endIndex);
         }
 
-        internal class SubTable<T> : ITable<T>
+        internal class SubTable<S> : ITable<S>
         {
-            private TableIndex startIndex;
-            private TableIndex endIndex;
+            TableIndex startIndex;
+            TableIndex endIndex;
 
-            private T[,] table;
+            S[,] table;
+
+            public SubTable(S[,] table, TableIndex startIndex, TableIndex endIndex)
+            {
+                this.startIndex = startIndex;
+                this.endIndex = endIndex;
+                this.table = table;
+            }
+
             public int Columns
             {
                 get { return endIndex.Column - startIndex.Column + 1; }
@@ -124,12 +125,12 @@ namespace GameEngine.Utils
                 get { return endIndex.Row - startIndex.Row + 1; }
             }
 
-            public T this[int row, int column]
+            public S this[int row, int column]
             {
                 get { return table[startIndex.Row + row, startIndex.Column + column]; }
             }
 
-            public IEnumerable<T> EnumerateColumns(int row)
+            public IEnumerable<S> EnumerateColumns(int row)
             {
                 if (row >= Rows)
                     yield break;
@@ -138,7 +139,7 @@ namespace GameEngine.Utils
                     yield return this[row, i];
             }
 
-            public IEnumerable<T> EnumerateRows(int column)
+            public IEnumerable<S> EnumerateRows(int column)
             {
                 if (column >= Columns)
                     yield break;
@@ -147,14 +148,22 @@ namespace GameEngine.Utils
                     yield return this[i, column];
             }
 
-            public IEnumerable<T> EnumerateAlongRows()
+            public IEnumerable<S> EnumerateAlongRows()
             {
-                throw new NotImplementedException();
+                for (int row = startIndex.Row; row <= endIndex.Row; row++)
+                {
+                    for (int column = startIndex.Column; column <= endIndex.Column; column++)
+                        yield return this[row, column];
+                }
             }
 
-            public IEnumerable<T> EnumerateAlongColumns()
+            public IEnumerable<S> EnumerateAlongColumns()
             {
-                throw new NotImplementedException();
+                for (int column = startIndex.Column; column <= endIndex.Column; column++)
+                {
+                    for (int row = startIndex.Row; row <= endIndex.Row; row++)
+                        yield return this[row, column];
+                }
             }
         }
     }
