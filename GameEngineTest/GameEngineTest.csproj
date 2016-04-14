@@ -89,6 +89,7 @@
     <Compile Include="IGraphicComponentTest.cs" />
     <Compile Include="InputComponentTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TableTest.cs" />
     <Compile Include="Util\Extensions.cs" />
     <Compile Include="Util\GraphicComponentMock.cs" />
     <Compile Include="Util\SelectableGraphicComponentMock.cs" />
