@@ -114,6 +114,7 @@
     <Compile Include="Graphics\Widgets\MessageBox.cs" />
     <Compile Include="Graphics\Widgets\TableWidget.cs" />
     <Compile Include="Utils\Extensions.cs" />
+    <Compile Include="Utils\ITable.cs" />
     <Compile Include="Utils\Table.cs" />
     <Compile Include="Wrapper\InputManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

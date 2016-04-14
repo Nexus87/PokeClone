@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GameEngine.Graphics.Views;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GameEngine.Utils
 {
-    public class Table<T>
+    public class Table<T> : ITable<T>
     {
         private const int INITAL_ROWS = 8;
         private const int INITAL_COLUMNS = 8;
@@ -99,6 +100,61 @@ namespace GameEngine.Utils
             {
                 for (int row = 0; row < Rows; row++)
                     yield return this[row, column];
+            }
+        }
+
+        public ITable<T> CreateSubtable(TableIndex startIndex, TableIndex endIndex)
+        {
+            return null;
+        }
+
+        internal class SubTable<T> : ITable<T>
+        {
+            private TableIndex startIndex;
+            private TableIndex endIndex;
+
+            private T[,] table;
+            public int Columns
+            {
+                get { return endIndex.Column - startIndex.Column + 1; }
+            }
+
+            public int Rows
+            {
+                get { return endIndex.Row - startIndex.Row + 1; }
+            }
+
+            public T this[int row, int column]
+            {
+                get { return table[startIndex.Row + row, startIndex.Column + column]; }
+            }
+
+            public IEnumerable<T> EnumerateColumns(int row)
+            {
+                if (row >= Rows)
+                    yield break;
+
+                for (int i = startIndex.Column; i <= endIndex.Column; i++)
+                    yield return this[row, i];
+            }
+
+            public IEnumerable<T> EnumerateRows(int column)
+            {
+                if (column >= Columns)
+                    yield break;
+
+                for (int i = startIndex.Row; i <= endIndex.Row; i++)
+                    yield return this[i, column];
+            }
+
+            public IEnumerable<T> EnumerateAlongRows()
+            {
+                throw new NotImplementedException();
+            }
+
+            public IEnumerable<T> EnumerateAlongColumns()
+            {
+                throw new NotImplementedException();
             }
         }
     }

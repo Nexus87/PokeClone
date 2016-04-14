@@ -1,4 +1,5 @@
-﻿using GameEngine.Utils;
+﻿using GameEngine.Graphics.Views;
+using GameEngine.Utils;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -219,5 +220,32 @@ namespace GameEngineTest
                 table[i, column] = start;
         }
 
+        [TestCase]
+        public void CreateSubtable_WithValidIndexes_RightNumberOfRowsAndColumns()
+        {
+            var table = new Table<Object>();
+            table[5, 5] = new Object();
+
+            var subTable = table.CreateSubtable(new TableIndex(1, 1), new TableIndex(3, 3));
+
+            Assert.AreEqual(3, subTable.Rows);
+            Assert.AreEqual(3, subTable.Columns);
+        }
+
+        [TestCase]
+        public void CreateSubtable_DataFilledTable_HasEntries()
+        {
+            var table = new Table<int>();
+            for (int i = 0; i < 3; i++)
+                for (int j = 0; j < 3; j++)
+                    table[i, j] = i + j;
+
+            var subTable = table.CreateSubtable(new TableIndex(1, 1), new TableIndex(2, 2));
+
+            Assert.AreEqual(1 + 1, subTable[0, 0]);
+            Assert.AreEqual(1 + 2, subTable[0, 1]);
+            Assert.AreEqual(2 + 1, subTable[1, 0]);
+            Assert.AreEqual(2 + 2, subTable[1, 1]);
+        }
     }
 }
