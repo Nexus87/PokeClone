@@ -228,8 +228,8 @@ namespace GameEngineTest
 
             var subTable = table.CreateSubtable(new TableIndex(1, 1), new TableIndex(3, 3));
 
-            Assert.AreEqual(3, subTable.Rows);
-            Assert.AreEqual(3, subTable.Columns);
+            Assert.AreEqual(2, subTable.Rows);
+            Assert.AreEqual(2, subTable.Columns);
         }
 
         [TestCase]
@@ -240,7 +240,7 @@ namespace GameEngineTest
                 for (int j = 0; j < 3; j++)
                     table[i, j] = i + j;
 
-            var subTable = table.CreateSubtable(new TableIndex(1, 1), new TableIndex(2, 2));
+            var subTable = table.CreateSubtable(new TableIndex(1, 1), new TableIndex(3, 3));
 
             Assert.AreEqual(1 + 1, subTable[0, 0]);
             Assert.AreEqual(1 + 2, subTable[0, 1]);

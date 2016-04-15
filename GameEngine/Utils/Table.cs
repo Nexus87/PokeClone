@@ -14,6 +14,17 @@ namespace GameEngine.Utils
 
         T[,] innerTable = new T[INITAL_ROWS, INITAL_COLUMNS];
 
+        public Table() 
+        {
+            innerTable = new T[INITAL_ROWS, INITAL_COLUMNS];
+        }
+        private Table(T[,] array)
+        {
+            innerTable = array;
+            Rows = array.Rows();
+            Columns = array.Columns();
+        }
+
         public T this[int row, int column]
         {
             get
@@ -138,12 +149,12 @@ namespace GameEngine.Utils
 
             public int Columns
             {
-                get { return endIndex.Column - startIndex.Column + 1; }
+                get { return endIndex.Column - startIndex.Column; }
             }
 
             public int Rows
             {
-                get { return endIndex.Row - startIndex.Row + 1; }
+                get { return endIndex.Row - startIndex.Row; }
             }
 
             public S this[int row, int column]
@@ -194,6 +205,11 @@ namespace GameEngine.Utils
                         yield return this[row, column];
                 }
             }
+        }
+
+        public static ITable<T> FromArray(T[,] array)
+        {
+            return new Table<T>(array);
         }
     }
 }

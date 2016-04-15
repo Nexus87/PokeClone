@@ -89,11 +89,11 @@ namespace GameEngineTest.Views
 
         public static List<TestCaseData> IndicesData = new List<TestCaseData>
         {
-            new TestCaseData(5, 5, null, new TableIndex(3, 3)),
+            new TestCaseData(5, 5, null, new TableIndex(4, 4)),
             new TestCaseData(5, 5, new TableIndex(2, 2), null),
             new TestCaseData(5, 5, null, null),
-            new TestCaseData(5, 5, new TableIndex(2, 2), new TableIndex(3, 3)),
-            new TestCaseData(5, 5, new TableIndex(1, 2), new TableIndex(3, 4))
+            new TestCaseData(5, 5, new TableIndex(2, 2), new TableIndex(4, 4)),
+            new TestCaseData(5, 5, new TableIndex(1, 2), new TableIndex(4, 5))
         };
 
         public static List<TestCaseData> RemoveTestData = new List<TestCaseData>
@@ -156,7 +156,8 @@ namespace GameEngineTest.Views
             table.StartIndex = newStart;
             table.EndIndex = newEnd;
 
-            renderer.Reset();
+            foreach (var c in renderer.components)
+                c.WasDrawn = false;
 
             table.Draw(new SpriteBatchMock());
 
@@ -437,11 +438,10 @@ namespace GameEngineTest.Views
         public void SimpleSelectionTest(int rows, int columns, int selectedRow, int selectedColumn)
         {
             SetDimension(modelMock, rows, columns);
-            selectionModelMock = new Mock<ITableSelectionModel>(MockBehavior.Strict);
+            selectionModelMock = new Mock<ITableSelectionModel>();
 
             selectionModelMock.Setup(o => o.SelectIndex(selectedRow, selectedColumn)).Returns(true);
-            table = CreateTable(modelMock, renderer, selectionModelMock);
-            
+            table = CreateTable(modelMock, renderer, selectionModelMock); 
             
             table.SetCellSelection(selectedRow, selectedColumn, true);
             selectionModelMock.Verify(o => o.SelectIndex(selectedRow, selectedColumn), Times.Once);
@@ -579,8 +579,8 @@ namespace GameEngineTest.Views
             int startRow = startIndex.HasValue ? startIndex.Value.Row : 0;
             int startColumn = startIndex.HasValue ? startIndex.Value.Column : 0;
 
-            int endRow = endIndex.HasValue ? endIndex.Value.Row : rows - 1;
-            int endColumn = endIndex.HasValue ? endIndex.Value.Column : columns - 1;
+            int endRow = endIndex.HasValue ? endIndex.Value.Row : rows;
+            int endColumn = endIndex.HasValue ? endIndex.Value.Column : columns;
 
             IterateComponents(startRow, startColumn, endRow, endColumn,
                 (data, isInBound) => Assert.AreEqual(isInBound, data != null && data.WasDrawn));
@@ -592,8 +592,8 @@ namespace GameEngineTest.Views
             int startRow = startIndex.HasValue ? startIndex.Value.Row : 0;
             int startColumn = startIndex.HasValue ? startIndex.Value.Column : 0;
 
-            int endRow = endIndex.HasValue ? endIndex.Value.Row : rows - 1;
-            int endColumn = endIndex.HasValue ? endIndex.Value.Column : columns - 1;
+            int endRow = endIndex.HasValue ? endIndex.Value.Row : rows;
+            int endColumn = endIndex.HasValue ? endIndex.Value.Column : columns;
 
             IterateComponents(startRow, startColumn, endRow, endColumn, predicate);
         }
@@ -601,8 +601,8 @@ namespace GameEngineTest.Views
         private void IterateComponents(int startRow, int startColumn, int endRow, int endColumn, PredicateFunction predicate)
         {
             var components = renderer.components;
-            var rows = endRow - startRow + 1;
-            var columns = endColumn - startColumn + 1;
+            var rows = endRow - startRow ;
+            var columns = endColumn - startColumn;
             // Assert that the table view has requested enough components
             Assert.GreaterOrEqual(components.Rows(), rows);
             Assert.GreaterOrEqual(components.Columns(), columns);
@@ -695,12 +695,12 @@ namespace GameEngineTest.Views
             int startRow = startIndex.HasValue ? startIndex.Value.Row : 0;
             int startColumn = startIndex.HasValue ? startIndex.Value.Column : 0;
 
-            int endRow = endIndex.HasValue ? endIndex.Value.Row : rows - 1;
-            int endColumn = endIndex.HasValue ? endIndex.Value.Column : columns - 1;
+            int endRow = endIndex.HasValue ? endIndex.Value.Row : rows;
+            int endColumn = endIndex.HasValue ? endIndex.Value.Column : columns;
 
             table.Draw(new SpriteBatchMock());
 
-            CheckDrawnArea(startRow, startColumn, endRow + 1, endColumn + 1);
+            CheckDrawnArea(startRow, startColumn, endRow, endColumn);
         }
 
         private void AssertTableSize(int rows, int columns)
@@ -713,6 +713,7 @@ namespace GameEngineTest.Views
         {
             var table = new TableView<CellData>(modelMock.Object, renderer, selectionModelMock.Object, gameMock.Object);
             table.SetCoordinates(0, 0, 500, 500);
+            table.Setup();
             return table;
         }
 
@@ -724,7 +725,9 @@ namespace GameEngineTest.Views
 
         protected override IGraphicComponent CreateComponent()
         {
-            return new TableView<CellData>(modelMock.Object, renderer, selectionModelMock.Object, gameMock.Object);
+            var table = new TableView<CellData>(modelMock.Object, renderer, selectionModelMock.Object, gameMock.Object);
+            table.Setup();
+            return table;
         }
     }
 

@@ -23,6 +23,11 @@ namespace GameEngine.Graphics
         private TableIndex startIndex;
         private TableIndex endIndex;
 
+        private bool autoResizeStart = false;
+        private bool autoResizeEnd = false;
+
+        private static readonly TableIndex? NULL = null;
+
         public int Rows
         {
             get { return layout.Rows; }
@@ -44,24 +49,55 @@ namespace GameEngine.Graphics
                 FixIndexesColumn();
             }
         }
-
-        public TableIndex StartIndex
+        
+        public TableIndex? StartIndex
         {
-            get { return startIndex; }
+            get { return autoResizeStart ? NULL : startIndex; }
             set
             {
-                startIndex = value;
                 Invalidate();
+                if (!value.HasValue)
+                {
+                    autoResizeStart = true;
+                    startIndex = new TableIndex(0, 0);
+                    return;
+                }
+
+                CheckStartRange(value.Value);
+                startIndex = value.Value;
+                autoResizeStart = false;
             }
         }
-        public TableIndex EndIndex
+
+        public TableIndex? EndIndex
         {
-            get { return endIndex; }
+            get { return autoResizeEnd ? NULL : endIndex; }
             set
             {
-                endIndex = value;
                 Invalidate();
+                if (!value.HasValue)
+                {
+                    autoResizeEnd = true;
+                    FixEndColumn();
+                    FixEndRow();
+                    return;
+                }          
+      
+                CheckEndRange(value.Value);
+                endIndex = value.Value;
+                autoResizeEnd = false;
             }
+        }
+
+        void CheckEndRange(TableIndex index)
+        {
+            var row = index.Row;
+            var column = index.Column;
+
+            if (row > Rows || row < 0)
+                throw new ArgumentOutOfRangeException("row");
+            if (column > Columns || column < 0)
+                throw new ArgumentOutOfRangeException("column");
         }
 
         public TableGrid(int rows, int columns, PokeEngine game)
@@ -81,20 +117,38 @@ namespace GameEngine.Graphics
 
         private void FixIndexesRow()
         {
-            if (endIndex.Row >= Rows)
-                endIndex.Row = Rows - 1;
+            FixEndRow();
+            FixStartRow();
+        }
 
+        private void FixEndRow()
+        {
+            if (autoResizeEnd || endIndex.Row > Rows)
+                endIndex.Row = Rows;
+        }
+
+        private void FixStartRow()
+        {
             if (startIndex.Row >= Rows)
-                startIndex.Row = Rows - 1;
+                startIndex.Row = Math.Max(0, Rows - 1);
         }
 
         private void FixIndexesColumn()
         {
-            if (endIndex.Column >= Columns)
-                endIndex.Column = Columns - 1;
+            FixEndColumn();
+            FixStartColumn();
+        }
 
+        private void FixEndColumn()
+        {
+            if (autoResizeEnd || endIndex.Column > Columns)
+                endIndex.Column = Columns;
+        }
+
+        private void FixStartColumn()
+        {
             if (startIndex.Column >= Columns)
-                startIndex.Column = Columns - 1;
+                startIndex.Column = Math.Max(0, Columns - 1);
         }
 
         private void Invalidate()
@@ -108,6 +162,11 @@ namespace GameEngine.Graphics
             CheckRange(row, column);
             components[row, column] = component;
             Invalidate();
+        }
+
+        private void CheckStartRange(TableIndex index)
+        {
+            CheckRange(index.Row, index.Column);
         }
 
         private void CheckRange(int row, int column)
