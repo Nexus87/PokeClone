@@ -135,7 +135,7 @@ namespace GameEngine.Utils
                 if (row >= Rows)
                     yield break;
 
-                for (int i = startIndex.Column; i <= endIndex.Column; i++)
+                for (int i = 0; i < Columns; i++)
                     yield return this[row, i];
             }
 
@@ -144,24 +144,24 @@ namespace GameEngine.Utils
                 if (column >= Columns)
                     yield break;
 
-                for (int i = startIndex.Row; i <= endIndex.Row; i++)
+                for (int i = 0; i < Rows; i++)
                     yield return this[i, column];
             }
 
             public IEnumerable<S> EnumerateAlongRows()
             {
-                for (int row = startIndex.Row; row <= endIndex.Row; row++)
+                for (int row = 0; row < Rows; row++)
                 {
-                    for (int column = startIndex.Column; column <= endIndex.Column; column++)
+                    for (int column = 0; column < Columns; column++)
                         yield return this[row, column];
                 }
             }
 
             public IEnumerable<S> EnumerateAlongColumns()
             {
-                for (int column = startIndex.Column; column <= endIndex.Column; column++)
+                for (int column = 0; column < Columns; column++)
                 {
-                    for (int row = startIndex.Row; row <= endIndex.Row; row++)
+                    for (int row = 0; row < Rows; row++)
                         yield return this[row, column];
                 }
             }

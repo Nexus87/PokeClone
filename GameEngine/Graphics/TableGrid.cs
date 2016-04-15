@@ -143,14 +143,9 @@ namespace GameEngine.Graphics
         private void Update()
         {
             itemContainer.RemoveAllComponents();
-            foreach(var component in components.EnumerateAlongRows())
-            for (int row = startIndex.Row; row <= endIndex.Row; row++)
-            {
-                for (int column = startIndex.Column; column <= endIndex.Column; column++)
-                {
-                    itemContainer.AddComponent(components[row, column]);
-                }
-            }
+            var subTable = components.CreateSubtable(startIndex, endIndex);
+            foreach (var component in subTable.EnumerateAlongRows())
+                itemContainer.AddComponent(component);
         }
     }
 }
