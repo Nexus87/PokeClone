@@ -11,14 +11,15 @@ namespace GameEngine.Utils
 
         public int Rows { get; private set; }
         public int Columns { get; private set; }
-        int rows;
-        int columns;
+
         T[,] innerTable = new T[INITAL_ROWS, INITAL_COLUMNS];
 
         public T this[int row, int column]
         {
             get
             {
+                CheckIndexIsPositive(row, column);
+
                 if(!IsInBounds(row, column))
                     return default(T);
 
@@ -26,38 +27,58 @@ namespace GameEngine.Utils
             }
             set
             {
+                CheckIndexIsPositive(row, column);
+
                 if (!IsInBounds(row, column))
-                    ResizeInnerTable(row, column);
+                    ResizeTable(row, column);
 
                 innerTable[row, column] = value;
             }
+        }
+
+        private void CheckIndexIsPositive(int row, int column){
+            if (row < 0)
+                throw new ArgumentOutOfRangeException("row", "was: " + row);
+            if (column < 0)
+                throw new ArgumentOutOfRangeException("column", "was: " + column);
         }
         private bool IsInBounds(int row, int column)
         {
             return row < Rows && column < Columns;
         }
 
-        private void ResizeInnerTable(int row, int column)
+        private void ResizeTable(int row, int column)
         {
-            var newColumns = GetNewColumn(column);
-            var newRows = GetNewRow(row);
+            var newColumns = CalculateColumnsNumber(column);
+            var newRows = CalculateRowsNumber(row);
 
-            var tmpTable = new T[newRows, newColumns];
-            innerTable.Copy(tmpTable);
-            innerTable = tmpTable;
+            ResizeInnerTable(newColumns, newRows);
 
             Columns = newColumns;
             Rows = newRows;
         }
 
-        private int GetNewRow(int row)
+        private int CalculateRowsNumber(int row)
         {
             return row < Rows ? Rows : row + 1;
         }
 
-        private int GetNewColumn(int column)
+        private int CalculateColumnsNumber(int column)
         {
             return column < Columns ? Columns : column + 1;
+        }
+
+        private void ResizeInnerTable(int newColumns, int newRows)
+        {
+            if (innerTable.Rows() >= newRows && innerTable.Columns() >= newColumns)
+                return;
+
+            newRows = Math.Max(newRows, 2 * innerTable.Rows());
+            newColumns = Math.Max(newColumns, 2 * innerTable.Columns());
+
+            var tmpTable = new T[newRows, newColumns];
+            innerTable.Copy(tmpTable);
+            innerTable = tmpTable;
         }
 
         public IEnumerable<T> EnumerateColumns(int row)
@@ -127,7 +148,15 @@ namespace GameEngine.Utils
 
             public S this[int row, int column]
             {
-                get { return table[startIndex.Row + row, startIndex.Column + column]; }
+                get 
+                {
+                    if (row >= Rows || row < 0)
+                        throw new ArgumentOutOfRangeException("row");
+                    if(column >= Columns || column < 0)
+                        throw new ArgumentOutOfRangeException("row");
+
+                    return table[startIndex.Row + row, startIndex.Column + column]; 
+                }
             }
 
             public IEnumerable<S> EnumerateColumns(int row)

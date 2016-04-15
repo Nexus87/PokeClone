@@ -105,21 +105,22 @@ namespace GameEngine.Graphics
 
         public void SetComponentAt(int row, int column, ISelectableGraphicComponent component)
         {
-            if (row >= Rows)
-                throw new ArgumentOutOfRangeException("row");
-            if (column >= Columns)
-                throw new ArgumentOutOfRangeException("column");
-
+            CheckRange(row, column);
             components[row, column] = component;
             Invalidate();
         }
 
+        private void CheckRange(int row, int column)
+        {
+            if (row >= Rows || row < 0)
+                throw new ArgumentOutOfRangeException("row");
+            if (column >= Columns || column < 0)
+                throw new ArgumentOutOfRangeException("column");
+        }
+
         public ISelectableGraphicComponent GetComponentAt(int row, int column)
         {
-            if (row >= Rows)
-                throw new ArgumentOutOfRangeException("row");
-            if (column >= Columns)
-                throw new ArgumentOutOfRangeException("column");
+            CheckRange(row, column);
 
             return components[row, column];
         }
@@ -144,6 +145,7 @@ namespace GameEngine.Graphics
         {
             itemContainer.RemoveAllComponents();
             var subTable = components.CreateSubtable(startIndex, endIndex);
+
             foreach (var component in subTable.EnumerateAlongRows())
                 itemContainer.AddComponent(component);
         }

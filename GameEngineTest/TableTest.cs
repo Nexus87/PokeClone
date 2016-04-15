@@ -247,5 +247,21 @@ namespace GameEngineTest
             Assert.AreEqual(2 + 1, subTable[1, 0]);
             Assert.AreEqual(2 + 2, subTable[1, 1]);
         }
+
+        [TestCase]
+        public void IndexerSet_InvalidRow_ThrowsException()
+        {
+            var table = new Table<Object>();
+
+            Assert.Throws<ArgumentOutOfRangeException>(() => table[-1, 0] = new Object());
+        }
+
+        [TestCase]
+        public void IndexerSet_InvalidColumn_ThrowsException()
+        {
+            var table = new Table<Object>();
+
+            Assert.Throws<ArgumentOutOfRangeException>(() => table[0, -1] = new Object());
+        }
     }
 }
