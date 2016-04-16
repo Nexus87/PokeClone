@@ -95,6 +95,8 @@ namespace GameEngine.Graphics.Views
 
         private void SetModel(ITableModel<T> value)
         {
+            tableGrid.Rows = value.Rows;
+            tableGrid.Columns = value.Columns;
             if (!isSetup)
             {
                 model = value;
@@ -188,6 +190,8 @@ namespace GameEngine.Graphics.Views
         private void model_SizeChanged(object sender, TableResizeEventArgs e)
         {
             OnTableResize(this, e);
+            tableGrid.Rows = e.Rows;
+            tableGrid.Columns = e.Columns;
             Invalidate();
         }
 

@@ -64,6 +64,7 @@ namespace GameEngine.Graphics
                 }
 
                 CheckStartRange(value.Value);
+                CheckOrder(value, EndIndex);
                 startIndex = value.Value;
                 autoResizeStart = false;
             }
@@ -84,8 +85,23 @@ namespace GameEngine.Graphics
                 }          
       
                 CheckEndRange(value.Value);
+                CheckOrder(StartIndex, value);
                 endIndex = value.Value;
                 autoResizeEnd = false;
+            }
+        }
+
+        private void CheckOrder(TableIndex? start, TableIndex? end)
+        {
+            if (start == null || end == null)
+                return;
+
+            var startValue = start.Value;
+            var endValue = end.Value;
+
+            if(startValue.Row > endValue.Row || startValue.Column > endValue.Column)
+            {
+                throw new ArgumentOutOfRangeException("", "StartIndex needs to be less than EndIndex");
             }
         }
 
