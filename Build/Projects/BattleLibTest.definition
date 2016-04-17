@@ -1,19 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Name="BattleLibTest" Path="BattleLibTest" Type="Library">
   <Properties />
   <References>
-	<Reference Include="System" />
+    <Reference Include="System" />
     <Reference Include="System.Core" />
-	<Reference Include="Moq" />
-	<Reference Include="NUnit" />
-	<Reference Include="MonoGame.Framework.DesktopGL" />
-	<Reference Include="GameEngineTest" />
-	<Reference Include="BattleLib" />
-	<Reference Include="GameEngine" />
-	<Reference Include="Base" />
+    <Reference Include="Moq" />
+    <Reference Include="NUnit" />
+    <Reference Include="MonoGame.Framework.DesktopGL" />
+    <Reference Include="GameEngineTest" />
+    <Reference Include="BattleLib" />
+    <Reference Include="GameEngine" />
+    <Reference Include="Base" />
   </References>
   <Files>
     <Compile Include="GraphicComponents\HPLineTest.cs" />
-    <Compile Include="GUI\AttackModelTest.cs" />   
+    <Compile Include="GUI\AttackModelTest.cs" />
   </Files>
 </Project>

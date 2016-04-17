@@ -1,32 +1,28 @@
 ﻿using GameEngine.Graphics.Basic;
 using GameEngine.Graphics.Layouts;
 using GameEngine.Graphics.Views;
-using GameEngine.Wrapper;
 using GameEngine.Utils;
+using GameEngine.Wrapper;
 using Microsoft.Xna.Framework;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GameEngine.Graphics
 {
-    internal class TableGrid
+    class TableGrid : ITableGrid
     {
-        private Table<ISelectableGraphicComponent> components;
-        private Container itemContainer;
-        private GridLayout layout;
+        Table<ISelectableGraphicComponent> components;
+        Container itemContainer;
+        GridLayout layout;
 
-        private bool needsUpdate = true;
+        bool needsUpdate = true;
 
-        private TableIndex startIndex;
-        private TableIndex endIndex;
+        TableIndex startIndex;
+        TableIndex endIndex;
 
-        private bool autoResizeStart = false;
-        private bool autoResizeEnd = false;
+        bool autoResizeStart = false;
+        bool autoResizeEnd = false;
 
-        private static readonly TableIndex? NULL = null;
+        static readonly TableIndex? NULL = null;
 
         public int Rows
         {
@@ -49,7 +45,7 @@ namespace GameEngine.Graphics
                 FixIndexesColumn();
             }
         }
-        
+
         public TableIndex? StartIndex
         {
             get { return autoResizeStart ? NULL : startIndex; }
@@ -82,8 +78,8 @@ namespace GameEngine.Graphics
                     FixEndColumn();
                     FixEndRow();
                     return;
-                }          
-      
+                }
+
                 CheckEndRange(value.Value);
                 CheckOrder(StartIndex, value);
                 endIndex = value.Value;
@@ -91,7 +87,7 @@ namespace GameEngine.Graphics
             }
         }
 
-        private void CheckOrder(TableIndex? start, TableIndex? end)
+        void CheckOrder(TableIndex? start, TableIndex? end)
         {
             if (start == null || end == null)
                 return;
@@ -99,7 +95,7 @@ namespace GameEngine.Graphics
             var startValue = start.Value;
             var endValue = end.Value;
 
-            if(startValue.Row > endValue.Row || startValue.Column > endValue.Column)
+            if (startValue.Row > endValue.Row || startValue.Column > endValue.Column)
             {
                 throw new ArgumentOutOfRangeException("", "StartIndex needs to be less than EndIndex");
             }
@@ -130,48 +126,46 @@ namespace GameEngine.Graphics
         {
         }
 
-
-        private void FixIndexesRow()
+        void FixIndexesRow()
         {
             FixEndRow();
             FixStartRow();
         }
 
-        private void FixEndRow()
+        void FixEndRow()
         {
             if (autoResizeEnd || endIndex.Row > Rows)
                 endIndex.Row = Rows;
         }
 
-        private void FixStartRow()
+        void FixStartRow()
         {
             if (startIndex.Row >= Rows)
                 startIndex.Row = Math.Max(0, Rows - 1);
         }
 
-        private void FixIndexesColumn()
+        void FixIndexesColumn()
         {
             FixEndColumn();
             FixStartColumn();
         }
 
-        private void FixEndColumn()
+        void FixEndColumn()
         {
             if (autoResizeEnd || endIndex.Column > Columns)
                 endIndex.Column = Columns;
         }
 
-        private void FixStartColumn()
+        void FixStartColumn()
         {
             if (startIndex.Column >= Columns)
                 startIndex.Column = Math.Max(0, Columns - 1);
         }
 
-        private void Invalidate()
+        void Invalidate()
         {
             needsUpdate = true;
         }
-
 
         public void SetComponentAt(int row, int column, ISelectableGraphicComponent component)
         {
@@ -180,12 +174,12 @@ namespace GameEngine.Graphics
             Invalidate();
         }
 
-        private void CheckStartRange(TableIndex index)
+        void CheckStartRange(TableIndex index)
         {
             CheckRange(index.Row, index.Column);
         }
 
-        private void CheckRange(int row, int column)
+        void CheckRange(int row, int column)
         {
             if (row >= Rows || row < 0)
                 throw new ArgumentOutOfRangeException("row");
@@ -216,7 +210,7 @@ namespace GameEngine.Graphics
             itemContainer.Draw(time, spriteBatch);
         }
 
-        private void Update()
+        void Update()
         {
             itemContainer.RemoveAllComponents();
             var subTable = components.CreateSubtable(startIndex, endIndex);

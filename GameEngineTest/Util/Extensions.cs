@@ -18,7 +18,6 @@ namespace GameEngineTest.Util
 {
     public static class Extensions
     {
-        public readonly static GraphicsDevice dev = new GraphicsDevice(GraphicsAdapter.DefaultAdapter, GraphicsProfile.Reach, new PresentationParameters());
         public static void SetCoordinates(this Mock<IGraphicComponent> compMock, float X, float Y, float Width, float Height)
         {
             compMock.Setup(o => o.XPosition).Returns(X);
@@ -54,10 +53,6 @@ namespace GameEngineTest.Util
                 container.RemoveComponent(list[0]);
                 list = container.Components;
             }
-        }
-        public static void SetupLoad(this Mock<ContentManager> contentMock)
-        {
-            contentMock.Setup(o => o.Load<Texture2D>(It.IsAny<string>())).Returns(new Texture2D(dev, 10, 10));
         }
 
         public static void SetupMeasureString(this Mock<ISpriteFont> fontMock)

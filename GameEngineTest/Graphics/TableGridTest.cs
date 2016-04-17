@@ -3,13 +3,11 @@ using GameEngine.Graphics.Views;
 using GameEngineTest.Util;
 using GameEngine.Utils;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using GameEngine;
+using System;
 
 namespace GameEngineTest.Graphics
 {
@@ -261,6 +259,25 @@ namespace GameEngineTest.Graphics
                 Assert.AreEqual(WIDTH, components.EnumerateColumns(i).Sum(o => o.Width));
 
         }
+
+        public static List<TestCaseData> InvalidIndexes = new List<TestCaseData>
+        {
+            new TestCaseData(new TableIndex(-1, -1), null),
+            new TestCaseData(null, new TableIndex(6, 6)),
+            new TestCaseData(new TableIndex(4, 4), new TableIndex(3, 3))
+        };
+
+        [TestCaseSource("InvalidIndexes")]
+        public void SetIndexes_InvalidData_ThrowsException(TableIndex? startIndex, TableIndex? endIndex)
+        {
+            var grid = CreateDefaultGrid();
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+            {
+                grid.StartIndex = startIndex;
+                grid.EndIndex = endIndex;
+            });
+        }
+
         private void AssertIndicesAreEqual(TableIndex expectedIndex, TableIndex tableIndex)
         {
             Assert.AreEqual(expectedIndex.Row, tableIndex.Row);

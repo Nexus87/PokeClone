@@ -1,30 +1,30 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Name="GameEngineTest" Path="GameEngineTest" Type="Library">
   <Properties />
   <References>
-	<Reference Include="System" />
+    <Reference Include="System" />
     <Reference Include="System.Core" />
-	<Reference Include="Moq" />
-	<Reference Include="NUnit" />
-	<Reference Include="MonoGame.Framework.DesktopGL" />
-	<Reference Include="GameEngine" />
+    <Reference Include="Moq" />
+    <Reference Include="NUnit" />
+    <Reference Include="MonoGame.Framework.DesktopGL" />
+    <Reference Include="GameEngine" />
   </References>
   <Files>
     <Compile Include="EventComponent\EventComponentTest.cs" />
     <Compile Include="Graphics\AbstractGraphicComponentTest.cs" />
     <Compile Include="Graphics\Basic\DefaultTextSplitterTest.cs" />
+    <Compile Include="Graphics\Basic\LineTest.cs" />
     <Compile Include="Graphics\Basic\MultiLayeredComponentTest.cs" />
     <Compile Include="Graphics\Basic\MultilineTextboxTest.cs" />
     <Compile Include="Graphics\Basic\NullGraphicObjectTest.cs" />
-    <Compile Include="Graphics\Basic\LineTest.cs" />
     <Compile Include="Graphics\Basic\TextBoxTest.cs" />
     <Compile Include="Graphics\Basic\TextGraphicTest.cs" />
     <Compile Include="Graphics\Basic\TextureBoxTest.cs" />
     <Compile Include="Graphics\Layouts\AbstractLayoutTest.cs" />
     <Compile Include="Graphics\Layouts\BoxLayoutTest.cs" />
+    <Compile Include="Graphics\Layouts\GridLayoutTest.cs" />
     <Compile Include="Graphics\Layouts\ILayoutTest.cs" />
     <Compile Include="Graphics\Layouts\SingleComponentLayoutTest.cs" />
-    <Compile Include="Graphics\Layouts\GridLayoutTest.cs" />
     <Compile Include="Graphics\TableGridTest.cs" />
     <Compile Include="Graphics\Widgets\TableWidgetTest.cs" />
     <Compile Include="IGraphicComponentTest.cs" />
@@ -45,6 +45,6 @@
     <Compile Include="Views\IItemModelTest.cs" />
     <Compile Include="Views\ITableRendererTest.cs" />
     <Compile Include="Views\ItemBoxTest.cs" />
-    <Compile Include="Views\TableViewTest.cs" />    
+    <Compile Include="Views\TableViewTest.cs" />
   </Files>
 </Project>

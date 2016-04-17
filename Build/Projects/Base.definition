@@ -1,30 +1,30 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Name="Base" Path="Base" Type="Library">
   <Properties />
   <References>
-	<Reference Include="System" />
+    <Reference Include="System" />
     <Reference Include="System.Runtime.Serialization" />
-	<Reference Include="System.XML" />
+    <Reference Include="System.XML" />
   </References>
   <Files>
+    <Compile Include="Data\Enums.cs" />
+    <Compile Include="Data\MoveData.cs" />
     <Compile Include="Data\MoveList.cs" />
-    <Compile Include="Factory\PokemonFactory.cs" />
-    <Compile Include="Factory\MoveFactory.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="Factory\IPokemonRepository.cs" />
+    <Compile Include="Data\PokemonData.cs" />
+    <Compile Include="Data\Stats.cs" />
     <Compile Include="Factory\IMoveRepository.cs" />
+    <Compile Include="Factory\IPokemonRepository.cs" />
+    <Compile Include="Factory\MoveFactory.cs" />
+    <Compile Include="Factory\PokemonFactory.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Item.cs" />
+    <Compile Include="Move.cs" />
+    <Compile Include="Pokemon.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rules\IBattlePokemon.cs" />
     <Compile Include="Rules\IBattleRules.cs" />
     <Compile Include="Rules\IPokemonRules.cs" />
     <Compile Include="Rules\ITypeTable.cs" />
-    <Compile Include="Move.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Data\Enums.cs" />
-    <Compile Include="Pokemon.cs" />
-    <Compile Include="Data\PokemonData.cs" />
-    <Compile Include="Data\MoveData.cs" />
-    <Compile Include="Data\Stats.cs" />
     <Compile Include="Rules\RulesSet.cs" />
   </Files>
 </Project>
