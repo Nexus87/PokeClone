@@ -1,4 +1,5 @@
 ﻿using GameEngine.Graphics;
+using GameEngine.Utils;
 using GameEngine.Wrapper;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -22,7 +23,7 @@ namespace GameEngineTest.Util
             float realWidth = Math.Max(0, Width);
             float realHeight = Math.Max(0, Height);
 
-            if (Size.X == 0 || Size.Y == 0)
+            if (Size.X.AlmostEqual(0) || Size.Y.AlmostEqual(0))
                 return;
 
             Assert.GreaterOrEqual(Position.X, X);

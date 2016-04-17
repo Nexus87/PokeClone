@@ -59,6 +59,10 @@ namespace GameEngine
 
         public IGraphicComponent Graphic { get; set; }
 
+        public void AddGameComponent(IGameComponent component)
+        {
+            Components.Add(new GameComponentWrapper(component, this));
+        }
 
         public IInputHandler InputHandler
         {
