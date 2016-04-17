@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Name="PokemonRulesTest" Path="PokemonRulesTest" Type="Library">
+  <Properties />
+  <References>
+	<Reference Include="System" />
+    <Reference Include="System.Core" />
+	<Reference Include="Moq" />
+	<Reference Include="NUnit" />
+	<Reference Include="Base" />
+  </References>
+  <Files>
+    <Compile Include="CharFactoryTest.cs" />
+    <Compile Include="TestData\CharFactoryTestData.cs" />
+  </Files>
+</Project>

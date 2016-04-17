@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Name="PokemonGame" Path="Game" Type="App">
+  <Properties />
+  <References>
+	<Reference Include="System" />
+    <Reference Include="System.Core" />
+	<Reference Include="MonoGame.Framework.DesktopGL" />
+	<Reference Include="GameEngine" />
+	<Reference Include="BattleLib" />
+	<Reference Include="Base" />
+	<Reference Include="Content" />
+  </References>
+  <Files>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rules\DummyBattleRules.cs" />
+    <Compile Include="Rules\DummyPokemonRules.cs" />
+    <Compile Include="Rules\DummyTable.cs" />
+    <Compile Include="Rules\Gen1CharRules.cs" />
+    <Compile Include="Rules\DummyScheduler.cs" />
+  </Files>
+</Project>

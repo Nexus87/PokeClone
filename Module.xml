@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Module>
+  <Name>Protobuild</Name>
+  <DefaultAction>resync</DefaultAction>
+  <DisableSynchronisation>false</DisableSynchronisation>
+  <GenerateNuGetRepositories>true</GenerateNuGetRepositories>
+  <Packages>
+    <Package Uri="https://protobuild.org/hach-que/Prototest" Folder="Prototest" GitRef="master" />
+  </Packages>
+</Module>

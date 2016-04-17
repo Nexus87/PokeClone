@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Name="GameEngine" Path="GameEngine" Type="Library">
+  <Properties />
+  <References>
+	<Reference Include="System" />
+    <Reference Include="System.Core" />
+	<Reference Include="MonoGame.Framework.DesktopGL" />
+  </References>
+  <Files>
+    <Compile Include="Configuration.cs" />
+    <Compile Include="EventComponent\EventQueue.cs" />
+    <Compile Include="GameEngine.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Graphics\AbstractGraphicComponent.cs" />
+    <Compile Include="Graphics\Animations\ResizeAnimation.cs" />
+    <Compile Include="Graphics\Basic\AnimatedTextureBox.cs" />
+    <Compile Include="Graphics\Basic\Container.cs" />
+    <Compile Include="Graphics\Basic\IAnimation.cs" />
+    <Compile Include="Graphics\Basic\ITextGraphicComponent.cs" />
+    <Compile Include="Graphics\Basic\MultiLayeredComponent.cs" />
+    <Compile Include="Graphics\DefaultTextSplitter.cs" />
+    <Compile Include="Graphics\Dialog.cs" />
+    <Compile Include="Graphics\Extensions.cs" />
+    <Compile Include="Graphics\ForwardingGraphicComponent.cs" />
+    <Compile Include="Graphics\ISelectable.cs" />
+    <Compile Include="Graphics\ISelectableGraphicComponent.cs" />
+    <Compile Include="Graphics\ISelectableTextComponent.cs" />
+    <Compile Include="Graphics\ITextSplitter.cs" />
+    <Compile Include="Graphics\Layouts\AbstractLayout.cs" />
+    <Compile Include="Graphics\Basic\MultlineTextBox.cs" />
+    <Compile Include="Graphics\Basic\NullGraphicObject.cs" />
+    <Compile Include="Graphics\Layouts\BoxLayout.cs" />
+    <Compile Include="Graphics\GUIManager.cs" />
+    <Compile Include="Graphics\TableGrid.cs" />
+    <Compile Include="Graphics\Views\DefaultTableRenderer.cs" />
+    <Compile Include="Graphics\Views\DefaultTableSelectionModel.cs" />
+    <Compile Include="Graphics\Views\ITableView.cs" />
+    <Compile Include="EventComponent\IEvent.cs" />
+    <Compile Include="EventComponent\IEventQueue.cs" />
+    <Compile Include="Graphics\Views\ITableRenderer.cs" />
+    <Compile Include="Graphics\Views\ITableSelectionModel.cs" />
+    <Compile Include="InputComponent.cs" />
+    <Compile Include="Graphics\Layouts\SingleComponentLayout.cs" />
+    <Compile Include="Graphics\IGraphicComponent.cs" />
+    <Compile Include="Graphics\Layouts\ILayout.cs" />
+    <Compile Include="Graphics\Basic\Line.cs" />
+    <Compile Include="Graphics\Layouts\GridLayout.cs" />
+    <Compile Include="Graphics\Views\DefaultTableModel.cs" />
+    <Compile Include="Graphics\IInputHandler.cs" />
+    <Compile Include="Graphics\Views\ITableModel.cs" />
+    <Compile Include="Graphics\Views\ItemBox.cs" />
+    <Compile Include="Graphics\Widgets\IWidget.cs" />
+    <Compile Include="Graphics\Views\TableView.cs" />
+    <Compile Include="Graphics\Basic\TextBox.cs" />
+    <Compile Include="Graphics\Basic\TextGraphic.cs" />
+    <Compile Include="Graphics\Basic\TextureBox.cs" />
+    <Compile Include="Graphics\Widgets\MessageBox.cs" />
+    <Compile Include="Graphics\Widgets\TableWidget.cs" />
+    <Compile Include="Utils\Extensions.cs" />
+    <Compile Include="Utils\ITable.cs" />
+    <Compile Include="Utils\Table.cs" />
+    <Compile Include="Wrapper\InputManager.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TextureProvider.cs" />
+    <Compile Include="Wrapper\ISpriteBatch.cs" />
+    <Compile Include="Wrapper\ISpriteFont.cs" />
+    <Compile Include="Wrapper\ITexture2D.cs" />
+    <Compile Include="Wrapper\XNASpriteBatch.cs" />
+    <Compile Include="Wrapper\XNASpriteFont.cs" />
+    <Compile Include="Wrapper\XNATexture2D.cs" />
+  </Files>
+</Project>
