@@ -6,5 +6,5 @@ install:
 mono:
   - latest
 script:
-  - xbuild /p:Configuration=DebugContentPrebuild PokeClone.sln
+  - xbuild /p:Configuration=Debug PokeClone.Linux.sln
   - mono ./testrunner/NUnit.ConsoleRunner.3.2.0/tools/nunit3-console.exe ./BattleLibTest/bin/DebugContentPrebuild/BattleLibTest.dll ./GameEngineTest/bin/DebugContentPrebuild/GameEngineTest.dll
