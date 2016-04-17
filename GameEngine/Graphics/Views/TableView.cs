@@ -143,6 +143,7 @@ namespace GameEngine.Graphics.Views
 
         void FillTableGrid()
         {
+            ModelSizeChanged();
             for (int i = 0; i < Rows; i++)
             {
                 for (int j = 0; j < Columns; j++)

@@ -21,14 +21,14 @@ namespace GameEngine
         Back
     }
 
-    class InputComponent : GameComponent
+    class InputComponent : IGameComponent
     {
-        private KeyboardState oldState;
-        private IReadOnlyDictionary<Keys, CommandKeys> keyMap;
+        KeyboardState oldState;
+        IReadOnlyDictionary<Keys, CommandKeys> keyMap;
         internal IInputHandler handler;
-        private InputManager manager;
+        InputManager manager;
 
-        internal InputComponent(Game game, InputManager manager, Configuration config) : base(game)
+        internal InputComponent(Game game, InputManager manager, Configuration config)
         {
             this.manager = manager;
             keyMap = config.KeyMap;
@@ -36,9 +36,8 @@ namespace GameEngine
 
         public InputComponent(Game game, Configuration config) : this(game, new InputManager(), config) { }
 
-        public override void Update(GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
-            base.Update(gameTime);
             manager.Update();
 
             foreach (var entry in keyMap)
@@ -48,6 +47,10 @@ namespace GameEngine
             }
 
             oldState = manager.GetState();
+        }
+
+        public void Initialize()
+        {
         }
     }
 }

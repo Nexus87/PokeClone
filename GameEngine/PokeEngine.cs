@@ -4,9 +4,7 @@ using GameEngine.Wrapper;
 using GameEngine.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using System;
-using System.Collections.Generic;
 
 namespace GameEngine
 {
@@ -50,8 +48,10 @@ namespace GameEngine
             GUIManager.GUIClose += GUI_GUIClose;
             Content.RootDirectory = "Content";
 
-            Components.Add(input);
-            Components.Add(new EventQueue(this));
+            AddGameComponent(input);
+            var queue = new EventQueue();
+            AddGameComponent(queue);
+            Services.AddService<IEventQueue>(queue);
         }
 
         // For testing only

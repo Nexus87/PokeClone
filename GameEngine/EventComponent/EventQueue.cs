@@ -7,19 +7,14 @@ using System.Threading.Tasks;
 
 namespace GameEngine.EventComponent
 {
-    class EventQueue : GameComponent, IEventQueue
+    class EventQueue : IGameComponent, IEventQueue
     {
         bool eventDispatched = false;
         IEvent dispatchedEvent;
 
-        public EventQueue(Game game) : base(game) 
-        {
-            game.Services.AddService(typeof(IEventQueue), this);
-        }
-
         LinkedList<IEvent> eventQueue = new LinkedList<IEvent>();
 
-        public override void Update(GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
             if (eventDispatched || eventQueue.Count == 0)
                 return;
@@ -44,5 +39,8 @@ namespace GameEngine.EventComponent
             eventQueue.AddLast(ev);
         }
 
+        public void Initialize()
+        {
+        }
     }
 }

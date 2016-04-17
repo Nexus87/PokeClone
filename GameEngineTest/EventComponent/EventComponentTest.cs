@@ -19,8 +19,7 @@ namespace GameEngineTest.EventComponent
         [SetUp]
         public void Setup()
         {
-            var gameMock = new PokeEngine();
-            eventComponent = new EventQueue(gameMock);
+            eventComponent = new EventQueue();
         }
 
 
