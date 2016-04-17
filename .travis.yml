@@ -1,7 +1,7 @@
 language: csharp
 solution: PokeClone.sln
 install:
-  - mono ./Protobuild --generate Linux
+  - mono ./Protobuild.exe --generate Linux
   - nuget install NUnit.Runners -Version 3.2.0 -OutputDirectory testrunner
 mono:
   - latest
