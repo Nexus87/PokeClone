@@ -118,17 +118,6 @@ namespace GameEngineTest.Graphics.Widgets
             AssertIndex(startIdx, view.StartIndex.Value);
             AssertIndex(endIdx, view.EndIndex.Value);
         }
-        [TestCase]
-        public void ForwardingPropertiesTest()
-        {
-            table = CreateTableWidget(tableViewMock);
-            tableViewMock.SetupSet(o => o.Model = modelMock.Object).Verifiable();
-
-            table.Model = modelMock.Object;
-
-            tableViewMock.Verify();
-
-        }
 
         [TestCaseSource("InvalidSelectionData")]
         public void InvalidSelectionTest(int rows, int columns, int selectedRow, int selectedColumn)

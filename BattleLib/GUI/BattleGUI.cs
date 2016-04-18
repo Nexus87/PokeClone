@@ -109,13 +109,11 @@ namespace BattleLib.GraphicComponents.GUI
 
         private void InitItemMenu(Configuration config, PokeEngine game)
         {
-            var ItemMenu = new TableWidget<Item>(8, null, game);
             var model = new DefaultTableModel<Item>();
-            var list = new List<Item>();
+            var ItemMenu = new TableWidget<Item>(8, null, model, game);
+            
             for (int i = 0; i < 20; i++)
                 model.SetData(new Item { Name = "Item" + i }, i, 0);
-
-            ItemMenu.Model = model;
 
             itemFrame.XPosition = 3.0f * PokeEngine.ScreenWidth / 8.0f;
             itemFrame.YPosition = 1.0f * PokeEngine.ScreenHeight / 8.0f;
@@ -183,10 +181,8 @@ namespace BattleLib.GraphicComponents.GUI
 
         private void InitPKMNMenu(Configuration config, PokeEngine game)
         {
-            var PKMNMenu = new TableWidget<Pokemon>(game);
             var model = new DefaultTableModel<Pokemon>();
-
-            PKMNMenu.Model = model;
+            var PKMNMenu = new TableWidget<Pokemon>(model, game);
 
             pkmnFrame.XPosition = 0;
             pkmnFrame.YPosition = 0;

@@ -96,12 +96,22 @@ namespace GameEngine.Graphics.Widgets
             }
         }
 
-        public TableWidget(PokeEngine game) : this(null, null, game) { }
-        public TableWidget(int? visibleRows, int? visibleColumns, PokeEngine game)
+        public TableWidget(PokeEngine game) : this(null, null, new DefaultTableModel<T>(), game) { }
+
+        public TableWidget(ITableModel<T> model, PokeEngine game) :
+            this(null, null,
+                new TableView<T>(
+                    model,
+                    new DefaultTableRenderer<T>(game),
+                    new DefaultTableSelectionModel(),
+                    game),
+            game)
+        { }
+        public TableWidget(int? visibleRows, int? visibleColumns, ITableModel<T> model, PokeEngine game)
             : this(
             visibleRows, visibleColumns,
             new TableView<T>(
-                new DefaultTableModel<T>(),
+                model,
                 new DefaultTableRenderer<T>(game),
                 new DefaultTableSelectionModel(),
                 game),
@@ -141,7 +151,6 @@ namespace GameEngine.Graphics.Widgets
         public ITableModel<T> Model
         {
             get { return tableView.Model; }
-            set { tableView.Model = value; }
         }
 
         /// <summary>

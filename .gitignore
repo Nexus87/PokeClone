@@ -32,3 +32,4 @@ packages/*
 *.csproj
 *.speccache
 !Protobuild.exe
+Content/source/.source

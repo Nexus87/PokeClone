@@ -80,6 +80,6 @@ namespace GameEngine.Graphics.Views
         /// <returns>True if the selection was changed</returns>
         bool SetCellSelection(int row, int column, bool isSelected);
 
-        ITableModel<T> Model { get; set; }
+        ITableModel<T> Model { get; }
     }
 }

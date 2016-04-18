@@ -22,7 +22,6 @@ namespace GameEngine.Graphics.Views
         ITableRenderer<T> renderer;
         ITableSelectionModel selectionModel;
         ITableGrid tableGrid;
-        bool isSetup;
 
         public TableView(ITableModel<T> model, ITableRenderer<T> renderer, ITableSelectionModel selectionModel, PokeEngine game)
             : base(game)
@@ -55,6 +54,7 @@ namespace GameEngine.Graphics.Views
         public int Columns { get { return model.Columns; } }
         public int Rows { get { return model.Rows; } }
 
+        public ITableModel<T> Model { get { return model; } }
         public TableIndex? EndIndex
         {
             get { return tableGrid.EndIndex; }
@@ -75,39 +75,11 @@ namespace GameEngine.Graphics.Views
                 throw new ArgumentOutOfRangeException("column", "value is: " + column);
         }
 
-        public ITableModel<T> Model
-        {
-            get { return model; }
-            set
-            {
-                value.CheckNull("value");
-                SetModel(value);
-            }
-        }
-
-        void SetModel(ITableModel<T> newModel)
-        {
-            if (isSetup)
-            {
-                UnsubscribeModelEvents(model);
-                SubscribeToModelEvents(newModel);
-            }
-
-            model = newModel;
-            ModelSizeChanged();
-        }
-
         void ModelSizeChanged()
         {
             tableGrid.Rows = model.Rows;
             tableGrid.Columns = model.Columns;
             Invalidate();
-        }
-
-        void UnsubscribeModelEvents(ITableModel<T> tableModel)
-        {
-            tableModel.DataChanged -= DataChangedHandler;
-            tableModel.SizeChanged -= SizeChangedHandler;
         }
 
         public bool SetCellSelection(int row, int column, bool isSelected)
@@ -125,9 +97,8 @@ namespace GameEngine.Graphics.Views
             SubscribeToModelEvents(model);
             SubscribeToSelectionEvents();
 
+            ModelSizeChanged();
             FillTableGrid();
-
-            isSetup = true;
         }
 
         void SubscribeToModelEvents(ITableModel<T> tableModel)
@@ -143,7 +114,6 @@ namespace GameEngine.Graphics.Views
 
         void FillTableGrid()
         {
-            ModelSizeChanged();
             for (int i = 0; i < Rows; i++)
             {
                 for (int j = 0; j < Columns; j++)
