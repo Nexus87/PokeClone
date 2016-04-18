@@ -16,28 +16,33 @@ namespace GameEngineTest.Views
     [TestFixture]
     public class TableViewTest : IGraphicComponentTest
     {
-        public class CellData
-        {
-            public int row;
-            public int column;
-            public int custom;
+        
 
-            public CellData(int row, int column, int custom = 0)
-            {
-                this.row = row;
-                this.column = column;
-                this.custom = custom;
-            }
-        }
-        private TableView<CellData> CreateTable(Mock<ITableModel<CellData>> modelMock, TableRendererMock<CellData> renderer, Mock<ITableSelectionModel> selectionModelMock)
+        [TestCase]
+        public void RowsColumns_ResizeModelBeforeSetup_ReturnsNewSize()
         {
-            var table = new TableView<CellData>(modelMock.Object, renderer, selectionModelMock.Object, gameMock.Object);
+            var modelStub = new Mock<ITableModel<Object>>();
+            var rendererStub = new TableRendererMock<Object>();
+            var selectionModelStub = new Mock<ITableSelectionModel>();
+            var table = CreateTable(modelStub, rendererStub, selectionModelStub);
+            int rows = 10;
+            int columns = 20;
+
+            SetDimension(modelStub, rows, columns);
+            modelStub.Raise(o => o.SizeChanged += null, new TableResizeEventArgs(rows, columns));
+
+            Assert.AreEqual(rows, table.Rows);
+            Assert.AreEqual(columns, table.Columns);
+        }
+        private TableView<Object> CreateTable(Mock<ITableModel<Object>> modelMock, TableRendererMock<Object> renderer, Mock<ITableSelectionModel> selectionModelMock)
+        {
+            var table = new TableView<Object>(modelMock.Object, renderer, selectionModelMock.Object, gameMock.Object);
             table.SetCoordinates(0, 0, 500, 500);
             table.Setup();
             return table;
         }
 
-        private static void SetDimension(Mock<ITableModel<CellData>> modelMock, int rows, int columns)
+        private static void SetDimension(Mock<ITableModel<Object>> modelMock, int rows, int columns)
         {
             modelMock.Setup(o => o.Rows).Returns(rows);
             modelMock.Setup(o => o.Columns).Returns(columns);
@@ -45,10 +50,10 @@ namespace GameEngineTest.Views
 
         protected override IGraphicComponent CreateComponent()
         {
-            var modelMock = new Mock<ITableModel<CellData>>();
+            var modelMock = new Mock<ITableModel<Object>>();
             var selectionModelMock = new Mock<ITableSelectionModel>();
-            var renderer = new TableRendererMock<CellData>();
-            var table = new TableView<CellData>(modelMock.Object, renderer, selectionModelMock.Object, gameMock.Object);
+            var renderer = new TableRendererMock<Object>();
+            var table = new TableView<Object>(modelMock.Object, renderer, selectionModelMock.Object, gameMock.Object);
             table.Setup();
             return table;
         }
