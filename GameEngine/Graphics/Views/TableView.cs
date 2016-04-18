@@ -24,6 +24,11 @@ namespace GameEngine.Graphics.Views
         ITableGrid tableGrid;
 
         public TableView(ITableModel<T> model, ITableRenderer<T> renderer, ITableSelectionModel selectionModel, PokeEngine game)
+            : this(model, renderer, selectionModel, new TableGrid(game), game)
+        {}
+
+        //grid argument is for testing purpose
+        internal TableView(ITableModel<T> model, ITableRenderer<T> renderer, ITableSelectionModel selectionModel, ITableGrid grid, PokeEngine game)
             : base(game)
         {
             renderer.CheckNull("renderer");
@@ -31,10 +36,7 @@ namespace GameEngine.Graphics.Views
             game.CheckNull("game");
             selectionModel.CheckNull("selectionModel");
 
-            //CreateGrid is only virtual for testing purpose.
-#pragma warning disable RECS0021 // Warns about calls to virtual member functions occuring in the constructor
-            tableGrid = CreateGrid(model.Rows, model.Columns);
-#pragma warning restore RECS0021 // Warns about calls to virtual member functions occuring in the constructor
+            tableGrid = grid;
             tableGrid.StartIndex = null;
             tableGrid.EndIndex = null;
 
@@ -168,11 +170,6 @@ namespace GameEngine.Graphics.Views
         {
             bool isSelected = selectionModel.IsSelected(row, column);
             return renderer.GetComponent(row, column, data, isSelected);
-        }
-
-        internal virtual ITableGrid CreateGrid(int rows, int columns)
-        {
-            return new TableGrid(rows, columns, Game);
         }
     }
 }
