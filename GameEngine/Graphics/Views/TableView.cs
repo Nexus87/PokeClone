@@ -43,6 +43,12 @@ namespace GameEngine.Graphics.Views
             this.renderer = renderer;
             this.model = model;
             this.selectionModel = selectionModel;
+            
+            // We need to handle the SizeChanged event right from the start so that
+            // we can keep tableGrid's Rows and Columns properties up to date.
+            // Otherwise it can't do the validity checks for Start- and EndIndex.
+            model.SizeChanged += SizeChangedHandler;
+            // The other event handler need tableGrid filled with components
         }
 
         public event EventHandler<TableResizeEventArgs> OnTableResize = delegate { };
@@ -96,11 +102,11 @@ namespace GameEngine.Graphics.Views
 
         public override void Setup()
         {
-            SubscribeToModelEvents(model);
-            SubscribeToSelectionEvents();
-
             ModelSizeChanged();
             FillTableGrid();
+
+            model.DataChanged += DataChangedHandler;
+            selectionModel.SelectionChanged += SelectionChangedHandler;
         }
 
         void SubscribeToModelEvents(ITableModel<T> tableModel)

@@ -22,9 +22,7 @@ namespace GameEngineTest.Views
         public void RowsColumns_ResizeModelBeforeSetup_ReturnsNewSize()
         {
             var modelStub = new Mock<ITableModel<Object>>();
-            var rendererStub = new TableRendererMock<Object>();
-            var selectionModelStub = new Mock<ITableSelectionModel>();
-            var table = CreateTable(modelStub, rendererStub, selectionModelStub);
+            var table = CreateTable(modelStub);
             int rows = 10;
             int columns = 20;
 
@@ -34,11 +32,56 @@ namespace GameEngineTest.Views
             Assert.AreEqual(rows, table.Rows);
             Assert.AreEqual(columns, table.Columns);
         }
+
+        [TestCase]
+        public void SetStartIndex_ResizeModelBeforeSetup_GetReturnsStartIndex()
+        {
+            var modelStub = new Mock<ITableModel<Object>>();
+            var table = CreateTable(modelStub);
+            int rows = 10;
+            int columns = 20;
+            var expectedStartIndex = new TableIndex(rows - 1, columns - 1);
+
+            SetDimension(modelStub, rows, columns);
+            modelStub.Raise(o => o.SizeChanged += null, new TableResizeEventArgs(rows, columns));
+
+            table.StartIndex = expectedStartIndex;
+
+            AssertIndexesAreEqual(expectedStartIndex, table.StartIndex);
+        }
+
+        [TestCase]
+        public void SetEndIndex_ResizeModelBeforeSetup_GetReturnsEndIndex()
+        {
+            var modelStub = new Mock<ITableModel<Object>>();
+            var table = CreateTable(modelStub);
+            int rows = 10;
+            int columns = 20;
+            var expectedEndIndex = new TableIndex(rows, columns);
+
+            SetDimension(modelStub, rows, columns);
+            modelStub.Raise(o => o.SizeChanged += null, new TableResizeEventArgs(rows, columns));
+
+            table.EndIndex = expectedEndIndex;
+
+            AssertIndexesAreEqual(expectedEndIndex, table.EndIndex);
+        }
+        private void AssertIndexesAreEqual(TableIndex expectedStartIndex, TableIndex? testIndex)
+        {
+            Assert.NotNull(testIndex);
+            Assert.AreEqual(expectedStartIndex.Column, testIndex.Value.Column);
+            Assert.AreEqual(expectedStartIndex.Row, testIndex.Value.Row);
+        }
+
+        private TableView<Object> CreateTable(Mock<ITableModel<Object>> modelMock)
+        {
+            return CreateTable(modelMock, new TableRendererMock<Object>(), new Mock<ITableSelectionModel>());
+        }
+
         private TableView<Object> CreateTable(Mock<ITableModel<Object>> modelMock, TableRendererMock<Object> renderer, Mock<ITableSelectionModel> selectionModelMock)
         {
             var table = new TableView<Object>(modelMock.Object, renderer, selectionModelMock.Object, gameMock.Object);
             table.SetCoordinates(0, 0, 500, 500);
-            table.Setup();
             return table;
         }
 
