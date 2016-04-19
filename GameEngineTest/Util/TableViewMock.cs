@@ -90,7 +90,7 @@ namespace GameEngineTest.Util
                 }
 
                 var idx = value.Value;
-                if (idx.Row >= Rows || idx.Column >= Columns)
+                if (idx.Row > Rows || idx.Column > Columns)
                     throw new ArgumentOutOfRangeException();
 
                 endIndex = idx;

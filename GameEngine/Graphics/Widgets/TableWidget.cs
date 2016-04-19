@@ -42,7 +42,7 @@ namespace GameEngine.Graphics.Widgets
             if (e.Rows == 0 || e.Columns == 0)
             {
                 cursorColumn = cursorRow = 0;
-                tableView.StartIndex = tableView.EndIndex = null;
+                tableView.StartIndex = tableView.EndIndex = new TableIndex(0, 0);
                 return;
             }
 
@@ -60,8 +60,8 @@ namespace GameEngine.Graphics.Widgets
             // If the cursor has changed, we also should change the selection
             tableView.SetCellSelection(cursorRow, cursorColumn, true);
 
-            int shownRows = (EndIndex.Row - StartIndex.Row) + 1;
-            int shownColumns = (EndIndex.Column - StartIndex.Column) + 1;
+            int shownRows = (EndIndex.Row - StartIndex.Row);
+            int shownColumns = (EndIndex.Column - StartIndex.Column);
 
             // Store the current indexes (TableIndex is a struct!)
             var localStartIdx = StartIndex;
@@ -315,7 +315,7 @@ namespace GameEngine.Graphics.Widgets
             cursorRow = row;
 
             // We may have to adjust the viewport
-            if (row > EndIndex.Row)
+            if (row >= EndIndex.Row)
                 SetEndCell(row, EndIndex.Column);
             else if (row < StartIndex.Row)
                 SetStartCell(row, StartIndex.Column);
@@ -335,7 +335,7 @@ namespace GameEngine.Graphics.Widgets
             cursorColumn = column;
 
             // We may have to adjust the viewport
-            if (column > EndIndex.Column)
+            if (column >= EndIndex.Column)
                 SetEndCell(EndIndex.Row, column);
             else if (column < StartIndex.Column)
                 SetStartCell(StartIndex.Row, column);
@@ -347,11 +347,11 @@ namespace GameEngine.Graphics.Widgets
             // column) is visible and that we have the right number of visible
             // cells.
 
-            int startRow = Math.Max(0, row - (realVisibleRows - 1));
-            int startColumn = Math.Max(0, column - (realVisibleColumns - 1));
+            int startRow = Math.Max(0, row - realVisibleRows + 1);
+            int startColumn = Math.Max(0, column - realVisibleColumns + 1);
 
-            int endRow = Math.Min(tableView.Rows - 1, startRow + realVisibleRows - 1);
-            int endColumn = Math.Min(tableView.Columns - 1, startColumn + realVisibleColumns - 1);
+            int endRow = Math.Min(tableView.Rows, startRow + realVisibleRows);
+            int endColumn = Math.Min(tableView.Columns, startColumn + realVisibleColumns);
 
             tableView.StartIndex = new TableIndex(startRow, startColumn);
             tableView.EndIndex = new TableIndex(endRow, endColumn);
@@ -365,12 +365,12 @@ namespace GameEngine.Graphics.Widgets
             // VisibleRows/Columns
 
             // Therefore we start with the end index
-            int endRow = Math.Min(tableView.Rows - 1, row + realVisibleRows - 1);
-            int endColumn = Math.Min(tableView.Columns - 1, column + realVisibleColumns - 1);
+            int endRow = Math.Min(tableView.Rows, row + realVisibleRows);
+            int endColumn = Math.Min(tableView.Columns, column + realVisibleColumns);
 
             // And go back to set the start index
-            int startRow = Math.Max(0, endRow - (realVisibleRows - 1));
-            int startColumn = Math.Max(0, endColumn - (realVisibleColumns - 1));
+            int startRow = Math.Max(0, endRow - (realVisibleRows));
+            int startColumn = Math.Max(0, endColumn - (realVisibleColumns));
 
             tableView.StartIndex = new TableIndex(startRow, startColumn);
             tableView.EndIndex = new TableIndex(endRow, endColumn);

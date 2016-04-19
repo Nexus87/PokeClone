@@ -69,11 +69,11 @@ namespace GameEngine
         {
             var res = Components.FirstOrDefault( c =>
             {
-                var comp = c as IGameComponent;
+                var comp = c as GameComponentWrapper;
                 if (comp == null)
                     return false;
 
-                return comp == component;
+                return comp.Component == component;
             });
 
             if (res == null)
