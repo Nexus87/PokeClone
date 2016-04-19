@@ -111,6 +111,15 @@ namespace GameEngineTest.Graphics
             ValidateComponentsDrawn(components, grid.StartIndex.Value, grid.EndIndex.Value);
         }
 
+        [TestCase]
+        public void SetStartIndex_OnEmptyTable_DoesNotThrowAnException()
+        {
+            var grid = CreateGrid(0, 0);
+            var startIndex = new TableIndex(0, 0);
+
+            grid.StartIndex = startIndex;
+        }
+
         private void ValidateComponentsDrawn(SelectableGraphicComponentMock[,] components, TableIndex startIndex, TableIndex endIndex)
         {
             for (int row = 0; row < components.Rows(); row++)

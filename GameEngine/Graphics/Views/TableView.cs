@@ -49,6 +49,8 @@ namespace GameEngine.Graphics.Views
             // Otherwise it can't do the validity checks for Start- and EndIndex.
             model.SizeChanged += SizeChangedHandler;
             // The other event handler need tableGrid filled with components
+
+            ModelSizeChanged();
         }
 
         public event EventHandler<TableResizeEventArgs> OnTableResize = delegate { };

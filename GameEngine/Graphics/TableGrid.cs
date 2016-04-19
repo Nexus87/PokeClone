@@ -176,6 +176,8 @@ namespace GameEngine.Graphics
 
         void CheckStartRange(TableIndex index)
         {
+            if (index.Row == 0 && index.Column == 0)
+                return;
             CheckRange(index.Row, index.Column);
         }
 
