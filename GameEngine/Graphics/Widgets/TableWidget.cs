@@ -2,7 +2,6 @@
 using GameEngine.Utils;
 using GameEngine.Wrapper;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using System;
 using System.Diagnostics;
 
@@ -16,12 +15,13 @@ namespace GameEngine.Graphics.Widgets
         /// The current column of the selected cell
         /// </summary>
         internal int cursorColumn = 0;
+
         /// <summary>
         /// The current row of the selected cell
         /// </summary>
         internal int cursorRow = 0;
 
-        private ITableView<T> tableView;
+        ITableView<T> tableView;
 
         public TableWidget(int? visibleRows, int? visibleColumns, ITableView<T> view, PokeEngine game)
             : base(game)
@@ -30,13 +30,14 @@ namespace GameEngine.Graphics.Widgets
             VisibleColumns = visibleColumns;
             tableView = view;
 
-            if(view.Rows > 0 && view.Columns > 0)
+            if (view.Rows > 0 && view.Columns > 0)
                 SetStartCell(0, 0);
 
             view.OnTableResize += TableResizeHandler;
+            SetStartCell(0, 0);
         }
 
-        private void TableResizeHandler(object sender, TableResizeEventArgs e)
+        void TableResizeHandler(object sender, TableResizeEventArgs e)
         {
             // If there is nothing to display, reset everything
             if (e.Rows == 0 || e.Columns == 0)
@@ -45,11 +46,6 @@ namespace GameEngine.Graphics.Widgets
                 tableView.StartIndex = tableView.EndIndex = new TableIndex(0, 0);
                 return;
             }
-
-            // If the table was empty before, we should initialize the indexes with a value.
-            // This makes the following code easier.
-            if (tableView.StartIndex == null || tableView.EndIndex == null)
-                tableView.StartIndex = tableView.EndIndex = new TableIndex();
 
             // First fix the cursor
             if (cursorColumn >= e.Columns)
@@ -79,7 +75,7 @@ namespace GameEngine.Graphics.Widgets
                 }
                 else
                 {
-                    SetEndCell(localEndIdx.Row, localEndIdx.Column);
+                    SetEndCell(localEndIdx.Row - 1, localEndIdx.Column - 1);
                 }
             }
 
@@ -92,11 +88,13 @@ namespace GameEngine.Graphics.Widgets
                 if (localStartIdx.Column + realVisibleColumns <= Columns)
                     SetStartCell(localStartIdx.Row, localStartIdx.Column);
                 else
-                    SetEndCell(localEndIdx.Row, localEndIdx.Column);
+                    SetEndCell(localEndIdx.Row - 1, localEndIdx.Column - 1);
             }
         }
 
-        public TableWidget(PokeEngine game) : this(null, null, new DefaultTableModel<T>(), game) { }
+        public TableWidget(PokeEngine game) : this(null, null, new DefaultTableModel<T>(), game)
+        {
+        }
 
         public TableWidget(ITableModel<T> model, PokeEngine game) :
             this(null, null,
@@ -107,6 +105,7 @@ namespace GameEngine.Graphics.Widgets
                     game),
             game)
         { }
+
         public TableWidget(int? visibleRows, int? visibleColumns, ITableModel<T> model, PokeEngine game)
             : this(
             visibleRows, visibleColumns,
@@ -193,7 +192,7 @@ namespace GameEngine.Graphics.Widgets
         private int realVisibleColumns { get { return VisibleColumns.HasValue ? VisibleColumns.Value : tableView.Columns; } }
 
         /// <summary>
-        /// Holds the number of visible rows, even if the VisibleRowss property is null.
+        /// Holds the number of visible rows, even if the VisibleRows property is null.
         /// </summary>
         private int realVisibleRows { get { return VisibleRows.HasValue ? VisibleRows.Value : tableView.Rows; } }
 
@@ -278,8 +277,9 @@ namespace GameEngine.Graphics.Widgets
             Debug.Assert(tableView.EndIndex.HasValue);
             Debug.Assert(tableView.StartIndex.HasValue);
 
-            if (row > EndIndex.Row || row < StartIndex.Row ||
-                column > EndIndex.Column || column < StartIndex.Column)
+            if (row >= EndIndex.Row || column >= EndIndex.Column)
+                SetEndCell(row, column);
+            else if (row < StartIndex.Row || column < StartIndex.Column)
                 SetStartCell(row, column);
         }
 
@@ -301,7 +301,7 @@ namespace GameEngine.Graphics.Widgets
             tableView.Height = Height;
         }
 
-        private void SetCursorRow(int row)
+        void SetCursorRow(int row)
         {
             // Only called from HandleInput. No reason to throw an exception
             if (row >= Rows || row < 0)
@@ -309,16 +309,7 @@ namespace GameEngine.Graphics.Widgets
 
             // tableViews selection model will take care of deselecting other
             // cells
-            if (!tableView.SetCellSelection(row, cursorColumn, true))
-                return;
-
-            cursorRow = row;
-
-            // We may have to adjust the viewport
-            if (row >= EndIndex.Row)
-                SetEndCell(row, EndIndex.Column);
-            else if (row < StartIndex.Row)
-                SetStartCell(row, StartIndex.Column);
+            SelectCell(row, cursorColumn);
         }
 
         private void SetCursorColumn(int column)
@@ -329,29 +320,16 @@ namespace GameEngine.Graphics.Widgets
 
             // tableViews selection model will take care of deselecting other
             // cells
-            if (!tableView.SetCellSelection(cursorRow, column, true))
-                return;
-
-            cursorColumn = column;
-
-            // We may have to adjust the viewport
-            if (column >= EndIndex.Column)
-                SetEndCell(EndIndex.Row, column);
-            else if (column < StartIndex.Column)
-                SetStartCell(StartIndex.Row, column);
+            SelectCell(cursorRow, column);
         }
 
         private void SetEndCell(int row, int column)
         {
-            // As with SetStartCell we only take care, that the cell (row,
-            // column) is visible and that we have the right number of visible
-            // cells.
+            int endRow = row + 1;
+            int endColumn = column + 1;
 
-            int startRow = Math.Max(0, row - realVisibleRows + 1);
-            int startColumn = Math.Max(0, column - realVisibleColumns + 1);
-
-            int endRow = Math.Min(tableView.Rows, startRow + realVisibleRows);
-            int endColumn = Math.Min(tableView.Columns, startColumn + realVisibleColumns);
+            int startRow = Math.Max(0, endRow - realVisibleRows);
+            int startColumn = Math.Max(0, endColumn - realVisibleColumns);
 
             tableView.StartIndex = new TableIndex(startRow, startColumn);
             tableView.EndIndex = new TableIndex(endRow, endColumn);
@@ -359,18 +337,11 @@ namespace GameEngine.Graphics.Widgets
 
         private void SetStartCell(int row, int column)
         {
-            // We don't really care, if the table starts with the cell in given
-            // as parameters. It is more important, that (row, cell) is visible
-            // and we show the number of rows/columns determined by
-            // VisibleRows/Columns
+            int startRow = row;
+            int startColumn = column;
 
-            // Therefore we start with the end index
-            int endRow = Math.Min(tableView.Rows, row + realVisibleRows);
-            int endColumn = Math.Min(tableView.Columns, column + realVisibleColumns);
-
-            // And go back to set the start index
-            int startRow = Math.Max(0, endRow - (realVisibleRows));
-            int startColumn = Math.Max(0, endColumn - (realVisibleColumns));
+            int endRow = Math.Min(Rows, startRow + realVisibleRows);
+            int endColumn = Math.Min(Columns, startColumn + realVisibleColumns);
 
             tableView.StartIndex = new TableIndex(startRow, startColumn);
             tableView.EndIndex = new TableIndex(endRow, endColumn);

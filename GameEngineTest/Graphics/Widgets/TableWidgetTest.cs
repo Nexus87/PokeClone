@@ -94,7 +94,7 @@ namespace GameEngineTest.Graphics.Widgets
             table = CreateTableWidget(tableViewMock, 0, 0);
         }
 
-        [Ignore("Refactoring")]
+        [Ignore("Needs refactoring")]
         [TestCaseSource("ResizeTableTestData")]
         public void ResizeTableTest(int rows, int columns, int visibleRows, int visibleColumns, TableIndex? selectedIndex, 
             int newRows, int newColumns, TableIndex startIdx)
