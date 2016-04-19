@@ -15,19 +15,20 @@ using System.Threading.Tasks;
 
 namespace BattleLib
 {
-    public class InitComponent : GameComponent
+    public class InitComponent : GameEngine.IGameComponent
     {
         Client player;
         Client ai;
-
+        PokeEngine engine;
         private BattleStateComponent battleState;
 
-        public InitComponent(Configuration config, PokeEngine game, RulesSet rules, ICommandScheduler scheduler) : base(game)
+        public InitComponent(Configuration config, PokeEngine game, RulesSet rules, ICommandScheduler scheduler)
         {
             var playerID = new ClientIdentifier();
             var aiID = new ClientIdentifier();
             playerID.Name = "Player";
             playerID.IsPlayer = false;
+            engine = game;
 
             aiID.Name = "AI";
             aiID.IsPlayer = false;
@@ -38,25 +39,23 @@ namespace BattleLib
             var graphic = new BattleGraphics(game, playerID, aiID);
             battleState = new BattleStateComponent(playerID, aiID, game, rules, scheduler);
             var gui = new BattleGUI(config, game, battleState, playerID, aiID);
-            var aiComponent = new AIComponent(battleState, ai, playerID, game);
+            var aiComponent = new AIComponent(battleState, ai, playerID);
 
-            game.Components.Add(aiComponent);
+            game.AddGameComponent(aiComponent);
             game.Components.Add(battleState);
             game.Graphic = graphic;
             
         }
 
-        public override void Initialize()
+        public void Initialize()
         {
         }
 
-        public override void Update(GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
-            base.Update(gameTime);
             // The AI sets the Character itself
             battleState.SetCharacter(player.Id, player.Pokemons.First());
-
-            Game.Components.Remove(this);
+            engine.RemoveGameComponent(this);
         }
     }
 }

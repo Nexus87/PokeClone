@@ -5,6 +5,7 @@ using GameEngine.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Linq;
 
 namespace GameEngine
 {
@@ -64,6 +65,22 @@ namespace GameEngine
             Components.Add(new GameComponentWrapper(component, this));
         }
 
+        public void RemoveGameComponent(IGameComponent component)
+        {
+            var res = Components.FirstOrDefault( c =>
+            {
+                var comp = c as IGameComponent;
+                if (comp == null)
+                    return false;
+
+                return comp == component;
+            });
+
+            if (res == null)
+                return;
+
+            Components.Remove(res);
+        }
         public IInputHandler InputHandler
         {
             set

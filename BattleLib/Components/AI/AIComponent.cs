@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BattleLib.Components.AI
 {
-    class AIComponent : GameComponent
+    class AIComponent : GameEngine.IGameComponent
     {
         private BattleStateComponent state;
         private Action nextAction = null;
@@ -19,8 +19,7 @@ namespace BattleLib.Components.AI
         private IReadOnlyList<Pokemon> pokemons;
         private Pokemon currentPokemon;
 
-        public AIComponent(BattleStateComponent state, Client ai, ClientIdentifier player, PokeEngine game)
-            : base(game)
+        public AIComponent(BattleStateComponent state, Client ai, ClientIdentifier player)
         {
             this.state = state;
             id = ai.Id;
@@ -69,15 +68,17 @@ namespace BattleLib.Components.AI
             state.SetCharacter(id, pkmn);
         }
 
-        public override void Update(GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
-            base.Update(gameTime);
-            
             if (nextAction == null)
                 return;
 
             nextAction();
             nextAction = null;
+        }
+
+        public void Initialize()
+        {
         }
     }
 }

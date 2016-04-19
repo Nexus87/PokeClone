@@ -31,7 +31,7 @@ namespace PokemonGame
 
             engine.ShowGUI();
             //engine.Graphic = graphic;
-            engine.Components.Add(new InitComponent(config, engine, rules, new DummyScheduler()));
+            engine.AddGameComponent(new InitComponent(config, engine, rules, new DummyScheduler()));
             //var gui = new BattleGUI(config, engine, battleState, playerId);
 
             engine.Run();
