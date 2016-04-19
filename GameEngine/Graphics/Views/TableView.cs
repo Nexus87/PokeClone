@@ -109,17 +109,6 @@ namespace GameEngine.Graphics.Views
             selectionModel.SelectionChanged += SelectionChangedHandler;
         }
 
-        void SubscribeToModelEvents(ITableModel<T> tableModel)
-        {
-            tableModel.DataChanged += DataChangedHandler;
-            tableModel.SizeChanged += SizeChangedHandler;
-        }
-
-        void SubscribeToSelectionEvents()
-        {
-            selectionModel.SelectionChanged += SelectionChangedHandler;
-        }
-
         void FillTableGrid()
         {
             for (int i = 0; i < Rows; i++)
