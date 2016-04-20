@@ -18,6 +18,7 @@
     <Compile Include="Graphics\Basic\AnimatedTextureBox.cs" />
     <Compile Include="Graphics\Basic\Container.cs" />
     <Compile Include="Graphics\Basic\IAnimation.cs" />
+    <Compile Include="Graphics\Basic\IGraphicalText.cs" />
     <Compile Include="Graphics\Basic\ITextGraphicComponent.cs" />
     <Compile Include="Graphics\Basic\Line.cs" />
     <Compile Include="Graphics\Basic\MultiLayeredComponent.cs" />

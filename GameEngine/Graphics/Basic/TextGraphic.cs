@@ -6,14 +6,14 @@ using System;
 
 namespace GameEngine.Graphics.Basic
 {
-    public class TextGraphic
+    public class TextGraphic : IGraphicalText
     {
-        private ISpriteFont font;
-        private bool needsUpdate;
-        private Vector2 position;
-        private float scale;
-        private string text = "";
-        private float textSize = 32.0f;
+        ISpriteFont font;
+        bool needsUpdate;
+        Vector2 position;
+        float scale;
+        string text = "";
+        float charHeight = 32.0f;
 
         public TextGraphic(ISpriteFont font)
         {
@@ -21,14 +21,14 @@ namespace GameEngine.Graphics.Basic
         }
 
         public string Text { get { return text; } set { text = value; Invalidate(); } }
-        public float TextSize
+        public float CharHeight
         {
-            get { return textSize; }
+            get { return charHeight; }
             set
             {
                 if (value.CompareTo(0) < 0)
                     throw new ArgumentException("TextSize must be >= 0");
-                textSize = value;
+                charHeight = value;
                 Invalidate();
             }
         }
@@ -43,7 +43,7 @@ namespace GameEngine.Graphics.Basic
                 return 0;
 
             var size = font.MeasureString(testText);
-            return textSize * size.X / size.Y;
+            return charHeight * size.X / size.Y;
         }
 
         public void Draw(ISpriteBatch batch)
@@ -63,19 +63,19 @@ namespace GameEngine.Graphics.Basic
             font.LoadContent();
         }
 
-        private void Invalidate()
+        void Invalidate()
         {
             needsUpdate = true;
         }
 
-        private void Update()
+        void Update()
         {
             if (font == null)
                 return;
 
             var size = font.MeasureString(" ");
 
-            scale = textSize / size.Y;
+            scale = charHeight / size.Y;
             needsUpdate = false;
         }
 

@@ -46,7 +46,7 @@ namespace GameEngineTest.Graphics.Basic
         [TestCaseSource("InvalidData")]
         public void InvalidDataTest(float textHeight)
         {
-            Assert.Throws<ArgumentException>(() => testObj.TextSize = textHeight);
+            Assert.Throws<ArgumentException>(() => testObj.CharHeight = textHeight);
         }
 
         [TestCaseSource("ValidPropertyData")]
@@ -65,8 +65,8 @@ namespace GameEngineTest.Graphics.Basic
             testObj.YPosition = Y;
             Assert.AreEqual(Y, testObj.YPosition);
 
-            testObj.TextSize = testSize;
-            Assert.AreEqual(testSize, testObj.TextSize);
+            testObj.CharHeight = testSize;
+            Assert.AreEqual(testSize, testObj.CharHeight);
 
             Assert.AreEqual(testSize * testText.Length, testObj.TextWidth);
         }
@@ -79,7 +79,7 @@ namespace GameEngineTest.Graphics.Basic
       
             testObj.XPosition = X;
             testObj.YPosition = Y;
-            testObj.TextSize = TextHeight;
+            testObj.CharHeight = TextHeight;
 
             Assert.AreEqual(TextWidth, testObj.CalculateTextLength(Text));
 

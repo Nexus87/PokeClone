@@ -9,16 +9,20 @@ namespace GameEngine.Graphics.Basic
     public class TextBox : AbstractGraphicComponent, ITextGraphicComponent
     {
         private string text = "";
-        private readonly TextGraphic textGraphic;
+        private readonly IGraphicalText textGraphic;
         private float preferedTextSize;
 
         public TextBox(PokeEngine game) : this(game.DefaultFont, game) { }
 
         public TextBox(ISpriteFont font, PokeEngine game)
-            : base(game)
+            : this(new TextGraphic(font), game)
+        { }
+
+        public TextBox(IGraphicalText textGraphic, PokeEngine game) :
+            base (game)
         {
-            textGraphic = new TextGraphic(font);
-            preferedTextSize = textGraphic.TextSize;
+            this.textGraphic = textGraphic;
+            preferedTextSize = textGraphic.CharHeight;
         }
 
         public float PreferedTextHeight
@@ -42,7 +46,7 @@ namespace GameEngine.Graphics.Basic
         
         public int DisplayableChars()
         {
-            textGraphic.TextSize = RealTextHeight;
+            textGraphic.CharHeight = RealTextHeight;
             float charWidth = textGraphic.GetSingleCharWidth();
             if (charWidth.CompareTo(0) == 0)
                 return 0;
@@ -65,7 +69,7 @@ namespace GameEngine.Graphics.Basic
         {
             textGraphic.XPosition = XPosition;
             textGraphic.YPosition = YPosition;
-            textGraphic.TextSize = RealTextHeight;
+            textGraphic.CharHeight = RealTextHeight;
 
             float length = textGraphic.CalculateTextLength(" ");
             if (length.CompareTo(0) == 0)
