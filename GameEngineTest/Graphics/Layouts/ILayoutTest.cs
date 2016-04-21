@@ -35,7 +35,7 @@ namespace GameEngineTest.Graphics.Layouts
         };
 
         [TestCaseSource(typeof(ILayoutTest), "ValidData")]
-        public void DrawInConstraintsTest(float X, float Y, float Width, float Height)
+        public void LayoutContainer_SetupContainer_ComponentsAreInContainersContraints(float X, float Y, float Width, float Height)
         {
             var testLayout = CreateLayout();
             var testContainer = new Container(engineMock.Object);
@@ -92,7 +92,7 @@ namespace GameEngineTest.Graphics.Layouts
         }
 
         [TestCase]
-        public void NullContainerTest()
+        public void LayoutContainer_NullAsArgument_ThrowsArgumentNullException()
         {
             var testLayout = CreateLayout();
             Assert.Throws(typeof(ArgumentNullException), delegate { testLayout.LayoutContainer(null); });
