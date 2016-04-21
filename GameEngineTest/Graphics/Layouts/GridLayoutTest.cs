@@ -16,14 +16,9 @@ namespace GameEngineTest.Graphics.Layouts
     [TestFixture]
     public class GridLayoutTest : ILayoutTest
     {
-        GridLayout layout;
-
-        [SetUp]
-        public void Setup()
+        protected override ILayout CreateLayout()
         {
-            layout = new GridLayout(2, 2);
-
-            testLayout = layout;
+            return new GridLayout(2, 2);
         }
 
 

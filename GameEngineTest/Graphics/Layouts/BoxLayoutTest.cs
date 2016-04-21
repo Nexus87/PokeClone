@@ -15,18 +15,10 @@ namespace GameEngineTest.Graphics.Layouts
     [TestFixture]
     public class VBoxLayoutTest : ILayoutTest
     {
-        VBoxLayout layout;
-
-        [SetUp]
-        public void Setup()
-        {            
-            layout = new VBoxLayout();
-            testLayout = layout;
-        }
-
         [TestCase(4, 0, 0, 200, 200)]
         public void PositionTest(int cnt, float x, float y, float width, float height)
         {
+            var layout = new VBoxLayout();
             var container = new Container(engineMock.Object);
             var components = container.SetupContainer(cnt);
             layout.SetMargin();
@@ -43,24 +35,22 @@ namespace GameEngineTest.Graphics.Layouts
                 Assert.AreEqual(height / cnt, comp.Height);
             }
         }
+
+        protected override ILayout CreateLayout()
+        {
+            return new VBoxLayout();
+        }
     }
 
     [TestFixture]
     public class HBoxLayoutTest : ILayoutTest
     {
-        HBoxLayout layout;
 
-        [SetUp]
-        public void Setup()
-        {
-
-            layout = new HBoxLayout();
-            testLayout = layout;
-        }
 
         [TestCase(4, 0, 0, 200, 200)]
         public void PositionTest(int cnt, float x, float y, float width, float height)
         {
+            var layout = new HBoxLayout();
             var container = new Container(engineMock.Object);
             var components = container.SetupContainer(cnt);
             layout.SetMargin();
@@ -77,6 +67,11 @@ namespace GameEngineTest.Graphics.Layouts
                 Assert.AreEqual(width / cnt, comp.Width);
                 Assert.AreEqual(height, comp.Height);
             }
+        }
+
+        protected override ILayout CreateLayout()
+        {
+            return new HBoxLayout();
         }
     }
 }

@@ -19,7 +19,7 @@ namespace GameEngineTest.Graphics.Layouts
 {
     public abstract class ILayoutTest
     {
-        public ILayout testLayout;
+        protected abstract ILayout CreateLayout();
 
         public Mock<PokeEngine> engineMock = new Mock<PokeEngine>();
 
@@ -37,6 +37,7 @@ namespace GameEngineTest.Graphics.Layouts
         [TestCaseSource(typeof(ILayoutTest), "ValidData")]
         public void DrawInConstraintsTest(float X, float Y, float Width, float Height)
         {
+            var testLayout = CreateLayout();
             var testContainer = new Container(engineMock.Object);
             var components = testContainer.SetupContainer(10);
             testContainer.SetCoordinates(X, Y, Width, Height);
@@ -50,6 +51,7 @@ namespace GameEngineTest.Graphics.Layouts
         [TestCaseSource(typeof(ILayoutTest), "ValidData")]
         public void MarginTest(float X, float Y, float Width, float Height)
         {
+            var testLayout = CreateLayout();
             int Margin = 10;
             var testContainer = new Container(engineMock.Object);
             var components = testContainer.SetupContainer(10);
@@ -92,6 +94,7 @@ namespace GameEngineTest.Graphics.Layouts
         [TestCase]
         public void NullContainerTest()
         {
+            var testLayout = CreateLayout();
             Assert.Throws(typeof(ArgumentNullException), delegate { testLayout.LayoutContainer(null); });
         }
 
@@ -99,6 +102,7 @@ namespace GameEngineTest.Graphics.Layouts
         [TestCase]
         public void TooLargeMarginTest()
         {
+            var testLayout = CreateLayout();
             var testContainer = new Container(engineMock.Object);
             var components = testContainer.SetupContainer(10);
 

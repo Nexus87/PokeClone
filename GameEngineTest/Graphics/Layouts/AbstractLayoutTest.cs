@@ -43,13 +43,16 @@ namespace GameEngineTest.Graphics.Layouts
     [TestFixture]
     public class AbstractLayoutTest : ILayoutTest
     {
-        public Mock<AbstractLayout> layoutMock;
-        [SetUp]
-        public void Setup()
+        private Mock<AbstractLayout> CreateLayoutMock()
         {
-            layoutMock = new Mock<AbstractLayout>();
+            var layoutMock = new Mock<AbstractLayout>();
             layoutMock.CallBase = true;
-            testLayout = layoutMock.Object;
+
+            return layoutMock;
+        }
+        protected override ILayout CreateLayout()
+        {
+            return CreateLayoutMock().Object;
         }
 
         public static List<TestCaseData> ValidPropertyData = new List<TestCaseData>
@@ -103,8 +106,12 @@ namespace GameEngineTest.Graphics.Layouts
         public void UpdateCalledTest()
         {
             var container = new Container(engineMock.Object);
+            var layoutMock = CreateLayoutMock();
+            var testLayout = layoutMock.Object;
+
             container.SetCoordinates(200, 200, 200, 200);
             testLayout.LayoutContainer(container);
+            
             layoutMock.Protected().Verify("UpdateComponents", Times.Once(), container);
         }
     }
