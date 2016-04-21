@@ -19,7 +19,7 @@ namespace GameEngineTest.Graphics.Basic
     {
 
         [TestCase]
-        public void EmptyImageTest()
+        public void Draw_NoImage_NothingIsDrawn()
         {
             var testObj = CreateEmptyBox();
             var spriteBatch = new SpriteBatchMock();
@@ -33,6 +33,7 @@ namespace GameEngineTest.Graphics.Basic
         {
             return new TextureBox(gameMock.Object);
         }
+
         protected override IGraphicComponent CreateComponent()
         {
             var box = CreateEmptyBox();
