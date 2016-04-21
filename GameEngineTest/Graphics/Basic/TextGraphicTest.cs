@@ -17,18 +17,15 @@ namespace GameEngineTest.Graphics.Basic
     [TestFixture]
     public class TextGraphicTest
     {
-        TextGraphic testObj;
         
-        [SetUp]
-        public void Setup()
+        TextGraphic CreateTextGraphic(float charHeight = 16.0f)
         {
             var spriteFontMock = new Mock<ISpriteFont>();
-            var serviceMock = new Mock<IServiceProvider>();
-            var contentMock = new Mock<ContentManager>(serviceMock.Object);
-            testObj = new TextGraphic(spriteFontMock.Object);
+            var testObj = new TextGraphic(spriteFontMock.Object);
 
-            spriteFontMock.Setup(o => o.MeasureString(It.IsAny<string>())).Returns<string>(s => new Vector2(16.0f * s.Length, 16.0f));
-            testObj.Setup();
+            spriteFontMock.Setup(o => o.MeasureString(It.IsAny<string>())).Returns<string>(s => new Vector2(charHeight * s.Length, charHeight));
+
+            return testObj;
         }
 
         public static List<TestCaseData> InvalidData = new List<TestCaseData>{
@@ -44,52 +41,24 @@ namespace GameEngineTest.Graphics.Basic
         };
 
         [TestCaseSource("InvalidData")]
-        public void InvalidDataTest(float textHeight)
+        public void SetCharHeight_InvalidData_ThrowsArgumentException(float textHeight)
         {
+            var testObj = CreateTextGraphic();
             Assert.Throws<ArgumentException>(() => testObj.CharHeight = textHeight);
         }
 
-        [TestCaseSource("ValidPropertyData")]
-        public void PropertiesTest(string testText, float testSize, float X, float Y)
+        [TestCase("12345", 16.0f, 5*16.0f)]
+        [TestCase(null, 16.0f, 0)]
+        [TestCase("", 16.0f, 0)]
+        [TestCase("1", 16.0f, 16.0f)]
+        public void CalcualteTextLength_ValidString_ReturnsExpectedSize(string text, float textHeight, float expectedWidth)
         {
+            var testObj = CreateTextGraphic();
+            testObj.CharHeight = textHeight;
 
-            Assert.AreEqual("", testObj.Text);
-            Assert.AreEqual(0, testObj.TextWidth);
-
-            testObj.Text = testText;
-            Assert.AreEqual(testText, testObj.Text);
+            var returnedLength = testObj.CalculateTextLength(text);
+            Assert.AreEqual(expectedWidth, returnedLength);
             
-            testObj.XPosition = X;
-            Assert.AreEqual(X, testObj.XPosition);
-
-            testObj.YPosition = Y;
-            Assert.AreEqual(Y, testObj.YPosition);
-
-            testObj.CharHeight = testSize;
-            Assert.AreEqual(testSize, testObj.CharHeight);
-
-            Assert.AreEqual(testSize * testText.Length, testObj.TextWidth);
-        }
-
-        [TestCaseSource("ValidPropertyData")]
-        public void SizePredictionTest(string Text, float TextHeight, float X, float Y)
-        {
-            var spriteMock = new SpriteBatchMock();
-            float TextWidth = TextHeight * Text.Length;
-      
-            testObj.XPosition = X;
-            testObj.YPosition = Y;
-            testObj.CharHeight = TextHeight;
-
-            Assert.AreEqual(TextWidth, testObj.CalculateTextLength(Text));
-
-            testObj.Text = Text;
-            Assert.AreEqual(TextWidth, testObj.TextWidth);
-            
-            testObj.Draw(spriteMock);
-
-            foreach (var obj in spriteMock.DrawnObjects)
-                obj.IsInConstraints(X, Y, TextWidth, TextHeight);
 
         }
     }

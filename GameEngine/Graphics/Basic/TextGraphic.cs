@@ -42,6 +42,9 @@ namespace GameEngine.Graphics.Basic
             if (font == null)
                 return 0;
 
+            if (testText == null)
+                return 0;
+   
             var size = font.MeasureString(testText);
             return charHeight * size.X / size.Y;
         }
