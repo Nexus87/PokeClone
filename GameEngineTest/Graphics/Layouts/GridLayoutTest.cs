@@ -52,7 +52,7 @@ namespace GameEngineTest.Graphics.Layouts
         [TestCaseSource("PositionData")]
         public void LayoutContainer_SetRowsColumnsInConstructor_ExpectedNumberOfRowsAndColumns(int componentCnt, int gridRows, int gridColumns, int realRows, int realColumns)
         {
-            var container = CreateContainer();
+            var container = CreateDefaultContainer();
             var layout = new GridLayout(gridRows, gridColumns);
             var components = container.SetupContainer(componentCnt);
 
@@ -68,7 +68,7 @@ namespace GameEngineTest.Graphics.Layouts
         [TestCaseSource("PositionData")]
         public void LayoutContainer_SetRowsColumnsProperty_ExpectedNumberOfRowsAndColumns(int componentCnt, int gridRows, int gridColumns, int realRows, int realColumns)
         {
-            var container = CreateContainer();
+            var container = CreateDefaultContainer();
             var layout = new GridLayout(1, 1);
             var components = container.SetupContainer(componentCnt);
             
@@ -98,7 +98,7 @@ namespace GameEngineTest.Graphics.Layouts
         [TestCaseSource("PositionData")]
         public void LayoutContainer_NormalSetup_ComponentsAreCorrectOrdered(int componentCnt, int gridRows, int gridColumns, int realRows, int realColumns)
         {
-            var container = CreateContainer();
+            var container = CreateDefaultContainer();
             var layout = new GridLayout(gridRows, gridColumns);
 
             float X = container.XPosition;
@@ -134,12 +134,9 @@ namespace GameEngineTest.Graphics.Layouts
             return index % columns;
         }
 
-        private Container CreateContainer()
+        private Container CreateDefaultContainer()
         {
-            var container = new Container(engineMock.Object);
-            container.SetCoordinates(5.0f, 5.0f, 500.0f, 500.0f);
-
-            return container;
+            return CreateContainer(5.0f, 5.0f, 500.0f, 500.0f);
         }
     }
 }

@@ -16,13 +16,12 @@ namespace GameEngineTest.Graphics.Layouts
     public class VBoxLayoutTest : ILayoutTest
     {
         [TestCase(4, 0, 0, 200, 200)]
-        public void PositionTest(int cnt, float x, float y, float width, float height)
+        public void LayoutContainer_NormalSetup_ComponentsInRightOrder(int cnt, float x, float y, float width, float height)
         {
             var layout = new VBoxLayout();
-            var container = new Container(engineMock.Object);
+            var container = CreateContainer(x, y, width, height);
             var components = container.SetupContainer(cnt);
-            layout.SetMargin();
-            container.SetCoordinates(x, y, width, height);
+            float componentHeight = height / cnt;
 
             layout.LayoutContainer(container);
             
@@ -30,9 +29,9 @@ namespace GameEngineTest.Graphics.Layouts
             {
                 var comp = components[i];
                 Assert.AreEqual(x, comp.XPosition);
-                Assert.AreEqual((height / cnt) * i, comp.YPosition);
+                Assert.AreEqual(componentHeight * i, comp.YPosition);
                 Assert.AreEqual(width, comp.Width);
-                Assert.AreEqual(height / cnt, comp.Height);
+                Assert.AreEqual(componentHeight, comp.Height);
             }
         }
 
@@ -48,23 +47,21 @@ namespace GameEngineTest.Graphics.Layouts
 
 
         [TestCase(4, 0, 0, 200, 200)]
-        public void PositionTest(int cnt, float x, float y, float width, float height)
+        public void LayoutContainer_NormalSetup_ComponentsInRightOrder(int cnt, float x, float y, float width, float height)
         {
             var layout = new HBoxLayout();
-            var container = new Container(engineMock.Object);
+            var container = CreateContainer(x, y, width, height);
             var components = container.SetupContainer(cnt);
-            layout.SetMargin();
-            container.SetCoordinates(x, y, width, height);
+            float componentWidth = width / cnt;
 
             layout.LayoutContainer(container);
-
 
             for (int i = 0; i < components.Count; i++)
             {
                 var comp = components[i];
-                Assert.AreEqual((width / cnt) * i, comp.XPosition);
+                Assert.AreEqual(componentWidth * i, comp.XPosition);
                 Assert.AreEqual(y, comp.YPosition);
-                Assert.AreEqual(width / cnt, comp.Width);
+                Assert.AreEqual(componentWidth, comp.Width);
                 Assert.AreEqual(height, comp.Height);
             }
         }

@@ -1,6 +1,7 @@
 ﻿using GameEngine.Graphics;
 using GameEngine.Graphics.Basic;
 using GameEngine.Graphics.Layouts;
+using GameEngine.Utils;
 using Moq;
 using NUnit.Framework;
 using System;
@@ -17,20 +18,30 @@ namespace GameEngineTest.Graphics.Layouts
     public class SingleComponentLayoutTest : ILayoutTest
     {
         [TestCase]
-        public void MultipleComponentsTest()
+        public void LayoutContainer_ContainerWithMultipleComponents_FirstIsLayouted()
         {
             var layout = CreateLayout();
-            var testContainer = new Container(engineMock.Object);
+            var testContainer = CreateContainer(10.0f, 10.0f, 50.0f, 50.0f);
             var components = testContainer.SetupContainer(10);
-            testContainer.SetCoordinates(10.0f, 10.0f, 50.0f, 50.0f);
 
             layout.LayoutContainer(testContainer);
 
-            var Objects = from obj in components where obj.Width.CompareTo(0) != 0 && obj.Height.CompareTo(0) != 0 select obj;
-            Assert.AreEqual(1, Objects.Count());
-            Objects.First().IsInConstraints(testContainer);
+            var firstComponent = components.First();
+            firstComponent.IsInConstraints(testContainer);
         }
 
+        [TestCase]
+        public void LayoutContainer_ContainerWithMultipleComponents_OtherComponentsAreSizedZero()
+        {
+            var layout = CreateLayout();
+            var testContainer = CreateContainer(10.0f, 10.0f, 50.0f, 50.0f);
+            var components = testContainer.SetupContainer(10);
+
+            layout.LayoutContainer(testContainer);
+
+            for (int i = 1; i < components.Count; i++)
+                Assert.IsTrue(components[i].Width.AlmostEqual(0) || components[i].Height.AlmostEqual(0));
+        }
         protected override ILayout CreateLayout()
         {
             return new SingleComponentLayout();

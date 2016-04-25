@@ -21,6 +21,14 @@ namespace GameEngineTest.Graphics.Layouts
     {
         protected abstract ILayout CreateLayout();
 
+        protected Container CreateContainer(float x = 0, float y = 0, float width = 0, float height = 0)
+        {
+            var container = new Container(engineMock.Object);
+            container.SetCoordinates(x, y, width, height);
+
+            return container;
+        }
+
         public Mock<PokeEngine> engineMock = new Mock<PokeEngine>();
 
         public static List<TestCaseData> ValidData = new List<TestCaseData>
@@ -38,9 +46,8 @@ namespace GameEngineTest.Graphics.Layouts
         public void LayoutContainer_SetupContainer_ComponentsAreInContainersContraints(float X, float Y, float Width, float Height)
         {
             var testLayout = CreateLayout();
-            var testContainer = new Container(engineMock.Object);
+            var testContainer = CreateContainer(X, Y, Width, Height);
             var components = testContainer.SetupContainer(10);
-            testContainer.SetCoordinates(X, Y, Width, Height);
 
             testLayout.LayoutContainer(testContainer);
 
@@ -53,9 +60,8 @@ namespace GameEngineTest.Graphics.Layouts
         {
             var testLayout = CreateLayout();
             int Margin = 10;
-            var testContainer = new Container(engineMock.Object);
+            var testContainer = CreateContainer(X, Y, Width, Height);
             var components = testContainer.SetupContainer(10);
-            testContainer.SetCoordinates(X, Y, Width, Height);
 
             testLayout.SetMargin(left: Margin);
             testLayout.LayoutContainer(testContainer);
@@ -68,9 +74,8 @@ namespace GameEngineTest.Graphics.Layouts
         {
             var testLayout = CreateLayout();
             int Margin = 10;
-            var testContainer = new Container(engineMock.Object);
+            var testContainer = CreateContainer(X, Y, Width, Height);
             var components = testContainer.SetupContainer(10);
-            testContainer.SetCoordinates(X, Y, Width, Height);
 
             testLayout.SetMargin(right: Margin);
             testLayout.LayoutContainer(testContainer);
@@ -83,9 +88,8 @@ namespace GameEngineTest.Graphics.Layouts
         {
             var testLayout = CreateLayout();
             int Margin = 10;
-            var testContainer = new Container(engineMock.Object);
-            var components = testContainer.SetupContainer(10);
-            testContainer.SetCoordinates(X, Y, Width, Height);
+            var testContainer = CreateContainer(X, Y, Width, Height);
+            var components = testContainer.SetupContainer(10);       
 
             testLayout.SetMargin(top: Margin);
             testLayout.LayoutContainer(testContainer);
@@ -99,9 +103,8 @@ namespace GameEngineTest.Graphics.Layouts
         {
             var testLayout = CreateLayout();
             int Margin = 10;
-            var testContainer = new Container(engineMock.Object);
+            var testContainer = CreateContainer(X, Y, Width, Height);
             var components = testContainer.SetupContainer(10);
-            testContainer.SetCoordinates(X, Y, Width, Height);
 
             testLayout.SetMargin(bottom: Margin);
             testLayout.LayoutContainer(testContainer);
@@ -115,9 +118,8 @@ namespace GameEngineTest.Graphics.Layouts
         {
             var testLayout = CreateLayout();
             int Margin = 10;
-            var testContainer = new Container(engineMock.Object);
+            var testContainer = CreateContainer(X, Y, Width, Height);
             var components = testContainer.SetupContainer(10);
-            testContainer.SetCoordinates(X, Y, Width, Height);
 
             testLayout.SetMargin(Margin, Margin, Margin, Margin); 
             testLayout.LayoutContainer(testContainer);
@@ -139,9 +141,8 @@ namespace GameEngineTest.Graphics.Layouts
         public void LayoutContainer_SetLeftMarginTooLarge_ComponentsHaveSizeZero(float width, float height, int margin)
         {
             var testLayout = CreateLayout();
-            var testContainer = new Container(engineMock.Object);
-            var components = testContainer.SetupContainer(10, 30.0f);
-            testContainer.SetCoordinates(0, 0, width, height);
+            var testContainer = CreateContainer(0, 0, width, height);
+            var components = testContainer.SetupContainer(10);
             testLayout.SetMargin(left: margin);
 
             testLayout.LayoutContainer(testContainer);
@@ -155,9 +156,8 @@ namespace GameEngineTest.Graphics.Layouts
         public void LayoutContainer_SetRightMarginTooLarge_ComponentsHaveSizeZero(float width, float height, int margin)
         {
             var testLayout = CreateLayout();
-            var testContainer = new Container(engineMock.Object);
-            var components = testContainer.SetupContainer(10, 30.0f);
-            testContainer.SetCoordinates(0, 0, width, height);
+            var testContainer = CreateContainer(0, 0, width, height);
+            var components = testContainer.SetupContainer(10);
             testLayout.SetMargin(right: margin);
 
             testLayout.LayoutContainer(testContainer);
@@ -171,9 +171,8 @@ namespace GameEngineTest.Graphics.Layouts
         public void LayoutContainer_SetTopMarginTooLarge_ComponentsHaveSizeZero(float width, float height, int margin)
         {
             var testLayout = CreateLayout();
-            var testContainer = new Container(engineMock.Object);
-            var components = testContainer.SetupContainer(10, 30.0f);
-            testContainer.SetCoordinates(0, 0, width, height);
+            var testContainer = CreateContainer(0, 0, width, height);
+            var components = testContainer.SetupContainer(10);
             testLayout.SetMargin(top: margin);
 
             testLayout.LayoutContainer(testContainer);
@@ -187,8 +186,8 @@ namespace GameEngineTest.Graphics.Layouts
         public void LayoutContainer_SetBottomMarginTooLarge_ComponentsHaveSizeZero(float width, float height, int margin)
         {
             var testLayout = CreateLayout();
-            var testContainer = new Container(engineMock.Object);
-            var components = testContainer.SetupContainer(10, 30.0f);
+            var testContainer = CreateContainer(0, 0, width, height);
+            var components = testContainer.SetupContainer(10);
             testContainer.SetCoordinates(0, 0, width, height);
             testLayout.SetMargin(bottom: margin);
 
@@ -203,9 +202,8 @@ namespace GameEngineTest.Graphics.Layouts
         public void LayoutContainer_SetAllMarginsTooLarge_ComponentsHaveSizeZero(float width, float height, int margin)
         {
             var testLayout = CreateLayout();
-            var testContainer = new Container(engineMock.Object);
-            var components = testContainer.SetupContainer(10, 30.0f);
-            testContainer.SetCoordinates(0, 0, width, height);
+            var testContainer = CreateContainer(0, 0, width, height);
+            var components = testContainer.SetupContainer(10);
             testLayout.SetMargin(margin, margin, margin, margin);
 
             testLayout.LayoutContainer(testContainer);
