@@ -213,5 +213,14 @@ namespace GameEngineTest.Graphics.Layouts
             foreach (var c in testContainer.Components)
                 Assert.IsTrue(c.Width.CompareTo(0) == 0 || c.Height.CompareTo(0) == 0);
         }
+
+        [TestCase]
+        public void LayoutContainer_EmptyContainer_DoesNotThrow()
+        {
+            var testLayout = CreateLayout();
+            var testContainer = new Container(engineMock.Object);
+
+            Assert.DoesNotThrow(() => testLayout.LayoutContainer(testContainer));
+        }
     }
 }
