@@ -23,71 +23,82 @@ namespace GameEngineTest.EventComponent
         }
 
 
-        [TestCase]
-        public void OrderTest()
+        private class TestEvent : IEvent
         {
-            var eventMock1 = new Mock<IEvent>();
-            var eventMock2 = new Mock<IEvent>();
-            var eventMock3 = new Mock<IEvent>();
+            public bool DispatchCalled = false;
+            public Action Callback = null;
+            public event EventHandler OnEventProcessed = delegate { };
 
-            eventMock1.Setup(o => o.Dispatch()).Callback(delegate { eventMock1.Raise(o => o.OnEventProcessed += null, eventMock1.Object, null); });
-            eventMock2.Setup(o => o.Dispatch()).Callback(delegate { eventMock2.Raise(o => o.OnEventProcessed += null, eventMock2.Object, null); });
-            eventMock3.Setup(o => o.Dispatch()).Callback(delegate { eventMock3.Raise(o => o.OnEventProcessed += null, eventMock3.Object, null); });
+            public void Dispatch()
+            {
+                if (Callback != null)
+                    Callback();
 
-            eventComponent.AddEvent(eventMock1.Object);
-            eventComponent.AddEvent(eventMock2.Object);
-            eventComponent.AddEvent(eventMock3.Object);
-
-            eventComponent.Update(new GameTime());
-
-            eventMock1.Verify(o => o.Dispatch(), Times.Once);
-            eventMock2.Verify(o => o.Dispatch(), Times.Never);
-            eventMock3.Verify(o => o.Dispatch(), Times.Never);
-
-            eventComponent.Update(new GameTime());
-
-            eventMock1.Verify(o => o.Dispatch(), Times.Once);
-            eventMock2.Verify(o => o.Dispatch(), Times.Once);
-            eventMock3.Verify(o => o.Dispatch(), Times.Never);
-
-            eventComponent.Update(new GameTime());
-
-            eventMock1.Verify(o => o.Dispatch(), Times.Once);
-            eventMock2.Verify(o => o.Dispatch(), Times.Once);
-            eventMock3.Verify(o => o.Dispatch(), Times.Once);
-
-            eventComponent.Update(new GameTime());
-
-            eventMock1.Verify(o => o.Dispatch(), Times.Once);
-            eventMock2.Verify(o => o.Dispatch(), Times.Once);
-            eventMock3.Verify(o => o.Dispatch(), Times.Once);
+                OnEventProcessed(this, EventArgs.Empty);
+                DispatchCalled = true;
+            }
         }
 
         [TestCase]
-        public void BlockingTest()
+        public void Update_WithThreeEvent_IsDispatchedInFIFOOrder()
+        {
+            int counter = 0;
+            int event1Number = 0;
+            int event2Number = 0;
+            int event3Number = 0;
+
+            var eventMock1 = new TestEvent();
+            var eventMock2 = new TestEvent();
+            var eventMock3 = new TestEvent();
+
+            eventMock1.Callback = () => { event1Number = counter; counter++; };
+            eventMock2.Callback = () => { event2Number = counter; counter++; };
+            eventMock3.Callback = () => { event3Number = counter; counter++; };
+
+            eventComponent.AddEvent(eventMock1);
+            eventComponent.AddEvent(eventMock2);
+            eventComponent.AddEvent(eventMock3);
+
+            while (UndispatchedEventsLeft(eventMock1, eventMock2, eventMock3))
+                eventComponent.Update(new GameTime());
+
+            Assert.AreEqual(0, event1Number);
+            Assert.AreEqual(1, event2Number);
+            Assert.AreEqual(2, event3Number);
+        }
+
+        private bool UndispatchedEventsLeft(params TestEvent[] events)
+        {
+            bool areAllEventsDispatched = true;
+            foreach (var ev in events)
+                areAllEventsDispatched &= ev.DispatchCalled;
+
+            return !areAllEventsDispatched;
+        }
+
+        [TestCase]
+        public void Update_AppendTwoEvents_BlocksUntilFirstEventIsDone()
         {
             var eventMock1 = new Mock<IEvent>();
-            var eventMock2 = new Mock<IEvent>();
+            var eventMock2 = new TestEvent();
 
             eventComponent.AddEvent(eventMock1.Object);
-            eventComponent.AddEvent(eventMock2.Object);
+            eventComponent.AddEvent(eventMock2);
 
             eventComponent.Update(new GameTime());
 
             eventMock1.Verify(o => o.Dispatch(), Times.Once);
-            eventMock2.Verify(o => o.Dispatch(), Times.Never);
+            Assert.False(eventMock2.DispatchCalled);
 
             eventComponent.Update(new GameTime());
 
-            eventMock1.Verify(o => o.Dispatch(), Times.Once);
-            eventMock2.Verify(o => o.Dispatch(), Times.Never);
+            Assert.False(eventMock2.DispatchCalled);
 
             eventMock1.Raise(o => o.OnEventProcessed += null, eventMock1.Object, null);
 
             eventComponent.Update(new GameTime());
 
-            eventMock1.Verify(o => o.Dispatch(), Times.Once);
-            eventMock2.Verify(o => o.Dispatch(), Times.Once);
+            Assert.True(eventMock2.DispatchCalled);
 
         }
     }
