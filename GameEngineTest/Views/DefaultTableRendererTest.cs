@@ -34,7 +34,7 @@ namespace GameEngineTest.Views
         };
 
         [TestCaseSource("TestData")]
-        public void DataTest(TestType data, string expectedString)
+        public void GetComponent_WithSpecificData_StringIsGivenToComponent(TestType data, string expectedString)
         {
             var renderer = CreateTestRenderer();
             var component = renderer.GetComponent(0, 0, data, false);
@@ -52,7 +52,7 @@ namespace GameEngineTest.Views
         };
 
         [TestCaseSource("ValidIndices")]
-        public void GetComponentTest(int row, int column)
+        public void GetComponent_SomeIndex_NeverNull(int row, int column)
         {
             var renderer = CreateTestRenderer();
             var data = new TestType("test");

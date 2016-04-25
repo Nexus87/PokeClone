@@ -14,8 +14,9 @@ namespace GameEngineTest.Views
         private TestType data = new TestType("test");
 
         protected abstract ITableRenderer<TestType> CreateRenderer();
+
         [TestCase]
-        public void DefaultDataTest()
+        public void GetComponent_NullData_DoesNotThrow()
         {
             // Table renderer need to handle null as data
             var testRenderer = CreateRenderer();
@@ -24,20 +25,38 @@ namespace GameEngineTest.Views
             Assert.DoesNotThrow(delegate { testRenderer.GetComponent(0, 0, data, true); });
             Assert.DoesNotThrow(delegate { testRenderer.GetComponent(0, 0, data, false); });
 
+        }
+        [TestCase]
+        public void GetComponent_NullData_ReturnsNotNull()
+        {
+            var testRenderer = CreateRenderer();
+
+            data = null;
             Assert.NotNull(testRenderer.GetComponent(0, 0, data, true));
             Assert.NotNull(testRenderer.GetComponent(0, 0, data, false));
         }
 
         [TestCase]
-        public void IsSelectedTest()
+        public void GetComponent_SelectionIsTrue_IsSelected()
         {
             var testRenderer = CreateRenderer();
 
-            Assert.IsTrue(testRenderer.GetComponent(0, 0, data, true).IsSelected);
-            Assert.IsFalse(testRenderer.GetComponent(0, 0, data, false).IsSelected);
+            var component = testRenderer.GetComponent(0, 0, data, true);
+
+            Assert.IsTrue(component.IsSelected);
         }
 
-        public static List<TestCaseData> InvalidIndices = new List<TestCaseData>
+        [TestCase]
+        public void GetComponent_SelectionIsFalse_IsNotSelected()
+        {
+            var testRenderer = CreateRenderer();
+
+            var component = testRenderer.GetComponent(0, 0, data, false);
+
+            Assert.IsFalse(component.IsSelected);
+        }
+
+        public static List<TestCaseData> InvalidIndexes = new List<TestCaseData>
         {
             new TestCaseData(-1, 0),
             new TestCaseData(0, -1),
@@ -48,8 +67,8 @@ namespace GameEngineTest.Views
             new TestCaseData(-10, -10),
         };
 
-        [TestCaseSource(typeof(ITableRendererTest), "InvalidIndices")]
-        public void InvalidIndicesTest(int row, int column)
+        [TestCaseSource(typeof(ITableRendererTest), "InvalidIndexes")]
+        public void GetComponent_CallWithInvalidIndexes_ThrowsException(int row, int column)
         {
             var testRenderer = CreateRenderer();
 
