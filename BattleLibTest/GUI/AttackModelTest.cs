@@ -63,7 +63,7 @@ namespace BattleLibTest.GUI
     public class AttackModelTest
     {
         [TestCase]
-        public void DefaultSizeTest()
+        public void ColumnsRows_NoDataSet_1And4()
         {
             var model = AttackModelTestFactory.CreateEmptyModel();
 
@@ -75,15 +75,23 @@ namespace BattleLibTest.GUI
         [TestCase(2)]
         [TestCase(3)]
         [TestCase(4)]
-        public void CreationDataTest(int moves)
+        public void DataAt_SetSomeData_ReturnsSetData(int moves)
         {
             var model = AttackModelTestFactory.CreateModel(moves);
 
-            int i = 0;
-            for (; i < moves; i++)
+            for (int i = 0; i < moves; i++)
                 Assert.AreEqual(AttackModelTestFactory.GetMoveName(i), model.DataAt(i, 0).Name);
+        }
 
-            for (; i < 4; i++)
+        [TestCase(1)]
+        [TestCase(2)]
+        [TestCase(3)]
+        [TestCase(4)]
+        public void DataAt_SetSomeData_ReturnsNullForUnsetData(int moves)
+        {
+            var model = AttackModelTestFactory.CreateModel(moves);
+
+            for (int i = moves; i < 4; i++)
                 Assert.Null(model.DataAt(i, 0));
         }
 
@@ -91,11 +99,10 @@ namespace BattleLibTest.GUI
         [TestCase(3, 1)]
         [TestCase(4, 4)]
         [TestCase(2, 1)]
-        public void ChangePokemonDataTest(int oldMoves, int newMoves)
+        public void DataAt_ResetPokemon_MovesHaveChanged(int oldMoves, int newMoves)
         {
             var wrapper = AttackModelTestFactory.CreateWrapper();
             wrapper.Pokemon = AttackModelTestFactory.CreatePokemon(oldMoves);
-
             var model = AttackModelTestFactory.CreateModel(wrapper);
 
             wrapper.Pokemon = AttackModelTestFactory.CreatePokemon(newMoves);
@@ -112,38 +119,51 @@ namespace BattleLibTest.GUI
         [TestCase(3, 1)]
         [TestCase(4, 4)]
         [TestCase(2, 1)]
-        public void ChangePokemonRaiseEventTest(int oldMoves, int newMoves)
+        public void SizeChangedEvent_ResetPokemon_IsNotRaised(int oldMoves, int newMoves)
         {
             bool sizeChanged = false;
+            var wrapper = AttackModelTestFactory.CreateWrapper();
+            wrapper.Pokemon = AttackModelTestFactory.CreatePokemon(oldMoves);
+            var model = AttackModelTestFactory.CreateModel(wrapper);
+
+            model.SizeChanged += delegate { sizeChanged = true; };
+
+            wrapper.Pokemon = AttackModelTestFactory.CreatePokemon(newMoves);
+
+            Assert.False(sizeChanged);
+        }
+
+        [TestCase(1, 3)]
+        [TestCase(3, 1)]
+        [TestCase(4, 4)]
+        [TestCase(2, 1)]
+        public void DataChangedEvent_ResetPokemon_IsRaised(int oldMoves, int newMoves)
+        {
+            bool dataChanged = false;
             var wrapper = AttackModelTestFactory.CreateWrapper();
             wrapper.Pokemon = AttackModelTestFactory.CreatePokemon(oldMoves);
 
             var eventArgs = new List<DataChangedEventArgs<Move>>();
             var model = AttackModelTestFactory.CreateModel(wrapper);
 
-            model.DataChanged += (a, b) => eventArgs.Add(b);
-            model.SizeChanged += delegate { sizeChanged = true; };
+            model.DataChanged += (a, b) => dataChanged = true;
 
             wrapper.Pokemon = AttackModelTestFactory.CreatePokemon(newMoves);
 
-            Assert.False(sizeChanged);
-            Assert.LessOrEqual(Math.Max(oldMoves, newMoves), eventArgs.Count);
-
-            var ordered = eventArgs.OrderBy(o => o.Row);
-
-            int i = 0;
-            for (; i < newMoves; i++)
-                Assert.AreEqual(AttackModelTestFactory.GetMoveName(i), ordered.ElementAt(i).NewData.Name);
-
-            for (; i < ordered.Count(); i++)
-                Assert.Null(ordered.ElementAt(i).NewData);
+            Assert.True(dataChanged);
         }
 
         [TestCase]
-        public void ReadOnlyTableTest()
+        public void SetData_SomeValue_ThrowsExecption()
         {
             var model = AttackModelTestFactory.CreateModel(3);
             Assert.Throws<InvalidOperationException>(delegate { model.SetData(new Move(new MoveData()), 2, 0); });
+        }
+
+        [TestCase]
+        public void SetIndexer_SomeValue_ThrowsExecption()
+        {
+            var model = AttackModelTestFactory.CreateModel(3);
             Assert.Throws<InvalidOperationException>(delegate { model[2, 0] = new Move(new MoveData()); });
         }
 
@@ -151,10 +171,19 @@ namespace BattleLibTest.GUI
         [TestCase(-10)]
         [TestCase(4)]
         [TestCase(10)]
-        public void OutOfRangeGetDataTest(int idx)
+        public void DataAt_IndexOutOfBound_ThrowsExecption(int idx)
         {
             var model = AttackModelTestFactory.CreateModel(3);
             Assert.Throws<ArgumentOutOfRangeException>(delegate { model.DataAt(idx, 0); });
+        }
+
+        [TestCase(-1)]
+        [TestCase(-10)]
+        [TestCase(4)]
+        [TestCase(10)]
+        public void GetIndexer_IndexOutOfBound_ThrowsExecption(int idx)
+        {
+            var model = AttackModelTestFactory.CreateModel(3);
             Assert.Throws<ArgumentOutOfRangeException>(delegate { var d = model[idx, 0]; });
         }
     }
