@@ -49,7 +49,7 @@ namespace GameEngineTest.Graphics.Layouts
         }
 
         [TestCaseSource(typeof(ILayoutTest), "ValidData")]
-        public void MarginTest(float X, float Y, float Width, float Height)
+        public void LayoutContainer_SetLeftMargin_ComponentsInContainersConstraints(float X, float Y, float Width, float Height)
         {
             var testLayout = CreateLayout();
             int Margin = 10;
@@ -57,38 +57,73 @@ namespace GameEngineTest.Graphics.Layouts
             var components = testContainer.SetupContainer(10);
             testContainer.SetCoordinates(X, Y, Width, Height);
 
-            testLayout.LayoutContainer(testContainer);
-
             testLayout.SetMargin(left: Margin);
             testLayout.LayoutContainer(testContainer);
-
             foreach (var obj in components)
                 obj.IsInConstraints(X + Margin, Y, Width - Margin, Height);
+        }
+
+        [TestCaseSource(typeof(ILayoutTest), "ValidData")]
+        public void LayoutContainer_SetRightMargin_ComponentsInContainersConstraints(float X, float Y, float Width, float Height)
+        {
+            var testLayout = CreateLayout();
+            int Margin = 10;
+            var testContainer = new Container(engineMock.Object);
+            var components = testContainer.SetupContainer(10);
+            testContainer.SetCoordinates(X, Y, Width, Height);
 
             testLayout.SetMargin(right: Margin);
             testLayout.LayoutContainer(testContainer);
-
             foreach (var obj in components)
                 obj.IsInConstraints(X, Y, Width - Margin, Height);
+        }
+
+        [TestCaseSource(typeof(ILayoutTest), "ValidData")]
+        public void LayoutContainer_SetTopMargin_ComponentsInContainersConstraints(float X, float Y, float Width, float Height)
+        {
+            var testLayout = CreateLayout();
+            int Margin = 10;
+            var testContainer = new Container(engineMock.Object);
+            var components = testContainer.SetupContainer(10);
+            testContainer.SetCoordinates(X, Y, Width, Height);
 
             testLayout.SetMargin(top: Margin);
             testLayout.LayoutContainer(testContainer);
 
             foreach (var obj in components)
                 obj.IsInConstraints(X, Y + Margin, Width, Height - Margin);
+        }
+        
+        [TestCaseSource(typeof(ILayoutTest), "ValidData")]
+        public void LayoutContainer_SetBottomMargin_ComponentsInContainersConstraints(float X, float Y, float Width, float Height)
+        {
+            var testLayout = CreateLayout();
+            int Margin = 10;
+            var testContainer = new Container(engineMock.Object);
+            var components = testContainer.SetupContainer(10);
+            testContainer.SetCoordinates(X, Y, Width, Height);
 
             testLayout.SetMargin(bottom: Margin);
             testLayout.LayoutContainer(testContainer);
 
             foreach (var obj in components)
                 obj.IsInConstraints(X, Y, Width, Height - Margin);
+        }
+
+        [TestCaseSource(typeof(ILayoutTest), "ValidData")]
+        public void LayoutContainer_SetAllMargins_ComponentsInContainersConstraints(float X, float Y, float Width, float Height)
+        {
+            var testLayout = CreateLayout();
+            int Margin = 10;
+            var testContainer = new Container(engineMock.Object);
+            var components = testContainer.SetupContainer(10);
+            testContainer.SetCoordinates(X, Y, Width, Height);
 
             testLayout.SetMargin(Margin, Margin, Margin, Margin); 
             testLayout.LayoutContainer(testContainer);
 
             foreach (var obj in components)
                 obj.IsInConstraints(X + Margin, Y + Margin, Width - 2*Margin, Height - 2*Margin);
-
         }
 
         [TestCase]
@@ -99,41 +134,80 @@ namespace GameEngineTest.Graphics.Layouts
         }
 
 
-        [TestCase]
-        public void TooLargeMarginTest()
+        [TestCase(10.0f, 10.0f, 10)]
+        [TestCase(10.0f, 10.0f, 11)]
+        public void LayoutContainer_SetLeftMarginTooLarge_ComponentsHaveSizeZero(float width, float height, int margin)
         {
             var testLayout = CreateLayout();
             var testContainer = new Container(engineMock.Object);
-            var components = testContainer.SetupContainer(10);
+            var components = testContainer.SetupContainer(10, 30.0f);
+            testContainer.SetCoordinates(0, 0, width, height);
+            testLayout.SetMargin(left: margin);
 
-            testContainer.SetCoordinates(10, 10, 30, 30);
-
-            int leftMargin = (int) testContainer.Width;
-            int rightMargin = (int) testContainer.Width;
-
-            int topMargin = (int)testContainer.Height;
-            int bottomMargin = (int)testContainer.Height;
-
-            testLayout.SetMargin(left: leftMargin, right: rightMargin);
             testLayout.LayoutContainer(testContainer);
 
             foreach (var c in testContainer.Components)
                 Assert.IsTrue(c.Width.CompareTo(0) == 0 || c.Height.CompareTo(0) == 0);
+        }
 
-            testLayout.SetMargin(top: topMargin, bottom: bottomMargin);
+        [TestCase(10.0f, 10.0f, 10)]
+        [TestCase(10.0f, 10.0f, 11)]
+        public void LayoutContainer_SetRightMarginTooLarge_ComponentsHaveSizeZero(float width, float height, int margin)
+        {
+            var testLayout = CreateLayout();
+            var testContainer = new Container(engineMock.Object);
+            var components = testContainer.SetupContainer(10, 30.0f);
+            testContainer.SetCoordinates(0, 0, width, height);
+            testLayout.SetMargin(right: margin);
+
             testLayout.LayoutContainer(testContainer);
 
             foreach (var c in testContainer.Components)
                 Assert.IsTrue(c.Width.CompareTo(0) == 0 || c.Height.CompareTo(0) == 0);
+        }
 
+        [TestCase(10.0f, 10.0f, 10)]
+        [TestCase(10.0f, 10.0f, 11)]
+        public void LayoutContainer_SetTopMarginTooLarge_ComponentsHaveSizeZero(float width, float height, int margin)
+        {
+            var testLayout = CreateLayout();
+            var testContainer = new Container(engineMock.Object);
+            var components = testContainer.SetupContainer(10, 30.0f);
+            testContainer.SetCoordinates(0, 0, width, height);
+            testLayout.SetMargin(top: margin);
 
-            testLayout.SetMargin(left: leftMargin + 5, right: rightMargin + 5);
             testLayout.LayoutContainer(testContainer);
 
             foreach (var c in testContainer.Components)
                 Assert.IsTrue(c.Width.CompareTo(0) == 0 || c.Height.CompareTo(0) == 0);
+        }
 
-            testLayout.SetMargin(top: topMargin + 5, bottom: bottomMargin + 5);
+        [TestCase(10.0f, 10.0f, 10)]
+        [TestCase(10.0f, 10.0f, 11)]
+        public void LayoutContainer_SetBottomMarginTooLarge_ComponentsHaveSizeZero(float width, float height, int margin)
+        {
+            var testLayout = CreateLayout();
+            var testContainer = new Container(engineMock.Object);
+            var components = testContainer.SetupContainer(10, 30.0f);
+            testContainer.SetCoordinates(0, 0, width, height);
+            testLayout.SetMargin(bottom: margin);
+
+            testLayout.LayoutContainer(testContainer);
+
+            foreach (var c in testContainer.Components)
+                Assert.IsTrue(c.Width.CompareTo(0) == 0 || c.Height.CompareTo(0) == 0);
+        }
+
+        [TestCase(10.0f, 10.0f, 10)]
+        [TestCase(10.0f, 10.0f, 11)]
+        public void LayoutContainer_SetAllMarginsTooLarge_ComponentsHaveSizeZero(float width, float height, int margin)
+        {
+            var testLayout = CreateLayout();
+            var testContainer = new Container(engineMock.Object);
+            var components = testContainer.SetupContainer(10, 30.0f);
+            testContainer.SetCoordinates(0, 0, width, height);
+            testLayout.SetMargin(margin, margin, margin, margin);
+
             testLayout.LayoutContainer(testContainer);
 
             foreach (var c in testContainer.Components)
