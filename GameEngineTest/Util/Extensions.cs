@@ -31,6 +31,21 @@ namespace GameEngineTest.Util
             component.Draw(new GameTime(), spriteBatch);
         }
 
+        public static void Draw(this IGraphicComponent component)
+        {
+            component.Draw(new GameTime(), new SpriteBatchMock());
+        }
+
+        public static void Update(this GameComponent component)
+        {
+            component.Update(new GameTime());
+        }
+
+        public static void Update(this GameEngine.IGameComponent component)
+        {
+            component.Update(new GameTime());
+        }
+
         public static List<GraphicComponentMock> SetupContainer(this Container container, int number, float initialSize = 30.0f)
         {
             var ret = new List<GraphicComponentMock>();
