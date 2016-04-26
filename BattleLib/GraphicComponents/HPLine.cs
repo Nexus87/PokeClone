@@ -20,7 +20,7 @@ namespace BattleLib.GraphicComponents
 
     public class HPLine : AbstractGraphicComponent
     {
-        private const int border = 10;
+        private const int LINE_BORDER_SIZE = 10;
         private int currentHp = 0;
         private ILine hpLine;
         private ILine innerLine;
@@ -70,6 +70,7 @@ namespace BattleLib.GraphicComponents
         {
             if (newHP < 0 || newHP > maxHp)
                 throw new ArgumentOutOfRangeException("newHP");
+
             var animation = new HPResizeAnimation(newHP, this);
             animation.AnimationFinished += animation_AnimationFinished;
             PlayAnimation(animation);
@@ -91,23 +92,40 @@ namespace BattleLib.GraphicComponents
 
         protected override void Update()
         {
+            SetOuterLineCoordinates();
+            SetInnerLineCoordinates();
+
+            float factor = maxHp == 0 ? 0 : ((float)currentHp) / ((float)maxHp);
+            SetHPLineCoordinates(factor);
+            SetHPLineColor(factor);
+        }
+
+        private void SetHPLineCoordinates(float factor)
+        {
+            hpLine.XPosition = XPosition + LINE_BORDER_SIZE;
+            hpLine.YPosition = YPosition + LINE_BORDER_SIZE;
+            hpLine.Width = Math.Max(0, factor * (Width - 2 * LINE_BORDER_SIZE));
+            hpLine.Height = Math.Max(0, Height - 2 * LINE_BORDER_SIZE);
+        }
+
+        private void SetInnerLineCoordinates()
+        {
+            innerLine.XPosition = XPosition + LINE_BORDER_SIZE;
+            innerLine.YPosition = YPosition + LINE_BORDER_SIZE;
+            innerLine.Width = Math.Max(0, Width - 2 * LINE_BORDER_SIZE);
+            innerLine.Height = Math.Max(0, Height - 2 * LINE_BORDER_SIZE);
+        }
+
+        private void SetOuterLineCoordinates()
+        {
             outerLine.XPosition = XPosition;
             outerLine.YPosition = YPosition;
             outerLine.Width = Width;
             outerLine.Height = Height;
+        }
 
-            innerLine.XPosition = XPosition + border;
-            innerLine.YPosition = YPosition + border;
-            innerLine.Width = Math.Max(0, Width - 2 * border);
-            innerLine.Height = Math.Max(0, Height - 2 * border);
-
-            float factor = maxHp == 0 ? 0 : ((float)currentHp) / ((float)maxHp);
-
-            hpLine.XPosition = XPosition + border;
-            hpLine.YPosition = YPosition + border;
-            hpLine.Width = Math.Max(0, factor * (Width - 2 * border));
-            hpLine.Height = Math.Max(0, Height - 2 * border);
-
+        private void SetHPLineColor(float factor)
+        {
             if (factor >= 0.50f)
                 hpLine.Color = Color.Green;
             else if (factor >= 0.25f)
