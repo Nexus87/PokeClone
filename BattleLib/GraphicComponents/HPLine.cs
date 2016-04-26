@@ -42,12 +42,34 @@ namespace BattleLib.GraphicComponents
 
         public event EventHandler AnimationDone = delegate { };
 
-        public int Current { get { return currentHp; } set { currentHp = value; Invalidate(); } }
+        public int Current { 
+            get { return currentHp; }
+            set
+            {
+                if (value < 0 || value > maxHp)
+                    throw new ArgumentOutOfRangeException("value");
+                currentHp = value; 
+                Invalidate();
+            } 
+        }
 
-        public int MaxHP { get { return maxHp; } set { maxHp = value; Invalidate(); } }
+        public int MaxHP { 
+            get { return maxHp; } 
+            set 
+            {
+                if (value < 0)
+                    throw new ArgumentOutOfRangeException("value");
+                maxHp = value;
+                if (Current > maxHp)
+                    Current = maxHp;
+                Invalidate(); 
+            } 
+        }
 
         public void AnimationSetHP(int newHP)
         {
+            if (newHP < 0 || newHP > maxHp)
+                throw new ArgumentOutOfRangeException("newHP");
             var animation = new HPResizeAnimation(newHP, this);
             animation.AnimationFinished += animation_AnimationFinished;
             PlayAnimation(animation);

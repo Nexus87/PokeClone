@@ -1,5 +1,6 @@
 ﻿using BattleLib.GraphicComponents;
 using GameEngine.Graphics;
+using GameEngine.Utils;
 using GameEngineTest;
 using GameEngineTest.Util;
 using Microsoft.Xna.Framework;
@@ -17,20 +18,23 @@ namespace BattleLibTest.GraphicComponents
     [TestFixture]
     public class HPLineTest : IGraphicComponentTest
     {
-        private HPLine line;
 
-        [SetUp]
-        public void Setup()
+        private HPLine CreateLine()
         {
-            var outerLineStub = new Mock<ILine>();
-            var innerLineStub = new Mock<ILine>();
             var hpLineStub = new Mock<ILine>();
 
-            line = new HPLine(outerLineStub.Object, innerLineStub.Object, hpLineStub.Object, gameMock.Object);
+            return CreateLine(hpLineStub.Object);
+        }
+
+        private HPLine CreateLine(ILine hpLine)
+        {
+            var outerLine = new Mock<ILine>().Object;
+            var innerLine = new Mock<ILine>().Object;
+            var line = new HPLine(outerLine, innerLine, hpLine, gameMock.Object);
             line.MaxHP = 100;
-            line.Current = 50;
             line.Setup();
 
+            return line;
         }
 
         public static List<TestCaseData> HPTestData = new List<TestCaseData>
@@ -38,39 +42,32 @@ namespace BattleLibTest.GraphicComponents
             new TestCaseData(100),
             new TestCaseData(25),
             new TestCaseData(0),
-            new TestCaseData(110),
-            new TestCaseData(-5)
         };
 
         [TestCaseSource("HPTestData")]
-        [Ignore("Fix later")]
-        public void HPAnimationTest(int hp)
+        public void AnimationSetHP_WaitTillAnimationFinished_CurrentHPIsAsExpected(int hp)
         {
-            line.XPosition = 300;
-            line.YPosition = 300;
-            line.Width = 300;
-            line.Height = 300;
-
-            Func<int, int> change;
-            if (hp < line.Current)
-                change = i => i - 1;
-            else
-                change = i => i + 1;
-
-            int currentHP = line.Current;
-            var spriteBatch = new SpriteBatchMock();
             bool animationDone = false;
+            var line = CreateLine();
+            line.SetCoordinates(0, 0, 300, 300);
             line.AnimationDone += delegate { animationDone = true; };
             
             line.AnimationSetHP(hp);
 
             while (!animationDone)
-            {
-                line.Draw(spriteBatch);
+                line.Draw();
 
-                Assert.GreaterOrEqual(line.Current, 0);
-                Assert.LessOrEqual(line.Current, line.MaxHP);
-            }
+            Assert.AreEqual(hp, line.Current);
+        }
+
+        [TestCase(110)]
+        [TestCase(-10)]
+        public void AnimationSetHP_SetInvalidData_ThrowsException(int hp)
+        {
+            var line = CreateLine();
+            line.SetCoordinates(0, 0, 300, 300);
+
+            Assert.Throws<ArgumentOutOfRangeException>(() => line.AnimationSetHP(hp));
         }
 
         public static List<TestCaseData> HPColorTestData = new List<TestCaseData>
@@ -83,54 +80,83 @@ namespace BattleLibTest.GraphicComponents
         };
 
         [TestCaseSource("HPColorTestData")]
-        public void ColorTest(int hp, Color color)
+        public void Draw_SetNumberOfHp_HPLineHasExpectedColor(int hp, Color color)
         {
-            var spriteBatch = new SpriteBatchMock();
-            var outerLineStub = new Mock<ILine>();
-            var innerLineStub = new Mock<ILine>();
             var hpLineStub = new Mock<ILine>();
+            var line = CreateLine(hpLineStub.Object);
+            line.SetCoordinates(0, 0, 500, 500);
 
-            line = new HPLine(outerLineStub.Object, innerLineStub.Object, hpLineStub.Object, gameMock.Object);
-
-            int maxHP = 100;
-
-            line.Width = 500;
-            line.Height = 500;
-
-            line.MaxHP = maxHP;
             line.Current = hp;
-
-            line.Draw(spriteBatch);
+            line.Draw();
 
             hpLineStub.VerifySet(o => o.Color = color, Times.Once);
         }
 
         [TestCase]
-        public void ZeroMaxHPTest()
+        public void Draw_ZeroMaxHP_DoesNotThrow()
         {
-            var spriteBatch = new SpriteBatchMock();
+            var line = CreateLine();
             line.SetCoordinates(0, 0, 500, 500);
 
             line.MaxHP = 0;
             line.Current = 0;
 
-            line.Draw(spriteBatch);
-            foreach (var obj in spriteBatch.DrawnObjects)
-                obj.IsInConstraints(line);
+            Assert.DoesNotThrow(()=> line.Draw());
+        }
+
+        [TestCase]
+        public void Draw_ZeroMaxHP_HPLineHasZeroSize()
+        {
+            float height = -1.0f;
+            float width = -1.0f;
+            var hpLine = new Mock<ILine>();
+            hpLine.SetupSet(o => o.Height = It.IsAny<float>()).Callback<float>(f => height = f);
+            hpLine.SetupSet(o => o.Width = It.IsAny<float>()).Callback<float>(f => width = f);
+            var line = CreateLine(hpLine.Object);
+            
+            line.SetCoordinates(0, 0, 500, 500);
+
+            line.MaxHP = 0;
+            line.Current = 0;
+
+            line.Draw();
+
+            Assert.IsTrue(height.AlmostEqual(0) || width.AlmostEqual(0));
+            
+        }
+
+        [TestCase(110)]
+        [TestCase(-10)]
+        public void Current_SetOutOfBound_ThrowsException(int hp)
+        {
+            var line = CreateLine();
+
+            Assert.Throws<ArgumentOutOfRangeException>(() => line.Current = hp);
+        }
+
+        [TestCase(100, 90, 90)]
+        [TestCase(80, 70, 70)]
+        [TestCase(20, 0, 0)]
+        public void Current_LowerMaxHp_IsChangedToFitInRange(int initalHP, int maxHP, int resultHP)
+        {
+            var line = CreateLine();
+            line.Current = initalHP;
+            line.MaxHP = maxHP;
+
+            Assert.AreEqual(resultHP, line.Current);
+        }
+
+        [TestCase(-10)]
+        public void MaxHP_SetOutOfBound_ThrowsException(int hp)
+        {
+            var line = CreateLine();
+
+            Assert.Throws<ArgumentOutOfRangeException>(() => line.MaxHP = hp);
         }
 
         protected override IGraphicComponent CreateComponent()
         {
-            var outerLineStub = new Mock<ILine>();
-            var innerLineStub = new Mock<ILine>();
-            var hpLineStub = new Mock<ILine>();
-
-            line = new HPLine(outerLineStub.Object, innerLineStub.Object, hpLineStub.Object, gameMock.Object);
-            line.MaxHP = 100;
-            line.Current = 50;
-            line.Setup();
-
-            return line;
+            return CreateLine();
         }
     }
 }

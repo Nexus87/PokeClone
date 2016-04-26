@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GameEngine.Utils
 {
-    static class Extensions
+    public static class Extensions
     {
         public delegate T Creator<T>();
         public delegate T CellCreator<T>(int row, int column);
