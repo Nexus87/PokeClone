@@ -30,66 +30,60 @@ namespace GameEngine.Graphics.Widgets
             VisibleColumns = visibleColumns;
             tableView = view;
 
-            if (view.Rows > 0 && view.Columns > 0)
-                SetStartCell(0, 0);
-
             view.OnTableResize += TableResizeHandler;
             SetStartCell(0, 0);
         }
 
         void TableResizeHandler(object sender, TableResizeEventArgs e)
         {
+            FixCursor();
             // If there is nothing to display, reset everything
             if (e.Rows == 0 || e.Columns == 0)
             {
-                cursorColumn = cursorRow = 0;
                 tableView.StartIndex = tableView.EndIndex = new TableIndex(0, 0);
                 return;
             }
 
-            // First fix the cursor
-            if (cursorColumn >= e.Columns)
-                cursorColumn = e.Columns - 1;
-            if (cursorRow >= e.Rows)
-                cursorRow = e.Rows - 1;
-
             // If the cursor has changed, we also should change the selection
             tableView.SetCellSelection(cursorRow, cursorColumn, true);
+            ResizeViewport();
+        }
 
-            int shownRows = (EndIndex.Row - StartIndex.Row);
-            int shownColumns = (EndIndex.Column - StartIndex.Column);
+        private void ResizeViewport()
+        {
+            int newStartRow = StartIndex.Row;
+            int newStartColumn = StartIndex.Column;
 
-            // Store the current indexes (TableIndex is a struct!)
-            var localStartIdx = StartIndex;
-            var localEndIdx = EndIndex;
-            // If we still display the right number of rows/columns, nothing needs to be done.
-            if (shownRows == realVisibleRows && shownColumns == realVisibleColumns)
-                return;
+            if (RowOutOfBound(newStartRow))
+                newStartRow = ZeroIfNegative(Rows - realVisibleRows);
+            if (ColumnOutOfBound(newStartColumn))
+                newStartColumn = ZeroIfNegative(Columns - realVisibleColumns);
 
-            if (shownRows != realVisibleRows)
-            {
-                // If we have enought rows from the start, we can use the current start index
-                if (localStartIdx.Row + realVisibleRows <= Rows)
-                {
-                    SetStartCell(localStartIdx.Row, localStartIdx.Column);
-                }
-                else
-                {
-                    SetEndCell(localEndIdx.Row - 1, localEndIdx.Column - 1);
-                }
-            }
+            SetStartCell(newStartRow, newStartColumn);
+        }
 
-            // The rows are already correct
-            localStartIdx.Row = StartIndex.Row;
-            localEndIdx.Row = EndIndex.Row;
+        private int ZeroIfNegative(int p)
+        {
+            return Math.Max(0, p);
+        }
 
-            if (shownColumns != realVisibleColumns)
-            {
-                if (localStartIdx.Column + realVisibleColumns <= Columns)
-                    SetStartCell(localStartIdx.Row, localStartIdx.Column);
-                else
-                    SetEndCell(localEndIdx.Row - 1, localEndIdx.Column - 1);
-            }
+        private bool ColumnOutOfBound(int column)
+        {
+            return column >= Columns;
+        }
+
+        private bool RowOutOfBound(int row)
+        {
+            return row >= Rows;
+        }
+
+        private void FixCursor()
+        {
+            if (RowOutOfBound(cursorRow))
+                cursorRow = ZeroIfNegative(Rows - 1);
+
+            if (ColumnOutOfBound(cursorColumn))
+                cursorColumn = ZeroIfNegative(Columns - 1);
         }
 
         public TableWidget(PokeEngine game) : this(null, null, new DefaultTableModel<T>(), game)
@@ -273,14 +267,19 @@ namespace GameEngine.Graphics.Widgets
             cursorRow = row;
             cursorColumn = column;
 
+            FixViewport();
+        }
+
+        private void FixViewport()
+        {
             // These indexes should already be set in TableWidget's constructor
             Debug.Assert(tableView.EndIndex.HasValue);
             Debug.Assert(tableView.StartIndex.HasValue);
 
-            if (row >= EndIndex.Row || column >= EndIndex.Column)
-                SetEndCell(row, column);
-            else if (row < StartIndex.Row || column < StartIndex.Column)
-                SetStartCell(row, column);
+            if (cursorRow >= EndIndex.Row || cursorColumn >= EndIndex.Column)
+                SetEndCell(cursorRow, cursorColumn);
+            else if (cursorRow < StartIndex.Row || cursorColumn < StartIndex.Column)
+                SetStartCell(cursorRow, cursorColumn);
         }
 
         public override void Setup()
@@ -303,24 +302,23 @@ namespace GameEngine.Graphics.Widgets
 
         void SetCursorRow(int row)
         {
-            // Only called from HandleInput. No reason to throw an exception
-            if (row >= Rows || row < 0)
-                return;
-
-            // tableViews selection model will take care of deselecting other
-            // cells
-            SelectCell(row, cursorColumn);
+            SetCursor(row, cursorColumn);
         }
 
         private void SetCursorColumn(int column)
         {
+            SetCursor(cursorRow, column);
+        }
+
+        private void SetCursor(int row, int column)
+        {
             // Only called from HandleInput. No reason to throw an exception
             if (column >= Columns || column < 0)
                 return;
+            if (row >= Rows || row < 0)
+                return;
 
-            // tableViews selection model will take care of deselecting other
-            // cells
-            SelectCell(cursorRow, column);
+            SelectCell(row, column);
         }
 
         private void SetEndCell(int row, int column)

@@ -83,7 +83,10 @@ namespace GameEngineTest.Graphics.Widgets
 
         [TestCase(8, 8, 1, 3, 1, 3)]
         [TestCase(3, 5, 0, 0, 0, 0)]
-        public void ResizeHandler_AutoResizeShrinkTableView_EndIndexIsAdjusted(int rows, int columns, 
+        [TestCase(8, 8, 20, 1, 20, 1)]
+        [TestCase(0, 0, 10, 32, 10, 32)]
+        [TestCase(5, 5, 4, 32, 4, 32)]
+        public void ResizeHandler_AutoResizeTableViewResize_EndIndexIsAdjusted(int rows, int columns, 
             int newRows, int newColumns, int endRow, int endColumn)
         {
             var endIndex = new TableIndex(endRow, endColumn);
@@ -97,14 +100,21 @@ namespace GameEngineTest.Graphics.Widgets
             AssertIndex(endIndex, view.EndIndex.Value);
         }
 
-        [TestCase(8, 8, 20, 1, 20, 1)]
-        [TestCase(0, 0, 10, 32, 10, 32)]
-        public void ResizeHandler_AutoResizeGrowingTableView_EndIndexIsAdjusted(int rows, int columns,
+        [TestCase(8, 8,    2, 4,    4, 5,    9, 1,    5, 1)]
+        [TestCase(8, 8,    1, 2,    4, 5,    9, 9,    5, 6)]
+        [TestCase(8, 8,    1, 2,    4, 5,    1, 1,    1, 1)]
+        [TestCase(2, 1,    2, 2,    0, 0,    5, 4,    2, 2)]
+        [TestCase(3, 2,    3, 2,    0, 0,    1, 2,    1, 2)]
+        public void Resizehandler_RestrictedVisibleArea_EndIndexIsAdjusted(int rows, int columns, 
+            int visibleRows, int visibleColumns,
+            int selectedRow, int selectedColumn,
             int newRows, int newColumns, int endRow, int endColumn)
         {
             var endIndex = new TableIndex(endRow, endColumn);
             var view = new TableViewMock();
-            var table = CreateTableWidget(view, rows, columns);
+            var table = CreateTableWidget(view, rows, columns, visibleRows, visibleColumns);
+
+            table.SelectCell(selectedRow, selectedColumn);
 
             view.Rows = newRows;
             view.Columns = newColumns;
@@ -113,6 +123,26 @@ namespace GameEngineTest.Graphics.Widgets
             AssertIndex(endIndex, view.EndIndex.Value);
         }
 
+        [TestCase(3, 2,    3, 2,    0, 0,    1, 2,    0, 0)]
+        [TestCase(8, 8,    1, 2,    6, 4,    1, 8,    0, 3)]
+        [TestCase(8, 8,    1, 2,    6, 4,    8, 1,    6, 0)]
+        public void Resizehandler_RestrictedVisibleArea_StartIndexIsAdjusted(int rows, int columns,
+            int visibleRows, int visibleColumns,
+            int selectedRow, int selectedColumn,
+            int newRows, int newColumns, int startRow, int startColumn)
+        {
+            var startIndex = new TableIndex(startRow, startColumn);
+            var view = new TableViewMock();
+            var table = CreateTableWidget(view, rows, columns, visibleRows, visibleColumns);
+
+            table.SelectCell(selectedRow, selectedColumn);
+
+            view.Rows = newRows;
+            view.Columns = newColumns;
+            view.RaiseTableResizeEvent(newRows, newColumns);
+
+            AssertIndex(startIndex, view.StartIndex.Value);
+        }
         [TestCase(0, 0, 5, 5, 0, 0)]
         [TestCase(8, 3, 2, 1, 2, 1)]
         [TestCase(1, 5, 5, 5, 1, 5)]
@@ -321,7 +351,8 @@ namespace GameEngineTest.Graphics.Widgets
 
         [TestCase(10, 4, 9, 3, 1, 1, 0, 0)]
         [TestCase(10, 4, 9, 3, 0, 0, 0, 0)]
-        public void Cursor_OnTableResize_IsAdjusted(int rows, int columns, int selectedRow, int selectedColumn, 
+        [TestCase(10, 4, 9, 3, 12, 1, 9, 0)]
+        public void Cursor_OnTableResize_CursorIsAdjusted(int rows, int columns, int selectedRow, int selectedColumn, 
             int newRows, int newColumns,
             int expectedRow, int expectedColumn)
         {
