@@ -13,7 +13,7 @@ namespace GameEngineTest.Graphics.Basic
     {
         protected override GameEngine.Graphics.IGraphicComponent CreateComponent()
         {
-            return new NullGraphicObject(gameMock.Object);
+            return new NullGraphicObject(gameStub);
         }
     }
 }

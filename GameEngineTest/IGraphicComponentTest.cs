@@ -18,15 +18,13 @@ namespace GameEngineTest
     public abstract class IGraphicComponentTest
     {
         public Mock<ISpriteFont> fontMock;
-        public Mock<PokeEngine> gameMock;
+        public IPokeEngine gameStub = new Mock<IPokeEngine>().Object;
 
         protected abstract IGraphicComponent CreateComponent();
 
         public IGraphicComponentTest()
         {
-            var serviceMock = new Mock<IServiceProvider>();
             fontMock = new Mock<ISpriteFont>();
-            gameMock = new Mock<PokeEngine>(new Configuration());
         }
 
         public static List<TestCaseData> InvalidData = new List<TestCaseData>{

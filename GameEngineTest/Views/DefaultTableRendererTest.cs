@@ -18,7 +18,7 @@ namespace GameEngineTest.Views
     {
         protected class TestTableRenderer : DefaultTableRenderer<TestType>
         {
-            public TestTableRenderer(PokeEngine game) : base(game) { }
+            public TestTableRenderer() : base(new Mock<IPokeEngine>().Object) { }
             protected override ISelectableTextComponent CreateComponent()
             {
                 return new TableComponentMock<TestType>();
@@ -64,7 +64,7 @@ namespace GameEngineTest.Views
 
         private DefaultTableRenderer<TestType> CreateTestRenderer()
         {
-            return new TestTableRenderer(new PokeEngine());
+            return new TestTableRenderer();
         }
 
         protected override ITableRenderer<TestType> CreateRenderer()

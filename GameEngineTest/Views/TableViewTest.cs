@@ -268,9 +268,9 @@ namespace GameEngineTest.Views
         private TableView<Object> CreateTable(Mock<ITableModel<Object>> modelMock, TableRendererMock<Object> renderer, Mock<ITableSelectionModel> selectionModelMock, ITableGrid grid = null)
         {
             if (grid == null)
-                grid = new TableGrid(gameMock.Object);
+                grid = new TableGrid(gameStub);
 
-            var table = new TableView<Object>(modelMock.Object, renderer, selectionModelMock.Object, grid, gameMock.Object);
+            var table = new TableView<Object>(modelMock.Object, renderer, selectionModelMock.Object, grid, gameStub);
             table.SetCoordinates(0, 0, 500, 500);
             return table;
         }
@@ -286,7 +286,7 @@ namespace GameEngineTest.Views
             var modelMock = new Mock<ITableModel<Object>>();
             var selectionModelMock = new Mock<ITableSelectionModel>();
             var renderer = new TableRendererMock<Object>();
-            var table = new TableView<Object>(modelMock.Object, renderer, selectionModelMock.Object, gameMock.Object);
+            var table = new TableView<Object>(modelMock.Object, renderer, selectionModelMock.Object, gameStub);
             table.Setup();
             return table;
         }

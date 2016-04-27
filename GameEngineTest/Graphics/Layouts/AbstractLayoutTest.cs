@@ -67,7 +67,7 @@ namespace GameEngineTest.Graphics.Layouts
         public void ProtectedProperties_SetLeftMargin_RespectsSetMargins(float X, float Y, float Width, float Height, int Margin)
         {
             var testObj = new TestLayout();
-            var container = new Container(new Mock<PokeEngine>().Object);
+            var container = CreateContainer();
             container.SetCoordinates(X, Y, Width, Height);
 
             testObj.SetMargin(left: Margin);
@@ -80,7 +80,7 @@ namespace GameEngineTest.Graphics.Layouts
         public void ProtectedProperties_SetRightMargin_RespectsSetMargins(float X, float Y, float Width, float Height, int Margin)
         {
             var testObj = new TestLayout();
-            var container = new Container(new Mock<PokeEngine>().Object);
+            var container = CreateContainer();
             container.SetCoordinates(X, Y, Width, Height);
 
             testObj.SetMargin(right: Margin);
@@ -93,7 +93,7 @@ namespace GameEngineTest.Graphics.Layouts
         public void ProtectedProperties_SetTopMargin_RespectsSetMargins(float X, float Y, float Width, float Height, int Margin)
         {
             var testObj = new TestLayout();
-            var container = new Container(new Mock<PokeEngine>().Object);
+            var container = CreateContainer();
             container.SetCoordinates(X, Y, Width, Height);
 
             testObj.SetMargin(top: Margin);
@@ -107,7 +107,7 @@ namespace GameEngineTest.Graphics.Layouts
         public void ProtectedProperties_SetBottomMargin_RespectsSetMargins(float X, float Y, float Width, float Height, int Margin)
         {
             var testObj = new TestLayout();
-            var container = new Container(new Mock<PokeEngine>().Object);
+            var container = CreateContainer();
             container.SetCoordinates(X, Y, Width, Height);
 
             testObj.SetMargin(bottom: Margin);
@@ -120,7 +120,7 @@ namespace GameEngineTest.Graphics.Layouts
         public void ProtectedProperties_SetAllMargins_RespectsSetMargins(float X, float Y, float Width, float Height, int Margin)
         {
             var testObj = new TestLayout();
-            var container = new Container(new Mock<PokeEngine>().Object);
+            var container = CreateContainer();
             container.SetCoordinates(X, Y, Width, Height);
 
             testObj.SetMargin(Margin, Margin, Margin, Margin);
@@ -133,7 +133,7 @@ namespace GameEngineTest.Graphics.Layouts
         [TestCase]
         public void LayoutContainer_SetCoordinates_UpdateComponentsIsCalled()
         {
-            var container = new Container(new Mock<PokeEngine>().Object);
+            var container = CreateContainer();
             var layoutMock = CreateLayoutMock();
             var testLayout = layoutMock.Object;
 
@@ -141,6 +141,11 @@ namespace GameEngineTest.Graphics.Layouts
             testLayout.LayoutContainer(container);
             
             layoutMock.Protected().Verify("UpdateComponents", Times.AtLeastOnce(), container);
+        }
+
+        private Container CreateContainer()
+        {
+            return new Container(new Mock<IPokeEngine>().Object);
         }
     }
 }

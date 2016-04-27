@@ -19,10 +19,10 @@ namespace BattleLib
     {
         Client player;
         Client ai;
-        PokeEngine engine;
+        IPokeEngine engine;
         private BattleStateComponent battleState;
 
-        public InitComponent(Configuration config, PokeEngine game, RulesSet rules, ICommandScheduler scheduler)
+        public InitComponent(Configuration config, IPokeEngine game, RulesSet rules, ICommandScheduler scheduler)
         {
             var playerID = new ClientIdentifier();
             var aiID = new ClientIdentifier();
@@ -42,7 +42,7 @@ namespace BattleLib
             var aiComponent = new AIComponent(battleState, ai, playerID);
 
             game.AddGameComponent(aiComponent);
-            game.Components.Add(battleState);
+            game.AddGameComponent(battleState);
             game.Graphic = graphic;
             
         }

@@ -11,11 +11,11 @@ namespace GameEngine.Graphics.Basic
         public ITexture2D Image { get { return image; } set { image = value; Invalidate(); } }
         private Vector2 scale;
 
-        public TextureBox(PokeEngine game) : base(game)
+        public TextureBox(IPokeEngine game) : base(game)
         {
         }
 
-        public TextureBox(ITexture2D image, PokeEngine game)
+        public TextureBox(ITexture2D image, IPokeEngine game)
             : base(game)
         {
             this.image = image;

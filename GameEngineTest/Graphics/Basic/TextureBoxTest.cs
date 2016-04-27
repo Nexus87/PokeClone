@@ -31,7 +31,7 @@ namespace GameEngineTest.Graphics.Basic
 
         private TextureBox CreateEmptyBox()
         {
-            return new TextureBox(gameMock.Object);
+            return new TextureBox(gameStub);
         }
 
         protected override IGraphicComponent CreateComponent()

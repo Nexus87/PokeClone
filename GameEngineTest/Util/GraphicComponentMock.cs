@@ -1,4 +1,5 @@
-﻿using GameEngine.Graphics;
+﻿using GameEngine;
+using GameEngine.Graphics;
 using GameEngine.Wrapper;
 using Microsoft.Xna.Framework;
 using System;
@@ -15,7 +16,7 @@ namespace GameEngineTest.Util
         public int Row { get; set; }
         public int Column { get; set; }
 
-        public GameEngine.PokeEngine Game { get; set; }
+        public IPokeEngine Game { get; set; }
 
         public void PlayAnimation(GameEngine.Graphics.Basic.IAnimation animation)
         {

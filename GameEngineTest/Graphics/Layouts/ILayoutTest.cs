@@ -23,13 +23,13 @@ namespace GameEngineTest.Graphics.Layouts
 
         protected Container CreateContainer(float x = 0, float y = 0, float width = 0, float height = 0)
         {
-            var container = new Container(engineMock.Object);
+            var container = new Container(gameStub);
             container.SetCoordinates(x, y, width, height);
 
             return container;
         }
 
-        public Mock<PokeEngine> engineMock = new Mock<PokeEngine>();
+        public IPokeEngine gameStub = new Mock<IPokeEngine>().Object;
 
         public static List<TestCaseData> ValidData = new List<TestCaseData>
         {
@@ -216,7 +216,7 @@ namespace GameEngineTest.Graphics.Layouts
         public void LayoutContainer_EmptyContainer_DoesNotThrow()
         {
             var testLayout = CreateLayout();
-            var testContainer = new Container(engineMock.Object);
+            var testContainer = new Container(gameStub);
 
             Assert.DoesNotThrow(() => testLayout.LayoutContainer(testContainer));
         }

@@ -1,5 +1,6 @@
 ﻿using Base;
 using Base.Rules;
+using GameEngine;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ namespace BattleLib.Components.BattleState
         Execute
     }
 
-    public class BattleStateComponent : GameComponent
+    public class BattleStateComponent : GameEngine.IGameComponent
     {
         public event EventHandler<StateChangedEventArgs> StateChanged = delegate { };
 
@@ -21,6 +22,7 @@ namespace BattleLib.Components.BattleState
         public IBattleState CharacterSetState { get; set; }
         public IBattleState ExecutionState { get; set; }
 
+        private IPokeEngine Game;
         private RulesSet rules;
         private ICommandScheduler scheduler;
         private IBattleState currentState;
@@ -48,12 +50,12 @@ namespace BattleLib.Components.BattleState
         }
 
         
-        public BattleStateComponent(ClientIdentifier player, ClientIdentifier ai, Game game, RulesSet rules, ICommandScheduler scheduler)
-            : base(game)
+        public BattleStateComponent(ClientIdentifier player, ClientIdentifier ai, IPokeEngine game, RulesSet rules, ICommandScheduler scheduler)
         {
             data = new BattleData(player, ai);
             eventCreator = new EventCreator(data);
 
+            Game = game;
             this.rules = rules;
             this.scheduler = scheduler;
             ActionState = new WaitForActionState(this);
@@ -61,7 +63,7 @@ namespace BattleLib.Components.BattleState
             ExecutionState = new ExecuteState(this, scheduler, new CommandExecuter(eventCreator, rules));
         }
 
-        public override void Initialize()
+        public void Initialize()
         {
 
             eventCreator.Setup(Game);
@@ -83,7 +85,7 @@ namespace BattleLib.Components.BattleState
             CurrentState.SetMove(id, target, move);
         }
 
-        public override void Update(GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
             CurrentState = CurrentState.Update(data);
         }

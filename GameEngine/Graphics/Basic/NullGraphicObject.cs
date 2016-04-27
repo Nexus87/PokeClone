@@ -7,7 +7,7 @@ namespace GameEngine.Graphics.Basic
 {
     public class NullGraphicObject : AbstractGraphicComponent
     {
-        public NullGraphicObject(PokeEngine game) : base(game) { }
+        public NullGraphicObject(IPokeEngine game) : base(game) { }
 
         public override void Setup()
         {

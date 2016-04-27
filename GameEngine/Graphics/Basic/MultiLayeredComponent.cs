@@ -14,7 +14,7 @@ namespace GameEngine.Graphics.Basic
         private IGraphicComponent foreground;
         private IGraphicComponent mainComponent;
 
-        public MultiLayeredComponent(IGraphicComponent mainComponent, PokeEngine game) : base(game)
+        public MultiLayeredComponent(IGraphicComponent mainComponent, IPokeEngine game) : base(game)
         {
             nullObject = new NullGraphicObject(game);
             this.mainComponent = mainComponent;

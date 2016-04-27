@@ -10,8 +10,8 @@ namespace GameEngine.Graphics
 {
     public abstract class AbstractGraphicComponent : IGraphicComponent
     {
-        public PokeEngine Game { get; protected set; }
-        protected AbstractGraphicComponent(PokeEngine game)
+        public IPokeEngine Game { get; protected set; }
+        protected AbstractGraphicComponent(IPokeEngine game)
         {
             Game = game;
             NeedsUpdate = true;

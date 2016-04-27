@@ -34,9 +34,9 @@ namespace GameEngine.Graphics
             InnerComponent.AddComponent(widget);
         }
 
-        public Dialog(PokeEngine game) : this(null, game) { }
+        public Dialog(IPokeEngine game) : this(null, game) { }
 
-        public Dialog(ITexture2D borderTexture, PokeEngine game) : base(new Container(game), game)
+        public Dialog(ITexture2D borderTexture, IPokeEngine game) : base(new Container(game), game)
         {
             border = new TextureBox(borderTexture, game);
             InnerComponent.Layout = new SingleComponentLayout();

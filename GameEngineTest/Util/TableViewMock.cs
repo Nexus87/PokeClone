@@ -1,4 +1,5 @@
-﻿using GameEngine.Graphics;
+﻿using GameEngine;
+using GameEngine.Graphics;
 using GameEngine.Graphics.Views;
 using GameEngine.Wrapper;
 using GameEngineTest.Views;
@@ -111,7 +112,7 @@ namespace GameEngineTest.Util
 
         public virtual ITableModel<TestType> Model { get; set; }
 
-        public GameEngine.PokeEngine Game
+        public IPokeEngine Game
         {
             get { throw new NotImplementedException(); }
         }

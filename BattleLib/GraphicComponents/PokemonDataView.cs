@@ -18,7 +18,7 @@ namespace BattleLib.GraphicComponents
     {
         public event EventHandler OnHPUpdated;
 
-        public PokemonDataView(PokeEngine game, bool player)
+        public PokemonDataView(IPokeEngine game, bool player)
             : base(new Container(game), game)
         {
             var container = InnerComponent;

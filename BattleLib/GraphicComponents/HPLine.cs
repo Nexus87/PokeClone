@@ -15,7 +15,7 @@ namespace BattleLib.GraphicComponents
 
     public class DefaultLine : Line, ILine
     {
-        public DefaultLine(PokeEngine game) : base(game) { }
+        public DefaultLine(IPokeEngine game) : base(game) { }
     }
 
     public class HPLine : AbstractGraphicComponent
@@ -27,17 +27,18 @@ namespace BattleLib.GraphicComponents
         private int maxHp = 0;
         private ILine outerLine;
 
-        public HPLine(PokeEngine game)
+        public HPLine(IPokeEngine game)
             : this(new DefaultLine(game), new DefaultLine(game), new DefaultLine(game), game)
         { }
-        public HPLine(ILine outerLine, ILine innerLine, ILine hpLine, PokeEngine game) :
+
+        public HPLine(ILine outerLine, ILine innerLine, ILine hpLine, IPokeEngine game) :
             base(game)
         {
             this.outerLine = outerLine;
             this.innerLine = innerLine;
             this.hpLine = hpLine;
             outerLine.Color = Color.Black;
-            innerLine.Color = PokeEngine.BackgroundColor;
+            innerLine.Color = game.BackgroundColor;
         }
 
         public event EventHandler AnimationDone = delegate { };

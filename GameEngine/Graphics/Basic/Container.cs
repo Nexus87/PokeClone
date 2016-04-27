@@ -7,7 +7,7 @@ namespace GameEngine.Graphics.Basic
 {
     public class Container : AbstractGraphicComponent
     {
-        public Container(PokeEngine game) : base(game)
+        public Container(IPokeEngine game) : base(game)
         {
         }
 

@@ -9,12 +9,13 @@ using System.Linq;
 
 namespace GameEngine
 {
-    public class PokeEngine : Game
+    public class PokeEngine : Game, IPokeEngine
     {
-        public static readonly float AspectRation = ScreenWidth / ScreenHeight;
-        public static readonly float ScreenHeight = 1080;
-        public static readonly float ScreenWidth = 1920;
-        public static readonly Color BackgroundColor = new Color(248, 248, 248, 0);
+        private const float aspectRation = screenWidth / screenHeight;
+        private const float screenHeight = 1080;
+        private const float screenWidth = 1920;
+        private static readonly Color backgroundColor = new Color(248, 248, 248, 0);
+
         public bool IsRunning { get; private set; }
 
         public ISpriteFont DefaultFont { get; private set; }
@@ -54,9 +55,6 @@ namespace GameEngine
             AddGameComponent(queue);
             Services.AddService<IEventQueue>(queue);
         }
-
-        // For testing only
-        internal PokeEngine(){}
 
         public IGraphicComponent Graphic { get; set; }
 
@@ -167,6 +165,26 @@ namespace GameEngine
             display.Height = (int)(scaleY * ScreenHeight);
             display.X = (int)((bufferX - display.Width) / 2.0f);
             display.Y = (int)((bufferY - display.Height) / 2.0f);
+        }
+
+        public float AspectRation
+        {
+            get { return aspectRation; }
+        }
+
+        public float ScreenHeight
+        {
+            get { return screenHeight; }
+        }
+
+        public float ScreenWidth
+        {
+            get { return screenWidth; }
+        }
+
+        public Color BackgroundColor
+        {
+            get { return backgroundColor; }
         }
     }
 }

@@ -112,7 +112,7 @@ namespace GameEngine.Graphics
                 throw new ArgumentOutOfRangeException("column");
         }
 
-        public TableGrid(int rows, int columns, PokeEngine game)
+        public TableGrid(int rows, int columns, IPokeEngine game)
         {
             layout = new GridLayout(rows, columns);
 
@@ -122,7 +122,7 @@ namespace GameEngine.Graphics
             itemContainer.Layout = layout;
         }
 
-        public TableGrid(PokeEngine game) : this(0, 0, game)
+        public TableGrid(IPokeEngine game) : this(0, 0, game)
         {
         }
 

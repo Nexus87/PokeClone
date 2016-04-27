@@ -19,10 +19,10 @@ namespace GameEngine.Graphics.Basic
         private int lineNumber;
         private ISpriteFont font;
 
-        public MultlineTextBox(PokeEngine game) : this(2, game) 
+        public MultlineTextBox(IPokeEngine game) : this(2, game) 
         { }
         
-        public MultlineTextBox(int lineNumber, PokeEngine game)
+        public MultlineTextBox(int lineNumber, IPokeEngine game)
             : this(game.DefaultFont,  new DefaultTextSplitter(), lineNumber, game)
         { }
 
@@ -31,7 +31,7 @@ namespace GameEngine.Graphics.Basic
             return (ITextGraphicComponent) container.Components[index];
         }
 
-        public MultlineTextBox(ISpriteFont font, ITextSplitter splitter, int lineNumber, PokeEngine game) :
+        public MultlineTextBox(ISpriteFont font, ITextSplitter splitter, int lineNumber, IPokeEngine game) :
             base(game)
         {
             this.lineNumber = lineNumber;

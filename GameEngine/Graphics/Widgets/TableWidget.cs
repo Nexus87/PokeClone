@@ -23,7 +23,7 @@ namespace GameEngine.Graphics.Widgets
 
         ITableView<T> tableView;
 
-        public TableWidget(int? visibleRows, int? visibleColumns, ITableView<T> view, PokeEngine game)
+        public TableWidget(int? visibleRows, int? visibleColumns, ITableView<T> view, IPokeEngine game)
             : base(game)
         {
             VisibleRows = visibleRows;
@@ -86,11 +86,11 @@ namespace GameEngine.Graphics.Widgets
                 cursorColumn = ZeroIfNegative(Columns - 1);
         }
 
-        public TableWidget(PokeEngine game) : this(null, null, new DefaultTableModel<T>(), game)
+        public TableWidget(IPokeEngine game) : this(null, null, new DefaultTableModel<T>(), game)
         {
         }
 
-        public TableWidget(ITableModel<T> model, PokeEngine game) :
+        public TableWidget(ITableModel<T> model, IPokeEngine game) :
             this(null, null,
                 new TableView<T>(
                     model,
@@ -100,7 +100,7 @@ namespace GameEngine.Graphics.Widgets
             game)
         { }
 
-        public TableWidget(int? visibleRows, int? visibleColumns, ITableModel<T> model, PokeEngine game)
+        public TableWidget(int? visibleRows, int? visibleColumns, ITableModel<T> model, IPokeEngine game)
             : this(
             visibleRows, visibleColumns,
             new TableView<T>(

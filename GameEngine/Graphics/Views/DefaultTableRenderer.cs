@@ -11,7 +11,7 @@ namespace GameEngine.Graphics.Views
 {
     public class DefaultTableRenderer<T> : ITableRenderer<T>
     {
-        PokeEngine game;
+        IPokeEngine game;
         ISelectableTextComponent[,] boxes = new ISelectableTextComponent[1, 1];
         private ISpriteFont spriteFont;
         private ITexture2D arrowTexture;
@@ -19,7 +19,7 @@ namespace GameEngine.Graphics.Views
         public string DefaultString { get; set; }
 
 
-        public DefaultTableRenderer(PokeEngine game, ISpriteFont font = null, ITexture2D arrow = null)
+        public DefaultTableRenderer(IPokeEngine game, ISpriteFont font = null, ITexture2D arrow = null)
         {
             spriteFont = font == null ? game.DefaultFont : font;
             arrowTexture = arrow == null ? game.DefaultArrowTexture : arrow;

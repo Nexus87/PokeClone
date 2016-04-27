@@ -10,7 +10,7 @@ namespace GameEngine.Graphics.Basic
         private int currentIndex;
         private int seconds;
 
-        public AnimatedTextureBox(PokeEngine game) : base(new TextureBox(game), game)
+        public AnimatedTextureBox(IPokeEngine game) : base(new TextureBox(game), game)
         {
             SecondsPerImage = 1;
         }

@@ -20,7 +20,7 @@ namespace GameEngineTest.Graphics
     {
         private Mock<AbstractGraphicComponent> CreateComponentMock()
         {
-            var componentMock = new Mock<AbstractGraphicComponent>(gameMock.Object);
+            var componentMock = new Mock<AbstractGraphicComponent>(gameStub);
             componentMock.CallBase = true;
 
             return componentMock;

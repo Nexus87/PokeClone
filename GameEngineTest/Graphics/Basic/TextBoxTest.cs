@@ -117,12 +117,12 @@ namespace GameEngineTest.Graphics.Basic
         {
             fontMock = new Mock<ISpriteFont>();
             fontMock.Setup(o => o.MeasureString(It.IsAny<string>())).Returns<string>(s => new Vector2(16.0f * s.Length, 16.0f));
-            return new TextBox(fontMock.Object, gameMock.Object);
+            return new TextBox(fontMock.Object, gameStub);
         }
 
         private TextBox CreateTextBox(float width, float height, GraphicalTextStub stub)
         {
-            var box = new TextBox(stub, gameMock.Object);
+            var box = new TextBox(stub, gameStub);
             box.Width = width;
             box.Height = height;
 
@@ -132,7 +132,7 @@ namespace GameEngineTest.Graphics.Basic
         {
             var fontStub = new Mock<ISpriteFont>();
             fontStub.Setup(o => o.MeasureString(It.IsAny<string>())).Returns<string>(s => new Vector2(charSize * s.Length, charSize));
-            var textBox = new TextBox(fontMock.Object, gameMock.Object);
+            var textBox = new TextBox(fontMock.Object, gameStub);
             textBox.Height = height;
             textBox.Width = width;
 

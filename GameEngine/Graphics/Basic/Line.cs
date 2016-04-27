@@ -18,7 +18,7 @@ namespace GameEngine.Graphics.Basic
     /// </remarks>
     public class Line : AbstractGraphicComponent
     {
-        public Line(ITexture2D pixel, ITexture2D cupTexture, PokeEngine game)
+        public Line(ITexture2D pixel, ITexture2D cupTexture, IPokeEngine game)
             : base(game)
         {
             this.pixel = pixel;
@@ -26,7 +26,7 @@ namespace GameEngine.Graphics.Basic
             Color = Color.Black;
         }
 
-        public Line(PokeEngine game) : this(null, null, game) { }
+        public Line(IPokeEngine game) : this(null, null, game) { }
 
         private float circleTextureScale;
         private ITexture2D cupTexture;

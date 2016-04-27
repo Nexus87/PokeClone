@@ -21,7 +21,7 @@ namespace BattleLib.GraphicComponents
         private PokemonSprite playerSprite;
         private PokemonDataView playerView;
 
-        public BattleGraphics(PokeEngine game, ClientIdentifier player, ClientIdentifier ai)
+        public BattleGraphics(IPokeEngine game, ClientIdentifier player, ClientIdentifier ai)
             : base(game)
         {
             game.Services.AddService(typeof(IBattleGraphicService), this);
@@ -93,32 +93,32 @@ namespace BattleLib.GraphicComponents
 
         private void initAIGraphic()
         {
-            aiView.XPosition = (int)(PokeEngine.ScreenWidth * 0.2f);
-            aiView.YPosition = (int)(PokeEngine.ScreenHeight * 0.1f);
+            aiView.XPosition = Game.ScreenWidth * 0.2f;
+            aiView.YPosition = Game.ScreenHeight * 0.1f;
 
-            aiView.Height = (int)(PokeEngine.ScreenHeight * 0.25f);
-            aiView.Width = (int)(PokeEngine.ScreenWidth * 0.3f);
+            aiView.Height = Game.ScreenHeight * 0.25f;
+            aiView.Width = Game.ScreenWidth * 0.3f;
 
-            aiSprite.XPosition = (int)(PokeEngine.ScreenWidth * 0.6f);
-            aiSprite.YPosition = (int)(PokeEngine.ScreenHeight * 0.1f);
+            aiSprite.XPosition = Game.ScreenWidth * 0.6f;
+            aiSprite.YPosition = Game.ScreenHeight * 0.1f;
 
-            aiSprite.Height = (int)(PokeEngine.ScreenHeight * 0.25f);
-            aiSprite.Width = (int)(PokeEngine.ScreenHeight * 0.25f);
+            aiSprite.Height = Game.ScreenHeight * 0.25f;
+            aiSprite.Width = Game.ScreenHeight * 0.25f;
         }
 
         private void initPlayerGraphic()
         {
-            playerView.XPosition = (int)(PokeEngine.ScreenWidth * 0.6f);
-            playerView.YPosition = (int)(PokeEngine.ScreenHeight * 0.4f);
+            playerView.XPosition = Game.ScreenWidth * 0.6f;
+            playerView.YPosition = Game.ScreenHeight * 0.4f;
 
-            playerView.Height = (int)(PokeEngine.ScreenHeight * 0.25f);
-            playerView.Width = (int)(PokeEngine.ScreenWidth * 0.3f);
+            playerView.Height = Game.ScreenHeight * 0.25f;
+            playerView.Width = Game.ScreenWidth * 0.3f;
 
-            playerSprite.XPosition = (int)(PokeEngine.ScreenWidth * 0.2f);
-            playerSprite.YPosition = (int)(PokeEngine.ScreenHeight * 0.4f);
+            playerSprite.XPosition = Game.ScreenWidth * 0.2f;
+            playerSprite.YPosition = Game.ScreenHeight * 0.4f;
 
-            playerSprite.Height = (int)(PokeEngine.ScreenHeight * 0.25f);
-            playerSprite.Width = (int)(PokeEngine.ScreenHeight * 0.25f);
+            playerSprite.Height = Game.ScreenHeight * 0.25f;
+            playerSprite.Width = Game.ScreenHeight * 0.25f;
         }
     }
 }

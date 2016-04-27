@@ -35,7 +35,7 @@ namespace BattleLib.GraphicComponents
             OnAttackAnimationPlayed(this, null);
         }
 
-        public PokemonSprite(bool front, PokeEngine game)
+        public PokemonSprite(bool front, IPokeEngine game)
             : base(game)
         {
             this.front = front;

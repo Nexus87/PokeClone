@@ -385,8 +385,8 @@ namespace GameEngineTest.Graphics.Widgets
 
         private TableWidget<TestType> CreateTableWidget(TableViewMock view, int? visibleRows = null, int? visibleColumns = null)
         {
-            
-            var widget = new TableWidget<TestType>(visibleRows, visibleColumns, view, new PokeEngine());
+
+            var widget = new TableWidget<TestType>(visibleRows, visibleColumns, view, new Mock<IPokeEngine>().Object);
             widget.SetCoordinates(10, 10, 500, 500);
             return widget;
         }

@@ -3,6 +3,7 @@ using Base.Data;
 using BattleLib.Components.BattleState.Commands;
 using BattleLib.Events;
 using BattleLib.GraphicComponents;
+using GameEngine;
 using GameEngine.EventComponent;
 using GameEngine.Utils;
 using Microsoft.Xna.Framework;
@@ -29,7 +30,7 @@ namespace BattleLib.Components.BattleState
             this.data = data;
         }
 
-        public void Setup(Game game)
+        public void Setup(IPokeEngine game)
         {
             game.CheckNull("game");
 

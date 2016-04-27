@@ -23,12 +23,12 @@ namespace GameEngine.Graphics.Views
         ITableSelectionModel selectionModel;
         ITableGrid tableGrid;
 
-        public TableView(ITableModel<T> model, ITableRenderer<T> renderer, ITableSelectionModel selectionModel, PokeEngine game)
+        public TableView(ITableModel<T> model, ITableRenderer<T> renderer, ITableSelectionModel selectionModel, IPokeEngine game)
             : this(model, renderer, selectionModel, new TableGrid(game), game)
         {}
 
         //grid argument is for testing purpose
-        internal TableView(ITableModel<T> model, ITableRenderer<T> renderer, ITableSelectionModel selectionModel, ITableGrid grid, PokeEngine game)
+        internal TableView(ITableModel<T> model, ITableRenderer<T> renderer, ITableSelectionModel selectionModel, ITableGrid grid, IPokeEngine game)
             : base(game)
         {
             renderer.CheckNull("renderer");

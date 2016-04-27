@@ -12,13 +12,13 @@ namespace GameEngine.Graphics.Basic
         private readonly IGraphicalText textGraphic;
         private float preferedTextSize;
 
-        public TextBox(PokeEngine game) : this(game.DefaultFont, game) { }
+        public TextBox(IPokeEngine game) : this(game.DefaultFont, game) { }
 
-        public TextBox(ISpriteFont font, PokeEngine game)
+        public TextBox(ISpriteFont font, IPokeEngine game)
             : this(new TextGraphic(font), game)
         { }
 
-        public TextBox(IGraphicalText textGraphic, PokeEngine game) :
+        public TextBox(IGraphicalText textGraphic, IPokeEngine game) :
             base (game)
         {
             this.textGraphic = textGraphic;

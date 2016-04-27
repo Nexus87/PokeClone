@@ -19,7 +19,7 @@ namespace GameEngineTest.Graphics.Basic
     public class TestableMultilineTextBox : MultlineTextBox
     {
 
-        public TestableMultilineTextBox(int lines, ITextSplitter splitter) : base(new SpriteFontMock(), splitter, lines, new PokeEngine()) 
+        public TestableMultilineTextBox(int lines, ITextSplitter splitter) : base(new SpriteFontMock(), splitter, lines, new Mock<IPokeEngine>().Object) 
         { 
         }
 

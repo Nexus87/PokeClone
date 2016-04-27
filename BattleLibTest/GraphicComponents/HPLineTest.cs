@@ -30,7 +30,7 @@ namespace BattleLibTest.GraphicComponents
         {
             var outerLine = new Mock<ILine>().Object;
             var innerLine = new Mock<ILine>().Object;
-            var line = new HPLine(outerLine, innerLine, hpLine, gameMock.Object);
+            var line = new HPLine(outerLine, innerLine, hpLine, gameStub);
             line.MaxHP = 100;
             line.Setup();
 

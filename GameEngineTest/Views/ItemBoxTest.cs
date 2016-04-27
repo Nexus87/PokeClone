@@ -61,7 +61,7 @@ namespace GameEngineTest.Views
             if (text == null)
                 text = new TextGraphicComponentMock();
 
-            return new ItemBox(arrow, text, gameMock.Object);
+            return new ItemBox(arrow, text, gameStub);
 
         }
 

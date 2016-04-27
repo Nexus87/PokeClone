@@ -19,7 +19,7 @@ namespace GameEngine.Graphics.Views
 
         public string Text { get { return textBox.Text; } set { textBox.Text = value; } }
 
-        public ItemBox(IGraphicComponent arrow, ITextGraphicComponent textBox, PokeEngine game)
+        public ItemBox(IGraphicComponent arrow, ITextGraphicComponent textBox, IPokeEngine game)
             : base(game)
         {
             this.arrow = arrow;

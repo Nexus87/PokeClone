@@ -12,7 +12,7 @@ namespace GameEngine.Graphics.Widgets
     {
         private MultlineTextBox textBox;
 
-        public MessageBox(Configuration config, PokeEngine game)
+        public MessageBox(Configuration config, IPokeEngine game)
             : base(new MultlineTextBox(game), game)
         {
             textBox = InnerComponent;

@@ -20,7 +20,7 @@ namespace BattleLib.GraphicComponents.GUI
         private Dialog messageFrame;
         private Dialog pkmnFrame;
 
-        public BattleGUI(Configuration config, PokeEngine game, BattleStateComponent battleState, ClientIdentifier player, ClientIdentifier ai)
+        public BattleGUI(Configuration config, IPokeEngine game, BattleStateComponent battleState, ClientIdentifier player, ClientIdentifier ai)
         {
             game.Services.AddService(typeof(IGUIService), this);
             BattleState = battleState;
@@ -76,7 +76,7 @@ namespace BattleLib.GraphicComponents.GUI
             mainFrame.IsVisible = true;
         }
 
-        private void InitAttackMenu(Configuration config, PokeEngine game)
+        private void InitAttackMenu(Configuration config, IPokeEngine game)
         {
             
             
@@ -93,10 +93,10 @@ namespace BattleLib.GraphicComponents.GUI
 
             attackFrame.AddWidget(AttackMenu);
             attackFrame.SetCoordinates(
-                X: PokeEngine.ScreenWidth / 2.0f,
-                Y: 2.0f * PokeEngine.ScreenHeight / 3.0f,
-                width: PokeEngine.ScreenWidth - PokeEngine.ScreenWidth / 2.0f,
-                height: PokeEngine.ScreenHeight - 2.0f * PokeEngine.ScreenHeight / 3.0f
+                X: game.ScreenWidth / 2.0f,
+                Y: 2.0f * game.ScreenHeight / 3.0f,
+                width: game.ScreenWidth - game.ScreenWidth / 2.0f,
+                height: game.ScreenHeight - 2.0f * game.ScreenHeight / 3.0f
             );
 
             AttackMenu.ItemSelected += AttackMenu_ItemSelected;
@@ -107,7 +107,7 @@ namespace BattleLib.GraphicComponents.GUI
             game.GUIManager.AddWidget(attackFrame);
         }
 
-        private void InitItemMenu(Configuration config, PokeEngine game)
+        private void InitItemMenu(Configuration config, IPokeEngine game)
         {
             var model = new DefaultTableModel<Item>();
             var ItemMenu = new TableWidget<Item>(8, null, model, game);
@@ -115,11 +115,11 @@ namespace BattleLib.GraphicComponents.GUI
             for (int i = 0; i < 20; i++)
                 model.SetData(new Item { Name = "Item" + i }, i, 0);
 
-            itemFrame.XPosition = 3.0f * PokeEngine.ScreenWidth / 8.0f;
-            itemFrame.YPosition = 1.0f * PokeEngine.ScreenHeight / 8.0f;
+            itemFrame.XPosition = 3.0f * game.ScreenWidth / 8.0f;
+            itemFrame.YPosition = 1.0f * game.ScreenHeight / 8.0f;
 
-            itemFrame.Width = PokeEngine.ScreenWidth - itemFrame.XPosition;
-            itemFrame.Height = (2.0f * PokeEngine.ScreenHeight / 3.0f) - itemFrame.YPosition;
+            itemFrame.Width = game.ScreenWidth - itemFrame.XPosition;
+            itemFrame.Height = (2.0f * game.ScreenHeight / 3.0f) - itemFrame.YPosition;
 
             ItemMenu.ItemSelected += ItemMenu_ItemSelected;
             ItemMenu.OnExitRequested += BackToMain;
@@ -136,7 +136,7 @@ namespace BattleLib.GraphicComponents.GUI
             widget.SelectCell(0, 0);
         }
 
-        private void InitMainMenu(Configuration config, PokeEngine game)
+        private void InitMainMenu(Configuration config, IPokeEngine game)
         {
             var MainMenu = new TableWidget<string>(game);
             MainMenu.Model.SetData("Attack", 0, 0);
@@ -146,10 +146,10 @@ namespace BattleLib.GraphicComponents.GUI
 
             mainFrame.AddWidget(MainMenu);
 
-            mainFrame.XPosition = 0.5f * PokeEngine.ScreenWidth;
-            mainFrame.YPosition = 2.0f * PokeEngine.ScreenHeight / 3.0f;
-            mainFrame.Width = PokeEngine.ScreenWidth - mainFrame.XPosition;
-            mainFrame.Height = PokeEngine.ScreenHeight - mainFrame.YPosition;
+            mainFrame.XPosition = 0.5f * game.ScreenWidth;
+            mainFrame.YPosition = 2.0f * game.ScreenHeight / 3.0f;
+            mainFrame.Width = game.ScreenWidth - mainFrame.XPosition;
+            mainFrame.Height = game.ScreenHeight - mainFrame.YPosition;
 
             MainMenu.ItemSelected += MainMenu_ItemSelected;
             MainMenu.OnExitRequested += delegate { game.Exit(); };
@@ -158,15 +158,15 @@ namespace BattleLib.GraphicComponents.GUI
             game.GUIManager.AddWidget(mainFrame);
         }
 
-        private void InitMessageBox(Configuration config, PokeEngine game)
+        private void InitMessageBox(Configuration config, IPokeEngine game)
         {
             messageBox = new MessageBox(config, game);
 
             messageFrame.AddWidget(messageBox);
             messageFrame.XPosition = 0;
-            messageFrame.YPosition = 2.0f * PokeEngine.ScreenHeight / 3.0f;
-            messageFrame.Width = PokeEngine.ScreenWidth;
-            messageFrame.Height = PokeEngine.ScreenHeight - messageFrame.YPosition;
+            messageFrame.YPosition = 2.0f * game.ScreenHeight / 3.0f;
+            messageFrame.Width = game.ScreenWidth;
+            messageFrame.Height = game.ScreenHeight - messageFrame.YPosition;
 
             messageFrame.IsVisible = true;
             game.GUIManager.AddWidget(messageFrame);
@@ -179,15 +179,15 @@ namespace BattleLib.GraphicComponents.GUI
             TextDisplayed(this, EventArgs.Empty);
         }
 
-        private void InitPKMNMenu(Configuration config, PokeEngine game)
+        private void InitPKMNMenu(Configuration config, IPokeEngine game)
         {
             var model = new DefaultTableModel<Pokemon>();
             var PKMNMenu = new TableWidget<Pokemon>(model, game);
 
             pkmnFrame.XPosition = 0;
             pkmnFrame.YPosition = 0;
-            pkmnFrame.Width = PokeEngine.ScreenWidth;
-            pkmnFrame.Height = PokeEngine.ScreenHeight;
+            pkmnFrame.Width = game.ScreenWidth;
+            pkmnFrame.Height = game.ScreenHeight;
 
             PKMNMenu.ItemSelected += PKMNMenu_ItemSelected;
             PKMNMenu.OnExitRequested += BackToMain;

@@ -50,7 +50,7 @@ namespace GameEngine.Graphics
         /// <summary>
         /// Instance of the current running PokeEngine
         /// </summary>
-        PokeEngine Game { get; }
+        IPokeEngine Game { get; }
 
         /// <summary>
         /// Play the given animation
