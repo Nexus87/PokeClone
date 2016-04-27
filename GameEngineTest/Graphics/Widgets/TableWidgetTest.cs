@@ -14,12 +14,6 @@ namespace GameEngineTest.Graphics.Widgets
     [TestFixture]
     public class TableWidgetTest
     {
-        Mock<TableViewMock> tableViewMock = new Mock<TableViewMock>();
-        Mock<ITableModel<TestType>> modelMock = new Mock<ITableModel<TestType>>();
-        Mock<ITableRenderer<TestType>> rendererMock = new Mock<ITableRenderer<TestType>>();
-
-        TableWidget<TestType> table;
-
         public static List<TestCaseData> HandleInputTestData = new List<TestCaseData>
         {
             new TestCaseData(2, 3, 0, 0, CommandKeys.Right, 0, 1),
@@ -80,72 +74,94 @@ namespace GameEngineTest.Graphics.Widgets
             new TestCaseData(10, 6, 3, 4, CommandKeys.Down)
         };
 
-        [SetUp]
-        public void Setup()
-        {
-            tableViewMock = new Mock<TableViewMock> { CallBase = true };
-            modelMock = new Mock<ITableModel<TestType>>();
-            rendererMock = new Mock<ITableRenderer<TestType>>();
-        }
-
         [TestCase]
-        public void ZeroSizedTable()
+        public void CreateWidget_ZeroSizeTable_DoesNotThrow()
         {
-            table = CreateTableWidget(tableViewMock, 0, 0);
+            var tableViewStub = new TableViewMock();
+            Assert.DoesNotThrow(() => CreateTableWidget(tableViewStub, 0, 0));
         }
 
-        [Ignore("Needs refactoring")]
-        [TestCaseSource("ResizeTableTestData")]
-        public void ResizeTableTest(int rows, int columns, int visibleRows, int visibleColumns, TableIndex? selectedIndex, 
-            int newRows, int newColumns, TableIndex startIdx)
+        [TestCase(8, 8, 1, 3, 1, 3)]
+        [TestCase(3, 5, 0, 0, 0, 0)]
+        public void ResizeHandler_AutoResizeShrinkTableView_EndIndexIsAdjusted(int rows, int columns, 
+            int newRows, int newColumns, int endRow, int endColumn)
         {
-            var endIdx = new TableIndex();
-            endIdx.Row = Math.Min(startIdx.Row + visibleRows, newRows);
-            endIdx.Column = Math.Min(startIdx.Column + visibleColumns, newColumns);
-            table = CreateTableWidget(tableViewMock, rows, columns, visibleRows, visibleColumns);
+            var endIndex = new TableIndex(endRow, endColumn);
+            var view = new TableViewMock();
+            var table = CreateTableWidget(view, rows, columns);
             
-            if(selectedIndex != null)
-                table.SelectCell(selectedIndex.Value.Row, selectedIndex.Value.Column);
-
-            var view = tableViewMock.Object;
             view.Rows = newRows;
             view.Columns = newColumns;
-
             view.RaiseTableResizeEvent(newRows, newColumns);
 
-            AssertIndex(startIdx, view.StartIndex.Value);
-            AssertIndex(endIdx, view.EndIndex.Value);
+            AssertIndex(endIndex, view.EndIndex.Value);
         }
 
-        [TestCaseSource("InvalidSelectionData")]
-        public void InvalidSelectionTest(int rows, int columns, int selectedRow, int selectedColumn)
+        [TestCase(8, 8, 20, 1, 20, 1)]
+        [TestCase(0, 0, 10, 32, 10, 32)]
+        public void ResizeHandler_AutoResizeGrowingTableView_EndIndexIsAdjusted(int rows, int columns,
+            int newRows, int newColumns, int endRow, int endColumn)
         {
-            table = CreateTableWidget(tableViewMock, rows, columns);
+            var endIndex = new TableIndex(endRow, endColumn);
+            var view = new TableViewMock();
+            var table = CreateTableWidget(view, rows, columns);
+
+            view.Rows = newRows;
+            view.Columns = newColumns;
+            view.RaiseTableResizeEvent(newRows, newColumns);
+
+            AssertIndex(endIndex, view.EndIndex.Value);
+        }
+
+        [TestCase(0, 0, 5, 5, 0, 0)]
+        [TestCase(8, 3, 2, 1, 2, 1)]
+        [TestCase(1, 5, 5, 5, 1, 5)]
+        public void CreateTable_WithVisibleColumnsAndRows_EndIndexHasExpectedValue(int rows, int column, int visibleRows, int visibleColumns, int endRow, int endColumn)
+        {
+            var view = new TableViewMock();
+            var table = CreateTableWidget(view, rows, column, visibleRows, visibleColumns);
+            var endIndex = new TableIndex(endRow, endColumn);
+
+            AssertIndex(endIndex, view.EndIndex.Value);
+            
+        }
+
+        [TestCase(10, 10, -1, 0)]
+        [TestCase(10, 10, 0, -1)]
+        [TestCase(10, 10, 10, 0)]
+        [TestCase(10, 10, 0, 10)]
+        [TestCase(10, 10, -1, -5)]
+        [TestCase(10, 10, 13, -1)]
+        public void SelectCell_InvalidCell_ThrowsException(int rows, int columns, int selectedRow, int selectedColumn)
+        {
+            var tableViewMock = new TableViewMock();
+            var table = CreateTableWidget(tableViewMock, rows, columns);
 
             Assert.Throws<ArgumentOutOfRangeException>(delegate { table.SelectCell(selectedRow, selectedColumn); });
         }
 
-        [TestCase]
-        public void ForwardingCoordinatesTest()
+        [TestCase(10.0f, 12.0f, 400.0f, 500.0f)]
+        public void Draw_SetCoordiantes_TableViewFillsWholeSpace(float x, float y, float width, float height)
         {
-            table = CreateTableWidget(tableViewMock);
+            var tableViewMock = new TableViewMock();
+            var table = CreateTableWidget(tableViewMock);
+            table.SetCoordinates(x, y, width, height);
 
-            table.Draw(new SpriteBatchMock());
+            table.Draw();
 
-            var tableMock = tableViewMock.Object;
-
-            Assert.AreEqual(table.XPosition, tableMock.XPosition);
-            Assert.AreEqual(table.YPosition, tableMock.YPosition);
-            Assert.AreEqual(table.Width, tableMock.Width);
-            Assert.AreEqual(table.Height, tableMock.Height);
+            Assert.AreEqual(x, tableViewMock.XPosition);
+            Assert.AreEqual(y, tableViewMock.YPosition);
+            Assert.AreEqual(width, tableViewMock.Width);
+            Assert.AreEqual(height, tableViewMock.Height);
         }
 
-        [TestCaseSource("SelectCellTestData")]
-        public void RespectTableViewsSelectionReturnValue(int rows, int columns, int selectedRow, int selectedColumn)
+        [TestCase(2, 2, 1, 0)]
+        [TestCase(1, 4, 0, 3)]
+        [TestCase(10, 4, 9, 3)]
+        public void SelectCell_TableViewReturnsFalse_CursorHasNotChanged(int rows, int columns, int selectedRow, int selectedColumn)
         {
-            table = CreateTableWidget(tableViewMock, rows, columns);
-            tableViewMock.Setup(o => o.SetCellSelection(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<bool>()))
-                .Returns(false);
+            var tableViewMock = new TableViewMock { SelectionReturnValue = false };
+            var table = CreateTableWidget(tableViewMock, rows, columns);
 
             int startCursorRow = table.cursorRow;
             int startCursorColumn = table.cursorColumn;
@@ -154,34 +170,34 @@ namespace GameEngineTest.Graphics.Widgets
 
             Assert.AreEqual(startCursorRow, table.cursorRow);
             Assert.AreEqual(startCursorColumn, table.cursorColumn);
-
         }
 
-        [TestCaseSource("InputKeysData")]
-        public void RespectTableViewsInputHandlerReturnValue(int rows, int columns, int selectedRow, int selectedColumn,
+        [TestCase(10, 6, 3, 4, CommandKeys.Left)]
+        [TestCase(10, 6, 3, 4, CommandKeys.Right)]
+        [TestCase(10, 6, 3, 4, CommandKeys.Up)]
+        [TestCase(10, 6, 3, 4, CommandKeys.Down)]
+        public void HandleInput_TableViewSelectionFails_CursorNotChanged(int rows, int columns, int initialSelectedRow, int initialSelectedColumn,
             CommandKeys key)
         {
-            table = CreateTableWidget(tableViewMock, rows, columns);
-            tableViewMock.Setup(o => o.SetCellSelection(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<bool>()))
-                .Returns(true);
+            var tableViewMock = new TableViewMock();
+            var table = CreateTableWidget(tableViewMock, rows, columns);
 
-            table.SelectCell(selectedRow, selectedColumn);
-
-            int startCursorRow = table.cursorRow;
-            int startCursorColumn = table.cursorColumn;
-
-            tableViewMock.Setup(o => o.SetCellSelection(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<bool>()))
-                .Returns(false);
+            table.SelectCell(initialSelectedRow, initialSelectedColumn);
+            tableViewMock.SelectionReturnValue = false;
 
             table.HandleInput(key);
 
-            Assert.AreEqual(startCursorRow, table.cursorRow);
-            Assert.AreEqual(startCursorColumn, table.cursorColumn);
+            Assert.AreEqual(initialSelectedRow, table.cursorRow);
+            Assert.AreEqual(initialSelectedColumn, table.cursorColumn);
         }
-        [TestCaseSource("SelectCellTestData")]
-        public void SelectCellTest(int rows, int columns, int selectedRow, int selectedColumn)
+
+        [TestCase(2, 2, 1, 0)]
+        [TestCase(1, 4, 0, 3)]
+        [TestCase(10, 4, 9, 3)]
+        public void SelectCell_WithValidData_TableViewSelectCellIsCalled(int rows, int columns, int selectedRow, int selectedColumn)
         {
-            table = CreateTableWidget(tableViewMock, rows, columns);
+            var tableViewMock = new Mock<TableViewMock> { CallBase = true };
+            var table = CreateTableWidget(tableViewMock.Object, rows, columns);
             tableViewMock.Setup(o => o.SetCellSelection(selectedRow, selectedColumn, true)).Verifiable();
 
             table.SelectCell(selectedRow, selectedColumn);
@@ -190,11 +206,15 @@ namespace GameEngineTest.Graphics.Widgets
 
         }
 
-        [TestCaseSource("HandleInputTestData")]
-        public void HandleInputTest(int rows, int columns, int selectedRow, int selectedColumn, 
+        [TestCase(2, 3, 0, 0, CommandKeys.Right, 0, 1)]
+        [TestCase(3, 2, 0, 0, CommandKeys.Down, 1, 0)]
+        [TestCase(10, 10, 9, 9, CommandKeys.Up, 8, 9)]
+        [TestCase(10, 10, 9, 9, CommandKeys.Left, 9, 8)]
+        public void HandleInput_StartingFromSomeCell_TableViewSelectCellIsCalled(int rows, int columns, int selectedRow, int selectedColumn, 
                                           CommandKeys key, int newRow, int newColumns)
         {
-            table = CreateTableWidget(tableViewMock, rows, columns);
+            var tableViewMock = new Mock<TableViewMock> { CallBase = true };
+            var table = CreateTableWidget(tableViewMock.Object, rows, columns);
             table.SelectCell(selectedRow, selectedColumn);
 
             tableViewMock.ResetCalls();
@@ -205,43 +225,114 @@ namespace GameEngineTest.Graphics.Widgets
             tableViewMock.Verify();
         }
 
-        [Ignore("Needs refactoring")]
-        [TestCaseSource("ViewPortSelectionTestData")]
-        public void ViewPortSetCellSelectionTest(int rows, int columns, int visibleRows, int visibleColumns, 
-            TableIndex selectedCell, TableIndex start, TableIndex end)
+        [TestCase(20, 32, 5, 3, 10, 21, 11, 22)]
+        public void SetSelection_WithVisibleRowsColumnsSet_EndIndexAdjusts(int rows, int columns, int visibleRows, int visibleColumns, 
+            int selectedRow, int selectedColumn, int endRow, int endColumn)
         {
+            var tableViewMock = new TableViewMock();
+            var table = CreateTableWidget(tableViewMock, rows, columns, visibleRows, visibleColumns);
+            var endIndex = new TableIndex(endRow, endColumn);
 
-            table = CreateTableWidget(tableViewMock, rows, columns, visibleRows, visibleColumns);
-            var view = tableViewMock.Object;   
+            table.SelectCell(selectedRow, selectedColumn);
 
-            // Changes might only be applied in the Update method.
-            // So we call Draw to make sure, that it is called.
-            table.Draw(new SpriteBatchMock());
-            // Start cell is still (0, 0)
-            AssertIndex(view.StartIndex.Value, 0, 0);
-            AssertIndex(view.EndIndex.Value, visibleRows , visibleColumns);
-
-
-            table.SelectCell(selectedCell.Row, selectedCell.Column);
-            table.Draw(new SpriteBatchMock());
-
-            AssertIndex(start, view.StartIndex.Value);
-            AssertIndex(end, view.EndIndex.Value);
+            AssertIndex(endIndex, tableViewMock.EndIndex.Value);
+            
         }
 
-        [Ignore("Needs refactoring")]
-        [TestCaseSource("ViewPortInputTestData")]
-        public void ViewPortInputTest(int rows, int columns, int visibleRows, int visibleColumns, TableIndex startSelection,
-            CommandKeys key, TableIndex start, TableIndex end)
+        [TestCase(20, 32, 5, 3, 10, 21, 6, 19)]
+        public void SetSelection_WithVisibleRowsColumnsSet_StartIndexAdjusts(int rows, int columns, int visibleRows, int visibleColumns, 
+            int selectedRow, int selectedColumn, int startRow, int startColumn)
         {
-            table = CreateTableWidget(tableViewMock, rows, columns, visibleRows, visibleColumns);
-            var view = tableViewMock.Object;
+            var tableViewMock = new TableViewMock();
+            var table = CreateTableWidget(tableViewMock, rows, columns, visibleRows, visibleColumns);
+            var startIndex = new TableIndex(startRow, startColumn);
 
-            table.SelectCell(startSelection.Row, startSelection.Column);
+            table.SelectCell(selectedRow, selectedColumn);
+
+            AssertIndex(startIndex, tableViewMock.StartIndex.Value);
+
+        }
+
+        [TestCase(20, 32, 5, 3, 10, 21, 1, 2, 1, 2)]
+        public void SetSelection_CalledTwiceWithDifferentIndexes_StartIndexAdjusts(int rows, int columns, int visibleRows, int visibleColumns, 
+            int selectedRow, int selectedColumn, int selectedRow2, int selectedColumn2, 
+            int startRow, int startColumn)
+        {
+            var tableViewMock = new TableViewMock();
+            var table = CreateTableWidget(tableViewMock, rows, columns, visibleRows, visibleColumns);
+            var startIndex = new TableIndex(startRow, startColumn);
+
+            table.SelectCell(selectedRow, selectedColumn);
+            table.SelectCell(selectedRow2, selectedColumn2);
+
+            AssertIndex(startIndex, tableViewMock.StartIndex.Value);
+
+        }
+
+        [TestCase(20, 32, 5, 3, 10, 21, 1, 2, 6, 5)]
+        public void SetSelection_CalledTwiceWithDifferentIndexes_EndIndexAdjusts(int rows, int columns, int visibleRows, int visibleColumns,
+            int selectedRow, int selectedColumn, int selectedRow2, int selectedColumn2, 
+            int endRow, int endColumn)
+        {
+            var tableViewMock = new TableViewMock();
+            var table = CreateTableWidget(tableViewMock, rows, columns, visibleRows, visibleColumns);
+            var endIndex = new TableIndex(endRow, endColumn);
+
+            table.SelectCell(selectedRow, selectedColumn);
+            table.SelectCell(selectedRow2, selectedColumn2);
+
+            AssertIndex(endIndex, tableViewMock.EndIndex.Value);
+
+        }
+
+        [TestCase(20, 32, 5, 3, 10, 21, CommandKeys.Right, 11, 23)]
+        public void HandleInput_WithVisibleRowsColumnsSet_EndIndexAdjusts(int rows, int columns, int visibleRows, int visibleColumns,
+            int selectedRow, int selectedColumn,
+            CommandKeys key,
+            int endRow, int endColumn)
+        {
+            var tableViewMock = new TableViewMock();
+            var table = CreateTableWidget(tableViewMock, rows, columns, visibleRows, visibleColumns);
+            var endIndex = new TableIndex(endRow, endColumn);
+
+            table.SelectCell(selectedRow, selectedColumn);
             table.HandleInput(key);
 
-            AssertIndex(start, view.StartIndex.Value);
-            AssertIndex(end, view.EndIndex.Value);
+            AssertIndex(endIndex, tableViewMock.EndIndex.Value);
+
+        }
+
+        [TestCase(20, 32, 5, 3, 10, 21, CommandKeys.Right, 6, 20)]
+        public void HandleInput_WithVisibleRowsColumnsSet_StartIndexAdjusts(int rows, int columns, int visibleRows, int visibleColumns,
+            int selectedRow, int selectedColumn,
+            CommandKeys key,
+            int startRow, int startColumn)
+        {
+            var tableViewMock = new TableViewMock();
+            var table = CreateTableWidget(tableViewMock, rows, columns, visibleRows, visibleColumns);
+            var startIndex = new TableIndex(startRow, startColumn);
+
+            table.SelectCell(selectedRow, selectedColumn);
+            table.HandleInput(key);
+
+            AssertIndex(startIndex, tableViewMock.StartIndex.Value);
+
+        }
+
+        [TestCase(10, 4, 9, 3, 1, 1, 0, 0)]
+        [TestCase(10, 4, 9, 3, 0, 0, 0, 0)]
+        public void Cursor_OnTableResize_IsAdjusted(int rows, int columns, int selectedRow, int selectedColumn, 
+            int newRows, int newColumns,
+            int expectedRow, int expectedColumn)
+        {
+            var tableViewMock = new TableViewMock();
+            var table = CreateTableWidget(tableViewMock, rows, columns);
+            table.SelectCell(selectedRow, selectedColumn);
+
+            tableViewMock.RaiseTableResizeEvent(newRows, newColumns);
+
+            Assert.AreEqual(expectedRow, table.cursorRow);
+            Assert.AreEqual(expectedColumn, table.cursorColumn);
         }
 
         private static void AssertIndex(TableIndex idx, TableIndex idx2)
@@ -255,23 +346,23 @@ namespace GameEngineTest.Graphics.Widgets
             Assert.AreEqual(row, idx.Row);
         }
 
-        private TableWidget<TestType> CreateTableWidget(Mock<TableViewMock> view, int rows, int columns, int? visibleRows = null, int? visibleColumns = null)
+        private TableWidget<TestType> CreateTableWidget(TableViewMock view, int rows, int columns, int? visibleRows = null, int? visibleColumns = null)
         {
             SetupView(view, rows, columns);
             return CreateTableWidget(view, visibleRows, visibleColumns);
         }
 
-        private TableWidget<TestType> CreateTableWidget(Mock<TableViewMock> view, int? visibleRows = null, int? visibleColumns = null)
+        private TableWidget<TestType> CreateTableWidget(TableViewMock view, int? visibleRows = null, int? visibleColumns = null)
         {
             
-            var widget = new TableWidget<TestType>(visibleRows, visibleColumns, view.Object, new PokeEngine());
+            var widget = new TableWidget<TestType>(visibleRows, visibleColumns, view, new PokeEngine());
             widget.SetCoordinates(10, 10, 500, 500);
             return widget;
         }
-        private void SetupView(Mock<TableViewMock> tableViewMock, int rows, int columns)
+        private void SetupView(TableViewMock tableViewMock, int rows, int columns)
         {
-            tableViewMock.Object.Rows = rows;
-            tableViewMock.Object.Columns = columns;
+            tableViewMock.Rows = rows;
+            tableViewMock.Columns = columns;
         }
     }
 }

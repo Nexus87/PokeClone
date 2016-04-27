@@ -17,6 +17,12 @@ namespace GameEngineTest.Util
         public virtual event EventHandler<TableResizeEventArgs> OnTableResize;
         public virtual event EventHandler<SelectionChangedEventArgs> SelectionChanged;
 
+        public bool SelectionReturnValue { get; set; }
+
+        public TableViewMock()
+        {
+            SelectionReturnValue = true;
+        }
         public void RaiseTableResizeEvent(int rows, int columns)
         {
             Rows = rows;
@@ -100,7 +106,7 @@ namespace GameEngineTest.Util
 
         public virtual bool SetCellSelection(int row, int column, bool isSelected)
         {
-            return true;
+            return SelectionReturnValue;
         }
 
         public virtual ITableModel<TestType> Model { get; set; }
