@@ -3,6 +3,7 @@ using BattleLib.Components.AI;
 using BattleLib.Components.BattleState;
 using BattleLib.GraphicComponents;
 using GameEngine;
+using GameEngine.Graphics;
 using Microsoft.Xna.Framework;
 using System.Linq;
 
@@ -15,7 +16,7 @@ namespace BattleLib
         IPokeEngine engine;
         private BattleStateComponent battleState;
 
-        public InitComponent(Configuration config, IPokeEngine game, RulesSet rules, ICommandScheduler scheduler)
+        public InitComponent(Configuration config, IPokeEngine game, GraphicComponentFactory factory, RulesSet rules, ICommandScheduler scheduler)
         {
             var playerID = new ClientIdentifier();
             var aiID = new ClientIdentifier();
@@ -29,9 +30,9 @@ namespace BattleLib
             player = new Client(playerID);
             ai = new Client(aiID);
 
-            var graphic = new BattleGraphics(game, playerID, aiID);
+            var graphic = new BattleGraphics(game, factory, playerID, aiID);
             battleState = new BattleStateComponent(playerID, aiID, game, rules, scheduler);
-            var gui = new BattleGUI(config, game, battleState, playerID, aiID);
+            var gui = new BattleGUI(config, game, factory, battleState, playerID, aiID);
             var aiComponent = new AIComponent(battleState, ai, playerID);
 
             game.AddGameComponent(aiComponent);

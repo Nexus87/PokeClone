@@ -14,7 +14,7 @@ namespace GameEngineTest.Graphics
 
         protected Container CreateContainer(float x = 0, float y = 0, float width = 0, float height = 0)
         {
-            var container = new Container(gameStub);
+            var container = new Container();
             container.SetCoordinates(x, y, width, height);
 
             return container;
@@ -207,7 +207,7 @@ namespace GameEngineTest.Graphics
         public void LayoutContainer_EmptyContainer_DoesNotThrow()
         {
             var testLayout = CreateLayout();
-            var testContainer = new Container(gameStub);
+            var testContainer = new Container();
 
             Assert.DoesNotThrow(() => testLayout.LayoutContainer(testContainer));
         }

@@ -11,8 +11,7 @@ namespace GameEngine.Graphics
 
         public string Text { get { return textBox.Text; } set { textBox.Text = value; } }
 
-        public ItemBox(IGraphicComponent arrow, ITextGraphicComponent textBox, IPokeEngine game)
-            : base(game)
+        public ItemBox(IGraphicComponent arrow, ITextGraphicComponent textBox)
         {
             this.arrow = arrow;
             this.textBox = textBox;

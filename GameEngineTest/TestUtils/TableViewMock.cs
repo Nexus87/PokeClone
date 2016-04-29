@@ -130,5 +130,8 @@ namespace GameEngineTest.TestUtils
         public virtual void Setup()
         {
         }
+
+
+        public Color Color { get; set; }
     }
 }

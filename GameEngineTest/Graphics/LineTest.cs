@@ -21,7 +21,7 @@ namespace GameEngineTest.Graphics
             cupTextureStub.Setup(o => o.Width).Returns(10);
             cupTextureStub.Setup(o => o.Bounds).Returns(new Rectangle(0, 0, 10, 10));
 
-            var line = new Line(textureStub.Object, cupTextureStub.Object, gameStub);
+            var line = new Line(textureStub.Object, cupTextureStub.Object);
             line.Setup();
 
             return line;

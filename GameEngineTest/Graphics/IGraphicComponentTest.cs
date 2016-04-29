@@ -12,7 +12,6 @@ namespace GameEngineTest.Graphics
     public abstract class IGraphicComponentTest
     {
         public Mock<ISpriteFont> fontMock;
-        public IPokeEngine gameStub = new Mock<IPokeEngine>().Object;
 
         protected abstract IGraphicComponent CreateComponent();
 

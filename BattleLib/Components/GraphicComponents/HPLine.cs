@@ -5,37 +5,23 @@ using System;
 
 namespace BattleLib.GraphicComponents
 {
-    public interface ILine : IGraphicComponent
-    {
-        Color Color { get; set; }
-    }
-
-    public class DefaultLine : Line, ILine
-    {
-        public DefaultLine(IPokeEngine game) : base(game) { }
-    }
-
     public class HPLine : AbstractGraphicComponent
     {
         private const int LINE_BORDER_SIZE = 10;
         private int currentHp = 0;
-        private ILine hpLine;
-        private ILine innerLine;
+        private IGraphicComponent hpLine;
+        private IGraphicComponent innerLine;
         private int maxHp = 0;
-        private ILine outerLine;
+        private IGraphicComponent outerLine;
 
-        public HPLine(IPokeEngine game)
-            : this(new DefaultLine(game), new DefaultLine(game), new DefaultLine(game), game)
-        { }
 
-        public HPLine(ILine outerLine, ILine innerLine, ILine hpLine, IPokeEngine game) :
-            base(game)
+        public HPLine(IGraphicComponent outerLine, IGraphicComponent innerLine, IGraphicComponent hpLine, Color backgroundColor)
         {
             this.outerLine = outerLine;
             this.innerLine = innerLine;
             this.hpLine = hpLine;
             outerLine.Color = Color.Black;
-            innerLine.Color = game.BackgroundColor;
+            innerLine.Color = backgroundColor;
         }
 
         public event EventHandler AnimationDone = delegate { };

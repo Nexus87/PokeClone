@@ -15,6 +15,7 @@ namespace GameEngine
         private const float screenWidth = 1920;
         private static readonly Color backgroundColor = new Color(248, 248, 248, 0);
 
+        internal GraphicComponentFactory factory;
         public bool IsRunning { get; private set; }
 
         public ISpriteFont DefaultFont { get; private set; }
@@ -37,9 +38,6 @@ namespace GameEngine
             IsRunning = false;
             input = new InputComponent(this, config);
             GUIManager = new GUIManager();
-            DefaultArrowTexture = new XNATexture2D(config.DefaultArrowTexture, Content);
-            DefaultFont = new XNASpriteFont(config.DefaultFont, Content);
-            DefaultBorderTexture = new XNATexture2D(config.DefaultBorderTexture, Content);
 
             new GraphicsDeviceManager(this);
 
@@ -124,9 +122,7 @@ namespace GameEngine
         {
             base.LoadContent();
             batch = new XNASpriteBatch(GraphicsDevice);
-            DefaultArrowTexture.LoadContent();
-            DefaultFont.LoadContent();
-            DefaultBorderTexture.LoadContent();
+            factory.Setup(this);
             if (Graphic == null)
                 throw new InvalidOperationException("Graphic component is not set");
             Graphic.Setup();

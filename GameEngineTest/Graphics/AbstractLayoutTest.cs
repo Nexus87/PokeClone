@@ -136,7 +136,7 @@ namespace GameEngineTest.Graphics
 
         private Container CreateContainer()
         {
-            return new Container(new Mock<IPokeEngine>().Object);
+            return new Container();
         }
     }
 }

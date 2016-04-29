@@ -12,25 +12,18 @@ namespace GameEngine.Graphics
         private int lineNumber;
         private ISpriteFont font;
 
-        public MultlineTextBox(IPokeEngine game) : this(2, game) 
-        { }
-        
-        public MultlineTextBox(int lineNumber, IPokeEngine game)
-            : this(game.DefaultFont,  new DefaultTextSplitter(), lineNumber, game)
-        { }
 
         private ITextGraphicComponent GetComponent(int index)
         {
             return (ITextGraphicComponent) container.Components[index];
         }
 
-        public MultlineTextBox(ISpriteFont font, ITextSplitter splitter, int lineNumber, IPokeEngine game) :
-            base(game)
+        public MultlineTextBox(ISpriteFont font, ITextSplitter splitter, int lineNumber)
         {
             this.lineNumber = lineNumber;
             this.font = font;
             this.splitter = splitter;
-            container = new Container(game);
+            container = new Container();
             container.Layout = new VBoxLayout();
         }
 
@@ -97,7 +90,7 @@ namespace GameEngine.Graphics
 
         protected virtual ITextGraphicComponent CreateTextComponent(ISpriteFont font)
         {
-            return new TextBox(font, Game);
+            return new TextBox(font);
         }
 
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)

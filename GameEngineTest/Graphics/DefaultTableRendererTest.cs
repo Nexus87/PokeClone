@@ -12,7 +12,7 @@ namespace GameEngineTest.Graphics
     {
         protected class TestTableRenderer : DefaultTableRenderer<TestType>
         {
-            public TestTableRenderer() : base(new Mock<IPokeEngine>().Object) { }
+            public TestTableRenderer() : base(null) { }
             protected override ISelectableTextComponent CreateComponent()
             {
                 return new TableComponentMock<TestType>();

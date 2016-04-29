@@ -54,7 +54,7 @@ namespace GameEngineTest.Graphics
             if (text == null)
                 text = new TextGraphicComponentMock();
 
-            return new ItemBox(arrow, text, gameStub);
+            return new ItemBox(arrow, text);
 
         }
 

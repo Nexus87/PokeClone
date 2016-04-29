@@ -10,14 +10,11 @@ namespace GameEngine.Graphics
         private readonly IGraphicalText textGraphic;
         private float preferedTextSize;
 
-        public TextBox(IPokeEngine game) : this(game.DefaultFont, game) { }
-
-        public TextBox(ISpriteFont font, IPokeEngine game)
-            : this(new TextGraphic(font), game)
+        public TextBox(ISpriteFont font)
+            : this(new TextGraphic(font))
         { }
 
-        public TextBox(IGraphicalText textGraphic, IPokeEngine game) :
-            base (game)
+        public TextBox(IGraphicalText textGraphic)
         {
             this.textGraphic = textGraphic;
             preferedTextSize = textGraphic.CharHeight;

@@ -104,7 +104,7 @@ namespace GameEngineTest.Graphics
         {
             if (mainComponent == null)
                 mainComponent = new GraphicComponentMock();
-            var testComponent = new MultiLayeredComponent(mainComponent, gameStub);
+            var testComponent = new MultiLayeredComponent(mainComponent);
             testComponent.Background = background;
             testComponent.Foreground = foreground;
 

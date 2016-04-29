@@ -5,10 +5,6 @@ namespace GameEngine.Graphics
 {
     public class Container : AbstractGraphicComponent
     {
-        public Container(IPokeEngine game) : base(game)
-        {
-        }
-
         public ILayout Layout { get; set; }
 
         public IReadOnlyList<IGraphicComponent> Components { get { return components.AsReadOnly(); } }

@@ -44,11 +44,6 @@ namespace GameEngine.Graphics
     public interface IGraphicComponent
     {
         /// <summary>
-        /// Instance of the current running PokeEngine
-        /// </summary>
-        IPokeEngine Game { get; }
-
-        /// <summary>
         /// Play the given animation
         /// </summary>
         /// <param name="animation">Animation to play</param>
@@ -97,5 +92,7 @@ namespace GameEngine.Graphics
         /// be after Run().
         /// </remarks>
         void Setup();
+
+        Color Color { get; set; }
     }
 }

@@ -261,9 +261,9 @@ namespace GameEngineTest.Graphics
         private TableView<Object> CreateTable(Mock<ITableModel<Object>> modelMock, TableRendererMock<Object> renderer, Mock<ITableSelectionModel> selectionModelMock, ITableGrid grid = null)
         {
             if (grid == null)
-                grid = new TableGrid(gameStub);
+                grid = new TableGrid();
 
-            var table = new TableView<Object>(modelMock.Object, renderer, selectionModelMock.Object, grid, gameStub);
+            var table = new TableView<Object>(modelMock.Object, renderer, selectionModelMock.Object, grid);
             table.SetCoordinates(0, 0, 500, 500);
             return table;
         }
@@ -279,7 +279,7 @@ namespace GameEngineTest.Graphics
             var modelMock = new Mock<ITableModel<Object>>();
             var selectionModelMock = new Mock<ITableSelectionModel>();
             var renderer = new TableRendererMock<Object>();
-            var table = new TableView<Object>(modelMock.Object, renderer, selectionModelMock.Object, gameStub);
+            var table = new TableView<Object>(modelMock.Object, renderer, selectionModelMock.Object);
             table.Setup();
             return table;
         }

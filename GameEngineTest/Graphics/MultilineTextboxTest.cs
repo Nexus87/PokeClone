@@ -14,7 +14,7 @@ namespace GameEngineTest.Graphics
     public class TestableMultilineTextBox : MultlineTextBox
     {
 
-        public TestableMultilineTextBox(int lines, ITextSplitter splitter) : base(null, splitter, lines, new Mock<IPokeEngine>().Object) 
+        public TestableMultilineTextBox(int lines, ITextSplitter splitter) : base(null, splitter, lines) 
         { 
         }
 

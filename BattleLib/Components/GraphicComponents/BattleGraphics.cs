@@ -17,14 +17,14 @@ namespace BattleLib.GraphicComponents
         private PokemonDataView aiView;
         private PokemonSprite playerSprite;
         private PokemonDataView playerView;
-
-        public BattleGraphics(IPokeEngine game, ClientIdentifier player, ClientIdentifier ai)
-            : base(game)
+        private IPokeEngine game;
+        public BattleGraphics(IPokeEngine game, GraphicComponentFactory factory, ClientIdentifier player, ClientIdentifier ai)
         {
             game.Services.AddService(typeof(IBattleGraphicService), this);
+            this.game = game;
 
-            aiView = new PokemonDataView(game, false);
-            playerView = new PokemonDataView(game, true);
+            aiView = new PokemonDataView(game, factory, false);
+            playerView = new PokemonDataView(game, factory, true);
             aiSprite = new PokemonSprite(true, game);
             playerSprite = new PokemonSprite(false, game);
 
@@ -90,32 +90,32 @@ namespace BattleLib.GraphicComponents
 
         private void initAIGraphic()
         {
-            aiView.XPosition = Game.ScreenWidth * 0.2f;
-            aiView.YPosition = Game.ScreenHeight * 0.1f;
+            aiView.XPosition = game.ScreenWidth * 0.2f;
+            aiView.YPosition = game.ScreenHeight * 0.1f;
 
-            aiView.Height = Game.ScreenHeight * 0.25f;
-            aiView.Width = Game.ScreenWidth * 0.3f;
+            aiView.Height = game.ScreenHeight * 0.25f;
+            aiView.Width = game.ScreenWidth * 0.3f;
 
-            aiSprite.XPosition = Game.ScreenWidth * 0.6f;
-            aiSprite.YPosition = Game.ScreenHeight * 0.1f;
+            aiSprite.XPosition = game.ScreenWidth * 0.6f;
+            aiSprite.YPosition = game.ScreenHeight * 0.1f;
 
-            aiSprite.Height = Game.ScreenHeight * 0.25f;
-            aiSprite.Width = Game.ScreenHeight * 0.25f;
+            aiSprite.Height = game.ScreenHeight * 0.25f;
+            aiSprite.Width = game.ScreenHeight * 0.25f;
         }
 
         private void initPlayerGraphic()
         {
-            playerView.XPosition = Game.ScreenWidth * 0.6f;
-            playerView.YPosition = Game.ScreenHeight * 0.4f;
+            playerView.XPosition = game.ScreenWidth * 0.6f;
+            playerView.YPosition = game.ScreenHeight * 0.4f;
 
-            playerView.Height = Game.ScreenHeight * 0.25f;
-            playerView.Width = Game.ScreenWidth * 0.3f;
+            playerView.Height = game.ScreenHeight * 0.25f;
+            playerView.Width = game.ScreenWidth * 0.3f;
 
-            playerSprite.XPosition = Game.ScreenWidth * 0.2f;
-            playerSprite.YPosition = Game.ScreenHeight * 0.4f;
+            playerSprite.XPosition = game.ScreenWidth * 0.2f;
+            playerSprite.YPosition = game.ScreenHeight * 0.4f;
 
-            playerSprite.Height = Game.ScreenHeight * 0.25f;
-            playerSprite.Width = Game.ScreenHeight * 0.25f;
+            playerSprite.Height = game.ScreenHeight * 0.25f;
+            playerSprite.Width = game.ScreenHeight * 0.25f;
         }
     }
 }

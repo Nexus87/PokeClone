@@ -6,10 +6,8 @@ namespace GameEngine.Graphics
 {
     public abstract class AbstractGraphicComponent : IGraphicComponent
     {
-        public IPokeEngine Game { get; protected set; }
-        protected AbstractGraphicComponent(IPokeEngine game)
+        protected AbstractGraphicComponent()
         {
-            Game = game;
             NeedsUpdate = true;
         }
 
@@ -124,5 +122,8 @@ namespace GameEngine.Graphics
         protected IAnimation Animation { get; set; }
 
         public abstract void Setup();
+
+
+        public Color Color { get; set; }
     }
 }

@@ -24,7 +24,7 @@ namespace GameEngineTest.Graphics
 
         private TextureBox CreateEmptyBox()
         {
-            return new TextureBox(gameStub);
+            return new TextureBox();
         }
 
         protected override IGraphicComponent CreateComponent()

@@ -50,17 +50,10 @@ namespace GameEngine.Graphics
         /// </summary>
         /// <param name="component">Inner component</param>
         /// <param name="game">Instance of PokeEngine</param>
-        protected ForwardingGraphicComponent(T component, IPokeEngine game)
+        protected ForwardingGraphicComponent(T component)
         {
-            Game = game;
             InnerComponent = component;
         }
-
-        /// <summary>
-        /// Game instance
-        /// </summary>
-        /// <see cref="IGraphicComponent.Game"/>
-        public IPokeEngine Game { get; protected set; }
 
         /// <summary>
         /// Height of the component
@@ -138,5 +131,8 @@ namespace GameEngine.Graphics
         {
             InnerComponent.PlayAnimation(animation);
         }
+
+
+        public Color Color { get; set; }
     }
 }

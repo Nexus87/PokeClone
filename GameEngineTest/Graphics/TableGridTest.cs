@@ -183,7 +183,7 @@ namespace GameEngineTest.Graphics
         public void StartIndex_Default_0_0()
         {
             TableIndex defaultStartIndex = new TableIndex(0, 0);
-            var grid = new TableGrid(ROWS, COLUMNS, new Mock<IPokeEngine>().Object);
+            var grid = new TableGrid(ROWS, COLUMNS);
 
             Assert.IsTrue(grid.StartIndex.HasValue);
             AssertIndicesAreEqual(defaultStartIndex, grid.StartIndex.Value);
@@ -193,7 +193,7 @@ namespace GameEngineTest.Graphics
         public void EndIndex_Default_0_0()
         {
             TableIndex defaultEndIndex = new TableIndex(0, 0);
-            var grid = new TableGrid(ROWS, COLUMNS, new Mock<IPokeEngine>().Object);
+            var grid = new TableGrid(ROWS, COLUMNS);
 
             Assert.IsTrue(grid.EndIndex.HasValue);
             AssertIndicesAreEqual(defaultEndIndex, grid.EndIndex.Value);
@@ -202,7 +202,7 @@ namespace GameEngineTest.Graphics
         [TestCase]
         public void Draw_EndIndexNull_DrawAll()
         {
-            var grid = new TableGrid(ROWS, COLUMNS, new Mock<IPokeEngine>().Object);
+            var grid = new TableGrid(ROWS, COLUMNS);
             var components = FillGrid(grid);
 
             grid.EndIndex = null;
@@ -231,7 +231,7 @@ namespace GameEngineTest.Graphics
         [TestCase]
         public void Draw_ResetEndToNotNull_DrawNothing()
         {
-            var grid = new TableGrid(ROWS, COLUMNS, new Mock<IPokeEngine>().Object);
+            var grid = new TableGrid(ROWS, COLUMNS);
             var components = FillGrid(grid);
 
             grid.EndIndex = null;
@@ -324,7 +324,7 @@ namespace GameEngineTest.Graphics
 
         private TableGrid CreateGrid(int rows, int columns)
         {
-            var grid = new TableGrid(new Mock<IPokeEngine>().Object);
+            var grid = new TableGrid();
             grid.Rows = rows;
             grid.Columns = columns;
 

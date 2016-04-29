@@ -40,5 +40,8 @@ namespace GameEngineTest.TestUtils
 
         }
 
+
+
+        public Color Color { get; set; }
     }
 }

@@ -10,12 +10,9 @@ namespace GameEngine
         float ScreenHeight { get; }
         float ScreenWidth { get; }
         Color BackgroundColor { get; }
-        ContentManager Content { get; }
-        ISpriteFont DefaultFont { get; }
-        ITexture2D DefaultArrowTexture { get; }
-        ITexture2D DefaultBorderTexture { get; }
         GameServiceContainer Services { get; }
         GUIManager GUIManager { get; }
+        ContentManager Content { get; }
         void Exit();
         void AddGameComponent(IGameComponent component);
         void RemoveGameComponent(IGameComponent component);

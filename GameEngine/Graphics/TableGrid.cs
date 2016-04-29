@@ -108,18 +108,14 @@ namespace GameEngine.Graphics
                 throw new ArgumentOutOfRangeException("column");
         }
 
-        public TableGrid(int rows, int columns, IPokeEngine game)
+        public TableGrid(int rows = 0, int columns = 0)
         {
             layout = new GridLayout(rows, columns);
 
             components = new Table<ISelectableGraphicComponent>();
 
-            itemContainer = new Container(game);
+            itemContainer = new Container();
             itemContainer.Layout = layout;
-        }
-
-        public TableGrid(IPokeEngine game) : this(0, 0, game)
-        {
         }
 
         void FixIndexesRow()

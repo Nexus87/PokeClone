@@ -10,8 +10,9 @@ namespace GameEngine
     {
         private string textureName;
         private ContentManager content;
-        public Texture2D Texture { get; private set; }
+        public Texture2D Texture { get; set; }
 
+        public XNATexture2D(){}
         public XNATexture2D(Texture2D texture)
         {
             texture.CheckNull("texture");

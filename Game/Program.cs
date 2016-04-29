@@ -2,6 +2,7 @@
 using BattleLib;
 using Game.Rules;
 using GameEngine;
+using GameEngine.Graphics;
 using PokemonGame.Rules;
 using System;
 
@@ -22,12 +23,13 @@ namespace PokemonGame
             var rules = new RulesSet(new DummyBattleRules(), new DummyPokemonRules(), new DummyTable());
 
             var engine = new PokeEngine(config);
+            var factory = new GraphicComponentFactory(config, engine);
             //    var graphic = new BattleGraphics(engine, playerId, aiId);
             //var battleState = new BattleStateComponent(playerId, aiId, engine);
 
             engine.ShowGUI();
             //engine.Graphic = graphic;
-            engine.AddGameComponent(new InitComponent(config, engine, rules, new DummyScheduler()));
+            engine.AddGameComponent(new InitComponent(config, engine, factory, rules, new DummyScheduler()));
             //var gui = new BattleGUI(config, engine, battleState, playerId);
 
             engine.Run();

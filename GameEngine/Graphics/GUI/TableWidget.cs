@@ -7,8 +7,6 @@ namespace GameEngine.Graphics.GUI
 {
     public class TableWidget<T> : AbstractGraphicComponent, IWidget
     {
-        private bool isVisible;
-
         /// <summary>
         /// The current column of the selected cell
         /// </summary>
@@ -19,10 +17,10 @@ namespace GameEngine.Graphics.GUI
         /// </summary>
         internal int cursorRow = 0;
 
-        ITableView<T> tableView;
+        private bool isVisible;
+        private ITableView<T> tableView;
 
-        public TableWidget(int? visibleRows, int? visibleColumns, ITableView<T> view, IPokeEngine game)
-            : base(game)
+        public TableWidget(int? visibleRows, int? visibleColumns, ITableView<T> view)
         {
             VisibleRows = visibleRows;
             VisibleColumns = visibleColumns;
@@ -31,83 +29,6 @@ namespace GameEngine.Graphics.GUI
             view.OnTableResize += TableResizeHandler;
             SetStartCell(0, 0);
         }
-
-        void TableResizeHandler(object sender, TableResizeEventArgs e)
-        {
-            FixCursor();
-            // If there is nothing to display, reset everything
-            if (e.Rows == 0 || e.Columns == 0)
-            {
-                tableView.StartIndex = tableView.EndIndex = new TableIndex(0, 0);
-                return;
-            }
-
-            // If the cursor has changed, we also should change the selection
-            tableView.SetCellSelection(cursorRow, cursorColumn, true);
-            ResizeViewport();
-        }
-
-        private void ResizeViewport()
-        {
-            int newStartRow = StartIndex.Row;
-            int newStartColumn = StartIndex.Column;
-
-            if (RowOutOfBound(newStartRow))
-                newStartRow = ZeroIfNegative(Rows - realVisibleRows);
-            if (ColumnOutOfBound(newStartColumn))
-                newStartColumn = ZeroIfNegative(Columns - realVisibleColumns);
-
-            SetStartCell(newStartRow, newStartColumn);
-        }
-
-        private int ZeroIfNegative(int p)
-        {
-            return Math.Max(0, p);
-        }
-
-        private bool ColumnOutOfBound(int column)
-        {
-            return column >= Columns;
-        }
-
-        private bool RowOutOfBound(int row)
-        {
-            return row >= Rows;
-        }
-
-        private void FixCursor()
-        {
-            if (RowOutOfBound(cursorRow))
-                cursorRow = ZeroIfNegative(Rows - 1);
-
-            if (ColumnOutOfBound(cursorColumn))
-                cursorColumn = ZeroIfNegative(Columns - 1);
-        }
-
-        public TableWidget(IPokeEngine game) : this(null, null, new DefaultTableModel<T>(), game)
-        {
-        }
-
-        public TableWidget(ITableModel<T> model, IPokeEngine game) :
-            this(null, null,
-                new TableView<T>(
-                    model,
-                    new DefaultTableRenderer<T>(game),
-                    new DefaultTableSelectionModel(),
-                    game),
-            game)
-        { }
-
-        public TableWidget(int? visibleRows, int? visibleColumns, ITableModel<T> model, IPokeEngine game)
-            : this(
-            visibleRows, visibleColumns,
-            new TableView<T>(
-                model,
-                new DefaultTableRenderer<T>(game),
-                new DefaultTableSelectionModel(),
-                game),
-            game)
-        { }
 
         /// <summary>
         /// This event is called, if a cell is selected, pressing the Select key
@@ -161,49 +82,54 @@ namespace GameEngine.Graphics.GUI
         }
 
         /// <summary>
-        /// The maximum number of columns that are displayed.
-        /// null is equivalent to Columns
+        /// The maximum number of columns that are displayed. null is equivalent
+        /// to Columns
         /// </summary>
         public int? VisibleColumns { get; private set; }
 
         /// <summary>
-        /// The maximum number of rows that are displayed.
-        /// null is equivalent to Rows
+        /// The maximum number of rows that are displayed. null is equivalent to
+        /// Rows
         /// </summary>
         public int? VisibleRows { get; private set; }
 
         /// <summary>
         /// Property to easily access TableView's EndIndex property.
         /// </summary>
-        /// <remarks> This property expects the EndIndex to be not null</remarks>
+        /// <remarks>This property expects the EndIndex to be not null</remarks>
         private TableIndex EndIndex { get { return tableView.EndIndex.Value; } }
 
         /// <summary>
-        /// Holds the number of visible columns, even if the VisibleColumns property is null.
+        /// Holds the number of visible columns, even if the VisibleColumns
+        /// property is null.
         /// </summary>
         private int realVisibleColumns { get { return VisibleColumns.HasValue ? VisibleColumns.Value : tableView.Columns; } }
 
         /// <summary>
-        /// Holds the number of visible rows, even if the VisibleRows property is null.
+        /// Holds the number of visible rows, even if the VisibleRows property
+        /// is null.
         /// </summary>
         private int realVisibleRows { get { return VisibleRows.HasValue ? VisibleRows.Value : tableView.Rows; } }
 
         /// <summary>
         /// Property to easily access TableView's StartIndex property.
         /// </summary>
-        /// <remarks> This property expects the StartIndex to be not null</remarks>
+        /// <remarks>
+        /// This property expects the StartIndex to be not null
+        /// </remarks>
         private TableIndex StartIndex { get { return tableView.StartIndex.Value; } }
 
         /// <summary>
-        /// This Method handles the Input.
-        /// Pressing Select or Back key will trigger the corresponding events, which are
-        /// ItemSelected and OnExitRequested. The ItemSelectedEventArgs will hold the data of the
-        /// current selected cell.
-        /// Pressing one of the direction keys will move the cursor in this same direction.
-        /// This will also result in a selection of the cell. If the newly selected cell is
-        /// outside of the current viewport, it will make one move, so that the cell is visible.
-        /// No exception is thrown if the resulting position is not valid, for example moving
-        /// left at position (0, 0). In this case, the handler will still return true.
+        /// This Method handles the Input. Pressing Select or Back key will
+        /// trigger the corresponding events, which are ItemSelected and
+        /// OnExitRequested. The ItemSelectedEventArgs will hold the data of the
+        /// current selected cell. Pressing one of the direction keys will move
+        /// the cursor in this same direction. This will also result in a
+        /// selection of the cell. If the newly selected cell is outside of the
+        /// current viewport, it will make one move, so that the cell is
+        /// visible. No exception is thrown if the resulting position is not
+        /// valid, for example moving left at position (0, 0). In this case, the
+        /// handler will still return true.
         /// </summary>
         /// <param name="key">Input key</param>
         /// <returns>True if the key was handled</returns>
@@ -268,18 +194,6 @@ namespace GameEngine.Graphics.GUI
             FixViewport();
         }
 
-        private void FixViewport()
-        {
-            // These indexes should already be set in TableWidget's constructor
-            Debug.Assert(tableView.EndIndex.HasValue);
-            Debug.Assert(tableView.StartIndex.HasValue);
-
-            if (cursorRow >= EndIndex.Row || cursorColumn >= EndIndex.Column)
-                SetEndCell(cursorRow, cursorColumn);
-            else if (cursorRow < StartIndex.Row || cursorColumn < StartIndex.Column)
-                SetStartCell(cursorRow, cursorColumn);
-        }
-
         public override void Setup()
         {
             tableView.Setup();
@@ -298,7 +212,72 @@ namespace GameEngine.Graphics.GUI
             tableView.Height = Height;
         }
 
-        void SetCursorRow(int row)
+        private void TableResizeHandler(object sender, TableResizeEventArgs e)
+        {
+            FixCursor();
+
+            // If there is nothing to display, reset everything
+            if (e.Rows == 0 || e.Columns == 0)
+            {
+                tableView.StartIndex = tableView.EndIndex = new TableIndex(0, 0);
+                return;
+            }
+
+            // If the cursor has changed, we also should change the selection
+            tableView.SetCellSelection(cursorRow, cursorColumn, true);
+            ResizeViewport();
+        }
+
+        private void ResizeViewport()
+        {
+            int newStartRow = StartIndex.Row;
+            int newStartColumn = StartIndex.Column;
+
+            if (RowOutOfBound(newStartRow))
+                newStartRow = ZeroIfNegative(Rows - realVisibleRows);
+            if (ColumnOutOfBound(newStartColumn))
+                newStartColumn = ZeroIfNegative(Columns - realVisibleColumns);
+
+            SetStartCell(newStartRow, newStartColumn);
+        }
+
+        private int ZeroIfNegative(int p)
+        {
+            return Math.Max(0, p);
+        }
+
+        private bool ColumnOutOfBound(int column)
+        {
+            return column >= Columns;
+        }
+
+        private bool RowOutOfBound(int row)
+        {
+            return row >= Rows;
+        }
+
+        private void FixCursor()
+        {
+            if (RowOutOfBound(cursorRow))
+                cursorRow = ZeroIfNegative(Rows - 1);
+
+            if (ColumnOutOfBound(cursorColumn))
+                cursorColumn = ZeroIfNegative(Columns - 1);
+        }
+
+        private void FixViewport()
+        {
+            // These indexes should already be set in TableWidget's constructor
+            Debug.Assert(tableView.EndIndex.HasValue);
+            Debug.Assert(tableView.StartIndex.HasValue);
+
+            if (cursorRow >= EndIndex.Row || cursorColumn >= EndIndex.Column)
+                SetEndCell(cursorRow, cursorColumn);
+            else if (cursorRow < StartIndex.Row || cursorColumn < StartIndex.Column)
+                SetStartCell(cursorRow, cursorColumn);
+        }
+
+        private void SetCursorRow(int row)
         {
             SetCursor(row, cursorColumn);
         }

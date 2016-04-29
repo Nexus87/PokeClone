@@ -16,15 +16,14 @@ namespace GameEngine.Graphics
     /// </remarks>
     public class Line : AbstractGraphicComponent
     {
-        public Line(ITexture2D pixel, ITexture2D cupTexture, IPokeEngine game)
-            : base(game)
+        public Line(ITexture2D pixel, ITexture2D cupTexture)
         {
+            cupTexture.CheckNull("cupTexture");
+
             this.pixel = pixel;
             this.cupTexture = cupTexture;
             Color = Color.Black;
         }
-
-        public Line(IPokeEngine game) : this(null, null, game) { }
 
         private float circleTextureScale;
         private ITexture2D cupTexture;
@@ -36,21 +35,11 @@ namespace GameEngine.Graphics
         private Vector2 rightCup;
 
         /// <summary>
-        /// Color of the line.
-        /// </summary>
-        /// <remarks>
-        /// It is black by default.
-        /// </remarks>
-        public Color Color { get; set; }
-
-        /// <summary>
         /// Setup this component
         /// </summary>
         /// <see cref="IGraphicComponent.Setup"/>
         public override void Setup()
         {
-            if(cupTexture == null)
-                cupTexture = new XNATexture2D(Game.Content.Load<Texture2D>("circle"));
             cupTexture.LoadContent();
             circleTextureScale = 1.0f / cupTexture.Height;
         }
@@ -63,9 +52,6 @@ namespace GameEngine.Graphics
         /// <see cref="AbstractGraphicComponent.DrawComponent"/>
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)
         {
-            if (pixel == null)
-                Init(batch.GraphicsDevice);
-
             batch.Draw(pixel, position: line, scale: lineScale, color: Color);
 
             batch.Draw(cupTexture, position: leftCup, scale: cupScale, color: Color);
@@ -135,20 +121,6 @@ namespace GameEngine.Graphics
 
             cupScale.X = Width * circleTextureScale;
             cupScale.Y = Height * circleTextureScale;
-        }
-
-        /// <summary>
-        /// Loads a 1x1 size texture
-        /// </summary>
-        /// <remarks>
-        /// This function call on the first execution of Draw
-        /// </remarks>
-        /// <param name="device"></param>
-        private void Init(GraphicsDevice device)
-        {
-            pixel = new XNATexture2D(new Texture2D(device, 1, 1, false, SurfaceFormat.Color, 1));
-            pixel.SetData(new[] { Color.White });
-
         }
     }
 }

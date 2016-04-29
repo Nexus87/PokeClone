@@ -8,7 +8,7 @@ namespace GameEngineTest.Graphics
     {
         protected override GameEngine.Graphics.IGraphicComponent CreateComponent()
         {
-            return new NullGraphicObject(gameStub);
+            return new NullGraphicObject();
         }
     }
 }

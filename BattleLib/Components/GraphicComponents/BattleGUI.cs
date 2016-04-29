@@ -16,25 +16,25 @@ namespace BattleLib.GraphicComponents
         private Dialog messageFrame;
         private Dialog pkmnFrame;
 
-        public BattleGUI(Configuration config, IPokeEngine game, BattleStateComponent battleState, ClientIdentifier player, ClientIdentifier ai)
+        public BattleGUI(Configuration config, IPokeEngine game, GraphicComponentFactory factory, BattleStateComponent battleState, ClientIdentifier player, ClientIdentifier ai)
         {
             game.Services.AddService(typeof(IGUIService), this);
             BattleState = battleState;
             ID = player;
             this.ai = ai;
 
-            mainFrame = new Dialog(game.DefaultBorderTexture, game);
-            attackFrame = new Dialog(game.DefaultBorderTexture, game);
-            itemFrame = new Dialog(game.DefaultBorderTexture, game);
-            pkmnFrame = new Dialog(game);
-            messageFrame = new Dialog(game.DefaultBorderTexture, game);
+            mainFrame = factory.CreateDialog();
+            attackFrame = factory.CreateDialog();
+            itemFrame = factory.CreateDialog();
+            pkmnFrame = new Dialog();
+            messageFrame = factory.CreateDialog();
 
-            InitMessageBox(config, game);
+            InitMessageBox(factory, game);
 
-            InitMainMenu(config, game);
-            InitAttackMenu(config, game);
-            InitItemMenu(config, game);
-            InitPKMNMenu(config, game);
+            InitMainMenu(factory, game);
+            InitAttackMenu(factory, game);
+            InitItemMenu(factory, game);
+            InitPKMNMenu(factory, game);
 
         }
 
@@ -72,20 +72,19 @@ namespace BattleLib.GraphicComponents
             mainFrame.IsVisible = true;
         }
 
-        private void InitAttackMenu(Configuration config, IPokeEngine game)
+        private void InitAttackMenu(GraphicComponentFactory factory, IPokeEngine game)
         {
             
             
             var model = new AttackModel(BattleState.GetPokemon(ID));
             
-            var tableView = new TableView<Move>(
+            var tableView =  factory.CreateTableView<Move>(
                 model, 
-                new DefaultTableRenderer<Move>(game) { DefaultString = "------" }, 
-                new AttackTableSelectionModel(model), 
-                game
+                new DefaultTableRenderer<Move>(factory) { DefaultString = "------" }, 
+                new AttackTableSelectionModel(model)
                 );
 
-            var AttackMenu = new TableWidget<Move>(null, null, tableView, game);
+            var AttackMenu = new TableWidget<Move>(null, null, tableView);
 
             attackFrame.AddWidget(AttackMenu);
             attackFrame.SetCoordinates(
@@ -103,10 +102,10 @@ namespace BattleLib.GraphicComponents
             game.GUIManager.AddWidget(attackFrame);
         }
 
-        private void InitItemMenu(Configuration config, IPokeEngine game)
+        private void InitItemMenu(GraphicComponentFactory factory, IPokeEngine game)
         {
             var model = new DefaultTableModel<Item>();
-            var ItemMenu = new TableWidget<Item>(8, null, model, game);
+            var ItemMenu = factory.CreateTableWidget(factory.CreateTableView<Item>(model), 8);
             
             for (int i = 0; i < 20; i++)
                 model.SetData(new Item { Name = "Item" + i }, i, 0);
@@ -132,9 +131,9 @@ namespace BattleLib.GraphicComponents
             widget.SelectCell(0, 0);
         }
 
-        private void InitMainMenu(Configuration config, IPokeEngine game)
+        private void InitMainMenu(GraphicComponentFactory factory, IPokeEngine game)
         {
-            var MainMenu = new TableWidget<string>(game);
+            var MainMenu = factory.CreateTableWidget<string>();
             MainMenu.Model.SetData("Attack", 0, 0);
             MainMenu.Model.SetData("PKMN", 0, 1);
             MainMenu.Model.SetData("Item", 1, 0);
@@ -154,9 +153,9 @@ namespace BattleLib.GraphicComponents
             game.GUIManager.AddWidget(mainFrame);
         }
 
-        private void InitMessageBox(Configuration config, IPokeEngine game)
+        private void InitMessageBox(GraphicComponentFactory factory, IPokeEngine game)
         {
-            messageBox = new MessageBox(config, game);
+            messageBox = factory.CreateMessageBox();
 
             messageFrame.AddWidget(messageBox);
             messageFrame.XPosition = 0;
@@ -175,10 +174,10 @@ namespace BattleLib.GraphicComponents
             TextDisplayed(this, EventArgs.Empty);
         }
 
-        private void InitPKMNMenu(Configuration config, IPokeEngine game)
+        private void InitPKMNMenu(GraphicComponentFactory factory, IPokeEngine game)
         {
             var model = new DefaultTableModel<Pokemon>();
-            var PKMNMenu = new TableWidget<Pokemon>(model, game);
+            var PKMNMenu = factory.CreateTableWidget(factory.CreateTableView(model: model));
 
             pkmnFrame.XPosition = 0;
             pkmnFrame.YPosition = 0;

@@ -28,14 +28,13 @@ namespace BattleLib.GraphicComponents
         }
 
         public PokemonSprite(bool front, IPokeEngine game)
-            : base(game)
         {
             this.front = front;
-            box = new TextureBox(game);
+            box = new TextureBox();
+            provider.Content = game.Content;
         }
         public override void Setup()
         {
-            provider.Content = Game.Content;
         }
 
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)

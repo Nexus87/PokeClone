@@ -17,16 +17,16 @@ namespace BattleLibTest.GraphicComponents
 
         private HPLine CreateLine()
         {
-            var hpLineStub = new Mock<ILine>();
+            var hpLineStub = new Mock<IGraphicComponent>();
 
             return CreateLine(hpLineStub.Object);
         }
 
-        private HPLine CreateLine(ILine hpLine)
+        private HPLine CreateLine(IGraphicComponent hpLine)
         {
-            var outerLine = new Mock<ILine>().Object;
-            var innerLine = new Mock<ILine>().Object;
-            var line = new HPLine(outerLine, innerLine, hpLine, gameStub);
+            var outerLine = new Mock<IGraphicComponent>().Object;
+            var innerLine = new Mock<IGraphicComponent>().Object;
+            var line = new HPLine(outerLine, innerLine, hpLine, Color.White);
             line.MaxHP = 100;
             line.Setup();
 
@@ -78,7 +78,7 @@ namespace BattleLibTest.GraphicComponents
         [TestCaseSource("HPColorTestData")]
         public void Draw_SetNumberOfHp_HPLineHasExpectedColor(int hp, Color color)
         {
-            var hpLineStub = new Mock<ILine>();
+            var hpLineStub = new Mock<IGraphicComponent>();
             var line = CreateLine(hpLineStub.Object);
             line.SetCoordinates(0, 0, 500, 500);
 
@@ -105,7 +105,7 @@ namespace BattleLibTest.GraphicComponents
         {
             float height = -1.0f;
             float width = -1.0f;
-            var hpLine = new Mock<ILine>();
+            var hpLine = new Mock<IGraphicComponent>();
             hpLine.SetupSet(o => o.Height = It.IsAny<float>()).Callback<float>(f => height = f);
             hpLine.SetupSet(o => o.Width = It.IsAny<float>()).Callback<float>(f => width = f);
             var line = CreateLine(hpLine.Object);

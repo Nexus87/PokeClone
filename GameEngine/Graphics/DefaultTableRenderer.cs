@@ -5,20 +5,14 @@ namespace GameEngine.Graphics
 {
     public class DefaultTableRenderer<T> : ITableRenderer<T>
     {
-        IPokeEngine game;
         ISelectableTextComponent[,] boxes = new ISelectableTextComponent[1, 1];
-        private ISpriteFont spriteFont;
-        private ITexture2D arrowTexture;
 
         public string DefaultString { get; set; }
 
 
-        public DefaultTableRenderer(IPokeEngine game, ISpriteFont font = null, ITexture2D arrow = null)
+        public DefaultTableRenderer(GraphicComponentFactory factory)
         {
-            spriteFont = font == null ? game.DefaultFont : font;
-            arrowTexture = arrow == null ? game.DefaultArrowTexture : arrow;
-                
-            this.game = game;
+            this.factory = factory;
             DefaultString = "";
         }
 
@@ -61,8 +55,10 @@ namespace GameEngine.Graphics
 
         protected virtual ISelectableTextComponent CreateComponent()
         {
-            return new ItemBox(new TextureBox(arrowTexture, game), new TextBox(spriteFont, game), game);
+            return factory.CreateGraphicComponent<ItemBox>();
         }
 
+
+        public GraphicComponentFactory factory { get; set; }
     }
 }

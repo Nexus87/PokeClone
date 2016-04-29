@@ -10,18 +10,23 @@ namespace BattleLib.GraphicComponents
     {
         public event EventHandler OnHPUpdated;
 
-        public PokemonDataView(IPokeEngine game, bool player)
-            : base(new Container(game), game)
+        public PokemonDataView(IPokeEngine game, GraphicComponentFactory factory, bool player)
+            : base(new Container())
         {
             var container = InnerComponent;
-            var hpLineContainer = new Container(game);
-            
-            hpLine = new HPLine(game);
-            name = new TextBox(game);
-            lvl = new TextBox(game) { PreferedTextHeight = 16.0f };
+            var hpLineContainer = new Container();
+
+            hpLine = new HPLine(factory.CreateGraphicComponent<Line>(), factory.CreateGraphicComponent<Line>(), factory.CreateGraphicComponent<Line>(), game.BackgroundColor);
+            name = factory.CreateTextBox();
+            lvl = factory.CreateTextBox(); 
+            lvl.PreferedTextHeight = 16.0f;
+
+            var hpBox = factory.CreateTextBox();
+            hpBox.Text = "hp:";
+            hpBox.PreferedTextHeight = 12.0f;
 
             hpLineContainer.Layout = new HBoxLayout();
-            hpLineContainer.AddComponent(new TextBox(game) { Text = "hp:", PreferedTextHeight = 12.0f });
+            hpLineContainer.AddComponent(hpBox);
             hpLineContainer.AddComponent(hpLine);
 
             container.AddComponent(name);
@@ -30,7 +35,8 @@ namespace BattleLib.GraphicComponents
 
             if (player)
             {
-                hpText = new TextBox(game) { PreferedTextHeight = 16.0f };
+                hpText = factory.CreateTextBox();
+                hpText.PreferedTextHeight = 16.0f;
                 container.AddComponent(hpText);
             }
 

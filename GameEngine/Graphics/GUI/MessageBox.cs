@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GameEngine.Utils;
+using System;
 
 namespace GameEngine.Graphics.GUI
 {
@@ -6,8 +7,8 @@ namespace GameEngine.Graphics.GUI
     {
         private MultlineTextBox textBox;
 
-        public MessageBox(Configuration config, IPokeEngine game)
-            : base(new MultlineTextBox(game), game)
+        public MessageBox(ISpriteFont font, ITextSplitter splitter, int lineNumber = 2)
+            : base(new MultlineTextBox(font, splitter, lineNumber))
         {
             textBox = InnerComponent;
         }
