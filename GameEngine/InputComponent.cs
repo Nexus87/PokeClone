@@ -1,5 +1,6 @@
 ﻿using GameEngine.Graphics;
 using GameEngine.Graphics.Views;
+using GameEngine.Wrapper;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -23,18 +24,17 @@ namespace GameEngine
 
     class InputComponent : IGameComponent
     {
-        KeyboardState oldState;
         IReadOnlyDictionary<Keys, CommandKeys> keyMap;
         internal IInputHandler handler;
-        InputManager manager;
+        IKeyboardManager manager;
 
-        internal InputComponent(Game game, InputManager manager, IReadOnlyDictionary<Keys, CommandKeys> keyMap)
+        internal InputComponent(Game game, IKeyboardManager manager, IReadOnlyDictionary<Keys, CommandKeys> keyMap)
         {
             this.manager = manager;
             this.keyMap = keyMap;
         }
 
-        public InputComponent(Game game, Configuration config) : this(game, new InputManager(), config.KeyMap) { }
+        public InputComponent(Game game, Configuration config) : this(game, new KeyboardManager(), config.KeyMap) { }
 
         public void Update(GameTime gameTime)
         {
@@ -42,11 +42,15 @@ namespace GameEngine
 
             foreach (var entry in keyMap)
             {
-                if (manager.IsKeyDown(entry.Key) && !oldState.IsKeyDown(entry.Key))
+                if (HasKeyChangedToDown(entry.Key))
                     handler.HandleInput(entry.Value);
             }
 
-            oldState = manager.GetState();
+        }
+
+        private bool HasKeyChangedToDown(Keys keys)
+        {
+            return manager.IsKeyDown(keys) && !manager.WasKeyDown(keys);
         }
 
         public void Initialize()

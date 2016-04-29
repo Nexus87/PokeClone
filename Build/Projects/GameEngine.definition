@@ -66,6 +66,7 @@
     <Compile Include="Utils\Extensions.cs" />
     <Compile Include="Utils\ITable.cs" />
     <Compile Include="Utils\Table.cs" />
+    <Compile Include="Wrapper\IKeyboardManager.cs" />
     <Compile Include="Wrapper\InputManager.cs" />
     <Compile Include="Wrapper\ISpriteBatch.cs" />
     <Compile Include="Wrapper\ISpriteFont.cs" />

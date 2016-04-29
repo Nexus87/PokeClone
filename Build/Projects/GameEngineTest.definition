@@ -33,6 +33,7 @@
     <Compile Include="TableTest.cs" />
     <Compile Include="Util\Extensions.cs" />
     <Compile Include="Util\GraphicComponentMock.cs" />
+    <Compile Include="Util\KeyboardManagerStub.cs" />
     <Compile Include="Util\SelectableGraphicComponentMock.cs" />
     <Compile Include="Util\SpriteBatchMock.cs" />
     <Compile Include="Util\TableComponentMock.cs" />
