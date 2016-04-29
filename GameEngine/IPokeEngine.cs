@@ -1,8 +1,7 @@
 ﻿using GameEngine.Graphics;
-using GameEngine.Wrapper;
+using GameEngine.Graphics.GUI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
-using System;
 namespace GameEngine
 {
     public interface IPokeEngine

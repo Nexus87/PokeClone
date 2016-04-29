@@ -1,6 +1,4 @@
-﻿using GameEngine.Graphics.Basic;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
+﻿using Microsoft.Xna.Framework;
 using System;
 
 namespace GameEngine.Graphics
@@ -91,7 +89,7 @@ namespace GameEngine.Graphics
         /// <param name="time">Game time</param>
         /// <param name="batch">Sprite batch</param>
         /// <see cref="IGraphicComponent.Draw"/>
-        public virtual void Draw(GameTime time, Wrapper.ISpriteBatch batch)
+        public virtual void Draw(GameTime time, ISpriteBatch batch)
         {
             if (needsUpdate)
             {

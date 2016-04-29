@@ -1,17 +1,9 @@
 ﻿using Base;
 using Base.Data;
-using BattleLib.Components.BattleState.Commands;
-using BattleLib.Events;
 using BattleLib.GraphicComponents;
 using GameEngine;
-using GameEngine.EventComponent;
 using GameEngine.Utils;
-using Microsoft.Xna.Framework;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BattleLib.Components.BattleState
 {

@@ -1,17 +1,13 @@
 ﻿using BattleLib.GraphicComponents;
 using GameEngine.Graphics;
 using GameEngine.Utils;
-using GameEngineTest;
-using GameEngineTest.Util;
+using GameEngineTest.Graphics;
+using GameEngineTest.TestUtils;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BattleLibTest.GraphicComponents
 {

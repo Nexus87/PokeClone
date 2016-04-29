@@ -1,4 +1,4 @@
-﻿using BattleLib;
+﻿using BattleLib.Components.BattleState;
 using BattleLib.Components.BattleState.Commands;
 using System.Collections.Generic;
 

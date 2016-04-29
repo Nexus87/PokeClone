@@ -1,5 +1,4 @@
-﻿using System;
-namespace Base.Rules
+﻿namespace Base.Rules
 {
     public interface ITypeTable
     {

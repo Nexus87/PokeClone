@@ -1,9 +1,5 @@
-﻿using GameEngine.Graphics.Basic;
-using GameEngine.Utils;
-using GameEngine.Wrapper;
+﻿using GameEngine.Utils;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 using System;
 
 namespace GameEngine.Graphics

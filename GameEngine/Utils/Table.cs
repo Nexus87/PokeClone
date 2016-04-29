@@ -1,4 +1,4 @@
-﻿using GameEngine.Graphics.Views;
+﻿using GameEngine.Graphics;
 using System;
 using System.Collections.Generic;
 

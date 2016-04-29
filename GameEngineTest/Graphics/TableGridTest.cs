@@ -1,14 +1,13 @@
-﻿using GameEngine.Graphics;
-using GameEngine.Graphics.Views;
-using GameEngineTest.Util;
+﻿using GameEngine;
+using GameEngine.Graphics;
 using GameEngine.Utils;
+using GameEngineTest.TestUtils;
+using Microsoft.Xna.Framework;
+using Moq;
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Xna.Framework;
-using GameEngine;
-using System;
-using Moq;
 
 namespace GameEngineTest.Graphics
 {

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 namespace GameEngine.Utils
 {
     public interface ITable<T>

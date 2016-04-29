@@ -1,17 +1,9 @@
 ﻿using GameEngine.Graphics;
-using GameEngine.Wrapper;
-using GameEngineTest.Util;
+using GameEngineTest.TestUtils;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 using Moq;
 using Moq.Protected;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GameEngineTest.Graphics
 {
@@ -35,19 +27,16 @@ namespace GameEngineTest.Graphics
         }
         private void ResetInvalidation(Mock<AbstractGraphicComponent> componentMock)
         {
-            componentMock.Object.Draw(spriteBatchStub);
+            componentMock.Object.Draw();
             componentMock.ResetCalls();
         }
-
-        private readonly ISpriteBatch spriteBatchStub = new Mock<ISpriteBatch>().Object;
-
 
         [TestCase]
         public void Draw_FirstCall_TriggerUpdateMethod()
         {
             var componentMock = CreateComponentMock();
 
-            componentMock.Object.Draw(spriteBatchStub);
+            componentMock.Object.Draw();
 
             componentMock.Protected().Verify("Update", Times.Once());
         }
@@ -58,7 +47,7 @@ namespace GameEngineTest.Graphics
             var componentMock = CreateComponentWithoutInvalidation();
             componentMock.Object.XPosition += 10.0f;
 
-            componentMock.Object.Draw(spriteBatchStub);
+            componentMock.Object.Draw();
 
             componentMock.Protected().Verify("Update", Times.Once());
         }
@@ -69,7 +58,7 @@ namespace GameEngineTest.Graphics
             var componentMock = CreateComponentWithoutInvalidation();
             componentMock.Object.YPosition += 10.0f;
 
-            componentMock.Object.Draw(spriteBatchStub);
+            componentMock.Object.Draw();
 
             componentMock.Protected().Verify("Update", Times.Once());
         }
@@ -80,7 +69,7 @@ namespace GameEngineTest.Graphics
             var componentMock = CreateComponentWithoutInvalidation();
             componentMock.Object.Width += 10.0f;
 
-            componentMock.Object.Draw(spriteBatchStub);
+            componentMock.Object.Draw();
 
             componentMock.Protected().Verify("Update", Times.Once());
         }
@@ -91,7 +80,7 @@ namespace GameEngineTest.Graphics
             var componentMock = CreateComponentWithoutInvalidation();
             componentMock.Object.Height += 10.0f;
 
-            componentMock.Object.Draw(spriteBatchStub);
+            componentMock.Object.Draw();
 
             componentMock.Protected().Verify("Update", Times.Once());
         }
@@ -102,7 +91,7 @@ namespace GameEngineTest.Graphics
             var componentMock = CreateComponentWithoutInvalidation();
             componentMock.Object.XPosition = componentMock.Object.XPosition;
 
-            componentMock.Object.Draw(spriteBatchStub);
+            componentMock.Object.Draw();
 
             componentMock.Protected().Verify("Update", Times.Never());
         }
@@ -113,7 +102,7 @@ namespace GameEngineTest.Graphics
             var componentMock = CreateComponentWithoutInvalidation();
             componentMock.Object.YPosition = componentMock.Object.YPosition;
 
-            componentMock.Object.Draw(spriteBatchStub);
+            componentMock.Object.Draw();
 
             componentMock.Protected().Verify("Update", Times.Never());
         }
@@ -124,7 +113,7 @@ namespace GameEngineTest.Graphics
             var componentMock = CreateComponentWithoutInvalidation();
             componentMock.Object.Width = componentMock.Object.Width;
 
-            componentMock.Object.Draw(spriteBatchStub);
+            componentMock.Object.Draw();
 
             componentMock.Protected().Verify("Update", Times.Never());
         }
@@ -135,7 +124,7 @@ namespace GameEngineTest.Graphics
             var componentMock = CreateComponentWithoutInvalidation();
             componentMock.Object.Height = componentMock.Object.Height;
 
-            componentMock.Object.Draw(spriteBatchStub);
+            componentMock.Object.Draw();
 
             componentMock.Protected().Verify("Update", Times.Never());
         }
@@ -145,6 +134,7 @@ namespace GameEngineTest.Graphics
         {
             var componentMock = CreateComponentWithoutInvalidation();
             var time = new GameTime();
+            var spriteBatchStub = new SpriteBatchMock();
 
             componentMock.Object.Draw(time, spriteBatchStub);
             componentMock.Protected().Verify("DrawComponent", Times.Once(), time, spriteBatchStub);

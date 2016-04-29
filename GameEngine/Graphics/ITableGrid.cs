@@ -1,6 +1,4 @@
-﻿using GameEngine.Graphics.Views;
-using GameEngine.Wrapper;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 
 namespace GameEngine.Graphics
 {

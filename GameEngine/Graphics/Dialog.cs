@@ -1,16 +1,7 @@
-﻿using GameEngine.Graphics.Basic;
-using GameEngine.Graphics.Layouts;
-using GameEngine.Graphics.Widgets;
-using GameEngine.Wrapper;
+﻿using GameEngine.Graphics.GUI;
 using GameEngine.Utils;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Input;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GameEngine.Graphics
 {

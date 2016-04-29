@@ -1,6 +1,5 @@
-﻿using GameEngine.EventComponent;
-using GameEngine.Graphics;
-using GameEngine.Wrapper;
+﻿using GameEngine.Graphics;
+using GameEngine.Graphics.GUI;
 using GameEngine.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;

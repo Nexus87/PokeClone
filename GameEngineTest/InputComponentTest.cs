@@ -1,16 +1,11 @@
-﻿using NUnit.Framework;
-using System;
+﻿using GameEngine;
+using GameEngineTest.TestUtils;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
+using Moq;
+using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GameEngine;
-using Microsoft.Xna.Framework;
-using Moq;
-using GameEngine.Graphics;
-using GameEngineTest.Util;
-using Microsoft.Xna.Framework.Input;
-using GameEngine.Wrapper;
 namespace GameEngineTest
 {
     [TestFixture]
