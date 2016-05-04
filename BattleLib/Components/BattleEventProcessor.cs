@@ -32,7 +32,8 @@ namespace BattleLib.Components
 
         private void StatusChangedHandler(object sender, ClientStatusChangedEventArgs e)
         {
-            throw new NotImplementedException();
+            queue.AddStatusEvent(graphicService, e.ID, e.Status);
+            queue.AddShowMessageEvent(guiService, "Status changed to: " + e.Status);
         }
 
         private void PokemonChangedHandler(object sender, ClientPokemonChangedEventArgs e)
