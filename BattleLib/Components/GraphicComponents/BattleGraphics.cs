@@ -20,7 +20,6 @@ namespace BattleLib.GraphicComponents
         private IPokeEngine game;
         public BattleGraphics(IPokeEngine game, GraphicComponentFactory factory, ClientIdentifier player, ClientIdentifier ai)
         {
-            game.Services.AddService(typeof(IBattleGraphicService), this);
             this.game = game;
 
             aiView = new PokemonDataView(game, factory, false);

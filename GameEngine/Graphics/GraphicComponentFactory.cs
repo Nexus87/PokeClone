@@ -26,6 +26,7 @@ namespace GameEngine.Graphics
             DefaultBorderTexture = new XNATexture2D(config.DefaultBorderTexture, game.Content);
             pixel = new XNATexture2D();
             Cup = new XNATexture2D("circle", game.Content);
+
             game.factory = this;
 
         }

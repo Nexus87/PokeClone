@@ -18,7 +18,6 @@ namespace BattleLib.GraphicComponents
 
         public BattleGUI(Configuration config, IPokeEngine game, GraphicComponentFactory factory, BattleStateComponent battleState, ClientIdentifier player, ClientIdentifier ai)
         {
-            game.Services.AddService(typeof(IGUIService), this);
             BattleState = battleState;
             ID = player;
             this.ai = ai;

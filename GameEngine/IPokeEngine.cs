@@ -6,11 +6,9 @@ namespace GameEngine
 {
     public interface IPokeEngine
     {
-        float AspectRation { get; }
         float ScreenHeight { get; }
         float ScreenWidth { get; }
         Color BackgroundColor { get; }
-        GameServiceContainer Services { get; }
         GUIManager GUIManager { get; }
         ContentManager Content { get; }
         void Exit();
