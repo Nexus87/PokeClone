@@ -24,13 +24,9 @@ namespace PokemonGame
 
             var engine = new PokeEngine(config);
             var factory = new GraphicComponentFactory(config, engine);
-            //    var graphic = new BattleGraphics(engine, playerId, aiId);
-            //var battleState = new BattleStateComponent(playerId, aiId, engine);
 
             engine.ShowGUI();
-            //engine.Graphic = graphic;
-            engine.AddGameComponent(new InitComponent(config, engine, factory, rules, new DummyScheduler()));
-            //var gui = new BattleGUI(config, engine, battleState, playerId);
+            engine.AddGameComponent(new InitComponent(config, engine, engine.EventQueue, factory, rules, new DummyScheduler()));
 
             engine.Run();
         }

@@ -23,13 +23,10 @@ namespace BattleLib.Components.BattleState
         ICommandScheduler scheduler;
         CommandExecuter executer;
 
-        BattleStateComponent state;
-
-        public ExecuteState(BattleStateComponent state, ICommandScheduler scheduler, CommandExecuter executer)
+        public ExecuteState(ICommandScheduler scheduler, CommandExecuter executer)
         {
             this.scheduler = scheduler;
             this.executer = executer;
-            this.state = state;
         }
 
         public override IBattleState Update(BattleData data)
@@ -51,10 +48,10 @@ namespace BattleLib.Components.BattleState
             foreach (var id in data.Clients)
             {
                 if(data.GetPokemon(id).HP == 0)
-                    return state.CharacterSetState;
+                    return BattleState.CharacterSetState;
             }
                 
-            return state.ActionState;
+            return BattleState.ActionState;
         }
 
         public override BattleStates State

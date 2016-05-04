@@ -13,6 +13,7 @@
     <Compile Include="ClientIdentifier.cs" />
     <Compile Include="CommandExecuter.cs" />
     <Compile Include="Components\AI\AIComponent.cs" />
+    <Compile Include="Components\BattleEventProcessor.cs" />
     <Compile Include="Components\BattleState\AbstractState.cs" />
     <Compile Include="Components\BattleState\BattleData.cs" />
     <Compile Include="Components\BattleState\BattleStateComponent.cs" />
@@ -24,6 +25,7 @@
     <Compile Include="Components\BattleState\ExecuteState.cs" />
     <Compile Include="Components\BattleState\IActionScheduler.cs" />
     <Compile Include="Components\BattleState\IBattleState.cs" />
+    <Compile Include="Components\BattleState\IEventCreator.cs" />
     <Compile Include="Components\BattleState\PokemonWrapper.cs" />
     <Compile Include="Components\BattleState\WaitForActionState.cs" />
     <Compile Include="Components\BattleState\WaitForCharState.cs" />

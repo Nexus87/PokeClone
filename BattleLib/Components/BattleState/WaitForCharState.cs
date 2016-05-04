@@ -7,8 +7,7 @@ namespace BattleLib.Components.BattleState
 {
     public class WaitForCharState : AbstractState
     {
-        BattleStateComponent state;
-        EventCreator eventCreator;
+        IEventCreator eventCreator;
 
         int clientsLeft;
         Dictionary<ClientIdentifier, Pokemon> clients = new Dictionary<ClientIdentifier, Pokemon>();
@@ -27,9 +26,8 @@ namespace BattleLib.Components.BattleState
             clientsLeft = clients.Count;
         }
         
-        public WaitForCharState(BattleStateComponent state, EventCreator eventCreator)
+        public WaitForCharState(IEventCreator eventCreator)
         {
-            this.state = state;
             this.eventCreator = eventCreator;
         }
 
@@ -46,7 +44,7 @@ namespace BattleLib.Components.BattleState
                 eventCreator.SetPokemon(c.Key, pokemon);
             }
 
-            return state.ActionState;
+            return BattleState.ActionState;
         }
 
         public override void SetCharacter(ClientIdentifier id, Pokemon pkmn)

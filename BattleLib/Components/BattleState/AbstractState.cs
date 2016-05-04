@@ -15,5 +15,8 @@ namespace BattleLib.Components.BattleState
         public virtual void Init(BattleData data)
         {
         }
+
+
+        public virtual BattleStateComponent BattleState { get; set; }
     }
 }

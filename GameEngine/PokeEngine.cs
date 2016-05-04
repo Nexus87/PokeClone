@@ -21,7 +21,7 @@ namespace GameEngine
         public ISpriteFont DefaultFont { get; private set; }
         public ITexture2D DefaultArrowTexture { get; private set; }
         public ITexture2D DefaultBorderTexture { get; private set; }
-
+        public IEventQueue EventQueue { get; set; }
         public GUIManager GUIManager { get; private set; }
 
         private XNASpriteBatch batch;
@@ -48,9 +48,8 @@ namespace GameEngine
             Content.RootDirectory = "Content";
 
             AddGameComponent(input);
-            var queue = new EventQueue();
-            AddGameComponent(queue);
-            Services.AddService<IEventQueue>(queue);
+            EventQueue = new EventQueue();
+            AddGameComponent(EventQueue);
         }
 
         public IGraphicComponent Graphic { get; set; }

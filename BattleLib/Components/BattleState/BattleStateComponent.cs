@@ -1,6 +1,7 @@
 ﻿using Base;
 using Base.Rules;
 using GameEngine;
+using GameEngine.Utils;
 using Microsoft.Xna.Framework;
 using System;
 
@@ -18,13 +19,11 @@ namespace BattleLib.Components.BattleState
         public event EventHandler<StateChangedEventArgs> StateChanged = delegate { };
 
         public IBattleState ActionState { get; set; }
-        public IBattleState CharacterSetState { get; set; }
-        public IBattleState ExecutionState { get; set; }
+        public IBattleState CharacterSetState { get; private set; }
+        public IBattleState ExecutionState { get; private set; }
 
-        private IPokeEngine Game;
-        private RulesSet rules;
-        private ICommandScheduler scheduler;
         private IBattleState currentState;
+
         private IBattleState CurrentState
         {
             get { return currentState; }
@@ -37,11 +36,11 @@ namespace BattleLib.Components.BattleState
                 currentState.Init(data);
                 StateChanged(this, new StateChangedEventArgs(currentState.State));
                 if (currentState.State == BattleStates.WaitForAction)
-                    eventCreator.NewTurn();
+                    eventCreator.SetNewTurn();
             }
         }
         private BattleData data;
-        private EventCreator eventCreator;
+        private IEventCreator eventCreator;
 
         public PokemonWrapper GetPokemon(ClientIdentifier id)
         {
@@ -49,24 +48,22 @@ namespace BattleLib.Components.BattleState
         }
 
         
-        public BattleStateComponent(ClientIdentifier player, ClientIdentifier ai, IPokeEngine game, RulesSet rules, ICommandScheduler scheduler)
+        public BattleStateComponent(ClientIdentifier player, ClientIdentifier ai, IBattleState actionState, IBattleState characterSetState, IBattleState executionState, IEventCreator eventCreator)
         {
+            actionState.CheckNull("actionState");
+            characterSetState.CheckNull("characterSetState");
+            executionState.CheckNull("executionState");
+            eventCreator.CheckNull("eventCreator");
+
+            ActionState = actionState;
+            CharacterSetState = characterSetState;
+            ExecutionState = executionState;
+            this.eventCreator = eventCreator;
             data = new BattleData(player, ai);
-            eventCreator = new EventCreator(data);
 
-            Game = game;
-            this.rules = rules;
-            this.scheduler = scheduler;
-            ActionState = new WaitForActionState(this);
-            CharacterSetState = new WaitForCharState(this, eventCreator);
-            ExecutionState = new ExecuteState(this, scheduler, new CommandExecuter(eventCreator, rules));
-        }
-
-        public void Initialize()
-        {
-
-            eventCreator.Setup(Game);
-            CurrentState = CharacterSetState;
+            ActionState.BattleState = this;
+            CharacterSetState.BattleState = this;
+            ExecutionState.BattleState = this;
         }
 
         public void SetCharacter(ClientIdentifier id, Pokemon pkmn)
@@ -87,6 +84,11 @@ namespace BattleLib.Components.BattleState
         public void Update(GameTime gameTime)
         {
             CurrentState = CurrentState.Update(data);
+        }
+
+        public void Initialize()
+        {
+            CurrentState = CharacterSetState;
         }
     }
 

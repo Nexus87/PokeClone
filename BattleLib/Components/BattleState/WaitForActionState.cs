@@ -10,12 +10,8 @@ namespace BattleLib.Components.BattleState
     {
         private int clientCnt;
         private Dictionary<ClientIdentifier, ICommand> commands = new Dictionary<ClientIdentifier, ICommand>();
-        private BattleStateComponent state;
+        public BattleStateComponent BattleState { get; set; }
 
-        public WaitForActionState(BattleStateComponent state)
-        {
-            this.state = state;
-        }
 
         public void SetCharacter(ClientIdentifier id, Pokemon pkmn)
         {
@@ -48,7 +44,7 @@ namespace BattleLib.Components.BattleState
             
             commands.Clear();
 
-            return state.ExecutionState;
+            return BattleState.ExecutionState;
 
         }
 

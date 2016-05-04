@@ -1,4 +1,5 @@
 ﻿using Base.Rules;
+using BattleLib.Components;
 using BattleLib.Components.AI;
 using BattleLib.Components.BattleState;
 using BattleLib.GraphicComponents;
@@ -14,9 +15,12 @@ namespace BattleLib
         Client player;
         Client ai;
         IPokeEngine engine;
+        EventCreator eventCreator;
         private BattleStateComponent battleState;
+        private BattleGraphics graphic;
+        private BattleGUI gui;
 
-        public InitComponent(Configuration config, IPokeEngine game, GraphicComponentFactory factory, RulesSet rules, ICommandScheduler scheduler)
+        public InitComponent(Configuration config, IPokeEngine game, IEventQueue queue, GraphicComponentFactory factory, RulesSet rules, ICommandScheduler scheduler)
         {
             var playerID = new ClientIdentifier();
             var aiID = new ClientIdentifier();
@@ -29,11 +33,16 @@ namespace BattleLib
 
             player = new Client(playerID);
             ai = new Client(aiID);
+            
+            eventCreator = new EventCreator();
+            SetupBattleState(playerID, aiID, rules, scheduler);
 
-            var graphic = new BattleGraphics(game, factory, playerID, aiID);
-            battleState = new BattleStateComponent(playerID, aiID, game, rules, scheduler);
-            var gui = new BattleGUI(config, game, factory, battleState, playerID, aiID);
+            graphic = new BattleGraphics(game, factory, playerID, aiID);
+            gui = new BattleGUI(config, game, factory, battleState, playerID, aiID);
+
+            var eventProcess = new BattleEventProcessor(gui, graphic, queue, eventCreator);
             var aiComponent = new AIComponent(battleState, ai, playerID);
+            
 
             game.AddGameComponent(aiComponent);
             game.AddGameComponent(battleState);
@@ -45,6 +54,14 @@ namespace BattleLib
         {
         }
 
+        private void SetupBattleState(ClientIdentifier playerID, ClientIdentifier aiID, RulesSet rules, ICommandScheduler scheduler)
+        {
+            var actionState = new WaitForActionState();
+            var characterState = new WaitForCharState(eventCreator);
+            var commandExecutor = new CommandExecuter(eventCreator, rules);
+            var executionState = new ExecuteState(scheduler, commandExecutor);
+            battleState = new BattleStateComponent(playerID, aiID, actionState, characterState, executionState, eventCreator);
+        }
         public void Update(GameTime gameTime)
         {
             // The AI sets the Character itself

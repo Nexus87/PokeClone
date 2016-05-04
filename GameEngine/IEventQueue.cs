@@ -8,7 +8,7 @@ namespace GameEngine
     /// This is a fire and forget event queue. Implementations are not required
     /// to report back the result of the event.
     /// </remarks>
-    public interface IEventQueue
+    public interface IEventQueue : IGameComponent
     {
         /// <summary>
         /// Add a new event to the event queue

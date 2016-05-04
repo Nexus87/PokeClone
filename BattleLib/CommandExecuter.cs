@@ -19,9 +19,9 @@ namespace BattleLib
         private IBattleRules rules;
         private ITypeTable table;
         private Random rng = new Random();
-        private EventCreator eventCreator;
+        private IEventCreator eventCreator;
 
-        public CommandExecuter(EventCreator eventCreator, RulesSet rules)
+        public CommandExecuter(IEventCreator eventCreator, RulesSet rules)
         {
             this.rules = rules.BattleRules;
             this.eventCreator = eventCreator;
@@ -74,7 +74,7 @@ namespace BattleLib
                 eventCreator.Critical();
 
             if (target.Condition == StatusCondition.KO)
-                eventCreator.SetStatus(StatusCondition.KO);
+                eventCreator.SetStatus(target, StatusCondition.KO);
         }
 
         private static MoveEfficiency GetEffect(float typeModifier)

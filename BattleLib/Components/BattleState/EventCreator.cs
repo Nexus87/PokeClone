@@ -1,81 +1,59 @@
 ﻿using Base;
 using Base.Data;
 using BattleLib.GraphicComponents;
-using GameEngine;
-using GameEngine.Utils;
 using System;
 
 namespace BattleLib.Components.BattleState
 {
-    public class EventCreator
+    public class EventCreator : IEventCreator, IBattleEvents
     {
-        
-        private IEventQueue eventDispatcher;
-        private IBattleGraphicService graphicService;
-        private IGUIService guiService;
-
-        private BattleData data;
-
-        public EventCreator(BattleData data)
+        public void UsingMove(PokemonWrapper source, Move move)
         {
-            data.CheckNull("data");
-            this.data = data;
+            MoveUsed(this, new MoveUsedEventArgs(move, source));
         }
 
-        public void Setup(IPokeEngine game)
+        public void SetHP(ClientIdentifier id, int hp)
         {
-            game.CheckNull("game");
-
-            eventDispatcher = game.Services.GetService<IEventQueue>();
-            graphicService = game.Services.GetService<IBattleGraphicService>();
-            guiService = game.Services.GetService<IGUIService>();
-        }
-        
-        internal void UsingMove(PokemonWrapper source, Move move)
-        {
-            eventDispatcher.AddShowMessageEvent(guiService,source.Name + " uses " + move.Name);
+            HPChanged(this, new HPChangedEventArgs(id, hp));
         }
 
-        internal void SetHP(ClientIdentifier id, int hp)
+        public void Effective(MoveEfficiency effect, PokemonWrapper target)
         {
-            eventDispatcher.AddHPEvent(graphicService, id, hp);
+            MoveEffective(this, new MoveEffectiveEventArgs(effect, target));
         }
 
-        internal void Effective(MoveEfficiency effect, PokemonWrapper target)
+        public void Critical()
         {
-            switch (effect)
-            {
-                case MoveEfficiency.NoEffect:
-                    eventDispatcher.AddShowMessageEvent(guiService, "It doesn't affect " + target.Name + "...");
-                    break;
-                case MoveEfficiency.NotEffective:
-                    eventDispatcher.AddShowMessageEvent(guiService, "It's not very effective...");
-                    break;
-                case MoveEfficiency.VeryEffective:
-                    eventDispatcher.AddShowMessageEvent(guiService, "It's super effective!");
-                    break;
-            }
+            CriticalDamage(this, EventArgs.Empty);
         }
 
-        internal void Critical()
+        public void SetStatus(PokemonWrapper pokemon, StatusCondition condition)
         {
-            eventDispatcher.AddShowMessageEvent(guiService, "Critical hit!");
+            StatusChanged(this, new ClientStatusChangedEventArgs(pokemon.Identifier, condition));
         }
 
-        internal void SetStatus(StatusCondition condition)
+        public void SetPokemon(ClientIdentifier id, PokemonWrapper pokemon)
         {
-            
-            throw new NotImplementedException();
+            PokemonChanged(this, new ClientPokemonChangedEventArgs(id, pokemon));
         }
 
-        internal void SetPokemon(ClientIdentifier id, PokemonWrapper pokemon)
+        public void SetNewTurn()
         {
-            eventDispatcher.AddSetPokemonEvent(graphicService, id, pokemon);
+            NewTurn(this, EventArgs.Empty);
         }
 
-        internal void NewTurn()
-        {
-            eventDispatcher.AddShowMenuEvent(guiService);
-        }
+        public event EventHandler CriticalDamage = delegate { };
+
+        public event EventHandler<MoveEffectiveEventArgs> MoveEffective = delegate { };
+
+        public event EventHandler NewTurn = delegate { };
+
+        public event EventHandler<HPChangedEventArgs> HPChanged = delegate { };
+
+        public event EventHandler<ClientPokemonChangedEventArgs> PokemonChanged = delegate { };
+
+        public event EventHandler<ClientStatusChangedEventArgs> StatusChanged = delegate { };
+
+        public event EventHandler<MoveUsedEventArgs> MoveUsed = delegate { };
     }
 }
