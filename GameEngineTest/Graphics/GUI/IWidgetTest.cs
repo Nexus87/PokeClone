@@ -24,7 +24,7 @@ namespace GameEngineTest.Graphics.GUI
             var widget = CreateWidget();
             bool eventRaised = false;
             widget.IsVisible = true;
-            widget.OnVisibilityChanged += delegate { eventRaised = true; };
+            widget.VisibilityChanged += delegate { eventRaised = true; };
 
             widget.IsVisible = false;
 
@@ -38,7 +38,7 @@ namespace GameEngineTest.Graphics.GUI
             var widget = CreateWidget();
             bool eventRaised = false;
             widget.IsVisible = false;
-            widget.OnVisibilityChanged += delegate { eventRaised = true; };
+            widget.VisibilityChanged += delegate { eventRaised = true; };
 
             widget.IsVisible = true;
 
@@ -52,7 +52,7 @@ namespace GameEngineTest.Graphics.GUI
             var widget = CreateWidget();
             bool eventRaised = false;
             widget.IsVisible = false;
-            widget.OnVisibilityChanged += delegate { eventRaised = true; };
+            widget.VisibilityChanged += delegate { eventRaised = true; };
 
             widget.IsVisible = false;
 

@@ -6,7 +6,7 @@ namespace BattleLib.Components
 {
     class SetHPEvent : IEvent
     {
-        public event EventHandler OnEventProcessed
+        public event EventHandler EventProcessed
         {
             add { graphic.OnHPSet += value; }
             remove { graphic.OnHPSet -= value; }

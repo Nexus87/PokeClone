@@ -19,7 +19,7 @@ namespace GameEngine.Graphics.GUI
         }
 
         public event EventHandler OnAllLineShowed = delegate { };
-        public event EventHandler<VisibilityChangedEventArgs> OnVisibilityChanged = delegate { };
+        public event EventHandler<VisibilityChangedEventArgs> VisibilityChanged = delegate { };
 
         public bool IsVisible
         {
@@ -30,7 +30,7 @@ namespace GameEngine.Graphics.GUI
                     return;
 
                 isVisible = value;
-                OnVisibilityChanged(this, new VisibilityChangedEventArgs(isVisible));
+                VisibilityChanged(this, new VisibilityChangedEventArgs(isVisible));
             }
         }
         private bool isVisible;

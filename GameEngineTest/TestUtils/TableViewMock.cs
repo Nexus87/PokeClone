@@ -8,7 +8,7 @@ namespace GameEngineTest.TestUtils
 {
     public class TableViewMock : ITableView<TestType>
     {
-        public virtual event EventHandler<TableResizeEventArgs> OnTableResize;
+        public virtual event EventHandler<TableResizeEventArgs> TableResized;
         public virtual event EventHandler<SelectionChangedEventArgs> SelectionChanged;
 
         public bool SelectionReturnValue { get; set; }
@@ -50,8 +50,8 @@ namespace GameEngineTest.TestUtils
                 EndIndex = newEndIdx;
             }
             
-            if (OnTableResize != null)
-                OnTableResize(this, new TableResizeEventArgs(rows, columns));
+            if (TableResized != null)
+                TableResized(this, new TableResizeEventArgs(rows, columns));
         }
 
         public int Columns { get; set; }

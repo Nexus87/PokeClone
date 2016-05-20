@@ -26,7 +26,7 @@ namespace GameEngine.Graphics.GUI
             VisibleColumns = visibleColumns;
             tableView = view;
 
-            view.OnTableResize += TableResizeHandler;
+            view.TableResized += TableResizeHandler;
             SetStartCell(0, 0);
         }
 
@@ -40,7 +40,7 @@ namespace GameEngine.Graphics.GUI
         /// </summary>
         public event EventHandler OnExitRequested = delegate { };
 
-        public event EventHandler<VisibilityChangedEventArgs> OnVisibilityChanged = delegate { };
+        public event EventHandler<VisibilityChangedEventArgs> VisibilityChanged = delegate { };
 
         /// <summary>
         /// Number of total columns in the table
@@ -56,7 +56,7 @@ namespace GameEngine.Graphics.GUI
                     return;
 
                 isVisible = value;
-                OnVisibilityChanged(this, new VisibilityChangedEventArgs(isVisible));
+                VisibilityChanged(this, new VisibilityChangedEventArgs(isVisible));
             }
         }
 

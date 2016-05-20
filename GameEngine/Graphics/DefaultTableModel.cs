@@ -66,10 +66,5 @@ namespace GameEngine.Graphics
                 SetData(value, row, column);
             }
         }
-
-        protected void OnSizeChanged(int rows, int columns)
-        {
-            SizeChanged(this, new TableResizeEventArgs(rows, columns));
-        }
     }
 }

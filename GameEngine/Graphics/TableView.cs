@@ -50,7 +50,7 @@ namespace GameEngine.Graphics
             ModelSizeChanged();
         }
 
-        public event EventHandler<TableResizeEventArgs> OnTableResize = delegate { };
+        public event EventHandler<TableResizeEventArgs> TableResized = delegate { };
 
         public event EventHandler<SelectionChangedEventArgs> SelectionChanged
         {
@@ -151,7 +151,7 @@ namespace GameEngine.Graphics
         void SizeChangedHandler(object sender, TableResizeEventArgs e)
         {
             ModelSizeChanged();
-            OnTableResize(this, e);
+            TableResized(this, e);
         }
 
         ISelectableGraphicComponent GetComponent(int row, int column)

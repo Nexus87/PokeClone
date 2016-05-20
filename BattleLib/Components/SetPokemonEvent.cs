@@ -7,7 +7,7 @@ namespace BattleLib.Components
 {
     class SetPokemonEvent : IEvent
     {
-        public event EventHandler OnEventProcessed = delegate { };
+        public event EventHandler EventProcessed = delegate { };
         
         private IBattleGraphicService graphic;
         private ClientIdentifier id;
@@ -23,7 +23,7 @@ namespace BattleLib.Components
         private void PokemonSetHandler(object sender, EventArgs e)
         {
             graphic.OnPokemonSet -= PokemonSetHandler;
-            OnEventProcessed(this, null);
+            EventProcessed(this, null);
         }
 
         public void Dispatch()

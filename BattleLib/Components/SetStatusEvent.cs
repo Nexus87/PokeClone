@@ -18,7 +18,7 @@ namespace BattleLib.Components
             this.condition = condition;
         }
 
-        public event EventHandler OnEventProcessed
+        public event EventHandler EventProcessed
         {
             add { graphic.ConditionSet += value; }
             remove { graphic.ConditionSet -= value; }

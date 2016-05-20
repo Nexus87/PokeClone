@@ -14,7 +14,7 @@ namespace GameEngine
         /// <summary>
         /// Signals, that the event is done.
         /// </summary>
-        event EventHandler OnEventProcessed;
+        event EventHandler EventProcessed;
         /// <summary>
         /// This function is called to "start" the event.
         /// </summary>

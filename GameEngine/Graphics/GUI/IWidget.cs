@@ -13,7 +13,7 @@ namespace GameEngine.Graphics.GUI
         /// <summary>
         /// Event is triggered, when IsVisible changes
         /// </summary>
-        event EventHandler<VisibilityChangedEventArgs> OnVisibilityChanged;
+        event EventHandler<VisibilityChangedEventArgs> VisibilityChanged;
 
         /// <summary>
         /// This property shows, if the widget is visible.

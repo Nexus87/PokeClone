@@ -15,7 +15,7 @@ namespace GameEngine.Graphics.GUI
         {
             widget.CheckNull("widget");
 
-            widget.OnVisibilityChanged += widget_OnVisibilityChanged;
+            widget.VisibilityChanged += widget_OnVisibilityChanged;
             if (widget.IsVisible)
             {
                 focusedWidget = widget;

@@ -18,7 +18,7 @@ namespace GameEngine
 
             var ev = eventQueue.First.Value;
             eventQueue.RemoveFirst();
-            ev.OnEventProcessed += OnEventProcessedHandler;
+            ev.EventProcessed += OnEventProcessedHandler;
 
             eventDispatched = true;
             dispatchedEvent = ev;
@@ -27,7 +27,7 @@ namespace GameEngine
 
         private void OnEventProcessedHandler(Object sender, EventArgs args)
         {
-            dispatchedEvent.OnEventProcessed -= OnEventProcessedHandler;
+            dispatchedEvent.EventProcessed -= OnEventProcessedHandler;
             eventDispatched = false;
         }
 

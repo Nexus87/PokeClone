@@ -37,7 +37,7 @@ namespace GameEngine.Graphics
             base.Setup();
         }
 
-        public event EventHandler<VisibilityChangedEventArgs> OnVisibilityChanged = delegate { };
+        public event EventHandler<VisibilityChangedEventArgs> VisibilityChanged = delegate { };
 
         public bool IsVisible
         {
@@ -48,7 +48,7 @@ namespace GameEngine.Graphics
                     return;
 
                 isVisible = value;
-                OnVisibilityChanged(this, new VisibilityChangedEventArgs(isVisible));
+                VisibilityChanged(this, new VisibilityChangedEventArgs(isVisible));
             }
         }
         private bool isVisible;

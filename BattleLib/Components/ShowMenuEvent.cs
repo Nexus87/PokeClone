@@ -6,7 +6,7 @@ namespace BattleLib.Components
 {
     public class ShowMenuEvent : IEvent
     {
-        public event EventHandler OnEventProcessed = delegate { };
+        public event EventHandler EventProcessed = delegate { };
         private IGUIService service;
 
         public ShowMenuEvent(IGUIService service)
@@ -23,7 +23,7 @@ namespace BattleLib.Components
         private void MenuShowedHandler(object sender, EventArgs e)
         {
             service.MenuShowed -= MenuShowedHandler;
-            OnEventProcessed(this, EventArgs.Empty);
+            EventProcessed(this, EventArgs.Empty);
         }
     }
 }

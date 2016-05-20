@@ -22,14 +22,14 @@ namespace GameEngineTest.EventComponent
         {
             public bool DispatchCalled = false;
             public Action Callback = null;
-            public event EventHandler OnEventProcessed = delegate { };
+            public event EventHandler EventProcessed = delegate { };
 
             public void Dispatch()
             {
                 if (Callback != null)
                     Callback();
 
-                OnEventProcessed(this, EventArgs.Empty);
+                EventProcessed(this, EventArgs.Empty);
                 DispatchCalled = true;
             }
         }
@@ -89,7 +89,7 @@ namespace GameEngineTest.EventComponent
 
             Assert.False(eventMock2.DispatchCalled);
 
-            eventMock1.Raise(o => o.OnEventProcessed += null, eventMock1.Object, null);
+            eventMock1.Raise(o => o.EventProcessed += null, eventMock1.Object, null);
 
             eventComponent.Update(new GameTime());
 

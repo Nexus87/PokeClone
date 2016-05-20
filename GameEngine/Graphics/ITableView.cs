@@ -29,7 +29,7 @@ namespace GameEngine.Graphics
         /// <summary>
         /// This event is issued, if the Columns or Rows Property was changed
         /// </summary>
-        event EventHandler<TableResizeEventArgs> OnTableResize;
+        event EventHandler<TableResizeEventArgs> TableResized;
 
         /// <summary>
         /// This event is called, if the selection changed
