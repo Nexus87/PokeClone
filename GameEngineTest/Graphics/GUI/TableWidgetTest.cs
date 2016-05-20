@@ -10,68 +10,8 @@ using System.Collections.Generic;
 namespace GameEngineTest.Graphics.GUI
 {
     [TestFixture]
-    public class TableWidgetTest
+    public class TableWidgetTest : IWidgetTest
     {
-        public static List<TestCaseData> HandleInputTestData = new List<TestCaseData>
-        {
-            new TestCaseData(2, 3, 0, 0, CommandKeys.Right, 0, 1),
-            new TestCaseData(3, 2, 0, 0, CommandKeys.Down, 1, 0),
-            new TestCaseData(10, 10, 9, 9, CommandKeys.Up, 8, 9),
-            new TestCaseData(10, 10, 9, 9, CommandKeys.Left, 9, 8)
-        };
-
-        public static List<TestCaseData> SelectCellTestData = new List<TestCaseData>
-        {
-            new TestCaseData(2, 2, 1, 0),
-            new TestCaseData(1, 4, 0, 3),
-            new TestCaseData(10, 4, 9, 3)
-        };
-
-        public static List<TestCaseData> ViewPortSelectionTestData = new List<TestCaseData>
-        {
-            new TestCaseData(15, 15, 2, 1, new TableIndex(3, 2), new TableIndex(3, 2), new TableIndex(4, 2)),
-            new TestCaseData(10, 10, 4, 4, new TableIndex(3, 3), new TableIndex(0, 0), new TableIndex(3, 3)),
-            new TestCaseData(10, 10, 3, 3, new TableIndex(8, 8), new TableIndex(7, 7), new TableIndex(9, 9))
-        };
-
-        public static List<TestCaseData> ViewPortInputTestData = new List<TestCaseData>
-        {
-            new TestCaseData(15, 15, 2, 1, new TableIndex(3, 2), CommandKeys.Left, new TableIndex(3, 1), new TableIndex(5, 2)),
-            new TestCaseData(15, 15, 2, 1, new TableIndex(3, 2), CommandKeys.Right, new TableIndex(3, 3), new TableIndex(5, 4)),
-            new TestCaseData(15, 15, 2, 1, new TableIndex(3, 2), CommandKeys.Up, new TableIndex(2, 2), new TableIndex(4, 3)),
-            new TestCaseData(15, 15, 2, 1, new TableIndex(3, 2), CommandKeys.Down, new TableIndex(3, 2), new TableIndex(5, 3)),
-        };
-
-        public static List<TestCaseData> InvalidSelectionData = new List<TestCaseData>
-        {
-            new TestCaseData(10, 10, -1, 0),
-            new TestCaseData(10, 10, 0, -1),
-            new TestCaseData(10, 10, 10, 0),
-            new TestCaseData(10, 10, 0, 10),
-            new TestCaseData(10, 10, -1, -5),
-            new TestCaseData(10, 10, 13, -1),
-        };
-
-        public static List<TestCaseData> ResizeTableTestData = new List<TestCaseData>
-        {
-            new TestCaseData(10, 10, 4, 4, new TableIndex(4, 4), 5, 5, new TableIndex(1, 1)),
-            new TestCaseData(3, 3, 5, 5, new TableIndex(0, 0), 12, 7, new TableIndex(0, 0)),
-            new TestCaseData(12, 6, 5, 3, new TableIndex(0, 0), 3, 2, new TableIndex(0, 0)),
-            new TestCaseData(7, 8, 5, 5, new TableIndex(4, 6), 3, 1, new TableIndex(0, 0)),
-            new TestCaseData(8, 8, 4, 4, new TableIndex(4, 4), 8, 2, new TableIndex(4, 0)),
-            new TestCaseData(8, 8, 4, 4, new TableIndex(4, 4), 2, 8, new TableIndex(0, 4)),
-            new TestCaseData(2, 2, 4, 4, new TableIndex(0, 0), 3, 3, new TableIndex(0, 0)),
-            new TestCaseData(0, 0, 4, 4, null, 4, 4, new TableIndex(0, 0))
-        };
-
-        public static List<TestCaseData> InputKeysData = new List<TestCaseData>
-        {
-            new TestCaseData(10, 6, 3, 4, CommandKeys.Left),
-            new TestCaseData(10, 6, 3, 4, CommandKeys.Right),
-            new TestCaseData(10, 6, 3, 4, CommandKeys.Up),
-            new TestCaseData(10, 6, 3, 4, CommandKeys.Down)
-        };
-
         [TestCase]
         public void CreateWidget_ZeroSizeTable_DoesNotThrow()
         {
@@ -392,6 +332,12 @@ namespace GameEngineTest.Graphics.GUI
         {
             tableViewMock.Rows = rows;
             tableViewMock.Columns = columns;
+        }
+
+        protected override IWidget CreateWidget()
+        {
+
+            return new TableWidget<TestType>(2, 2, new TableViewMock());
         }
     }
 }

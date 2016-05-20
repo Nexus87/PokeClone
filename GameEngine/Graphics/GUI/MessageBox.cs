@@ -3,14 +3,19 @@ using System;
 
 namespace GameEngine.Graphics.GUI
 {
-    public class MessageBox : ForwardingGraphicComponent<MultlineTextBox>, IWidget
+    public class MessageBox : ForwardingGraphicComponent<ITextGraphicContainer>, IWidget
     {
-        private MultlineTextBox textBox;
+        private ITextGraphicContainer textBox;
+
+        public MessageBox(ITextGraphicContainer textBox) :
+            base(textBox)
+        {
+            this.textBox = InnerComponent;
+        }
 
         public MessageBox(ISpriteFont font, ITextSplitter splitter, int lineNumber = 2)
-            : base(new MultlineTextBox(font, splitter, lineNumber))
+            : this(new MultlineTextBox(font, splitter, lineNumber))
         {
-            textBox = InnerComponent;
         }
 
         public event EventHandler OnAllLineShowed = delegate { };

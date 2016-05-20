@@ -149,6 +149,24 @@ namespace GameEngineTest.Graphics
         }
 
         [TestCase]
+        public void NextLine_CalledTwiceWithNoNextLine_DoesNothing()
+        {
+            var firstLine = "String1";
+            var secondLine = "String2";
+
+            var splitterStub = CreateSplitterStub(new List<string> { firstLine, secondLine });
+            var textBox = CreateTextBox(splitterStub, 2);
+
+            textBox.Text = SAMPLE_STRING;
+            textBox.NextLine();
+            textBox.NextLine();
+            textBox.Draw(new SpriteBatchMock());
+
+            Assert.Contains(firstLine, textBox.ComponentStrings());
+            Assert.Contains(secondLine, textBox.ComponentStrings());
+        }
+
+        [TestCase]
         public void NextLine_OnlyOneLineLeft_AllButFirstLineEmpty()
         {
             var firstLine = "String1";

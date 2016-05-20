@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 
 namespace GameEngine.Graphics
 {
-    public class MultlineTextBox : AbstractGraphicComponent
+    public class MultlineTextBox : AbstractGraphicComponent, ITextGraphicContainer
     {
         private string text;
         private ITextSplitter splitter;

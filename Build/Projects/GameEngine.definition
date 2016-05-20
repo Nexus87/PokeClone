@@ -42,6 +42,7 @@
     <Compile Include="Graphics\ITableView.cs" />
     <Compile Include="Graphics\ItemBox.cs" />
     <Compile Include="Graphics\ITextGraphicComponent.cs" />
+    <Compile Include="Graphics\ITextGraphicContainer.cs" />
     <Compile Include="Graphics\Line.cs" />
     <Compile Include="Graphics\MultiLayeredComponent.cs" />
     <Compile Include="Graphics\MultlineTextBox.cs" />

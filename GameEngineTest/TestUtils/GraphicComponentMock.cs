@@ -21,12 +21,12 @@ namespace GameEngineTest.TestUtils
         public event EventHandler<GraphicComponentSizeChangedEventArgs> SizeChanged;
         public event EventHandler<GraphicComponentPositionChangedEventArgs> PositionChanged;
 
-        public float XPosition { get; set; }
-        public float YPosition { get; set; }
+        public virtual float XPosition { get; set; }
+        public virtual float YPosition { get; set; }
 
-        public float Width { get; set; }
+        public virtual float Width { get; set; }
+        public virtual float Height { get; set; }
 
-        public float Height { get; set; }
         public Action DrawCallback = null;
         public void Draw(GameTime time, ISpriteBatch batch)
         {
@@ -43,5 +43,17 @@ namespace GameEngineTest.TestUtils
 
 
         public Color Color { get; set; }
+
+        protected void OnSizeChanged()
+        {
+            if (SizeChanged != null)
+                SizeChanged(this, new GraphicComponentSizeChangedEventArgs(Width, Height));
+        }
+
+        protected void OnPositionChanged()
+        {
+            if (PositionChanged != null)
+                PositionChanged(this, new GraphicComponentPositionChangedEventArgs(XPosition, YPosition));
+        }
     }
 }

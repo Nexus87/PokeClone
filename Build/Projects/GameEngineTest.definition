@@ -18,6 +18,8 @@
     <Compile Include="Graphics\DefaultTableRendererTest.cs" />
     <Compile Include="Graphics\DefaultTableSelectionModelTest.cs" />
     <Compile Include="Graphics\GridLayoutTest.cs" />
+    <Compile Include="Graphics\GUI\IWidgetTest.cs" />
+    <Compile Include="Graphics\GUI\MessageBoxTest.cs" />
     <Compile Include="Graphics\GUI\TableWidgetTest.cs" />
     <Compile Include="Graphics\IGraphicComponentTest.cs" />
     <Compile Include="Graphics\IItemModelTest.cs" />
@@ -45,6 +47,7 @@
     <Compile Include="TestUtils\TableRendererMock.cs" />
     <Compile Include="TestUtils\TableViewMock.cs" />
     <Compile Include="TestUtils\TextGraphicComponentMock.cs" />
+    <Compile Include="TestUtils\TextGraphicContainerFake.cs" />
     <Compile Include="Utils\DefaultTextSplitterTest.cs" />
     <Compile Include="Utils\TableTest.cs" />
   </Files>
