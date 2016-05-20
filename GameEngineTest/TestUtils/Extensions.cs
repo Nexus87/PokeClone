@@ -1,5 +1,6 @@
 ﻿using GameEngine;
 using GameEngine.Graphics;
+using GameEngine.Graphics.GUI;
 using Microsoft.Xna.Framework;
 using Moq;
 using NUnit.Framework;
@@ -18,6 +19,10 @@ namespace GameEngineTest.TestUtils
             compMock.Setup(o => o.Height).Returns(Height);
         }
 
+        public static void Draw(this GUIManager manager)
+        {
+            manager.Draw(new GameTime(), new SpriteBatchMock());
+        }
         public static void Draw(this IGraphicComponent component, ISpriteBatch spriteBatch)
         {
             component.Draw(new GameTime(), spriteBatch);
