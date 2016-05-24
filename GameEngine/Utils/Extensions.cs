@@ -41,39 +41,6 @@ namespace GameEngine.Utils
             }
         }
 
-        public static void Copy<T>(this T[,] source, T[,] target, CellCreator<T> defaultValue)
-        {
-            int sourceRows = source.GetLength(0);
-            int sourceColumns = source.GetLength(1);
-            int targetRows = target.GetLength(0);
-            int targetColumns = target.GetLength(1);
-
-            for (int row = 0; row < targetRows; row++)
-            {
-                for (int column = 0; column < targetColumns; column++)
-                {
-                    target[row, column] = row >= sourceRows || column >= sourceColumns ? defaultValue(row, column) :  source[row, column];
-                }
-            }
-        }
-
-        public static void Resize<T>(this List<T> list, int newSize)
-        {
-            if (list.Count == newSize)
-                return;
-            else if (list.Count > newSize)
-            {
-                list.RemoveRange(newSize, list.Count - newSize);
-            }
-            else
-            {
-                if (list.Capacity < newSize)
-                    list.Capacity = newSize;
-
-                list.AddRange(Enumerable.Repeat(default(T), newSize - list.Count));
-            }
-        }
-
     }
 
     public static class PublicExtensions

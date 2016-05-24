@@ -10,21 +10,9 @@ namespace GameEngine.Graphics
         public IReadOnlyList<IGraphicComponent> Components { get { return components.AsReadOnly(); } }
         private readonly List<IGraphicComponent> components = new List<IGraphicComponent>();
 
-        public void AddComponent(IGraphicComponent comp, int index)
-        {
-            components.Insert(index, comp);
-            Invalidate();
-        }
-
         public void AddComponent(IGraphicComponent comp)
         {
             components.Add(comp);
-            Invalidate();
-        }
-
-        public void RemoveComponent(IGraphicComponent comp)
-        {
-            components.Remove(comp);
             Invalidate();
         }
 

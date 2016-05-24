@@ -11,14 +11,6 @@ namespace GameEngineTest.TestUtils
 {
     public static class Extensions
     {
-        public static void SetCoordinates(this Mock<IGraphicComponent> compMock, float X, float Y, float Width, float Height)
-        {
-            compMock.Setup(o => o.XPosition).Returns(X);
-            compMock.Setup(o => o.YPosition).Returns(Y);
-            compMock.Setup(o => o.Width).Returns(Width);
-            compMock.Setup(o => o.Height).Returns(Height);
-        }
-
         public static void Draw(this GUIManager manager)
         {
             manager.Draw(new GameTime(), new SpriteBatchMock());
@@ -31,11 +23,6 @@ namespace GameEngineTest.TestUtils
         public static void Draw(this IGraphicComponent component)
         {
             component.Draw(new GameTime(), new SpriteBatchMock());
-        }
-
-        public static void Update(this GameComponent component)
-        {
-            component.Update(new GameTime());
         }
 
         public static void Update(this GameEngine.IGameComponent component)
@@ -57,35 +44,6 @@ namespace GameEngineTest.TestUtils
             }
 
             return ret;
-        }
-
-        public static void ClearContainer(this Container container)
-        {
-            var list = container.Components;
-            while (list.Count != 0)
-            {
-                container.RemoveComponent(list[0]);
-                list = container.Components;
-            }
-        }
-
-        public static void SetupMeasureString(this Mock<ISpriteFont> fontMock)
-        {
-            fontMock.Setup(o => o.MeasureString(It.IsAny<string>())).Returns<string>(s => new Vector2(16.0f * s.Length, 16.0f));
-        }
-
-        public static void SetupModelMock<T>(this Mock<ITableModel<T>> model, int rows, int columns, T data)
-        {
-            model.Setup(o => o.Rows).Returns(rows);
-            model.Setup(o => o.Columns).Returns(columns);
-            model.Setup(o => o.DataAt(It.IsAny<int>(), It.IsAny<int>())).Returns(data);
-        }
-
-        public static void SetupModelMock<T>(this Mock<ITableModel<T>> model, int rows, int columns, Func<int, int, T> retFunc)
-        {
-            model.Setup(o => o.Rows).Returns(rows);
-            model.Setup(o => o.Columns).Returns(columns);
-            model.Setup(o => o.DataAt(It.IsAny<int>(), It.IsAny<int>())).Returns((int a, int b) => retFunc(a, b));
         }
 
         public static void IsInConstraints(this IGraphicComponent component, float X, float Y, float Width, float Height)
