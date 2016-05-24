@@ -26,7 +26,8 @@ namespace GameEngineTest.TestUtils
         public void SetVisibility(bool visibility)
         {
             IsVisible = visibility;
-            VisibilityChanged(this, new VisibilityChangedEventArgs(visibility));
+            if(VisibilityChanged != null)
+                VisibilityChanged(this, new VisibilityChangedEventArgs(visibility));
         }
     }
 }

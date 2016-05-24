@@ -237,6 +237,24 @@ namespace GameEngineTest.Graphics.GUI
             var guiManager = CreateGUIManager();
             Assert.DoesNotThrow(() => guiManager.HandleInput(CommandKeys.Up));
         }
+
+        [TestCase]
+        public void Draw_ChangeVisibilityOfWidgetAfterRemove_IsNotDrawn()
+        {
+            var widgetMock1 = new WidgetMock { IsVisible = true };
+            var widgetMock2 = new WidgetMock { IsVisible = false };
+            var guiManager = CreateGUIManager();
+
+            guiManager.AddWidget(widgetMock1);
+            guiManager.AddWidget(widgetMock2);
+            guiManager.RemoveWidget(widgetMock2);
+
+            widgetMock2.SetVisibility(true);
+
+            guiManager.Draw();
+
+            Assert.False(widgetMock2.WasDrawn);
+        }
         private GUIManager CreateGUIManager()
         {
             var manager = new GUIManager();

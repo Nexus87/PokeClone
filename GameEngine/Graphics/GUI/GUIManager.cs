@@ -41,9 +41,25 @@ namespace GameEngine.Graphics.GUI
 
         public void RemoveWidget(IWidget widget)
         {
-            widget.CheckNull("widget");
+            if (!Contains(widget))
+                return;
 
-            if(widget.IsVisible)
+            RemoveWidgetFromList(widget);
+            widget.VisibilityChanged -= VisibilityChangedHandler;
+            
+        }
+
+        private bool Contains(IWidget widget)
+        {
+            if (widget == null)
+                return false;
+
+            return widgets.Contains(widget) || notVisibleWidgets.Contains(widget);
+        }
+
+        private void RemoveWidgetFromList(IWidget widget)
+        {
+            if (widget.IsVisible)
                 widgets.Remove(widget);
             else
                 notVisibleWidgets.Remove(widget);
