@@ -11,12 +11,22 @@ namespace GameEngineTest.TestUtils
     public class WidgetMock : GraphicComponentMock, IWidget
     {
         public event EventHandler<VisibilityChangedEventArgs> VisibilityChanged;
-
+        public bool WasHandleInputCalled = false;
+        public CommandKeys HandleInputArgument;
         public bool IsVisible { get; set; }
 
         public bool HandleInput(CommandKeys key)
         {
-            throw new NotImplementedException();
+            WasHandleInputCalled = true;
+            HandleInputArgument = key;
+
+            return true;
+        }
+
+        public void SetVisibility(bool visibility)
+        {
+            IsVisible = visibility;
+            VisibilityChanged(this, new VisibilityChangedEventArgs(visibility));
         }
     }
 }

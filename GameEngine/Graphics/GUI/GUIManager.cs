@@ -7,7 +7,7 @@ namespace GameEngine.Graphics.GUI
 {
     public class GUIManager : IInputHandler
     {
-        private IWidget focusedWidget;
+        private IWidget FocusedWidget { get { return widgets.Count == 0 ? null : widgets.Last.Value; } }
         private LinkedList<IWidget> widgets = new LinkedList<IWidget>();
         private LinkedList<IWidget> notVisibleWidgets = new LinkedList<IWidget>();
 
@@ -15,30 +15,24 @@ namespace GameEngine.Graphics.GUI
         {
             widget.CheckNull("widget");
 
-            widget.VisibilityChanged += widget_OnVisibilityChanged;
+            widget.VisibilityChanged += VisibilityChangedHandler;
+
             if (widget.IsVisible)
-            {
-                focusedWidget = widget;
                 widgets.AddLast(widget);
-            }
             else
                 notVisibleWidgets.AddLast(widget);
         }
 
-        void widget_OnVisibilityChanged(object sender, VisibilityChangedEventArgs e)
+        void VisibilityChangedHandler(object sender, VisibilityChangedEventArgs e)
         {
             var widget = (IWidget)sender;
             if (e.Visible == false)
             {
                 widgets.Remove(widget);
                 notVisibleWidgets.AddLast(widget);
-
-                if (focusedWidget == widget)
-                    focusedWidget = widgets.Last.Value;
             }
             else
             {
-                focusedWidget = widget;
                 notVisibleWidgets.Remove(widget);
                 widgets.AddLast(widget);
             }
@@ -55,38 +49,27 @@ namespace GameEngine.Graphics.GUI
                 notVisibleWidgets.Remove(widget);
         }
 
-        public void FocusWidget(IWidget widget)
-        {
-            if (!widgets.Remove(widget))
-                return;
-
-            widgets.AddLast(widget);
-            focusedWidget = widget;
-        }
-
         public GUIManager()
         {
             IsActive = false;
         }
 
-        public event EventHandler GUIClose = delegate { };
-
-        internal bool IsActive { get; private set; }
+        private bool IsActive { get; set; }
 
         public bool HandleInput(CommandKeys key)
         {
-            if (focusedWidget == null)
+            if (FocusedWidget == null)
                 return false;
 
-            return focusedWidget.HandleInput(key);
+            return FocusedWidget.HandleInput(key);
         }
 
-        internal void Close()
+        public void Close()
         {
             IsActive = false;
         }
 
-        internal void Draw(GameTime time, ISpriteBatch batch)
+        public void Draw(GameTime time, ISpriteBatch batch)
         {
             if (!IsActive)
                 return;
@@ -94,7 +77,7 @@ namespace GameEngine.Graphics.GUI
                 w.Draw(time, batch);
         }
 
-        internal void Show()
+        public void Show()
         {
             IsActive = true;
         }

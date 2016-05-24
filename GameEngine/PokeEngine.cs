@@ -44,7 +44,6 @@ namespace GameEngine
             Window.AllowUserResizing = true;
             Window.ClientSizeChanged += Window_ClientSizeChanged;
 
-            GUIManager.GUIClose += GUI_GUIClose;
             Content.RootDirectory = "Content";
 
             AddGameComponent(input);
@@ -75,12 +74,13 @@ namespace GameEngine
 
             Components.Remove(res);
         }
+
         public IInputHandler InputHandler
         {
             set
             {
                 DefaultInputHandler = value;
-                if (!GUIManager.IsActive)
+                if (input.handler == null)
                     input.handler = value;
             }
             get
@@ -127,12 +127,6 @@ namespace GameEngine
             Graphic.Setup();
             GUIManager.Setup();
             IsRunning = true;
-        }
-
-        private void GUI_GUIClose(object sender, EventArgs e)
-        {
-            GUIManager.Close();
-            input.handler = DefaultInputHandler;
         }
 
         private void Window_ClientSizeChanged(object sender, EventArgs e)
