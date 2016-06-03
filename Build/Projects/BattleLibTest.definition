@@ -15,6 +15,7 @@
   <Files>
     <Compile Include="Components\BattleEventProcessorTest.cs" />
     <Compile Include="Components\GraphicComponents\AttackModelTest.cs" />
+    <Compile Include="Components\GraphicComponents\AttackTableSelectionModelTest.cs" />
     <Compile Include="Components\GraphicComponents\HPLineTest.cs" />
   </Files>
 </Project>

@@ -15,7 +15,6 @@
     <Compile Include="Graphics\AbstractLayoutTest.cs" />
     <Compile Include="Graphics\BoxLayoutTest.cs" />
     <Compile Include="Graphics\DefaultTableModelTest.cs" />
-    <Compile Include="Graphics\DefaultTableRendererTest.cs" />
     <Compile Include="Graphics\DefaultTableSelectionModelTest.cs" />
     <Compile Include="Graphics\GridLayoutTest.cs" />
     <Compile Include="Graphics\GUI\GUIManagerTest.cs" />
@@ -33,6 +32,7 @@
     <Compile Include="Graphics\NullGraphicObjectTest.cs" />
     <Compile Include="Graphics\SingleComponentLayoutTest.cs" />
     <Compile Include="Graphics\TableGridTest.cs" />
+    <Compile Include="Graphics\TableSingleSelectionModelTest.cs" />
     <Compile Include="Graphics\TableViewTest.cs" />
     <Compile Include="Graphics\TextBoxTest.cs" />
     <Compile Include="Graphics\TextGraphicTest.cs" />
@@ -45,6 +45,7 @@
     <Compile Include="TestUtils\SelectableGraphicComponentMock.cs" />
     <Compile Include="TestUtils\SpriteBatchMock.cs" />
     <Compile Include="TestUtils\TableComponentMock.cs" />
+    <Compile Include="TestUtils\TableModelStub.cs" />
     <Compile Include="TestUtils\TableRendererMock.cs" />
     <Compile Include="TestUtils\TableViewMock.cs" />
     <Compile Include="TestUtils\TextGraphicComponentMock.cs" />

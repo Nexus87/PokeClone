@@ -18,7 +18,6 @@
     <Compile Include="Graphics\Container.cs" />
     <Compile Include="Graphics\DefaultTableModel.cs" />
     <Compile Include="Graphics\DefaultTableRenderer.cs" />
-    <Compile Include="Graphics\DefaultTableSelectionModel.cs" />
     <Compile Include="Graphics\Dialog.cs" />
     <Compile Include="Graphics\Extensions.cs" />
     <Compile Include="Graphics\ForwardingGraphicComponent.cs" />
@@ -50,6 +49,7 @@
     <Compile Include="Graphics\ResizeAnimation.cs" />
     <Compile Include="Graphics\SingleComponentLayout.cs" />
     <Compile Include="Graphics\TableGrid.cs" />
+    <Compile Include="Graphics\TableSingleSelectionModel.cs" />
     <Compile Include="Graphics\TableView.cs" />
     <Compile Include="Graphics\TextBox.cs" />
     <Compile Include="Graphics\TextGraphic.cs" />
