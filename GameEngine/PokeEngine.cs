@@ -16,11 +16,7 @@ namespace GameEngine
         private static readonly Color backgroundColor = new Color(248, 248, 248, 0);
 
         internal GraphicComponentFactory factory;
-        public bool IsRunning { get; private set; }
 
-        public ISpriteFont DefaultFont { get; private set; }
-        public ITexture2D DefaultArrowTexture { get; private set; }
-        public ITexture2D DefaultBorderTexture { get; private set; }
         public IEventQueue EventQueue { get; set; }
         public GUIManager GUIManager { get; private set; }
 
@@ -35,7 +31,6 @@ namespace GameEngine
         {
             config.CheckNull("config");
 
-            IsRunning = false;
             input = new InputComponent(this, config);
             GUIManager = new GUIManager();
 
@@ -126,7 +121,6 @@ namespace GameEngine
                 throw new InvalidOperationException("Graphic component is not set");
             Graphic.Setup();
             GUIManager.Setup();
-            IsRunning = true;
         }
 
         private void Window_ClientSizeChanged(object sender, EventArgs e)
@@ -153,11 +147,6 @@ namespace GameEngine
             display.Height = (int)(scaleY * ScreenHeight);
             display.X = (int)((bufferX - display.Width) / 2.0f);
             display.Y = (int)((bufferY - display.Height) / 2.0f);
-        }
-
-        public float AspectRation
-        {
-            get { return aspectRation; }
         }
 
         public float ScreenHeight
