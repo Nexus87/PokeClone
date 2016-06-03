@@ -18,6 +18,7 @@ namespace GameEngine.Utils
         {
             innerTable = new T[INITAL_ROWS, INITAL_COLUMNS];
         }
+
         private Table(T[,] array)
         {
             innerTable = array;

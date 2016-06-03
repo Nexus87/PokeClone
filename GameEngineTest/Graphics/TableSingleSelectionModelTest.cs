@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace GameEngineTest.Graphics
 {
     [TestFixture]
-    public class DefaultTableRendererTest : ITableRendererTest
+    public class TableSingleSelectionModelTest : ITableRendererTest
     {
         protected class TestTableRenderer : DefaultTableRenderer<TestType>
         {

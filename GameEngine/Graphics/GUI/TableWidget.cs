@@ -138,7 +138,7 @@ namespace GameEngine.Graphics.GUI
             switch (key)
             {
                 case CommandKeys.Select:
-                    ItemSelected(this, new SelectionEventArgs<T>(Model[cursorRow, cursorColumn]));
+                    ItemSelected(this, new SelectionEventArgs<T>(Model.DataAt(cursorRow, cursorColumn)));
                     break;
 
                 case CommandKeys.Back:

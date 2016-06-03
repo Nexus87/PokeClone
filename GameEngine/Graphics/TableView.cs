@@ -156,7 +156,7 @@ namespace GameEngine.Graphics
 
         ISelectableGraphicComponent GetComponent(int row, int column)
         {
-            var data = model[row, column];
+            var data = model.DataAt(row, column);
             return GetComponent(row, column, data);
         }
 

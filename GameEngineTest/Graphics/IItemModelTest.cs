@@ -27,7 +27,7 @@ namespace GameEngineTest.Graphics
         {
             var testModel = GetModel();
             var t = new TestType { testString = "Test" };
-            Assert.True(testModel.SetData(t, 0, 0));
+            Assert.True(testModel.SetDataAt(t, 0, 0));
 
             Assert.AreEqual(t, testModel.DataAt(0, 0));
 
@@ -41,7 +41,7 @@ namespace GameEngineTest.Graphics
             var t = new TestType { testString = "Test" };
 
             testModel.DataChanged += (obj, args) => { eventArgs = args; };
-            testModel.SetData(t, 0, 0);
+            testModel.SetDataAt(t, 0, 0);
             
             Assert.NotNull(eventArgs);
             Assert.AreEqual(0, eventArgs.Row);

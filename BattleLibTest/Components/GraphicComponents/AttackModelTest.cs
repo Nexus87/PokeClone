@@ -151,10 +151,10 @@ namespace BattleLibTest.GUI
         }
 
         [TestCase]
-        public void SetData_SomeValue_ThrowsExecption()
+        public void SetDataAt_SomeValue_ThrowsExecption()
         {
             var model = AttackModelTestFactory.CreateModel(3);
-            Assert.Throws<InvalidOperationException>(delegate { model.SetData(new Move(new MoveData()), 2, 0); });
+            Assert.Throws<InvalidOperationException>(delegate { model.SetDataAt(new Move(new MoveData()), 2, 0); });
         }
 
         [TestCase]

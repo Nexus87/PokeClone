@@ -53,7 +53,7 @@ namespace GameEngine.Graphics
             if (renderer == null)
                 renderer = new DefaultTableRenderer<T>(this);
             if (selectionModel == null)
-                selectionModel = new DefaultTableSelectionModel();
+                selectionModel = new TableSingleSelectionModel();
 
             return new TableView<T>(model, renderer, selectionModel);
         }

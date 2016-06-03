@@ -107,7 +107,7 @@ namespace BattleLib.GraphicComponents
             var ItemMenu = factory.CreateTableWidget(factory.CreateTableView<Item>(model), 8);
             
             for (int i = 0; i < 20; i++)
-                model.SetData(new Item { Name = "Item" + i }, i, 0);
+                model.SetDataAt(new Item { Name = "Item" + i }, i, 0);
 
             itemFrame.XPosition = 3.0f * game.ScreenWidth / 8.0f;
             itemFrame.YPosition = 1.0f * game.ScreenHeight / 8.0f;
@@ -133,10 +133,10 @@ namespace BattleLib.GraphicComponents
         private void InitMainMenu(GraphicComponentFactory factory, IPokeEngine game)
         {
             var MainMenu = factory.CreateTableWidget<string>();
-            MainMenu.Model.SetData("Attack", 0, 0);
-            MainMenu.Model.SetData("PKMN", 0, 1);
-            MainMenu.Model.SetData("Item", 1, 0);
-            MainMenu.Model.SetData("Run", 1, 1);
+            MainMenu.Model.SetDataAt("Attack", 0, 0);
+            MainMenu.Model.SetDataAt("PKMN", 0, 1);
+            MainMenu.Model.SetDataAt("Item", 1, 0);
+            MainMenu.Model.SetDataAt("Run", 1, 1);
 
             mainFrame.AddWidget(MainMenu);
 

@@ -1,21 +1,22 @@
-﻿using GameEngine.Graphics;
+﻿using Base;
+using GameEngine.Graphics;
+using GameEngine.Utils;
 
 namespace BattleLib.GraphicComponents
 {
-    internal class AttackTableSelectionModel : DefaultTableSelectionModel
+    class AttackTableSelectionModel : TableSingleSelectionModel
     {
-        private AttackModel model;
-
-        public AttackTableSelectionModel(AttackModel model)
-        {
-            this.model = model;
-        }
-
-        public override bool SelectIndex(int row, int column)
-        {
-            if (model[row, column] == null)
+        public AttackTableSelectionModel(ITableModel<Move> model)
+            : base(
+            (row, column) => { 
+                if(model.IndexInRange(row, column))
+                    return model.DataAt(row, column) != null;
                 return false;
-            return base.SelectIndex(row, column);
+            }
+            )
+        {
+            model.CheckNull("model");
         }
+
     }
 }

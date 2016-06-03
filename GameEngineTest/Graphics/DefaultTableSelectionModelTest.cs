@@ -9,8 +9,6 @@ namespace GameEngineTest.Graphics
     [TestFixture]
     public class DefaultTableSelectionModelTest
     {
-
-
         public static List<TestCaseData> ValidIndices = new List<TestCaseData> 
         { 
             new TestCaseData(0, 10),
@@ -21,14 +19,14 @@ namespace GameEngineTest.Graphics
         [TestCase]
         public void IsSelected_DefaultSetup_IsTrue()
         {
-            var model = new DefaultTableSelectionModel();
+            var model = new TableSingleSelectionModel();
             Assert.IsTrue(model.IsSelected(0, 0));
         }
 
         [TestCaseSource("ValidIndices")]
         public void SelectionChanged_SelectIndex_IsCalledTwice(int row, int column)
         {
-            var model = new DefaultTableSelectionModel();
+            var model = new TableSingleSelectionModel();
             var args = new List<SelectionChangedEventArgs>();
             model.SelectionChanged += (obj, arg) => args.Add(arg);
 
@@ -40,7 +38,7 @@ namespace GameEngineTest.Graphics
         [TestCaseSource("ValidIndices")]
         public void SelectionChanged_SelectIndex_DefaultIndexIsUnselected(int row, int column)
         {
-            var model = new DefaultTableSelectionModel();
+            var model = new TableSingleSelectionModel();
             var args = new List<SelectionChangedEventArgs>();
             var expectedEvent = new SelectionChangedEventArgs(0, 0, false);
             model.SelectionChanged += (obj, arg) => args.Add(arg);
@@ -53,7 +51,7 @@ namespace GameEngineTest.Graphics
         [TestCaseSource("ValidIndices")]
         public void SelectionChanged_SelectIndex_NewIndexIsSelected(int row, int column)
         {
-            var model = new DefaultTableSelectionModel();
+            var model = new TableSingleSelectionModel();
             var args = new List<SelectionChangedEventArgs>();
             var expectedEvent = new SelectionChangedEventArgs(row, column, true);
             model.SelectionChanged += (obj, arg) => args.Add(arg);
@@ -72,7 +70,7 @@ namespace GameEngineTest.Graphics
         [TestCase(0, 0)]
         public void SelectionChanged_UnselectIndex_ArgumentIsAsExpected(int row, int column)
         {
-            var model = new DefaultTableSelectionModel();
+            var model = new TableSingleSelectionModel();
             var args = new List<SelectionChangedEventArgs>();
             var expectedArgument = new SelectionChangedEventArgs(row, column, false);
             model.SelectionChanged += (obj, arg) => args.Add(arg);
@@ -85,7 +83,7 @@ namespace GameEngineTest.Graphics
         [TestCaseSource("ValidIndices")]
         public void SelectionChanged_SelectSameIndexTwice_NoEventRaised(int row, int column)
         {
-            var model = new DefaultTableSelectionModel();
+            var model = new TableSingleSelectionModel();
             model.SelectIndex(row, column);
             bool wasSelected = false;
             model.SelectionChanged += (obj, arg) => wasSelected = true;
@@ -98,7 +96,7 @@ namespace GameEngineTest.Graphics
         [TestCase(1, 1)]
         public void SelectionChanged_UnselectOnNotSelectedIndex_NoEventRaised(int row, int column)
         {
-            var model = new DefaultTableSelectionModel();
+            var model = new TableSingleSelectionModel();
             bool wasSelected = false;
             model.SelectionChanged += (obj, arg) => wasSelected = true;
 
@@ -122,19 +120,19 @@ namespace GameEngineTest.Graphics
         [TestCaseSource("InvalidIndices")]
         public void SelectIndex_InvalidIndexes_ThrowsException(int row, int column)
         {
-            var model = new DefaultTableSelectionModel();
+            var model = new TableSingleSelectionModel();
             Assert.Throws(typeof(ArgumentOutOfRangeException), delegate { model.SelectIndex(row, column); });
         }
         [TestCaseSource("InvalidIndices")]
         public void UnselectIndex_InvalidIndexes_ThrowsException(int row, int column)
         {
-            var model = new DefaultTableSelectionModel();
+            var model = new TableSingleSelectionModel();
             Assert.Throws(typeof(ArgumentOutOfRangeException), delegate { model.UnselectIndex(row, column); });
         }
         [TestCaseSource("InvalidIndices")]
         public void IsSelected_InvalidIndexes_ThrowsException(int row, int column)
         {
-            var model = new DefaultTableSelectionModel();
+            var model = new TableSingleSelectionModel();
             Assert.Throws(typeof(ArgumentOutOfRangeException), delegate { model.IsSelected(row, column); });
         }
     }

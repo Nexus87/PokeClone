@@ -145,7 +145,6 @@ namespace GameEngineTest.Graphics
             var eventArgs = new DataChangedEventArgs<Object>(row, column, newData);
 
             table.Setup();
-            modelStub.SetupGet(o => o[row, column] ).Returns(newData);
             modelStub.Setup(o => o.DataAt(row, column) ).Returns(newData);
             modelStub.Raise( o => o.DataChanged += null, modelStub.Object, eventArgs);
             table.Draw();
@@ -190,7 +189,6 @@ namespace GameEngineTest.Graphics
             table.Setup();
             table.Draw();
 
-            modelStub.SetupGet(o => o[row, column]).Returns(newData);
             modelStub.Setup(o => o.DataAt(row, column)).Returns(newData);
             modelStub.Raise(o => o.DataChanged += null, modelStub.Object, eventArgs);
             table.Draw();

@@ -22,9 +22,9 @@ namespace BattleLib.GraphicComponents
             // Therefore we call the base method.
             int i = 0;
             for (; i < moves.Count; i++)
-                base.SetData(moves[i], i, 0);
+                base.SetDataAt(moves[i], i, 0);
             for (; i < Rows; i++)
-                base.SetData(null, i, 0);
+                base.SetDataAt(null, i, 0);
         }
 
         private void PokemonChangedHandler(object sender, PokemonChangedEventArgs e)
@@ -32,7 +32,7 @@ namespace BattleLib.GraphicComponents
             SetMoves(e.Pokemon.Moves);
         }
 
-        public override bool SetData(Move data, int row, int column)
+        public override bool SetDataAt(Move data, int row, int column)
         {
             throw new InvalidOperationException("Model is read only");
         }

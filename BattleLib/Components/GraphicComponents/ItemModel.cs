@@ -58,22 +58,9 @@ namespace BattleLib.GraphicComponents
             return DataAt(row, column).ToString();
         }
 
-        public bool SetData(Item data, int row, int column)
+        public bool SetDataAt(Item data, int row, int column)
         {
             throw new InvalidOperationException("Model is read only");
-        }
-
-
-        public Item this[int row, int column]
-        {
-            get
-            {
-                return DataAt(row, column);
-            }
-            set
-            {
-                SetData(value, row, column);
-            }
         }
     }
 }

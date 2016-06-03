@@ -26,7 +26,7 @@ namespace BattleLib.GraphicComponents
             return items[row];
         }
 
-        public virtual bool SetData(T data, int row, int column)
+        public virtual bool SetDataAt(T data, int row, int column)
         {
             if (row < 0 || row >= Rows || column < 0 || column >= Columns)
                 throw new ArgumentOutOfRangeException("Index out of bound");
@@ -43,7 +43,7 @@ namespace BattleLib.GraphicComponents
         public T this[int row, int column]
         {
             get { return DataAt(row, column); }
-            set { SetData(value, row, column); }
+            set { SetDataAt(value, row, column); }
         }
     }
 }
