@@ -55,9 +55,9 @@ namespace GameEngineTest.Graphics
                 ColumnsXAscending(components, row);
         }
 
-        private void ColumnsXAscending(SelectableGraphicComponentMock[,] components, int row)
+        private void ColumnsXAscending(Table<SelectableGraphicComponentMock> components, int row)
         {
-            for (int column = 0; column < components.Columns() - 1; column++)
+            for (int column = 0; column < components.Columns - 1; column++)
                 Assert.LessOrEqual(components[row, column].XPosition, components[row, column + 1].XPosition);
         }
 
@@ -73,9 +73,9 @@ namespace GameEngineTest.Graphics
                 RowsYAscending(components, column);
         }
 
-        private void RowsYAscending(SelectableGraphicComponentMock[,] components, int column)
+        private void RowsYAscending(Table<SelectableGraphicComponentMock> components, int column)
         {
-            for (int row = 0; row < components.Rows() - 1; row++)
+            for (int row = 0; row < components.Rows - 1; row++)
                 Assert.LessOrEqual(components[row, column].YPosition, components[row + 1, column].YPosition);
         }
 
@@ -120,18 +120,11 @@ namespace GameEngineTest.Graphics
             grid.StartIndex = startIndex;
         }
 
-        private void ValidateComponentsDrawn(SelectableGraphicComponentMock[,] components, TableIndex startIndex, TableIndex endIndex)
+        private void ValidateComponentsDrawn(Table<SelectableGraphicComponentMock> components, TableIndex startIndex, TableIndex endIndex)
         {
-            for (int row = 0; row < components.Rows(); row++)
-            {
-                for (int column = 0; column < components.Columns(); column++)
-                {
-                    bool shouldBeDrawn = IsBetween(row, startIndex.Row, endIndex.Row) &&
-                        IsBetween(column, startIndex.Column, endIndex.Column);
-
-                    Assert.AreEqual(shouldBeDrawn, components[row, column].WasDrawn);
-                }
-            }
+            var drawnArea = components.CreateSubtable(startIndex, endIndex);
+            foreach (var c in components)
+                Assert.AreEqual(drawnArea.Contains(c), c.WasDrawn);
         }
 
         private bool IsBetween(int test, int lowerLimit, int upperLimit)
@@ -247,7 +240,7 @@ namespace GameEngineTest.Graphics
         public void Draw_BasicSetup_DrawnComponentsHeigthFillsContraints()
         {
             var grid = CreateDefaultGrid();
-            var components = Table<SelectableGraphicComponentMock>.FromArray(FillGrid(grid));
+            var components = FillGrid(grid);
 
             grid.Draw();
 
@@ -260,7 +253,7 @@ namespace GameEngineTest.Graphics
         public void Draw_BasicSetup_DrawnComponentsWidthFillsContraints()
         {
             var grid = CreateDefaultGrid();
-            var components = Table<SelectableGraphicComponentMock>.FromArray(FillGrid(grid));
+            var components = FillGrid(grid);
 
             grid.Draw();
 
@@ -300,9 +293,9 @@ namespace GameEngineTest.Graphics
             return grid;
         }
 
-        private SelectableGraphicComponentMock[,] FillGrid(TableGrid grid)
+        private Table<SelectableGraphicComponentMock> FillGrid(TableGrid grid)
         {
-            var components = new SelectableGraphicComponentMock[grid.Rows, grid.Columns];
+            var components = new Table<SelectableGraphicComponentMock>();
 
             for (int row = 0; row < grid.Rows; row++)
             {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 namespace GameEngine.Utils
 {
-    public interface ITable<T>
+    public interface ITable<T> : IEnumerable<T>
     {
         int Columns { get; }
         int Rows { get; }

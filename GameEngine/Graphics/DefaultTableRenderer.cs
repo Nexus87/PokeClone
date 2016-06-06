@@ -5,7 +5,7 @@ namespace GameEngine.Graphics
 {
     public class DefaultTableRenderer<T> : ITableRenderer<T>
     {
-        ISelectableTextComponent[,] boxes = new ISelectableTextComponent[1, 1];
+        Table<ISelectableTextComponent> boxes = new Table<ISelectableTextComponent>();
 
         public string DefaultString { get; set; }
 
@@ -18,7 +18,7 @@ namespace GameEngine.Graphics
 
         public ISelectableGraphicComponent GetComponent(int row, int column, T data, bool IsSelected)
         {
-            CheckBounds(row, column);
+            CreateComponent(row, column);
 
             var ret = boxes[row, column];
             ret.Text = data == null ? DefaultString : data.ToString();
@@ -32,19 +32,8 @@ namespace GameEngine.Graphics
         }
 
 
-        private void CheckBounds(int row, int column)
+        private void CreateComponent(int row, int column)
         {
-            if (row < 0)
-                throw new ArgumentOutOfRangeException("row", "row must be positive");
-            if(column < 0)
-                throw new ArgumentOutOfRangeException("column", "column must be positive");
-            if (row >= boxes.Rows() || column >= boxes.Columns())
-            {
-                var tmp = new ISelectableTextComponent[row + 1, column + 1];
-                boxes.Copy(tmp);
-                boxes = tmp;
-            }
-
             if (boxes[row, column] == null)
             {
                 var box = CreateComponent(); 

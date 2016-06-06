@@ -54,6 +54,7 @@ namespace GameEngine.Utils
             if (column < 0)
                 throw new ArgumentOutOfRangeException("column", "was: " + column);
         }
+
         private bool IsInBounds(int row, int column)
         {
             return row < Rows && column < Columns;
@@ -206,11 +207,31 @@ namespace GameEngine.Utils
                         yield return this[row, column];
                 }
             }
+
+            public IEnumerator<S> GetEnumerator()
+            {
+                return EnumerateAlongColumns().GetEnumerator();
+            }
+
+            System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+            {
+                return EnumerateAlongColumns().GetEnumerator();
+            }
         }
 
         public static ITable<T> FromArray(T[,] array)
         {
             return new Table<T>(array);
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            return EnumerateAlongColumns().GetEnumerator();
+        }
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return EnumerateAlongColumns().GetEnumerator();
         }
     }
 }
