@@ -12,27 +12,18 @@ namespace BattleLib.Components.BattleState
         {
             this.scheduler = scheduler;
             this.executer = executer;
+            IsDone = true;
         }
 
-        public override IBattleState Update(BattleData data)
+        public override void Update(BattleData data)
         {
             scheduler.ClearCommands();
             scheduler.AppendCommands(data.Commands);
 
             foreach (var command in scheduler.ScheduleCommands())
-            {
                 command.Execute(executer, data);
-            }
 
             data.ClearCommands();
-
-            foreach (var id in data.Clients)
-            {
-                if(data.GetPokemon(id).HP == 0)
-                    return BattleState.CharacterSetState;
-            }
-                
-            return BattleState.ActionState;
         }
 
         public override BattleStates State

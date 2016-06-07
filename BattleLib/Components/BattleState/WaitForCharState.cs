@@ -14,6 +14,7 @@ namespace BattleLib.Components.BattleState
 
         public override void Init(BattleData data)
         {
+            IsDone = false;
             clients.Clear();
 
             foreach(var id in data.Clients)
@@ -32,10 +33,10 @@ namespace BattleLib.Components.BattleState
         }
 
 
-        public override IBattleState Update(BattleData data)
+        public override void Update(BattleData data)
         {
             if (clientsLeft != 0)
-                return this;
+                return;
 
             foreach (var c in clients)
             {
@@ -44,7 +45,7 @@ namespace BattleLib.Components.BattleState
                 eventCreator.SetPokemon(c.Key, pokemon);
             }
 
-            return BattleState.ActionState;
+            IsDone = true;
         }
 
         public override void SetCharacter(ClientIdentifier id, Pokemon pkmn)

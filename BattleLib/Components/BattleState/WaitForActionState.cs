@@ -15,40 +15,40 @@ namespace BattleLib.Components.BattleState
 
         public void SetCharacter(ClientIdentifier id, Pokemon pkmn)
         {
-            Validate(id, pkmn, "pkmn");
+            ValidateInput(id, pkmn, "pkmn");
             commands[id] = new ChangeCommand(id, pkmn);
             clientCnt--;
         }
 
         public void SetItem(ClientIdentifier id, ClientIdentifier target, Base.Item item)
         {
-            Validate(id, item, "item");
+            ValidateInput(id, item, "item");
             commands[id] = new ItemCommand(id, item);
             clientCnt--;
         }
 
         public void SetMove(ClientIdentifier id, ClientIdentifier target, Move move)
         {
-            Validate(id, move, "move");
+            ValidateInput(id, move, "move");
             commands[id] = new MoveCommand(id, target, move);
             clientCnt--;
         }
 
-        public IBattleState Update(BattleData data)
+        public void Update(BattleData data)
         {
             if (clientCnt != 0)
-                return this;
+                return;
 
             foreach (var c in commands)
                 data.SetCommand(c.Key, c.Value);
             
             commands.Clear();
 
-            return BattleState.ExecutionState;
+            IsDone = true;
 
         }
 
-        private void Validate(ClientIdentifier id, Object obj, string varName)
+        private void ValidateInput(ClientIdentifier id, Object obj, string varName)
         {
             if (!commands.ContainsKey(id))
                 throw new InvalidOperationException("Id " + id.Name + " not found");
@@ -62,7 +62,7 @@ namespace BattleLib.Components.BattleState
         public void Init(BattleData data)
         {
             commands.Clear();
-
+            IsDone = false;
             foreach (var c in data.Clients)
                 commands[c] = null;
 
@@ -73,5 +73,8 @@ namespace BattleLib.Components.BattleState
         {
             get { return BattleStates.WaitForAction; }
         }
+
+
+        public bool IsDone { get; private set; }
     }
 }

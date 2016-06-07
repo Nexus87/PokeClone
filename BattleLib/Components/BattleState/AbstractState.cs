@@ -6,7 +6,7 @@ namespace BattleLib.Components.BattleState
     public abstract class AbstractState : IBattleState
     {
         public abstract BattleStates State { get; }
-        public abstract IBattleState Update(BattleData data);
+        public abstract void Update(BattleData data);
 
         public virtual void SetCharacter(ClientIdentifier id, Pokemon pkmn) { throw new InvalidOperationException("Wong operation"); }
         public virtual void SetMove(ClientIdentifier id, ClientIdentifier target, Move move) { throw new InvalidOperationException("Wong operation"); }
@@ -18,5 +18,10 @@ namespace BattleLib.Components.BattleState
 
 
         public virtual BattleStateComponent BattleState { get; set; }
+
+
+
+
+        public bool IsDone { get; protected set; }
     }
 }

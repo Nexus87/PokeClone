@@ -18,7 +18,7 @@ namespace BattleLib.Components.BattleState
     {
         public event EventHandler<StateChangedEventArgs> StateChanged = delegate { };
 
-        public IBattleState ActionState { get; set; }
+        public IBattleState ActionState { get; private set; }
         public IBattleState CharacterSetState { get; private set; }
         public IBattleState ExecutionState { get; private set; }
 
@@ -29,16 +29,14 @@ namespace BattleLib.Components.BattleState
             get { return currentState; }
             set
             {
-                if (currentState == value)
-                    return;
-
                 currentState = value;
-                currentState.Init(data);
                 StateChanged(this, new StateChangedEventArgs(currentState.State));
+
                 if (currentState.State == BattleStates.WaitForAction)
                     eventCreator.SetNewTurn();
             }
         }
+
         private BattleData data;
         private IEventCreator eventCreator;
 
@@ -83,7 +81,37 @@ namespace BattleLib.Components.BattleState
 
         public void Update(GameTime gameTime)
         {
-            CurrentState = CurrentState.Update(data);
+            SetNextState();
+            CurrentState.Update(data);
+        }
+
+        private void SetNextState()
+        {
+            if (!CurrentState.IsDone)
+                return;
+
+            var nextState = GetNextState(CurrentState);
+            nextState.Init(data);
+            while (nextState.IsDone)
+            {
+                nextState = GetNextState(nextState);
+                nextState.Init(data);
+            }
+
+            CurrentState = nextState;
+        }
+
+
+        IBattleState GetNextState(IBattleState current)
+        {
+            if (current == ActionState)
+                return ExecutionState;
+            else if (current == CharacterSetState)
+                return ActionState;
+            else if (current == ExecutionState)
+                return CharacterSetState;
+            
+            throw new InvalidOperationException("Current state is unkown");
         }
 
         public void Initialize()

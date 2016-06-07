@@ -7,8 +7,9 @@ namespace BattleLib.Components.BattleState
         BattleStates State { get; }
         BattleStateComponent BattleState { get; set; }
 
+        bool IsDone { get; }
         void Init(BattleData data);
-        IBattleState Update(BattleData data);
+        void Update(BattleData data);
 
         void SetCharacter(ClientIdentifier id, Pokemon pkmn);
         void SetMove(ClientIdentifier id, ClientIdentifier target, Move move);
