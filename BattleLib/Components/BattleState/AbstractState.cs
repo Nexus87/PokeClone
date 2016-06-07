@@ -16,12 +16,6 @@ namespace BattleLib.Components.BattleState
         {
         }
 
-
-        public virtual BattleStateComponent BattleState { get; set; }
-
-
-
-
         public bool IsDone { get; protected set; }
     }
 }

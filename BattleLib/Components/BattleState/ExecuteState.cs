@@ -12,9 +12,12 @@ namespace BattleLib.Components.BattleState
         {
             this.scheduler = scheduler;
             this.executer = executer;
-            IsDone = true;
         }
 
+        public override void Init(BattleData data)
+        {
+            IsDone = false;
+        }
         public override void Update(BattleData data)
         {
             scheduler.ClearCommands();
@@ -24,6 +27,7 @@ namespace BattleLib.Components.BattleState
                 command.Execute(executer, data);
 
             data.ClearCommands();
+            IsDone = true;
         }
 
         public override BattleStates State

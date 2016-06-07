@@ -1,6 +1,7 @@
 ﻿using Base;
 using Base.Data;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace BattleLib.Components.BattleState
@@ -15,16 +16,21 @@ namespace BattleLib.Components.BattleState
         public override void Init(BattleData data)
         {
             IsDone = false;
-            clients.Clear();
 
-            foreach(var id in data.Clients)
-            {
-                PokemonWrapper pkmn = data.GetPokemon(id);
-                if (pkmn.Pokemon == null || pkmn.Condition == StatusCondition.KO)
-                    clients[id] = null;
-            }
+            clients =  data.Clients
+                .Where( id => NeedsPokemon(data, id))
+                .ToDictionary( id => id, id => (Pokemon) null);
 
             clientsLeft = clients.Count;
+
+            if (clientsLeft == 0)
+                IsDone = true;
+        }
+
+        private bool NeedsPokemon(BattleData data, ClientIdentifier id)
+        {
+             PokemonWrapper pkmn = data.GetPokemon(id);
+             return pkmn.Pokemon == null || pkmn.Condition == StatusCondition.KO;
         }
         
         public WaitForCharState(IEventCreator eventCreator)

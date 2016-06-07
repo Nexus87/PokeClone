@@ -18,10 +18,9 @@ namespace BattleLib.Components.BattleState
     {
         public event EventHandler<StateChangedEventArgs> StateChanged = delegate { };
 
-        public IBattleState ActionState { get; private set; }
-        public IBattleState CharacterSetState { get; private set; }
-        public IBattleState ExecutionState { get; private set; }
-
+        private IBattleState ActionState { get; set; }
+        private IBattleState CharacterSetState { get; set; }
+        private IBattleState ExecutionState { get; set; }
         private IBattleState currentState;
 
         private IBattleState CurrentState
@@ -58,10 +57,6 @@ namespace BattleLib.Components.BattleState
             ExecutionState = executionState;
             this.eventCreator = eventCreator;
             data = new BattleData(player, ai);
-
-            ActionState.BattleState = this;
-            CharacterSetState.BattleState = this;
-            ExecutionState.BattleState = this;
         }
 
         public void SetCharacter(ClientIdentifier id, Pokemon pkmn)
@@ -117,6 +112,7 @@ namespace BattleLib.Components.BattleState
         public void Initialize()
         {
             CurrentState = CharacterSetState;
+            CurrentState.Init(data);
         }
     }
 

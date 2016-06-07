@@ -5,7 +5,6 @@ namespace BattleLib.Components.BattleState
     public interface IBattleState
     {
         BattleStates State { get; }
-        BattleStateComponent BattleState { get; set; }
 
         bool IsDone { get; }
         void Init(BattleData data);
