@@ -6,17 +6,12 @@ namespace BattleLib.Components.BattleState.Commands
     public class ChangeCommand : ICommand
     {
         public ClientIdentifier Source { get; private set; }
-        Pokemon newPkmn;
+        public Pokemon Pokemon { get; private set; }
 
         public ChangeCommand(ClientIdentifier source, Pokemon newPkmn)
         {
-            this.Source = source;
-            this.newPkmn = newPkmn;
-        }
-
-        public CommandType Type
-        {
-            get { return CommandType.Change; }
+            Source = source;
+            Pokemon = newPkmn;
         }
 
         public int Priority
@@ -24,9 +19,9 @@ namespace BattleLib.Components.BattleState.Commands
             get { throw new NotImplementedException(); }
         }
 
-        public void Execute(CommandExecuter executer, BattleData data)
+        public void Execute(CommandExecuter executer)
         {
-            executer.ChangePokemon(data.GetPokemon(Source), newPkmn);
+            executer.DispatchCommand(this);
         }
     }
 }

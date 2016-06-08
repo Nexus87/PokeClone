@@ -13,6 +13,7 @@
     <Reference Include="Base" />
   </References>
   <Files>
+    <Compile Include="CommandExecuterTest.cs" />
     <Compile Include="Components\BattleEventProcessorTest.cs" />
     <Compile Include="Components\BattleState\BattleStateComponentTest.cs" />
     <Compile Include="Components\BattleState\WaitForCharStateTest.cs" />

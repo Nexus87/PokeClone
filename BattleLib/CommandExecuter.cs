@@ -2,6 +2,7 @@
 using Base.Data;
 using Base.Rules;
 using BattleLib.Components.BattleState;
+using BattleLib.Components.BattleState.Commands;
 using System;
 
 namespace BattleLib
@@ -16,29 +17,15 @@ namespace BattleLib
 
     public class CommandExecuter
     {
-        private IBattleRules rules;
-        private ITypeTable table;
-        private Random rng = new Random();
         private IEventCreator eventCreator;
-
-        public CommandExecuter(IEventCreator eventCreator, RulesSet rules)
+        private IMoveEffectCalculator calculator;
+        public CommandExecuter(IMoveEffectCalculator calculator, IEventCreator eventCreator)
         {
-            this.rules = rules.BattleRules;
             this.eventCreator = eventCreator;
-            this.table = rules.TypeTable;
+            this.calculator = calculator;
         }
 
-        public bool CanChange()
-        {
-            return rules.CanChange();
-        }
-
-        public bool CanEscape()
-        {
-            return rules.CanEscape();
-        }
-
-        public void ExecMove(PokemonWrapper source, Move move, PokemonWrapper target)
+        private void ExecMove(PokemonWrapper source, Move move, PokemonWrapper target)
         {
             eventCreator.UsingMove(source, move);
 
@@ -53,23 +40,36 @@ namespace BattleLib
             }
         }
 
+        public BattleData Data{get;set;}
+
+        public void DispatchCommand(ItemCommand command)
+        {
+            UseItem(Data.GetPokemon(command.Source), command.Item);
+        }
+
+        public void DispatchCommand(MoveCommand command)
+        {
+            ExecMove(Data.GetPokemon(command.Source), command.Move, Data.GetPokemon(command.Target));
+        }
+
+        public void DispatchCommand(ChangeCommand command)
+        {
+            ChangePokemon(Data.GetPokemon(command.Source), command.Pokemon);
+        }
+
         private void HandleDamage(PokemonWrapper source, PokemonWrapper target, Move move)
         {
-            float damage = rules.CalculateBaseDamage(source, target, move);
-            float typeModifier = rules.GetTypeModifier(source, target, move);
+            calculator.Init(source, move, target);
 
-            MoveEfficiency effect = GetEffect(typeModifier);
-            bool critical = rng.NextDouble().CompareTo(rules.GetCriticalHitChance(move)) < 0;
+            int damage = calculator.Damage;
+            MoveEfficiency effect = GetEffect(calculator.TypeModifier);
+            bool critical = calculator.IsCritical;
 
-            damage *= rules.SameTypeAttackBonus(source, move);
-            damage *= typeModifier;
-            damage *= critical ? rules.GetCriticalHitModifier() : 1.0f;
-            damage *= rules.GetMiscModifier(source, target, move);
-
-            target.HP -= (int) damage;
+            target.HP -= damage;
 
             eventCreator.SetHP(target.Identifier, target.HP);
             eventCreator.Effective(effect, target);
+
             if (critical)
                 eventCreator.Critical();
 
@@ -92,12 +92,12 @@ namespace BattleLib
             return MoveEfficiency.Normal;
         }
 
-        public void ChangePokemon(PokemonWrapper oldPokemon, Pokemon newPokemon)
+        private void ChangePokemon(PokemonWrapper oldPokemon, Pokemon newPokemon)
         {
             throw new NotImplementedException();
         }
 
-        public bool UseItem(PokemonWrapper target, Item item)
+        private bool UseItem(PokemonWrapper target, Item item)
         {
             throw new NotImplementedException();
         }

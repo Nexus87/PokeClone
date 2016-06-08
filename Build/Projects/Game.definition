@@ -13,6 +13,7 @@
   <Files>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rules\DefaultMoveEffectCalculator.cs" />
     <Compile Include="Rules\DummyBattleRules.cs" />
     <Compile Include="Rules\DummyPokemonRules.cs" />
     <Compile Include="Rules\DummyScheduler.cs" />

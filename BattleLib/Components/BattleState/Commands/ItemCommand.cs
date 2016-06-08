@@ -6,17 +6,12 @@ namespace BattleLib.Components.BattleState.Commands
     public class ItemCommand : ICommand
     {
         public ClientIdentifier Source { get; private set; }
-        Item item;
+        public Item Item { get; private set; }
 
         public ItemCommand(ClientIdentifier source, Item item)
         {
-            this.Source = source;
-            this.item = item;
-        }
-
-        public CommandType Type
-        {
-            get { return CommandType.Item; }
+            Source = source;
+            Item = item;
         }
 
         public int Priority
@@ -24,9 +19,9 @@ namespace BattleLib.Components.BattleState.Commands
             get { throw new NotImplementedException(); }
         }
 
-        public void Execute(CommandExecuter executer, BattleData data)
+        public void Execute(CommandExecuter executer)
         {
-            executer.UseItem(data.GetPokemon(Source), item);
+            executer.DispatchCommand(this);
         }
     }
 }

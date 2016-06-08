@@ -1,5 +1,7 @@
 ﻿using BattleLib.Components.BattleState.Commands;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace BattleLib.Components.BattleState
 {
@@ -18,16 +20,23 @@ namespace BattleLib.Components.BattleState
         {
             IsDone = false;
         }
+
         public override void Update(BattleData data)
+        {
+            executer.Data = data;
+            
+            List<ICommand> commands = ScheduleCommands(data);
+            commands.ForEach(c => c.Execute(executer));
+            
+            data.ClearCommands();
+            IsDone = true;
+        }
+
+        private List<ICommand> ScheduleCommands(BattleData data)
         {
             scheduler.ClearCommands();
             scheduler.AppendCommands(data.Commands);
-
-            foreach (var command in scheduler.ScheduleCommands())
-                command.Execute(executer, data);
-
-            data.ClearCommands();
-            IsDone = true;
+            return scheduler.ScheduleCommands().ToList();
         }
 
         public override BattleStates State

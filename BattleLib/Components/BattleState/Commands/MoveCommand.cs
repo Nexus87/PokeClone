@@ -4,34 +4,27 @@ namespace BattleLib.Components.BattleState.Commands
 {
     public class MoveCommand : ICommand
     {
-        public Move move;
+        public Move Move { get; private set; }
 
         public MoveCommand(ClientIdentifier source, ClientIdentifier target, Move move)
         {
-            this.move = move;
+            this.Move = move;
             this.Source = source;
             this.Target = target;
         }
 
         public int Priority
         {
-            get { return move.Priority; }
+            get { return Move.Priority; }
         }
 
         public ClientIdentifier Source { get; private set; }
         public ClientIdentifier Target { get; private set; }
 
-        public CommandType Type
-        {
-            get { return CommandType.Move; }
-        }
 
-        public void Execute(CommandExecuter executer, BattleData data)
+        public void Execute(CommandExecuter executer)
         {
-            PokemonWrapper source = data.GetPokemon(Source);
-            PokemonWrapper target = data.GetPokemon(Target);
-
-            executer.ExecMove(source, move, target);
+            executer.DispatchCommand(this);
         }
     }
 }

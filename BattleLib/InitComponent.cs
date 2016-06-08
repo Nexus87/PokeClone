@@ -58,7 +58,7 @@ namespace BattleLib
         {
             var actionState = new WaitForActionState();
             var characterState = new WaitForCharState(eventCreator);
-            var commandExecutor = new CommandExecuter(eventCreator, rules);
+            var commandExecutor = new CommandExecuter(rules.MoveCalculator, eventCreator);
             var executionState = new ExecuteState(scheduler, commandExecutor);
             battleState = new BattleStateComponent(playerID, aiID, actionState, characterState, executionState, eventCreator);
         }

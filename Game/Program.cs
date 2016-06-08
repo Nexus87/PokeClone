@@ -20,7 +20,8 @@ namespace PokemonGame
         static void Main()
         {
             var config = new Configuration();
-            var rules = new RulesSet(new DummyBattleRules(), new DummyPokemonRules(), new DummyTable());
+            var calculator = new DefaultMoveEffectCalculator(new DummyBattleRules());
+            var rules = new RulesSet(new DummyBattleRules(), new DummyPokemonRules(), new DummyTable(), calculator);
 
             var engine = new PokeEngine(config);
             var factory = new GraphicComponentFactory(config, engine);
