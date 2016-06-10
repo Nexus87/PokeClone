@@ -17,7 +17,7 @@ namespace BattleLib
         IPokeEngine engine;
         EventCreator eventCreator;
         private BattleStateComponent battleState;
-        private BattleGraphics graphic;
+        private BattleGraphicController graphic;
         private BattleGUI gui;
 
         public InitComponent(Configuration config, IPokeEngine game, IEventQueue queue, GraphicComponentFactory factory, RulesSet rules, ICommandScheduler scheduler)
@@ -37,7 +37,7 @@ namespace BattleLib
             eventCreator = new EventCreator();
             SetupBattleState(playerID, aiID, rules, scheduler);
 
-            graphic = new BattleGraphics(game, factory, playerID, aiID);
+            graphic = new BattleGraphicController(game, factory, playerID, aiID);
             gui = new BattleGUI(config, game, factory, battleState, playerID, aiID);
 
             var eventProcess = new BattleEventProcessor(gui, graphic, queue, eventCreator);

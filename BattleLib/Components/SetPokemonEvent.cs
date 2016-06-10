@@ -9,11 +9,11 @@ namespace BattleLib.Components
     {
         public event EventHandler EventProcessed = delegate { };
         
-        private IBattleGraphicService graphic;
+        private IBattleGraphicController graphic;
         private ClientIdentifier id;
         private PokemonWrapper pokemon;
 
-        public SetPokemonEvent(IBattleGraphicService graphic, ClientIdentifier id, PokemonWrapper pokemon)
+        public SetPokemonEvent(IBattleGraphicController graphic, ClientIdentifier id, PokemonWrapper pokemon)
         {
             this.graphic = graphic;
             this.id = id;

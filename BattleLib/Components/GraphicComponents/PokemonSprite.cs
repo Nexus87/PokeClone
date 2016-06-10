@@ -5,7 +5,7 @@ using System;
 
 namespace BattleLib.GraphicComponents
 {
-    class PokemonSprite : AbstractGraphicComponent
+    public class PokemonSprite : AbstractGraphicComponent
     {
         public event EventHandler OnPokemonAppeared = delegate { };
         public event EventHandler OnAttackAnimationPlayed = delegate { };

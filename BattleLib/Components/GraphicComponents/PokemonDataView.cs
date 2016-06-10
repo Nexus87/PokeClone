@@ -6,7 +6,7 @@ using System;
 
 namespace BattleLib.GraphicComponents
 {
-    class PokemonDataView : ForwardingGraphicComponent<Container>
+    public class PokemonDataView : ForwardingGraphicComponent<Container>
     {
         public event EventHandler OnHPUpdated;
 

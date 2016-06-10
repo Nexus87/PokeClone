@@ -32,10 +32,10 @@
     <Compile Include="Components\Extensions.cs" />
     <Compile Include="Components\GraphicComponents\AttackModel.cs" />
     <Compile Include="Components\GraphicComponents\AttackTableSelectionModel.cs" />
-    <Compile Include="Components\GraphicComponents\BattleGraphics.cs" />
+    <Compile Include="Components\GraphicComponents\BattleGraphicController.cs" />
     <Compile Include="Components\GraphicComponents\BattleGUI.cs" />
     <Compile Include="Components\GraphicComponents\HPLine.cs" />
-    <Compile Include="Components\GraphicComponents\IBattleGraphicService.cs" />
+    <Compile Include="Components\GraphicComponents\IBattleGraphicController.cs" />
     <Compile Include="Components\GraphicComponents\IGUIService.cs" />
     <Compile Include="Components\GraphicComponents\ItemModel.cs" />
     <Compile Include="Components\GraphicComponents\PokemonDataView.cs" />

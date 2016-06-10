@@ -12,11 +12,11 @@ namespace BattleLib.Components
             remove { graphic.OnHPSet -= value; }
         }
 
-        private IBattleGraphicService graphic;
+        private IBattleGraphicController graphic;
         private int hp;
         private ClientIdentifier id;
 
-        public SetHPEvent(IBattleGraphicService graphic, ClientIdentifier id, int hp)
+        public SetHPEvent(IBattleGraphicController graphic, ClientIdentifier id, int hp)
         {
             this.graphic = graphic;
             this.id = id;

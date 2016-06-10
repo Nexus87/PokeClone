@@ -8,24 +8,35 @@ using System.Collections.Generic;
 
 namespace BattleLib.GraphicComponents
 {
-    public class BattleGraphics : AbstractGraphicComponent, IBattleGraphicService
+    public class BattleGraphicController : AbstractGraphicComponent, IBattleGraphicController
     {
         private readonly Dictionary<ClientIdentifier, PokemonDataView> dataViews = new Dictionary<ClientIdentifier, PokemonDataView>();
         private readonly Dictionary<ClientIdentifier, PokemonSprite> sprites = new Dictionary<ClientIdentifier, PokemonSprite>();
 
-        private PokemonSprite aiSprite;
-        private PokemonDataView aiView;
-        private PokemonSprite playerSprite;
-        private PokemonDataView playerView;
-        private IPokeEngine game;
-        public BattleGraphics(IPokeEngine game, GraphicComponentFactory factory, ClientIdentifier player, ClientIdentifier ai)
+        public BattleGraphicController(
+            ClientIdentifier playerId, ClientIdentifier aiId,
+            PokemonDataView playerView, PokemonSprite playerSprite, 
+            PokemonDataView aiView, PokemonSprite aiSprite)
         {
-            this.game = game;
+            dataViews[playerId] = playerView;
+            dataViews[aiId] = aiView;
 
-            aiView = new PokemonDataView(game, factory, false);
-            playerView = new PokemonDataView(game, factory, true);
-            aiSprite = new PokemonSprite(true, game);
-            playerSprite = new PokemonSprite(false, game);
+            sprites[playerId] = playerSprite;
+            sprites[aiId] = aiSprite;
+
+            foreach (var view in dataViews.Values)
+                view.OnHPUpdated += delegate { OnHPSet(this, null); };
+
+            foreach (var sprite in sprites.Values)
+                sprite.OnPokemonAppeared += delegate { OnPokemonSet(this, null); };
+        }
+
+        public BattleGraphicController(IPokeEngine game, GraphicComponentFactory factory, ClientIdentifier player, ClientIdentifier ai)
+        {
+            var aiView = new PokemonDataView(game, factory, false);
+            var playerView = new PokemonDataView(game, factory, true);
+            var aiSprite = new PokemonSprite(true, game);
+            var playerSprite = new PokemonSprite(false, game);
 
             dataViews[player] = playerView;
             dataViews[ai] = aiView;
@@ -39,6 +50,8 @@ namespace BattleLib.GraphicComponents
             foreach (var sprite in sprites.Values)
                 sprite.OnPokemonAppeared += delegate { OnPokemonSet(this, null); };
 
+            initAIGraphic(aiView, aiSprite, game);
+            initPlayerGraphic(playerView, playerSprite, game);
         }
 
         public event EventHandler ConditionSet;
@@ -68,26 +81,24 @@ namespace BattleLib.GraphicComponents
 
         public override void Setup()
         {
-            aiView.Setup();
-            playerView.Setup();
+            foreach (var view in dataViews.Values)
+                view.Setup();
 
-            aiSprite.Setup();
-            playerSprite.Setup();
+            foreach (var sprite in sprites.Values)
+                sprite.Setup();
 
-            initAIGraphic();
-            initPlayerGraphic();
         }
 
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)
         {
-            aiView.Draw(time, batch);
-            playerView.Draw(time, batch);
+            foreach (var view in dataViews.Values)
+                view.Draw(time, batch);
 
-            aiSprite.Draw(time, batch);
-            playerSprite.Draw(time, batch);
+            foreach (var sprite in sprites.Values)
+                sprite.Draw(time, batch);
         }
 
-        private void initAIGraphic()
+        private void initAIGraphic(PokemonDataView aiView, PokemonSprite aiSprite, IPokeEngine game)
         {
             aiView.XPosition = game.ScreenWidth * 0.2f;
             aiView.YPosition = game.ScreenHeight * 0.1f;
@@ -102,7 +113,7 @@ namespace BattleLib.GraphicComponents
             aiSprite.Width = game.ScreenHeight * 0.25f;
         }
 
-        private void initPlayerGraphic()
+        private void initPlayerGraphic(PokemonDataView playerView, PokemonSprite playerSprite, IPokeEngine game)
         {
             playerView.XPosition = game.ScreenWidth * 0.6f;
             playerView.YPosition = game.ScreenHeight * 0.4f;

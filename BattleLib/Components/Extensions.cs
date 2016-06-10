@@ -7,12 +7,12 @@ namespace BattleLib.Components
 {
     public static class Extensions
     {
-        public static void AddHPEvent(this IEventQueue queue, IBattleGraphicService graphic, ClientIdentifier id, int hp)
+        public static void AddHPEvent(this IEventQueue queue, IBattleGraphicController graphic, ClientIdentifier id, int hp)
         {
             queue.AddEvent(new SetHPEvent(graphic, id, hp));
         }
 
-        public static void AddSetPokemonEvent(this IEventQueue queue, IBattleGraphicService service, ClientIdentifier id, PokemonWrapper pokemon)
+        public static void AddSetPokemonEvent(this IEventQueue queue, IBattleGraphicController service, ClientIdentifier id, PokemonWrapper pokemon)
         {
             queue.AddEvent(new SetPokemonEvent(service, id, pokemon));
         }
@@ -24,7 +24,7 @@ namespace BattleLib.Components
         {
             queue.AddEvent(new ShowMessageEvent(service, message));
         }
-        public static void AddStatusEvent(this IEventQueue queue, IBattleGraphicService graphic, ClientIdentifier id, StatusCondition condition)
+        public static void AddStatusEvent(this IEventQueue queue, IBattleGraphicController graphic, ClientIdentifier id, StatusCondition condition)
         {
             queue.AddEvent(new SetStatusEvent(graphic, id, condition));
         }

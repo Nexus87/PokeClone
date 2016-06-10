@@ -8,10 +8,10 @@ namespace BattleLib.Components
     internal class SetStatusEvent : IEvent
     {
         private StatusCondition condition;
-        private IBattleGraphicService graphic;
+        private IBattleGraphicController graphic;
         private ClientIdentifier id;
 
-        public SetStatusEvent(IBattleGraphicService graphic, ClientIdentifier id, StatusCondition condition)
+        public SetStatusEvent(IBattleGraphicController graphic, ClientIdentifier id, StatusCondition condition)
         {
             this.graphic = graphic;
             this.id = id;

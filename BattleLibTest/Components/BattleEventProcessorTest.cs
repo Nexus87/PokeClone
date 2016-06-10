@@ -102,7 +102,7 @@ namespace BattleLibTest.Components
     {
         EventQueueFake eventQueue;
         Mock<IGUIService> guiMock;
-        Mock<IBattleGraphicService> graphicMock;
+        Mock<IBattleGraphicController> graphicMock;
         BattleEventFake eventMock;
 
         [SetUp]
@@ -111,7 +111,7 @@ namespace BattleLibTest.Components
             eventQueue = new EventQueueFake();
             guiMock = new Mock<IGUIService>();
             eventMock = new BattleEventFake();
-            graphicMock = new Mock<IBattleGraphicService>();
+            graphicMock = new Mock<IBattleGraphicController>();
         }
 
         [TestCase]

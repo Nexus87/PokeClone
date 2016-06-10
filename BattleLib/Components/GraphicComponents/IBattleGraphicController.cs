@@ -4,7 +4,7 @@ using System;
 
 namespace BattleLib.GraphicComponents
 {
-    public interface IBattleGraphicService
+    public interface IBattleGraphicController
     {
         event EventHandler ConditionSet;
         event EventHandler OnHPSet;
