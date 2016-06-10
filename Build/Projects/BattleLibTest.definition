@@ -20,5 +20,6 @@
     <Compile Include="Components\GraphicComponents\AttackModelTest.cs" />
     <Compile Include="Components\GraphicComponents\AttackTableSelectionModelTest.cs" />
     <Compile Include="Components\GraphicComponents\HPLineTest.cs" />
+    <Compile Include="Utils\TestFactory.cs" />
   </Files>
 </Project>
