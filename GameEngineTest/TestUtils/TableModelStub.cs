@@ -9,8 +9,8 @@ namespace GameEngineTest.TestUtils
 {
     public class TableModelStub<T> : ITableModel<T>
     {
-        public event EventHandler<DataChangedEventArgs<T>> DataChanged;
-        public event EventHandler<TableResizeEventArgs> SizeChanged;
+        public event EventHandler<DataChangedEventArgs<T>> DataChanged { add { } remove { } }
+        public event EventHandler<TableResizeEventArgs> SizeChanged { add { } remove { } }
         public T ReturnValue = default(T);
 
         public int Rows { get; set; }

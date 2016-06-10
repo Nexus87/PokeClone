@@ -9,7 +9,7 @@ namespace GameEngineTest.TestUtils
     public class TableViewMock : ITableView<TestType>
     {
         public virtual event EventHandler<TableResizeEventArgs> TableResized;
-        public virtual event EventHandler<SelectionChangedEventArgs> SelectionChanged;
+        public virtual event EventHandler<SelectionChangedEventArgs> SelectionChanged { add { } remove { } }
 
         public bool SelectionReturnValue { get; set; }
 
@@ -115,8 +115,8 @@ namespace GameEngineTest.TestUtils
             throw new NotImplementedException();
         }
 
-        public event EventHandler<GraphicComponentSizeChangedEventArgs> SizeChanged;
-        public event EventHandler<GraphicComponentPositionChangedEventArgs> PositionChanged;
+        public event EventHandler<GraphicComponentSizeChangedEventArgs> SizeChanged { add { } remove { } }
+        public event EventHandler<GraphicComponentPositionChangedEventArgs> PositionChanged { add { } remove { } }
 
         public float XPosition { get; set; }
         public float YPosition { get; set; }
