@@ -19,32 +19,18 @@ namespace BattleLib
     {
         private IEventCreator eventCreator;
         private IMoveEffectCalculator calculator;
+
         public CommandExecuter(IMoveEffectCalculator calculator, IEventCreator eventCreator)
         {
             this.eventCreator = eventCreator;
             this.calculator = calculator;
         }
 
-        private void ExecMove(PokemonWrapper source, Move move, PokemonWrapper target)
-        {
-            eventCreator.UsingMove(source, move);
-
-            switch (move.DamageType)
-            {
-                case DamageCategory.Physical:
-                case DamageCategory.Special:
-                    HandleDamage(source, target, move);
-                    break;
-                case DamageCategory.Status:
-                    throw new NotImplementedException();
-            }
-        }
-
-        public BattleData Data{get;set;}
+        public BattleData Data { get; set; }
 
         public void DispatchCommand(ItemCommand command)
         {
-            UseItem(Data.GetPokemon(command.Source), command.Item);
+            throw new NotImplementedException();
         }
 
         public void DispatchCommand(MoveCommand command)
@@ -54,27 +40,7 @@ namespace BattleLib
 
         public void DispatchCommand(ChangeCommand command)
         {
-            ChangePokemon(Data.GetPokemon(command.Source), command.Pokemon);
-        }
-
-        private void HandleDamage(PokemonWrapper source, PokemonWrapper target, Move move)
-        {
-            calculator.Init(source, move, target);
-
-            int damage = calculator.Damage;
-            MoveEfficiency effect = GetEffect(calculator.TypeModifier);
-            bool critical = calculator.IsCritical;
-
-            target.HP -= damage;
-
-            eventCreator.SetHP(target.Identifier, target.HP);
-            eventCreator.Effective(effect, target);
-
-            if (critical)
-                eventCreator.Critical();
-
-            if (target.Condition == StatusCondition.KO)
-                eventCreator.SetStatus(target, StatusCondition.KO);
+            throw new NotImplementedException();
         }
 
         private static MoveEfficiency GetEffect(float typeModifier)
@@ -92,20 +58,44 @@ namespace BattleLib
             return MoveEfficiency.Normal;
         }
 
-        private void ChangePokemon(PokemonWrapper oldPokemon, Pokemon newPokemon)
+        private void ExecMove(PokemonWrapper source, Move move, PokemonWrapper target)
         {
-            throw new NotImplementedException();
+            eventCreator.UsingMove(source, move);
+            calculator.Init(source, move, target);
+            
+            DoDamage(target);
+            HandleEfficiency(target);
+            CheckIfCritical();
+            HandleStatusConditionChange(target);
         }
 
-        private bool UseItem(PokemonWrapper target, Item item)
+        private void HandleStatusConditionChange(PokemonWrapper target)
         {
-            throw new NotImplementedException();
+
+            if (target.Condition != calculator.StatusCondition)
+            {
+                target.Condition = calculator.StatusCondition;
+                eventCreator.SetStatus(target, target.Condition);
+            }
         }
 
-        private void HandleStatusDamage(PokemonWrapper source, Move move, PokemonWrapper target)
+        private void CheckIfCritical()
         {
-            throw new NotImplementedException();
+            if (calculator.IsCritical)
+                eventCreator.Critical();
         }
 
+        private void DoDamage(PokemonWrapper target)
+        {
+            int damage = calculator.Damage;
+            target.HP -= damage;
+            eventCreator.SetHP(target.Identifier, target.HP);
+        }
+
+        private void HandleEfficiency(PokemonWrapper target)
+        {
+            MoveEfficiency effect = GetEffect(calculator.TypeModifier);
+            eventCreator.Effective(effect, target);
+        }
     }
 }

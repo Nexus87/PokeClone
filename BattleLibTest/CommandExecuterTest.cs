@@ -1,4 +1,5 @@
 ﻿using Base;
+using Base.Data;
 using Base.Rules;
 using BattleLib;
 using BattleLib.Components.BattleState;
@@ -25,6 +26,8 @@ namespace BattleLibTest
         public bool IsCritical { get; set; }
         public float TypeModifier { get; set; }
         public int Damage { get; set; }
+
+        public StatusCondition StatusCondition { get; set; }
     }
 
     [TestFixture]
@@ -100,6 +103,42 @@ namespace BattleLibTest
             creatorMock.Verify(c => c.Effective(expected, It.IsAny<PokemonWrapper>()), Times.Once);
         }
 
+        [TestCase(StatusCondition.Normal)]
+        [TestCase(StatusCondition.KO)]
+        [TestCase(StatusCondition.Paralyzed)]
+        public void ExecuteMove_ChangingStatusCondition_PokemonConditionChanged(StatusCondition condition)
+        {
+            var executer = CreateExecuter();
+            factory.CreateAllPokemon();
+
+            ExecuteMoveCommand(executer, target: factory.PlayerID, newCondition: condition);
+
+            Assert.AreEqual(condition, factory.GetPlayerPokemon().Condition);
+        }
+
+        [TestCase(StatusCondition.KO)]
+        [TestCase(StatusCondition.Paralyzed)]
+        public void ExecuteMove_ChangingStatusCondition_EventCreatorSetStatusCalled(StatusCondition condition)
+        {
+            var executer = CreateExecuter();
+            factory.CreateAllPokemon();
+
+            ExecuteMoveCommand(executer, target: factory.PlayerID, newCondition: condition);
+
+            creatorMock.Verify(c => c.SetStatus(It.IsAny<PokemonWrapper>(), condition), Times.Once);
+        }
+
+        [Test]
+        public void ExecuteMove_StatusDoesNotChange_EventCreatorSetStatusNotCalled()
+        {
+            var executer = CreateExecuter();
+            factory.CreateAllPokemon();
+
+            ExecuteMoveCommand(executer, target: factory.PlayerID, newCondition: StatusCondition.Normal);
+
+            creatorMock.Verify(c => c.SetStatus(It.IsAny<PokemonWrapper>(), It.IsAny<StatusCondition>()), Times.Never);
+        }
+
         private void ExecuteMoveCommand(CommandExecuter executer, ClientIdentifier clientIdentifier, int damage)
         {
             var command = new MoveCommand(clientIdentifier, clientIdentifier, factory.CreateMove());
@@ -107,11 +146,14 @@ namespace BattleLibTest
             executer.DispatchCommand(command);
         }
 
-        private void ExecuteMoveCommand(CommandExecuter executer, bool critical = false, float typeModifier = 1)
+        private void ExecuteMoveCommand(CommandExecuter executer, bool critical = false, float typeModifier = 1, ClientIdentifier target = null, StatusCondition newCondition = StatusCondition.Normal)
         {
-            var command = new MoveCommand(factory.PlayerID, factory.PlayerID, factory.CreateMove());
+            if (target == null)
+                target = factory.PlayerID;
+            var command = new MoveCommand(target, target, factory.CreateMove());
             calculator.IsCritical = critical;
             calculator.TypeModifier = typeModifier;
+            calculator.StatusCondition = newCondition;
             executer.DispatchCommand(command);
         }
 

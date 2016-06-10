@@ -64,8 +64,6 @@ namespace BattleLib.Components.BattleState
             set
             {
                 Pokemon.HP = Math.Max(0, value);
-                if (Pokemon.HP == 0)
-                    Pokemon.Condition = StatusCondition.KO;
             }
         }
 

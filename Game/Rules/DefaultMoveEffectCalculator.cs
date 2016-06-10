@@ -1,4 +1,5 @@
 ﻿using Base;
+using Base.Data;
 using Base.Rules;
 using GameEngine.Utils;
 using System;
@@ -32,6 +33,11 @@ namespace PokemonGame.Rules
             CalculateCritical();
             CalculateTypeModifier();
             CalculateDamage();
+
+            if (Damage > target.HP)
+                StatusCondition = StatusCondition.KO;
+            else
+                StatusCondition = StatusCondition.Normal;
         }
 
         private void CalculateHit()
@@ -71,6 +77,6 @@ namespace PokemonGame.Rules
         public bool IsCritical { get; private set; }
         public float TypeModifier { get; private set; }
         public int Damage { get; private set; }
-
+        public StatusCondition StatusCondition { get; private set; }
     }
 }
