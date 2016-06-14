@@ -6,6 +6,7 @@
   <GenerateNuGetRepositories>true</GenerateNuGetRepositories>
   <Packages>
     <Package Uri="https-nuget://www.nuget.org/api/v2/|MonoGame.Framework.DesktopGL" Folder="MonoGame.Framework.DesktopGL" GitRef="3.5.1.1679" />
+	<Package Uri="https-nuget://www.nuget.org/api/v2/|Autofac" Folder="Autofac" GitRef="3.5.2" />
 	<Package Uri="https-nuget://www.nuget.org/api/v2/|NUnit" Folder="NUnit" GitRef="3.2.0" />
 	<Package Uri="https-nuget://www.nuget.org/api/v2/|Moq" Folder="Moq" GitRef="4.2.1510.2205" />
   </Packages>

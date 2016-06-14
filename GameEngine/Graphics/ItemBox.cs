@@ -17,6 +17,8 @@ namespace GameEngine.Graphics
             this.textBox = textBox;
         }
 
+        public ItemBox(TextureBox arrow, TextBox textBox) : this((IGraphicComponent)arrow, textBox) { }
+
         public override void Setup()
         {
             arrow.Setup();

@@ -18,6 +18,7 @@ namespace GameEngine.Graphics
         private ITexture2D DefaultBorderTexture { get; set; }
         private ITexture2D Pixel { get { return pixel; } }
         private ITexture2D Cup { get; set; }
+        private AutofacGameRegistry registry = new AutofacGameRegistry();
 
         public GraphicComponentFactory(Configuration config, PokeEngine game)
         {
@@ -28,14 +29,20 @@ namespace GameEngine.Graphics
             Cup = new XNATexture2D("circle", game.Content);
 
             game.factory = this;
-
+            GameEngineTypes.Register(registry);
         }
         public T CreateGraphicComponent<T>() where T : IGraphicComponent
         {
             if (typeof(T) == typeof(Line))
                 return (T) (Object) new Line(pixel, Cup);
             else if (typeof(T) == typeof(ItemBox))
-                return (T)(Object)new ItemBox(new TextureBox(DefaultArrowTexture), new TextBox(DefaultFont));
+            {
+                var parameters = new Dictionary<Type, object>{
+                    {typeof(TextureBox), new TextureBox(DefaultArrowTexture)}, 
+                    {typeof(TextBox), new TextBox(DefaultFont)}
+                };
+                return registry.ResolveTypeWithParameters<T>(parameters);
+            }
 
             throw new NotSupportedException("Type not found");
         }
@@ -46,7 +53,7 @@ namespace GameEngine.Graphics
             pixel.SetData(new[] { Color.White });
         }
 
-        public TableView<T> CreateTableView<T>(ITableModel<T> model = null, ITableRenderer<T> renderer = null, ITableSelectionModel selectionModel = null)
+        public ITableView<T> CreateTableView<T>(ITableModel<T> model = null, ITableRenderer<T> renderer = null, ITableSelectionModel selectionModel = null)
         {
             if (model == null)
                 model = new DefaultTableModel<T>();
@@ -55,7 +62,12 @@ namespace GameEngine.Graphics
             if (selectionModel == null)
                 selectionModel = new TableSingleSelectionModel();
 
-            return new TableView<T>(model, renderer, selectionModel);
+            var parameters = new Dictionary<Type, object>{
+                {typeof(ITableModel<T>), model},
+                {typeof(ITableRenderer<T>), renderer},
+                {typeof(ITableSelectionModel), selectionModel}
+            };
+            return registry.ResolveTypeWithParameters<ITableView<T>>(parameters);
         }
 
         public TableWidget<T> CreateTableWidget<T>(ITableView<T> view = null, int? visibleRows = null, int? visibleColumns = null)

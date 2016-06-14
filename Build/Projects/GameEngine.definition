@@ -5,6 +5,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="MonoGame.Framework.DesktopGL" />
+    <Reference Include="Autofac" />
   </References>
   <Files>
     <Compile Include="Configuration.cs" />
