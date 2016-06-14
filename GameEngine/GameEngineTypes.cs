@@ -10,7 +10,7 @@ namespace GameEngine
 {
     internal static class GameEngineTypes
     {
-        public static void Register(IGameRegistry registry)
+        public static void Register(IGameRegistry registry, GraphicComponentFactory factory)
         {
             registry.RegisterGameComponentAsType<EventQueue, IEventQueue>();
             registry.RegisterGameComponentType<InputComponent>();
@@ -22,12 +22,21 @@ namespace GameEngine
 
             registry.RegisterGraphicComponentType<AnimatedTextureBox>();
             registry.RegisterGraphicComponentType<ItemBox>();
-            registry.RegisterGraphicComponentType<Line>();
+            var lineParameters = new Dictionary<string, object>{
+                {"pixel", factory.Pixel},
+                {"cupTexture", factory.Cup}
+            };
+            registry.RegisterGraphicComponentType<Line>(namedParameters: lineParameters);
             registry.RegisterGraphicComponentType<MultiLayeredComponent>();
             registry.RegisterGraphicComponentType<MultlineTextBox>();
             registry.RegisterGraphicComponentAsType(typeof(TableView<>), typeof(ITableView<>));
             registry.RegisterGraphicComponentAsType<TextBox, ITextGraphicComponent>();
-            registry.RegisterTypeAs<TextGraphic, IGraphicalText>();
+
+            var textGraphicParameters = new Dictionary<Type, object>
+            {
+                {typeof(ISpriteFont), factory.DefaultBorderTexture}
+            };
+            registry.RegisterTypeAs<TextGraphic, IGraphicalText>(typedParameters: textGraphicParameters);
             registry.RegisterGraphicComponentType<TextureBox>();
         }
     }

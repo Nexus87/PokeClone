@@ -61,7 +61,7 @@
     <Compile Include="IInputHandler.cs" />
     <Compile Include="IKeyboardManager.cs" />
     <Compile Include="InputComponent.cs" />
-    <Compile Include="InputManager.cs" />
+    <Compile Include="KeyboardManager.cs" />
     <Compile Include="IPokeEngine.cs" />
     <Compile Include="ISpriteBatch.cs" />
     <Compile Include="ISpriteFont.cs" />

@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Autofac.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,35 +13,49 @@ namespace GameEngine
         IContainer container;
         ContainerBuilder builder = new ContainerBuilder();
 
-        public void RegisterGameComponentType<T>() where T : IGameComponent
+        public void RegisterGameComponentType<T>(IDictionary<Type, object> typedParameters = null, IDictionary<String, object> namedParameters = null) where T : IGameComponent
         {
-            RegisterTypeAs<T, T>();
+            RegisterTypeAs<T, T>(typedParameters, namedParameters);
         }
 
-        public void RegisterGameComponentAsType<T, S>() where T : IGameComponent
+        public void RegisterGameComponentAsType<T, S>(IDictionary<Type, object> typedParameters = null, IDictionary<String, object> namedParameters = null) where T : IGameComponent
         {
-            RegisterTypeAs<T, S>();
+            RegisterTypeAs<T, S>(typedParameters, namedParameters);
         }
 
-        public void RegisterGraphicComponentType<T>() where T : Graphics.IGraphicComponent
+        public void RegisterGraphicComponentType<T>(IDictionary<Type, object> typedParameters = null, IDictionary<String, object> namedParameters = null) where T : Graphics.IGraphicComponent
         {
-            RegisterTypeAs<T, T>();
+            RegisterTypeAs<T, T>(typedParameters, namedParameters);
         }
 
-        public void RegisterGraphicComponentAsType<T, S>() where T : Graphics.IGraphicComponent
+        public void RegisterGraphicComponentAsType<T, S>(IDictionary<Type, object> typedParameters = null, IDictionary<String, object> namedParameters = null) where T : Graphics.IGraphicComponent
         {
-            RegisterTypeAs<T, S>();
+            RegisterTypeAs<T, S>(typedParameters, namedParameters);
         }
 
-        public void RegisterGraphicComponentAsType(Type T, Type S)
+        public void RegisterGraphicComponentAsType(Type T, Type S, IDictionary<Type, object> typedParameters = null, IDictionary<String, object> namedParameters = null)
         {
-            builder.RegisterGeneric(T).As(S);
+            if (typedParameters == null)
+                typedParameters = new Dictionary<Type, object>();
+            if (namedParameters == null)
+                namedParameters = new Dictionary<string, object>();
+
+            var pars = new List<Parameter>(from p in typedParameters select new TypedParameter(p.Key, p.Value));
+            pars.AddRange(from p in namedParameters select (Parameter) new NamedParameter(p.Key, p.Value));
+            builder.RegisterGeneric(T).As(S).WithParameters(pars);
             container = null;
         }
 
-        public void RegisterTypeAs<T, S>()
+        public void RegisterTypeAs<T, S>(IDictionary<Type, object> typedParameters = null, IDictionary<String, object> namedParameters = null)
         {
-            builder.RegisterType<T>().As<S>();
+            if (typedParameters == null)
+                typedParameters = new Dictionary<Type, object>();
+            if (namedParameters == null)
+                namedParameters = new Dictionary<string, object>();
+
+            var pars = new List<Parameter>(from p in typedParameters select new TypedParameter(p.Key, p.Value));
+            pars.AddRange(from p in namedParameters select (Parameter)new NamedParameter(p.Key, p.Value));
+            builder.RegisterType<T>().As<S>().WithParameters(pars);
             container = null;
         }
 

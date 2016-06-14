@@ -12,12 +12,12 @@ namespace GameEngine.Graphics
 {
     public class GraphicComponentFactory
     {
-        private XNATexture2D pixel;
-        private ISpriteFont DefaultFont { get; set; }
-        private ITexture2D DefaultArrowTexture { get; set; }
-        private ITexture2D DefaultBorderTexture { get; set; }
-        private ITexture2D Pixel { get { return pixel; } }
-        private ITexture2D Cup { get; set; }
+        internal XNATexture2D pixel;
+        internal ISpriteFont DefaultFont { get; set; }
+        internal ITexture2D DefaultArrowTexture { get; set; }
+        internal ITexture2D DefaultBorderTexture { get; set; }
+        internal ITexture2D Pixel { get { return pixel; } }
+        internal ITexture2D Cup { get; set; }
         private AutofacGameRegistry registry = new AutofacGameRegistry();
 
         public GraphicComponentFactory(Configuration config, PokeEngine game)
@@ -29,13 +29,13 @@ namespace GameEngine.Graphics
             Cup = new XNATexture2D("circle", game.Content);
 
             game.factory = this;
-            GameEngineTypes.Register(registry);
+            GameEngineTypes.Register(registry, this);
         }
         public T CreateGraphicComponent<T>() where T : IGraphicComponent
         {
             if (typeof(T) == typeof(Line))
-                return (T) (Object) new Line(pixel, Cup);
-            else if (typeof(T) == typeof(ItemBox))
+                return registry.ResolveType<T>();
+            if (typeof(T) == typeof(ItemBox))
             {
                 var parameters = new Dictionary<Type, object>{
                     {typeof(TextureBox), new TextureBox(DefaultArrowTexture)}, 
@@ -79,6 +79,7 @@ namespace GameEngine.Graphics
 
         public MessageBox CreateMessageBox(int lineNumber = 2)
         {
+            var parameters = new Dictionary<Type, object>{ { typeof(ISpriteFont), DefaultFont } };
             return new MessageBox(DefaultFont, new DefaultTextSplitter(), lineNumber);
         }
 
