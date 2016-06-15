@@ -71,6 +71,8 @@
     <Compile Include="KeyboardManager.cs" />
     <Compile Include="PokeEngine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Registry\ConstructorParameterAttribute.cs" />
+    <Compile Include="Registry\GameComponentAttribute.cs" />
     <Compile Include="TextureProvider.cs" />
     <Compile Include="Utils\DefaultTextSplitter.cs" />
     <Compile Include="Utils\Extensions.cs" />

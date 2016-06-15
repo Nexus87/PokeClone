@@ -1,9 +1,11 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GameEngine.Registry;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 
 namespace GameEngine
 {
+    [GameComponentAttribute(typeof(IEventQueue), true)]
     class EventQueue : IGameComponent, IEventQueue
     {
         bool eventDispatched = false;

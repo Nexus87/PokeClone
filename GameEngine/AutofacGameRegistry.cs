@@ -1,61 +1,22 @@
 ﻿using Autofac;
+using Autofac.Builder;
 using Autofac.Core;
+using GameEngine.Registry;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Reflection;
 
 namespace GameEngine
 {
     internal class AutofacGameRegistry : IGameRegistry
     {
-        IContainer container;
-        ContainerBuilder builder = new ContainerBuilder();
+        private IContainer container;
+        private ContainerBuilder builder = new ContainerBuilder();
 
-        public void RegisterGameComponentType<T>(IDictionary<Type, object> typedParameters = null, IDictionary<String, object> namedParameters = null) where T : IGameComponent
+        public void RegisterTypeAs<T, S>()
         {
-            RegisterTypeAs<T, T>(typedParameters, namedParameters);
-        }
-
-        public void RegisterGameComponentAsType<T, S>(IDictionary<Type, object> typedParameters = null, IDictionary<String, object> namedParameters = null) where T : IGameComponent
-        {
-            RegisterTypeAs<T, S>(typedParameters, namedParameters);
-        }
-
-        public void RegisterGraphicComponentType<T>(IDictionary<Type, object> typedParameters = null, IDictionary<String, object> namedParameters = null) where T : Graphics.IGraphicComponent
-        {
-            RegisterTypeAs<T, T>(typedParameters, namedParameters);
-        }
-
-        public void RegisterGraphicComponentAsType<T, S>(IDictionary<Type, object> typedParameters = null, IDictionary<String, object> namedParameters = null) where T : Graphics.IGraphicComponent
-        {
-            RegisterTypeAs<T, S>(typedParameters, namedParameters);
-        }
-
-        public void RegisterGraphicComponentAsType(Type T, Type S, IDictionary<Type, object> typedParameters = null, IDictionary<String, object> namedParameters = null)
-        {
-            if (typedParameters == null)
-                typedParameters = new Dictionary<Type, object>();
-            if (namedParameters == null)
-                namedParameters = new Dictionary<string, object>();
-
-            var pars = new List<Parameter>(from p in typedParameters select new TypedParameter(p.Key, p.Value));
-            pars.AddRange(from p in namedParameters select (Parameter) new NamedParameter(p.Key, p.Value));
-            builder.RegisterGeneric(T).As(S).WithParameters(pars);
-            container = null;
-        }
-
-        public void RegisterTypeAs<T, S>(IDictionary<Type, object> typedParameters = null, IDictionary<String, object> namedParameters = null)
-        {
-            if (typedParameters == null)
-                typedParameters = new Dictionary<Type, object>();
-            if (namedParameters == null)
-                namedParameters = new Dictionary<string, object>();
-
-            var pars = new List<Parameter>(from p in typedParameters select new TypedParameter(p.Key, p.Value));
-            pars.AddRange(from p in namedParameters select (Parameter)new NamedParameter(p.Key, p.Value));
-            builder.RegisterType<T>().As<S>().WithParameters(pars);
+            builder.RegisterType<T>().As<S>();
             container = null;
         }
 
@@ -76,9 +37,64 @@ namespace GameEngine
         {
             if (container == null)
                 container = builder.Build();
-            
+
             var parameterList = from p in parameters select new TypedParameter(p.Key, p.Value);
             return container.Resolve<T>(parameterList);
+        }
+
+        public void RegisterType<T>(Func<IGameRegistry, T> creatorFunc)
+        {
+            RegisterTypeAs<T, T>(creatorFunc);
+        }
+
+        public void RegisterType<T>()
+        {
+            RegisterTypeAs<T, T>();
+        }
+
+        public void RegisterGenericTypeAs(Type T, Type S)
+        {
+            builder.RegisterGeneric(T).As(S);
+            container = null;
+        }
+
+        public void RegisterGenericType(Type T)
+        {
+            RegisterGenericTypeAs(T, T);
+        }
+
+        public void RegisterTypeAs<T, S>(Func<IGameRegistry, T> creatorFunc)
+        {
+            builder.Register(c => creatorFunc(this)).As<S>();
+        }
+
+        public void ScanAssembly(Assembly assembly)
+        {
+            var types = assembly.GetTypes().
+                Where(t => Attribute.IsDefined(t, typeof(GameComponentAttribute)));
+
+            foreach (var t in types)
+                RegistertTypeWithAttribute(t);
+        }
+
+        private void RegistertTypeWithAttribute(Type t)
+        {
+            var attribute = t.GetCustomAttribute<GameComponentAttribute>();
+
+            if (t.IsGenericType)
+                SetAdditionalCondition(builder.RegisterGeneric(t), attribute);
+            else
+                SetAdditionalCondition(builder.RegisterType(t), attribute);
+
+            container = null;
+        }
+
+        private void SetAdditionalCondition<T, T2, T3>(IRegistrationBuilder<T, T2, T3> registrationBuilder, GameComponentAttribute attribute)
+        {
+            if (attribute.RegisterType != null)
+                registrationBuilder = registrationBuilder.As(attribute.RegisterType);
+            if (attribute.SingleInstance)
+                registrationBuilder.SingleInstance();
         }
     }
 }

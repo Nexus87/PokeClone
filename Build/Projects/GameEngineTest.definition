@@ -8,6 +8,7 @@
     <Reference Include="NUnit" />
     <Reference Include="MonoGame.Framework.DesktopGL" />
     <Reference Include="GameEngine" />
+    <Reference Include="Autofac" />
   </References>
   <Files>
     <Compile Include="EventComponent\EventComponentTest.cs" />
@@ -39,6 +40,8 @@
     <Compile Include="Graphics\TextureBoxTest.cs" />
     <Compile Include="InputComponentTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Registry\AutofacGameRegistryTest.cs" />
+    <Compile Include="Registry\IGameRegistryTest.cs" />
     <Compile Include="TestUtils\Extensions.cs" />
     <Compile Include="TestUtils\GraphicComponentMock.cs" />
     <Compile Include="TestUtils\KeyboardManagerStub.cs" />

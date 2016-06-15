@@ -1,7 +1,9 @@
-﻿using Microsoft.Xna.Framework.Input;
+﻿using GameEngine.Registry;
+using Microsoft.Xna.Framework.Input;
 
 namespace GameEngine
 {
+    [GameComponentAttribute(registerType: typeof(IKeyboardManager))]
     internal class KeyboardManager : IKeyboardManager
     {
         private KeyboardState currentState;
