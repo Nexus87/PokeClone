@@ -5,6 +5,7 @@ using System;
 namespace GameEngine.Graphics
 {
     [GameComponentAttribute]
+    [DefaultParameter("arrowTexture", GameEngineTypes.ResourceKeys.ArrowTexture)]
     internal class ItemBox : AbstractGraphicComponent, ISelectableTextComponent
     {
         public bool IsSelected { get; private set; }
@@ -13,13 +14,14 @@ namespace GameEngine.Graphics
 
         public string Text { get { return textBox.Text; } set { textBox.Text = value; } }
 
-        public ItemBox(IGraphicComponent arrow, ITextGraphicComponent textBox)
+        internal ItemBox(IGraphicComponent arrow, ITextGraphicComponent textBox)
         {
             this.arrow = arrow;
             this.textBox = textBox;
         }
 
-        public ItemBox(TextureBox arrow, TextBox textBox) : this((IGraphicComponent)arrow, textBox) { }
+        public ItemBox(ITexture2D arrowTexture, ISpriteFont font) : 
+            this(new TextureBox(arrowTexture), new TextBox(font)) { }
 
         public override void Setup()
         {

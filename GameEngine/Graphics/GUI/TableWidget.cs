@@ -20,6 +20,9 @@ namespace GameEngine.Graphics.GUI
         private bool isVisible;
         private ITableView<T> tableView;
 
+        public TableWidget(int? visibleRows, int? visibleColumns, ITableModel<T> model, ITableRenderer<T> renderer, ITableSelectionModel selection) :
+            this(visibleRows, visibleColumns, new TableView<T>(model, renderer, selection)) { }
+
         public TableWidget(int? visibleRows, int? visibleColumns, ITableView<T> view)
         {
             VisibleRows = visibleRows;

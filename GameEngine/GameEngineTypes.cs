@@ -11,11 +11,23 @@ namespace GameEngine
 {
     internal static class GameEngineTypes
     {
+        public enum ResourceKeys
+        {
+            PixelTexture,
+            CupTexture,
+            ArrowTexture,
+            BorderTexture
+        }
+
         public static void Register(IGameRegistry registry, GraphicComponentFactory factory)
         {
+            registry.RegisterParameter(ResourceKeys.PixelTexture, factory.Pixel);
+            registry.RegisterParameter(ResourceKeys.CupTexture, factory.Cup);
+            registry.RegisterParameter(ResourceKeys.ArrowTexture, factory.DefaultArrowTexture);
+            registry.RegisterParameter(ResourceKeys.BorderTexture, factory.DefaultBorderTexture);
+
             registry.ScanAssembly(Assembly.GetExecutingAssembly());
             registry.RegisterType<ISpriteFont>(r => factory.DefaultFont);
-            registry.RegisterType<Line>( r => new Line(factory.Pixel, factory.Cup));
 
         }
     }

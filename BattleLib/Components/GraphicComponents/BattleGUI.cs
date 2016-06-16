@@ -22,11 +22,11 @@ namespace BattleLib.GraphicComponents
             ID = player;
             this.ai = ai;
 
-            mainFrame = factory.CreateDialog();
-            attackFrame = factory.CreateDialog();
-            itemFrame = factory.CreateDialog();
+            mainFrame = factory.CreateGraphicComponent<Dialog>();
+            attackFrame = factory.CreateGraphicComponent<Dialog>();
+            itemFrame = factory.CreateGraphicComponent<Dialog>();
             pkmnFrame = new Dialog();
-            messageFrame = factory.CreateDialog();
+            messageFrame = factory.CreateGraphicComponent<Dialog>();
 
             InitMessageBox(factory, game);
 

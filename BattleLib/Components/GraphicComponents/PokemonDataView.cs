@@ -17,11 +17,12 @@ namespace BattleLib.GraphicComponents
             var hpLineContainer = new Container();
 
             hpLine = new HPLine(factory.CreateGraphicComponent<Line>(), factory.CreateGraphicComponent<Line>(), factory.CreateGraphicComponent<Line>(), game.BackgroundColor);
-            name = factory.CreateTextBox();
-            lvl = factory.CreateTextBox(); 
+            name = factory.CreateGraphicComponent<TextBox>();
+
+            lvl = factory.CreateGraphicComponent<TextBox>(); 
             lvl.PreferedTextHeight = 16.0f;
 
-            var hpBox = factory.CreateTextBox();
+            var hpBox = factory.CreateGraphicComponent<TextBox>();
             hpBox.Text = "hp:";
             hpBox.PreferedTextHeight = 12.0f;
 
@@ -35,7 +36,7 @@ namespace BattleLib.GraphicComponents
 
             if (player)
             {
-                hpText = factory.CreateTextBox();
+                hpText = factory.CreateGraphicComponent<TextBox>();
                 hpText.PreferedTextHeight = 16.0f;
                 container.AddComponent(hpText);
             }

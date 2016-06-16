@@ -33,16 +33,12 @@ namespace GameEngine.Graphics
         }
         public T CreateGraphicComponent<T>() where T : IGraphicComponent
         {
-            if (typeof(T) == typeof(Line))
+            if (typeof(T) == typeof(Line) 
+                || typeof(T) == typeof(ItemBox) 
+                || typeof(T) == typeof(TextBox)
+                || typeof(T) == typeof(Dialog)
+                )
                 return registry.ResolveType<T>();
-            if (typeof(T) == typeof(ItemBox))
-            {
-                var parameters = new Dictionary<Type, object>{
-                    {typeof(TextureBox), new TextureBox(DefaultArrowTexture)}, 
-                    {typeof(TextBox), new TextBox(DefaultFont)}
-                };
-                return registry.ResolveTypeWithParameters<T>(parameters);
-            }
 
             throw new NotSupportedException("Type not found");
         }
@@ -81,16 +77,6 @@ namespace GameEngine.Graphics
         {
             var parameters = new Dictionary<Type, object>{ { typeof(ISpriteFont), DefaultFont } };
             return new MessageBox(DefaultFont, new DefaultTextSplitter(), lineNumber);
-        }
-
-        public Dialog CreateDialog()
-        {
-            return new Dialog(DefaultBorderTexture);
-        }
-
-        public TextBox CreateTextBox()
-        {
-            return new TextBox(DefaultFont);
         }
     }
 }

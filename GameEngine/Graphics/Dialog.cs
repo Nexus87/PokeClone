@@ -1,13 +1,27 @@
 ﻿using GameEngine.Graphics.GUI;
+using GameEngine.Registry;
 using GameEngine.Utils;
 using Microsoft.Xna.Framework;
 using System;
 
 namespace GameEngine.Graphics
 {
+    [GameComponentAttribute]
+    [DefaultParameter("borderTexture", GameEngineTypes.ResourceKeys.BorderTexture)]
     public class Dialog : ForwardingGraphicComponent<Container>, IWidget
     {
-        TextureBox border;
+        private TextureBox border;
+
+        private bool isVisible;
+
+        public Dialog(ITexture2D borderTexture = null)
+            : base(new Container())
+        {
+            border = new TextureBox(borderTexture);
+            InnerComponent.Layout = new SingleComponentLayout();
+        }
+
+        public event EventHandler<VisibilityChangedEventArgs> VisibilityChanged = delegate { };
 
         public ILayout Layout
         {
@@ -18,26 +32,6 @@ namespace GameEngine.Graphics
                 Invalidate();
             }
         }
-
-        public void AddWidget(IWidget widget)
-        {
-            widget.CheckNull("widget");
-            InnerComponent.AddComponent(widget);
-        }
-
-        public Dialog(ITexture2D borderTexture = null) : base(new Container())
-        {
-            border = new TextureBox(borderTexture);
-            InnerComponent.Layout = new SingleComponentLayout();
-        }
-
-        public override void Setup()
-        {
-            border.Setup();
-            base.Setup();
-        }
-
-        public event EventHandler<VisibilityChangedEventArgs> VisibilityChanged = delegate { };
 
         public bool IsVisible
         {
@@ -51,18 +45,36 @@ namespace GameEngine.Graphics
                 VisibilityChanged(this, new VisibilityChangedEventArgs(isVisible));
             }
         }
-        private bool isVisible;
+
+        public void AddWidget(IWidget widget)
+        {
+            widget.CheckNull("widget");
+            InnerComponent.AddComponent(widget);
+        }
+
+        public override void Setup()
+        {
+            border.Setup();
+            base.Setup();
+        }
 
         public bool HandleInput(CommandKeys key)
         {
             var compontents = InnerComponent.Components;
-            
-            foreach( var c in compontents){
+
+            foreach (var c in compontents)
+            {
                 if (((IWidget)c).HandleInput(key))
                     return true;
             }
 
             return false;
+        }
+
+        public override void Draw(GameTime time, ISpriteBatch batch)
+        {
+            border.Draw(time, batch);
+            base.Draw(time, batch);
         }
 
         protected override void Update()
@@ -75,11 +87,6 @@ namespace GameEngine.Graphics
             border.YPosition = YPosition;
             border.Width = Width;
             border.Height = Height;
-        }
-        public override void Draw(GameTime time, ISpriteBatch batch)
-        {
-            border.Draw(time, batch);
-            base.Draw(time, batch);
         }
     }
 }
