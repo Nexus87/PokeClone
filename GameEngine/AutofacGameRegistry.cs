@@ -135,5 +135,11 @@ namespace GameEngine
         {
             parameters[parameterKey] = parameter;
         }
+
+
+        public T GetParameter<T>(object resourceKey)
+        {
+            return (T)parameters[resourceKey];
+        }
     }
 }

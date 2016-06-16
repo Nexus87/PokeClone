@@ -18,7 +18,7 @@ namespace GameEngine.Graphics
         internal ITexture2D DefaultBorderTexture { get; set; }
         internal ITexture2D Pixel { get { return pixel; } }
         internal ITexture2D Cup { get; set; }
-        private AutofacGameRegistry registry = new AutofacGameRegistry();
+        public readonly IGameRegistry registry = new AutofacGameRegistry();
 
         public GraphicComponentFactory(Configuration config, PokeEngine game)
         {
@@ -37,6 +37,7 @@ namespace GameEngine.Graphics
                 || typeof(T) == typeof(ItemBox) 
                 || typeof(T) == typeof(TextBox)
                 || typeof(T) == typeof(Dialog)
+                || typeof(T) == typeof(MessageBox)
                 )
                 return registry.ResolveType<T>();
 
@@ -54,7 +55,7 @@ namespace GameEngine.Graphics
             if (model == null)
                 model = new DefaultTableModel<T>();
             if (renderer == null)
-                renderer = new DefaultTableRenderer<T>(this);
+                renderer = new DefaultTableRenderer<T>(registry);
             if (selectionModel == null)
                 selectionModel = new TableSingleSelectionModel();
 
@@ -71,12 +72,6 @@ namespace GameEngine.Graphics
             if (view == null)
                 view = CreateTableView<T>();
             return new TableWidget<T>(visibleRows, visibleColumns, view);
-        }
-
-        public MessageBox CreateMessageBox(int lineNumber = 2)
-        {
-            var parameters = new Dictionary<Type, object>{ { typeof(ISpriteFont), DefaultFont } };
-            return new MessageBox(DefaultFont, new DefaultTextSplitter(), lineNumber);
         }
     }
 }

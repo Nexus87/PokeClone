@@ -1,9 +1,11 @@
 ﻿using Base;
 using GameEngine.Graphics;
+using GameEngine.Registry;
 using GameEngine.Utils;
 
 namespace BattleLib.GraphicComponents
 {
+    [GameComponentAttribute]
     class AttackTableSelectionModel : TableSingleSelectionModel
     {
         public AttackTableSelectionModel(ITableModel<Move> model)

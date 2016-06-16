@@ -30,5 +30,7 @@ namespace GameEngine
 
 
         void RegisterParameter(Object parameterKey, Object parameter);
+
+        T GetParameter<T>(Object resourceKey);
     }
 }

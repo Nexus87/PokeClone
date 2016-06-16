@@ -38,7 +38,7 @@ namespace BattleLib
             SetupBattleState(playerID, aiID, rules, scheduler);
 
             graphic = new BattleGraphicController(game, factory, playerID, aiID);
-            gui = new BattleGUI(config, game, factory, battleState, playerID, aiID);
+            gui = new BattleGUI(game, factory, battleState, playerID, aiID);
 
             var eventProcess = new BattleEventProcessor(gui, graphic, queue, eventCreator);
             var aiComponent = new AIComponent(battleState, ai, playerID);

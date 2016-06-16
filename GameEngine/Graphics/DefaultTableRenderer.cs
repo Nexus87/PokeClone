@@ -12,9 +12,9 @@ namespace GameEngine.Graphics
         public string DefaultString { get; set; }
 
 
-        public DefaultTableRenderer(GraphicComponentFactory factory)
+        public DefaultTableRenderer(IGameRegistry registry)
         {
-            this.factory = factory;
+            this.registry = registry;
             DefaultString = "";
         }
 
@@ -46,10 +46,10 @@ namespace GameEngine.Graphics
 
         protected virtual ISelectableTextComponent CreateComponent()
         {
-            return factory.CreateGraphicComponent<ItemBox>();
+            return registry.ResolveType<ItemBox>();
         }
 
 
-        public GraphicComponentFactory factory { get; set; }
+        public IGameRegistry registry { get; set; }
     }
 }

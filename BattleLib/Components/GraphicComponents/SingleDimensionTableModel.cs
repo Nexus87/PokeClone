@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace BattleLib.GraphicComponents
 {
-    internal abstract class SingleDimensionTableModel<T> : ITableModel<T>
+    public abstract class SingleDimensionTableModel<T> : ITableModel<T>
     {
         public event EventHandler<DataChangedEventArgs<T>> DataChanged = delegate { };
         public event EventHandler<TableResizeEventArgs> SizeChanged = delegate { };

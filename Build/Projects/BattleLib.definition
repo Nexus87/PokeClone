@@ -9,6 +9,7 @@
     <Reference Include="Base" />
   </References>
   <Files>
+    <Compile Include="BattleLibTypes.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="ClientIdentifier.cs" />
     <Compile Include="CommandExecuter.cs" />
@@ -37,7 +38,9 @@
     <Compile Include="Components\GraphicComponents\HPLine.cs" />
     <Compile Include="Components\GraphicComponents\IBattleGraphicController.cs" />
     <Compile Include="Components\GraphicComponents\IGUIService.cs" />
+    <Compile Include="Components\GraphicComponents\IMoveWidget.cs" />
     <Compile Include="Components\GraphicComponents\ItemModel.cs" />
+    <Compile Include="Components\GraphicComponents\MoveWidget.cs" />
     <Compile Include="Components\GraphicComponents\PokemonDataView.cs" />
     <Compile Include="Components\GraphicComponents\PokemonSprite.cs" />
     <Compile Include="Components\GraphicComponents\SingleDimensionTableModel.cs" />

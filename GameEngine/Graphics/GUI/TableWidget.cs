@@ -1,5 +1,4 @@
-﻿using GameEngine.Utils;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using System;
 using System.Diagnostics;
 
@@ -45,11 +44,6 @@ namespace GameEngine.Graphics.GUI
 
         public event EventHandler<VisibilityChangedEventArgs> VisibilityChanged = delegate { };
 
-        /// <summary>
-        /// Number of total columns in the table
-        /// </summary>
-        public int Columns { get { return tableView.Columns; } }
-
         public bool IsVisible
         {
             get { return isVisible; }
@@ -69,32 +63,23 @@ namespace GameEngine.Graphics.GUI
         }
 
         /// <summary>
-        /// Total number of rows in the table
+        /// Number of total columns in the table
         /// </summary>
-        public int Rows { get { return tableView.Rows; } }
+        private int Columns { get { return tableView.Columns; } }
 
-        public ITableView<T> TableView
-        {
-            get { return tableView; }
-            private set
-            {
-                value.CheckNull("value");
-                tableView = value;
-                Invalidate();
-            }
-        }
+        private int Rows { get { return tableView.Rows; } }
 
         /// <summary>
         /// The maximum number of columns that are displayed. null is equivalent
         /// to Columns
         /// </summary>
-        public int? VisibleColumns { get; private set; }
+        private int? VisibleColumns { get; set; }
 
         /// <summary>
         /// The maximum number of rows that are displayed. null is equivalent to
         /// Rows
         /// </summary>
-        public int? VisibleRows { get; private set; }
+        private int? VisibleRows { get; set; }
 
         /// <summary>
         /// Property to easily access TableView's EndIndex property.
@@ -209,10 +194,7 @@ namespace GameEngine.Graphics.GUI
 
         protected override void Update()
         {
-            tableView.XPosition = XPosition;
-            tableView.YPosition = YPosition;
-            tableView.Width = Width;
-            tableView.Height = Height;
+            tableView.SetCoordinates(this);
         }
 
         private void TableResizeHandler(object sender, TableResizeEventArgs e)

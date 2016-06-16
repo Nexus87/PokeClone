@@ -1,11 +1,14 @@
 ﻿using Base;
 using BattleLib.Components.BattleState;
+using GameEngine.Registry;
 using System;
 using System.Collections.Generic;
 
 namespace BattleLib.GraphicComponents
 {
-    internal class AttackModel : SingleDimensionTableModel<Move>
+    [GameComponentAttribute]
+    [DefaultParameter("pokemon", BattleLibTypes.ResourceKeys.PlayerPokemonWrapper)]
+    public class AttackModel : SingleDimensionTableModel<Move>
     {
         public AttackModel(PokemonWrapper pokemon)
         {

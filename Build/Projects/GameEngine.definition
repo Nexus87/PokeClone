@@ -26,6 +26,7 @@
     <Compile Include="Graphics\ForwardingGraphicComponent.cs" />
     <Compile Include="Graphics\GraphicComponentFactory.cs" />
     <Compile Include="Graphics\GridLayout.cs" />
+    <Compile Include="Graphics\GUI\AbstractWidget.cs" />
     <Compile Include="Graphics\GUI\GUIManager.cs" />
     <Compile Include="Graphics\GUI\IWidget.cs" />
     <Compile Include="Graphics\GUI\MessageBox.cs" />

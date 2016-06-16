@@ -3,10 +3,12 @@ using BattleLib.Components.BattleState;
 using GameEngine;
 using GameEngine.Graphics;
 using GameEngine.Graphics.GUI;
+using GameEngine.Registry;
 using System;
 
 namespace BattleLib.GraphicComponents
 {
+    [GameComponentAttribute(RegisterType=typeof(IGUIService), SingleInstance=true)]
     public class BattleGUI : IGUIService
     {
         private Dialog attackFrame;
@@ -16,7 +18,7 @@ namespace BattleLib.GraphicComponents
         private Dialog messageFrame;
         private Dialog pkmnFrame;
 
-        public BattleGUI(Configuration config, IPokeEngine game, GraphicComponentFactory factory, BattleStateComponent battleState, ClientIdentifier player, ClientIdentifier ai)
+        public BattleGUI(IPokeEngine game, GraphicComponentFactory factory, BattleStateComponent battleState, ClientIdentifier player, ClientIdentifier ai)
         {
             BattleState = battleState;
             ID = player;
@@ -79,7 +81,7 @@ namespace BattleLib.GraphicComponents
             
             var tableView =  factory.CreateTableView<Move>(
                 model, 
-                new DefaultTableRenderer<Move>(factory) { DefaultString = "------" }, 
+                new DefaultTableRenderer<Move>(factory.registry) { DefaultString = "------" }, 
                 new AttackTableSelectionModel(model)
                 );
 
@@ -154,7 +156,7 @@ namespace BattleLib.GraphicComponents
 
         private void InitMessageBox(GraphicComponentFactory factory, IPokeEngine game)
         {
-            messageBox = factory.CreateMessageBox();
+            messageBox = factory.CreateGraphicComponent<MessageBox>();
 
             messageFrame.AddWidget(messageBox);
             messageFrame.XPosition = 0;

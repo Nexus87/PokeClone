@@ -1,24 +1,29 @@
-﻿using GameEngine.Utils;
+﻿using GameEngine.Registry;
+using GameEngine.Utils;
 using System;
 
 namespace GameEngine.Graphics.GUI
 {
+    [GameComponentAttribute]
     public class MessageBox : ForwardingGraphicComponent<ITextGraphicContainer>, IWidget
     {
         private ITextGraphicContainer textBox;
 
-        public MessageBox(ITextGraphicContainer textBox) :
-            base(textBox)
-        {
-            this.textBox = InnerComponent;
-        }
+        private bool isVisible;
 
         public MessageBox(ISpriteFont font, ITextSplitter splitter, int lineNumber = 2)
             : this(new MultlineTextBox(font, splitter, lineNumber))
         {
         }
 
+        internal MessageBox(ITextGraphicContainer textBox) :
+            base(textBox)
+        {
+            this.textBox = InnerComponent;
+        }
+
         public event EventHandler OnAllLineShowed = delegate { };
+
         public event EventHandler<VisibilityChangedEventArgs> VisibilityChanged = delegate { };
 
         public bool IsVisible
@@ -33,7 +38,7 @@ namespace GameEngine.Graphics.GUI
                 VisibilityChanged(this, new VisibilityChangedEventArgs(isVisible));
             }
         }
-        private bool isVisible;
+
         public void DisplayText(string text)
         {
             textBox.Text = text;
