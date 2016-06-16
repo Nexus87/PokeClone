@@ -1,4 +1,5 @@
-﻿using GameEngine.Utils;
+﻿using GameEngine.Registry;
+using GameEngine.Utils;
 using Microsoft.Xna.Framework;
 using System;
 using System.Diagnostics;
@@ -15,6 +16,7 @@ namespace GameEngine.Graphics
         public T SelectedData { get; private set; }
     }
 
+    [GameComponentAttribute(registerType: typeof(ITableView<>))]
     public class TableView<T> : AbstractGraphicComponent, ITableView<T>
     {
         ITableModel<T> model;

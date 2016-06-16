@@ -1,9 +1,11 @@
-﻿using System;
+﻿using GameEngine.Registry;
+using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace GameEngine.Utils
 {
+    [GameComponentAttribute(RegisterType = typeof(ITextSplitter))]
     public class DefaultTextSplitter : ITextSplitter
     {
         List<string> lines = new List<string>();

@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GameEngine.Registry;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 
@@ -15,6 +16,7 @@ namespace GameEngine
         Back
     }
 
+    [GameComponentAttribute(SingleInstance=true)]
     class InputComponent : IGameComponent
     {
         IReadOnlyDictionary<Keys, CommandKeys> keyMap;

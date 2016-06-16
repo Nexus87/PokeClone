@@ -1,8 +1,10 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GameEngine.Registry;
+using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 
 namespace GameEngine.Graphics
 {
+    [GameComponentAttribute]
     public class Container : AbstractGraphicComponent
     {
         public ILayout Layout { get; set; }

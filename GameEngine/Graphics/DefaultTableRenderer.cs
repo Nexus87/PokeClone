@@ -1,8 +1,10 @@
-﻿using GameEngine.Utils;
+﻿using GameEngine.Registry;
+using GameEngine.Utils;
 using System;
 
 namespace GameEngine.Graphics
 {
+    [GameComponentAttribute(registerType: typeof(ITableRenderer<>))]
     public class DefaultTableRenderer<T> : ITableRenderer<T>
     {
         Table<ISelectableTextComponent> boxes = new Table<ISelectableTextComponent>();

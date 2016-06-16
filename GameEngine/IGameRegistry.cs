@@ -8,6 +8,12 @@ using System.Threading.Tasks;
 
 namespace GameEngine
 {
+    public class TypeNotRegisteredException : Exception {
+        public TypeNotRegisteredException(string message, Exception innerException) :
+            base(message, innerException)
+        { }
+    }
+
     public interface IGameRegistry
     {
         void ScanAssembly(Assembly assembly);
@@ -22,5 +28,7 @@ namespace GameEngine
         T ResolveType<T>();
         T ResolveTypeWithParameters<T>(IDictionary<Type, object> parameters);
 
+
+        void RegisterParameter(Object parameterKey, Object parameter);
     }
 }

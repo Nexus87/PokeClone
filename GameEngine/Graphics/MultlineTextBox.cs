@@ -1,8 +1,10 @@
-﻿using GameEngine.Utils;
+﻿using GameEngine.Registry;
+using GameEngine.Utils;
 using Microsoft.Xna.Framework;
 
 namespace GameEngine.Graphics
 {
+    [GameComponentAttribute(registerType: typeof(ITextGraphicContainer))]
     public class MultlineTextBox : AbstractGraphicComponent, ITextGraphicContainer
     {
         private string text;

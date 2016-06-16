@@ -1,8 +1,10 @@
-﻿using GameEngine.Utils;
+﻿using GameEngine.Registry;
+using GameEngine.Utils;
 using System;
 
 namespace GameEngine.Graphics
 {
+    [GameComponentAttribute(registerType: typeof(ITableModel<>))]
     public class DefaultTableModel<T> : ITableModel<T>
     {
         private Table<T> items = new Table<T>();

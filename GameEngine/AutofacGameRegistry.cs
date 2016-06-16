@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Autofac.Builder;
 using Autofac.Core;
+using Autofac.Core.Registration;
 using GameEngine.Registry;
 using System;
 using System.Collections.Generic;
@@ -30,7 +31,14 @@ namespace GameEngine
             if (container == null)
                 container = builder.Build();
 
-            return container.Resolve<T>();
+            try
+            {
+                return container.Resolve<T>();
+            }
+            catch (ComponentNotRegisteredException e)
+            {
+                throw new TypeNotRegisteredException("Type not found", e);
+            }
         }
 
         public T ResolveTypeWithParameters<T>(IDictionary<Type, object> parameters)
@@ -71,7 +79,7 @@ namespace GameEngine
         public void ScanAssembly(Assembly assembly)
         {
             var types = assembly.GetTypes().
-                Where(t => Attribute.IsDefined(t, typeof(GameComponentAttribute)));
+                Where(t => Attribute.IsDefined(t, typeof(GameComponentAttribute), false));
 
             foreach (var t in types)
                 RegistertTypeWithAttribute(t);
@@ -79,22 +87,53 @@ namespace GameEngine
 
         private void RegistertTypeWithAttribute(Type t)
         {
-            var attribute = t.GetCustomAttribute<GameComponentAttribute>();
-
             if (t.IsGenericType)
-                SetAdditionalCondition(builder.RegisterGeneric(t), attribute);
+                SetAdditionalCondition(t, builder.RegisterGeneric(t));
             else
-                SetAdditionalCondition(builder.RegisterType(t), attribute);
+                SetAdditionalCondition(t, builder.RegisterType(t));
 
             container = null;
         }
 
-        private void SetAdditionalCondition<T, T2, T3>(IRegistrationBuilder<T, T2, T3> registrationBuilder, GameComponentAttribute attribute)
+        private void SetAdditionalCondition<T, T2, T3>(Type t, IRegistrationBuilder<T, T2, T3> registrationBuilder)
+            where T2 : ReflectionActivatorData
         {
+            var attribute = t.GetCustomAttribute<GameComponentAttribute>();
+
             if (attribute.RegisterType != null)
                 registrationBuilder = registrationBuilder.As(attribute.RegisterType);
             if (attribute.SingleInstance)
                 registrationBuilder.SingleInstance();
+
+            if (Attribute.IsDefined(t, typeof(DefaultParameterAttribute), false))
+                SetDefaultParameters(t, registrationBuilder);
+
+        }
+
+        private void SetDefaultParameters<T, T2, T3>(Type t, IRegistrationBuilder<T, T2, T3> registrationBuilder)
+            where T2 : ReflectionActivatorData
+        {
+            foreach (var attribute in t.GetCustomAttributes<DefaultParameterAttribute>())
+                registrationBuilder.WithParameter(new ResolvedParameter(
+                    (pi, ctx) =>  pi.Name.Equals(attribute.ParameterName), 
+                    (pi, ctx) => GetParameter(attribute.ResourceKey)
+                    ));
+        }
+
+        private object GetParameter(object resourceKey)
+        {
+            if (!parameters.ContainsKey(resourceKey))
+                return null;
+
+            return parameters[resourceKey];
+        }
+
+
+        private readonly Dictionary<object, object> parameters = new Dictionary<object, object>();
+
+        public void RegisterParameter(object parameterKey, object parameter)
+        {
+            parameters[parameterKey] = parameter;
         }
     }
 }

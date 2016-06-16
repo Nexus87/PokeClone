@@ -1,4 +1,5 @@
-﻿using GameEngine.Utils;
+﻿using GameEngine.Registry;
+using GameEngine.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -6,6 +7,7 @@ using System.IO;
 
 namespace GameEngine
 {
+    [GameComponentAttribute(RegisterType = typeof(ITexture2D))]
     public class XNATexture2D : ITexture2D
     {
         private string textureName;

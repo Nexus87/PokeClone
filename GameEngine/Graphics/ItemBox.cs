@@ -1,8 +1,10 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GameEngine.Registry;
+using Microsoft.Xna.Framework;
 using System;
 
 namespace GameEngine.Graphics
 {
+    [GameComponentAttribute]
     internal class ItemBox : AbstractGraphicComponent, ISelectableTextComponent
     {
         public bool IsSelected { get; private set; }

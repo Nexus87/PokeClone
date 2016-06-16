@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace GameEngineTest.Registry
 {
     [GameComponentAttribute]
-    public class TestType { }
+    public class SimpleType { }
 
     public interface TestInterface{}
 
@@ -28,6 +28,35 @@ namespace GameEngineTest.Registry
     [GameComponentAttribute]
     public class GenericClass<T> { }
 
+    [GameComponentAttribute]
+    [DefaultParameter("parameter", "key")]
+    public class ClassWithDefaultParameters
+    {
+        public ClassWithDefaultParameters(String parameter)
+        {
+            this.parameter = parameter;
+        }
+
+        public string parameter { get; set; }
+    }
+
+    [GameComponentAttribute]
+    [DefaultParameter("parameter1", "Key")]
+    [DefaultParameter("parameter2", 10)]
+    public class ClassWithMulitpleDefaultParameters
+    {
+        public string parameter1;
+        public int parameter2;
+        public ClassWithMulitpleDefaultParameters(String parameter1, int parameter2)
+        {
+            this.parameter1 = parameter1;
+            this.parameter2 = parameter2;
+        }
+    }
+
+    [GameComponentAttribute]
+    public class ParentClassWithAttribute { }
+    public class InheritedClassWithoutAttribute : ParentClassWithAttribute { }
 
     public abstract class IGameRegistryTest
     {
@@ -38,7 +67,7 @@ namespace GameEngineTest.Registry
         {
             var registry = CreateRegistryAndScan();
 
-            Assert.DoesNotThrow(() => registry.ResolveType<TestType>());
+            Assert.DoesNotThrow(() => registry.ResolveType<SimpleType>());
         }
 
         [Test]
@@ -78,11 +107,53 @@ namespace GameEngineTest.Registry
             Assert.DoesNotThrow(() => registry.ResolveType<GenericClass<object>>());
         }
 
+        [Test]
+        public void ScanAssembly_ClassWithDefaultParameter_RegisteredParameterIsUsed()
+        {
+            var registry = CreateRegistryAndScan();
+            registry.RegisterParameter("key", "String");
+
+            var resolvedType = registry.ResolveType<ClassWithDefaultParameters>();
+
+            Assert.AreEqual("String", resolvedType.parameter);
+        }
+
+        [Test]
+        public void ScanAssembly_ClassWithDefaultParameterWithoutResourceRegistering_ResolvedTypeResolvedWithNullArgument()
+        {
+            var registry = CreateRegistryAndScan();
+
+            var resolvedType = registry.ResolveType<ClassWithDefaultParameters>();
+
+            Assert.AreEqual(null, resolvedType.parameter);
+        }
+
+        [Test]
+        public void ScanAssembly_ClassWithMultipeDefaultParameter_RegisteredParameterIsUsed()
+        {
+            var registry = CreateRegistryAndScan();
+            registry.RegisterParameter("Key", "String");
+            registry.RegisterParameter(10, 20);
+
+            var resolvedType = registry.ResolveType<ClassWithMulitpleDefaultParameters>();
+
+            Assert.AreEqual("String", resolvedType.parameter1);
+            Assert.AreEqual(20, resolvedType.parameter2);
+        }
+        [Test]
+        public void ScanAssembly_ClassInheritAttribute_TypeIsNotRegistered()
+        {
+            var registry = CreateRegistryAndScan();
+
+            Assert.Throws<TypeNotRegisteredException>(() => registry.ResolveType<InheritedClassWithoutAttribute>());
+        }
+
         private IGameRegistry CreateRegistryAndScan()
         {
             var registry = CreateRegistry();
             registry.ScanAssembly(Assembly.GetExecutingAssembly());
             return registry;
         }
+
     }
 }

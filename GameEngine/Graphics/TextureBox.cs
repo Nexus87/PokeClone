@@ -1,8 +1,10 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GameEngine.Registry;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace GameEngine.Graphics
 {
+    [GameComponentAttribute]
     public class TextureBox : AbstractGraphicComponent
     {
         private ITexture2D image;

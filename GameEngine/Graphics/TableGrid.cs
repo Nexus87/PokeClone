@@ -1,9 +1,11 @@
-﻿using GameEngine.Utils;
+﻿using GameEngine.Registry;
+using GameEngine.Utils;
 using Microsoft.Xna.Framework;
 using System;
 
 namespace GameEngine.Graphics
 {
+    [GameComponentAttribute(registerType: typeof(ITableGrid))]
     class TableGrid : ITableGrid
     {
         Table<ISelectableGraphicComponent> components;
