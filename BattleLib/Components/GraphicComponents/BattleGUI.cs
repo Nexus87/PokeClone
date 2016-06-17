@@ -8,7 +8,7 @@ using System;
 
 namespace BattleLib.GraphicComponents
 {
-    [GameComponentAttribute(RegisterType=typeof(IGUIService), SingleInstance=true)]
+    [GameTypeAttribute(RegisterType=typeof(IGUIService), SingleInstance=true)]
     public class BattleGUI : IGUIService
     {
         private Dialog attackFrame;

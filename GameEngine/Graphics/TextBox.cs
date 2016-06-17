@@ -5,7 +5,7 @@ using System;
 
 namespace GameEngine.Graphics
 {
-    [GameComponentAttribute]
+    [GameTypeAttribute]
     public class TextBox : AbstractGraphicComponent, ITextGraphicComponent
     {
         private string text = "";

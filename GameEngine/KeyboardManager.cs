@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace GameEngine
 {
-    [GameComponentAttribute(registerType: typeof(IKeyboardManager))]
+    [GameTypeAttribute(registerType: typeof(IKeyboardManager))]
     internal class KeyboardManager : IKeyboardManager
     {
         private KeyboardState currentState;

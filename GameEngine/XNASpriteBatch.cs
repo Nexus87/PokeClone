@@ -12,7 +12,7 @@ namespace GameEngine
     /// This class is a wrapper around XNAs SpriteBatch class, with the only difference that
     /// it uses ISpriteFont instead of a SpriteFont
     /// </remarks>
-    [GameComponentAttribute(RegisterType=typeof(ISpriteBatch))]
+    [GameTypeAttribute(RegisterType=typeof(ISpriteBatch))]
     sealed class XNASpriteBatch : SpriteBatch, ISpriteBatch
     {
         public XNASpriteBatch(GraphicsDevice device) : base(device){ }

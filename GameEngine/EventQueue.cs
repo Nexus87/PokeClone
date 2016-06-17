@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace GameEngine
 {
-    [GameComponentAttribute(typeof(IEventQueue), true)]
+    [GameTypeAttribute(typeof(IEventQueue), true)]
     class EventQueue : IGameComponent, IEventQueue
     {
         bool eventDispatched = false;

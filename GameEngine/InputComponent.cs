@@ -16,7 +16,7 @@ namespace GameEngine
         Back
     }
 
-    [GameComponentAttribute(SingleInstance=true)]
+    [GameTypeAttribute(SingleInstance=true)]
     class InputComponent : IGameComponent
     {
         IReadOnlyDictionary<Keys, CommandKeys> keyMap;

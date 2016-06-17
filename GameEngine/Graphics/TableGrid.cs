@@ -5,7 +5,7 @@ using System;
 
 namespace GameEngine.Graphics
 {
-    [GameComponentAttribute(registerType: typeof(ITableGrid))]
+    [GameTypeAttribute(registerType: typeof(ITableGrid))]
     class TableGrid : ITableGrid
     {
         Table<ISelectableGraphicComponent> components;

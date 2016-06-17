@@ -7,7 +7,7 @@ namespace GameEngine.Graphics
 {
     public delegate bool IndexValidator(int row, int column);
 
-    [GameComponentAttribute(registerType: typeof(ITableSelectionModel))]
+    [GameTypeAttribute(registerType: typeof(ITableSelectionModel))]
     public class TableSingleSelectionModel : ITableSelectionModel
     {
         private Tuple<int, int> currentSelection = new Tuple<int, int>(0, 0);

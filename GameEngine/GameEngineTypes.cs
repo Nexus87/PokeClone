@@ -1,4 +1,5 @@
 ﻿using GameEngine.Graphics;
+using GameEngine.Registry;
 using GameEngine.Utils;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ namespace GameEngine
             BorderTexture
         }
 
-        public static void Register(IGameRegistry registry, GraphicComponentFactory factory)
+        public static void Register(IGameTypeRegistry registry, GraphicComponentFactory factory)
         {
             registry.RegisterParameter(ResourceKeys.PixelTexture, factory.Pixel);
             registry.RegisterParameter(ResourceKeys.CupTexture, factory.Cup);

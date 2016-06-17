@@ -1,4 +1,5 @@
 ﻿using GameEngine.Graphics.GUI;
+using GameEngine.Registry;
 using GameEngine.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -18,7 +19,7 @@ namespace GameEngine.Graphics
         internal ITexture2D DefaultBorderTexture { get; set; }
         internal ITexture2D Pixel { get { return pixel; } }
         internal ITexture2D Cup { get; set; }
-        public readonly IGameRegistry registry = new AutofacGameRegistry();
+        public readonly IGameTypeRegistry registry = new AutofacGameTypeRegistry();
 
         public GraphicComponentFactory(Configuration config, PokeEngine game)
         {

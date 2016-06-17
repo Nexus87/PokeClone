@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameEngine
+namespace GameEngine.Registry
 {
     public class TypeNotRegisteredException : Exception {
         public TypeNotRegisteredException(string message, Exception innerException) :
@@ -14,11 +14,11 @@ namespace GameEngine
         { }
     }
 
-    public interface IGameRegistry
+    public interface IGameTypeRegistry
     {
         void ScanAssembly(Assembly assembly);
-        void RegisterType<T>(Func<IGameRegistry, T> creatorFunc);
-        void RegisterTypeAs<T, S>(Func<IGameRegistry, T> creatorFunc);
+        void RegisterType<T>(Func<IGameTypeRegistry, T> creatorFunc);
+        void RegisterTypeAs<T, S>(Func<IGameTypeRegistry, T> creatorFunc);
         void RegisterType<T>();
         void RegisterTypeAs<T, S>();
         void RegisterGenericTypeAs(Type T, Type S);

@@ -4,7 +4,7 @@ using System;
 
 namespace GameEngine.Graphics.GUI
 {
-    [GameComponentAttribute]
+    [GameTypeAttribute]
     public class MessageBox : ForwardingGraphicComponent<ITextGraphicContainer>, IWidget
     {
         private ITextGraphicContainer textBox;

@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace GameEngine.Graphics
 {
-    [GameComponentAttribute]
+    [GameTypeAttribute]
     public class TextureBox : AbstractGraphicComponent
     {
         private ITexture2D image;

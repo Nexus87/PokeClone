@@ -6,7 +6,7 @@ using System;
 
 namespace GameEngine.Graphics
 {
-    [GameComponentAttribute]
+    [GameTypeAttribute]
     [DefaultParameter("borderTexture", GameEngineTypes.ResourceKeys.BorderTexture)]
     public class Dialog : ForwardingGraphicComponent<Container>, IWidget
     {

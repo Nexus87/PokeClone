@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace BattleLib.GraphicComponents
 {
-    [GameComponentAttribute]
+    [GameTypeAttribute]
     [DefaultParameter("pokemon", BattleLibTypes.ResourceKeys.PlayerPokemonWrapper)]
     public class AttackModel : SingleDimensionTableModel<Move>
     {

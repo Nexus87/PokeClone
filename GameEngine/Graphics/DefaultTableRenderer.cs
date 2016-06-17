@@ -4,7 +4,7 @@ using System;
 
 namespace GameEngine.Graphics
 {
-    [GameComponentAttribute(registerType: typeof(ITableRenderer<>))]
+    [GameTypeAttribute(registerType: typeof(ITableRenderer<>))]
     public class DefaultTableRenderer<T> : ITableRenderer<T>
     {
         Table<ISelectableTextComponent> boxes = new Table<ISelectableTextComponent>();
@@ -12,7 +12,7 @@ namespace GameEngine.Graphics
         public string DefaultString { get; set; }
 
 
-        public DefaultTableRenderer(IGameRegistry registry)
+        public DefaultTableRenderer(IGameTypeRegistry registry)
         {
             this.registry = registry;
             DefaultString = "";
@@ -50,6 +50,6 @@ namespace GameEngine.Graphics
         }
 
 
-        public IGameRegistry registry { get; set; }
+        public IGameTypeRegistry registry { get; set; }
     }
 }

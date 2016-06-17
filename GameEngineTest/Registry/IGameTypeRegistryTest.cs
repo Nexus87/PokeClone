@@ -10,25 +10,25 @@ using System.Threading.Tasks;
 
 namespace GameEngineTest.Registry
 {
-    [GameComponentAttribute]
+    [GameTypeAttribute]
     public class SimpleType { }
 
     public interface TestInterface{}
 
-    [GameComponentAttribute(RegisterType= typeof(TestInterface))]
+    [GameTypeAttribute(RegisterType= typeof(TestInterface))]
     public class ImplementingClass : TestInterface{}
 
-    [GameComponentAttribute(singleInstance: true)]
+    [GameTypeAttribute(singleInstance: true)]
     public class SingleTestType
     {
         public static int counter = 0;
         public SingleTestType() { counter++; }
     }
 
-    [GameComponentAttribute]
+    [GameTypeAttribute]
     public class GenericClass<T> { }
 
-    [GameComponentAttribute]
+    [GameTypeAttribute]
     [DefaultParameter("parameter", "key")]
     public class ClassWithDefaultParameters
     {
@@ -40,7 +40,7 @@ namespace GameEngineTest.Registry
         public string parameter { get; set; }
     }
 
-    [GameComponentAttribute]
+    [GameTypeAttribute]
     [DefaultParameter("parameter1", "Key")]
     [DefaultParameter("parameter2", 10)]
     public class ClassWithMulitpleDefaultParameters
@@ -54,15 +54,15 @@ namespace GameEngineTest.Registry
         }
     }
 
-    [GameComponentAttribute]
+    [GameTypeAttribute]
     public class ParentClassWithAttribute { }
     public class InheritedClassWithoutAttribute : ParentClassWithAttribute { }
 
 
-    [GameComponentAttribute]
+    [GameTypeAttribute]
     public class OtherImplementingType : TestInterface { }
 
-    [GameComponentAttribute]
+    [GameTypeAttribute]
     [DefaultParameterType("instance", typeof(OtherImplementingType))]
     public class ClassWithDefaultParameterType
     {
@@ -72,9 +72,9 @@ namespace GameEngineTest.Registry
             this.instance = instance;
         }
     }
-    public abstract class IGameRegistryTest
+    public abstract class IGameTypeRegistryTest
     {
-        protected abstract IGameRegistry CreateRegistry();
+        protected abstract IGameTypeRegistry CreateRegistry();
 
         [Test]
         public void ScanAssembly_SimpleComponent_CanResolveComponent()
@@ -171,7 +171,7 @@ namespace GameEngineTest.Registry
             Assert.IsInstanceOf<OtherImplementingType>(resolvedInstance.instance);
         }
 
-        private IGameRegistry CreateRegistryAndScan()
+        private IGameTypeRegistry CreateRegistryAndScan()
         {
             var registry = CreateRegistry();
             registry.ScanAssembly(Assembly.GetExecutingAssembly());

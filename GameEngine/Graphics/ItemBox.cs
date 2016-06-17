@@ -4,7 +4,7 @@ using System;
 
 namespace GameEngine.Graphics
 {
-    [GameComponentAttribute]
+    [GameTypeAttribute]
     [DefaultParameter("arrowTexture", GameEngineTypes.ResourceKeys.ArrowTexture)]
     internal class ItemBox : AbstractGraphicComponent, ISelectableTextComponent
     {

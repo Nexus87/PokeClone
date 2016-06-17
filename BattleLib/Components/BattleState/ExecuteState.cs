@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace BattleLib.Components.BattleState
 {
-    [GameComponentAttribute]
+    [GameTypeAttribute]
     public class ExecuteState : AbstractState
     {
         private ICommandScheduler scheduler;

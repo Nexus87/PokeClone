@@ -5,6 +5,7 @@ using BattleLib.GraphicComponents;
 using GameEngine;
 using GameEngine.Graphics;
 using GameEngine.Graphics.GUI;
+using GameEngine.Registry;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,7 @@ namespace BattleLib
             PlayerPokemonWrapper
         }
 
-        public static void RegisterTypes(IGameRegistry registry)
+        public static void RegisterTypes(IGameTypeRegistry registry)
         {
             registry.ScanAssembly(Assembly.GetExecutingAssembly());
 

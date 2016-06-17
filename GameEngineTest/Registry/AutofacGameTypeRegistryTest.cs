@@ -1,4 +1,5 @@
 ﻿using GameEngine;
+using GameEngine.Registry;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace GameEngineTest.Registry
 {
-    public class AutofacGameRegistryTest : IGameRegistryTest
+    public class AutofacGameTypeRegistryTest : IGameTypeRegistryTest
     {
-        protected override IGameRegistry CreateRegistry()
+        protected override IGameTypeRegistry CreateRegistry()
         {
-            return new AutofacGameRegistry();
+            return new AutofacGameTypeRegistry();
         }
     }
 }

@@ -13,12 +13,9 @@ namespace BattleLib.Components.BattleState
         Execute
     }
 
-    [GameComponentAttribute(RegisterType=typeof(IBattleStateService), SingleInstance=true)]
+    [GameTypeAttribute(RegisterType=typeof(IBattleStateService), SingleInstance=true)]
     [DefaultParameter("player", BattleLibTypes.ResourceKeys.PlayerId)]
     [DefaultParameter("ai", BattleLibTypes.ResourceKeys.AIId)]
-    [DefaultParameterType("actionState", typeof(WaitForActionState))]
-    [DefaultParameterType("characterSetState", typeof(WaitForCharState))]
-    [DefaultParameterType("executionState", typeof(ExecuteState))]
     public class BattleStateComponent : GameEngine.IGameComponent, IBattleStateService
     {
         private IBattleState currentState;
@@ -27,7 +24,9 @@ namespace BattleLib.Components.BattleState
 
         private IEventCreator eventCreator;
 
-        public BattleStateComponent(ClientIdentifier player, ClientIdentifier ai, IBattleState actionState, IBattleState characterSetState, IBattleState executionState, IEventCreator eventCreator)
+        public BattleStateComponent(ClientIdentifier player, ClientIdentifier ai, WaitForActionState actionState, WaitForCharState characterSetState, ExecuteState executionState, IEventCreator eventCreator) :
+            this(player, ai, (IBattleState)actionState, characterSetState, executionState, eventCreator) { }
+        internal BattleStateComponent(ClientIdentifier player, ClientIdentifier ai, IBattleState actionState, IBattleState characterSetState, IBattleState executionState, IEventCreator eventCreator)
         {
             actionState.CheckNull("actionState");
             characterSetState.CheckNull("characterSetState");

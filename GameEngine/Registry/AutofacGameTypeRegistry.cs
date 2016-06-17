@@ -8,9 +8,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace GameEngine
+namespace GameEngine.Registry
 {
-    internal class AutofacGameRegistry : IGameRegistry
+    internal class AutofacGameTypeRegistry : IGameTypeRegistry
     {
         private IContainer container;
         private ContainerBuilder builder = new ContainerBuilder();
@@ -50,7 +50,7 @@ namespace GameEngine
             return container.Resolve<T>(parameterList);
         }
 
-        public void RegisterType<T>(Func<IGameRegistry, T> creatorFunc)
+        public void RegisterType<T>(Func<IGameTypeRegistry, T> creatorFunc)
         {
             RegisterTypeAs<T, T>(creatorFunc);
         }
@@ -71,7 +71,7 @@ namespace GameEngine
             RegisterGenericTypeAs(T, T);
         }
 
-        public void RegisterTypeAs<T, S>(Func<IGameRegistry, T> creatorFunc)
+        public void RegisterTypeAs<T, S>(Func<IGameTypeRegistry, T> creatorFunc)
         {
             builder.Register(c => creatorFunc(this)).As<S>();
         }
@@ -79,7 +79,7 @@ namespace GameEngine
         public void ScanAssembly(Assembly assembly)
         {
             var types = assembly.GetTypes().
-                Where(t => Attribute.IsDefined(t, typeof(GameComponentAttribute), false));
+                Where(t => Attribute.IsDefined(t, typeof(GameTypeAttribute), false));
 
             foreach (var t in types)
                 RegistertTypeWithAttribute(t);
@@ -98,7 +98,7 @@ namespace GameEngine
         private void SetAdditionalCondition<T, T2, T3>(Type t, IRegistrationBuilder<T, T2, T3> registrationBuilder)
             where T2 : ReflectionActivatorData
         {
-            var attribute = t.GetCustomAttribute<GameComponentAttribute>();
+            var attribute = t.GetCustomAttribute<GameTypeAttribute>();
 
             if (attribute.RegisterType != null)
                 registrationBuilder = registrationBuilder.As(attribute.RegisterType);

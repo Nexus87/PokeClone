@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 
 namespace GameEngine.Graphics
 {
-    [GameComponentAttribute(registerType: typeof(ITextGraphicContainer))]
+    [GameTypeAttribute(registerType: typeof(ITextGraphicContainer))]
     public class MultlineTextBox : AbstractGraphicComponent, ITextGraphicContainer
     {
         private string text;

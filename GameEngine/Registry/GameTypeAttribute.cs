@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 namespace GameEngine.Registry
 {
     [AttributeUsage(AttributeTargets.Class)]
-    public class GameComponentAttribute : Attribute
+    public class GameTypeAttribute : Attribute
     {
-        public GameComponentAttribute(Type registerType = null, bool singleInstance = false)
+        public GameTypeAttribute(Type registerType = null, bool singleInstance = false)
         {
             RegisterType = registerType;
             SingleInstance = singleInstance;
