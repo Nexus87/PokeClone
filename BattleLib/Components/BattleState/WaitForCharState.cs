@@ -1,43 +1,43 @@
 ﻿using Base;
 using Base.Data;
+using GameEngine.Registry;
 using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BattleLib.Components.BattleState
 {
+    [GameComponentAttribute]
     public class WaitForCharState : AbstractState
     {
-        IEventCreator eventCreator;
+        private IEventCreator eventCreator;
 
-        int clientsLeft;
-        Dictionary<ClientIdentifier, Pokemon> clients = new Dictionary<ClientIdentifier, Pokemon>();
+        private int clientsLeft;
+        private Dictionary<ClientIdentifier, Pokemon> clients = new Dictionary<ClientIdentifier, Pokemon>();
+
+        public WaitForCharState(IEventCreator eventCreator)
+        {
+            this.eventCreator = eventCreator;
+        }
+
+        public override BattleStates State
+        {
+            get { return BattleStates.WaitForPokemon; }
+        }
 
         public override void Init(BattleData data)
         {
             IsDone = false;
 
-            clients =  data.Clients
-                .Where( id => NeedsPokemon(data, id))
-                .ToDictionary( id => id, id => (Pokemon) null);
+            clients = data.Clients
+                .Where(id => NeedsPokemon(data, id))
+                .ToDictionary(id => id, id => (Pokemon)null);
 
             clientsLeft = clients.Count;
 
             if (clientsLeft == 0)
                 IsDone = true;
         }
-
-        private bool NeedsPokemon(BattleData data, ClientIdentifier id)
-        {
-             PokemonWrapper pkmn = data.GetPokemon(id);
-             return pkmn.Pokemon == null || pkmn.Condition == StatusCondition.KO;
-        }
-        
-        public WaitForCharState(IEventCreator eventCreator)
-        {
-            this.eventCreator = eventCreator;
-        }
-
 
         public override void Update(BattleData data)
         {
@@ -66,9 +66,10 @@ namespace BattleLib.Components.BattleState
             clientsLeft--;
         }
 
-        public override BattleStates State
+        private bool NeedsPokemon(BattleData data, ClientIdentifier id)
         {
-            get { return BattleStates.WaitForPokemon; }
+            PokemonWrapper pkmn = data.GetPokemon(id);
+            return pkmn.Pokemon == null || pkmn.Condition == StatusCondition.KO;
         }
     }
 }

@@ -1,19 +1,25 @@
 ﻿using BattleLib.Components.BattleState.Commands;
-using System;
+using GameEngine.Registry;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace BattleLib.Components.BattleState
 {
+    [GameComponentAttribute]
     public class ExecuteState : AbstractState
     {
-        ICommandScheduler scheduler;
-        CommandExecuter executer;
+        private ICommandScheduler scheduler;
+        private CommandExecuter executer;
 
         public ExecuteState(ICommandScheduler scheduler, CommandExecuter executer)
         {
             this.scheduler = scheduler;
             this.executer = executer;
+        }
+
+        public override BattleStates State
+        {
+            get { return BattleStates.Execute; }
         }
 
         public override void Init(BattleData data)
@@ -24,10 +30,10 @@ namespace BattleLib.Components.BattleState
         public override void Update(BattleData data)
         {
             executer.Data = data;
-            
+
             List<ICommand> commands = ScheduleCommands(data);
             commands.ForEach(c => c.Execute(executer));
-            
+
             data.ClearCommands();
             IsDone = true;
         }
@@ -37,11 +43,6 @@ namespace BattleLib.Components.BattleState
             scheduler.ClearCommands();
             scheduler.AppendCommands(data.Commands);
             return scheduler.ScheduleCommands().ToList();
-        }
-
-        public override BattleStates State
-        {
-            get { return BattleStates.Execute; }
         }
     }
 }

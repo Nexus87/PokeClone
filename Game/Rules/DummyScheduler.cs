@@ -1,9 +1,11 @@
 ﻿using BattleLib.Components.BattleState;
 using BattleLib.Components.BattleState.Commands;
+using GameEngine.Registry;
 using System.Collections.Generic;
 
 namespace PokemonGame.Rules
 {
+    [GameComponentAttribute(RegisterType=typeof(ICommandScheduler))]
     public class DummyScheduler : ICommandScheduler
     {
         private List<ICommand> commands = new List<ICommand>();

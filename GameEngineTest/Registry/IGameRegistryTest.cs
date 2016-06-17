@@ -58,6 +58,20 @@ namespace GameEngineTest.Registry
     public class ParentClassWithAttribute { }
     public class InheritedClassWithoutAttribute : ParentClassWithAttribute { }
 
+
+    [GameComponentAttribute]
+    public class OtherImplementingType : TestInterface { }
+
+    [GameComponentAttribute]
+    [DefaultParameterType("instance", typeof(OtherImplementingType))]
+    public class ClassWithDefaultParameterType
+    {
+        public TestInterface instance;
+        public ClassWithDefaultParameterType(TestInterface instance)
+        {
+            this.instance = instance;
+        }
+    }
     public abstract class IGameRegistryTest
     {
         protected abstract IGameRegistry CreateRegistry();
@@ -146,6 +160,15 @@ namespace GameEngineTest.Registry
             var registry = CreateRegistryAndScan();
 
             Assert.Throws<TypeNotRegisteredException>(() => registry.ResolveType<InheritedClassWithoutAttribute>());
+        }
+
+        [Test]
+        public void ScanAssembly_ClassWithDefaultParameterType_ResolvedWithGivenType()
+        {
+            var registry = CreateRegistryAndScan();
+
+            var resolvedInstance = registry.ResolveType<ClassWithDefaultParameterType>();
+            Assert.IsInstanceOf<OtherImplementingType>(resolvedInstance.instance);
         }
 
         private IGameRegistry CreateRegistryAndScan()

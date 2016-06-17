@@ -1,6 +1,7 @@
 ﻿using Base;
 using Base.Data;
 using Base.Rules;
+using GameEngine.Registry;
 using GameEngine.Utils;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace PokemonGame.Rules
 {
+    [GameComponentAttribute(RegisterType=typeof(IMoveEffectCalculator))]
     public class DefaultMoveEffectCalculator : IMoveEffectCalculator
     {
         private IBattlePokemon source;

@@ -5,6 +5,7 @@ using GameEngine;
 using GameEngine.Graphics;
 using PokemonGame.Rules;
 using System;
+using System.Reflection;
 
 namespace PokemonGame
 {
@@ -21,13 +22,13 @@ namespace PokemonGame
         {
             var config = new Configuration();
             var calculator = new DefaultMoveEffectCalculator(new DummyBattleRules());
-            var rules = new RulesSet(new DummyBattleRules(), new DummyPokemonRules(), new DummyTable(), calculator);
 
             var engine = new PokeEngine(config);
             var factory = new GraphicComponentFactory(config, engine);
+            factory.registry.ScanAssembly(Assembly.GetExecutingAssembly());
 
             engine.ShowGUI();
-            engine.AddGameComponent(new InitComponent(config, engine, engine.EventQueue, factory, rules, new DummyScheduler()));
+            engine.AddGameComponent(new InitComponent(config, engine, engine.EventQueue, factory, calculator, new DummyScheduler()));
 
             engine.Run();
         }

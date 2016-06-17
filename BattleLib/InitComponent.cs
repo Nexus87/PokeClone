@@ -15,27 +15,25 @@ namespace BattleLib
         Client player;
         Client ai;
         IPokeEngine engine;
-        EventCreator eventCreator;
+        //EventCreator eventCreator;
         private BattleStateComponent battleState;
         private BattleGraphicController graphic;
         private BattleGUI gui;
 
-        public InitComponent(Configuration config, IPokeEngine game, IEventQueue queue, GraphicComponentFactory factory, RulesSet rules, ICommandScheduler scheduler)
+        public InitComponent(Configuration config, IPokeEngine game, IEventQueue queue, GraphicComponentFactory factory, IMoveEffectCalculator rules, ICommandScheduler scheduler)
         {
-            var playerID = new ClientIdentifier();
-            var aiID = new ClientIdentifier();
-            playerID.Name = "Player";
-            playerID.IsPlayer = false;
+            BattleLibTypes.RegisterTypes(factory.registry);
+            var playerID = factory.registry.GetParameter<ClientIdentifier>(BattleLibTypes.ResourceKeys.PlayerId);
+            var aiID = factory.registry.GetParameter<ClientIdentifier>(BattleLibTypes.ResourceKeys.AIId);
             engine = game;
-
-            aiID.Name = "AI";
-            aiID.IsPlayer = false;
 
             player = new Client(playerID);
             ai = new Client(aiID);
             
-            eventCreator = new EventCreator();
-            SetupBattleState(playerID, aiID, rules, scheduler);
+            //eventCreator = new EventCreator();
+            //SetupBattleState(playerID, aiID, rules, scheduler);
+            battleState = (BattleStateComponent) factory.registry.ResolveType<IBattleStateService>();
+            var eventCreator = (EventCreator) factory.registry.ResolveType<IEventCreator>();
 
             graphic = new BattleGraphicController(game, factory, playerID, aiID);
             gui = new BattleGUI(game, factory, battleState, playerID, aiID);
@@ -54,13 +52,13 @@ namespace BattleLib
         {
         }
 
-        private void SetupBattleState(ClientIdentifier playerID, ClientIdentifier aiID, RulesSet rules, ICommandScheduler scheduler)
+        private void SetupBattleState(ClientIdentifier playerID, ClientIdentifier aiID, IMoveEffectCalculator rules, ICommandScheduler scheduler)
         {
-            var actionState = new WaitForActionState();
-            var characterState = new WaitForCharState(eventCreator);
-            var commandExecutor = new CommandExecuter(rules.MoveCalculator, eventCreator);
-            var executionState = new ExecuteState(scheduler, commandExecutor);
-            battleState = new BattleStateComponent(playerID, aiID, actionState, characterState, executionState, eventCreator);
+            //var actionState = new WaitForActionState();
+            //var characterState = new WaitForCharState(eventCreator);
+            //var commandExecutor = new CommandExecuter(rules, eventCreator);
+            //var executionState = new ExecuteState(scheduler, commandExecutor);
+            //battleState = new BattleStateComponent(playerID, aiID, actionState, characterState, executionState, eventCreator);
         }
         public void Update(GameTime gameTime)
         {

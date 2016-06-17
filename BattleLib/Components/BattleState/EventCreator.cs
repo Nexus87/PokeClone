@@ -1,10 +1,12 @@
 ﻿using Base;
 using Base.Data;
 using BattleLib.GraphicComponents;
+using GameEngine.Registry;
 using System;
 
 namespace BattleLib.Components.BattleState
 {
+    [GameComponentAttribute(RegisterType=typeof(IEventCreator), SingleInstance=true)]
     public class EventCreator : IEventCreator, IBattleEvents
     {
         public void UsingMove(PokemonWrapper source, Move move)

@@ -107,7 +107,24 @@ namespace GameEngine
 
             if (Attribute.IsDefined(t, typeof(DefaultParameterAttribute), false))
                 SetDefaultParameters(t, registrationBuilder);
+            if (Attribute.IsDefined(t, typeof(DefaultParameterTypeAttribute), false))
+                SetDefaultTypeParameters(t, registrationBuilder);
 
+        }
+
+        private void SetDefaultTypeParameters<T, T2, T3>(Type t, IRegistrationBuilder<T, T2, T3> registrationBuilder)
+            where T2 : ReflectionActivatorData
+        {
+            foreach (var attribute in t.GetCustomAttributes<DefaultParameterTypeAttribute>())
+                registrationBuilder.WithParameter(new ResolvedParameter(
+                    (pi, ctx) => pi.Name.Equals(attribute.ParameterName),
+                    (pi, ctx) => ResolveType(attribute.ResolveType)
+                    ));
+        }
+
+        private object ResolveType(Type t)
+        {
+            return container.Resolve(t);
         }
 
         private void SetDefaultParameters<T, T2, T3>(Type t, IRegistrationBuilder<T, T2, T3> registrationBuilder)

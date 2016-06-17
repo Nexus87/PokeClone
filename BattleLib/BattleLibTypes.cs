@@ -8,6 +8,7 @@ using GameEngine.Graphics.GUI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -24,6 +25,8 @@ namespace BattleLib
 
         public static void RegisterTypes(IGameRegistry registry)
         {
+            registry.ScanAssembly(Assembly.GetExecutingAssembly());
+
             registry.RegisterTypeAs<MoveWidget, IMoveWidget>(
                 r => new MoveWidget(
                         new TableWidget<Move>(null, null,

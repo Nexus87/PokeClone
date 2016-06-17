@@ -1,17 +1,25 @@
 ﻿using Base;
 using BattleLib.Components.BattleState.Commands;
+using GameEngine.Registry;
 using GameEngine.Utils;
 using System;
 using System.Collections.Generic;
 
 namespace BattleLib.Components.BattleState
 {
-    internal class WaitForActionState : IBattleState
+    [GameComponentAttribute]
+    public class WaitForActionState : IBattleState
     {
         private int clientCnt;
         private Dictionary<ClientIdentifier, ICommand> commands = new Dictionary<ClientIdentifier, ICommand>();
         public BattleStateComponent BattleState { get; set; }
 
+        public BattleStates State
+        {
+            get { return BattleStates.WaitForAction; }
+        }
+
+        public bool IsDone { get; private set; }
 
         public void SetCharacter(ClientIdentifier id, Pokemon pkmn)
         {
@@ -41,22 +49,10 @@ namespace BattleLib.Components.BattleState
 
             foreach (var c in commands)
                 data.SetCommand(c.Key, c.Value);
-            
+
             commands.Clear();
 
             IsDone = true;
-
-        }
-
-        private void ValidateInput(ClientIdentifier id, Object obj, string varName)
-        {
-            if (!commands.ContainsKey(id))
-                throw new InvalidOperationException("Id " + id.Name + " not found");
-
-            obj.CheckNull(varName);
-
-            if (commands[id] != null)
-                throw new InvalidOperationException(id.Name + " already made a move for this turn.");
         }
 
         public void Init(BattleData data)
@@ -69,12 +65,15 @@ namespace BattleLib.Components.BattleState
             clientCnt = commands.Count;
         }
 
-        public BattleStates State
+        private void ValidateInput(ClientIdentifier id, Object obj, string varName)
         {
-            get { return BattleStates.WaitForAction; }
+            if (!commands.ContainsKey(id))
+                throw new InvalidOperationException("Id " + id.Name + " not found");
+
+            obj.CheckNull(varName);
+
+            if (commands[id] != null)
+                throw new InvalidOperationException(id.Name + " already made a move for this turn.");
         }
-
-
-        public bool IsDone { get; private set; }
     }
 }

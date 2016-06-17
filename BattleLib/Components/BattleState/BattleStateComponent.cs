@@ -1,27 +1,51 @@
 ﻿using Base;
-using Base.Rules;
-using GameEngine;
+using GameEngine.Registry;
 using GameEngine.Utils;
 using Microsoft.Xna.Framework;
 using System;
 
 namespace BattleLib.Components.BattleState
 {
-    public enum BattleStates 
+    public enum BattleStates
     {
         WaitForPokemon,
         WaitForAction,
         Execute
     }
 
-    public class BattleStateComponent : GameEngine.IGameComponent
+    [GameComponentAttribute(RegisterType=typeof(IBattleStateService), SingleInstance=true)]
+    [DefaultParameter("player", BattleLibTypes.ResourceKeys.PlayerId)]
+    [DefaultParameter("ai", BattleLibTypes.ResourceKeys.AIId)]
+    [DefaultParameterType("actionState", typeof(WaitForActionState))]
+    [DefaultParameterType("characterSetState", typeof(WaitForCharState))]
+    [DefaultParameterType("executionState", typeof(ExecuteState))]
+    public class BattleStateComponent : GameEngine.IGameComponent, IBattleStateService
     {
+        private IBattleState currentState;
+
+        private BattleData data;
+
+        private IEventCreator eventCreator;
+
+        public BattleStateComponent(ClientIdentifier player, ClientIdentifier ai, IBattleState actionState, IBattleState characterSetState, IBattleState executionState, IEventCreator eventCreator)
+        {
+            actionState.CheckNull("actionState");
+            characterSetState.CheckNull("characterSetState");
+            executionState.CheckNull("executionState");
+            eventCreator.CheckNull("eventCreator");
+
+            ActionState = actionState;
+            CharacterSetState = characterSetState;
+            ExecutionState = executionState;
+            this.eventCreator = eventCreator;
+            data = new BattleData(player, ai);
+        }
+
         public event EventHandler<StateChangedEventArgs> StateChanged = delegate { };
 
         private IBattleState ActionState { get; set; }
         private IBattleState CharacterSetState { get; set; }
         private IBattleState ExecutionState { get; set; }
-        private IBattleState currentState;
 
         private IBattleState CurrentState
         {
@@ -36,27 +60,9 @@ namespace BattleLib.Components.BattleState
             }
         }
 
-        private BattleData data;
-        private IEventCreator eventCreator;
-
         public PokemonWrapper GetPokemon(ClientIdentifier id)
         {
             return data.GetPokemon(id);
-        }
-
-        
-        public BattleStateComponent(ClientIdentifier player, ClientIdentifier ai, IBattleState actionState, IBattleState characterSetState, IBattleState executionState, IEventCreator eventCreator)
-        {
-            actionState.CheckNull("actionState");
-            characterSetState.CheckNull("characterSetState");
-            executionState.CheckNull("executionState");
-            eventCreator.CheckNull("eventCreator");
-
-            ActionState = actionState;
-            CharacterSetState = characterSetState;
-            ExecutionState = executionState;
-            this.eventCreator = eventCreator;
-            data = new BattleData(player, ai);
         }
 
         public void SetCharacter(ClientIdentifier id, Pokemon pkmn)
@@ -80,6 +86,12 @@ namespace BattleLib.Components.BattleState
             CurrentState.Update(data);
         }
 
+        public void Initialize()
+        {
+            CurrentState = CharacterSetState;
+            CurrentState.Init(data);
+        }
+
         private void SetNextState()
         {
             if (!CurrentState.IsDone)
@@ -96,8 +108,7 @@ namespace BattleLib.Components.BattleState
             CurrentState = nextState;
         }
 
-
-        IBattleState GetNextState(IBattleState current)
+        private IBattleState GetNextState(IBattleState current)
         {
             if (current == ActionState)
                 return ExecutionState;
@@ -105,24 +116,18 @@ namespace BattleLib.Components.BattleState
                 return ActionState;
             else if (current == ExecutionState)
                 return CharacterSetState;
-            
-            throw new InvalidOperationException("Current state is unkown");
-        }
 
-        public void Initialize()
-        {
-            CurrentState = CharacterSetState;
-            CurrentState.Init(data);
+            throw new InvalidOperationException("Current state is unkown");
         }
     }
 
     public class StateChangedEventArgs : EventArgs
     {
-        public BattleStates NewState { get; private set; }
         public StateChangedEventArgs(BattleStates newState)
         {
             NewState = newState;
         }
-    }
 
+        public BattleStates NewState { get; private set; }
+    }
 }

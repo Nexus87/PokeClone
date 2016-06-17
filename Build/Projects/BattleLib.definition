@@ -26,6 +26,7 @@
     <Compile Include="Components\BattleState\ExecuteState.cs" />
     <Compile Include="Components\BattleState\IActionScheduler.cs" />
     <Compile Include="Components\BattleState\IBattleState.cs" />
+    <Compile Include="Components\BattleState\IBattleStateService.cs" />
     <Compile Include="Components\BattleState\IEventCreator.cs" />
     <Compile Include="Components\BattleState\PokemonWrapper.cs" />
     <Compile Include="Components\BattleState\WaitForActionState.cs" />

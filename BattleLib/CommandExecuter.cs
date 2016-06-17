@@ -3,6 +3,7 @@ using Base.Data;
 using Base.Rules;
 using BattleLib.Components.BattleState;
 using BattleLib.Components.BattleState.Commands;
+using GameEngine.Registry;
 using System;
 
 namespace BattleLib
@@ -15,6 +16,7 @@ namespace BattleLib
         VeryEffective
     }
 
+    [GameComponentAttribute]
     public class CommandExecuter
     {
         private IEventCreator eventCreator;
