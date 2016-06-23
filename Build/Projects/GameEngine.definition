@@ -62,6 +62,7 @@
     <Compile Include="IGameComponent.cs" />
     <Compile Include="IInputHandler.cs" />
     <Compile Include="IKeyboardManager.cs" />
+    <Compile Include="IModule.cs" />
     <Compile Include="InputComponent.cs" />
     <Compile Include="IPokeEngine.cs" />
     <Compile Include="IScreen.cs" />
@@ -78,8 +79,7 @@
     <Compile Include="Registry\GameTypeAttribute.cs" />
     <Compile Include="Registry\IGameTypeRegistry.cs" />
     <Compile Include="Registry\IModuleRegistry.cs" />
-    <Compile Include="Registry\ModuleInitAttribute.cs" />
-    <Compile Include="Registry\ModuleRegistrationAttribute.cs" />
+    <Compile Include="Registry\Module.cs" />
     <Compile Include="TextureProvider.cs" />
     <Compile Include="Utils\DefaultTextSplitter.cs" />
     <Compile Include="Utils\Extensions.cs" />
