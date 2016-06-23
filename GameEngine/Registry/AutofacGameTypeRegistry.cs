@@ -158,5 +158,28 @@ namespace GameEngine.Registry
         {
             return (T)parameters[resourceKey];
         }
+
+
+        public void RegisterAsService<T, S>()
+        {
+            builder.RegisterType<T>().As<S>().SingleInstance();
+            container = null;
+        }
+
+        public void RegisterGameComponentForModule<T>(string moduleName) where T : GameEngine.IGameComponent
+        {
+            builder.RegisterType<T>()
+                .As<GameEngine.IGameComponent>().
+                As<T>().
+                SingleInstance().
+                PreserveExistingDefaults();
+        }
+
+        public IEnumerable<IGameComponent> CreateGameComponents(string moduleName)
+        {
+            if (container == null)
+                container = builder.Build();
+            return container.Resolve<IEnumerable<GameEngine.IGameComponent>>();
+        }
     }
 }

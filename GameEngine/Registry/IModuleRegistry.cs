@@ -10,5 +10,6 @@ namespace GameEngine.Registry
     public interface IModuleRegistry
     {
         void RegisterModule(Assembly moduleAssembly);
+        IReadOnlyList<string> RegisteredModuleNames { get; }
     }
 }

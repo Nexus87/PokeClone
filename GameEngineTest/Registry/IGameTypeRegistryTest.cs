@@ -1,5 +1,6 @@
 ﻿using GameEngine;
 using GameEngine.Registry;
+using Microsoft.Xna.Framework;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -72,9 +73,25 @@ namespace GameEngineTest.Registry
             this.instance = instance;
         }
     }
+
+    public class GameComponentClass : GameEngine.IGameComponent
+    {
+        public static int instances;
+        public GameComponentClass() { instances++; }
+        public void Initialize() { throw new NotImplementedException(); }
+        public void Update(GameTime time) { throw new NotImplementedException(); }
+    }
+
     public abstract class IGameTypeRegistryTest
     {
         protected abstract IGameTypeRegistry CreateRegistry();
+
+        [SetUp]
+        public void Setup()
+        {
+            SingleTestType.counter = 0;
+            GameComponentClass.instances = 0;
+        }
 
         [Test]
         public void ScanAssembly_SimpleComponent_CanResolveComponent()
@@ -171,6 +188,44 @@ namespace GameEngineTest.Registry
             Assert.IsInstanceOf<OtherImplementingType>(resolvedInstance.instance);
         }
 
+        [Test]
+        public void RegisterAsService_SingeType_ResolveCreatesOnlyOneInstance()
+        {
+            var registry = CreateRegistry();
+
+            registry.RegisterAsService<SingleTestType, SingleTestType>();
+
+            registry.ResolveType<SingleTestType>();
+            registry.ResolveType<SingleTestType>();
+
+            Assert.AreEqual(1, SingleTestType.counter);
+        }
+
+        [Test]
+        public void RegisterGameComponentForModule_GameComponentClass_ResolveCreateOnlyOneInstance()
+        {
+            var registry = CreateRegistry();
+
+            registry.RegisterGameComponentForModule<GameComponentClass>("module");
+
+            registry.ResolveType<GameComponentClass>();
+            registry.ResolveType<GameComponentClass>();
+
+            Assert.AreEqual(1, GameComponentClass.instances);
+        }
+
+        [Test]
+        public void CreateGameComponents_ForValidModuleName_ReturnsGameComponentClass()
+        {
+            var registry = CreateRegistry();
+
+            registry.RegisterGameComponentForModule<GameComponentClass>("module");
+
+            var components = registry.CreateGameComponents("module");
+            var expectedComponent = registry.ResolveType<GameComponentClass>();
+            
+            Assert.True(components.Contains(expectedComponent));
+        }
         private IGameTypeRegistry CreateRegistryAndScan()
         {
             var registry = CreateRegistry();

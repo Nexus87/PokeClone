@@ -1,4 +1,5 @@
-﻿using GameEngine.Registry;
+﻿using GameEngine;
+using GameEngine.Registry;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -9,17 +10,17 @@ using System.Threading.Tasks;
 
 namespace GameEngineTest.Registry
 {
-    [ModuleRegistration("TestModule")]
-    public class TestModule
+    public class TestModule : IModule
     {
         public static bool WasCreated = false;
         public static bool WasCalled = false;
+        public string ModuleName { get { return "TestModule"; } }
         public TestModule()
         {
             WasCreated = true;
         }
-        [ModuleInit]
-        public void Init(IGameTypeRegistry registry)
+
+        public void RegisterTypes(IGameTypeRegistry registry)
         {
             WasCalled = true;
         }
@@ -40,7 +41,7 @@ namespace GameEngineTest.Registry
             
             registry.RegisterModule(Assembly.GetExecutingAssembly());
 
-            Assert.True(TestModule.WasCreated);
+            Assert.True(registry.RegisteredModuleNames.Contains("TestModule"));
         }
 
         [Test]

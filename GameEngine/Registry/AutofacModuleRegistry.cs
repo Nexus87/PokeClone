@@ -10,20 +10,23 @@ namespace GameEngine.Registry
     public class AutofacModuleRegistry : IModuleRegistry
     {
         private IGameTypeRegistry registry = new AutofacGameTypeRegistry();
+        private List<string> registeredModules = new List<string>();
+
         public void RegisterModule(Assembly moduleAssembly)
         {
             foreach (var type in moduleAssembly.GetTypes()
-                .Where(t => Attribute.IsDefined(t, typeof(ModuleRegistrationAttribute))))
+                .Where(t => t.GetInterfaces().Contains(typeof(IModule))))
             {
-                var method = type.GetMethods()
-                    .Where(m => Attribute.IsDefined(m, typeof(ModuleInitAttribute)))
-                    .First();
-
-                method.Invoke(Activator.CreateInstance(type), new object[]{registry});
+                var module = (IModule) Activator.CreateInstance(type);
+                registeredModules.Add(module.ModuleName);
+                module.RegisterTypes(registry);
             }
+        }
 
-                
 
+        public IReadOnlyList<string> RegisteredModuleNames
+        {
+            get { return registeredModules.AsReadOnly(); }
         }
     }
 }

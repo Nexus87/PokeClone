@@ -24,7 +24,10 @@ namespace GameEngine.Registry
         void RegisterGenericTypeAs(Type T, Type S);
         void RegisterGenericType(Type T);
 
-        IEnumerable<IGameComponent> CreateGameComponents();
+        void RegisterAsService<T, S>();
+        void RegisterGameComponentForModule<T>(string moduleName) where T : GameEngine.IGameComponent;
+
+        IEnumerable<IGameComponent> CreateGameComponents(string moduleName);
         T ResolveType<T>();
         T ResolveTypeWithParameters<T>(IDictionary<Type, object> parameters);
 
