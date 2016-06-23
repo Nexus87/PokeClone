@@ -226,6 +226,18 @@ namespace GameEngineTest.Registry
             
             Assert.True(components.Contains(expectedComponent));
         }
+
+        [Test]
+        public void CreateGameComponents_CreateComponentsForUnknownModule_ReturnsEmptyList()
+        {
+            var registry = CreateRegistry();
+
+            registry.RegisterGameComponentForModule<GameComponentClass>("module");
+
+            var components = registry.CreateGameComponents("m");
+
+            Assert.IsEmpty(components);
+        }
         private IGameTypeRegistry CreateRegistryAndScan()
         {
             var registry = CreateRegistry();

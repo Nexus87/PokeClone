@@ -168,10 +168,10 @@ namespace GameEngine.Registry
 
         public void RegisterGameComponentForModule<T>(string moduleName) where T : GameEngine.IGameComponent
         {
-            builder.RegisterType<T>()
-                .As<GameEngine.IGameComponent>().
+            builder.RegisterType<T>().
                 As<T>().
                 SingleInstance().
+                Keyed<GameEngine.IGameComponent>(moduleName).
                 PreserveExistingDefaults();
         }
 
@@ -179,7 +179,7 @@ namespace GameEngine.Registry
         {
             if (container == null)
                 container = builder.Build();
-            return container.Resolve<IEnumerable<GameEngine.IGameComponent>>();
+            return container.ResolveKeyed<IEnumerable<GameEngine.IGameComponent>>(moduleName);
         }
     }
 }
