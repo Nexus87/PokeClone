@@ -14,7 +14,6 @@ namespace GameEngineTest
     [TestFixture]
     public class InputComponentTest
     {
-        Mock<Game> gameMock = new Mock<Game>();
         readonly IReadOnlyList<Keys> keys = new List<Keys> { Keys.Up, Keys.Down, Keys.Left };
         readonly IReadOnlyDictionary<Keys, CommandKeys> map = new Dictionary<Keys, CommandKeys>
         {
@@ -31,7 +30,7 @@ namespace GameEngineTest
         {
             var handlerMock = new Mock<IInputHandler>();
             var managerMock = CreateInputManagerFake(keys.First());
-            var component = new InputComponent(gameMock.Object, managerMock, map);
+            var component = new InputComponent(managerMock, map);
 
             component.handler = handlerMock.Object;    
 
@@ -45,7 +44,7 @@ namespace GameEngineTest
         {
             var handlerMock = new Mock<IInputHandler>();
             var managerMock = CreateInputManagerFake(keys.First());
-            var component = new InputComponent(gameMock.Object, managerMock, map);
+            var component = new InputComponent(managerMock, map);
 
             component.handler = handlerMock.Object;
 
@@ -60,7 +59,7 @@ namespace GameEngineTest
         {
             var handlerMock = new Mock<IInputHandler>();
             var managerMock = CreateInputManagerFake(keys.ToArray());
-            var component = new InputComponent(gameMock.Object, managerMock, map);
+            var component = new InputComponent(managerMock, map);
 
             component.handler = handlerMock.Object;
 
@@ -76,7 +75,7 @@ namespace GameEngineTest
         {
             var handlerMock = new Mock<IInputHandler>();
             var managerMock = CreateInputManagerFake(keys.ToArray());
-            var component = new InputComponent(gameMock.Object, managerMock, map);
+            var component = new InputComponent(managerMock, map);
 
             component.handler = handlerMock.Object;
 
@@ -94,7 +93,7 @@ namespace GameEngineTest
             // The component should not watch out for D
             var handlerMock = new Mock<IInputHandler>();
             var managerMock = CreateInputManagerFake(Keys.D);
-            var component = new InputComponent(gameMock.Object, managerMock, map);
+            var component = new InputComponent(managerMock, map);
 
             component.handler = handlerMock.Object;
 
@@ -110,7 +109,7 @@ namespace GameEngineTest
 
             var handlerMock = new Mock<IInputHandler>();
             var managerMock = CreateInputManagerFake(Keys.D, Keys.Down);
-            var component = new InputComponent(gameMock.Object, managerMock, map);
+            var component = new InputComponent(managerMock, map);
 
             component.handler = handlerMock.Object;
 

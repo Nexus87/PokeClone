@@ -22,13 +22,13 @@ namespace GameEngine
         internal IInputHandler handler;
         IKeyboardManager manager;
 
-        internal InputComponent(Game game, IKeyboardManager manager, IReadOnlyDictionary<Keys, CommandKeys> keyMap)
+        internal InputComponent(IKeyboardManager manager, IReadOnlyDictionary<Keys, CommandKeys> keyMap)
         {
             this.manager = manager;
             this.keyMap = keyMap;
         }
 
-        public InputComponent(Game game, Configuration config) : this(game, new KeyboardManager(), config.KeyMap) { }
+        public InputComponent(Configuration config) : this(new KeyboardManager(), config.KeyMap) { }
 
         public void Update(GameTime gameTime)
         {

@@ -32,9 +32,8 @@ namespace GameEngine
             registry.RegisterType<ItemBox>(reg => new ItemBox(factory.DefaultArrowTexture, factory.DefaultFont));
             registry.RegisterType<Dialog>(reg => new Dialog(factory.DefaultBorderTexture));
             registry.RegisterType<Line>(reg => new Line(factory.Pixel, factory.Cup));
-            registry.RegisterTypeAs<KeyboardManager, IKeyboardManager>();
             registry.RegisterType<TextureBox>();
-            registry.RegisterTypeAs<MultlineTextBox, ITextGraphicContainer>();
+            registry.RegisterType<MultlineTextBox>();
             registry.RegisterType<MessageBox>();
             registry.RegisterTypeAs(typeof(DefaultTableRenderer<>), typeof(ITableRenderer<>));
             registry.RegisterTypeAs(typeof(DefaultTableModel<>), typeof(ITableModel<>));

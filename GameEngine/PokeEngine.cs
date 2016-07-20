@@ -31,7 +31,7 @@ namespace GameEngine
         {
             config.CheckNull("config");
 
-            input = new InputComponent(this, config);
+            input = new InputComponent(config);
             GUIManager = new GUIManager();
 
             new GraphicsDeviceManager(this);
