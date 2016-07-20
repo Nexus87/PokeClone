@@ -5,7 +5,6 @@ using System.Text.RegularExpressions;
 
 namespace GameEngine.Utils
 {
-    [GameTypeAttribute(RegisterType = typeof(ITextSplitter))]
     public class DefaultTextSplitter : ITextSplitter
     {
         List<string> lines = new List<string>();

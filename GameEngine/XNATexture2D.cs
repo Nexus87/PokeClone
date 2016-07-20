@@ -7,7 +7,6 @@ using System.IO;
 
 namespace GameEngine
 {
-    [GameTypeAttribute(RegisterType = typeof(ITexture2D))]
     public class XNATexture2D : ITexture2D
     {
         private string textureName;

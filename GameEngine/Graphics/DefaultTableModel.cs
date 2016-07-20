@@ -4,7 +4,6 @@ using System;
 
 namespace GameEngine.Graphics
 {
-    [GameTypeAttribute(registerType: typeof(ITableModel<>))]
     public class DefaultTableModel<T> : ITableModel<T>
     {
         private Table<T> items = new Table<T>();

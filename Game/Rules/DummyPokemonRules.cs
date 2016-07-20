@@ -6,7 +6,6 @@ using System.Collections.Generic;
 
 namespace Game.Rules
 {
-    [GameTypeAttribute(RegisterType=typeof(IPokemonRules), SingleInstance=true)]
     class DummyPokemonRules : IPokemonRules
     {
         public Stats GenerateIV()

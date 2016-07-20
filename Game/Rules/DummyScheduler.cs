@@ -5,7 +5,6 @@ using System.Collections.Generic;
 
 namespace PokemonGame.Rules
 {
-    [GameTypeAttribute(RegisterType=typeof(ICommandScheduler))]
     public class DummyScheduler : ICommandScheduler
     {
         private List<ICommand> commands = new List<ICommand>();

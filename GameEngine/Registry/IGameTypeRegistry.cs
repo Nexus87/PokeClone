@@ -16,15 +16,14 @@ namespace GameEngine.Registry
 
     public interface IGameTypeRegistry
     {
-        void ScanAssembly(Assembly assembly);
         void RegisterType<T>(Func<IGameTypeRegistry, T> creatorFunc);
         void RegisterTypeAs<T, S>(Func<IGameTypeRegistry, T> creatorFunc);
         void RegisterType<T>();
         void RegisterTypeAs<T, S>();
-        void RegisterGenericTypeAs(Type T, Type S);
-        void RegisterGenericType(Type T);
-
+        void RegisterType(Type t);
+        void RegisterTypeAs(Type t, Type s);
         void RegisterAsService<T, S>();
+        void RegisterAsService<T, S>(Func<IGameTypeRegistry, T> creatorFunc);
         void RegisterGameComponentForModule<T>(string moduleName) where T : GameEngine.IGameComponent;
 
         IEnumerable<IGameComponent> CreateGameComponents(string moduleName);

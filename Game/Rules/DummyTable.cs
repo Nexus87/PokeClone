@@ -5,7 +5,6 @@ using System;
 
 namespace PokemonGame.Rules
 {
-    [GameTypeAttribute(RegisterType=typeof(ITypeTable))]
     public class DummyTable : ITypeTable
     {
         private readonly int typeCount = Enum.GetNames(typeof(PokemonType)).Length;

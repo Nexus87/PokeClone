@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 
 namespace PokemonGame.Rules
 {
-    [GameTypeAttribute(RegisterType=typeof(IMoveEffectCalculator))]
     public class DefaultMoveEffectCalculator : IMoveEffectCalculator
     {
         private IBattlePokemon source;

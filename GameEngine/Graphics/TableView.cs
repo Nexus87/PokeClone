@@ -16,7 +16,6 @@ namespace GameEngine.Graphics
         public T SelectedData { get; private set; }
     }
 
-    [GameTypeAttribute(registerType: typeof(ITableView<>))]
     public class TableView<T> : AbstractGraphicComponent, ITableView<T>
     {
         ITableModel<T> model;

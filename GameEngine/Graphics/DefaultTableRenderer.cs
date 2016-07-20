@@ -4,7 +4,6 @@ using System;
 
 namespace GameEngine.Graphics
 {
-    [GameTypeAttribute(registerType: typeof(ITableRenderer<>))]
     public class DefaultTableRenderer<T> : ITableRenderer<T>
     {
         Table<ISelectableTextComponent> boxes = new Table<ISelectableTextComponent>();

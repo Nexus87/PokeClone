@@ -7,7 +7,6 @@ using System.Linq;
 
 namespace BattleLib.Components.BattleState
 {
-    [GameTypeAttribute]
     public class WaitForCharState : AbstractState
     {
         private IEventCreator eventCreator;

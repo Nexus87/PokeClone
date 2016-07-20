@@ -6,8 +6,6 @@ using System;
 
 namespace GameEngine.Graphics
 {
-    [GameTypeAttribute]
-    [DefaultParameter("borderTexture", GameEngineTypes.ResourceKeys.BorderTexture)]
     public class Dialog : ForwardingGraphicComponent<Container>, IWidget
     {
         private TextureBox border;

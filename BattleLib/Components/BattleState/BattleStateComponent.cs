@@ -13,9 +13,6 @@ namespace BattleLib.Components.BattleState
         Execute
     }
 
-    [GameTypeAttribute(RegisterType=typeof(IBattleStateService), SingleInstance=true)]
-    [DefaultParameter("player", BattleLibTypes.ResourceKeys.PlayerId)]
-    [DefaultParameter("ai", BattleLibTypes.ResourceKeys.AIId)]
     public class BattleStateComponent : GameEngine.IGameComponent, IBattleStateService
     {
         private IBattleState currentState;

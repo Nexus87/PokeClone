@@ -76,75 +76,6 @@ namespace GameEngine.Registry
             builder.Register(c => creatorFunc(this)).As<S>();
         }
 
-        public void ScanAssembly(Assembly assembly)
-        {
-            var types = assembly.GetTypes().
-                Where(t => Attribute.IsDefined(t, typeof(GameTypeAttribute), false));
-
-            foreach (var t in types)
-                RegistertTypeWithAttribute(t);
-        }
-
-        private void RegistertTypeWithAttribute(Type t)
-        {
-            if (t.IsGenericType)
-                SetAdditionalCondition(t, builder.RegisterGeneric(t));
-            else
-                SetAdditionalCondition(t, builder.RegisterType(t));
-
-            container = null;
-        }
-
-        private void SetAdditionalCondition<T, T2, T3>(Type t, IRegistrationBuilder<T, T2, T3> registrationBuilder)
-            where T2 : ReflectionActivatorData
-        {
-            var attribute = t.GetCustomAttribute<GameTypeAttribute>();
-
-            if (attribute.RegisterType != null)
-                registrationBuilder = registrationBuilder.As(attribute.RegisterType);
-            if (attribute.SingleInstance)
-                registrationBuilder.SingleInstance();
-
-            if (Attribute.IsDefined(t, typeof(DefaultParameterAttribute), false))
-                SetDefaultParameters(t, registrationBuilder);
-            if (Attribute.IsDefined(t, typeof(DefaultParameterTypeAttribute), false))
-                SetDefaultTypeParameters(t, registrationBuilder);
-
-        }
-
-        private void SetDefaultTypeParameters<T, T2, T3>(Type t, IRegistrationBuilder<T, T2, T3> registrationBuilder)
-            where T2 : ReflectionActivatorData
-        {
-            foreach (var attribute in t.GetCustomAttributes<DefaultParameterTypeAttribute>())
-                registrationBuilder.WithParameter(new ResolvedParameter(
-                    (pi, ctx) => pi.Name.Equals(attribute.ParameterName),
-                    (pi, ctx) => ResolveType(attribute.ResolveType)
-                    ));
-        }
-
-        private object ResolveType(Type t)
-        {
-            return container.Resolve(t);
-        }
-
-        private void SetDefaultParameters<T, T2, T3>(Type t, IRegistrationBuilder<T, T2, T3> registrationBuilder)
-            where T2 : ReflectionActivatorData
-        {
-            foreach (var attribute in t.GetCustomAttributes<DefaultParameterAttribute>())
-                registrationBuilder.WithParameter(new ResolvedParameter(
-                    (pi, ctx) =>  pi.Name.Equals(attribute.ParameterName), 
-                    (pi, ctx) => GetParameter(attribute.ResourceKey)
-                    ));
-        }
-
-        private object GetParameter(object resourceKey)
-        {
-            if (!parameters.ContainsKey(resourceKey))
-                return null;
-
-            return parameters[resourceKey];
-        }
-
 
         private readonly Dictionary<object, object> parameters = new Dictionary<object, object>();
 
@@ -180,6 +111,29 @@ namespace GameEngine.Registry
             if (container == null)
                 container = builder.Build();
             return container.ResolveKeyed<IEnumerable<GameEngine.IGameComponent>>(moduleName);
+        }
+
+
+        public void RegisterType(Type t)
+        {
+            if (t.IsGenericType)
+                builder.RegisterGeneric(t);
+            else
+                builder.RegisterType(t);
+        }
+
+        public void RegisterTypeAs(Type t, Type s)
+        {
+            if (t.IsGenericType)
+                builder.RegisterGeneric(t).As(s);
+            else
+                builder.RegisterType(t).As(s);
+        }
+
+
+        public void RegisterAsService<T, S>(Func<IGameTypeRegistry, T> creatorFunc)
+        {
+            builder.Register<T>(c => creatorFunc(this)).As<S>().SingleInstance();
         }
     }
 }
