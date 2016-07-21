@@ -7,7 +7,12 @@ namespace BattleLib.GraphicComponents
 {
     public class AttackTableSelectionModel : TableSingleSelectionModel
     {
-        public AttackTableSelectionModel(AttackModel model)
+        public AttackTableSelectionModel(AttackModel model) :
+            this((ITableModel<Move>) model)
+        {
+        
+        }
+        internal AttackTableSelectionModel(ITableModel<Move> model)
             : base(
             (row, column) => { 
                 if(model.IndexInRange(row, column))
