@@ -9,6 +9,7 @@
     <Reference Include="Base" />
   </References>
   <Files>
+    <Compile Include="AttackTableRenderer.cs" />
     <Compile Include="BattleLibTypes.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="ClientIdentifier.cs" />

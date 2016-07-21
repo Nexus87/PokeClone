@@ -7,7 +7,7 @@
     <Reference Include="Moq" />
     <Reference Include="NUnit" />
     <Reference Include="Base" />
-	<Reference Include="Castle.Core" />
+    <Reference Include="Castle.Core" />
   </References>
   <Files>
     <Compile Include="CharFactoryTest.cs" />
