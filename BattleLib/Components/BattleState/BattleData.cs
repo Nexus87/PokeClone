@@ -9,19 +9,24 @@ namespace BattleLib.Components.BattleState
         ClientIdentifier Ai { get; set; }
         ClientIdentifier Player { get; set; }
 
+        public ClientIdentifier PlayerId { get { return Player; } }
+
         private Dictionary<ClientIdentifier, ICommand> commands = new Dictionary<ClientIdentifier, ICommand>();
         private List<ClientIdentifier> clients = new List<ClientIdentifier>();
 
-        public BattleData(ClientIdentifier player, ClientIdentifier ai)
+        public BattleData() :
+            this(new ClientIdentifier { IsPlayer = true, Name = "Player" }, new ClientIdentifier { IsPlayer = false, Name = "Ai" })
+        {}
+        internal BattleData(ClientIdentifier player, ClientIdentifier ai)
         {
-            this.Player = player;
-            this.Ai = ai;
+            Player = player;
+            Ai = ai;
 
-            clients.Add(ai);
-            clients.Add(player);
+            clients.Add(Ai);
+            clients.Add(Player);
 
-            PlayerPokemon = new PokemonWrapper(player);
-            AiPokemon = new PokemonWrapper(ai);
+            PlayerPokemon = new PokemonWrapper(Player);
+            AiPokemon = new PokemonWrapper(Ai);
         }
 
         PokemonWrapper AiPokemon { get; set; }

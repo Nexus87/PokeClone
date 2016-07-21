@@ -65,7 +65,7 @@ namespace GameEngine.Graphics
                 {typeof(ITableRenderer<T>), renderer},
                 {typeof(ITableSelectionModel), selectionModel}
             };
-            return registry.ResolveTypeWithParameters<ITableView<T>>(parameters);
+            return registry.ResolveTypeWithParameters<TableView<T>>(parameters);
         }
 
         public TableWidget<T> CreateTableWidget<T>(ITableView<T> view = null, int? visibleRows = null, int? visibleColumns = null)

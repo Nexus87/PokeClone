@@ -7,5 +7,7 @@ namespace BattleLib.Components.GraphicComponents
     {
         event EventHandler ExitRequested;
         event EventHandler<GameEngine.Graphics.SelectionEventArgs<Move>> ItemSelected;
+
+        void ResetSelection();
     }
 }

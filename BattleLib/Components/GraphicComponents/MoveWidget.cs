@@ -1,13 +1,15 @@
 ﻿using Base;
+using BattleLib.GraphicComponents;
 using GameEngine;
 using GameEngine.Graphics;
 using GameEngine.Graphics.GUI;
 using GameEngine.Utils;
+using Microsoft.Xna.Framework;
 using System;
 
 namespace BattleLib.Components.GraphicComponents
 {
-    public class MoveWidget : AbstractWidget, IWidget, IMoveWidget
+    public class MoveWidget : AbstractGraphicComponent, IWidget, IMoveWidget
     {
         private TableWidget<Move> tableWidget;
         private Dialog dialog;
@@ -24,23 +26,28 @@ namespace BattleLib.Components.GraphicComponents
             remove { tableWidget.OnExitRequested -= value; }
         }
 
-        public MoveWidget(TableWidget<Move> tableWiget, Dialog dialog)
+        public MoveWidget(AttackModel model, AttackTableRenderer renderer, AttackTableSelectionModel selectionModel, Dialog dialog) :
+            this(new TableWidget<Move>(null, null, model, renderer, selectionModel), dialog)
+        { }
+
+        private MoveWidget(TableWidget<Move> tableWidget, Dialog dialog)
         {
             tableWidget.CheckNull("tableWidget");
             dialog.CheckNull("dialog");
 
-            this.tableWidget = tableWiget;
+            this.tableWidget = tableWidget;
             this.dialog = dialog;
 
+            dialog.VisibilityChanged += (obj, args) => VisibilityChanged(this, args);
             dialog.AddWidget(tableWidget);
         }
 
-        public override bool HandleInput(CommandKeys key)
+        public bool HandleInput(CommandKeys key)
         {
             return tableWidget.HandleInput(key);
         }
 
-        protected override void DrawComponent(Microsoft.Xna.Framework.GameTime time, ISpriteBatch batch)
+        protected override void DrawComponent(GameTime time, ISpriteBatch batch)
         {
             dialog.Draw(time, batch);
         }
@@ -48,6 +55,32 @@ namespace BattleLib.Components.GraphicComponents
         public override void Setup()
         {
             dialog.Setup();
+        }
+
+
+        public void ResetSelection()
+        {
+            tableWidget.SelectCell(0, 0);
+        }
+
+        public event EventHandler<VisibilityChangedEventArgs> VisibilityChanged = delegate { };
+
+        public bool IsVisible
+        {
+            get
+            {
+                return dialog.IsVisible;
+            }
+            set
+            {
+                dialog.IsVisible = value;
+            }
+        }
+
+        protected override void Update()
+        {
+            base.Update();
+            dialog.SetCoordinates(this);
         }
     }
 }

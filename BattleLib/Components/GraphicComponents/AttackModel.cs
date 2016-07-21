@@ -8,7 +8,10 @@ namespace BattleLib.GraphicComponents
 {
     public class AttackModel : SingleDimensionTableModel<Move>
     {
-        public AttackModel(PokemonWrapper pokemon)
+        public AttackModel(BattleData data) :
+            this(data.GetPokemon(data.PlayerId))
+        {}
+        internal AttackModel(PokemonWrapper pokemon)
         {
             items = new List<Move>{null, null, null, null};
             

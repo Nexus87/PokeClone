@@ -157,7 +157,7 @@ namespace BattleLibTest.Components.BattleState
             if(creator == null)
                 creator = new Mock<IEventCreator>().Object;
 
-            var state = new BattleStateComponent(new ClientIdentifier(), new ClientIdentifier(), waitForAction, waitForChar, execute, creator);
+            var state = new BattleStateComponent(new BattleData(), waitForAction, waitForChar, execute, creator);
             state.Initialize();
             return state;
         }

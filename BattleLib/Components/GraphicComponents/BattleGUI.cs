@@ -1,5 +1,6 @@
 ﻿using Base;
 using BattleLib.Components.BattleState;
+using BattleLib.Components.GraphicComponents;
 using GameEngine;
 using GameEngine.Graphics;
 using GameEngine.Graphics.GUI;
@@ -10,21 +11,19 @@ namespace BattleLib.GraphicComponents
 {
     public class BattleGUI : IGUIService
     {
-        private Dialog attackFrame;
         private Dialog itemFrame;
         private Dialog mainFrame;
         private MessageBox messageBox;
         private Dialog messageFrame;
         private Dialog pkmnFrame;
 
-        public BattleGUI(IPokeEngine game, GraphicComponentFactory factory, BattleStateComponent battleState, ClientIdentifier player, ClientIdentifier ai)
+        public BattleGUI(IPokeEngine game, MoveWidget moveWidget, GraphicComponentFactory factory, BattleStateComponent battleState, ClientIdentifier player, ClientIdentifier ai)
         {
             BattleState = battleState;
             ID = player;
             this.ai = ai;
-
+            this.moveWidget = moveWidget;
             mainFrame = factory.CreateGraphicComponent<Dialog>();
-            attackFrame = factory.CreateGraphicComponent<Dialog>();
             itemFrame = factory.CreateGraphicComponent<Dialog>();
             pkmnFrame = new Dialog();
             messageFrame = factory.CreateGraphicComponent<Dialog>();
@@ -41,6 +40,7 @@ namespace BattleLib.GraphicComponents
         public event EventHandler MenuShowed = delegate { };
         public event EventHandler TextDisplayed = delegate { };
         private ClientIdentifier ai;
+        private MoveWidget moveWidget;
 
         public BattleStateComponent BattleState { get; private set; }
         public ClientIdentifier ID { get; set; }
@@ -60,13 +60,13 @@ namespace BattleLib.GraphicComponents
         private void AttackMenu_ItemSelected(object sender, SelectionEventArgs<Move> e)
         {
             BattleState.SetMove(ID, ai, e.SelectedData);
-            attackFrame.IsVisible = false;
+            moveWidget.IsVisible = false;
         }
 
         private void BackToMain(object sender, EventArgs e)
         {
             itemFrame.IsVisible = false;
-            attackFrame.IsVisible = false;
+            moveWidget.IsVisible = false;
             pkmnFrame.IsVisible = false;
 
             mainFrame.IsVisible = true;
@@ -74,32 +74,19 @@ namespace BattleLib.GraphicComponents
 
         private void InitAttackMenu(GraphicComponentFactory factory, IPokeEngine game)
         {
-            
-            
-            var model = new AttackModel(BattleState.GetPokemon(ID));
-            
-            var tableView =  factory.CreateTableView<Move>(
-                model, 
-                new DefaultTableRenderer<Move>(factory.registry) { DefaultString = "------" }, 
-                new AttackTableSelectionModel(model)
-                );
-
-            var AttackMenu = new TableWidget<Move>(null, null, tableView);
-
-            attackFrame.AddWidget(AttackMenu);
-            attackFrame.SetCoordinates(
+            moveWidget.SetCoordinates(
                 X: game.ScreenWidth / 2.0f,
                 Y: 2.0f * game.ScreenHeight / 3.0f,
                 width: game.ScreenWidth - game.ScreenWidth / 2.0f,
                 height: game.ScreenHeight - 2.0f * game.ScreenHeight / 3.0f
             );
 
-            AttackMenu.ItemSelected += AttackMenu_ItemSelected;
-            AttackMenu.OnExitRequested += BackToMain;
-            AttackMenu.OnExitRequested += delegate { ResetTableWidget(AttackMenu); };
+            moveWidget.ItemSelected += AttackMenu_ItemSelected;
+            moveWidget.ExitRequested += BackToMain;
+            moveWidget.ExitRequested += delegate { moveWidget.ResetSelection(); };
 
-            attackFrame.IsVisible = false;
-            game.GUIManager.AddWidget(attackFrame);
+            moveWidget.IsVisible = false;
+            game.GUIManager.AddWidget(moveWidget);
         }
 
         private void InitItemMenu(GraphicComponentFactory factory, IPokeEngine game)
@@ -206,7 +193,7 @@ namespace BattleLib.GraphicComponents
             {
                 case "Attack":
                     mainFrame.IsVisible = false;
-                    attackFrame.IsVisible = true;
+                    moveWidget.IsVisible = true;
                     break;
 
                 case "PKMN":

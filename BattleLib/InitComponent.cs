@@ -2,6 +2,7 @@
 using BattleLib.Components;
 using BattleLib.Components.AI;
 using BattleLib.Components.BattleState;
+using BattleLib.Components.GraphicComponents;
 using BattleLib.GraphicComponents;
 using GameEngine;
 using GameEngine.Graphics;
@@ -23,20 +24,18 @@ namespace BattleLib
         public InitComponent(Configuration config, IPokeEngine game, IEventQueue queue, GraphicComponentFactory factory, IMoveEffectCalculator rules, ICommandScheduler scheduler)
         {
             BattleLibTypes.RegisterTypes(factory.registry);
-            var playerID = factory.registry.GetParameter<ClientIdentifier>(BattleLibTypes.ResourceKeys.PlayerId);
-            var aiID = factory.registry.GetParameter<ClientIdentifier>(BattleLibTypes.ResourceKeys.AIId);
             engine = game;
-
+            BattleData data = factory.registry.ResolveType<BattleData>();
+            var playerID = data.PlayerId;
+            var aiID = data.Clients.Where(id => !id.IsPlayer).First();
             player = new Client(playerID);
             ai = new Client(aiID);
             
-            //eventCreator = new EventCreator();
-            //SetupBattleState(playerID, aiID, rules, scheduler);
             battleState = (BattleStateComponent) factory.registry.ResolveType<IBattleStateService>();
             var eventCreator = (EventCreator) factory.registry.ResolveType<IEventCreator>();
 
             graphic = new BattleGraphicController(game, factory, playerID, aiID);
-            gui = new BattleGUI(game, factory, battleState, playerID, aiID);
+            gui = new BattleGUI(game, factory.registry.ResolveType<MoveWidget>(), factory, battleState, playerID, aiID);
 
             var eventProcess = new BattleEventProcessor(gui, graphic, queue, eventCreator);
             var aiComponent = new AIComponent(battleState, ai, playerID);

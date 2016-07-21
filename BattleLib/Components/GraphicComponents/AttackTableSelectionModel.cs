@@ -5,9 +5,9 @@ using GameEngine.Utils;
 
 namespace BattleLib.GraphicComponents
 {
-    class AttackTableSelectionModel : TableSingleSelectionModel
+    public class AttackTableSelectionModel : TableSingleSelectionModel
     {
-        public AttackTableSelectionModel(ITableModel<Move> model)
+        public AttackTableSelectionModel(AttackModel model)
             : base(
             (row, column) => { 
                 if(model.IndexInRange(row, column))

@@ -14,7 +14,10 @@ namespace GameEngine.Registry
     {
         private IContainer container;
         private ContainerBuilder builder = new ContainerBuilder();
-
+        public AutofacGameTypeRegistry()
+        {
+            builder.Register<IGameTypeRegistry>(p => this);
+        }
         public void RegisterTypeAs<T, S>()
         {
             builder.RegisterType<T>().As<S>();

@@ -21,9 +21,9 @@ namespace BattleLib.Components.BattleState
 
         private IEventCreator eventCreator;
 
-        public BattleStateComponent(ClientIdentifier player, ClientIdentifier ai, WaitForActionState actionState, WaitForCharState characterSetState, ExecuteState executionState, IEventCreator eventCreator) :
-            this(player, ai, (IBattleState)actionState, characterSetState, executionState, eventCreator) { }
-        internal BattleStateComponent(ClientIdentifier player, ClientIdentifier ai, IBattleState actionState, IBattleState characterSetState, IBattleState executionState, IEventCreator eventCreator)
+        public BattleStateComponent(BattleData data, WaitForActionState actionState, WaitForCharState characterSetState, ExecuteState executionState, IEventCreator eventCreator) :
+            this(data, (IBattleState)actionState, characterSetState, executionState, eventCreator) { }
+        internal BattleStateComponent(BattleData data, IBattleState actionState, IBattleState characterSetState, IBattleState executionState, IEventCreator eventCreator)
         {
             actionState.CheckNull("actionState");
             characterSetState.CheckNull("characterSetState");
@@ -34,7 +34,7 @@ namespace BattleLib.Components.BattleState
             CharacterSetState = characterSetState;
             ExecutionState = executionState;
             this.eventCreator = eventCreator;
-            data = new BattleData(player, ai);
+            this.data = data;
         }
 
         public event EventHandler<StateChangedEventArgs> StateChanged = delegate { };

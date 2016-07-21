@@ -36,6 +36,7 @@ namespace GameEngine
             registry.RegisterType<MultlineTextBox>();
             registry.RegisterType<MessageBox>();
             registry.RegisterTypeAs(typeof(DefaultTableRenderer<>), typeof(ITableRenderer<>));
+            registry.RegisterType(typeof(DefaultTableRenderer<>));
             registry.RegisterTypeAs(typeof(DefaultTableModel<>), typeof(ITableModel<>));
             registry.RegisterType<Container>();
             registry.RegisterTypeAs<DefaultTextSplitter, ITextSplitter>();
@@ -43,7 +44,7 @@ namespace GameEngine
             registry.RegisterAsService<EventQueue, IEventQueue>();
             registry.RegisterTypeAs<TableSingleSelectionModel, ITableSelectionModel>();
             registry.RegisterAsService<InputComponent, InputComponent>();
-            registry.RegisterTypeAs(typeof(TableView<>), typeof(ITableView<>));
+            registry.RegisterType(typeof(TableView<>));
         }
     }
 }
