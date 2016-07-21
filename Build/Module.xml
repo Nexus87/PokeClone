@@ -9,5 +9,6 @@
 	<Package Uri="https-nuget://www.nuget.org/api/v2/|Autofac" Folder="Autofac" GitRef="3.5.2" />
 	<Package Uri="https-nuget://www.nuget.org/api/v2/|NUnit" Folder="NUnit" GitRef="3.4.1" />
 	<Package Uri="https-nuget://www.nuget.org/api/v2/|Moq" Folder="Moq" GitRef="4.5.13" />
+	<Package Uri="https-nuget://www.nuget.org/api/v2/|Castle.Core" Folder="Castle.Core" GitRef="3.3.3" />
   </Packages>
 </Module>

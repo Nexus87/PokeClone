@@ -9,6 +9,7 @@
     <Reference Include="MonoGame.Framework.DesktopGL" />
     <Reference Include="GameEngine" />
     <Reference Include="Autofac" />
+	<Reference Include="Castle.Core" />
   </References>
   <Files>
     <Compile Include="EventComponent\EventComponentTest.cs" />

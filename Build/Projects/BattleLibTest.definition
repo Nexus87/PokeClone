@@ -11,6 +11,7 @@
     <Reference Include="BattleLib" />
     <Reference Include="GameEngine" />
     <Reference Include="Base" />
+	<Reference Include="Castle.Core" />
   </References>
   <Files>
     <Compile Include="CommandExecuterTest.cs" />
