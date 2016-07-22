@@ -12,8 +12,8 @@ namespace BattleLib.Components.GraphicComponents
 {
     public class AbstractMenuWidget<T> : AbstractGraphicComponent, IMenuWidget<T>
     {
-        private TableWidget<T> tableWidget;
-        private IWidget borderWidget;
+        protected TableWidget<T> tableWidget;
+        protected IWidget borderWidget;
 
         public event EventHandler ExitRequested
         {

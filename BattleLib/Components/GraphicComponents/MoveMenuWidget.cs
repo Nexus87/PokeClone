@@ -9,10 +9,10 @@ using System;
 
 namespace BattleLib.Components.GraphicComponents
 {
-    public class MoveWidget : AbstractMenuWidget<Move>
+    public class MoveMenuWidget : AbstractMenuWidget<Move>
     {
 
-        public MoveWidget(MoveModel model, AttackTableRenderer renderer, MoveTableSelectionModel selectionModel, Dialog dialog) :
+        public MoveMenuWidget(MoveModel model, AttackTableRenderer renderer, MoveTableSelectionModel selectionModel, Dialog dialog) :
             base(new TableWidget<Move>(null, null, model, renderer, selectionModel), dialog)
         { }
     }

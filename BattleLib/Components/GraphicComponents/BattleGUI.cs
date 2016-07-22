@@ -11,20 +11,19 @@ namespace BattleLib.GraphicComponents
 {
     public class BattleGUI : IGUIService
     {
-        private Dialog itemFrame;
         private Dialog mainFrame;
         private MessageBox messageBox;
         private Dialog messageFrame;
         private Dialog pkmnFrame;
 
-        public BattleGUI(IPokeEngine game, IMenuWidget<Move> moveWidget, GraphicComponentFactory factory, BattleStateComponent battleState, ClientIdentifier player, ClientIdentifier ai)
+        public BattleGUI(IPokeEngine game, IMenuWidget<Move> moveWidget, IMenuWidget<Item> itemWidget, GraphicComponentFactory factory, BattleStateComponent battleState, ClientIdentifier player, ClientIdentifier ai)
         {
             BattleState = battleState;
             ID = player;
             this.ai = ai;
             this.moveWidget = moveWidget;
+            this.itemWidget = itemWidget;
             mainFrame = factory.CreateGraphicComponent<Dialog>();
-            itemFrame = factory.CreateGraphicComponent<Dialog>();
             pkmnFrame = new Dialog();
             messageFrame = factory.CreateGraphicComponent<Dialog>();
 
@@ -41,6 +40,7 @@ namespace BattleLib.GraphicComponents
         public event EventHandler TextDisplayed = delegate { };
         private ClientIdentifier ai;
         private IMenuWidget<Move> moveWidget;
+        private IMenuWidget<Item> itemWidget;
 
         public BattleStateComponent BattleState { get; private set; }
         public ClientIdentifier ID { get; set; }
@@ -65,7 +65,7 @@ namespace BattleLib.GraphicComponents
 
         private void BackToMain(object sender, EventArgs e)
         {
-            itemFrame.IsVisible = false;
+            itemWidget.IsVisible = false;
             moveWidget.IsVisible = false;
             pkmnFrame.IsVisible = false;
 
@@ -91,26 +91,19 @@ namespace BattleLib.GraphicComponents
 
         private void InitItemMenu(GraphicComponentFactory factory, IPokeEngine game)
         {
-            var model = new DefaultTableModel<Item>();
-            var ItemMenu = factory.CreateTableWidget(factory.CreateTableView<Item>(model), 8);
-            
-            for (int i = 0; i < 20; i++)
-                model.SetDataAt(new Item { Name = "Item" + i }, i, 0);
+            itemWidget.XPosition = 3.0f * game.ScreenWidth / 8.0f;
+            itemWidget.YPosition = 1.0f * game.ScreenHeight / 8.0f;
 
-            itemFrame.XPosition = 3.0f * game.ScreenWidth / 8.0f;
-            itemFrame.YPosition = 1.0f * game.ScreenHeight / 8.0f;
+            itemWidget.Width = game.ScreenWidth - itemWidget.XPosition;
+            itemWidget.Height = (2.0f * game.ScreenHeight / 3.0f) - itemWidget.YPosition;
 
-            itemFrame.Width = game.ScreenWidth - itemFrame.XPosition;
-            itemFrame.Height = (2.0f * game.ScreenHeight / 3.0f) - itemFrame.YPosition;
+            itemWidget.ItemSelected += ItemMenu_ItemSelected;
+            itemWidget.ExitRequested += BackToMain;
+            itemWidget.ExitRequested += delegate { itemWidget.ResetSelection(); };
 
-            ItemMenu.ItemSelected += ItemMenu_ItemSelected;
-            ItemMenu.ExitRequested += BackToMain;
-            ItemMenu.ExitRequested += delegate { ResetTableWidget(ItemMenu); };
+            itemWidget.IsVisible = false;
 
-            itemFrame.AddWidget(ItemMenu);
-            itemFrame.IsVisible = false;
-
-            game.GUIManager.AddWidget(itemFrame);
+            game.GUIManager.AddWidget(itemWidget);
         }
 
         private static void ResetTableWidget<T>(TableWidget<T> widget)
@@ -184,7 +177,7 @@ namespace BattleLib.GraphicComponents
         private void ItemMenu_ItemSelected(object sender, SelectionEventArgs<Item> e)
         {
             BattleState.SetItem(ID, ID, e.SelectedData);
-            itemFrame.IsVisible = false;
+            itemWidget.IsVisible = false;
         }
 
         private void MainMenu_ItemSelected(object sender, SelectionEventArgs<string> e)
@@ -203,7 +196,7 @@ namespace BattleLib.GraphicComponents
 
                 case "Item":
                     mainFrame.IsVisible = false;
-                    itemFrame.IsVisible = true;
+                    itemWidget.IsVisible = true;
                     break;
             }
         }

@@ -41,7 +41,8 @@ namespace BattleLib
             registry.RegisterAsService<EventCreator, IEventCreator>();
             registry.RegisterAsService<BattleGUI, IGUIService>();
             registry.RegisterType<CommandExecuter>();
-            registry.RegisterTypeAs<MoveWidget, IMenuWidget<Move>>();
+            registry.RegisterTypeAs<MoveMenuWidget, IMenuWidget<Move>>();
+            registry.RegisterTypeAs<ItemMenuWidget, IMenuWidget<Item>>();
             registry.RegisterAsService<BattleData, BattleData>();
 
         }
