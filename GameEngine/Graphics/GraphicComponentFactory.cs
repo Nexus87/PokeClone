@@ -30,7 +30,7 @@ namespace GameEngine.Graphics
             Cup = new XNATexture2D("circle", game.Content);
 
             game.factory = this;
-            GameEngineTypes.Register(registry, this);
+            GameEngineTypes.Register(registry, this, game);
         }
         public T CreateGraphicComponent<T>() where T : IGraphicComponent
         {

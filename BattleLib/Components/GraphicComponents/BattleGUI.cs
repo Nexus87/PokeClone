@@ -5,34 +5,35 @@ using GameEngine;
 using GameEngine.Graphics;
 using GameEngine.Graphics.GUI;
 using GameEngine.Registry;
+using System.Linq;
 using System;
 
 namespace BattleLib.GraphicComponents
 {
     public class BattleGUI : IGUIService
     {
-        private Dialog mainFrame;
         private MessageBox messageBox;
         private Dialog messageFrame;
-        private Dialog pkmnFrame;
 
-        public BattleGUI(IPokeEngine game, IMenuWidget<Move> moveWidget, IMenuWidget<Item> itemWidget, GraphicComponentFactory factory, BattleStateComponent battleState, ClientIdentifier player, ClientIdentifier ai)
+        public BattleGUI(Screen screen, GUIManager manager, Dialog messageFrame, MessageBox messageBox, IMenuWidget<MainMenuEntries> mainWidget, IMenuWidget<Move> moveWidget, IMenuWidget<Pokemon> pokemonWidget, IMenuWidget<Item> itemWidget, IBattleStateService battleState, BattleData data)
         {
-            BattleState = battleState;
-            ID = player;
-            this.ai = ai;
+            this.battleState = battleState;
+            playerId = data.PlayerId;
+            this.ai = data.Clients.Where(id => !id.IsPlayer).First() ;
             this.moveWidget = moveWidget;
             this.itemWidget = itemWidget;
-            mainFrame = factory.CreateGraphicComponent<Dialog>();
-            pkmnFrame = new Dialog();
-            messageFrame = factory.CreateGraphicComponent<Dialog>();
+            this.mainWidget = mainWidget;
+            this.pokemonWidget = pokemonWidget;
 
-            InitMessageBox(factory, game);
+            this.messageBox = messageBox;
+            this.messageFrame = messageFrame;
 
-            InitMainMenu(factory, game);
-            InitAttackMenu(factory, game);
-            InitItemMenu(factory, game);
-            InitPKMNMenu(factory, game);
+            InitMessageBox(screen, manager);
+
+            InitMainMenu(screen, manager);
+            InitAttackMenu(screen, manager);
+            InitItemMenu(screen, manager);
+            InitPKMNMenu(screen, manager);
 
         }
 
@@ -41,9 +42,10 @@ namespace BattleLib.GraphicComponents
         private ClientIdentifier ai;
         private IMenuWidget<Move> moveWidget;
         private IMenuWidget<Item> itemWidget;
+        private IMenuWidget<Pokemon> pokemonWidget;
 
-        public BattleStateComponent BattleState { get; private set; }
-        public ClientIdentifier ID { get; set; }
+        private IBattleStateService battleState;
+        private ClientIdentifier playerId;
 
         public void SetText(string Text)
         {
@@ -59,7 +61,7 @@ namespace BattleLib.GraphicComponents
 
         private void AttackMenu_ItemSelected(object sender, SelectionEventArgs<Move> e)
         {
-            BattleState.SetMove(ID, ai, e.SelectedData);
+            battleState.SetMove(playerId, ai, e.SelectedData);
             moveWidget.IsVisible = false;
         }
 
@@ -67,18 +69,18 @@ namespace BattleLib.GraphicComponents
         {
             itemWidget.IsVisible = false;
             moveWidget.IsVisible = false;
-            pkmnFrame.IsVisible = false;
+            pokemonWidget.IsVisible = false;
 
-            mainFrame.IsVisible = true;
+            mainWidget.IsVisible = true;
         }
 
-        private void InitAttackMenu(GraphicComponentFactory factory, IPokeEngine game)
+        private void InitAttackMenu(Screen screen, GUIManager manager)
         {
             moveWidget.SetCoordinates(
-                X: game.ScreenWidth / 2.0f,
-                Y: 2.0f * game.ScreenHeight / 3.0f,
-                width: game.ScreenWidth - game.ScreenWidth / 2.0f,
-                height: game.ScreenHeight - 2.0f * game.ScreenHeight / 3.0f
+                X: screen.ScreenWidth / 2.0f,
+                Y: 2.0f * screen.ScreenHeight / 3.0f,
+                width: screen.ScreenWidth - screen.ScreenWidth / 2.0f,
+                height: screen.ScreenHeight - 2.0f * screen.ScreenHeight / 3.0f
             );
 
             moveWidget.ItemSelected += AttackMenu_ItemSelected;
@@ -86,16 +88,16 @@ namespace BattleLib.GraphicComponents
             moveWidget.ExitRequested += delegate { moveWidget.ResetSelection(); };
 
             moveWidget.IsVisible = false;
-            game.GUIManager.AddWidget(moveWidget);
+            manager.AddWidget(moveWidget);
         }
 
-        private void InitItemMenu(GraphicComponentFactory factory, IPokeEngine game)
+        private void InitItemMenu(Screen screen, GUIManager manager)
         {
-            itemWidget.XPosition = 3.0f * game.ScreenWidth / 8.0f;
-            itemWidget.YPosition = 1.0f * game.ScreenHeight / 8.0f;
+            itemWidget.XPosition = 3.0f * screen.ScreenWidth / 8.0f;
+            itemWidget.YPosition = 1.0f * screen.ScreenHeight / 8.0f;
 
-            itemWidget.Width = game.ScreenWidth - itemWidget.XPosition;
-            itemWidget.Height = (2.0f * game.ScreenHeight / 3.0f) - itemWidget.YPosition;
+            itemWidget.Width = screen.ScreenWidth - itemWidget.XPosition;
+            itemWidget.Height = (2.0f * screen.ScreenHeight / 3.0f) - itemWidget.YPosition;
 
             itemWidget.ItemSelected += ItemMenu_ItemSelected;
             itemWidget.ExitRequested += BackToMain;
@@ -103,7 +105,7 @@ namespace BattleLib.GraphicComponents
 
             itemWidget.IsVisible = false;
 
-            game.GUIManager.AddWidget(itemWidget);
+            manager.AddWidget(itemWidget);
         }
 
         private static void ResetTableWidget<T>(TableWidget<T> widget)
@@ -111,40 +113,30 @@ namespace BattleLib.GraphicComponents
             widget.SelectCell(0, 0);
         }
 
-        private void InitMainMenu(GraphicComponentFactory factory, IPokeEngine game)
+        private void InitMainMenu(Screen screen, GUIManager manager)
         {
-            var MainMenu = factory.CreateTableWidget<string>();
-            MainMenu.Model.SetDataAt("Attack", 0, 0);
-            MainMenu.Model.SetDataAt("PKMN", 0, 1);
-            MainMenu.Model.SetDataAt("Item", 1, 0);
-            MainMenu.Model.SetDataAt("Run", 1, 1);
+            mainWidget.XPosition = 0.5f * screen.ScreenWidth;
+            mainWidget.YPosition = 2.0f * screen.ScreenHeight / 3.0f;
+            mainWidget.Width = screen.ScreenWidth - mainWidget.XPosition;
+            mainWidget.Height = screen.ScreenHeight - mainWidget.YPosition;
 
-            mainFrame.AddWidget(MainMenu);
+            mainWidget.ItemSelected += MainMenu_ItemSelected;
+            //mainWidget.ExitRequested += delegate { manager.Exit(); };
 
-            mainFrame.XPosition = 0.5f * game.ScreenWidth;
-            mainFrame.YPosition = 2.0f * game.ScreenHeight / 3.0f;
-            mainFrame.Width = game.ScreenWidth - mainFrame.XPosition;
-            mainFrame.Height = game.ScreenHeight - mainFrame.YPosition;
-
-            MainMenu.ItemSelected += MainMenu_ItemSelected;
-            MainMenu.ExitRequested += delegate { game.Exit(); };
-
-            mainFrame.IsVisible = true;
-            game.GUIManager.AddWidget(mainFrame);
+            mainWidget.IsVisible = true;
+            manager.AddWidget(mainWidget);
         }
 
-        private void InitMessageBox(GraphicComponentFactory factory, IPokeEngine game)
+        private void InitMessageBox(Screen screen, GUIManager manager)
         {
-            messageBox = factory.CreateGraphicComponent<MessageBox>();
-
             messageFrame.AddWidget(messageBox);
             messageFrame.XPosition = 0;
-            messageFrame.YPosition = 2.0f * game.ScreenHeight / 3.0f;
-            messageFrame.Width = game.ScreenWidth;
-            messageFrame.Height = game.ScreenHeight - messageFrame.YPosition;
+            messageFrame.YPosition = 2.0f * screen.ScreenHeight / 3.0f;
+            messageFrame.Width = screen.ScreenWidth;
+            messageFrame.Height = screen.ScreenHeight - messageFrame.YPosition;
 
             messageFrame.IsVisible = true;
-            game.GUIManager.AddWidget(messageFrame);
+            manager.AddWidget(messageFrame);
 
             messageBox.OnAllLineShowed += AllLineShowedHandler;
         }
@@ -154,48 +146,44 @@ namespace BattleLib.GraphicComponents
             TextDisplayed(this, EventArgs.Empty);
         }
 
-        private void InitPKMNMenu(GraphicComponentFactory factory, IPokeEngine game)
+        private void InitPKMNMenu(Screen screen, GUIManager manager)
         {
-            var model = new DefaultTableModel<Pokemon>();
-            var PKMNMenu = factory.CreateTableWidget(factory.CreateTableView(model: model));
+            pokemonWidget.XPosition = 0;
+            pokemonWidget.YPosition = 0;
+            pokemonWidget.Width = screen.ScreenWidth;
+            pokemonWidget.Height = screen.ScreenHeight;
 
-            pkmnFrame.XPosition = 0;
-            pkmnFrame.YPosition = 0;
-            pkmnFrame.Width = game.ScreenWidth;
-            pkmnFrame.Height = game.ScreenHeight;
+            pokemonWidget.ItemSelected += PKMNMenu_ItemSelected;
+            pokemonWidget.ExitRequested += BackToMain;
+            pokemonWidget.ExitRequested += delegate { pokemonWidget.ResetSelection(); };
 
-            PKMNMenu.ItemSelected += PKMNMenu_ItemSelected;
-            PKMNMenu.ExitRequested += BackToMain;
-            PKMNMenu.ExitRequested += delegate { ResetTableWidget(PKMNMenu); };
+            pokemonWidget.IsVisible = false;
 
-            pkmnFrame.AddWidget(PKMNMenu);
-            pkmnFrame.IsVisible = false;
-
-            game.GUIManager.AddWidget(pkmnFrame);
+            manager.AddWidget(pokemonWidget);
         }
 
         private void ItemMenu_ItemSelected(object sender, SelectionEventArgs<Item> e)
         {
-            BattleState.SetItem(ID, ID, e.SelectedData);
+            battleState.SetItem(playerId, playerId, e.SelectedData);
             itemWidget.IsVisible = false;
         }
 
-        private void MainMenu_ItemSelected(object sender, SelectionEventArgs<string> e)
+        private void MainMenu_ItemSelected(object sender, SelectionEventArgs<MainMenuEntries> e)
         {
             switch (e.SelectedData)
             {
-                case "Attack":
-                    mainFrame.IsVisible = false;
+                case MainMenuEntries.Attack:
+                    mainWidget.IsVisible = false;
                     moveWidget.IsVisible = true;
                     break;
 
-                case "PKMN":
-                    mainFrame.IsVisible = false;
-                    pkmnFrame.IsVisible = true; ;
+                case MainMenuEntries.PKMN:
+                    mainWidget.IsVisible = false;
+                    pokemonWidget.IsVisible = true; ;
                     break;
 
-                case "Item":
-                    mainFrame.IsVisible = false;
+                case MainMenuEntries.Item:
+                    mainWidget.IsVisible = false;
                     itemWidget.IsVisible = true;
                     break;
             }
@@ -203,8 +191,10 @@ namespace BattleLib.GraphicComponents
 
         private void PKMNMenu_ItemSelected(object sender, SelectionEventArgs<Pokemon> e)
         {
-            BattleState.SetCharacter(ID, e.SelectedData);
-            pkmnFrame.IsVisible = false;
+            battleState.SetCharacter(playerId, e.SelectedData);
+            pokemonWidget.IsVisible = false;
         }
+
+        public IMenuWidget<MainMenuEntries> mainWidget { get; set; }
     }
 }

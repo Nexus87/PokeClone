@@ -43,6 +43,8 @@ namespace BattleLib
             registry.RegisterType<CommandExecuter>();
             registry.RegisterTypeAs<MoveMenuWidget, IMenuWidget<Move>>();
             registry.RegisterTypeAs<ItemMenuWidget, IMenuWidget<Item>>();
+            registry.RegisterTypeAs<MainMenuWidget, IMenuWidget<MainMenuEntries>>();
+            registry.RegisterTypeAs<PokemonMenuWidget, IMenuWidget<Pokemon>>();
             registry.RegisterAsService<BattleData, BattleData>();
 
         }

@@ -10,13 +10,13 @@ namespace BattleLib.GraphicComponents
     {
         public event EventHandler OnHPUpdated;
 
-        public PokemonDataView(IPokeEngine game, GraphicComponentFactory factory, bool player)
+        public PokemonDataView(Screen screen, GraphicComponentFactory factory, bool player)
             : base(new Container())
         {
             var container = InnerComponent;
             var hpLineContainer = new Container();
 
-            hpLine = new HPLine(factory.CreateGraphicComponent<Line>(), factory.CreateGraphicComponent<Line>(), factory.CreateGraphicComponent<Line>(), game.BackgroundColor);
+            hpLine = new HPLine(factory.CreateGraphicComponent<Line>(), factory.CreateGraphicComponent<Line>(), factory.CreateGraphicComponent<Line>(), screen.BackgroundColor);
             name = factory.CreateGraphicComponent<TextBox>();
 
             lvl = factory.CreateGraphicComponent<TextBox>(); 

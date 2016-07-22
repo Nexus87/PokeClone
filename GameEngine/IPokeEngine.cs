@@ -6,10 +6,6 @@ namespace GameEngine
 {
     public interface IPokeEngine
     {
-        float ScreenHeight { get; }
-        float ScreenWidth { get; }
-        Color BackgroundColor { get; }
-        GUIManager GUIManager { get; }
         ContentManager Content { get; }
         void Exit();
         void AddGameComponent(IGameComponent component);

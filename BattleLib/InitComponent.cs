@@ -17,10 +17,9 @@ namespace BattleLib
         Client player;
         Client ai;
         IPokeEngine engine;
-        //EventCreator eventCreator;
         private BattleStateComponent battleState;
         private BattleGraphicController graphic;
-        private BattleGUI gui;
+        private IGUIService gui;
 
         public InitComponent(Configuration config, IPokeEngine game, IEventQueue queue, GraphicComponentFactory factory, IMoveEffectCalculator rules, ICommandScheduler scheduler)
         {
@@ -35,8 +34,8 @@ namespace BattleLib
             battleState = (BattleStateComponent) factory.registry.ResolveType<IBattleStateService>();
             var eventCreator = (EventCreator) factory.registry.ResolveType<IEventCreator>();
 
-            graphic = new BattleGraphicController(game, factory, playerID, aiID);
-            gui = new BattleGUI(game, factory.registry.ResolveType<IMenuWidget<Move>>(), factory.registry.ResolveType<IMenuWidget<Item>>(), factory, battleState, playerID, aiID);
+            graphic = new BattleGraphicController(factory.registry.ResolveType<Screen>(), game, factory, playerID, aiID);
+            gui = factory.registry.ResolveType<IGUIService>();
 
             var eventProcess = new BattleEventProcessor(gui, graphic, queue, eventCreator);
             var aiComponent = new AIComponent(battleState, ai, playerID);
@@ -52,14 +51,6 @@ namespace BattleLib
         {
         }
 
-        private void SetupBattleState(ClientIdentifier playerID, ClientIdentifier aiID, IMoveEffectCalculator rules, ICommandScheduler scheduler)
-        {
-            //var actionState = new WaitForActionState();
-            //var characterState = new WaitForCharState(eventCreator);
-            //var commandExecutor = new CommandExecuter(rules, eventCreator);
-            //var executionState = new ExecuteState(scheduler, commandExecutor);
-            //battleState = new BattleStateComponent(playerID, aiID, actionState, characterState, executionState, eventCreator);
-        }
         public void Update(GameTime gameTime)
         {
             // The AI sets the Character itself

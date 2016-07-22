@@ -21,7 +21,7 @@ namespace GameEngine
             BorderTexture
         }
 
-        public static void Register(IGameTypeRegistry registry, GraphicComponentFactory factory)
+        public static void Register(IGameTypeRegistry registry, GraphicComponentFactory factory, PokeEngine engine)
         {
             registry.RegisterParameter(ResourceKeys.PixelTexture, factory.Pixel);
             registry.RegisterParameter(ResourceKeys.CupTexture, factory.Cup);
@@ -45,6 +45,8 @@ namespace GameEngine
             registry.RegisterTypeAs<TableSingleSelectionModel, ITableSelectionModel>();
             registry.RegisterAsService<InputComponent, InputComponent>();
             registry.RegisterType(typeof(TableView<>));
+            registry.RegisterAsService<Screen, Screen>();
+            registry.RegisterAsService<GUIManager, GUIManager>(reg => engine.GUIManager);
         }
     }
 }

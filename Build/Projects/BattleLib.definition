@@ -44,10 +44,12 @@
     <Compile Include="Components\GraphicComponents\IMenuWidget.cs" />
     <Compile Include="Components\GraphicComponents\ItemMenuWidget.cs" />
     <Compile Include="Components\GraphicComponents\ItemModel.cs" />
+    <Compile Include="Components\GraphicComponents\MainMenuWidget.cs" />
     <Compile Include="Components\GraphicComponents\MoveMenuWidget.cs" />
     <Compile Include="Components\GraphicComponents\MoveModel.cs" />
     <Compile Include="Components\GraphicComponents\MoveTableSelectionModel.cs" />
     <Compile Include="Components\GraphicComponents\PokemonDataView.cs" />
+    <Compile Include="Components\GraphicComponents\PokemonMenuWidget.cs" />
     <Compile Include="Components\GraphicComponents\PokemonSprite.cs" />
     <Compile Include="Components\GraphicComponents\SingleDimensionTableModel.cs" />
     <Compile Include="Components\SetHPEvent.cs" />

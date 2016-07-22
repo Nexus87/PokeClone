@@ -18,7 +18,7 @@ namespace GameEngine
         internal GraphicComponentFactory factory;
 
         public IEventQueue EventQueue { get; set; }
-        public GUIManager GUIManager { get; private set; }
+        internal GUIManager GUIManager { get; private set; }
 
         private XNASpriteBatch batch;
         private IInputHandler DefaultInputHandler;
