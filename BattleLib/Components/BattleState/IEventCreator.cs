@@ -3,7 +3,7 @@ using Base.Data;
 using System;
 namespace BattleLib.Components.BattleState
 {
-    public interface IEventCreator
+    public interface IEventCreator : IBattleEvents
     {
         void Critical();
         void Effective(MoveEfficiency effect, PokemonWrapper target);

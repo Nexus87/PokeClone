@@ -1,4 +1,5 @@
 ﻿using Base;
+using BattleLib.Components;
 using BattleLib.Components.BattleState;
 using BattleLib.Components.GraphicComponents;
 using BattleLib.GraphicComponents;
@@ -51,6 +52,7 @@ namespace BattleLib
             registry.RegisterType<PlayerPokemonDataView>();
             registry.RegisterAsService<BattleGraphicController, IBattleGraphicController>();
             registry.RegisterType<PokemonSprite>();
+            registry.RegisterAsService<BattleEventProcessor, BattleEventProcessor>();
         }
     }
 }

@@ -6,7 +6,7 @@ using System;
 
 namespace BattleLib.Components.BattleState
 {
-    public class EventCreator : IEventCreator, IBattleEvents
+    public class EventCreator : IEventCreator
     {
         public void UsingMove(PokemonWrapper source, Move move)
         {

@@ -15,7 +15,7 @@ namespace BattleLib.Components
         private IBattleGraphicController graphicService;
         private IEventQueue queue;
 
-        public BattleEventProcessor(IGUIService guiService, IBattleGraphicController graphicService, IEventQueue queue, IBattleEvents events)
+        public BattleEventProcessor(IGUIService guiService, IBattleGraphicController graphicService, IEventQueue queue, IEventCreator events)
         {
             this.guiService = guiService;
             this.graphicService = graphicService;

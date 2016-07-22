@@ -38,7 +38,7 @@ namespace BattleLib
             graphic = registry.ResolveType<IBattleGraphicController>();
             gui = registry.ResolveType<IGUIService>();
 
-            var eventProcess = new BattleEventProcessor(gui, graphic, registry.ResolveType<IEventQueue>(), eventCreator);
+            var eventProcess = registry.ResolveType<BattleEventProcessor>();
             var aiComponent = new AIComponent(battleState, ai, playerID);
             
 

@@ -40,7 +40,7 @@ namespace BattleLibTest.Components
         }
     }
 
-    public class BattleEventFake : IBattleEvents
+    public class BattleEventFake : IEventCreator
     {
         private ClientIdentifier id = new ClientIdentifier();
         private PokemonWrapper pokemon;
@@ -95,6 +95,41 @@ namespace BattleLibTest.Components
         }
 
 
+
+        public void Critical()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Effective(MoveEfficiency effect, PokemonWrapper target)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetNewTurn()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetHP(ClientIdentifier id, int hp)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetPokemon(ClientIdentifier id, PokemonWrapper pokemon)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetStatus(PokemonWrapper pokemon, StatusCondition condition)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UsingMove(PokemonWrapper source, Move move)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     [TestFixture]
