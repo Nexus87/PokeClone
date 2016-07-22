@@ -26,11 +26,8 @@ namespace PokemonGame
             var calculator = new DefaultMoveEffectCalculator(new DummyBattleRules());
 
             var engine = new PokeEngine(config);
-            var factory = new GraphicComponentFactory(config, engine);
-            RegisterTypes(factory.registry);
-
-            engine.ShowGUI();
-            engine.AddGameComponent(new InitComponent(config, engine, engine.EventQueue, factory, calculator, new DummyScheduler()));
+            RegisterTypes(engine.registry);
+            engine.AddGameComponent(new InitComponent(config, engine, engine.registry));
 
             engine.Run();
         }

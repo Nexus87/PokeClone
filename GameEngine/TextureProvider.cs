@@ -4,13 +4,12 @@ namespace GameEngine
 {
     public class TextureProvider
     {
-        public ContentManager Content { get; set; }
+        private ContentManager Content { get; set; }
         public TextureProvider(ContentManager content)
         {
             Content = content;
         }
 
-        public TextureProvider() { }
 
         public ITexture2D GetTexturesFront(int id)
         {

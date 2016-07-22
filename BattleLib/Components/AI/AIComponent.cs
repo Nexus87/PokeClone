@@ -9,14 +9,14 @@ namespace BattleLib.Components.AI
 {
     class AIComponent : GameEngine.IGameComponent
     {
-        private BattleStateComponent state;
+        private IBattleStateService state;
         private Action nextAction = null;
         private ClientIdentifier id;
         private ClientIdentifier player;
         private IReadOnlyList<Pokemon> pokemons;
         private Pokemon currentPokemon;
 
-        public AIComponent(BattleStateComponent state, Client ai, ClientIdentifier player)
+        public AIComponent(IBattleStateService state, Client ai, ClientIdentifier player)
         {
             this.state = state;
             id = ai.Id;

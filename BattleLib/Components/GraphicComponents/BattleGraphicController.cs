@@ -5,6 +5,7 @@ using GameEngine.Graphics;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BattleLib.GraphicComponents
 {
@@ -13,7 +14,7 @@ namespace BattleLib.GraphicComponents
         private readonly Dictionary<ClientIdentifier, PokemonDataView> dataViews = new Dictionary<ClientIdentifier, PokemonDataView>();
         private readonly Dictionary<ClientIdentifier, PokemonSprite> sprites = new Dictionary<ClientIdentifier, PokemonSprite>();
 
-        public BattleGraphicController(
+        private BattleGraphicController(
             ClientIdentifier playerId, ClientIdentifier aiId,
             PokemonDataView playerView, PokemonSprite playerSprite, 
             PokemonDataView aiView, PokemonSprite aiSprite)
@@ -31,12 +32,16 @@ namespace BattleLib.GraphicComponents
                 sprite.OnPokemonAppeared += delegate { OnPokemonSet(this, null); };
         }
 
-        public BattleGraphicController(Screen screen, IPokeEngine game, GraphicComponentFactory factory, ClientIdentifier player, ClientIdentifier ai)
+        public BattleGraphicController(Screen screen, 
+            PlayerPokemonDataView playerView, AIPokemonDataView aiView, 
+            PokemonSprite playerSprite, PokemonSprite aiSprite,
+            BattleData data)
         {
-            var aiView = new PokemonDataView(screen, factory, false);
-            var playerView = new PokemonDataView(screen, factory, true);
-            var aiSprite = new PokemonSprite(true, game);
-            var playerSprite = new PokemonSprite(false, game);
+            var player = data.PlayerId;
+            var ai = data.Clients.Where(id => !id.IsPlayer).First();
+
+            playerSprite.IsPlayer = true;
+            aiSprite.IsPlayer = false;
 
             dataViews[player] = playerView;
             dataViews[ai] = aiView;

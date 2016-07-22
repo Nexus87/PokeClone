@@ -15,7 +15,10 @@ namespace BattleLib.GraphicComponents
         private IGraphicComponent outerLine;
 
 
-        public HPLine(IGraphicComponent outerLine, IGraphicComponent innerLine, IGraphicComponent hpLine, Color backgroundColor)
+        public HPLine(Line outerLine, Line innerLine, Line hpLine, Screen screen) :
+            this(outerLine, innerLine, hpLine, screen.BackgroundColor)
+        {}
+        internal HPLine(IGraphicComponent outerLine, IGraphicComponent innerLine, IGraphicComponent hpLine, Color backgroundColor)
         {
             this.outerLine = outerLine;
             this.innerLine = innerLine;

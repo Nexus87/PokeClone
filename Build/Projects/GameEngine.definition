@@ -25,7 +25,7 @@
     <Compile Include="Graphics\Dialog.cs" />
     <Compile Include="Graphics\Extensions.cs" />
     <Compile Include="Graphics\ForwardingGraphicComponent.cs" />
-    <Compile Include="Graphics\GraphicComponentFactory.cs" />
+    <Compile Include="Graphics\GraphicResources.cs" />
     <Compile Include="Graphics\GridLayout.cs" />
     <Compile Include="Graphics\GUI\AbstractWidget.cs" />
     <Compile Include="Graphics\GUI\GUIManager.cs" />
@@ -62,6 +62,7 @@
     <Compile Include="IEvent.cs" />
     <Compile Include="IEventQueue.cs" />
     <Compile Include="IGameComponent.cs" />
+    <Compile Include="IGameRegistry.cs" />
     <Compile Include="IInputHandler.cs" />
     <Compile Include="IKeyboardManager.cs" />
     <Compile Include="IModule.cs" />

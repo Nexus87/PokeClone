@@ -7,6 +7,7 @@ using BattleLib.Components.GraphicComponents;
 using BattleLib.GraphicComponents;
 using GameEngine;
 using GameEngine.Graphics;
+using GameEngine.Registry;
 using Microsoft.Xna.Framework;
 using System.Linq;
 
@@ -16,28 +17,28 @@ namespace BattleLib
     {
         Client player;
         Client ai;
-        IPokeEngine engine;
-        private BattleStateComponent battleState;
-        private BattleGraphicController graphic;
+        PokeEngine engine;
+        private IBattleStateService battleState;
+        private IBattleGraphicController graphic;
         private IGUIService gui;
 
-        public InitComponent(Configuration config, IPokeEngine game, IEventQueue queue, GraphicComponentFactory factory, IMoveEffectCalculator rules, ICommandScheduler scheduler)
+        public InitComponent(Configuration config, PokeEngine game, IGameTypeRegistry registry)
         {
-            BattleLibTypes.RegisterTypes(factory.registry);
+            BattleLibTypes.RegisterTypes(registry);
             engine = game;
-            BattleData data = factory.registry.ResolveType<BattleData>();
+            BattleData data = registry.ResolveType<BattleData>();
             var playerID = data.PlayerId;
             var aiID = data.Clients.Where(id => !id.IsPlayer).First();
             player = new Client(playerID);
             ai = new Client(aiID);
             
-            battleState = (BattleStateComponent) factory.registry.ResolveType<IBattleStateService>();
-            var eventCreator = (EventCreator) factory.registry.ResolveType<IEventCreator>();
+            battleState = registry.ResolveType<IBattleStateService>();
+            var eventCreator = (EventCreator) registry.ResolveType<IEventCreator>();
 
-            graphic = new BattleGraphicController(factory.registry.ResolveType<Screen>(), game, factory, playerID, aiID);
-            gui = factory.registry.ResolveType<IGUIService>();
+            graphic = registry.ResolveType<IBattleGraphicController>();
+            gui = registry.ResolveType<IGUIService>();
 
-            var eventProcess = new BattleEventProcessor(gui, graphic, queue, eventCreator);
+            var eventProcess = new BattleEventProcessor(gui, graphic, registry.ResolveType<IEventQueue>(), eventCreator);
             var aiComponent = new AIComponent(battleState, ai, playerID);
             
 
@@ -54,6 +55,7 @@ namespace BattleLib
         public void Update(GameTime gameTime)
         {
             // The AI sets the Character itself
+            engine.ShowGUI();
             battleState.SetCharacter(player.Id, player.Pokemons.First());
             engine.RemoveGameComponent(this);
         }

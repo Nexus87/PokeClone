@@ -1,10 +1,11 @@
 ﻿using Base.Data;
 using BattleLib.Components.BattleState;
+using GameEngine.Graphics;
 using System;
 
 namespace BattleLib.GraphicComponents
 {
-    public interface IBattleGraphicController
+    public interface IBattleGraphicController : IGraphicComponent
     {
         event EventHandler ConditionSet;
         event EventHandler OnHPSet;

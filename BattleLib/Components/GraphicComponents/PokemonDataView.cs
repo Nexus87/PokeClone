@@ -6,23 +6,40 @@ using System;
 
 namespace BattleLib.GraphicComponents
 {
+    // TODO come up with a better solution for this
+    public class PlayerPokemonDataView : PokemonDataView
+    {
+        public PlayerPokemonDataView(HPLine line, TextBox nameBox, TextBox levelBox, TextBox hpBox, TextBox hpTextBox) :
+            base(line, nameBox, levelBox, hpBox, hpTextBox)
+        { }
+    }
+
+    public class AIPokemonDataView : PokemonDataView
+    {
+        public AIPokemonDataView(HPLine line, TextBox nameBox, TextBox levelBox, TextBox hpBox) :
+            base(line, nameBox, levelBox, hpBox)
+        { }
+    }
     public class PokemonDataView : ForwardingGraphicComponent<Container>
     {
         public event EventHandler OnHPUpdated;
 
-        public PokemonDataView(Screen screen, GraphicComponentFactory factory, bool player)
+        public PokemonDataView(HPLine line, TextBox nameBox, TextBox levelBox, TextBox hpBox) :
+            this(line, nameBox, levelBox, hpBox, null)
+        {}
+        public PokemonDataView(HPLine line, TextBox nameBox, TextBox levelBox, TextBox hpBox, TextBox hpTextBox)
             : base(new Container())
         {
             var container = InnerComponent;
             var hpLineContainer = new Container();
 
-            hpLine = new HPLine(factory.CreateGraphicComponent<Line>(), factory.CreateGraphicComponent<Line>(), factory.CreateGraphicComponent<Line>(), screen.BackgroundColor);
-            name = factory.CreateGraphicComponent<TextBox>();
+            hpLine = line;
+            name = nameBox;
 
-            lvl = factory.CreateGraphicComponent<TextBox>(); 
+            lvl = levelBox;
             lvl.PreferedTextHeight = 16.0f;
 
-            var hpBox = factory.CreateGraphicComponent<TextBox>();
+            var hpLabelBox = hpBox;
             hpBox.Text = "hp:";
             hpBox.PreferedTextHeight = 12.0f;
 
@@ -34,9 +51,9 @@ namespace BattleLib.GraphicComponents
             container.AddComponent(hpLineContainer);
             container.AddComponent(lvl);
 
-            if (player)
+            if (hpTextBox != null)
             {
-                hpText = factory.CreateGraphicComponent<TextBox>();
+                hpText = hpTextBox;
                 hpText.PreferedTextHeight = 16.0f;
                 container.AddComponent(hpText);
             }

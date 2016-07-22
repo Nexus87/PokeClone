@@ -108,11 +108,6 @@ namespace BattleLib.GraphicComponents
             manager.AddWidget(itemWidget);
         }
 
-        private static void ResetTableWidget<T>(TableWidget<T> widget)
-        {
-            widget.SelectCell(0, 0);
-        }
-
         private void InitMainMenu(Screen screen, GUIManager manager)
         {
             mainWidget.XPosition = 0.5f * screen.ScreenWidth;

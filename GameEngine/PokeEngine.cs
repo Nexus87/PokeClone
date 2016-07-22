@@ -1,5 +1,6 @@
 ﻿using GameEngine.Graphics;
 using GameEngine.Graphics.GUI;
+using GameEngine.Registry;
 using GameEngine.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -15,10 +16,10 @@ namespace GameEngine
         private const float screenWidth = 1920;
         private static readonly Color backgroundColor = new Color(248, 248, 248, 0);
 
-        internal GraphicComponentFactory factory;
-
-        public IEventQueue EventQueue { get; set; }
-        internal GUIManager GUIManager { get; private set; }
+        public IGameTypeRegistry registry;
+        GraphicResources factory;
+        private IEventQueue EventQueue { get; set; }
+        private GUIManager GUIManager { get; set; }
 
         private XNASpriteBatch batch;
         private IInputHandler DefaultInputHandler;
@@ -30,9 +31,9 @@ namespace GameEngine
         public PokeEngine(Configuration config) : base()
         {
             config.CheckNull("config");
-
-            input = new InputComponent(config);
-            GUIManager = new GUIManager();
+            factory = new GraphicResources(config, this);
+            registry = new AutofacGameTypeRegistry();
+            GameEngineTypes.Register(registry, factory, this, config);
 
             new GraphicsDeviceManager(this);
 
@@ -40,10 +41,6 @@ namespace GameEngine
             Window.ClientSizeChanged += Window_ClientSizeChanged;
 
             Content.RootDirectory = "Content";
-
-            AddGameComponent(input);
-            EventQueue = new EventQueue();
-            AddGameComponent(EventQueue);
         }
 
         public IGraphicComponent Graphic { get; set; }
@@ -108,6 +105,12 @@ namespace GameEngine
 
         protected override void Initialize()
         {
+            input = registry.ResolveType<InputComponent>();
+            GUIManager = registry.ResolveType<GUIManager>();
+            EventQueue = registry.ResolveType<IEventQueue>();
+
+            AddGameComponent(input);
+            AddGameComponent(EventQueue);
             base.Initialize();
             target = new RenderTarget2D(GraphicsDevice, (int)ScreenWidth, (int)ScreenHeight);
         }

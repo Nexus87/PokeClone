@@ -2,7 +2,7 @@
 
 namespace BattleLib.Components.BattleState
 {
-    public interface IBattleStateService
+    public interface IBattleStateService : GameEngine.IGameComponent
     {
         event EventHandler<StateChangedEventArgs> StateChanged;
 

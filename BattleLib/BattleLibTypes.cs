@@ -46,7 +46,11 @@ namespace BattleLib
             registry.RegisterTypeAs<MainMenuWidget, IMenuWidget<MainMenuEntries>>();
             registry.RegisterTypeAs<PokemonMenuWidget, IMenuWidget<Pokemon>>();
             registry.RegisterAsService<BattleData, BattleData>();
-
+            registry.RegisterType<HPLine>();
+            registry.RegisterType<AIPokemonDataView>();
+            registry.RegisterType<PlayerPokemonDataView>();
+            registry.RegisterAsService<BattleGraphicController, IBattleGraphicController>();
+            registry.RegisterType<PokemonSprite>();
         }
     }
 }

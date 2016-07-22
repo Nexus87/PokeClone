@@ -10,9 +10,11 @@ namespace BattleLib.GraphicComponents
         public event EventHandler OnPokemonAppeared = delegate { };
         public event EventHandler OnAttackAnimationPlayed = delegate { };
 
-        TextureProvider provider = new TextureProvider();
+        TextureProvider provider;
         TextureBox box;
-        bool front;
+        bool isPlayer;
+
+        public bool IsPlayer { get { return isPlayer; } set { isPlayer = value; Invalidate(); } }
         private int id = -1;
 
         public void SetPokemon(int id)
@@ -27,11 +29,10 @@ namespace BattleLib.GraphicComponents
             OnAttackAnimationPlayed(this, null);
         }
 
-        public PokemonSprite(bool front, IPokeEngine game)
+        public PokemonSprite(TextureBox box, TextureProvider provider)
         {
-            this.front = front;
-            box = new TextureBox();
-            provider.Content = game.Content;
+            this.box = box;
+            this.provider = provider;
         }
         public override void Setup()
         {
@@ -51,7 +52,7 @@ namespace BattleLib.GraphicComponents
             box.Width = Width;
             box.Height = Height;
 
-            box.Image = front ? provider.GetTexturesFront(id) : provider.GetTextureBack(id);
+            box.Image = isPlayer ? provider.GetTextureBack(id) : provider.GetTexturesFront(id);
         }
     }
 }

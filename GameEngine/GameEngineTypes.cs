@@ -2,6 +2,7 @@
 using GameEngine.Graphics.GUI;
 using GameEngine.Registry;
 using GameEngine.Utils;
+using Microsoft.Xna.Framework.Content;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +22,7 @@ namespace GameEngine
             BorderTexture
         }
 
-        public static void Register(IGameTypeRegistry registry, GraphicComponentFactory factory, PokeEngine engine)
+        public static void Register(IGameTypeRegistry registry, GraphicResources factory, PokeEngine engine, Configuration config)
         {
             registry.RegisterParameter(ResourceKeys.PixelTexture, factory.Pixel);
             registry.RegisterParameter(ResourceKeys.CupTexture, factory.Cup);
@@ -43,10 +44,12 @@ namespace GameEngine
             registry.RegisterType<TextBox>();
             registry.RegisterAsService<EventQueue, IEventQueue>();
             registry.RegisterTypeAs<TableSingleSelectionModel, ITableSelectionModel>();
-            registry.RegisterAsService<InputComponent, InputComponent>();
+            registry.RegisterAsService<InputComponent, InputComponent>(reg => new InputComponent(config));
             registry.RegisterType(typeof(TableView<>));
             registry.RegisterAsService<Screen, Screen>();
-            registry.RegisterAsService<GUIManager, GUIManager>(reg => engine.GUIManager);
+            registry.RegisterAsService<GUIManager, GUIManager>();
+            registry.RegisterAsService<TextureProvider, TextureProvider>();
+            registry.RegisterAsService<ContentManager, ContentManager>(reg => engine.Content);
         }
     }
 }
