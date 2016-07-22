@@ -17,7 +17,7 @@ namespace BattleLib.GraphicComponents
         private Dialog messageFrame;
         private Dialog pkmnFrame;
 
-        public BattleGUI(IPokeEngine game, MoveWidget moveWidget, GraphicComponentFactory factory, BattleStateComponent battleState, ClientIdentifier player, ClientIdentifier ai)
+        public BattleGUI(IPokeEngine game, IMenuWidget<Move> moveWidget, GraphicComponentFactory factory, BattleStateComponent battleState, ClientIdentifier player, ClientIdentifier ai)
         {
             BattleState = battleState;
             ID = player;
@@ -40,7 +40,7 @@ namespace BattleLib.GraphicComponents
         public event EventHandler MenuShowed = delegate { };
         public event EventHandler TextDisplayed = delegate { };
         private ClientIdentifier ai;
-        private MoveWidget moveWidget;
+        private IMenuWidget<Move> moveWidget;
 
         public BattleStateComponent BattleState { get; private set; }
         public ClientIdentifier ID { get; set; }
@@ -104,8 +104,8 @@ namespace BattleLib.GraphicComponents
             itemFrame.Height = (2.0f * game.ScreenHeight / 3.0f) - itemFrame.YPosition;
 
             ItemMenu.ItemSelected += ItemMenu_ItemSelected;
-            ItemMenu.OnExitRequested += BackToMain;
-            ItemMenu.OnExitRequested += delegate { ResetTableWidget(ItemMenu); };
+            ItemMenu.ExitRequested += BackToMain;
+            ItemMenu.ExitRequested += delegate { ResetTableWidget(ItemMenu); };
 
             itemFrame.AddWidget(ItemMenu);
             itemFrame.IsVisible = false;
@@ -134,7 +134,7 @@ namespace BattleLib.GraphicComponents
             mainFrame.Height = game.ScreenHeight - mainFrame.YPosition;
 
             MainMenu.ItemSelected += MainMenu_ItemSelected;
-            MainMenu.OnExitRequested += delegate { game.Exit(); };
+            MainMenu.ExitRequested += delegate { game.Exit(); };
 
             mainFrame.IsVisible = true;
             game.GUIManager.AddWidget(mainFrame);
@@ -172,8 +172,8 @@ namespace BattleLib.GraphicComponents
             pkmnFrame.Height = game.ScreenHeight;
 
             PKMNMenu.ItemSelected += PKMNMenu_ItemSelected;
-            PKMNMenu.OnExitRequested += BackToMain;
-            PKMNMenu.OnExitRequested += delegate { ResetTableWidget(PKMNMenu); };
+            PKMNMenu.ExitRequested += BackToMain;
+            PKMNMenu.ExitRequested += delegate { ResetTableWidget(PKMNMenu); };
 
             pkmnFrame.AddWidget(PKMNMenu);
             pkmnFrame.IsVisible = false;

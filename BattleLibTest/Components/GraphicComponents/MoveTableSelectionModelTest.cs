@@ -12,13 +12,13 @@ using System.Threading.Tasks;
 namespace BattleLibTest.Components.GraphicComponents
 {
     [TestFixture]
-    class AttackTableSelectionModelTest
+    class MoveTableSelectionModelTest
     {
         [Test]
         public void SelectIndex_ModelHasNoValidValue_ReturnsFalse()
         {
             var model = new TableModelStub<Move> { Rows = 5, Columns = 1 };
-            var selectionModel = new AttackTableSelectionModel(model);
+            var selectionModel = new MoveTableSelectionModel(model);
 
             bool wasSelected = selectionModel.SelectIndex(1, 0);
 
@@ -30,7 +30,7 @@ namespace BattleLibTest.Components.GraphicComponents
         public void SelectIndex_IndexOutOfBound_ReturnFalse(int row, int column)
         {
             var model = new TableModelStub<Move> { Rows = 5, Columns = 1, ReturnValue = new Move(new MoveData()) };
-            var selectionModel = new AttackTableSelectionModel(model);
+            var selectionModel = new MoveTableSelectionModel(model);
 
             bool wasSelected = selectionModel.SelectIndex(row, column);
 

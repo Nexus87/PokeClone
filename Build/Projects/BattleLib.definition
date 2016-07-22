@@ -1,6 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Name="BattleLib" Path="BattleLib" Type="Library">
-  <Properties />
+  <Properties>
+    <NoWarn>1591</NoWarn>
+  </Properties>
   <References>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -33,15 +35,16 @@
     <Compile Include="Components\BattleState\WaitForActionState.cs" />
     <Compile Include="Components\BattleState\WaitForCharState.cs" />
     <Compile Include="Components\Extensions.cs" />
-    <Compile Include="Components\GraphicComponents\AttackModel.cs" />
-    <Compile Include="Components\GraphicComponents\AttackTableSelectionModel.cs" />
+    <Compile Include="Components\GraphicComponents\AbstractMenuWidget.cs" />
     <Compile Include="Components\GraphicComponents\BattleGraphicController.cs" />
     <Compile Include="Components\GraphicComponents\BattleGUI.cs" />
     <Compile Include="Components\GraphicComponents\HPLine.cs" />
     <Compile Include="Components\GraphicComponents\IBattleGraphicController.cs" />
     <Compile Include="Components\GraphicComponents\IGUIService.cs" />
-    <Compile Include="Components\GraphicComponents\IMoveWidget.cs" />
+    <Compile Include="Components\GraphicComponents\IMenuWidget.cs" />
     <Compile Include="Components\GraphicComponents\ItemModel.cs" />
+    <Compile Include="Components\GraphicComponents\MoveModel.cs" />
+    <Compile Include="Components\GraphicComponents\MoveTableSelectionModel.cs" />
     <Compile Include="Components\GraphicComponents\MoveWidget.cs" />
     <Compile Include="Components\GraphicComponents\PokemonDataView.cs" />
     <Compile Include="Components\GraphicComponents\PokemonSprite.cs" />

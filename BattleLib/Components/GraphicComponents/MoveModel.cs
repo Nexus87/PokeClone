@@ -6,12 +6,12 @@ using System.Collections.Generic;
 
 namespace BattleLib.GraphicComponents
 {
-    public class AttackModel : SingleDimensionTableModel<Move>
+    public class MoveModel : SingleDimensionTableModel<Move>
     {
-        public AttackModel(BattleData data) :
+        public MoveModel(BattleData data) :
             this(data.GetPokemon(data.PlayerId))
         {}
-        internal AttackModel(PokemonWrapper pokemon)
+        internal MoveModel(PokemonWrapper pokemon)
         {
             items = new List<Move>{null, null, null, null};
             

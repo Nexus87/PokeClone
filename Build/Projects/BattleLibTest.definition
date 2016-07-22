@@ -1,6 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Name="BattleLibTest" Path="BattleLibTest" Type="Library">
-  <Properties />
+  <Properties>
+    <NoWarn>1591</NoWarn>
+  </Properties>
   <References>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -18,9 +20,9 @@
     <Compile Include="Components\BattleEventProcessorTest.cs" />
     <Compile Include="Components\BattleState\BattleStateComponentTest.cs" />
     <Compile Include="Components\BattleState\WaitForCharStateTest.cs" />
-    <Compile Include="Components\GraphicComponents\AttackModelTest.cs" />
-    <Compile Include="Components\GraphicComponents\AttackTableSelectionModelTest.cs" />
     <Compile Include="Components\GraphicComponents\HPLineTest.cs" />
+    <Compile Include="Components\GraphicComponents\MoveModelTest.cs" />
+    <Compile Include="Components\GraphicComponents\MoveTableSelectionModelTest.cs" />
     <Compile Include="Utils\TestFactory.cs" />
   </Files>
 </Project>

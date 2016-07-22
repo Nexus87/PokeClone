@@ -32,8 +32,8 @@ namespace BattleLib
                     reg.ResolveType<WaitForCharState>(), reg.ResolveType<ExecuteState>(), reg.ResolveType<IEventCreator>());
             });
 
-            registry.RegisterType<AttackModel>();
-            registry.RegisterType<AttackTableSelectionModel>();
+            registry.RegisterType<MoveModel>();
+            registry.RegisterType<MoveTableSelectionModel>();
             registry.RegisterType<AttackTableRenderer>();
             registry.RegisterType<ExecuteState>();
             registry.RegisterType<WaitForCharState>();
@@ -41,7 +41,7 @@ namespace BattleLib
             registry.RegisterAsService<EventCreator, IEventCreator>();
             registry.RegisterAsService<BattleGUI, IGUIService>();
             registry.RegisterType<CommandExecuter>();
-            registry.RegisterType<MoveWidget>();
+            registry.RegisterTypeAs<MoveWidget, IMenuWidget<Move>>();
             registry.RegisterAsService<BattleData, BattleData>();
 
         }

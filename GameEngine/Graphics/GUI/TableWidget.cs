@@ -40,7 +40,7 @@ namespace GameEngine.Graphics.GUI
         /// <summary>
         /// This event is called, if the Back key is pressed
         /// </summary>
-        public event EventHandler OnExitRequested = delegate { };
+        public event EventHandler ExitRequested = delegate { };
 
         public event EventHandler<VisibilityChangedEventArgs> VisibilityChanged = delegate { };
 
@@ -130,7 +130,7 @@ namespace GameEngine.Graphics.GUI
                     break;
 
                 case CommandKeys.Back:
-                    OnExitRequested(this, EventArgs.Empty);
+                    ExitRequested(this, EventArgs.Empty);
                     break;
 
                 case CommandKeys.Right:

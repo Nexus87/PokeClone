@@ -1,4 +1,5 @@
-﻿using Base.Rules;
+﻿using Base;
+using Base.Rules;
 using BattleLib.Components;
 using BattleLib.Components.AI;
 using BattleLib.Components.BattleState;
@@ -35,7 +36,7 @@ namespace BattleLib
             var eventCreator = (EventCreator) factory.registry.ResolveType<IEventCreator>();
 
             graphic = new BattleGraphicController(game, factory, playerID, aiID);
-            gui = new BattleGUI(game, factory.registry.ResolveType<MoveWidget>(), factory, battleState, playerID, aiID);
+            gui = new BattleGUI(game, factory.registry.ResolveType<IMenuWidget<Move>>(), factory, battleState, playerID, aiID);
 
             var eventProcess = new BattleEventProcessor(gui, graphic, queue, eventCreator);
             var aiComponent = new AIComponent(battleState, ai, playerID);

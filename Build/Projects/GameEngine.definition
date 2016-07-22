@@ -1,6 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Name="GameEngine" Path="GameEngine" Type="Library">
-  <Properties />
+  <Properties>
+    <NoWarn>1591</NoWarn>
+  </Properties>
   <References>
     <Reference Include="System" />
     <Reference Include="System.Core" />
