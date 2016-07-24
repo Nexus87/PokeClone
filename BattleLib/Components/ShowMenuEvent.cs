@@ -7,7 +7,7 @@ namespace BattleLib.Components
     public class ShowMenuEvent : IEvent
     {
         public event EventHandler EventProcessed = delegate { };
-        private IGUIService service;
+        readonly IGUIService service;
 
         public ShowMenuEvent(IGUIService service)
         {
@@ -20,7 +20,7 @@ namespace BattleLib.Components
             service.ShowMenu();
         }
 
-        private void MenuShowedHandler(object sender, EventArgs e)
+        void MenuShowedHandler(object sender, EventArgs e)
         {
             service.MenuShowed -= MenuShowedHandler;
             EventProcessed(this, EventArgs.Empty);

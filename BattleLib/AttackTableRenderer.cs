@@ -9,7 +9,7 @@ namespace BattleLib.Components.GraphicComponents
 {
     public class AttackTableRenderer : ITableRenderer<Move>
     {
-        private DefaultTableRenderer<Move> renderer;
+        readonly DefaultTableRenderer<Move> renderer;
 
         public AttackTableRenderer(DefaultTableRenderer<Move> renderer)
         {

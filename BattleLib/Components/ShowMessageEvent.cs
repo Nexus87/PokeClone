@@ -7,8 +7,8 @@ namespace BattleLib.Components
     public class ShowMessageEvent : IEvent
     {
         public event EventHandler EventProcessed = delegate { };
-        private IGUIService guiService;
-        private string text;
+        readonly IGUIService guiService;
+        readonly string text;
 
         public ShowMessageEvent(IGUIService guiService, string text)
         {
@@ -21,7 +21,7 @@ namespace BattleLib.Components
             guiService.SetText(text);
         }
 
-        private void TextDisplayedHandler(object sender, EventArgs e)
+        void TextDisplayedHandler(object sender, EventArgs e)
         {
             guiService.TextDisplayed -= TextDisplayedHandler;
             EventProcessed(this, EventArgs.Empty);

@@ -10,7 +10,7 @@ namespace BattleLib.Components.AI
     class AIComponent : GameEngine.IGameComponent
     {
         private IBattleStateService state;
-        private Action nextAction = null;
+        private Action nextAction;
         private ClientIdentifier id;
         private ClientIdentifier player;
         private IReadOnlyList<Pokemon> pokemons;

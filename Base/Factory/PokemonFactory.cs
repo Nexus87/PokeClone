@@ -25,8 +25,8 @@ namespace Base.Factory
 {
     public class PokemonFactory
     {
-        private IPokemonRepository repository;
-        private IPokemonRules rules;
+        readonly IPokemonRepository repository;
+        readonly IPokemonRules rules;
 
         public PokemonFactory(IPokemonRepository repository, IPokemonRules rules)
         {
@@ -43,7 +43,7 @@ namespace Base.Factory
 
         public Pokemon GetPokemon(int id, int level)
         {
-            Pokemon charakter = rules.FromPokemonData(repository.GetPokemonData(id));
+            var charakter = rules.FromPokemonData(repository.GetPokemonData(id));
             rules.ToLevel(charakter, level);
 
             return charakter;

@@ -18,8 +18,8 @@ namespace BattleLib
 
     public class CommandExecuter
     {
-        private IEventCreator eventCreator;
-        private IMoveEffectCalculator calculator;
+        readonly IEventCreator eventCreator;
+        readonly IMoveEffectCalculator calculator;
 
         public CommandExecuter(IMoveEffectCalculator calculator, IEventCreator eventCreator)
         {
@@ -44,22 +44,22 @@ namespace BattleLib
             throw new NotImplementedException();
         }
 
-        private static MoveEfficiency GetEffect(float typeModifier)
+        static MoveEfficiency GetEffect(float typeModifier)
         {
             if (typeModifier.CompareTo(0) == 0)
                 return MoveEfficiency.NoEffect;
 
-            int result = typeModifier.CompareTo(1.0f);
+            var result = typeModifier.CompareTo(1.0f);
 
             if (result > 0)
                 return MoveEfficiency.VeryEffective;
-            else if (result < 0)
+            if (result < 0)
                 return MoveEfficiency.NotEffective;
 
             return MoveEfficiency.Normal;
         }
 
-        private void ExecMove(PokemonWrapper source, Move move, PokemonWrapper target)
+        void ExecMove(PokemonWrapper source, Move move, PokemonWrapper target)
         {
             eventCreator.UsingMove(source, move);
             calculator.Init(source, move, target);
@@ -70,7 +70,7 @@ namespace BattleLib
             HandleStatusConditionChange(target);
         }
 
-        private void HandleStatusConditionChange(PokemonWrapper target)
+        void HandleStatusConditionChange(PokemonWrapper target)
         {
 
             if (target.Condition != calculator.StatusCondition)
@@ -80,22 +80,22 @@ namespace BattleLib
             }
         }
 
-        private void CheckIfCritical()
+        void CheckIfCritical()
         {
             if (calculator.IsCritical)
                 eventCreator.Critical();
         }
 
-        private void DoDamage(PokemonWrapper target)
+        void DoDamage(PokemonWrapper target)
         {
-            int damage = calculator.Damage;
+            var damage = calculator.Damage;
             target.HP -= damage;
             eventCreator.SetHP(target.Identifier, target.HP);
         }
 
-        private void HandleEfficiency(PokemonWrapper target)
+        void HandleEfficiency(PokemonWrapper target)
         {
-            MoveEfficiency effect = GetEffect(calculator.TypeModifier);
+            var effect = GetEffect(calculator.TypeModifier);
             eventCreator.Effective(effect, target);
         }
     }

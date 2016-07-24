@@ -11,9 +11,9 @@ namespace BattleLib.Components
 {
     public class BattleEventProcessor
     {
-        private IGUIService guiService;
-        private IBattleGraphicController graphicService;
-        private IEventQueue queue;
+        readonly IGUIService guiService;
+        readonly IBattleGraphicController graphicService;
+        readonly IEventQueue queue;
 
         public BattleEventProcessor(IGUIService guiService, IBattleGraphicController graphicService, IEventQueue queue, IEventCreator events)
         {

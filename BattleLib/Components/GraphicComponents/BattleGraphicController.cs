@@ -11,26 +11,8 @@ namespace BattleLib.GraphicComponents
 {
     public class BattleGraphicController : AbstractGraphicComponent, IBattleGraphicController
     {
-        private readonly Dictionary<ClientIdentifier, PokemonDataView> dataViews = new Dictionary<ClientIdentifier, PokemonDataView>();
-        private readonly Dictionary<ClientIdentifier, PokemonSprite> sprites = new Dictionary<ClientIdentifier, PokemonSprite>();
-
-        private BattleGraphicController(
-            ClientIdentifier playerId, ClientIdentifier aiId,
-            PokemonDataView playerView, PokemonSprite playerSprite, 
-            PokemonDataView aiView, PokemonSprite aiSprite)
-        {
-            dataViews[playerId] = playerView;
-            dataViews[aiId] = aiView;
-
-            sprites[playerId] = playerSprite;
-            sprites[aiId] = aiSprite;
-
-            foreach (var view in dataViews.Values)
-                view.OnHPUpdated += delegate { OnHPSet(this, null); };
-
-            foreach (var sprite in sprites.Values)
-                sprite.OnPokemonAppeared += delegate { OnPokemonSet(this, null); };
-        }
+        readonly Dictionary<ClientIdentifier, PokemonDataView> dataViews = new Dictionary<ClientIdentifier, PokemonDataView>();
+        readonly Dictionary<ClientIdentifier, PokemonSprite> sprites = new Dictionary<ClientIdentifier, PokemonSprite>();
 
         public BattleGraphicController(Screen screen, 
             PlayerPokemonDataView playerView, AIPokemonDataView aiView, 
@@ -38,7 +20,7 @@ namespace BattleLib.GraphicComponents
             BattleData data)
         {
             var player = data.PlayerId;
-            var ai = data.Clients.Where(id => !id.IsPlayer).First();
+            var ai = data.Clients.First(id => !id.IsPlayer);
 
             playerSprite.IsPlayer = true;
             aiSprite.IsPlayer = false;

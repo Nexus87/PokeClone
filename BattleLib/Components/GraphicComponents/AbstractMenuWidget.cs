@@ -37,9 +37,9 @@ namespace BattleLib.Components.GraphicComponents
             SetComponents(widget, border);
         }
 
-        private void SetComponents(TableWidget<T> tableWidget, IWidget border)
+        void SetComponents(TableWidget<T> widget, IWidget border)
         {
-            this.tableWidget = tableWidget;
+            tableWidget = widget;
             borderWidget = border;
 
             borderWidget.VisibilityChanged += (obj, args) => VisibilityChanged(this, args);

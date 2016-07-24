@@ -7,9 +7,9 @@ namespace BattleLib.Components
 {
     internal class SetStatusEvent : IEvent
     {
-        private StatusCondition condition;
-        private IBattleGraphicController graphic;
-        private ClientIdentifier id;
+        readonly StatusCondition condition;
+        readonly IBattleGraphicController graphic;
+        readonly ClientIdentifier id;
 
         public SetStatusEvent(IBattleGraphicController graphic, ClientIdentifier id, StatusCondition condition)
         {

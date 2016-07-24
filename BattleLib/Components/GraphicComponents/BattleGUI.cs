@@ -12,14 +12,14 @@ namespace BattleLib.GraphicComponents
 {
     public class BattleGUI : IGUIService
     {
-        private MessageBox messageBox;
-        private Dialog messageFrame;
+        readonly MessageBox messageBox;
+        readonly Dialog messageFrame;
 
         public BattleGUI(Screen screen, GUIManager manager, Dialog messageFrame, MessageBox messageBox, IMenuWidget<MainMenuEntries> mainWidget, IMenuWidget<Move> moveWidget, IMenuWidget<Pokemon> pokemonWidget, IMenuWidget<Item> itemWidget, IBattleStateService battleState, BattleData data)
         {
             this.battleState = battleState;
             playerId = data.PlayerId;
-            this.ai = data.Clients.Where(id => !id.IsPlayer).First() ;
+            ai = data.Clients.First(id => !id.IsPlayer);
             this.moveWidget = moveWidget;
             this.itemWidget = itemWidget;
             this.mainWidget = mainWidget;
@@ -39,13 +39,13 @@ namespace BattleLib.GraphicComponents
 
         public event EventHandler MenuShowed = delegate { };
         public event EventHandler TextDisplayed = delegate { };
-        private ClientIdentifier ai;
-        private IMenuWidget<Move> moveWidget;
-        private IMenuWidget<Item> itemWidget;
-        private IMenuWidget<Pokemon> pokemonWidget;
+        readonly ClientIdentifier ai;
+        readonly IMenuWidget<Move> moveWidget;
+        readonly IMenuWidget<Item> itemWidget;
+        readonly IMenuWidget<Pokemon> pokemonWidget;
 
-        private IBattleStateService battleState;
-        private ClientIdentifier playerId;
+        readonly IBattleStateService battleState;
+        readonly ClientIdentifier playerId;
 
         public void SetText(string Text)
         {
@@ -59,13 +59,13 @@ namespace BattleLib.GraphicComponents
             MenuShowed(this, EventArgs.Empty);
         }
 
-        private void AttackMenu_ItemSelected(object sender, SelectionEventArgs<Move> e)
+        void AttackMenu_ItemSelected(object sender, SelectionEventArgs<Move> e)
         {
             battleState.SetMove(playerId, ai, e.SelectedData);
             moveWidget.IsVisible = false;
         }
 
-        private void BackToMain(object sender, EventArgs e)
+        void BackToMain(object sender, EventArgs e)
         {
             itemWidget.IsVisible = false;
             moveWidget.IsVisible = false;
@@ -74,7 +74,7 @@ namespace BattleLib.GraphicComponents
             mainWidget.IsVisible = true;
         }
 
-        private void InitAttackMenu(Screen screen, GUIManager manager)
+        void InitAttackMenu(Screen screen, GUIManager manager)
         {
             moveWidget.SetCoordinates(
                 X: screen.ScreenWidth / 2.0f,
@@ -91,7 +91,7 @@ namespace BattleLib.GraphicComponents
             manager.AddWidget(moveWidget);
         }
 
-        private void InitItemMenu(Screen screen, GUIManager manager)
+        void InitItemMenu(Screen screen, GUIManager manager)
         {
             itemWidget.XPosition = 3.0f * screen.ScreenWidth / 8.0f;
             itemWidget.YPosition = 1.0f * screen.ScreenHeight / 8.0f;
@@ -108,7 +108,7 @@ namespace BattleLib.GraphicComponents
             manager.AddWidget(itemWidget);
         }
 
-        private void InitMainMenu(Screen screen, GUIManager manager)
+        void InitMainMenu(Screen screen, GUIManager manager)
         {
             mainWidget.XPosition = 0.5f * screen.ScreenWidth;
             mainWidget.YPosition = 2.0f * screen.ScreenHeight / 3.0f;
@@ -122,7 +122,7 @@ namespace BattleLib.GraphicComponents
             manager.AddWidget(mainWidget);
         }
 
-        private void InitMessageBox(Screen screen, GUIManager manager)
+        void InitMessageBox(Screen screen, GUIManager manager)
         {
             messageFrame.AddWidget(messageBox);
             messageFrame.XPosition = 0;
@@ -136,12 +136,12 @@ namespace BattleLib.GraphicComponents
             messageBox.OnAllLineShowed += AllLineShowedHandler;
         }
 
-        private void AllLineShowedHandler(object sender, EventArgs e)
+        void AllLineShowedHandler(object sender, EventArgs e)
         {
             TextDisplayed(this, EventArgs.Empty);
         }
 
-        private void InitPKMNMenu(Screen screen, GUIManager manager)
+        void InitPKMNMenu(Screen screen, GUIManager manager)
         {
             pokemonWidget.XPosition = 0;
             pokemonWidget.YPosition = 0;
@@ -157,13 +157,13 @@ namespace BattleLib.GraphicComponents
             manager.AddWidget(pokemonWidget);
         }
 
-        private void ItemMenu_ItemSelected(object sender, SelectionEventArgs<Item> e)
+        void ItemMenu_ItemSelected(object sender, SelectionEventArgs<Item> e)
         {
             battleState.SetItem(playerId, playerId, e.SelectedData);
             itemWidget.IsVisible = false;
         }
 
-        private void MainMenu_ItemSelected(object sender, SelectionEventArgs<MainMenuEntries> e)
+        void MainMenu_ItemSelected(object sender, SelectionEventArgs<MainMenuEntries> e)
         {
             switch (e.SelectedData)
             {
@@ -184,7 +184,7 @@ namespace BattleLib.GraphicComponents
             }
         }
 
-        private void PKMNMenu_ItemSelected(object sender, SelectionEventArgs<Pokemon> e)
+        void PKMNMenu_ItemSelected(object sender, SelectionEventArgs<Pokemon> e)
         {
             battleState.SetCharacter(playerId, e.SelectedData);
             pokemonWidget.IsVisible = false;

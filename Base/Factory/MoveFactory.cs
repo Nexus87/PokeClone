@@ -1,11 +1,10 @@
-﻿using Base.Data;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Base.Factory
 {
     public class MoveFactory
     {
-        IMoveRepository repository;
+        readonly IMoveRepository repository;
 
         public MoveFactory(IMoveRepository repository)
         {
@@ -16,7 +15,7 @@ namespace Base.Factory
 
         public Move GetMove(int id)
         {
-            MoveData data = repository.GetMoveData(id);
+            var data = repository.GetMoveData(id);
             return new Move(data);
         }
     }

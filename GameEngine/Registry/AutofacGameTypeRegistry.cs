@@ -1,8 +1,5 @@
 ﻿using Autofac;
-using Autofac.Builder;
-using Autofac.Core;
 using Autofac.Core.Registration;
-using GameEngine.Registry;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -15,20 +15,20 @@ namespace BattleLib
 {
     public class InitComponent : GameEngine.IGameComponent
     {
-        Client player;
-        Client ai;
-        PokeEngine engine;
-        private IBattleStateService battleState;
-        private IBattleGraphicController graphic;
-        private IGUIService gui;
+        readonly Client player;
+        readonly Client ai;
+        readonly PokeEngine engine;
+        readonly IBattleStateService battleState;
+        readonly IBattleGraphicController graphic;
+        readonly IGUIService gui;
 
-        public InitComponent(Configuration config, PokeEngine game, IGameTypeRegistry registry)
+        public InitComponent(PokeEngine game, IGameTypeRegistry registry)
         {
             BattleLibTypes.RegisterTypes(registry);
             engine = game;
-            BattleData data = registry.ResolveType<BattleData>();
+            var data = registry.ResolveType<BattleData>();
             var playerID = data.PlayerId;
-            var aiID = data.Clients.Where(id => !id.IsPlayer).First();
+            var aiID = data.Clients.First(id => !id.IsPlayer);
             player = new Client(playerID);
             ai = new Client(aiID);
             

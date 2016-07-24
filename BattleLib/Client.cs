@@ -7,17 +7,17 @@ namespace BattleLib
 {
     public class Client
     {
-        private readonly List<Pokemon> pokemons = new List<Pokemon>();
-        private readonly List<Item> items = new List<Item>();
+        readonly List<Pokemon> pokemons = new List<Pokemon>();
+        readonly List<Item> items = new List<Item>();
 
         public Client(ClientIdentifier id)
         {
-            this.Id = id;
+            Id = id;
 
-            Stats stats = new Stats { Atk = 10, Def = 10, HP = 30, SpAtk = 10, SpDef = 10, Speed = 10 };
-            PokemonData data = new PokemonData() { Id = 0, Type1 = PokemonType.Normal, BaseStats = stats };
+            var stats = new Stats { Atk = 10, Def = 10, HP = 30, SpAtk = 10, SpDef = 10, Speed = 10 };
+            var data = new PokemonData { Id = 0, Type1 = PokemonType.Normal, BaseStats = stats };
 
-            MoveData moveData = new MoveData()
+            var moveData = new MoveData
             {
                 Name = "Move",
                 Accuracy = 100,

@@ -5,7 +5,7 @@ namespace Base
 {
     public class Move
     {
-        private MoveData data;
+        readonly MoveData data;
         
         public Move(MoveData data)
         {
