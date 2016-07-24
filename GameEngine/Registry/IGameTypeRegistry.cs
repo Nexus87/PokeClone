@@ -34,5 +34,6 @@ namespace GameEngine.Registry
         void RegisterParameter(Object parameterKey, Object parameter);
 
         T GetParameter<T>(Object resourceKey);
+        void ScanAssembly(Assembly assembly);
     }
 }

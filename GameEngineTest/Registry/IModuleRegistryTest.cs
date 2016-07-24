@@ -12,8 +12,8 @@ namespace GameEngineTest.Registry
 {
     public class TestModule : IModule
     {
-        public static bool WasCreated = false;
-        public static bool WasCalled = false;
+        public static bool WasCreated;
+        public static bool WasCalled ;
         public string ModuleName { get { return "TestModule"; } }
         public TestModule()
         {

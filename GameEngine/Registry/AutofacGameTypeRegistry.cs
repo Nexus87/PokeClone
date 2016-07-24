@@ -10,10 +10,10 @@ using System.Reflection;
 
 namespace GameEngine.Registry
 {
-    internal class AutofacGameTypeRegistry : IGameTypeRegistry
+    class AutofacGameTypeRegistry : IGameTypeRegistry
     {
-        private IContainer container;
-        private ContainerBuilder builder = new ContainerBuilder();
+        IContainer container;
+        ContainerBuilder builder = new ContainerBuilder();
         public AutofacGameTypeRegistry()
         {
             builder.Register<IGameTypeRegistry>(p => this);
@@ -80,7 +80,7 @@ namespace GameEngine.Registry
         }
 
 
-        private readonly Dictionary<object, object> parameters = new Dictionary<object, object>();
+        readonly Dictionary<object, object> parameters = new Dictionary<object, object>();
 
         public void RegisterParameter(object parameterKey, object parameter)
         {
@@ -137,6 +137,16 @@ namespace GameEngine.Registry
         public void RegisterAsService<T, S>(Func<IGameTypeRegistry, T> creatorFunc)
         {
             builder.Register<T>(c => creatorFunc(this)).As<S>().SingleInstance();
+        }
+
+        public void ScanAssembly(Assembly assembly)
+        {
+            var typesToRegister = assembly.GetTypes()
+                .Where(type => Attribute.IsDefined(type, typeof(GameTypeAttribute)));
+
+            foreach (var type in typesToRegister)
+                builder.RegisterType(type);
+                
         }
     }
 }

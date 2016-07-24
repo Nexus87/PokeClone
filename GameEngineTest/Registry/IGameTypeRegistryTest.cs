@@ -1,13 +1,9 @@
-﻿using GameEngine;
-using GameEngine.Registry;
+﻿using GameEngine.Registry;
 using Microsoft.Xna.Framework;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GameEngineTest.Registry
 {
@@ -18,6 +14,9 @@ namespace GameEngineTest.Registry
         public void Initialize() { throw new NotImplementedException(); }
         public void Update(GameTime time) { throw new NotImplementedException(); }
     }
+
+    [GameType]
+    public class GameType { }
 
     public abstract class IGameTypeRegistryTest
     {
@@ -66,6 +65,17 @@ namespace GameEngineTest.Registry
             var components = registry.CreateGameComponents("m");
 
             Assert.IsEmpty(components);
+        }
+
+        [Test]
+        public void ScanAssembly_GameTypeAttribute_TypeCanBeResolved()
+        {
+            var registry = CreateRegistry();
+            registry.ScanAssembly(Assembly.GetExecutingAssembly());
+
+            GameType type = registry.ResolveType<GameType>();
+
+            Assert.NotNull(type);
         }
     
 

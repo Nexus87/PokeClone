@@ -7,8 +7,7 @@ namespace GameEngineTest.Graphics
 {
     public abstract class ITableRendererTest
     {
-        private TestType data = new TestType("test");
-
+        TestType data = new TestType("test");
         protected abstract ITableRenderer<TestType> CreateRenderer();
 
         [TestCase]
@@ -60,7 +59,7 @@ namespace GameEngineTest.Graphics
 
             new TestCaseData(-10, 0),
             new TestCaseData(0, -10),
-            new TestCaseData(-10, -10),
+            new TestCaseData(-10, -10)
         };
 
         [TestCaseSource(typeof(ITableRendererTest), "InvalidIndexes")]

@@ -7,7 +7,7 @@ namespace GameEngine
 {
     class EventQueue : IGameComponent, IEventQueue
     {
-        bool eventDispatched = false;
+        bool eventDispatched;
         IEvent dispatchedEvent;
 
         LinkedList<IEvent> eventQueue = new LinkedList<IEvent>();
