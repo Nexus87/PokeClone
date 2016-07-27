@@ -114,12 +114,40 @@ namespace GameEngine.Registry
 
         public void ScanAssembly(Assembly assembly)
         {
+            RegisterGameTypes(assembly);
+            RegisterServiceTypes(assembly);
+        }
+
+        private void RegisterGameTypes(Assembly assembly)
+        {
             var typesToRegister = assembly.GetTypes()
                 .Where(type => Attribute.IsDefined(type, typeof(GameTypeAttribute)));
 
             foreach (var type in typesToRegister)
-                builder.RegisterType(type);
-                
+            {
+                if (type.IsGenericType)
+                    builder.RegisterGeneric(type);
+                else
+                    builder.RegisterType(type);
+            }
+
+        }
+
+
+        private void RegisterServiceTypes(Assembly assembly)
+        {
+            var typesToRegister = assembly.GetTypes()
+                .Where(type => Attribute.IsDefined(type, typeof(GameServiceAttribute)));
+
+            foreach (var type in typesToRegister)
+                if(type.IsGenericType)
+                    builder.RegisterGeneric(type)
+                        .As(type.GetCustomAttribute<GameServiceAttribute>().ServiceType)
+                        .SingleInstance();
+                else
+                    builder.RegisterType(type)
+                        .As(type.GetCustomAttribute<GameServiceAttribute>().ServiceType)
+                        .SingleInstance();
         }
     }
 }

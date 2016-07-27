@@ -10,6 +10,7 @@ using System;
 
 namespace BattleLib.GraphicComponents
 {
+    [GameService(typeof(IGUIService))]
     public class BattleGUI : IGUIService
     {
         readonly MessageBox messageBox;

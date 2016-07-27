@@ -1,10 +1,12 @@
-﻿using GameEngine.Utils;
+﻿using GameEngine.Registry;
+using GameEngine.Utils;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 
 namespace GameEngine.Graphics.GUI
 {
+    [GameService(typeof(GUIManager))]
     public class GUIManager : IInputHandler
     {
         private IWidget FocusedWidget { get { return widgets.Count == 0 ? null : widgets.Last.Value; } }

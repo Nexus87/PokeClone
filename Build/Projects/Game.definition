@@ -22,5 +22,6 @@
     <Compile Include="Rules\DummyScheduler.cs" />
     <Compile Include="Rules\DummyTable.cs" />
     <Compile Include="Rules\Gen1CharRules.cs" />
+    <None Include="packages.config" />
   </Files>
 </Project>

@@ -1,6 +1,7 @@
 ﻿using BattleLib.Components.BattleState;
 using BattleLib.GraphicComponents;
 using GameEngine;
+using GameEngine.Registry;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace BattleLib.Components
 {
+    [GameService(typeof(BattleEventProcessor))]
     public class BattleEventProcessor
     {
         readonly IGUIService guiService;

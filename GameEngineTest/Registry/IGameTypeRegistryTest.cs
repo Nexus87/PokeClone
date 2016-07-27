@@ -15,8 +15,12 @@ namespace GameEngineTest.Registry
         public void Update(GameTime time) { throw new NotImplementedException(); }
     }
 
-    [GameType]
-    public class GameType { }
+    public interface IGameService { }
+    [GameService(typeof(IGameService))]
+    public class GameService : IGameService { 
+        public static int instances = 0; 
+        public GameService() { instances++; } 
+    }
 
     public abstract class IGameTypeRegistryTest
     {
@@ -26,6 +30,7 @@ namespace GameEngineTest.Registry
         public void Setup()
         {
             GameComponentClass.instances = 0;
+            GameService.instances = 0;
         }
 
         
@@ -67,6 +72,8 @@ namespace GameEngineTest.Registry
             Assert.IsEmpty(components);
         }
 
+        [GameType]
+        public class GameType { }
         [Test]
         public void ScanAssembly_GameTypeAttribute_TypeCanBeResolved()
         {
@@ -77,7 +84,42 @@ namespace GameEngineTest.Registry
 
             Assert.NotNull(type);
         }
-    
 
+        [GameType]
+        public class GenericType<T> { }
+
+        [Test]
+        public void ScanAssembly_GameTypeAttributeGenericType_TypeCanBeResolved()
+        {
+            var registry = CreateRegistry();
+            registry.ScanAssembly(Assembly.GetExecutingAssembly());
+
+            GenericType<Object> type = registry.ResolveType<GenericType<Object>>();
+
+            Assert.NotNull(type);
+        }
+
+        [Test]
+        public void ScanAssembly_GameServiceAttribute_ServiceCanBeResolved()
+        {
+            var registry = CreateRegistry();
+            registry.ScanAssembly(Assembly.GetExecutingAssembly());
+
+            IGameService service = registry.ResolveType<IGameService>();
+
+            Assert.NotNull(service);
+        }
+
+        [Test]
+        public void ResolveType_GameServiceAttribute_OnlyOneInstanceCreated()
+        {
+            var registry = CreateRegistry();
+            registry.ScanAssembly(Assembly.GetExecutingAssembly());
+
+            registry.ResolveType<IGameService>();
+            registry.ResolveType<IGameService>();
+
+            Assert.AreEqual(1, GameService.instances);
+        }
     }
 }

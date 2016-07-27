@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace GameEngine
 {
+    [GameService(typeof(IEventQueue))]
     class EventQueue : IGameComponent, IEventQueue
     {
         bool eventDispatched;

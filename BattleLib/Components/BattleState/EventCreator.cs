@@ -6,6 +6,7 @@ using System;
 
 namespace BattleLib.Components.BattleState
 {
+    [GameService(typeof(IEventCreator))]
     public class EventCreator : IEventCreator
     {
         public void UsingMove(PokemonWrapper source, Move move)

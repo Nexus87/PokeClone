@@ -29,16 +29,10 @@ namespace GameEngine
             registry.RegisterType<Dialog>(reg => new Dialog(factory.DefaultBorderTexture));
             registry.RegisterType<Line>(reg => new Line(factory.Pixel, factory.Cup));
             registry.RegisterTypeAs(typeof(DefaultTableRenderer<>), typeof(ITableRenderer<>));
-            registry.RegisterType(typeof(DefaultTableRenderer<>));
             registry.RegisterTypeAs(typeof(DefaultTableModel<>), typeof(ITableModel<>));
             registry.RegisterTypeAs<DefaultTextSplitter, ITextSplitter>();
-            registry.RegisterAsService<EventQueue, IEventQueue>();
             registry.RegisterTypeAs<TableSingleSelectionModel, ITableSelectionModel>();
             registry.RegisterAsService<InputComponent, InputComponent>(reg => new InputComponent(config));
-            registry.RegisterType(typeof(TableView<>));
-            registry.RegisterAsService<Screen, Screen>();
-            registry.RegisterAsService<GUIManager, GUIManager>();
-            registry.RegisterAsService<TextureProvider, TextureProvider>();
             registry.RegisterAsService<ContentManager, ContentManager>(reg => engine.Content);
 
             registry.ScanAssembly(Assembly.GetExecutingAssembly());

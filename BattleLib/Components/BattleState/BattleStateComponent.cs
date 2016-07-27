@@ -13,6 +13,7 @@ namespace BattleLib.Components.BattleState
         Execute
     }
 
+    [GameService(typeof(IBattleStateService))]
     public class BattleStateComponent : GameEngine.IGameComponent, IBattleStateService
     {
         private IBattleState currentState;

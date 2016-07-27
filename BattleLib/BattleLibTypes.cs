@@ -18,23 +18,8 @@ namespace BattleLib
 {
     internal static class BattleLibTypes
     {
-        public enum ResourceKeys
-        {
-            PlayerId,
-            AIId,
-            PlayerPokemonWrapper
-        }
-
         public static void RegisterTypes(IGameTypeRegistry registry)
         {
-
-            registry.RegisterAsService<BattleStateComponent, IBattleStateService>();
-            registry.RegisterAsService<EventCreator, IEventCreator>();
-            registry.RegisterAsService<BattleGUI, IGUIService>();
-            registry.RegisterAsService<BattleData, BattleData>();
-            registry.RegisterAsService<BattleGraphicController, IBattleGraphicController>();
-            registry.RegisterAsService<BattleEventProcessor, BattleEventProcessor>();
-
             registry.ScanAssembly(Assembly.GetExecutingAssembly());
         }
     }

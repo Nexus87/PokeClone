@@ -1,9 +1,11 @@
 ﻿using BattleLib.Components.BattleState.Commands;
+using GameEngine.Registry;
 using System;
 using System.Collections.Generic;
 
 namespace BattleLib.Components.BattleState
 {
+    [GameService(typeof(BattleData))]
     public class BattleData
     {
         ClientIdentifier Ai { get; set; }

@@ -1,7 +1,9 @@
-﻿using Microsoft.Xna.Framework.Content;
+﻿using GameEngine.Registry;
+using Microsoft.Xna.Framework.Content;
 
 namespace GameEngine
 {
+    [GameService(typeof(TextureProvider))]
     public class TextureProvider
     {
         private ContentManager Content { get; set; }

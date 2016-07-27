@@ -6,9 +6,12 @@ using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using BattleLib.Components.GraphicComponents;
+using GameEngine.Registry;
 
 namespace BattleLib.GraphicComponents
 {
+    [GameService(typeof(IBattleGraphicController))]
     public class BattleGraphicController : AbstractGraphicComponent, IBattleGraphicController
     {
         readonly Dictionary<ClientIdentifier, PokemonDataView> dataViews = new Dictionary<ClientIdentifier, PokemonDataView>();

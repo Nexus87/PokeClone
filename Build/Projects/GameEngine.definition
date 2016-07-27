@@ -76,6 +76,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registry\AutofacGameTypeRegistry.cs" />
     <Compile Include="Registry\AutofacModuleRegistry.cs" />
+    <Compile Include="Registry\GameServiceAttribute.cs" />
     <Compile Include="Registry\GameTypeAttribute.cs" />
     <Compile Include="Registry\IGameTypeRegistry.cs" />
     <Compile Include="Registry\IModuleRegistry.cs" />
