@@ -1,5 +1,6 @@
 ﻿using GameEngine.Graphics;
 using GameEngine.Graphics.GUI;
+using GameEngine.Registry;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,8 @@ namespace BattleLib.Components.GraphicComponents
         Item,
         Run
     }
+
+    [GameType]
     public class MainMenuWidget : AbstractMenuWidget<MainMenuEntries>
     {
         public MainMenuWidget(TableView<MainMenuEntries> tableView, Dialog dialog) :

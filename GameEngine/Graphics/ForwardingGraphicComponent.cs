@@ -49,7 +49,6 @@ namespace GameEngine.Graphics
         /// Constructs an instance of this class with InnerComponent component
         /// </summary>
         /// <param name="component">Inner component</param>
-        /// <param name="game">Instance of PokeEngine</param>
         protected ForwardingGraphicComponent(T component)
         {
             InnerComponent = component;

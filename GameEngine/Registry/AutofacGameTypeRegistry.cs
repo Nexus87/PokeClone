@@ -41,15 +41,6 @@ namespace GameEngine.Registry
             }
         }
 
-        public T ResolveTypeWithParameters<T>(IDictionary<Type, object> parameters)
-        {
-            if (container == null)
-                container = builder.Build();
-
-            var parameterList = from p in parameters select new TypedParameter(p.Key, p.Value);
-            return container.Resolve<T>(parameterList);
-        }
-
         public void RegisterType<T>(Func<IGameTypeRegistry, T> creatorFunc)
         {
             RegisterTypeAs<T, T>(creatorFunc);
@@ -75,21 +66,6 @@ namespace GameEngine.Registry
         {
             builder.Register(c => creatorFunc(this)).As<S>();
         }
-
-
-        readonly Dictionary<object, object> parameters = new Dictionary<object, object>();
-
-        public void RegisterParameter(object parameterKey, object parameter)
-        {
-            parameters[parameterKey] = parameter;
-        }
-
-
-        public T GetParameter<T>(object resourceKey)
-        {
-            return (T)parameters[resourceKey];
-        }
-
 
         public void RegisterAsService<T, S>()
         {

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 
 namespace BattleLib.Components.BattleState
 {
+    [GameType]
     public class WaitForActionState : IBattleState
     {
         private int clientCnt;

@@ -44,7 +44,7 @@ namespace GameEngine.Graphics
         /// <param name="column">Column</param>
         /// <returns>Data at the given index</returns>
         /// <exception cref="System.IndexOutOfRangeException"> 
-        /// If row / column < 0  or row >= Rows / column >= columns
+        /// If row / column \< 0  or row >= Rows / column >= columns
         /// </exception>
         T DataAt(int row, int column);
         /// <summary>

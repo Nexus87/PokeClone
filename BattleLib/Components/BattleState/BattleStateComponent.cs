@@ -23,6 +23,7 @@ namespace BattleLib.Components.BattleState
 
         public BattleStateComponent(BattleData data, WaitForActionState actionState, WaitForCharState characterSetState, ExecuteState executionState, IEventCreator eventCreator) :
             this(data, (IBattleState)actionState, characterSetState, executionState, eventCreator) { }
+        
         internal BattleStateComponent(BattleData data, IBattleState actionState, IBattleState characterSetState, IBattleState executionState, IEventCreator eventCreator)
         {
             actionState.CheckNull("actionState");

@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 
 namespace GameEngine.Graphics
 {
+    [GameType]
     public class MultlineTextBox : AbstractGraphicComponent, ITextGraphicContainer
     {
         private string text;

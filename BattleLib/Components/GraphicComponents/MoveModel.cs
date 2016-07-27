@@ -6,6 +6,7 @@ using System.Collections.Generic;
 
 namespace BattleLib.GraphicComponents
 {
+    [GameType]
     public class MoveModel : SingleDimensionTableModel<Move>
     {
         public MoveModel(BattleData data) :

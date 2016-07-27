@@ -1,10 +1,12 @@
 ﻿using GameEngine;
 using GameEngine.Graphics;
+using GameEngine.Registry;
 using Microsoft.Xna.Framework;
 using System;
 
 namespace BattleLib.GraphicComponents
 {
+    [GameType]
     public class PokemonSprite : AbstractGraphicComponent
     {
         public event EventHandler OnPokemonAppeared = delegate { };

@@ -28,12 +28,6 @@ namespace GameEngine.Registry
 
         IEnumerable<IGameComponent> CreateGameComponents(string moduleName);
         T ResolveType<T>();
-        T ResolveTypeWithParameters<T>(IDictionary<Type, object> parameters);
-
-
-        void RegisterParameter(Object parameterKey, Object parameter);
-
-        T GetParameter<T>(Object resourceKey);
         void ScanAssembly(Assembly assembly);
     }
 }

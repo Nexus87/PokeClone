@@ -15,7 +15,21 @@ namespace BattleLib.GraphicComponents
         readonly MessageBox messageBox;
         readonly Dialog messageFrame;
 
-        public BattleGUI(Screen screen, GUIManager manager, Dialog messageFrame, MessageBox messageBox, IMenuWidget<MainMenuEntries> mainWidget, IMenuWidget<Move> moveWidget, IMenuWidget<Pokemon> pokemonWidget, IMenuWidget<Item> itemWidget, IBattleStateService battleState, BattleData data)
+        public BattleGUI(Screen screen, GUIManager manager, 
+            Dialog messageFrame, MessageBox messageBox, 
+            MainMenuWidget mainWidget,
+            MoveMenuWidget moveWidget, PokemonMenuWidget pokemonWidget,
+            ItemMenuWidget itemWidget, IBattleStateService battleState,
+            BattleData data) :
+            this(screen, manager, messageFrame, messageBox, (IMenuWidget<MainMenuEntries>)mainWidget, moveWidget, pokemonWidget, itemWidget, battleState, data)
+        {}
+        
+            internal BattleGUI(Screen screen, GUIManager manager, 
+            Dialog messageFrame, MessageBox messageBox, 
+            IMenuWidget<MainMenuEntries> mainWidget, 
+            IMenuWidget<Move> moveWidget, IMenuWidget<Pokemon> pokemonWidget, 
+            IMenuWidget<Item> itemWidget, IBattleStateService battleState, 
+            BattleData data)
         {
             this.battleState = battleState;
             playerId = data.PlayerId;

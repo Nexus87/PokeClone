@@ -5,6 +5,7 @@ using GameEngine.Utils;
 
 namespace BattleLib.GraphicComponents
 {
+    [GameType]
     public class MoveTableSelectionModel : TableSingleSelectionModel
     {
         public MoveTableSelectionModel(MoveModel model) :

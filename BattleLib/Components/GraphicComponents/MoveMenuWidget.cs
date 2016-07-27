@@ -3,12 +3,14 @@ using BattleLib.GraphicComponents;
 using GameEngine;
 using GameEngine.Graphics;
 using GameEngine.Graphics.GUI;
+using GameEngine.Registry;
 using GameEngine.Utils;
 using Microsoft.Xna.Framework;
 using System;
 
 namespace BattleLib.Components.GraphicComponents
 {
+    [GameType]
     public class MoveMenuWidget : AbstractMenuWidget<Move>
     {
 

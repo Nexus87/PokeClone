@@ -1,12 +1,14 @@
 ﻿using BattleLib.Components.BattleState;
 using GameEngine;
 using GameEngine.Graphics;
+using GameEngine.Registry;
 using Microsoft.Xna.Framework;
 using System;
 
 namespace BattleLib.GraphicComponents
 {
     // TODO come up with a better solution for this
+    [GameType]
     public class PlayerPokemonDataView : PokemonDataView
     {
         public PlayerPokemonDataView(HPLine line, TextBox nameBox, TextBox levelBox, TextBox hpBox, TextBox hpTextBox) :
@@ -14,6 +16,7 @@ namespace BattleLib.GraphicComponents
         { }
     }
 
+    [GameType]
     public class AIPokemonDataView : PokemonDataView
     {
         public AIPokemonDataView(HPLine line, TextBox nameBox, TextBox levelBox, TextBox hpBox) :

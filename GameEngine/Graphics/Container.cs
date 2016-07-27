@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 namespace GameEngine.Graphics
 {
+    [GameType]
     public class Container : AbstractGraphicComponent
     {
         public ILayout Layout { get; set; }

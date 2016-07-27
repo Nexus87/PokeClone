@@ -16,6 +16,7 @@ namespace BattleLib
         VeryEffective
     }
 
+    [GameType]
     public class CommandExecuter
     {
         readonly IEventCreator eventCreator;

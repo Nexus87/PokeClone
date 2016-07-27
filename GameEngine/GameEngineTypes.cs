@@ -24,24 +24,14 @@ namespace GameEngine
 
         public static void Register(IGameTypeRegistry registry, GraphicResources factory, PokeEngine engine, Configuration config)
         {
-            registry.RegisterParameter(ResourceKeys.PixelTexture, factory.Pixel);
-            registry.RegisterParameter(ResourceKeys.CupTexture, factory.Cup);
-            registry.RegisterParameter(ResourceKeys.ArrowTexture, factory.DefaultArrowTexture);
-            registry.RegisterParameter(ResourceKeys.BorderTexture, factory.DefaultBorderTexture);
-
             registry.RegisterType<ISpriteFont>(r => factory.DefaultFont);
             registry.RegisterType<ItemBox>(reg => new ItemBox(factory.DefaultArrowTexture, factory.DefaultFont));
             registry.RegisterType<Dialog>(reg => new Dialog(factory.DefaultBorderTexture));
             registry.RegisterType<Line>(reg => new Line(factory.Pixel, factory.Cup));
-            registry.RegisterType<TextureBox>();
-            registry.RegisterType<MultlineTextBox>();
-            registry.RegisterType<MessageBox>();
             registry.RegisterTypeAs(typeof(DefaultTableRenderer<>), typeof(ITableRenderer<>));
             registry.RegisterType(typeof(DefaultTableRenderer<>));
             registry.RegisterTypeAs(typeof(DefaultTableModel<>), typeof(ITableModel<>));
-            registry.RegisterType<Container>();
             registry.RegisterTypeAs<DefaultTextSplitter, ITextSplitter>();
-            registry.RegisterType<TextBox>();
             registry.RegisterAsService<EventQueue, IEventQueue>();
             registry.RegisterTypeAs<TableSingleSelectionModel, ITableSelectionModel>();
             registry.RegisterAsService<InputComponent, InputComponent>(reg => new InputComponent(config));
@@ -50,6 +40,8 @@ namespace GameEngine
             registry.RegisterAsService<GUIManager, GUIManager>();
             registry.RegisterAsService<TextureProvider, TextureProvider>();
             registry.RegisterAsService<ContentManager, ContentManager>(reg => engine.Content);
+
+            registry.ScanAssembly(Assembly.GetExecutingAssembly());
         }
     }
 }

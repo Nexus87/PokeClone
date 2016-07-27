@@ -28,31 +28,14 @@ namespace BattleLib
         public static void RegisterTypes(IGameTypeRegistry registry)
         {
 
-            registry.RegisterAsService<BattleStateComponent, IBattleStateService>(reg => {
-                return new BattleStateComponent(reg.ResolveType<BattleData>(), reg.ResolveType<WaitForActionState>(),
-                    reg.ResolveType<WaitForCharState>(), reg.ResolveType<ExecuteState>(), reg.ResolveType<IEventCreator>());
-            });
-
-            registry.RegisterType<MoveModel>();
-            registry.RegisterType<MoveTableSelectionModel>();
-            registry.RegisterType<AttackTableRenderer>();
-            registry.RegisterType<ExecuteState>();
-            registry.RegisterType<WaitForCharState>();
-            registry.RegisterType<WaitForActionState>();
+            registry.RegisterAsService<BattleStateComponent, IBattleStateService>();
             registry.RegisterAsService<EventCreator, IEventCreator>();
             registry.RegisterAsService<BattleGUI, IGUIService>();
-            registry.RegisterType<CommandExecuter>();
-            registry.RegisterTypeAs<MoveMenuWidget, IMenuWidget<Move>>();
-            registry.RegisterTypeAs<ItemMenuWidget, IMenuWidget<Item>>();
-            registry.RegisterTypeAs<MainMenuWidget, IMenuWidget<MainMenuEntries>>();
-            registry.RegisterTypeAs<PokemonMenuWidget, IMenuWidget<Pokemon>>();
             registry.RegisterAsService<BattleData, BattleData>();
-            registry.RegisterType<HPLine>();
-            registry.RegisterType<AIPokemonDataView>();
-            registry.RegisterType<PlayerPokemonDataView>();
             registry.RegisterAsService<BattleGraphicController, IBattleGraphicController>();
-            registry.RegisterType<PokemonSprite>();
             registry.RegisterAsService<BattleEventProcessor, BattleEventProcessor>();
+
+            registry.ScanAssembly(Assembly.GetExecutingAssembly());
         }
     }
 }

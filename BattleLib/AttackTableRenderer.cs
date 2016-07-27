@@ -1,5 +1,6 @@
 ﻿using Base;
 using GameEngine.Graphics;
+using GameEngine.Registry;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Text;
 
 namespace BattleLib.Components.GraphicComponents
 {
+    [GameType]
     public class AttackTableRenderer : ITableRenderer<Move>
     {
         readonly DefaultTableRenderer<Move> renderer;
