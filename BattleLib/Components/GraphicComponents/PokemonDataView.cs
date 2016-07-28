@@ -99,12 +99,12 @@ namespace BattleLib.GraphicComponents
 
         private class SetHPAnimation : IAnimation
         {
-            private int targetHP;
-            private HPLine line;
-            private TextBox text;
+            readonly int targetHP;
+            readonly HPLine line;
+            readonly TextBox text;
 
-            private int currentHP;
-            private Func<int, int> nextInt;
+            int currentHP;
+            readonly Func<int, int> nextInt;
 
             public event EventHandler AnimationFinished;
 

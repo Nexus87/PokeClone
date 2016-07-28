@@ -28,8 +28,7 @@ namespace GameEngine
 
         private RenderTarget2D target;
 
-        public PokeEngine(Configuration config) : base()
-        {
+        public PokeEngine(Configuration config)         {
             config.CheckNull("config");
             factory = new GraphicResources(config, this);
             registry = new AutofacGameTypeRegistry();
@@ -128,17 +127,17 @@ namespace GameEngine
 
         private void Window_ClientSizeChanged(object sender, EventArgs e)
         {
-            float bufferX = (float)GraphicsDevice.PresentationParameters.BackBufferWidth;
-            float bufferY = (float)GraphicsDevice.PresentationParameters.BackBufferHeight;
+            var bufferX = (float)GraphicsDevice.PresentationParameters.BackBufferWidth;
+            var bufferY = (float)GraphicsDevice.PresentationParameters.BackBufferHeight;
 
-            float windowX = (float)Window.ClientBounds.Width;
-            float windowY = (float)Window.ClientBounds.Height;
+            var windowX = (float)Window.ClientBounds.Width;
+            var windowY = (float)Window.ClientBounds.Height;
 
-            float displayRatio = windowX / windowY;
-            float invBufferRatio = bufferY / bufferX;
+            var displayRatio = windowX / windowY;
+            var invBufferRatio = bufferY / bufferX;
 
-            float scaleX = bufferX / ScreenWidth;
-            float scaleY = displayRatio * invBufferRatio * scaleX;
+            var scaleX = bufferX / ScreenWidth;
+            var scaleY = displayRatio * invBufferRatio * scaleX;
 
             if (scaleY * ScreenHeight > GraphicsDevice.PresentationParameters.BackBufferHeight)
             {

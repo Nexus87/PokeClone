@@ -8,8 +8,8 @@ namespace BattleLib.Components.BattleState
     [GameType]
     public class ExecuteState : AbstractState
     {
-        private ICommandScheduler scheduler;
-        private CommandExecuter executer;
+        readonly ICommandScheduler scheduler;
+        readonly CommandExecuter executer;
 
         public ExecuteState(ICommandScheduler scheduler, CommandExecuter executer)
         {
@@ -31,7 +31,7 @@ namespace BattleLib.Components.BattleState
         {
             executer.Data = data;
 
-            List<ICommand> commands = ScheduleCommands(data);
+            var commands = ScheduleCommands(data);
             commands.ForEach(c => c.Execute(executer));
 
             data.ClearCommands();

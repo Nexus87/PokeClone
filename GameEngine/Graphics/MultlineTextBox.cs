@@ -7,17 +7,16 @@ namespace GameEngine.Graphics
     [GameType]
     public class MultlineTextBox : AbstractGraphicComponent, ITextGraphicContainer
     {
-        private string text;
-        private ITextSplitter splitter;
-        private int currentLineIndex = 0;
-        private Container container;
-        private int lineNumber;
-        private ISpriteFont font;
+        string text;
+        readonly ITextSplitter splitter;
+        int currentLineIndex;
+        readonly Container container;
+        readonly int lineNumber;
+        readonly ISpriteFont font;
 
-
-        private ITextGraphicComponent GetComponent(int index)
+        ITextGraphicComponent GetComponent(int index)
         {
-            return (ITextGraphicComponent) container.Components[index];
+            return (ITextGraphicComponent)container.Components[index];
         }
 
         public MultlineTextBox(ISpriteFont font, ITextSplitter splitter, int lineNumber)
@@ -29,7 +28,8 @@ namespace GameEngine.Graphics
             container.Layout = new VBoxLayout();
         }
 
-        public string Text {
+        public string Text
+        {
             set
             {
                 text = value;
@@ -40,7 +40,6 @@ namespace GameEngine.Graphics
             {
                 return text;
             }
-        
         }
 
         public bool HasNext()

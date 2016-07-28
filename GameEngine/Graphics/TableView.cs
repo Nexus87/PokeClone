@@ -19,10 +19,10 @@ namespace GameEngine.Graphics
     [GameType]
     public class TableView<T> : AbstractGraphicComponent, ITableView<T>
     {
-        ITableModel<T> model;
-        ITableRenderer<T> renderer;
-        ITableSelectionModel selectionModel;
-        ITableGrid tableGrid;
+        readonly ITableModel<T> model;
+        readonly ITableRenderer<T> renderer;
+        readonly ITableSelectionModel selectionModel;
+        readonly ITableGrid tableGrid;
 
         public TableView(ITableModel<T> model, ITableRenderer<T> renderer, ITableSelectionModel selectionModel)
             : this(model, renderer, selectionModel, new TableGrid())
@@ -164,7 +164,7 @@ namespace GameEngine.Graphics
 
         ISelectableGraphicComponent GetComponent(int row, int column, T data)
         {
-            bool isSelected = selectionModel.IsSelected(row, column);
+            var isSelected = selectionModel.IsSelected(row, column);
             return renderer.GetComponent(row, column, data, isSelected);
         }
     }

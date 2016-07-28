@@ -7,19 +7,19 @@ namespace GameEngine.Graphics
 {
     class TableGrid : ITableGrid
     {
-        Table<ISelectableGraphicComponent> components;
-        Container itemContainer;
-        GridLayout layout;
+        readonly Table<ISelectableGraphicComponent> components;
+        readonly Container itemContainer;
+        readonly GridLayout layout;
 
         bool needsUpdate = true;
 
         TableIndex startIndex;
         TableIndex endIndex;
 
-        bool autoResizeStart = false;
-        bool autoResizeEnd = false;
+        bool autoResizeStart;
+        bool autoResizeEnd;
 
-        static readonly TableIndex? NULL = null;
+        static readonly TableIndex? NULL;
 
         public int Rows
         {

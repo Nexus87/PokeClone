@@ -10,7 +10,8 @@ namespace GameEngine.Registry
     class AutofacGameTypeRegistry : IGameTypeRegistry
     {
         IContainer container;
-        ContainerBuilder builder = new ContainerBuilder();
+        readonly ContainerBuilder builder = new ContainerBuilder();
+
         public AutofacGameTypeRegistry()
         {
             builder.Register<IGameTypeRegistry>(p => this);

@@ -44,7 +44,7 @@ namespace GameEngine.Graphics
         public int DisplayableChars()
         {
             textGraphic.CharHeight = RealTextHeight;
-            float charWidth = textGraphic.GetSingleCharWidth();
+            var charWidth = textGraphic.GetSingleCharWidth();
             if (charWidth.CompareTo(0) == 0)
                 return 0;
 
@@ -68,7 +68,7 @@ namespace GameEngine.Graphics
             textGraphic.YPosition = YPosition;
             textGraphic.CharHeight = RealTextHeight;
 
-            float length = textGraphic.CalculateTextLength(" ");
+            var length = textGraphic.CalculateTextLength(" ");
             if (length.CompareTo(0) == 0)
             {
                 textGraphic.Text = "";

@@ -9,7 +9,7 @@ namespace GameEngineTest.EventComponent
     [TestFixture]
     public class EventComponentTest
     {
-        private EventQueue eventComponent;
+        EventQueue eventComponent;
 
         [SetUp]
         public void Setup()
@@ -18,10 +18,10 @@ namespace GameEngineTest.EventComponent
         }
 
 
-        private class TestEvent : IEvent
+        class TestEvent : IEvent
         {
-            public bool DispatchCalled = false;
-            public Action Callback = null;
+            public bool DispatchCalled;
+            public Action Callback;
             public event EventHandler EventProcessed = delegate { };
 
             public void Dispatch()

@@ -9,15 +9,15 @@ namespace GameEngine.Graphics.GUI
         /// <summary>
         /// The current column of the selected cell
         /// </summary>
-        internal int cursorColumn = 0;
+        internal int cursorColumn;
 
         /// <summary>
         /// The current row of the selected cell
         /// </summary>
-        internal int cursorRow = 0;
+        internal int cursorRow;
 
-        private bool isVisible;
-        private ITableView<T> tableView;
+        bool isVisible;
+        readonly ITableView<T> tableView;
 
         public TableWidget(int? visibleRows, int? visibleColumns, ITableModel<T> model, ITableRenderer<T> renderer, ITableSelectionModel selection) :
             this(visibleRows, visibleColumns, new TableView<T>(model, renderer, selection)) { }
@@ -283,25 +283,25 @@ namespace GameEngine.Graphics.GUI
             SelectCell(row, column);
         }
 
-        private void SetEndCell(int row, int column)
+        void SetEndCell(int row, int column)
         {
-            int endRow = row + 1;
-            int endColumn = column + 1;
+            var endRow = row + 1;
+            var endColumn = column + 1;
 
-            int startRow = Math.Max(0, endRow - realVisibleRows);
-            int startColumn = Math.Max(0, endColumn - realVisibleColumns);
+            var startRow = Math.Max(0, endRow - realVisibleRows);
+            var startColumn = Math.Max(0, endColumn - realVisibleColumns);
 
             tableView.StartIndex = new TableIndex(startRow, startColumn);
             tableView.EndIndex = new TableIndex(endRow, endColumn);
         }
 
-        private void SetStartCell(int row, int column)
+        void SetStartCell(int row, int column)
         {
-            int startRow = row;
-            int startColumn = column;
+            var startRow = row;
+            var startColumn = column;
 
-            int endRow = Math.Min(Rows, startRow + realVisibleRows);
-            int endColumn = Math.Min(Columns, startColumn + realVisibleColumns);
+            var endRow = Math.Min(Rows, startRow + realVisibleRows);
+            var endColumn = Math.Min(Columns, startColumn + realVisibleColumns);
 
             tableView.StartIndex = new TableIndex(startRow, startColumn);
             tableView.EndIndex = new TableIndex(endRow, endColumn);

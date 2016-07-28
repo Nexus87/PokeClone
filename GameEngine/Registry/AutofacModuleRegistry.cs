@@ -9,8 +9,8 @@ namespace GameEngine.Registry
 {
     public class AutofacModuleRegistry : IModuleRegistry
     {
-        private IGameTypeRegistry registry = new AutofacGameTypeRegistry();
-        private List<string> registeredModules = new List<string>();
+        readonly IGameTypeRegistry registry = new AutofacGameTypeRegistry();
+        readonly List<string> registeredModules = new List<string>();
 
         public void RegisterModule(Assembly moduleAssembly)
         {

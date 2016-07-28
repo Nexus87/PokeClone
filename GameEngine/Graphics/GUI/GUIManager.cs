@@ -1,7 +1,6 @@
 ﻿using GameEngine.Registry;
 using GameEngine.Utils;
 using Microsoft.Xna.Framework;
-using System;
 using System.Collections.Generic;
 
 namespace GameEngine.Graphics.GUI
@@ -10,8 +9,8 @@ namespace GameEngine.Graphics.GUI
     public class GUIManager : IInputHandler
     {
         private IWidget FocusedWidget { get { return widgets.Count == 0 ? null : widgets.Last.Value; } }
-        private LinkedList<IWidget> widgets = new LinkedList<IWidget>();
-        private LinkedList<IWidget> notVisibleWidgets = new LinkedList<IWidget>();
+        readonly LinkedList<IWidget> widgets = new LinkedList<IWidget>();
+        readonly LinkedList<IWidget> notVisibleWidgets = new LinkedList<IWidget>();
 
         public void AddWidget(IWidget widget)
         {
@@ -40,7 +39,6 @@ namespace GameEngine.Graphics.GUI
             }
         }
 
-
         public void RemoveWidget(IWidget widget)
         {
             if (!Contains(widget))
@@ -48,7 +46,6 @@ namespace GameEngine.Graphics.GUI
 
             RemoveWidgetFromList(widget);
             widget.VisibilityChanged -= VisibilityChangedHandler;
-            
         }
 
         private bool Contains(IWidget widget)

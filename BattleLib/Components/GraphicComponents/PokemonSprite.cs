@@ -12,12 +12,12 @@ namespace BattleLib.GraphicComponents
         public event EventHandler OnPokemonAppeared = delegate { };
         public event EventHandler OnAttackAnimationPlayed = delegate { };
 
-        TextureProvider provider;
-        TextureBox box;
+        readonly TextureProvider provider;
+        readonly TextureBox box;
         bool isPlayer;
 
         public bool IsPlayer { get { return isPlayer; } set { isPlayer = value; Invalidate(); } }
-        private int id = -1;
+        int id = -1;
 
         public void SetPokemon(int id)
         {

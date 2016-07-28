@@ -35,8 +35,7 @@ namespace BattleLib.Components.BattleState
 
             clientsLeft = clients.Count;
 
-            if (clientsLeft == 0)
-                IsDone = true;
+            IsDone = (clientsLeft == 0);
         }
 
         public override void Update(BattleData data)
@@ -46,7 +45,7 @@ namespace BattleLib.Components.BattleState
 
             foreach (var c in clients)
             {
-                PokemonWrapper pokemon = data.GetPokemon(c.Key);
+                var pokemon = data.GetPokemon(c.Key);
                 pokemon.Pokemon = c.Value;
                 eventCreator.SetPokemon(c.Key, pokemon);
             }
@@ -68,7 +67,7 @@ namespace BattleLib.Components.BattleState
 
         private bool NeedsPokemon(BattleData data, ClientIdentifier id)
         {
-            PokemonWrapper pkmn = data.GetPokemon(id);
+            var pkmn = data.GetPokemon(id);
             return pkmn.Pokemon == null || pkmn.Condition == StatusCondition.KO;
         }
     }

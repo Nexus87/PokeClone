@@ -15,13 +15,13 @@ namespace GameEngine.Graphics
         public float SpeedX { get; set; }
         public float SpeedY { get; set; }
 
-        private float currentWidth = 0;
-        private float currentHeight = 0;
+        float currentWidth;
+        float currentHeight;
 
-        private bool IsInitialized = false;
-        private bool shrinkX;
-        private bool shrinkY;
-        
+        bool IsInitialized;
+        bool shrinkX;
+        bool shrinkY;
+
         public void SetStartSize(IGraphicComponent component)
         {
             component.CheckNull("component");
@@ -41,7 +41,7 @@ namespace GameEngine.Graphics
 
             if (currentWidth.CompareTo(EndWidth) == 0 && currentHeight.CompareTo(EndHeight) == 0)
                 Finished();
-            if (time.ElapsedGameTime.TotalMilliseconds != 0)
+            if (time.ElapsedGameTime.TotalMilliseconds.AlmostEqual(0))
                 return;
 
             if (shrinkX)

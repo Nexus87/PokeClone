@@ -15,11 +15,21 @@ namespace GameEngine.Utils
             return AlmostEqual(f1, f2, 0.0001f);
         }
 
+        public static bool AlmostEqual(this double f1, double f2)
+        {
+            return AlmostEqual(f1, f2, 0.0001d);
+        }
+
         public static bool IndexInRange<T>(this ITableModel<T> model, int row, int column){
             return (row >= 0 && row < model.Rows) &&
                 (column >= 0 && column < model.Columns);
         }
         public static bool AlmostEqual(this float f1, float f2, float epsilon)
+        {
+            return Math.Abs(f1 - f2) < epsilon;
+        }
+
+        public static bool AlmostEqual(this double f1, double f2, double epsilon)
         {
             return Math.Abs(f1 - f2) < epsilon;
         }
@@ -35,8 +45,8 @@ namespace GameEngine.Utils
 
         public static void Copy<T>(this T[,] source, T[,] target)
         {
-            int rows = Math.Min(source.GetLength(0), target.GetLength(0));
-            int columns = Math.Min(source.GetLength(1), target.GetLength(1));
+            var rows = Math.Min(source.GetLength(0), target.GetLength(0));
+            var columns = Math.Min(source.GetLength(1), target.GetLength(1));
             for (int i = 0; i < rows; i++)
             {
                 for (int j = 0; j < columns; j++)

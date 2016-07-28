@@ -7,10 +7,10 @@ namespace GameEngine.Utils
 {
     public class DefaultTextSplitter : ITextSplitter
     {
-        List<string> lines = new List<string>();
+        readonly List<string> lines = new List<string>();
+        string lastSplittedText;
+        int lastCharsPerLine;
 
-        string lastSplittedText = null;
-        int lastCharsPerLine = 0;
         public void SplitText(int charsPerLine, string text)
         {
             if (EqualsLastText(text, charsPerLine))

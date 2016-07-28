@@ -7,8 +7,8 @@ namespace GameEngine.Graphics
     internal class ItemBox : AbstractGraphicComponent, ISelectableTextComponent
     {
         public bool IsSelected { get; private set; }
-        private IGraphicComponent arrow;
-        private ITextGraphicComponent textBox;
+        readonly IGraphicComponent arrow;
+        readonly ITextGraphicComponent textBox;
 
         public string Text { get { return textBox.Text; } set { textBox.Text = value; } }
 

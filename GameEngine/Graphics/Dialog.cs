@@ -1,5 +1,4 @@
 ﻿using GameEngine.Graphics.GUI;
-using GameEngine.Registry;
 using GameEngine.Utils;
 using Microsoft.Xna.Framework;
 using System;
@@ -8,9 +7,9 @@ namespace GameEngine.Graphics
 {
     public class Dialog : ForwardingGraphicComponent<Container>, IWidget
     {
-        private TextureBox border;
+        readonly TextureBox border;
 
-        private bool isVisible;
+        bool isVisible;
 
         public Dialog(ITexture2D borderTexture = null)
             : base(new Container())

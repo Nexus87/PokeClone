@@ -13,8 +13,8 @@ namespace BattleLib.Components.BattleState
 
         public ClientIdentifier PlayerId { get { return Player; } }
 
-        private Dictionary<ClientIdentifier, ICommand> commands = new Dictionary<ClientIdentifier, ICommand>();
-        private List<ClientIdentifier> clients = new List<ClientIdentifier>();
+        readonly Dictionary<ClientIdentifier, ICommand> commands = new Dictionary<ClientIdentifier, ICommand>();
+        readonly List<ClientIdentifier> clients = new List<ClientIdentifier>();
 
         public BattleData() :
             this(new ClientIdentifier { IsPlayer = true, Name = "Player" }, new ClientIdentifier { IsPlayer = false, Name = "Ai" })

@@ -34,9 +34,8 @@ namespace BattleLib.Components.BattleState
 
     public class PokemonWrapper : IBattlePokemon
     {
-        private Dictionary<ModifyableState, float> modifier = new Dictionary<ModifyableState, float>();
-
-        private Pokemon pokemon;
+        readonly Dictionary<ModifyableState, float> modifier = new Dictionary<ModifyableState, float>();
+        Pokemon pokemon;
 
         public PokemonWrapper(ClientIdentifier id)
         {
@@ -79,7 +78,7 @@ namespace BattleLib.Components.BattleState
             set
             {
                 if (value == null)
-                    throw new ArgumentNullException("null is not a valid value");
+                    throw new ArgumentNullException("value", "null is not a valid value");
                 if (value == pokemon)
                     return;
 

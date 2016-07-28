@@ -1,6 +1,7 @@
 ﻿using GameEngine;
 using GameEngine.Graphics;
 using GameEngine.Registry;
+using GameEngine.Utils;
 using Microsoft.Xna.Framework;
 using System;
 
@@ -9,12 +10,12 @@ namespace BattleLib.GraphicComponents
     [GameType]
     public class HPLine : AbstractGraphicComponent
     {
-        private const int LINE_BORDER_SIZE = 10;
-        private int currentHp = 0;
-        private IGraphicComponent hpLine;
-        private IGraphicComponent innerLine;
-        private int maxHp = 0;
-        private IGraphicComponent outerLine;
+        const int LINE_BORDER_SIZE = 10;
+        int currentHp;
+        readonly IGraphicComponent hpLine;
+        readonly IGraphicComponent innerLine;
+        int maxHp;
+        readonly IGraphicComponent outerLine;
 
 
         public HPLine(Line outerLine, Line innerLine, Line hpLine, Screen screen) :
@@ -133,11 +134,11 @@ namespace BattleLib.GraphicComponents
 
     public class HPResizeAnimation : IAnimation
     {
-        private int currentHP = 0;
-        private HPLine line;
-        private bool lower;
-        private int startHP;
-        private int targetHP;
+        int currentHP;
+        readonly HPLine line;
+        readonly bool lower;
+        readonly int startHP;
+        readonly int targetHP;
 
         public HPResizeAnimation(int startHP, int targetHP, HPLine line)
         {
@@ -146,8 +147,7 @@ namespace BattleLib.GraphicComponents
             this.line = line;
             this.currentHP = startHP;
 
-            if (startHP > targetHP)
-                lower = true;
+            lower = startHP > targetHP;
         }
 
         public HPResizeAnimation(int targetHP, HPLine line)
@@ -166,7 +166,7 @@ namespace BattleLib.GraphicComponents
                 return;
             }
 
-            if (time.ElapsedGameTime.TotalMilliseconds != 0)
+            if (time.ElapsedGameTime.TotalMilliseconds.AlmostEqual(0))
                 return;
 
             if (lower)

@@ -6,11 +6,7 @@ namespace GameEngine.Graphics
 {
     public class DefaultTableModel<T> : ITableModel<T>
     {
-        private Table<T> items = new Table<T>();
-
-        public DefaultTableModel()
-        {
-        }
+        readonly Table<T> items = new Table<T>();
 
         public event EventHandler<DataChangedEventArgs<T>> DataChanged = delegate { };
         public event EventHandler<TableResizeEventArgs> SizeChanged = delegate { };
