@@ -145,7 +145,7 @@ namespace BattleLib.GraphicComponents
             this.startHP = startHP;
             this.targetHP = targetHP;
             this.line = line;
-            this.currentHP = startHP;
+            currentHP = startHP;
 
             lower = startHP > targetHP;
         }
@@ -166,7 +166,7 @@ namespace BattleLib.GraphicComponents
                 return;
             }
 
-            if (time.ElapsedGameTime.TotalMilliseconds.AlmostEqual(0))
+            if (!time.ElapsedGameTime.TotalMilliseconds.AlmostEqual(0))
                 return;
 
             if (lower)
