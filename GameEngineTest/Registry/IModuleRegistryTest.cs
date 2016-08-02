@@ -24,6 +24,17 @@ namespace GameEngineTest.Registry
         {
             WasCalled = true;
         }
+
+
+        public void Start(PokeEngine engine, IGameTypeRegistry registry)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Stop(PokeEngine engine)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public abstract class IModuleRegistryTest

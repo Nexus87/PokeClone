@@ -2,6 +2,7 @@
 using GameEngine.Registry;
 using GameEngine.Utils;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,8 @@ namespace GameEngine.Graphics
         internal ITexture2D DefaultBorderTexture { get; set; }
         internal ITexture2D Pixel { get { return pixel; } }
         internal ITexture2D Cup { get; set; }
+        internal ContentManager ContentManager { get; set; }
+        internal Configuration Configuration { get; set; }
 
         public GraphicResources(Configuration config, PokeEngine game)
         {
@@ -27,7 +30,8 @@ namespace GameEngine.Graphics
             DefaultBorderTexture = new XNATexture2D(config.DefaultBorderTexture, game.Content);
             pixel = new XNATexture2D();
             Cup = new XNATexture2D("circle", game.Content);
-
+            ContentManager = game.Content;
+            Configuration = config;
         }
 
         public void Setup(Game game)

@@ -24,7 +24,6 @@ namespace BattleLib
 
         public InitComponent(PokeEngine game, IGameTypeRegistry registry)
         {
-            BattleLibTypes.RegisterTypes(registry);
             engine = game;
             var data = registry.ResolveType<BattleData>();
             var playerID = data.PlayerId;

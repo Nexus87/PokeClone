@@ -12,7 +12,7 @@
   </References>
   <Files>
     <Compile Include="AttackTableRenderer.cs" />
-    <Compile Include="BattleLibTypes.cs" />
+    <Compile Include="BattleModule.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="ClientIdentifier.cs" />
     <Compile Include="CommandExecuter.cs" />

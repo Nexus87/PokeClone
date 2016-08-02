@@ -14,6 +14,7 @@
     <Reference Include="Content" />
   </References>
   <Files>
+    <Compile Include="PokemonGameModule.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rules\DefaultMoveEffectCalculator.cs" />
@@ -22,6 +23,5 @@
     <Compile Include="Rules\DummyScheduler.cs" />
     <Compile Include="Rules\DummyTable.cs" />
     <Compile Include="Rules\Gen1CharRules.cs" />
-    <None Include="packages.config" />
   </Files>
 </Project>

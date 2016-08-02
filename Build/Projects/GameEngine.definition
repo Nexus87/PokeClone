@@ -13,7 +13,7 @@
     <Compile Include="Configuration.cs" />
     <Compile Include="EventQueue.cs" />
     <Compile Include="GameComponentWrapper.cs" />
-    <Compile Include="GameEngineTypes.cs" />
+    <Compile Include="GameEngineModule.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Graphics\AbstractGraphicComponent.cs" />
     <Compile Include="Graphics\AbstractLayout.cs" />

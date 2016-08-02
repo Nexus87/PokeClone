@@ -23,22 +23,12 @@ namespace PokemonGame
         static void Main()
         {
             var config = new Configuration();
-            var calculator = new DefaultMoveEffectCalculator(new DummyBattleRules());
 
             var engine = new PokeEngine(config);
-            RegisterTypes(engine.registry);
-            engine.AddGameComponent(new InitComponent(engine, engine.registry));
-
+            engine.registry.RegisterModule(new PokemonGameModule());
+            engine.registry.RegisterModule(new BattleModule());
+            engine.SetStartModule("BattleModule");
             engine.Run();
-        }
-
-        private static void RegisterTypes(IGameTypeRegistry registry)
-        {
-            registry.RegisterAsService<DummyBattleRules, IBattleRules>();
-            registry.RegisterAsService<DummyScheduler, ICommandScheduler>();
-            registry.RegisterAsService<DummyTable, ITypeTable>();
-            registry.RegisterAsService<DummyPokemonRules, IPokemonRules>();
-            registry.RegisterAsService<DefaultMoveEffectCalculator, IMoveEffectCalculator>();
         }
     }
 }

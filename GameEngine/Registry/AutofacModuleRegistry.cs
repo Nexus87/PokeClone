@@ -10,7 +10,7 @@ namespace GameEngine.Registry
     public class AutofacModuleRegistry : IModuleRegistry
     {
         readonly IGameTypeRegistry registry = new AutofacGameTypeRegistry();
-        readonly List<string> registeredModules = new List<string>();
+        readonly Dictionary<string, IModule> registeredModules = new Dictionary<string, IModule>();
 
         public void RegisterModule(Assembly moduleAssembly)
         {
@@ -18,15 +18,31 @@ namespace GameEngine.Registry
                 .Where(t => t.GetInterfaces().Contains(typeof(IModule))))
             {
                 var module = (IModule) Activator.CreateInstance(type);
-                registeredModules.Add(module.ModuleName);
-                module.RegisterTypes(registry);
+                RegisterModule(module);
             }
         }
 
+        public void RegisterModule(IModule module)
+        {
+            registeredModules.Add(module.ModuleName, module);
+            module.RegisterTypes(registry);
+        }
 
         public IReadOnlyList<string> RegisteredModuleNames
         {
-            get { return registeredModules.AsReadOnly(); }
+            get { return registeredModules.Keys.ToList(); }
+        }
+
+
+        public IGameTypeRegistry TypeRegistry {get{return registry;}}
+
+
+        public void StartModule(string moduleName, PokeEngine engine)
+        {
+            if (!registeredModules.ContainsKey(moduleName))
+                throw new InvalidOperationException("Unkown module name: " + moduleName);
+
+            registeredModules[moduleName].Start(engine, registry);
         }
     }
 }

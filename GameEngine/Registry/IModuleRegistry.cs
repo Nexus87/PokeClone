@@ -10,6 +10,9 @@ namespace GameEngine.Registry
     public interface IModuleRegistry
     {
         void RegisterModule(Assembly moduleAssembly);
+        void RegisterModule(IModule module);
+        void StartModule(string moduleName, PokeEngine engine);
         IReadOnlyList<string> RegisteredModuleNames { get; }
+        IGameTypeRegistry TypeRegistry { get; }
     }
 }

@@ -16,9 +16,8 @@ namespace GameEngine
         private const float screenWidth = 1920;
         private static readonly Color backgroundColor = new Color(248, 248, 248, 0);
 
-        public IGameTypeRegistry registry;
+        public IModuleRegistry registry;
         GraphicResources factory;
-        private IEventQueue EventQueue { get; set; }
         private GUIManager GUIManager { get; set; }
 
         private XNASpriteBatch batch;
@@ -27,12 +26,12 @@ namespace GameEngine
         private InputComponent input;
 
         private RenderTarget2D target;
+        private string startModule;
 
         public PokeEngine(Configuration config)         {
             config.CheckNull("config");
+            registry = new AutofacModuleRegistry();
             factory = new GraphicResources(config, this);
-            registry = new AutofacGameTypeRegistry();
-            GameEngineTypes.Register(registry, factory, this, config);
 
             new GraphicsDeviceManager(this);
 
@@ -40,6 +39,8 @@ namespace GameEngine
             Window.ClientSizeChanged += Window_ClientSizeChanged;
 
             Content.RootDirectory = "Content";
+
+            registry.RegisterModule(new GameEngineModule(factory));
         }
 
         public IGraphicComponent Graphic { get; set; }
@@ -47,6 +48,7 @@ namespace GameEngine
         public void AddGameComponent(IGameComponent component)
         {
             Components.Add(new GameComponentWrapper(component, this));
+            component.Initialize();
         }
 
         public void RemoveGameComponent(IGameComponent component)
@@ -66,7 +68,7 @@ namespace GameEngine
             Components.Remove(res);
         }
 
-        public IInputHandler InputHandler
+        private IInputHandler InputHandler
         {
             set
             {
@@ -104,13 +106,19 @@ namespace GameEngine
 
         protected override void Initialize()
         {
-            input = registry.ResolveType<InputComponent>();
-            GUIManager = registry.ResolveType<GUIManager>();
-            EventQueue = registry.ResolveType<IEventQueue>();
-
-            AddGameComponent(input);
-            AddGameComponent(EventQueue);
             base.Initialize();
+
+            GUIManager = registry.TypeRegistry.ResolveType<GUIManager>();
+            input = registry.TypeRegistry.ResolveType<InputComponent>();
+
+            registry.StartModule("GameEngine", this);
+            registry.StartModule(startModule, this);
+
+            if (Graphic == null)
+                throw new InvalidOperationException("Graphic component is not set");
+            Graphic.Setup();
+            GUIManager.Setup();
+
             target = new RenderTarget2D(GraphicsDevice, (int)ScreenWidth, (int)ScreenHeight);
         }
 
@@ -119,10 +127,6 @@ namespace GameEngine
             base.LoadContent();
             batch = new XNASpriteBatch(GraphicsDevice);
             factory.Setup(this);
-            if (Graphic == null)
-                throw new InvalidOperationException("Graphic component is not set");
-            Graphic.Setup();
-            GUIManager.Setup();
         }
 
         private void Window_ClientSizeChanged(object sender, EventArgs e)
@@ -165,5 +169,11 @@ namespace GameEngine
         {
             get { return backgroundColor; }
         }
+
+        public void SetStartModule(string name)
+        {
+            startModule = name;
+        }
+
     }
 }
