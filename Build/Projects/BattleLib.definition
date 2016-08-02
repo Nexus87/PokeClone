@@ -58,7 +58,6 @@
     <Compile Include="Components\ShowMenuEvent.cs" />
     <Compile Include="Components\ShowMessageEvent.cs" />
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="InitComponent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </Files>
 </Project>

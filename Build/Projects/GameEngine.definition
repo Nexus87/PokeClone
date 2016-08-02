@@ -81,6 +81,7 @@
     <Compile Include="Registry\IGameTypeRegistry.cs" />
     <Compile Include="Registry\IModuleRegistry.cs" />
     <Compile Include="Screen.cs" />
+    <Compile Include="ScreenConstants.cs" />
     <Compile Include="TextureProvider.cs" />
     <Compile Include="Utils\DefaultTextSplitter.cs" />
     <Compile Include="Utils\Extensions.cs" />

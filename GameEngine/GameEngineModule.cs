@@ -32,7 +32,7 @@ namespace GameEngine
             registry.RegisterTypeAs<TableSingleSelectionModel, ITableSelectionModel>();
             registry.RegisterAsService<InputComponent, InputComponent>(reg => new InputComponent(resources.Configuration));
             registry.RegisterAsService<ContentManager, ContentManager>(reg => resources.ContentManager);
-
+            
             registry.ScanAssembly(Assembly.GetExecutingAssembly());
         }
 

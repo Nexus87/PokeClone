@@ -17,7 +17,7 @@ namespace BattleLib.GraphicComponents
         readonly Dictionary<ClientIdentifier, PokemonDataView> dataViews = new Dictionary<ClientIdentifier, PokemonDataView>();
         readonly Dictionary<ClientIdentifier, PokemonSprite> sprites = new Dictionary<ClientIdentifier, PokemonSprite>();
 
-        public BattleGraphicController(Screen screen, 
+        public BattleGraphicController(ScreenConstants screen, 
             PlayerPokemonDataView playerView, AIPokemonDataView aiView, 
             PokemonSprite playerSprite, PokemonSprite aiSprite,
             BattleData data)
@@ -88,7 +88,7 @@ namespace BattleLib.GraphicComponents
                 sprite.Draw(time, batch);
         }
 
-        private void initAIGraphic(PokemonDataView aiView, PokemonSprite aiSprite, Screen screen)
+        private void initAIGraphic(PokemonDataView aiView, PokemonSprite aiSprite, ScreenConstants screen)
         {
             aiView.XPosition = screen.ScreenWidth * 0.2f;
             aiView.YPosition = screen.ScreenHeight * 0.1f;
@@ -103,7 +103,7 @@ namespace BattleLib.GraphicComponents
             aiSprite.Width = screen.ScreenHeight * 0.25f;
         }
 
-        private void initPlayerGraphic(PokemonDataView playerView, PokemonSprite playerSprite, Screen screen)
+        private void initPlayerGraphic(PokemonDataView playerView, PokemonSprite playerSprite, ScreenConstants screen)
         {
             playerView.XPosition = screen.ScreenWidth * 0.6f;
             playerView.YPosition = screen.ScreenHeight * 0.4f;

@@ -16,7 +16,7 @@ namespace BattleLib.GraphicComponents
         readonly MessageBox messageBox;
         readonly Dialog messageFrame;
 
-        public BattleGUI(Screen screen, GUIManager manager, 
+        public BattleGUI(ScreenConstants screen, GUIManager manager, 
             Dialog messageFrame, MessageBox messageBox, 
             MainMenuWidget mainWidget,
             MoveMenuWidget moveWidget, PokemonMenuWidget pokemonWidget,
@@ -25,7 +25,7 @@ namespace BattleLib.GraphicComponents
             this(screen, manager, messageFrame, messageBox, (IMenuWidget<MainMenuEntries>)mainWidget, moveWidget, pokemonWidget, itemWidget, battleState, data)
         {}
         
-            internal BattleGUI(Screen screen, GUIManager manager, 
+            internal BattleGUI(ScreenConstants screen, GUIManager manager, 
             Dialog messageFrame, MessageBox messageBox, 
             IMenuWidget<MainMenuEntries> mainWidget, 
             IMenuWidget<Move> moveWidget, IMenuWidget<Pokemon> pokemonWidget, 
@@ -89,7 +89,7 @@ namespace BattleLib.GraphicComponents
             mainWidget.IsVisible = true;
         }
 
-        void InitAttackMenu(Screen screen, GUIManager manager)
+        void InitAttackMenu(ScreenConstants screen, GUIManager manager)
         {
             moveWidget.SetCoordinates(
                 X: screen.ScreenWidth / 2.0f,
@@ -106,7 +106,7 @@ namespace BattleLib.GraphicComponents
             manager.AddWidget(moveWidget);
         }
 
-        void InitItemMenu(Screen screen, GUIManager manager)
+        void InitItemMenu(ScreenConstants screen, GUIManager manager)
         {
             itemWidget.XPosition = 3.0f * screen.ScreenWidth / 8.0f;
             itemWidget.YPosition = 1.0f * screen.ScreenHeight / 8.0f;
@@ -123,7 +123,7 @@ namespace BattleLib.GraphicComponents
             manager.AddWidget(itemWidget);
         }
 
-        void InitMainMenu(Screen screen, GUIManager manager)
+        void InitMainMenu(ScreenConstants screen, GUIManager manager)
         {
             mainWidget.XPosition = 0.5f * screen.ScreenWidth;
             mainWidget.YPosition = 2.0f * screen.ScreenHeight / 3.0f;
@@ -137,7 +137,7 @@ namespace BattleLib.GraphicComponents
             manager.AddWidget(mainWidget);
         }
 
-        void InitMessageBox(Screen screen, GUIManager manager)
+        void InitMessageBox(ScreenConstants screen, GUIManager manager)
         {
             messageFrame.AddWidget(messageBox);
             messageFrame.XPosition = 0;
@@ -156,7 +156,7 @@ namespace BattleLib.GraphicComponents
             TextDisplayed(this, EventArgs.Empty);
         }
 
-        void InitPKMNMenu(Screen screen, GUIManager manager)
+        void InitPKMNMenu(ScreenConstants screen, GUIManager manager)
         {
             pokemonWidget.XPosition = 0;
             pokemonWidget.YPosition = 0;

@@ -11,21 +11,15 @@ namespace GameEngine
 {
     public class PokeEngine : Game, IPokeEngine
     {
-        private const float aspectRation = screenWidth / screenHeight;
-        private const float screenHeight = 1080;
-        private const float screenWidth = 1920;
-        private static readonly Color backgroundColor = new Color(248, 248, 248, 0);
-
         public IModuleRegistry registry;
         GraphicResources factory;
         private GUIManager GUIManager { get; set; }
 
         private XNASpriteBatch batch;
         private IInputHandler DefaultInputHandler;
-        private Rectangle display;
         private InputComponent input;
+        private Screen screen;
 
-        private RenderTarget2D target;
         private string startModule;
 
         public PokeEngine(Configuration config)         {
@@ -36,7 +30,7 @@ namespace GameEngine
             new GraphicsDeviceManager(this);
 
             Window.AllowUserResizing = true;
-            Window.ClientSizeChanged += Window_ClientSizeChanged;
+            
 
             Content.RootDirectory = "Content";
 
@@ -90,26 +84,21 @@ namespace GameEngine
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.SetRenderTarget(target);
-            GraphicsDevice.Clear(BackgroundColor);
-
-            batch.Begin();
-            Graphic.Draw(gameTime, batch);
-            GUIManager.Draw(gameTime, batch);
-            batch.End();
-
-            GraphicsDevice.SetRenderTarget(null);
-            batch.Begin();
-            batch.Draw(target, destinationRectangle: display);
-            batch.End();
+            screen.Begin(batch);
+            screen.Draw(Graphic, batch, gameTime);
+            screen.Draw(GUIManager, batch, gameTime);
+            screen.End(batch);
         }
 
         protected override void Initialize()
         {
             base.Initialize();
-
+            screen = new Screen(registry.TypeRegistry.ResolveType<ScreenConstants>(), GraphicsDevice);
             GUIManager = registry.TypeRegistry.ResolveType<GUIManager>();
             input = registry.TypeRegistry.ResolveType<InputComponent>();
+
+            Window.ClientSizeChanged += delegate { screen.WindowsResizeHandler(Window.ClientBounds.Width, Window.ClientBounds.Height); };
+            screen.WindowsResizeHandler(Window.ClientBounds.Width, Window.ClientBounds.Height); 
 
             registry.StartModule("GameEngine", this);
             registry.StartModule(startModule, this);
@@ -119,7 +108,6 @@ namespace GameEngine
             Graphic.Setup();
             GUIManager.Setup();
 
-            target = new RenderTarget2D(GraphicsDevice, (int)ScreenWidth, (int)ScreenHeight);
         }
 
         protected override void LoadContent()
@@ -127,47 +115,6 @@ namespace GameEngine
             base.LoadContent();
             batch = new XNASpriteBatch(GraphicsDevice);
             factory.Setup(this);
-        }
-
-        private void Window_ClientSizeChanged(object sender, EventArgs e)
-        {
-            var bufferX = (float)GraphicsDevice.PresentationParameters.BackBufferWidth;
-            var bufferY = (float)GraphicsDevice.PresentationParameters.BackBufferHeight;
-
-            var windowX = (float)Window.ClientBounds.Width;
-            var windowY = (float)Window.ClientBounds.Height;
-
-            var displayRatio = windowX / windowY;
-            var invBufferRatio = bufferY / bufferX;
-
-            var scaleX = bufferX / ScreenWidth;
-            var scaleY = displayRatio * invBufferRatio * scaleX;
-
-            if (scaleY * ScreenHeight > GraphicsDevice.PresentationParameters.BackBufferHeight)
-            {
-                scaleY = bufferY / ScreenHeight;
-                scaleX = scaleY / (displayRatio * invBufferRatio);
-            }
-
-            display.Width = (int)(scaleX * ScreenWidth);
-            display.Height = (int)(scaleY * ScreenHeight);
-            display.X = (int)((bufferX - display.Width) / 2.0f);
-            display.Y = (int)((bufferY - display.Height) / 2.0f);
-        }
-
-        public float ScreenHeight
-        {
-            get { return screenHeight; }
-        }
-
-        public float ScreenWidth
-        {
-            get { return screenWidth; }
-        }
-
-        public Color BackgroundColor
-        {
-            get { return backgroundColor; }
         }
 
         public void SetStartModule(string name)
