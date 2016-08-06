@@ -11,7 +11,7 @@ namespace GameEngineTest.TestUtils
         public int Row { get; set; }
         public int Column { get; set; }
 
-        public IPokeEngine Game { get; set; }
+        public IEngineInterface Game { get; set; }
 
         public void PlayAnimation(IAnimation animation)
         {

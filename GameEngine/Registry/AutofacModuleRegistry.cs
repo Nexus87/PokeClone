@@ -37,12 +37,12 @@ namespace GameEngine.Registry
         public IGameTypeRegistry TypeRegistry {get{return registry;}}
 
 
-        public void StartModule(string moduleName, PokeEngine engine)
+        public void StartModule(string moduleName, IGameComponentManager componentManager)
         {
             if (!registeredModules.ContainsKey(moduleName))
                 throw new InvalidOperationException("Unkown module name: " + moduleName);
 
-            registeredModules[moduleName].Start(engine, registry);
+            registeredModules[moduleName].Start(componentManager, registry);
         }
     }
 }

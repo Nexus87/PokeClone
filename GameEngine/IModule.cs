@@ -11,7 +11,7 @@ namespace GameEngine
     {
         string ModuleName { get; }
         void RegisterTypes(IGameTypeRegistry registry);
-        void Start(PokeEngine engine, IGameTypeRegistry registry);
-        void Stop(PokeEngine engine);
+        void Start(IGameComponentManager manager, IGameTypeRegistry registry);
+        void Stop(IGameComponentManager engine);
     }
 }

@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace GameEngine
 {
-    public class PokeEngine : Game, IPokeEngine
+    public class PokeEngine : Game, IEngineInterface, IGameComponentManager
     {
         public IModuleRegistry registry;
         GraphicResources factory;
@@ -25,7 +25,7 @@ namespace GameEngine
         public PokeEngine(Configuration config)         {
             config.CheckNull("config");
             registry = new AutofacModuleRegistry();
-            factory = new GraphicResources(config, this);
+            factory = new GraphicResources(config, Content);
 
             new GraphicsDeviceManager(this);
 

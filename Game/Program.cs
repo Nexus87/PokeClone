@@ -26,7 +26,7 @@ namespace PokemonGame
 
             var engine = new PokeEngine(config);
             engine.registry.RegisterModule(new PokemonGameModule());
-            engine.registry.RegisterModule(new BattleModule());
+            engine.registry.RegisterModule(new BattleModule(engine));
             engine.SetStartModule("BattleModule");
             engine.Run();
         }

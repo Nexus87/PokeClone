@@ -20,7 +20,7 @@ namespace GameEngineTest.Graphics
             return container;
         }
 
-        public IPokeEngine gameStub = new Mock<IPokeEngine>().Object;
+        public IEngineInterface gameStub = new Mock<IEngineInterface>().Object;
 
         public static List<TestCaseData> ValidData = new List<TestCaseData>
         {

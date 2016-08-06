@@ -105,7 +105,7 @@ namespace GameEngineTest.TestUtils
 
         public virtual ITableModel<TestType> Model { get; set; }
 
-        public IPokeEngine Game
+        public IEngineInterface Game
         {
             get { throw new NotImplementedException(); }
         }

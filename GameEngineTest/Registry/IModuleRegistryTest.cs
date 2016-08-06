@@ -26,12 +26,12 @@ namespace GameEngineTest.Registry
         }
 
 
-        public void Start(PokeEngine engine, IGameTypeRegistry registry)
+        public void Start(IGameComponentManager componentManager, IGameTypeRegistry registry)
         {
             throw new NotImplementedException();
         }
 
-        public void Stop(PokeEngine engine)
+        public void Stop(IGameComponentManager componentManager)
         {
             throw new NotImplementedException();
         }

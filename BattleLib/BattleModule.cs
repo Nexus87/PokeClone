@@ -22,7 +22,13 @@ namespace BattleLib
         private IBattleGraphicController graphic;
         private IBattleStateService battleState;
         private AIComponent aiComponent;
-        
+        private IEngineInterface engine;
+
+        public BattleModule(IEngineInterface engine)
+        {
+            this.engine = engine;
+        }
+
         public string ModuleName
         {
             get { return "BattleModule"; }
@@ -33,7 +39,7 @@ namespace BattleLib
             registry.ScanAssembly(Assembly.GetExecutingAssembly());
         }
 
-        public void Start(PokeEngine engine, IGameTypeRegistry registry)
+        public void Start(IGameComponentManager componentManager, IGameTypeRegistry registry)
         {
             var data = registry.ResolveType<BattleData>();
             var playerID = data.PlayerId;
@@ -48,19 +54,19 @@ namespace BattleLib
             registry.ResolveType<BattleEventProcessor>();
 
 
-            engine.AddGameComponent(aiComponent);
-            engine.AddGameComponent(battleState);
-            engine.Graphic = graphic;
+            componentManager.AddGameComponent(aiComponent);
+            componentManager.AddGameComponent(battleState);
+            componentManager.Graphic = graphic;
 
             engine.ShowGUI();
             battleState.SetCharacter(player.Id, player.Pokemons.First());
         }
 
-        public void Stop(PokeEngine engine)
+        public void Stop(IGameComponentManager componentManager)
         {
-            engine.RemoveGameComponent(aiComponent);
-            engine.RemoveGameComponent(battleState);
-            engine.Graphic = null;
+            componentManager.RemoveGameComponent(aiComponent);
+            componentManager.RemoveGameComponent(battleState);
+            componentManager.Graphic = null;
 
             battleState = null;
             graphic = null;

@@ -23,14 +23,14 @@ namespace GameEngine.Graphics
         internal ContentManager ContentManager { get; set; }
         internal Configuration Configuration { get; set; }
 
-        public GraphicResources(Configuration config, PokeEngine game)
+        public GraphicResources(Configuration config, ContentManager content)
         {
-            DefaultArrowTexture = new XNATexture2D(config.DefaultArrowTexture, game.Content);
-            DefaultFont = new XNASpriteFont(config.DefaultFont, game.Content);
-            DefaultBorderTexture = new XNATexture2D(config.DefaultBorderTexture, game.Content);
+            DefaultArrowTexture = new XNATexture2D(config.DefaultArrowTexture, content);
+            DefaultFont = new XNASpriteFont(config.DefaultFont, content);
+            DefaultBorderTexture = new XNATexture2D(config.DefaultBorderTexture, content);
             pixel = new XNATexture2D();
-            Cup = new XNATexture2D("circle", game.Content);
-            ContentManager = game.Content;
+            Cup = new XNATexture2D("circle", content);
+            ContentManager = content;
             Configuration = config;
         }
 

@@ -41,13 +41,13 @@ namespace GameEngine
             get { return "GameEngine"; }
         }
 
-        public void Start(PokeEngine engine, IGameTypeRegistry registry)
+        public void Start(IGameComponentManager componentManager, IGameTypeRegistry registry)
         {
-            engine.AddGameComponent(registry.ResolveType<InputComponent>());
-            engine.AddGameComponent(registry.ResolveType<IEventQueue>());
+            componentManager.AddGameComponent(registry.ResolveType<InputComponent>());
+            componentManager.AddGameComponent(registry.ResolveType<IEventQueue>());
         }
 
-        public void Stop(PokeEngine engine)
+        public void Stop(IGameComponentManager componentManager)
         {
             throw new NotImplementedException();
         }
