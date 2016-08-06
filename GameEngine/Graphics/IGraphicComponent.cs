@@ -3,6 +3,12 @@ using System;
 
 namespace GameEngine.Graphics
 {
+    public enum ResizePolicy
+    {
+        Fixed,
+        Extending
+    }
+
     public class GraphicComponentSizeChangedEventArgs : EventArgs
     {
         public float Width { get; private set; }
@@ -94,5 +100,12 @@ namespace GameEngine.Graphics
         void Setup();
 
         Color Color { get; set; }
+
+        float PreferedHeight { get; set; }
+        float PreferedWidth { get; set; }
+       
+        ResizePolicy HorizontalPolicy { get; set; }
+        ResizePolicy VerticalPolicy { get; set; }
+
     }
 }

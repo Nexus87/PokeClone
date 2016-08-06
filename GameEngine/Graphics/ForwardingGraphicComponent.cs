@@ -133,5 +133,57 @@ namespace GameEngine.Graphics
 
 
         public Color Color { get; set; }
+
+        public float PreferedHeight
+        {
+            get
+            {
+                return InnerComponent.PreferedHeight;
+            }
+
+            set
+            {
+                InnerComponent.PreferedHeight = value;
+            }
+        }
+
+        public float PreferedWidth
+        {
+            get
+            {
+                return InnerComponent.PreferedWidth;
+            }
+
+            set
+            {
+                InnerComponent.PreferedWidth = value;
+            }
+        }
+
+        public ResizePolicy HorizontalPolicy
+        {
+            get
+            {
+                return InnerComponent.HorizontalPolicy;
+            }
+
+            set
+            {
+                InnerComponent.HorizontalPolicy = value;
+            }
+        }
+
+        public ResizePolicy VerticalPolicy
+        {
+            get
+            {
+                return InnerComponent.VerticalPolicy;
+            }
+
+            set
+            {
+                InnerComponent.VerticalPolicy = value;
+            }
+        }
     }
 }

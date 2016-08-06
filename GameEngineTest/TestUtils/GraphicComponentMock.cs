@@ -44,6 +44,58 @@ namespace GameEngineTest.TestUtils
 
         public Color Color { get; set; }
 
+        public float PreferedHeight
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public float PreferedWidth
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public ResizePolicy HorizontalPolicy
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public ResizePolicy VerticalPolicy
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         protected void OnSizeChanged()
         {
             if (SizeChanged != null)
