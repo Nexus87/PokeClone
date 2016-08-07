@@ -1,6 +1,7 @@
 ﻿using GameEngine.Registry;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace GameEngine.Graphics
 {
@@ -9,7 +10,7 @@ namespace GameEngine.Graphics
     {
         public ILayout Layout { get; set; }
 
-        public IReadOnlyList<IGraphicComponent> Components { get { return components.AsReadOnly(); } }
+        public List<IGraphicComponent> Components { get { return components; } }
         private readonly List<IGraphicComponent> components = new List<IGraphicComponent>();
 
         public void AddComponent(IGraphicComponent comp)

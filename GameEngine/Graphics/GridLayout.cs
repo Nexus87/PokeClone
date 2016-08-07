@@ -1,7 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace GameEngine.Graphics
 {
+    /// <summary>
+    /// A layout that orders the components in a grid.
+    /// The number of rows and columns can be set by the corresponding
+    /// properties.
+    /// If not enough components are given for one row, the number of
+    /// columns are reduced to the number of components in the container.
+    /// </summary>
     public class GridLayout : AbstractLayout
     {
         public int Rows { get; set; }
@@ -32,28 +41,49 @@ namespace GameEngine.Graphics
                 realColumns = (int)Math.Ceiling(((float)components.Count) / Rows);
             }
 
-            float width = Width / realColumns;
-            float height = Height / realRows;
+            OrderComponents(components, realColumns, realRows);
+        }
 
-            // i % realColumns will be 0 for i == 0, so rowCount is incremented
-            int rowCount = -1;
-            int columnCount = 0;
+        void OrderComponents(List<IGraphicComponent> components, int realColumns, int realRows)
+        {
+            float cellWidth = Width / realColumns;
+            float cellHeight = Height / realRows;
+            float currentY = YPosition;
 
-            for (int i = 0; i < components.Count; i++)
+            for (int row = 0; row < realRows; row++)
             {
-                if (i % realColumns == 0)
-                {
-                    columnCount = 0;
-                    rowCount++;
-                }
-                else
-                    columnCount++;
+                var rowComponents = components.Where((c, i) => i >= row * realColumns && i < (row + 1) * realColumns);
+                OrderRow(rowComponents, currentY, cellWidth, cellHeight);
 
-                components[i].XPosition = XPosition + columnCount * width;
-                components[i].YPosition = YPosition + rowCount * height;
-                components[i].Width = width;
-                components[i].Height = height;
+                currentY += cellHeight;
             }
+        }
+
+        void OrderRow(IEnumerable<IGraphicComponent> rowComponents, float currentY, float cellWidth, float cellHeight)
+        {
+            float currentX = XPosition;
+            foreach (var c in rowComponents)
+            {
+                c.XPosition = currentX;
+                c.YPosition = currentY;
+
+                SetComponentSize(c, cellWidth, cellHeight);
+
+                currentX += cellWidth;
+            }
+        }
+
+        void SetComponentSize(IGraphicComponent c, float cellWidth, float cellHeight)
+        {
+            if (c.HorizontalPolicy == ResizePolicy.Fixed)
+                c.Width = Math.Min(cellWidth, c.PreferedWidth);
+            else
+                c.Width = cellWidth;
+
+            if (c.VerticalPolicy == ResizePolicy.Fixed)
+                c.Height = Math.Min(cellHeight, c.PreferedHeight);
+            else
+                c.Height = cellHeight;
         }
     }
 }

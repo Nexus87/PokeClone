@@ -211,5 +211,47 @@ namespace GameEngineTest.Graphics
 
             Assert.DoesNotThrow(() => testLayout.LayoutContainer(testContainer));
         }
+
+        [TestCase(0, 0, 100, 100, 10, 10)]
+        [TestCase(10, 5, 100, 100, 10, 10)]
+        [TestCase(10, 10, 100, 100, 110, 100)]
+        public void LayoutContainer_OneComponentWithFixedVSize_ComponentHasPreferedHeight(
+            float containerX, float containerY, 
+            float containerWidth, float containerHeight, 
+            float preferedHeight, float expectedHeight)
+        {
+            var testLayout = CreateLayout();
+            var testContainer = CreateContainer(containerX, containerY, containerWidth, containerHeight);
+            var component = testContainer.SetupContainer(1);
+
+            component[0].PreferedHeight = preferedHeight;
+            component[0].VerticalPolicy = ResizePolicy.Fixed;
+
+            testLayout.LayoutContainer(testContainer);
+
+            Assert.AreEqual(expectedHeight, component[0].Height);
+
+        }
+
+        [TestCase(0, 0, 100, 100, 10, 10)]
+        [TestCase(10, 5, 100, 100, 10, 10)]
+        [TestCase(10, 10, 100, 100, 110, 100)]
+        public void LayoutContainer_OneComponentWithFixedHSize_ComponentHasPreferedWidth(
+            float containerX, float containerY,
+            float containerWidth, float containerHeight,
+            float preferedWidth, float expectedWidth)
+        {
+            var testLayout = CreateLayout();
+            var testContainer = CreateContainer(containerX, containerY, containerWidth, containerHeight);
+            var component = testContainer.SetupContainer(1);
+
+            component[0].PreferedWidth = preferedWidth;
+            component[0].HorizontalPolicy = ResizePolicy.Fixed;
+
+            testLayout.LayoutContainer(testContainer);
+
+            Assert.AreEqual(expectedWidth, component[0].Width);
+
+        }
     }
 }

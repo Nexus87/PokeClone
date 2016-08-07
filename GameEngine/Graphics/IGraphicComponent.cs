@@ -5,8 +5,8 @@ namespace GameEngine.Graphics
 {
     public enum ResizePolicy
     {
-        Fixed,
-        Extending
+        Extending,
+        Fixed
     }
 
     public class GraphicComponentSizeChangedEventArgs : EventArgs

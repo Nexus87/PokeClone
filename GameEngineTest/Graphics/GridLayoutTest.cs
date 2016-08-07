@@ -128,6 +128,32 @@ namespace GameEngineTest.Graphics
             return index % columns;
         }
 
+        [TestCase(50, 5, 10, 200, 100, 20, 20, 100, 200)]
+        public void LayoutContainer_ComponentWithFixedPolicy_ComponentAlwaysLessThanCellSize(
+            int componentCount,
+            int rows, int columns,
+            float containerWidth, float containerHeight,
+            float cellWidth, float cellHeight,
+            float preferedWidth, float preferedHeight)
+        {
+            var container = CreateContainer(0, 0, containerWidth, containerHeight);
+            var layout = new GridLayout(rows, columns);
+            var components = container.SetupContainer(componentCount);
+
+            var fixedSizeComponent = components[componentCount / 2];
+            fixedSizeComponent.HorizontalPolicy = ResizePolicy.Fixed;
+            fixedSizeComponent.VerticalPolicy = ResizePolicy.Fixed;
+            fixedSizeComponent.PreferedHeight = preferedHeight;
+            fixedSizeComponent.PreferedWidth = preferedWidth;
+
+            layout.LayoutContainer(container);
+
+            foreach(var c in components)
+            {
+                Assert.LessOrEqual(c.Width, cellWidth);
+                Assert.LessOrEqual(c.Height, cellHeight);
+            }
+        }
         private Container CreateDefaultContainer()
         {
             return CreateContainer(5.0f, 5.0f, 500.0f, 500.0f);
