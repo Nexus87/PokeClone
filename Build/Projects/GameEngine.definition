@@ -62,6 +62,7 @@
     <Compile Include="IEvent.cs" />
     <Compile Include="IEventQueue.cs" />
     <Compile Include="IGameComponent.cs" />
+    <Compile Include="IGameComponentManager.cs" />
     <Compile Include="IGameRegistry.cs" />
     <Compile Include="IInputHandler.cs" />
     <Compile Include="IKeyboardManager.cs" />
