@@ -42,7 +42,7 @@ namespace GameEngineTest.Graphics
             var fixedComponent = components[0];
             var expandingComponent = components[1];
 
-            fixedComponent.VerticalPolicy = ResizePolicy.Fixed;
+            fixedComponent.VerticalPolicy = ResizePolicy.Preferred;
             expandingComponent.VerticalPolicy = ResizePolicy.Extending;
 
             fixedComponent.PreferredHeight = fixedHeight;
@@ -70,7 +70,7 @@ namespace GameEngineTest.Graphics
             var fixedComponent = components[0];
             var expandingComponent = components[1];
 
-            fixedComponent.HorizontalPolicy = ResizePolicy.Fixed;
+            fixedComponent.HorizontalPolicy = ResizePolicy.Preferred;
             expandingComponent.HorizontalPolicy = ResizePolicy.Extending;
 
             fixedComponent.PreferredWidth = fixedWidth;
@@ -129,7 +129,7 @@ namespace GameEngineTest.Graphics
             var fixedComponent = components[0];
             var expandingComponent = components[1];
 
-            fixedComponent.HorizontalPolicy = ResizePolicy.Fixed;
+            fixedComponent.HorizontalPolicy = ResizePolicy.Preferred;
             expandingComponent.HorizontalPolicy = ResizePolicy.Extending;
 
             fixedComponent.PreferredWidth = fixedWidth;
@@ -157,7 +157,7 @@ namespace GameEngineTest.Graphics
             var fixedComponent = components[0];
             var expandingComponent = components[1];
 
-            fixedComponent.VerticalPolicy = ResizePolicy.Fixed;
+            fixedComponent.VerticalPolicy = ResizePolicy.Preferred;
             expandingComponent.VerticalPolicy = ResizePolicy.Extending;
 
             fixedComponent.PreferredHeight = fixedHeight;

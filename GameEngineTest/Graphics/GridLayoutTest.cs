@@ -141,8 +141,8 @@ namespace GameEngineTest.Graphics
             var components = container.SetupContainer(componentCount);
 
             var fixedSizeComponent = components[componentCount / 2];
-            fixedSizeComponent.HorizontalPolicy = ResizePolicy.Fixed;
-            fixedSizeComponent.VerticalPolicy = ResizePolicy.Fixed;
+            fixedSizeComponent.HorizontalPolicy = ResizePolicy.Preferred;
+            fixedSizeComponent.VerticalPolicy = ResizePolicy.Preferred;
             fixedSizeComponent.PreferredHeight = preferredHeight;
             fixedSizeComponent.PreferredWidth = preferredWidth;
 

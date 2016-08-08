@@ -140,11 +140,6 @@ namespace GameEngine.Graphics
             {
                 return InnerComponent.PreferredHeight;
             }
-
-            set
-            {
-                InnerComponent.PreferredHeight = value;
-            }
         }
 
         public float PreferredWidth
@@ -152,11 +147,6 @@ namespace GameEngine.Graphics
             get
             {
                 return InnerComponent.PreferredWidth;
-            }
-
-            set
-            {
-                InnerComponent.PreferredWidth = value;
             }
         }
 

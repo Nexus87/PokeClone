@@ -225,7 +225,7 @@ namespace GameEngineTest.Graphics
             var component = testContainer.SetupContainer(1);
 
             component[0].PreferredHeight = preferredHeight;
-            component[0].VerticalPolicy = ResizePolicy.Fixed;
+            component[0].VerticalPolicy = ResizePolicy.Preferred;
 
             testLayout.LayoutContainer(testContainer);
 
@@ -246,7 +246,7 @@ namespace GameEngineTest.Graphics
             var component = testContainer.SetupContainer(1);
 
             component[0].PreferredWidth = preferredWidth;
-            component[0].HorizontalPolicy = ResizePolicy.Fixed;
+            component[0].HorizontalPolicy = ResizePolicy.Preferred;
 
             testLayout.LayoutContainer(testContainer);
 

@@ -37,15 +37,18 @@ namespace BattleLib.GraphicComponents
             var hpLineContainer = new Container();
 
             hpLine = line;
+            
             name = nameBox;
 
             lvl = levelBox;
             lvl.PreferredTextHeight = 16.0f;
 
-            var hpLabelBox = hpBox;
             hpBox.Text = "hp:";
-            hpBox.PreferredTextHeight = 12.0f;
+            hpBox.PreferredTextHeight = 16.0f;
+            hpBox.HorizontalPolicy = ResizePolicy.Preferred;
 
+            hpLineContainer.VerticalPolicy = ResizePolicy.Preferred;
+            hpLineContainer.Height = 32.0f;
             hpLineContainer.Layout = new HBoxLayout();
             hpLineContainer.AddComponent(hpBox);
             hpLineContainer.AddComponent(hpLine);

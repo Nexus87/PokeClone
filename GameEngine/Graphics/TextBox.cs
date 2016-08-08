@@ -110,11 +110,6 @@ namespace GameEngine.Graphics
 
                 return preferredHeight;
             }
-            set
-            {
-                preferredHeight = value;
-                preferredHeightOutdated = false;
-            }
         }
 
         public override float PreferredWidth
@@ -127,11 +122,6 @@ namespace GameEngine.Graphics
                 }
 
                 return preferredWidth;
-            }
-            set
-            {
-                preferredWidth = value;
-                preferredWidthOutdated = false;
             }
         }
     }

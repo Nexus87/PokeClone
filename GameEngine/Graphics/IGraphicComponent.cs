@@ -6,6 +6,7 @@ namespace GameEngine.Graphics
     public enum ResizePolicy
     {
         Extending,
+        Preferred,
         Fixed
     }
 
@@ -101,8 +102,8 @@ namespace GameEngine.Graphics
 
         Color Color { get; set; }
 
-        float PreferredHeight { get; set; }
-        float PreferredWidth { get; set; }
+        float PreferredHeight { get; }
+        float PreferredWidth { get; }
        
         ResizePolicy HorizontalPolicy { get; set; }
         ResizePolicy VerticalPolicy { get; set; }
