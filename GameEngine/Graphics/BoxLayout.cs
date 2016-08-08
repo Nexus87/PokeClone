@@ -5,71 +5,50 @@ using System.Linq;
 
 namespace GameEngine.Graphics
 {
-    public class BoxLayout : AbstractLayout
+    public abstract class BoxLayout : AbstractLayout
     {
-        private Direction direction;
-
         protected float HeightForExtendingComponents { get; set; }
         protected float WidthForExtendingComponents { get; set; }
 
-        protected void CalculateSizeForExtendingComponents(List<IGraphicComponent> components)
+        protected Func<IGraphicComponent, float> HeightModifier { get; set; }
+        protected Func<IGraphicComponent, float> WidthModifier { get; set; }
+
+        protected float CalculateWidthForExtendingComponents(List<IGraphicComponent> components)
         {
             var fixedWidthComponents = components.Where(c => c.HorizontalPolicy == ResizePolicy.Fixed);
-            var fixedHeightComponents = components.Where(c => c.VerticalPolicy == ResizePolicy.Fixed);
-
             float totalFixedWidth = fixedWidthComponents.Sum(c => c.PreferedWidth);
-            float totalFixedHeight = fixedHeightComponents.Sum(c => c.PreferedHeight);
-
             var extendingWidthComponetns = components.Count - fixedWidthComponents.Count();
-            var extendingHeightComponetns = components.Count - fixedHeightComponents.Count();
-
-            HeightForExtendingComponents = Math.Max(0, Height - totalFixedHeight) / extendingHeightComponetns;
-            WidthForExtendingComponents = Math.Max(0, Width - totalFixedWidth) / extendingWidthComponetns;
+            return Math.Max(0, Width - totalFixedWidth) / extendingWidthComponetns;
             
         }
-        
-        protected BoxLayout(Direction direction)
+
+        protected float CalculateHeightForExtendingComponents(List<IGraphicComponent> components)
         {
-            this.direction = direction;
+            var fixedHeightComponents = components.Where(c => c.VerticalPolicy == ResizePolicy.Fixed);
+            float totalFixedHeight = fixedHeightComponents.Sum(c => c.PreferedHeight);
+            var extendingHeightComponetns = components.Count - fixedHeightComponents.Count();
+            return Math.Max(0, Height - totalFixedHeight) / extendingHeightComponetns;
+
         }
 
-        protected enum Direction { Horizontal, Vertical };
-
-
-        protected override void UpdateComponents(Container container)
+        protected void LayoutComponents(List<IGraphicComponent> components)
         {
-            var components = container.Components;
-            CalculateSizeForExtendingComponents(components);
 
-            if (direction == Direction.Horizontal)
+            float totalWidthLeft = Width;
+            float currentXPosition = XPosition;
+            float totalHeightLeft = Height;
+            float currentYPosition = YPosition;
+
+            foreach(var component in components)
             {
-                float totalWidthLeft = Width;
-                float currentXPosition = XPosition;
+                SetComponentPosition(component, currentXPosition, currentYPosition);
+                SetSizeWithLimits(component, HeightForExtendingComponents, WidthForExtendingComponents, totalHeightLeft, totalWidthLeft);
 
-                for (int i = 0; i < components.Count; i++)
-                {
-                    var component = components[i];
-                    SetComponentPosition(component, currentXPosition, YPosition);
-                    SetSizeWithLimits(component, Height, WidthForExtendingComponents, Height, totalWidthLeft);
+                totalWidthLeft -= WidthModifier(component);
+                currentXPosition += WidthModifier(component);
 
-                    totalWidthLeft -= component.Width;
-                    currentXPosition += component.Width;
-                }
-            }
-            else
-            {
-                float totalHeightLeft = Height;
-                float currentYPosition = YPosition;
-
-                for (int i = 0; i < components.Count; i++)
-                {
-                    var component = components[i];
-                    SetComponentPosition(component, XPosition, currentYPosition);
-                    SetSizeWithLimits(component, HeightForExtendingComponents, Width, totalHeightLeft, Width);
-
-                    totalHeightLeft -= component.Height;
-                    currentYPosition += component.Height;
-                }
+                totalHeightLeft -= HeightModifier(component);
+                currentYPosition += HeightModifier(component);
             }
         }
 
@@ -104,17 +83,31 @@ namespace GameEngine.Graphics
 
     public class HBoxLayout : BoxLayout
     {
-        public HBoxLayout()
-            : base(Direction.Horizontal)
+        protected override void UpdateComponents(Container container)
         {
+            var components = container.Components;
+
+            HeightModifier = c => 0;
+            WidthModifier = c => c.Width;
+            HeightForExtendingComponents = Height;
+            WidthForExtendingComponents = CalculateWidthForExtendingComponents(components);
+
+            LayoutComponents(components);
         }
     }
 
     public class VBoxLayout : BoxLayout
     {
-        public VBoxLayout()
-            : base(Direction.Vertical)
+        protected override void UpdateComponents(Container container)
         {
+            var components = container.Components;
+
+            HeightModifier = c => c.Height;
+            WidthModifier = c => 0;
+            WidthForExtendingComponents = Width;
+            HeightForExtendingComponents = CalculateHeightForExtendingComponents(components);
+
+            LayoutComponents(components);
         }
     }
 }
