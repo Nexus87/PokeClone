@@ -18,9 +18,9 @@ namespace GameEngine.Graphics
             component.YPosition = YPosition;
 
             component.Width = component.HorizontalPolicy == ResizePolicy.Extending ?
-                Width : Math.Min(Width, component.PreferedWidth);
+                Width : Math.Min(Width, component.PreferredWidth);
             component.Height = component.VerticalPolicy == ResizePolicy.Extending ?
-                Height : Math.Min(Height, component.PreferedHeight);
+                Height : Math.Min(Height, component.PreferredHeight);
 
             SetRemainingComponentsSizeZero(components);
         }

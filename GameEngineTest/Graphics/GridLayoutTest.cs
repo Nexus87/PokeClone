@@ -134,7 +134,7 @@ namespace GameEngineTest.Graphics
             int rows, int columns,
             float containerWidth, float containerHeight,
             float cellWidth, float cellHeight,
-            float preferedWidth, float preferedHeight)
+            float preferredWidth, float preferredHeight)
         {
             var container = CreateContainer(0, 0, containerWidth, containerHeight);
             var layout = new GridLayout(rows, columns);
@@ -143,8 +143,8 @@ namespace GameEngineTest.Graphics
             var fixedSizeComponent = components[componentCount / 2];
             fixedSizeComponent.HorizontalPolicy = ResizePolicy.Fixed;
             fixedSizeComponent.VerticalPolicy = ResizePolicy.Fixed;
-            fixedSizeComponent.PreferedHeight = preferedHeight;
-            fixedSizeComponent.PreferedWidth = preferedWidth;
+            fixedSizeComponent.PreferredHeight = preferredHeight;
+            fixedSizeComponent.PreferredWidth = preferredWidth;
 
             layout.LayoutContainer(container);
 

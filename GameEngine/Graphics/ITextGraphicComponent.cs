@@ -12,7 +12,7 @@
         /// This property holds the preferred text size.
         /// If the Height property allows it, this the drawn text will have this size.
         /// </summary>
-        float PreferedTextHeight { get; set; }
+        float PreferredTextHeight { get; set; }
 
         /// <summary>
         /// Returns the real text height. This is the real size, that the drawn text will have.

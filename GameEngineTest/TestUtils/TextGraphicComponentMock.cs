@@ -14,11 +14,11 @@ namespace GameEngineTest.TestUtils
             return DisplayableCharsFunc();
         }
 
-        public float PreferedTextHeight { get;set;  }
+        public float PreferredTextHeight { get;set;  }
 
         public float RealTextHeight
         {
-            get { return Math.Min(Height, PreferedTextHeight); }
+            get { return Math.Min(Height, PreferredTextHeight); }
         }
 
         public string Text { get; set; }

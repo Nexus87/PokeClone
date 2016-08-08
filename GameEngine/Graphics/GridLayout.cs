@@ -76,12 +76,12 @@ namespace GameEngine.Graphics
         void SetComponentSize(IGraphicComponent c, float cellWidth, float cellHeight)
         {
             if (c.HorizontalPolicy == ResizePolicy.Fixed)
-                c.Width = Math.Min(cellWidth, c.PreferedWidth);
+                c.Width = Math.Min(cellWidth, c.PreferredWidth);
             else
                 c.Width = cellWidth;
 
             if (c.VerticalPolicy == ResizePolicy.Fixed)
-                c.Height = Math.Min(cellHeight, c.PreferedHeight);
+                c.Height = Math.Min(cellHeight, c.PreferredHeight);
             else
                 c.Height = cellHeight;
         }

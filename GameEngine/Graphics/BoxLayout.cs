@@ -16,7 +16,7 @@ namespace GameEngine.Graphics
         protected float CalculateWidthForExtendingComponents(List<IGraphicComponent> components)
         {
             var fixedWidthComponents = components.Where(c => c.HorizontalPolicy == ResizePolicy.Fixed);
-            float totalFixedWidth = fixedWidthComponents.Sum(c => c.PreferedWidth);
+            float totalFixedWidth = fixedWidthComponents.Sum(c => c.PreferredWidth);
             var extendingWidthComponetns = components.Count - fixedWidthComponents.Count();
             return Math.Max(0, Width - totalFixedWidth) / extendingWidthComponetns;
             
@@ -25,7 +25,7 @@ namespace GameEngine.Graphics
         protected float CalculateHeightForExtendingComponents(List<IGraphicComponent> components)
         {
             var fixedHeightComponents = components.Where(c => c.VerticalPolicy == ResizePolicy.Fixed);
-            float totalFixedHeight = fixedHeightComponents.Sum(c => c.PreferedHeight);
+            float totalFixedHeight = fixedHeightComponents.Sum(c => c.PreferredHeight);
             var extendingHeightComponetns = components.Count - fixedHeightComponents.Count();
             return Math.Max(0, Height - totalFixedHeight) / extendingHeightComponetns;
 
@@ -55,12 +55,12 @@ namespace GameEngine.Graphics
         private static void SetSizeWithLimits(IGraphicComponent component, float height, float width, float heightLimit, float widthLimit)
         {
             if (component.VerticalPolicy == ResizePolicy.Fixed)
-                component.Height = Math.Min(component.PreferedHeight, heightLimit);
+                component.Height = Math.Min(component.PreferredHeight, heightLimit);
             else
                 component.Height = height;
 
             if (component.HorizontalPolicy == ResizePolicy.Fixed)
-                component.Width = Math.Min(component.PreferedWidth, widthLimit);
+                component.Width = Math.Min(component.PreferredWidth, widthLimit);
             else
                 component.Width = width;
         }
@@ -75,7 +75,7 @@ namespace GameEngine.Graphics
         {
             float remainingHeight = height - components
                 .Where(c => c.VerticalPolicy == ResizePolicy.Fixed)
-                .Sum(c => c.PreferedHeight);
+                .Sum(c => c.PreferredHeight);
 
             return Math.Max(0, remainingHeight);
         }

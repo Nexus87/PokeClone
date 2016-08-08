@@ -67,11 +67,11 @@ namespace GameEngineTest.Graphics
         [TestCase(150.0f, 0.0f, 32.0f)]
         [TestCase(150.0f, 40.0f, 0.0f)]
         [TestCase(150.0f, 40.0f, 50.0f)]
-        public void RealTextHeigth_SetPreferedTextHeight_IsAlwaysLessThanHeight(float width, float height, float TextSize)
+        public void RealTextHeigth_SetPreferredTextHeight_IsAlwaysLessThanHeight(float width, float height, float TextSize)
         {
             var box = CreateTextBox(width, height);
 
-            box.PreferedTextHeight = TextSize;
+            box.PreferredTextHeight = TextSize;
 
             Assert.LessOrEqual(box.RealTextHeight, height);
         }
@@ -81,20 +81,20 @@ namespace GameEngineTest.Graphics
         [TestCase(100.0f, 50.0f, 49.0f)]
         [TestCase(100.0f, 50.0f, 0.0f)]
         [TestCase(0.0f, 50.0f, 32.0f)]
-        public void RealTextHeigth_SetPreferedTextHeightLessThanHeight_IsEqualToPreferedHeight(float width, float height, float textSize)
+        public void RealTextHeigth_SetPreferredTextHeightLessThanHeight_IsEqualToPreferredHeight(float width, float height, float textSize)
         {
             var box = CreateTextBox(width, height);
 
-            box.PreferedTextHeight = textSize;
+            box.PreferredTextHeight = textSize;
 
             Assert.AreEqual(textSize, box.RealTextHeight, 0.0001);
         }
 
         [TestCase(-1.0f)]
-        public void SetPreferedTextHeight_InvalidValue_ThrowsArgumentException(float TextSize)
+        public void SetPreferredTextHeight_InvalidValue_ThrowsArgumentException(float TextSize)
         {
             var box = CreateTextBox(100, 100);
-            Assert.Throws<ArgumentException>(() => box.PreferedTextHeight = TextSize);
+            Assert.Throws<ArgumentException>(() => box.PreferredTextHeight = TextSize);
         }
 
 
@@ -102,11 +102,11 @@ namespace GameEngineTest.Graphics
         [TestCase(100.0f, 150.0f, 10.0f, 100.0f, 1)]
         [TestCase(100.0f, 150.0f, 10.0f, 99.0f, 1)]
         [TestCase(100.0f, 150.0f, 10.0f, 101.0f, 0)]
-        public void DisplayableChars_SetPreferedTextHeight_RightNumberOfChars(float width, float height, float TextSize, float charSize, int expectedNumber)
+        public void DisplayableChars_SetPreferredTextHeight_RightNumberOfChars(float width, float height, float TextSize, float charSize, int expectedNumber)
         {
             var textStub = new GraphicalTextStub { SingleCharWidth = charSize };
             var box = CreateTextBox(width, height, textStub);
-            box.PreferedTextHeight = TextSize;
+            box.PreferredTextHeight = TextSize;
 
             int displayedChars = box.DisplayableChars();
             
@@ -115,21 +115,21 @@ namespace GameEngineTest.Graphics
 
 
         [TestCase(100, 200, 12)]
-        public void GetPreferedHeight_SettingPrefredTextSize_PreferedHeightEqualsTextSize(float width, float height, float textSize)
+        public void GetPreferredHeight_SettingPrefredTextSize_PreferredHeightEqualsTextSize(float width, float height, float textSize)
         {
             var box = CreateTextBox(width, height);
 
-            box.PreferedTextHeight = textSize;
+            box.PreferredTextHeight = textSize;
 
-            Assert.AreEqual(textSize, box.PreferedHeight);
+            Assert.AreEqual(textSize, box.PreferredHeight);
         }
 
         [TestCase(100, 200, 12)]
-        public void GetPreferedHeight_CreateWithTextSize_PreferedHeightEqualsTextSize(float width, float height, float textSize)
+        public void GetPreferredHeight_CreateWithTextSize_PreferredHeightEqualsTextSize(float width, float height, float textSize)
         {
             var textStub = new GraphicalTextStub { CharHeight = textSize };
             var box = CreateTextBox(width, height, textStub);
-            Assert.AreEqual(textSize, box.PreferedHeight);
+            Assert.AreEqual(textSize, box.PreferredHeight);
         }
 
         [TestCase(100, 200, "test", 4)]
@@ -140,7 +140,7 @@ namespace GameEngineTest.Graphics
 
             box.Text = text;
 
-            Assert.AreEqual(expectedWidth, box.PreferedWidth, 10e-5);
+            Assert.AreEqual(expectedWidth, box.PreferredWidth, 10e-5);
         }
 
         protected override IGraphicComponent CreateComponent()

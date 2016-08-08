@@ -215,16 +215,16 @@ namespace GameEngineTest.Graphics
         [TestCase(0, 0, 100, 100, 10, 10)]
         [TestCase(10, 5, 100, 100, 10, 10)]
         [TestCase(10, 10, 100, 100, 110, 100)]
-        public void LayoutContainer_OneComponentWithFixedVSize_ComponentHasPreferedHeight(
+        public void LayoutContainer_OneComponentWithFixedVSize_ComponentHasPreferredHeight(
             float containerX, float containerY, 
             float containerWidth, float containerHeight, 
-            float preferedHeight, float expectedHeight)
+            float preferredHeight, float expectedHeight)
         {
             var testLayout = CreateLayout();
             var testContainer = CreateContainer(containerX, containerY, containerWidth, containerHeight);
             var component = testContainer.SetupContainer(1);
 
-            component[0].PreferedHeight = preferedHeight;
+            component[0].PreferredHeight = preferredHeight;
             component[0].VerticalPolicy = ResizePolicy.Fixed;
 
             testLayout.LayoutContainer(testContainer);
@@ -236,16 +236,16 @@ namespace GameEngineTest.Graphics
         [TestCase(0, 0, 100, 100, 10, 10)]
         [TestCase(10, 5, 100, 100, 10, 10)]
         [TestCase(10, 10, 100, 100, 110, 100)]
-        public void LayoutContainer_OneComponentWithFixedHSize_ComponentHasPreferedWidth(
+        public void LayoutContainer_OneComponentWithFixedHSize_ComponentHasPreferredWidth(
             float containerX, float containerY,
             float containerWidth, float containerHeight,
-            float preferedWidth, float expectedWidth)
+            float preferredWidth, float expectedWidth)
         {
             var testLayout = CreateLayout();
             var testContainer = CreateContainer(containerX, containerY, containerWidth, containerHeight);
             var component = testContainer.SetupContainer(1);
 
-            component[0].PreferedWidth = preferedWidth;
+            component[0].PreferredWidth = preferredWidth;
             component[0].HorizontalPolicy = ResizePolicy.Fixed;
 
             testLayout.LayoutContainer(testContainer);

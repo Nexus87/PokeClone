@@ -40,11 +40,11 @@ namespace BattleLib.GraphicComponents
             name = nameBox;
 
             lvl = levelBox;
-            lvl.PreferedTextHeight = 16.0f;
+            lvl.PreferredTextHeight = 16.0f;
 
             var hpLabelBox = hpBox;
             hpBox.Text = "hp:";
-            hpBox.PreferedTextHeight = 12.0f;
+            hpBox.PreferredTextHeight = 12.0f;
 
             hpLineContainer.Layout = new HBoxLayout();
             hpLineContainer.AddComponent(hpBox);
@@ -57,7 +57,7 @@ namespace BattleLib.GraphicComponents
             if (hpTextBox != null)
             {
                 hpText = hpTextBox;
-                hpText.PreferedTextHeight = 16.0f;
+                hpText.PreferredTextHeight = 16.0f;
                 container.AddComponent(hpText);
             }
 

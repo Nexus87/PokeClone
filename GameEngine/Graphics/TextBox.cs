@@ -10,12 +10,12 @@ namespace GameEngine.Graphics
     {
         private string text = "";
         private readonly IGraphicalText textGraphic;
-        private float preferedTextSize;
+        private float preferredTextSize;
 
-        private bool preferedWidthOutdated = true;
-        private bool preferedHeightOutdated = true;
-        private float preferedHeight;
-        private float preferedWidth;
+        private bool preferredWidthOutdated = true;
+        private bool preferredHeightOutdated = true;
+        private float preferredHeight;
+        private float preferredWidth;
 
         public TextBox(ISpriteFont font)
             : this(new TextGraphic(font))
@@ -24,22 +24,22 @@ namespace GameEngine.Graphics
         public TextBox(IGraphicalText textGraphic)
         {
             this.textGraphic = textGraphic;
-            PreferedTextHeight = textGraphic.CharHeight;
+            PreferredTextHeight = textGraphic.CharHeight;
         }
 
-        public float PreferedTextHeight
+        public float PreferredTextHeight
         { 
-            get { return preferedTextSize; } 
+            get { return preferredTextSize; } 
             set 
             {
                 if (value < 0)
-                    throw new ArgumentException("PreferedTextSize must be >= 0");
+                    throw new ArgumentException("PreferredTextSize must be >= 0");
 
-                if (preferedTextSize.AlmostEqual(value))
+                if (preferredTextSize.AlmostEqual(value))
                     return;
 
-                preferedHeightOutdated = true;
-                preferedTextSize = value;
+                preferredHeightOutdated = true;
+                preferredTextSize = value;
                 Invalidate();
             } 
         }
@@ -51,11 +51,11 @@ namespace GameEngine.Graphics
             }
             set {
                 text = value;
-                preferedWidthOutdated = true;
+                preferredWidthOutdated = true;
                 Invalidate();
             }
         }
-        public float RealTextHeight { get { return preferedTextSize <= Height ? preferedTextSize : Height; } }
+        public float RealTextHeight { get { return preferredTextSize <= Height ? preferredTextSize : Height; } }
         
         public int DisplayableChars()
         {
@@ -98,40 +98,40 @@ namespace GameEngine.Graphics
 
         public ISpriteFont SpriteFont { get { return textGraphic.SpriteFont; } set { textGraphic.SpriteFont = value; } }
 
-        public override float PreferedHeight
+        public override float PreferredHeight
         {
             get
             {
-                if (preferedHeightOutdated)
+                if (preferredHeightOutdated)
                 {
-                    preferedHeight = PreferedTextHeight;
-                    preferedHeightOutdated = false;
+                    preferredHeight = PreferredTextHeight;
+                    preferredHeightOutdated = false;
                 }
 
-                return preferedHeight;
+                return preferredHeight;
             }
             set
             {
-                preferedHeight = value;
-                preferedHeightOutdated = false;
+                preferredHeight = value;
+                preferredHeightOutdated = false;
             }
         }
 
-        public override float PreferedWidth
+        public override float PreferredWidth
         {
             get{
-                if (preferedWidthOutdated)
+                if (preferredWidthOutdated)
                 {
-                    preferedWidth = textGraphic.GetSingleCharWidth(PreferedTextHeight) * text.Length;
-                    preferedWidthOutdated = false;
+                    preferredWidth = textGraphic.GetSingleCharWidth(PreferredTextHeight) * text.Length;
+                    preferredWidthOutdated = false;
                 }
 
-                return preferedWidth;
+                return preferredWidth;
             }
             set
             {
-                preferedWidth = value;
-                preferedWidthOutdated = false;
+                preferredWidth = value;
+                preferredWidthOutdated = false;
             }
         }
     }

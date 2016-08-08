@@ -70,15 +70,15 @@ namespace GameEngine.Graphics
             return textBox.DisplayableChars();
         }
 
-        public float PreferedTextHeight
+        public float PreferredTextHeight
         {
             get
             {
-                return textBox.PreferedTextHeight;
+                return textBox.PreferredTextHeight;
             }
             set
             {
-                textBox.PreferedTextHeight = value;
+                textBox.PreferredTextHeight = value;
             }
         }
 

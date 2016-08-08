@@ -126,8 +126,8 @@ namespace GameEngine.Graphics
 
         public Color Color { get; set; }
 
-        public virtual float PreferedHeight { get; set; }
-        public virtual float PreferedWidth { get; set; }
+        public virtual float PreferredHeight { get; set; }
+        public virtual float PreferredWidth { get; set; }
         public ResizePolicy HorizontalPolicy { get; set; }
         public ResizePolicy VerticalPolicy { get; set; }
     }

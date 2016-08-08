@@ -45,7 +45,7 @@ namespace GameEngineTest.Graphics
             fixedComponent.VerticalPolicy = ResizePolicy.Fixed;
             expandingComponent.VerticalPolicy = ResizePolicy.Extending;
 
-            fixedComponent.PreferedHeight = fixedHeight;
+            fixedComponent.PreferredHeight = fixedHeight;
 
             layout.LayoutContainer(container);
 
@@ -73,7 +73,7 @@ namespace GameEngineTest.Graphics
             fixedComponent.HorizontalPolicy = ResizePolicy.Fixed;
             expandingComponent.HorizontalPolicy = ResizePolicy.Extending;
 
-            fixedComponent.PreferedWidth = fixedWidth;
+            fixedComponent.PreferredWidth = fixedWidth;
 
             layout.LayoutContainer(container);
 
@@ -132,7 +132,7 @@ namespace GameEngineTest.Graphics
             fixedComponent.HorizontalPolicy = ResizePolicy.Fixed;
             expandingComponent.HorizontalPolicy = ResizePolicy.Extending;
 
-            fixedComponent.PreferedWidth = fixedWidth;
+            fixedComponent.PreferredWidth = fixedWidth;
 
             layout.LayoutContainer(container);
 
@@ -160,7 +160,7 @@ namespace GameEngineTest.Graphics
             fixedComponent.VerticalPolicy = ResizePolicy.Fixed;
             expandingComponent.VerticalPolicy = ResizePolicy.Extending;
 
-            fixedComponent.PreferedHeight = fixedHeight;
+            fixedComponent.PreferredHeight = fixedHeight;
 
             layout.LayoutContainer(container);
 

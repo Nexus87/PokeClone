@@ -44,9 +44,9 @@ namespace GameEngineTest.TestUtils
 
         public Color Color { get; set; }
 
-        public float PreferedHeight { get; set; }
+        public float PreferredHeight { get; set; }
 
-        public float PreferedWidth { get; set; }
+        public float PreferredWidth { get; set; }
 
         public ResizePolicy HorizontalPolicy { get; set; }
 

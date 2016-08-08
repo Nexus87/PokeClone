@@ -134,29 +134,29 @@ namespace GameEngine.Graphics
 
         public Color Color { get; set; }
 
-        public float PreferedHeight
+        public float PreferredHeight
         {
             get
             {
-                return InnerComponent.PreferedHeight;
+                return InnerComponent.PreferredHeight;
             }
 
             set
             {
-                InnerComponent.PreferedHeight = value;
+                InnerComponent.PreferredHeight = value;
             }
         }
 
-        public float PreferedWidth
+        public float PreferredWidth
         {
             get
             {
-                return InnerComponent.PreferedWidth;
+                return InnerComponent.PreferredWidth;
             }
 
             set
             {
-                InnerComponent.PreferedWidth = value;
+                InnerComponent.PreferredWidth = value;
             }
         }
 

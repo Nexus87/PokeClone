@@ -134,7 +134,7 @@ namespace GameEngineTest.TestUtils
 
         public Color Color { get; set; }
 
-        public float PreferedHeight
+        public float PreferredHeight
         {
             get
             {
@@ -147,7 +147,7 @@ namespace GameEngineTest.TestUtils
             }
         }
 
-        public float PreferedWidth
+        public float PreferredWidth
         {
             get
             {
