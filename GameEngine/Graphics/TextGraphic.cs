@@ -19,7 +19,16 @@ namespace GameEngine.Graphics
             this.font = font;
         }
 
-        public string Text { get { return text; } set { text = value; Invalidate(); } }
+        public string Text 
+        { 
+            get { return text; }
+            set
+            {
+                text = value;
+                Invalidate();
+            } 
+        }
+        
         public float CharHeight
         {
             get { return charHeight; }
@@ -38,6 +47,11 @@ namespace GameEngine.Graphics
 
         public float CalculateTextLength(string testText)
         {
+            return CalculateTextLength(testText, CharHeight);
+        }
+
+        private float CalculateTextLength(string testText, float charSize)
+        {
             if (font == null)
                 return 0;
 
@@ -45,7 +59,7 @@ namespace GameEngine.Graphics
                 return 0;
    
             var size = font.MeasureString(testText);
-            return charHeight * size.X / size.Y;
+            return charSize * size.X / size.Y;
         }
 
         public void Draw(ISpriteBatch batch)
@@ -58,6 +72,11 @@ namespace GameEngine.Graphics
         public float GetSingleCharWidth()
         {
             return CalculateTextLength(" ");
+        }
+
+        public float GetSingleCharWidth(float charSize)
+        {
+            return CalculateTextLength(" ", charSize);
         }
 
         public void Setup()

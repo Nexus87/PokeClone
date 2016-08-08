@@ -5,6 +5,7 @@
         float CalculateTextLength(string testText);
         void Draw(ISpriteBatch batch);
         float GetSingleCharWidth();
+        float GetSingleCharWidth(float charHeight);
         void Setup();
 
         ISpriteFont SpriteFont { get; set; }

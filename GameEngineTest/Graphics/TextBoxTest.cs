@@ -43,6 +43,12 @@ namespace GameEngineTest.Graphics
 
         public float XPosition { get; set; }
         public float YPosition { get; set; }
+
+
+        public float GetSingleCharWidth(float charHeight)
+        {
+            return SingleCharWidth;
+        }
     }
 
     [TestFixture]
@@ -108,6 +114,34 @@ namespace GameEngineTest.Graphics
         }
 
 
+        [TestCase(100, 200, 12)]
+        public void GetPreferedHeight_SettingPrefredTextSize_PreferedHeightEqualsTextSize(float width, float height, float textSize)
+        {
+            var box = CreateTextBox(width, height);
+
+            box.PreferedTextHeight = textSize;
+
+            Assert.AreEqual(textSize, box.PreferedHeight);
+        }
+
+        [TestCase(100, 200, 12)]
+        public void GetPreferedHeight_CreateWithTextSize_PreferedHeightEqualsTextSize(float width, float height, float textSize)
+        {
+            var textStub = new GraphicalTextStub { CharHeight = textSize };
+            var box = CreateTextBox(width, height, textStub);
+            Assert.AreEqual(textSize, box.PreferedHeight);
+        }
+
+        [TestCase(100, 200, "test", 4)]
+        public void GetPrefredWidth_SetText_PrefredWidthEqualsTextLenght(float width, float height, String text, float expectedWidth)
+        {
+            var textStub = new GraphicalTextStub { SingleCharWidth = 1 };
+            var box = CreateTextBox(width, height, textStub);
+
+            box.Text = text;
+
+            Assert.AreEqual(expectedWidth, box.PreferedWidth, 10e-5);
+        }
 
         protected override IGraphicComponent CreateComponent()
         {

@@ -12,6 +12,11 @@ namespace GameEngine.Graphics
         private readonly IGraphicalText textGraphic;
         private float preferedTextSize;
 
+        private bool preferedWidthOutdated = true;
+        private bool preferedHeightOutdated = true;
+        private float preferedHeight;
+        private float preferedWidth;
+
         public TextBox(ISpriteFont font)
             : this(new TextGraphic(font))
         { }
@@ -19,7 +24,7 @@ namespace GameEngine.Graphics
         public TextBox(IGraphicalText textGraphic)
         {
             this.textGraphic = textGraphic;
-            preferedTextSize = textGraphic.CharHeight;
+            PreferedTextHeight = textGraphic.CharHeight;
         }
 
         public float PreferedTextHeight
@@ -32,13 +37,24 @@ namespace GameEngine.Graphics
 
                 if (preferedTextSize.AlmostEqual(value))
                     return;
-                
+
+                preferedHeightOutdated = true;
                 preferedTextSize = value;
                 Invalidate();
             } 
         }
 
-        public string Text { get { return text; } set { text = value; Invalidate(); } }
+        public string Text { 
+            get
+            {
+                return text;
+            }
+            set {
+                text = value;
+                preferedWidthOutdated = true;
+                Invalidate();
+            }
+        }
         public float RealTextHeight { get { return preferedTextSize <= Height ? preferedTextSize : Height; } }
         
         public int DisplayableChars()
@@ -81,5 +97,42 @@ namespace GameEngine.Graphics
 
 
         public ISpriteFont SpriteFont { get { return textGraphic.SpriteFont; } set { textGraphic.SpriteFont = value; } }
+
+        public override float PreferedHeight
+        {
+            get
+            {
+                if (preferedHeightOutdated)
+                {
+                    preferedHeight = PreferedTextHeight;
+                    preferedHeightOutdated = false;
+                }
+
+                return preferedHeight;
+            }
+            set
+            {
+                preferedHeight = value;
+                preferedHeightOutdated = false;
+            }
+        }
+
+        public override float PreferedWidth
+        {
+            get{
+                if (preferedWidthOutdated)
+                {
+                    preferedWidth = textGraphic.GetSingleCharWidth(PreferedTextHeight) * text.Length;
+                    preferedWidthOutdated = false;
+                }
+
+                return preferedWidth;
+            }
+            set
+            {
+                preferedWidth = value;
+                preferedWidthOutdated = false;
+            }
+        }
     }
 }
