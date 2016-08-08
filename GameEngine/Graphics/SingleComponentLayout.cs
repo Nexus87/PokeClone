@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace GameEngine.Graphics
@@ -13,7 +14,13 @@ namespace GameEngine.Graphics
                 return;
 
             var component = components.First();
-            component.SetCoordinates(XPosition, YPosition, Width, Height);
+            component.XPosition = XPosition;
+            component.YPosition = YPosition;
+
+            component.Width = component.HorizontalPolicy == ResizePolicy.Extending ?
+                Width : Math.Min(Width, component.PreferedWidth);
+            component.Height = component.VerticalPolicy == ResizePolicy.Extending ?
+                Height : Math.Min(Height, component.PreferedHeight);
 
             SetRemainingComponentsSizeZero(components);
         }
