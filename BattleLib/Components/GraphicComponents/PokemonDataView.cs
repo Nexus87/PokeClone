@@ -35,27 +35,35 @@ namespace BattleLib.GraphicComponents
         {
             var container = InnerComponent;
             var hpLineContainer = new Container();
+            var lvlContainer = new Container();
 
             hpLine = line;
             
             name = nameBox;
 
             lvl = levelBox;
-            lvl.PreferredTextHeight = 16.0f;
+            lvl.PreferredTextHeight = 24.0f;
+            lvl.HorizontalPolicy = ResizePolicy.Preferred;
+            lvlContainer.AddComponent(new NullGraphicObject());
+            lvlContainer.AddComponent(lvl);
+            lvlContainer.AddComponent(new NullGraphicObject());
+            lvlContainer.Layout = new HBoxLayout();
+            lvlContainer.VerticalPolicy = ResizePolicy.Fixed;
+            lvlContainer.Height = lvl.PreferredHeight;
 
             hpBox.Text = "hp:";
-            hpBox.PreferredTextHeight = 16.0f;
+            hpBox.PreferredTextHeight = 24.0f;
             hpBox.HorizontalPolicy = ResizePolicy.Preferred;
 
-            hpLineContainer.VerticalPolicy = ResizePolicy.Preferred;
-            hpLineContainer.Height = 32.0f;
+            hpLineContainer.VerticalPolicy = ResizePolicy.Fixed;
+            hpLineContainer.Height = hpBox.PreferredHeight;
             hpLineContainer.Layout = new HBoxLayout();
             hpLineContainer.AddComponent(hpBox);
             hpLineContainer.AddComponent(hpLine);
 
             container.AddComponent(name);
+            container.AddComponent(lvlContainer);
             container.AddComponent(hpLineContainer);
-            container.AddComponent(lvl);
 
             if (hpTextBox != null)
             {
@@ -88,12 +96,15 @@ namespace BattleLib.GraphicComponents
         public void SetPokemon(PokemonWrapper pokemon)
         {
             name.Text = pokemon.Name;
-            lvl.Text = "Level " + pokemon.Level;
+            lvl.Text = ": " + pokemon.Level;
             hpLine.MaxHP = pokemon.MaxHP;
             hpLine.Current = pokemon.HP;
 
             if (hpText != null)
                 hpText.Text = pokemon.HP + "/  " + hpLine.MaxHP;
+            
+            // TODO Remove this cast
+            ((Container)InnerComponent.Components[1]).ForceLayout();
         }
 
         protected override void Update()
