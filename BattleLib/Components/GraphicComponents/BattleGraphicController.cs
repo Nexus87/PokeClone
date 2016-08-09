@@ -93,8 +93,8 @@ namespace BattleLib.GraphicComponents
             aiView.XPosition = screen.ScreenWidth * 0.2f;
             aiView.YPosition = screen.ScreenHeight * 0.1f;
 
-            aiView.Height = screen.ScreenHeight * 0.25f;
-            aiView.Width = screen.ScreenWidth * 0.3f;
+            aiView.Height = screen.ScreenHeight * 0.1f;
+            aiView.Width = screen.ScreenWidth * 0.15f;
 
             aiSprite.XPosition = screen.ScreenWidth * 0.6f;
             aiSprite.YPosition = screen.ScreenHeight * 0.1f;
@@ -105,11 +105,11 @@ namespace BattleLib.GraphicComponents
 
         private void initPlayerGraphic(PokemonDataView playerView, PokemonSprite playerSprite, ScreenConstants screen)
         {
-            playerView.XPosition = screen.ScreenWidth * 0.6f;
-            playerView.YPosition = screen.ScreenHeight * 0.4f;
+            playerView.XPosition = screen.ScreenWidth * 0.55f;
+            playerView.YPosition = screen.ScreenHeight * 0.45f;
 
-            playerView.Height = screen.ScreenHeight * 0.25f;
-            playerView.Width = screen.ScreenWidth * 0.3f;
+            playerView.Height = screen.ScreenHeight * 0.15f;
+            playerView.Width = screen.ScreenWidth * 0.15f;
 
             playerSprite.XPosition = screen.ScreenWidth * 0.2f;
             playerSprite.YPosition = screen.ScreenHeight * 0.4f;
