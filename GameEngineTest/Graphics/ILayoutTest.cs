@@ -214,10 +214,52 @@ namespace GameEngineTest.Graphics
 
         [TestCase(0, 0, 100, 100, 10, 10)]
         [TestCase(10, 5, 100, 100, 10, 10)]
-        [TestCase(10, 10, 100, 100, 110, 100)]
-        public void LayoutContainer_OneComponentWithFixedVSize_ComponentHasPreferredHeight(
+        [TestCase(10, 10, 100, 100, 110, 110)]
+        public void LayoutContainer_OneComponentWithFixedVSize_ComponentHasGivenHeight(
             float containerX, float containerY, 
             float containerWidth, float containerHeight, 
+            float componentHeight, float expectedHeight)
+        {
+            var testLayout = CreateLayout();
+            var testContainer = CreateContainer(containerX, containerY, containerWidth, containerHeight);
+            var component = testContainer.SetupContainer(1);
+
+            component[0].Height = componentHeight;
+            component[0].VerticalPolicy = ResizePolicy.Fixed;
+
+            testLayout.LayoutContainer(testContainer);
+
+            Assert.AreEqual(expectedHeight, component[0].Height);
+
+        }
+
+        [TestCase(0, 0, 100, 100, 10, 10)]
+        [TestCase(10, 5, 100, 100, 10, 10)]
+        [TestCase(10, 10, 100, 100, 110, 110)]
+        public void LayoutContainer_OneComponentWithFixedHSize_ComponentGivenWidth(
+            float containerX, float containerY,
+            float containerWidth, float containerHeight,
+            float componentWidth, float expectedWidth)
+        {
+            var testLayout = CreateLayout();
+            var testContainer = CreateContainer(containerX, containerY, containerWidth, containerHeight);
+            var component = testContainer.SetupContainer(1);
+
+            component[0].Width = componentWidth;
+            component[0].HorizontalPolicy = ResizePolicy.Fixed;
+
+            testLayout.LayoutContainer(testContainer);
+
+            Assert.AreEqual(expectedWidth, component[0].Width);
+
+        }
+
+        [TestCase(0, 0, 100, 100, 10, 10)]
+        [TestCase(10, 5, 100, 100, 10, 10)]
+        [TestCase(10, 10, 100, 100, 110, 100)]
+        public void LayoutContainer_OneComponentWithPreferredVSize_ComponentHasPreferredHeight(
+            float containerX, float containerY,
+            float containerWidth, float containerHeight,
             float preferredHeight, float expectedHeight)
         {
             var testLayout = CreateLayout();
@@ -236,7 +278,7 @@ namespace GameEngineTest.Graphics
         [TestCase(0, 0, 100, 100, 10, 10)]
         [TestCase(10, 5, 100, 100, 10, 10)]
         [TestCase(10, 10, 100, 100, 110, 100)]
-        public void LayoutContainer_OneComponentWithFixedHSize_ComponentHasPreferredWidth(
+        public void LayoutContainer_OneComponentWithPreferredHSize_ComponentHasPreferredWidth(
             float containerX, float containerY,
             float containerWidth, float containerHeight,
             float preferredWidth, float expectedWidth)

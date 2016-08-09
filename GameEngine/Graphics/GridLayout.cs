@@ -77,12 +77,12 @@ namespace GameEngine.Graphics
         {
             if (c.HorizontalPolicy == ResizePolicy.Preferred)
                 c.Width = Math.Min(cellWidth, c.PreferredWidth);
-            else
+            else if(c.HorizontalPolicy == ResizePolicy.Extending)
                 c.Width = cellWidth;
 
             if (c.VerticalPolicy == ResizePolicy.Preferred)
                 c.Height = Math.Min(cellHeight, c.PreferredHeight);
-            else
+            else if (c.VerticalPolicy == ResizePolicy.Extending)
                 c.Height = cellHeight;
         }
     }

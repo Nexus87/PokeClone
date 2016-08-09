@@ -17,10 +17,25 @@ namespace GameEngine.Graphics
             component.XPosition = XPosition;
             component.YPosition = YPosition;
 
-            component.Width = component.HorizontalPolicy == ResizePolicy.Extending ?
-                Width : Math.Min(Width, component.PreferredWidth);
-            component.Height = component.VerticalPolicy == ResizePolicy.Extending ?
-                Height : Math.Min(Height, component.PreferredHeight);
+            switch (component.VerticalPolicy)
+            {
+                case ResizePolicy.Extending:
+                    component.Height = Height;
+                    break;
+                case ResizePolicy.Preferred:
+                    component.Height = Math.Min(Height, component.PreferredHeight);
+                    break;
+            }
+
+            switch (component.HorizontalPolicy)
+            {
+                case ResizePolicy.Extending:
+                    component.Width = Width;
+                    break;
+                case ResizePolicy.Preferred:
+                    component.Width = Math.Min(Width, component.PreferredWidth);
+                    break;
+            }
 
             SetRemainingComponentsSizeZero(components);
         }
