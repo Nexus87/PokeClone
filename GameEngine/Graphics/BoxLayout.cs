@@ -7,13 +7,49 @@ namespace GameEngine.Graphics
 {
     public abstract class BoxLayout : AbstractLayout
     {
+        private readonly NullGraphicObject spacer;
+        private List<IGraphicComponent> components;
+
+        public float Spacing
+        {
+            get
+            {
+                return spacer.Width;
+            }
+            set
+            {
+                spacer.Width = spacer.Height = value;
+            }
+        }
+
         protected float HeightForExtendingComponents { get; set; }
         protected float WidthForExtendingComponents { get; set; }
 
         protected Func<IGraphicComponent, float> HeightModifier { get; set; }
         protected Func<IGraphicComponent, float> WidthModifier { get; set; }
 
-        protected float CalculateWidthForExtendingComponents(List<IGraphicComponent> components)
+        protected BoxLayout()
+        {
+            spacer = new NullGraphicObject { HorizontalPolicy = ResizePolicy.Fixed, VerticalPolicy = ResizePolicy.Fixed };
+        }
+
+        protected void SetComponents(List<IGraphicComponent> components)
+        {
+            this.components = new List<IGraphicComponent>();
+            if (components.Count == 0)
+                return;
+
+            this.components.Capacity = components.Count * 2;
+            foreach (var c in components)
+            {
+                this.components.Add(c);
+                this.components.Add(spacer);
+            }
+            this.components.RemoveAt(this.components.Count - 1);
+        }
+
+
+        protected float CalculateWidthForExtendingComponents()
         {
             float totalPreferredWidth = components.Where(c => c.HorizontalPolicy == ResizePolicy.Preferred).Sum(c => c.PreferredWidth);
             float totalFixedWidth = components.Where(c => c.HorizontalPolicy == ResizePolicy.Fixed).Sum(c => c.Width);
@@ -22,7 +58,7 @@ namespace GameEngine.Graphics
             
         }
 
-        protected float CalculateHeightForExtendingComponents(List<IGraphicComponent> components)
+        protected float CalculateHeightForExtendingComponents()
         {
             float totalPreferredHeight = components.Where(c => c.VerticalPolicy == ResizePolicy.Preferred).Sum(c => c.PreferredHeight);
             float totalFixedHeight = components.Where(c => c.VerticalPolicy == ResizePolicy.Fixed).Sum(c => c.Height);
@@ -31,7 +67,7 @@ namespace GameEngine.Graphics
 
         }
 
-        protected void LayoutComponents(List<IGraphicComponent> components)
+        protected void LayoutComponents()
         {
 
             float totalWidthLeft = Width;
@@ -93,14 +129,13 @@ namespace GameEngine.Graphics
     {
         protected override void UpdateComponents(Container container)
         {
-            var components = container.Components;
-
+            SetComponents(container.Components);
             HeightModifier = c => 0;
             WidthModifier = c => c.Width;
             HeightForExtendingComponents = Height;
-            WidthForExtendingComponents = CalculateWidthForExtendingComponents(components);
+            WidthForExtendingComponents = CalculateWidthForExtendingComponents();
 
-            LayoutComponents(components);
+            LayoutComponents();
         }
     }
 
@@ -108,14 +143,14 @@ namespace GameEngine.Graphics
     {
         protected override void UpdateComponents(Container container)
         {
-            var components = container.Components;
+            SetComponents(container.Components);
 
             HeightModifier = c => c.Height;
             WidthModifier = c => 0;
             WidthForExtendingComponents = Width;
-            HeightForExtendingComponents = CalculateHeightForExtendingComponents(components);
+            HeightForExtendingComponents = CalculateHeightForExtendingComponents();
 
-            LayoutComponents(components);
+            LayoutComponents();
         }
     }
 }

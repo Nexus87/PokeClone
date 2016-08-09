@@ -72,7 +72,7 @@ namespace BattleLib.GraphicComponents
                 container.AddComponent(hpText);
             }
 
-            container.Layout = new VBoxLayout();
+            container.Layout = new VBoxLayout { Spacing = 10f };
         }
 
         HPLine hpLine;
