@@ -33,7 +33,7 @@ namespace GameEngine.Graphics
             spacer = new NullGraphicObject { HorizontalPolicy = ResizePolicy.Fixed, VerticalPolicy = ResizePolicy.Fixed };
         }
 
-        protected void SetComponents(List<IGraphicComponent> components)
+        protected void SetComponents(IReadOnlyList<IGraphicComponent> components)
         {
             this.components = new List<IGraphicComponent>();
             if (components.Count == 0)

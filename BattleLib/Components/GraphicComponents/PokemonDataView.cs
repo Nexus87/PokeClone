@@ -4,6 +4,7 @@ using GameEngine.Graphics;
 using GameEngine.Registry;
 using Microsoft.Xna.Framework;
 using System;
+using System.Linq;
 
 namespace BattleLib.GraphicComponents
 {
@@ -67,9 +68,14 @@ namespace BattleLib.GraphicComponents
 
             if (hpTextBox != null)
             {
+                var hpTextContainer = new Container();
                 hpText = hpTextBox;
-                hpText.PreferredTextHeight = 16.0f;
-                container.AddComponent(hpText);
+                hpText.PreferredTextHeight = 24.0f;
+                hpText.VerticalPolicy = ResizePolicy.Preferred;
+                hpTextContainer.AddComponent(new NullGraphicObject());
+                hpTextContainer.AddComponent(hpText);
+                hpTextContainer.Layout = new HBoxLayout();
+                container.AddComponent(hpTextContainer);
             }
 
             container.Layout = new VBoxLayout { Spacing = 10f };
@@ -96,12 +102,15 @@ namespace BattleLib.GraphicComponents
         public void SetPokemon(PokemonWrapper pokemon)
         {
             name.Text = pokemon.Name;
-            lvl.Text = ": " + pokemon.Level;
+            lvl.Text = ":L" + pokemon.Level;
             hpLine.MaxHP = pokemon.MaxHP;
             hpLine.Current = pokemon.HP;
 
             if (hpText != null)
-                hpText.Text = pokemon.HP + "/  " + hpLine.MaxHP;
+            {
+                hpText.Text = pokemon.HP + "/ " + hpLine.MaxHP;
+                ((Container)InnerComponent.Components.Last()).ForceLayout();
+            }
             
             // TODO Remove this cast
             ((Container)InnerComponent.Components[1]).ForceLayout();

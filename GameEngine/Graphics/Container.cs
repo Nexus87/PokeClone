@@ -10,7 +10,7 @@ namespace GameEngine.Graphics
     {
         public ILayout Layout { get; set; }
 
-        public List<IGraphicComponent> Components { get { return components; } }
+        public IReadOnlyList<IGraphicComponent> Components { get { return components; } }
         private readonly List<IGraphicComponent> components = new List<IGraphicComponent>();
 
         public void AddComponent(IGraphicComponent comp)

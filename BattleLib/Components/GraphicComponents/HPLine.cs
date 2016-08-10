@@ -10,7 +10,8 @@ namespace BattleLib.GraphicComponents
     [GameType]
     public class HPLine : AbstractGraphicComponent
     {
-        const int LINE_BORDER_SIZE = 10;
+        const float RelativeBorderSize = 0.2f;
+        float BorderSize { get { return RelativeBorderSize * Height; } }
         int currentHp;
         readonly IGraphicComponent hpLine;
         readonly IGraphicComponent innerLine;
@@ -92,18 +93,18 @@ namespace BattleLib.GraphicComponents
 
         private void SetHPLineCoordinates(float factor)
         {
-            hpLine.XPosition = XPosition + LINE_BORDER_SIZE;
-            hpLine.YPosition = YPosition + LINE_BORDER_SIZE;
-            hpLine.Width = Math.Max(0, factor * (Width - 2 * LINE_BORDER_SIZE));
-            hpLine.Height = Math.Max(0, Height - 2 * LINE_BORDER_SIZE);
+            hpLine.XPosition = XPosition + BorderSize;
+            hpLine.YPosition = YPosition + BorderSize;
+            hpLine.Width = Math.Max(0, factor * (Width - 2 * BorderSize));
+            hpLine.Height = Math.Max(0, Height - 2 * BorderSize);
         }
 
         private void SetInnerLineCoordinates()
         {
-            innerLine.XPosition = XPosition + LINE_BORDER_SIZE;
-            innerLine.YPosition = YPosition + LINE_BORDER_SIZE;
-            innerLine.Width = Math.Max(0, Width - 2 * LINE_BORDER_SIZE);
-            innerLine.Height = Math.Max(0, Height - 2 * LINE_BORDER_SIZE);
+            innerLine.XPosition = XPosition + BorderSize;
+            innerLine.YPosition = YPosition + BorderSize;
+            innerLine.Width = Math.Max(0, Width - 2 * BorderSize);
+            innerLine.Height = Math.Max(0, Height - 2 * BorderSize);
         }
 
         private void SetOuterLineCoordinates()

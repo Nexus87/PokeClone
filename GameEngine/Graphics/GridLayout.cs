@@ -44,7 +44,7 @@ namespace GameEngine.Graphics
             OrderComponents(components, realColumns, realRows);
         }
 
-        void OrderComponents(List<IGraphicComponent> components, int realColumns, int realRows)
+        void OrderComponents(IEnumerable<IGraphicComponent> components, int realColumns, int realRows)
         {
             float cellWidth = Width / realColumns;
             float cellHeight = Height / realRows;
