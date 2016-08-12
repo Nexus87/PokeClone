@@ -1,4 +1,5 @@
 ﻿using BattleLib.Components.BattleState;
+using BattleLib.Components.GraphicComponents;
 using GameEngine;
 using GameEngine.Graphics;
 using GameEngine.Registry;
@@ -12,7 +13,7 @@ namespace BattleLib.GraphicComponents
     [GameType]
     public class PlayerPokemonDataView : PokemonDataView
     {
-        public PlayerPokemonDataView(HPLine line, TextBox nameBox, TextBox levelBox, TextBox hpBox, TextBox hpTextBox) :
+        public PlayerPokemonDataView(HPLine line, TextBox nameBox, TextBox levelBox, TextBox hpBox, HPText hpTextBox) :
             base(line, nameBox, levelBox, hpBox, hpTextBox)
         { }
     }
@@ -31,7 +32,7 @@ namespace BattleLib.GraphicComponents
         public PokemonDataView(HPLine line, TextBox nameBox, TextBox levelBox, TextBox hpBox) :
             this(line, nameBox, levelBox, hpBox, null)
         {}
-        public PokemonDataView(HPLine line, TextBox nameBox, TextBox levelBox, TextBox hpBox, TextBox hpTextBox)
+        public PokemonDataView(HPLine line, TextBox nameBox, TextBox levelBox, TextBox hpBox, HPText hpTextBox)
             : base(new Container())
         {
             var container = InnerComponent;
@@ -82,7 +83,7 @@ namespace BattleLib.GraphicComponents
         }
 
         HPLine hpLine;
-        TextBox hpText;
+        HPText hpText;
         TextBox name;
         TextBox lvl;
 
@@ -108,7 +109,7 @@ namespace BattleLib.GraphicComponents
 
             if (hpText != null)
             {
-                hpText.Text = pokemon.HP + "/ " + hpLine.MaxHP;
+                hpText.SetPokemon(pokemon);
                 ((Container)InnerComponent.Components.Last()).ForceLayout();
             }
             
@@ -124,14 +125,14 @@ namespace BattleLib.GraphicComponents
         {
             readonly int targetHP;
             readonly HPLine line;
-            readonly TextBox text;
+            readonly HPText text;
 
             int currentHP;
             readonly Func<int, int> nextInt;
 
             public event EventHandler AnimationFinished;
 
-            public SetHPAnimation(int targetHP, HPLine line, TextBox text)
+            public SetHPAnimation(int targetHP, HPLine line, HPText text)
             {
                 this.targetHP = targetHP;
                 this.line = line;
@@ -148,7 +149,7 @@ namespace BattleLib.GraphicComponents
                 currentHP = nextInt(currentHP);
                 line.Current = currentHP;
                 if(text != null)
-                    text.Text = line.Current + "/  " + line.MaxHP;
+                    text.SetHP(line.Current);
 
                 if (currentHP == targetHP)
                     AnimationFinished(this, EventArgs.Empty);

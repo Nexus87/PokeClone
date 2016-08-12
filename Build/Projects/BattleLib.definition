@@ -39,6 +39,7 @@
     <Compile Include="Components\GraphicComponents\BattleGraphicController.cs" />
     <Compile Include="Components\GraphicComponents\BattleGUI.cs" />
     <Compile Include="Components\GraphicComponents\HPLine.cs" />
+    <Compile Include="Components\GraphicComponents\HPText.cs" />
     <Compile Include="Components\GraphicComponents\IBattleGraphicController.cs" />
     <Compile Include="Components\GraphicComponents\IGUIService.cs" />
     <Compile Include="Components\GraphicComponents\IMenuWidget.cs" />
@@ -49,6 +50,7 @@
     <Compile Include="Components\GraphicComponents\MoveModel.cs" />
     <Compile Include="Components\GraphicComponents\MoveTableSelectionModel.cs" />
     <Compile Include="Components\GraphicComponents\PokemonDataView.cs" />
+    <Compile Include="Components\GraphicComponents\PokemonMenuLine.cs" />
     <Compile Include="Components\GraphicComponents\PokemonMenuWidget.cs" />
     <Compile Include="Components\GraphicComponents\PokemonSprite.cs" />
     <Compile Include="Components\GraphicComponents\SingleDimensionTableModel.cs" />
