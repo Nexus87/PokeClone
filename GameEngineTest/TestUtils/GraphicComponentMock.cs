@@ -20,6 +20,12 @@ namespace GameEngineTest.TestUtils
 
         public event EventHandler<GraphicComponentSizeChangedEventArgs> SizeChanged;
         public event EventHandler<GraphicComponentPositionChangedEventArgs> PositionChanged;
+        public event EventHandler<GraphicComponentSizeChangedEventArgs> PreferredSizeChanged;
+
+        public void RaisePreferredSizeChanged()
+        {
+            PreferredSizeChanged(this, new GraphicComponentSizeChangedEventArgs(this, 0, 0));
+        }
 
         public virtual float XPosition { get; set; }
         public virtual float YPosition { get; set; }
@@ -52,16 +58,21 @@ namespace GameEngineTest.TestUtils
 
         public ResizePolicy VerticalPolicy { get; set; }
 
-    protected void OnSizeChanged()
+        protected void OnSizeChanged()
         {
             if (SizeChanged != null)
-                SizeChanged(this, new GraphicComponentSizeChangedEventArgs(Width, Height));
+                SizeChanged(this, new GraphicComponentSizeChangedEventArgs(this, Width, Height));
         }
 
         protected void OnPositionChanged()
         {
             if (PositionChanged != null)
                 PositionChanged(this, new GraphicComponentPositionChangedEventArgs(XPosition, YPosition));
+        }
+
+        public void RaiseSizeChanged()
+        {
+            OnSizeChanged();
         }
     }
 }

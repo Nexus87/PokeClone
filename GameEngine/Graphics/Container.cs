@@ -1,7 +1,8 @@
 ﻿using GameEngine.Registry;
+using GameEngine.Utils;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using System;
 
 namespace GameEngine.Graphics
 {
@@ -15,14 +16,53 @@ namespace GameEngine.Graphics
 
         public void AddComponent(IGraphicComponent comp)
         {
+            comp.CheckNull("comp");
+            RegisterEventHandler(comp);
             components.Add(comp);
             Invalidate();
         }
 
+        private void RegisterEventHandler(IGraphicComponent comp)
+        {
+            comp.PreferredSizeChanged += PreferredSizeChangedHandler;
+            comp.SizeChanged += SizeChangedHandler;
+        }
+
+        private void SizeChangedHandler(object sender, GraphicComponentSizeChangedEventArgs e)
+        {
+            if (ComponentResizePolicyIsFixed(e.Component))
+                Invalidate();
+        }
+
+        private bool ComponentResizePolicyIsFixed(IGraphicComponent component)
+        {
+            return component.VerticalPolicy == ResizePolicy.Fixed
+                || component.HorizontalPolicy == ResizePolicy.Fixed;
+        }
+
+        private void PreferredSizeChangedHandler(object sender, GraphicComponentSizeChangedEventArgs e)
+        {
+            if (ComponentResizePolicyIsPreferred(e.Component))
+                Invalidate();
+        }
+
+        private static bool ComponentResizePolicyIsPreferred(IGraphicComponent e)
+        {
+            return e.VerticalPolicy == ResizePolicy.Preferred ||
+                e.HorizontalPolicy == ResizePolicy.Preferred;
+        }
+
         public void RemoveAllComponents()
         {
+            components.ForEach(c => RemoveEventHandler(c));
             components.Clear();
             Invalidate();
+        }
+
+        private void RemoveEventHandler(IGraphicComponent c)
+        {
+            c.PreferredSizeChanged -= PreferredSizeChangedHandler;
+            c.SizeChanged -= SizeChangedHandler;
         }
 
         public void ForceLayout()

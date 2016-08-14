@@ -9,6 +9,8 @@ namespace GameEngineTest.TestUtils
     public class TableViewMock : ITableView<TestType>
     {
         public virtual event EventHandler<TableResizeEventArgs> TableResized;
+        public event EventHandler<GraphicComponentSizeChangedEventArgs> PreferredSizeChanged;
+
         public virtual event EventHandler<SelectionChangedEventArgs> SelectionChanged { add { } remove { } }
 
         public bool SelectionReturnValue { get; set; }

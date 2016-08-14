@@ -1,5 +1,6 @@
 ﻿using GameEngine;
 using GameEngine.Graphics;
+using GameEngineTest.TestUtils;
 using Microsoft.Xna.Framework;
 using Moq;
 using NUnit.Framework;
@@ -120,7 +121,7 @@ namespace GameEngineTest.Graphics
             var box = CreateTextBox(width, height);
 
             box.PreferredTextHeight = textSize;
-
+            box.Draw();
             Assert.AreEqual(textSize, box.PreferredHeight);
         }
 
@@ -129,6 +130,7 @@ namespace GameEngineTest.Graphics
         {
             var textStub = new GraphicalTextStub { CharHeight = textSize };
             var box = CreateTextBox(width, height, textStub);
+            box.Draw();
             Assert.AreEqual(textSize, box.PreferredHeight);
         }
 
@@ -139,7 +141,7 @@ namespace GameEngineTest.Graphics
             var box = CreateTextBox(width, height, textStub);
 
             box.Text = text;
-
+            box.Draw();
             Assert.AreEqual(expectedWidth, box.PreferredWidth, 10e-5);
         }
 

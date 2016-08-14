@@ -14,28 +14,19 @@ namespace BattleLib.Components.GraphicComponents
     [GameType]
     public class HPText : AbstractGraphicComponent
     {
-        private TextBox text;
-        private string maxHP;
+        TextBox text;
+        string maxHP;
 
         public HPText(TextBox text)
         {
             this.text = text;
+            text.PreferredSizeChanged += (obj, ev) => SetPreferredSize(ev);
         }
 
-        public override float PreferredHeight
+        private void SetPreferredSize(GraphicComponentSizeChangedEventArgs ev)
         {
-            get
-            {
-                return text.PreferredHeight;
-            }
-        }
-
-        public override float PreferredWidth
-        {
-            get
-            {
-                return text.PreferredWidth;
-            }
+            PreferredWidth = ev.Width;
+            PreferredHeight = ev.Height;
         }
 
         public float PreferredTextHeight

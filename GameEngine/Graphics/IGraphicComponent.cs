@@ -26,11 +26,13 @@ namespace GameEngine.Graphics
 
     public class GraphicComponentSizeChangedEventArgs : EventArgs
     {
+        public IGraphicComponent Component { get; private set; }
         public float Width { get; private set; }
         public float Height { get; private set; }
 
-        public GraphicComponentSizeChangedEventArgs(float width, float height)
+        public GraphicComponentSizeChangedEventArgs(IGraphicComponent component, float width, float height)
         {
+            Component = component;
             Width = width;
             Height = height;
         }
@@ -78,6 +80,8 @@ namespace GameEngine.Graphics
         /// This event signals that either X or Y has changed
         /// </summary>
         event EventHandler<GraphicComponentPositionChangedEventArgs> PositionChanged;
+
+        event EventHandler<GraphicComponentSizeChangedEventArgs> PreferredSizeChanged;
 
         /// <summary>
         /// Current X position

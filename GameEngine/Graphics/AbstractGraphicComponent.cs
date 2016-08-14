@@ -14,9 +14,12 @@ namespace GameEngine.Graphics
         protected bool NeedsUpdate { get; set; }
         private Vector2 position;
         private Vector2 size;
+        private float preferredHeight;
+        private float preferredWidth;
 
         public event EventHandler<GraphicComponentPositionChangedEventArgs> PositionChanged = (a, b) => { };
         public event EventHandler<GraphicComponentSizeChangedEventArgs> SizeChanged = (a, b) => { };
+        public event EventHandler<GraphicComponentSizeChangedEventArgs> PreferredSizeChanged = (a, b) => { };
 
         public float Height
         {
@@ -29,7 +32,7 @@ namespace GameEngine.Graphics
                     return;
                 size.Y = value;
                 Invalidate();
-                SizeChanged(this, new GraphicComponentSizeChangedEventArgs(size.X, size.Y));
+                SizeChanged(this, new GraphicComponentSizeChangedEventArgs(this, size.X, size.Y));
             }
         }
 
@@ -47,7 +50,7 @@ namespace GameEngine.Graphics
                     return;
                 size.X = value;
                 Invalidate();
-                SizeChanged(this, new GraphicComponentSizeChangedEventArgs(size.X, size.Y));
+                SizeChanged(this, new GraphicComponentSizeChangedEventArgs(this, size.X, size.Y));
             }
         }
 
@@ -126,8 +129,33 @@ namespace GameEngine.Graphics
 
         public Color Color { get; set; }
 
-        public virtual float PreferredHeight { get { return 0; } }
-        public virtual float PreferredWidth { get { return 0; } }
+        public float PreferredHeight {
+            get
+            {
+                return preferredHeight;
+            }
+            protected set
+            {
+                if (value.AlmostEqual(preferredHeight))
+                    return;
+                preferredHeight = value;
+                PreferredSizeChanged(this, new GraphicComponentSizeChangedEventArgs(this, PreferredWidth, PreferredHeight));
+            }
+        }
+        public float PreferredWidth
+        {
+            get
+            {
+                return preferredWidth;
+            }
+            set
+            {
+                if (value.AlmostEqual(preferredWidth))
+                    return;
+                preferredWidth = value;
+                PreferredSizeChanged(this, new GraphicComponentSizeChangedEventArgs(this, PreferredWidth, PreferredHeight));
+            }
+        }
         public ResizePolicy HorizontalPolicy { get; set; }
         public ResizePolicy VerticalPolicy { get; set; }
     }

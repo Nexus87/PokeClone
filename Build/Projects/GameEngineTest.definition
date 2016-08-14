@@ -18,6 +18,7 @@
     <Compile Include="Graphics\AbstractGraphicComponentTest.cs" />
     <Compile Include="Graphics\AbstractLayoutTest.cs" />
     <Compile Include="Graphics\BoxLayoutTest.cs" />
+    <Compile Include="Graphics\ContainerTest.cs" />
     <Compile Include="Graphics\DefaultTableModelTest.cs" />
     <Compile Include="Graphics\DefaultTableSelectionModelTest.cs" />
     <Compile Include="Graphics\GridLayoutTest.cs" />

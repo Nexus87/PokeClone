@@ -51,14 +51,14 @@ namespace BattleLib.GraphicComponents
             lvlContainer.AddComponent(new NullGraphicObject());
             lvlContainer.Layout = new HBoxLayout();
             lvlContainer.VerticalPolicy = ResizePolicy.Fixed;
-            lvlContainer.Height = lvl.PreferredHeight;
+            lvlContainer.Height = lvl.PreferredTextHeight;
 
             hpBox.Text = "hp:";
             hpBox.PreferredTextHeight = 24.0f;
             hpBox.HorizontalPolicy = ResizePolicy.Preferred;
 
             hpLineContainer.VerticalPolicy = ResizePolicy.Fixed;
-            hpLineContainer.Height = hpBox.PreferredHeight;
+            hpLineContainer.Height = hpBox.PreferredTextHeight;
             hpLineContainer.Layout = new HBoxLayout();
             hpLineContainer.AddComponent(hpBox);
             hpLineContainer.AddComponent(hpLine);
@@ -72,7 +72,7 @@ namespace BattleLib.GraphicComponents
                 var hpTextContainer = new Container();
                 hpText = hpTextBox;
                 hpText.PreferredTextHeight = 24.0f;
-                hpText.VerticalPolicy = ResizePolicy.Preferred;
+                hpText.HorizontalPolicy = ResizePolicy.Preferred;
                 hpTextContainer.AddComponent(new NullGraphicObject());
                 hpTextContainer.AddComponent(hpText);
                 hpTextContainer.Layout = new HBoxLayout();

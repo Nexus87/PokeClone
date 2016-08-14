@@ -26,6 +26,12 @@ namespace GameEngine.Graphics
         protected T InnerComponent { get; private set; }
         private bool needsUpdate = true;
 
+        public event EventHandler<GraphicComponentSizeChangedEventArgs> PreferredSizeChanged
+        {
+            add { InnerComponent.PreferredSizeChanged += value; }
+            remove { InnerComponent.PreferredSizeChanged -= value; }
+        }
+
         /// <summary>
         /// Signals that either X or Y has changed.
         /// </summary>

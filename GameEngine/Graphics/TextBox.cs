@@ -12,11 +12,6 @@ namespace GameEngine.Graphics
         private readonly IGraphicalText textGraphic;
         private float preferredTextSize;
 
-        private bool preferredWidthOutdated = true;
-        private bool preferredHeightOutdated = true;
-        private float preferredHeight;
-        private float preferredWidth;
-
         public TextBox(ISpriteFont font)
             : this(new TextGraphic(font))
         { }
@@ -38,10 +33,15 @@ namespace GameEngine.Graphics
                 if (preferredTextSize.AlmostEqual(value))
                     return;
 
-                preferredHeightOutdated = true;
                 preferredTextSize = value;
                 Invalidate();
             } 
+        }
+
+        private void SetPreferredSize()
+        {
+            PreferredHeight = PreferredTextHeight;
+            PreferredWidth = textGraphic.GetSingleCharWidth(PreferredTextHeight) * text.Length;
         }
 
         public string Text { 
@@ -51,7 +51,6 @@ namespace GameEngine.Graphics
             }
             set {
                 text = value;
-                preferredWidthOutdated = true;
                 Invalidate();
             }
         }
@@ -80,6 +79,7 @@ namespace GameEngine.Graphics
 
         protected override void Update()
         {
+            SetPreferredSize();
             textGraphic.XPosition = XPosition;
             textGraphic.YPosition = YPosition;
             textGraphic.CharHeight = RealTextHeight;
@@ -97,32 +97,5 @@ namespace GameEngine.Graphics
 
 
         public ISpriteFont SpriteFont { get { return textGraphic.SpriteFont; } set { textGraphic.SpriteFont = value; } }
-
-        public override float PreferredHeight
-        {
-            get
-            {
-                if (preferredHeightOutdated)
-                {
-                    preferredHeight = PreferredTextHeight;
-                    preferredHeightOutdated = false;
-                }
-
-                return preferredHeight;
-            }
-        }
-
-        public override float PreferredWidth
-        {
-            get{
-                if (preferredWidthOutdated)
-                {
-                    preferredWidth = textGraphic.GetSingleCharWidth(PreferredTextHeight) * text.Length;
-                    preferredWidthOutdated = false;
-                }
-
-                return preferredWidth;
-            }
-        }
     }
 }
