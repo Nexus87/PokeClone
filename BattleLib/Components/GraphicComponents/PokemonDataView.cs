@@ -110,11 +110,7 @@ namespace BattleLib.GraphicComponents
             if (hpText != null)
             {
                 hpText.SetPokemon(pokemon);
-                ((Container)InnerComponent.Components.Last()).ForceLayout();
             }
-            
-            // TODO Remove this cast
-            ((Container)InnerComponent.Components[1]).ForceLayout();
         }
 
         protected override void Update()
