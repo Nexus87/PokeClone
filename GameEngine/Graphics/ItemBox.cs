@@ -4,66 +4,24 @@ using System;
 
 namespace GameEngine.Graphics
 {
-    internal class ItemBox : AbstractGraphicComponent, ISelectableTextComponent
+    public class ItemBox : SelectableContainer, ISelectableTextComponent
     {
-        public bool IsSelected { get; private set; }
         readonly IGraphicComponent arrow;
         readonly ITextGraphicComponent textBox;
 
         public string Text { get { return textBox.Text; } set { textBox.Text = value; } }
 
-        internal ItemBox(IGraphicComponent arrow, ITextGraphicComponent textBox)
+        internal ItemBox(IGraphicComponent arrow, ITextGraphicComponent textBox) :
+            base(arrow, textBox)
         {
             this.arrow = arrow;
             this.textBox = textBox;
+
+            VerticalPolicy = ResizePolicy.Preferred;
         }
 
         public ItemBox(ITexture2D arrowTexture, ISpriteFont font) : 
             this(new TextureBox(arrowTexture), new TextBox(font)) { }
-
-        public override void Setup()
-        {
-            arrow.Setup();
-            textBox.Setup();
-        }
-
-        protected override void DrawComponent(GameTime time, ISpriteBatch batch)
-        {
-            if (IsSelected)
-                arrow.Draw(time, batch);
-            
-            textBox.Draw(time, batch);
-        }
-
-        protected override void Update()
-        {
-
-            textBox.Height = Height;
-
-            // If we can't draw the whole arrow, draw no arrow at all
-            float arrowHeight = textBox.RealTextHeight;
-            float arrowWidth = Width.CompareTo(arrowHeight) <= 0 ? 0 : arrowHeight;
-
-            arrow.XPosition = XPosition;
-            arrow.YPosition = YPosition;
-            arrow.Width = arrowWidth;
-            arrow.Height = arrowHeight;
-
-            textBox.XPosition = XPosition + arrowWidth;
-            textBox.YPosition = YPosition;
-            textBox.Width = Math.Max(Width - arrowWidth, 0);
-
-        }
-
-        public void Select()
-        {
-            IsSelected = true;
-        }
-
-        public void Unselect()
-        {
-            IsSelected = false;
-        }
 
         public int DisplayableChars()
         {

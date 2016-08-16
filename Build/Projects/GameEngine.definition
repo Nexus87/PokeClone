@@ -52,6 +52,7 @@
     <Compile Include="Graphics\MultlineTextBox.cs" />
     <Compile Include="Graphics\NullGraphicObject.cs" />
     <Compile Include="Graphics\ResizeAnimation.cs" />
+    <Compile Include="Graphics\SelectableContainer.cs" />
     <Compile Include="Graphics\SingleComponentLayout.cs" />
     <Compile Include="Graphics\TableGrid.cs" />
     <Compile Include="Graphics\TableSingleSelectionModel.cs" />

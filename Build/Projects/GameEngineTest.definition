@@ -35,6 +35,7 @@
     <Compile Include="Graphics\MultiLayeredComponentTest.cs" />
     <Compile Include="Graphics\MultilineTextboxTest.cs" />
     <Compile Include="Graphics\NullGraphicObjectTest.cs" />
+    <Compile Include="Graphics\SelectableContainerTest.cs" />
     <Compile Include="Graphics\SingleComponentLayoutTest.cs" />
     <Compile Include="Graphics\TableGridTest.cs" />
     <Compile Include="Graphics\TableSingleSelectionModelTest.cs" />
