@@ -29,6 +29,7 @@ namespace BattleLib.Components.GraphicComponents
                 component = registry.ResolveType<SelectableContainer<PokemonMenuLine>>();
                 component.Content = registry.ResolveType<PokemonMenuLine>();
                 components[row, column] = component;
+                component.Setup();
             }
 
             component.Content.SetPokemon(data);

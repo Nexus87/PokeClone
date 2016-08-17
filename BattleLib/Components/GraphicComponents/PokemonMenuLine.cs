@@ -41,7 +41,24 @@ namespace BattleLib.Components.GraphicComponents
 
         public void SetPokemon(Pokemon pokemon)
         {
+            hpText.SetPokemon(pokemon);
 
+            hpLine.MaxHP = pokemon.MaxHP;
+            hpLine.Current = pokemon.HP;
+
+            nameBox.Text = pokemon.Name;
+
+            level.Text = "L" + pokemon.Level;
+
+            icon.Image = textureProvider.GetIcon(pokemon.Id);
+        }
+        protected override void DrawComponent(GameTime time, ISpriteBatch batch)
+        {
+            mainContainer.Draw(time, batch);
+        }
+
+        public override void Setup()
+        {
             var iconDataContainer = new Container() { Layout = new HBoxLayout() };
             var hpLineContainer = new Container() { Layout = new HBoxLayout() };
             var nameLevelContainer = new Container() { Layout = new HBoxLayout() };
@@ -49,20 +66,20 @@ namespace BattleLib.Components.GraphicComponents
 
             hpLabel.Text = "HP:";
             hpLabel.HorizontalPolicy = ResizePolicy.Preferred;
+            hpLabel.PreferredTextHeight = 24;
 
-            hpText.SetPokemon(pokemon);
+            
             hpText.HorizontalPolicy = ResizePolicy.Preferred;
 
-            hpLine.MaxHP = pokemon.MaxHP;
-            hpLine.Current = pokemon.HP;
+            
+            hpLine.VerticalPolicy = ResizePolicy.Fixed;
+            hpLine.Height = 24;
 
             hpLineContainer.AddComponent(hpLabel);
             hpLineContainer.AddComponent(hpLine);
             hpLineContainer.AddComponent(hpText);
 
-            nameBox.Text = pokemon.Name;
-            
-            level.Text = "L" + pokemon.Level;
+
             level.HorizontalPolicy = ResizePolicy.Preferred;
 
             nameLevelContainer.AddComponent(nameBox);
@@ -78,16 +95,6 @@ namespace BattleLib.Components.GraphicComponents
 
             mainContainer = iconDataContainer;
 
-            icon.Image = textureProvider.GetIcon(pokemon.Id);
-
-        }
-        protected override void DrawComponent(GameTime time, ISpriteBatch batch)
-        {
-            mainContainer.Draw(time, batch);
-        }
-
-        public override void Setup()
-        {
             mainContainer.Setup();
         }
 
