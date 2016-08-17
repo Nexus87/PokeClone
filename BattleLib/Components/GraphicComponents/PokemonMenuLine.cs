@@ -25,10 +25,10 @@ namespace BattleLib.Components.GraphicComponents
         private TextBox nameBox;
         private TextBox hpLabel;
 
-        public PokemonMenuLine(TextureBox icon, HPLine hpLine, TextBox nameBox, HPText hpText, TextBox level, TextBox hpLabel, TextureProvider provider)
+        public PokemonMenuLine(TextureBox icon, HPLine hpLine, TextBox nameBox, HPText hpText, TextBox level, TextBox hpLabel, TextureProvider textureProvider)
         {
             mainContainer = new Container();
-            this.provider = provider;
+            this.provider = textureProvider;
             this.icon = icon;
             this.hpLine = hpLine;
             this.hpText = hpText;
@@ -36,7 +36,7 @@ namespace BattleLib.Components.GraphicComponents
             this.nameBox = nameBox;
             this.level = level;
             this.hpLabel = hpLabel;
-
+            this.textureProvider = textureProvider;
         }
 
         public void SetPokemon(Pokemon pokemon)
@@ -71,10 +71,14 @@ namespace BattleLib.Components.GraphicComponents
             dataContainer.AddComponent(nameLevelContainer);
             dataContainer.AddComponent(hpLineContainer);
 
+            icon.VerticalPolicy = icon.HorizontalPolicy = ResizePolicy.Fixed;
+
             iconDataContainer.AddComponent(icon);
             iconDataContainer.AddComponent(dataContainer);
 
             mainContainer = iconDataContainer;
+
+            icon.Image = textureProvider.GetIcon(pokemon.Id);
 
         }
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)
@@ -90,8 +94,10 @@ namespace BattleLib.Components.GraphicComponents
         protected override void Update()
         {
             mainContainer.SetCoordinates(this);
+            icon.Width = icon.Height = mainContainer.Height;
         }
 
         private TextBox level;
+        private TextureProvider textureProvider;
     }
 }

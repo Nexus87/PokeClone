@@ -51,6 +51,7 @@
     <Compile Include="Graphics\MultiLayeredComponent.cs" />
     <Compile Include="Graphics\MultlineTextBox.cs" />
     <Compile Include="Graphics\NullGraphicObject.cs" />
+    <Compile Include="Graphics\Pixel.cs" />
     <Compile Include="Graphics\ResizeAnimation.cs" />
     <Compile Include="Graphics\SelectableContainer.cs" />
     <Compile Include="Graphics\SingleComponentLayout.cs" />

@@ -7,14 +7,18 @@ namespace GameEngine.Graphics
 {
     public class Dialog : ForwardingGraphicComponent<Container>, IWidget
     {
-        readonly TextureBox border;
+        readonly IGraphicComponent border;
 
         bool isVisible;
 
-        public Dialog(ITexture2D borderTexture = null)
+        public Dialog(ITexture2D borderTexture = null) :
+            this(new TextureBox(borderTexture))
+        {}
+        public Dialog(IGraphicComponent border)
             : base(new Container())
+
         {
-            border = new TextureBox(borderTexture);
+            this.border = border;
             InnerComponent.Layout = new SingleComponentLayout();
         }
 
@@ -76,9 +80,6 @@ namespace GameEngine.Graphics
 
         protected override void Update()
         {
-            if (border.Image == null)
-                return;
-
             Layout.SetMargin(100, 50, 100, 50);
             border.XPosition = XPosition;
             border.YPosition = YPosition;

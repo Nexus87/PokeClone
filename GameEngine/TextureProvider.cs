@@ -30,5 +30,10 @@ namespace GameEngine
             texture.LoadContent();
             return texture;
         }
+
+        public ITexture2D GetIcon(int id)
+        {
+            return GetTexturesFront(id);
+        }
     }
 }

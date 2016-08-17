@@ -161,7 +161,7 @@ namespace BattleLib.GraphicComponents
             pokemonWidget.XPosition = 0;
             pokemonWidget.YPosition = 0;
             pokemonWidget.Width = screen.ScreenWidth;
-            pokemonWidget.Height = screen.ScreenHeight;
+            pokemonWidget.Height = 2.0f * screen.ScreenHeight / 3.0f;
 
             pokemonWidget.ItemSelected += PKMNMenu_ItemSelected;
             pokemonWidget.ExitRequested += BackToMain;
