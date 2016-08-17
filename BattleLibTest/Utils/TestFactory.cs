@@ -22,6 +22,17 @@ namespace BattleLibTest.Utils
         public ClientIdentifier PlayerID { get; private set; }
         public ClientIdentifier AIID { get; private set; }
         public BattleData BattleData { get; private set; }
+        
+        public static Client CreatePlayerClient(int numPokemon)
+        {
+            var pokemons = new List<Pokemon>();
+            for (int i = 0; i < numPokemon; i++)
+            {
+                pokemons.Add(CreatePokemon());
+            }
+
+            return new Client(new ClientIdentifier(), pokemons);
+        }
 
         public void CreatePlayerPokemon(StatusCondition statusCondition = StatusCondition.Normal, int HP = 100)
         {
@@ -33,7 +44,7 @@ namespace BattleLibTest.Utils
             BattleData.GetPokemon(AIID).Pokemon = CreatePokemon(statusCondition, HP);
         }
 
-        public Pokemon CreatePokemon(StatusCondition statusCondition = StatusCondition.Normal, int HP = 100)
+        public static Pokemon CreatePokemon(StatusCondition statusCondition = StatusCondition.Normal, int HP = 100)
         {
             var baseData = new PokemonData();
             baseData.BaseStats = new Stats { HP = 100 };

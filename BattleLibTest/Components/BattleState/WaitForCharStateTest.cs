@@ -77,7 +77,7 @@ namespace BattleLibTest.Components.BattleState
             var state = CreateWaitForCharState(factory.BattleData);
 
             Assert.Throws<InvalidOperationException>(() => 
-                state.SetCharacter(factory.PlayerID, factory.CreatePokemon())
+                state.SetCharacter(factory.PlayerID, TestFactory.CreatePokemon())
                 );
 
         }
@@ -132,8 +132,8 @@ namespace BattleLibTest.Components.BattleState
         public void Update_SetAllCharacters_BattleDataContainsTheRightCharacters()
         {
             var state = CreateWaitForCharState(factory.BattleData);
-            var playerCharacter = factory.CreatePokemon();
-            var aiCharacter = factory.CreatePokemon();
+            var playerCharacter = TestFactory.CreatePokemon();
+            var aiCharacter = TestFactory.CreatePokemon();
 
             SetNewPlayerCharacter(state, playerCharacter);
             SetNewAICharacter(state, aiCharacter);
@@ -164,7 +164,7 @@ namespace BattleLibTest.Components.BattleState
 
         private void SetNewCharacter(WaitForCharState state, ClientIdentifier id, Pokemon pokemon = null){
             if(pokemon == null)
-                pokemon = factory.CreatePokemon();
+                pokemon = TestFactory.CreatePokemon();
 
             state.SetCharacter(id, pokemon);
         }

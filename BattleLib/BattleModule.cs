@@ -23,6 +23,7 @@ namespace BattleLib
         private IBattleStateService battleState;
         private AIComponent aiComponent;
         private IEngineInterface engine;
+        private Client player;
 
         public BattleModule(IEngineInterface engine)
         {
@@ -37,6 +38,8 @@ namespace BattleLib
         public void RegisterTypes(IGameTypeRegistry registry)
         {
             registry.ScanAssembly(Assembly.GetExecutingAssembly());
+            registry.RegisterType<Client>(a => player);
+
         }
 
         public void Start(IGameComponentManager componentManager, IGameTypeRegistry registry)
@@ -44,7 +47,7 @@ namespace BattleLib
             var data = registry.ResolveType<BattleData>();
             var playerID = data.PlayerId;
             var aiID = data.Clients.First(id => !id.IsPlayer);
-            var player = new Client(playerID);
+            player = new Client(playerID);
             var ai = new Client(aiID);
 
             battleState = registry.ResolveType<IBattleStateService>();

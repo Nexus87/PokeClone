@@ -1,7 +1,9 @@
-﻿using BattleLib.Components.BattleState;
+﻿using Base;
+using BattleLib.Components.BattleState;
 using BattleLib.GraphicComponents;
 using GameEngine;
 using GameEngine.Graphics;
+using GameEngine.Registry;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -11,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace BattleLib.Components.GraphicComponents
 {
+    [GameType]
     public class PokemonMenuLine : AbstractGraphicComponent
     {
         Container mainContainer;
@@ -36,7 +39,7 @@ namespace BattleLib.Components.GraphicComponents
 
         }
 
-        public void SetPokemon(PokemonWrapper pokemon)
+        public void SetPokemon(Pokemon pokemon)
         {
 
             var iconDataContainer = new Container() { Layout = new HBoxLayout() };

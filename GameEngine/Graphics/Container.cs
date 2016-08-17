@@ -86,5 +86,14 @@ namespace GameEngine.Graphics
             foreach (var c in components)
                 c.Draw(time, batch);
         }
+
+        public void RemoveComponent(IGraphicComponent component)
+        {
+            if (!components.Remove(component))
+                return;
+            
+            RemoveEventHandler(component);
+            Invalidate();
+        }
     }
 }

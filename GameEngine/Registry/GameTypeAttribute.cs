@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GameEngine.Registry
 {
-    [AttributeUsage(AttributeTargets.Class)]
+    [AttributeUsage(AttributeTargets.Class, Inherited = false)]
     public class GameTypeAttribute : Attribute
     {
     }

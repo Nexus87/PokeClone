@@ -4,7 +4,7 @@ using System;
 
 namespace GameEngine.Graphics
 {
-    public class ItemBox : SelectableContainer, ISelectableTextComponent
+    internal class ItemBox : SelectableContainer<ITextGraphicComponent>, ISelectableTextComponent
     {
         readonly IGraphicComponent arrow;
         readonly ITextGraphicComponent textBox;

@@ -72,9 +72,42 @@ namespace GameEngineTest.Graphics
 
             Assert.AreEqual(10, container.PreferredHeight, 10e-9);
         }
-        private SelectableContainer CreateContainer(GraphicComponentMock arrowMock, GraphicComponentMock contentMock)
+
+        [TestCase]
+        public void Draw_WithoutContent_DoesNotThrow()
         {
-            var container = new SelectableContainer(arrowMock, contentMock);
+            var arrowMock = new GraphicComponentMock();
+            var container = CreateContainer(arrowMock);
+
+            Assert.DoesNotThrow(() => container.Draw());
+        }
+
+        [TestCase]
+        public void Draw_SetContentProperty_ContentIsDrawn()
+        {
+            var arrowMock = new GraphicComponentMock();
+            var contentMock = new GraphicComponentMock();
+            var container = CreateContainer(arrowMock);
+
+            container.Content = contentMock;
+            container.Draw();
+
+            Assert.True(contentMock.WasDrawn);
+            
+        }
+
+        private SelectableContainer<GraphicComponentMock> CreateContainer(GraphicComponentMock arrowMock) 
+        {
+            return CreateContainer(arrowMock, null);
+        }
+        private SelectableContainer<GraphicComponentMock> CreateContainer(GraphicComponentMock arrowMock, GraphicComponentMock contentMock)
+        {
+            SelectableContainer<GraphicComponentMock> container;
+            if (contentMock != null)
+                container = new SelectableContainer<GraphicComponentMock>(arrowMock, contentMock);
+            else
+                container = new SelectableContainer<GraphicComponentMock>(arrowMock);
+
             container.SetCoordinates(10, 10, 100, 100);
             return container;
         }

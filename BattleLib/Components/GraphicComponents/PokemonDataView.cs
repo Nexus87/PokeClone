@@ -109,7 +109,7 @@ namespace BattleLib.GraphicComponents
 
             if (hpText != null)
             {
-                hpText.SetPokemon(pokemon);
+                hpText.SetPokemon(pokemon.Pokemon);
             }
         }
 

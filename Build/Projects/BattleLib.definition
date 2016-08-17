@@ -52,7 +52,9 @@
     <Compile Include="Components\GraphicComponents\PokemonDataView.cs" />
     <Compile Include="Components\GraphicComponents\PokemonMenuLine.cs" />
     <Compile Include="Components\GraphicComponents\PokemonMenuWidget.cs" />
+    <Compile Include="Components\GraphicComponents\PokemonModel.cs" />
     <Compile Include="Components\GraphicComponents\PokemonSprite.cs" />
+    <Compile Include="Components\GraphicComponents\PokemonTableRenderer.cs" />
     <Compile Include="Components\GraphicComponents\SingleDimensionTableModel.cs" />
     <Compile Include="Components\SetHPEvent.cs" />
     <Compile Include="Components\SetPokemonEvent.cs" />

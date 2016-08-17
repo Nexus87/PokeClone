@@ -121,5 +121,14 @@ namespace GameEngineTest.Registry
 
             Assert.AreEqual(1, GameService.instances);
         }
+
+        public class ClassWithArgument
+        {
+            public String argument;
+            public ClassWithArgument(String argument)
+            {
+                this.argument = argument;
+            }
+        }
     }
 }

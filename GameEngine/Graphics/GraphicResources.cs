@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace GameEngine.Graphics
 {
-    internal class GraphicResources
+    public class GraphicResources
     {
         internal XNATexture2D pixel;
         internal ISpriteFont DefaultFont { get; set; }
@@ -23,7 +23,7 @@ namespace GameEngine.Graphics
         internal ContentManager ContentManager { get; set; }
         internal Configuration Configuration { get; set; }
 
-        public GraphicResources(Configuration config, ContentManager content)
+        internal GraphicResources(Configuration config, ContentManager content)
         {
             DefaultArrowTexture = new XNATexture2D(config.DefaultArrowTexture, content);
             DefaultFont = new XNASpriteFont(config.DefaultFont, content);

@@ -24,6 +24,7 @@ namespace GameEngine
         {
             registry.RegisterType<ISpriteFont>(r => resources.DefaultFont);
             registry.RegisterType<ItemBox>(reg => new ItemBox(resources.DefaultArrowTexture, resources.DefaultFont));
+            registry.RegisterType<GraphicResources>(r => resources);
             registry.RegisterType<Dialog>(reg => new Dialog(resources.DefaultBorderTexture));
             registry.RegisterType<Line>(reg => new Line(resources.Pixel, resources.Cup));
             registry.RegisterTypeAs(typeof(DefaultTableRenderer<>), typeof(ITableRenderer<>));

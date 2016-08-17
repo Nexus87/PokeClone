@@ -1,4 +1,5 @@
-﻿using BattleLib.Components.BattleState;
+﻿using Base;
+using BattleLib.Components.BattleState;
 using GameEngine;
 using GameEngine.Graphics;
 using GameEngine.Registry;
@@ -46,7 +47,7 @@ namespace BattleLib.Components.GraphicComponents
         }
 
 
-        public void SetPokemon(PokemonWrapper pokemon)
+        public void SetPokemon(Pokemon pokemon)
         {
             maxHP = "/" + pokemon.MaxHP.ToString().PadLeft(3, ' ');
             SetHP(pokemon.HP);

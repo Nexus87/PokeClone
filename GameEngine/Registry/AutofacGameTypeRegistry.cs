@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Autofac.Core;
 using Autofac.Core.Registration;
 using System;
 using System.Collections.Generic;

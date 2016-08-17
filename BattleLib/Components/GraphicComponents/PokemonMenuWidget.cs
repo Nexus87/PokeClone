@@ -13,8 +13,8 @@ namespace BattleLib.Components.GraphicComponents
     [GameType]
     public class PokemonMenuWidget : AbstractMenuWidget<Pokemon>
     {
-        public PokemonMenuWidget(TableView<Pokemon> tableView) :
-            base(new TableWidget<Pokemon>(null, null, tableView))
+        public PokemonMenuWidget(PokemonModel model, PokemonTableRenderer renderer, TableSingleSelectionModel selection) :
+            base(new TableWidget<Pokemon>(null, null, model, renderer, selection))
         {
         }
     }

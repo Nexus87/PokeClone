@@ -23,6 +23,7 @@
     <Compile Include="Components\GraphicComponents\HPLineTest.cs" />
     <Compile Include="Components\GraphicComponents\MoveModelTest.cs" />
     <Compile Include="Components\GraphicComponents\MoveTableSelectionModelTest.cs" />
+    <Compile Include="Components\GraphicComponents\PokemonModelTest.cs" />
     <Compile Include="Utils\TestFactory.cs" />
   </Files>
 </Project>

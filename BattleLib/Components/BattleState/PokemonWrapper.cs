@@ -44,6 +44,7 @@ namespace BattleLib.Components.BattleState
         }
 
         public event EventHandler<PokemonChangedEventArgs> PokemonChanged = delegate { };
+        public event EventHandler<PokemonChangedEventArgs> PokemonValuesChanged = delegate { };
 
         public float Accuracy { get { return modifier[ModifyableState.Accuracy]; } }
         public int Atk { get { return (int)(Pokemon.Atk * modifier[ModifyableState.Atk]); } }
@@ -62,7 +63,11 @@ namespace BattleLib.Components.BattleState
             get { return Pokemon.HP; }
             set
             {
-                Pokemon.HP = Math.Max(0, value);
+                var newHP = Math.Max(0, value);
+                if (newHP == Pokemon.HP)
+                    return;
+                Pokemon.HP = newHP;
+                PokemonValuesChanged(this, new PokemonChangedEventArgs(Pokemon));
             }
         }
 

@@ -10,6 +10,12 @@ namespace BattleLib
         readonly List<Pokemon> pokemons = new List<Pokemon>();
         readonly List<Item> items = new List<Item>();
 
+        public Client(ClientIdentifier id, List<Pokemon> pokemons)
+        {
+            Id = id;
+            this.pokemons.AddRange(pokemons);
+        }
+
         public Client(ClientIdentifier id)
         {
             Id = id;
