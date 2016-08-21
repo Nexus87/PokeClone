@@ -44,6 +44,11 @@ namespace BattleLib.Components.BattleState
             NewTurn(this, EventArgs.Empty);
         }
 
+        public void SwitchPokemon(PokemonWrapper pokemon)
+        {
+            PokemonChanged(this, new ClientPokemonChangedEventArgs(pokemon.Identifier, pokemon));
+        }
+
         public event EventHandler CriticalDamage = delegate { };
 
         public event EventHandler<MoveEffectiveEventArgs> MoveEffective = delegate { };

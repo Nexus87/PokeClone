@@ -42,7 +42,13 @@ namespace BattleLib
 
         public void DispatchCommand(ChangeCommand command)
         {
-            throw new NotImplementedException();
+            ExecChange(Data.GetPokemon(command.Source), command.Pokemon);
+        }
+
+        private void ExecChange(PokemonWrapper pokemonWrapper, Pokemon newPokemon)
+        {
+            pokemonWrapper.Pokemon = newPokemon;
+            eventCreator.SwitchPokemon(pokemonWrapper);
         }
 
         static MoveEfficiency GetEffect(float typeModifier)

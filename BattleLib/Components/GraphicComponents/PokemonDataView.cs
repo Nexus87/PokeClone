@@ -142,13 +142,15 @@ namespace BattleLib.GraphicComponents
             }
             public void Update(GameTime time, IGraphicComponent component)
             {
+                if (currentHP == targetHP)
+                {
+                    AnimationFinished(this, EventArgs.Empty);
+                    return;
+                }
                 currentHP = nextInt(currentHP);
                 line.Current = currentHP;
                 if(text != null)
                     text.SetHP(line.Current);
-
-                if (currentHP == targetHP)
-                    AnimationFinished(this, EventArgs.Empty);
             }
         }
     }

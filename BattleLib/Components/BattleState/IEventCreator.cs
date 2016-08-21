@@ -12,6 +12,7 @@ namespace BattleLib.Components.BattleState
         void SetPokemon(ClientIdentifier id, PokemonWrapper pokemon);
         void SetStatus(PokemonWrapper pokemon, StatusCondition condition);
         void UsingMove(PokemonWrapper source, Base.Move move);
+        void SwitchPokemon(PokemonWrapper pokemon);
     }
 
     public class MoveEffectiveEventArgs : EventArgs

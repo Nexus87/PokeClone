@@ -130,6 +130,11 @@ namespace BattleLibTest.Components
         {
             throw new NotImplementedException();
         }
+
+        public void SwitchPokemon(PokemonWrapper pokemon)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     [TestFixture]
