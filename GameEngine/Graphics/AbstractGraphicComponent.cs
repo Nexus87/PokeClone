@@ -6,6 +6,23 @@ namespace GameEngine.Graphics
 {
     public abstract class AbstractGraphicComponent : IGraphicComponent
     {
+        private bool isVisible = true;
+
+        public event EventHandler<VisibilityChangedEventArgs> VisibilityChanged = delegate { };
+
+        public bool IsVisible
+        {
+            get { return isVisible; }
+            set
+            {
+                if (value == isVisible)
+                    return;
+
+                isVisible = value;
+                VisibilityChanged(this, new VisibilityChangedEventArgs(isVisible));
+            }
+        }
+
         protected AbstractGraphicComponent()
         {
             NeedsUpdate = true;
@@ -89,6 +106,8 @@ namespace GameEngine.Graphics
         {
             if (Animation != null)
                 Animation.Update(time, this);
+            if (!isVisible)
+                return;
 
             if (NeedsUpdate)
             {

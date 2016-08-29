@@ -9,8 +9,6 @@ namespace GameEngine.Graphics
     {
         readonly IGraphicComponent border;
 
-        bool isVisible;
-
         public Dialog(ITexture2D borderTexture = null) :
             this(new TextureBox(borderTexture))
         {}
@@ -22,8 +20,6 @@ namespace GameEngine.Graphics
             InnerComponent.Layout = new SingleComponentLayout();
         }
 
-        public event EventHandler<VisibilityChangedEventArgs> VisibilityChanged = delegate { };
-
         public ILayout Layout
         {
             get { return InnerComponent.Layout; }
@@ -31,19 +27,6 @@ namespace GameEngine.Graphics
             {
                 InnerComponent.Layout = value;
                 Invalidate();
-            }
-        }
-
-        public bool IsVisible
-        {
-            get { return isVisible; }
-            set
-            {
-                if (value == isVisible)
-                    return;
-
-                isVisible = value;
-                VisibilityChanged(this, new VisibilityChangedEventArgs(isVisible));
             }
         }
 

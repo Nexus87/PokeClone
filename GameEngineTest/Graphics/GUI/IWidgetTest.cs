@@ -17,47 +17,5 @@ namespace GameEngineTest.Graphics.GUI
         {
             return CreateWidget();
         }
-
-        [TestCase]
-        public void Visibility_ChangeVisibilityToFalse_RaisesEvent()
-        {
-            var widget = CreateWidget();
-            bool eventRaised = false;
-            widget.IsVisible = true;
-            widget.VisibilityChanged += delegate { eventRaised = true; };
-
-            widget.IsVisible = false;
-
-            Assert.True(eventRaised);
-
-        }
-
-        [TestCase]
-        public void Visibility_ChangeVisibilityToTrue_RaisesEvent()
-        {
-            var widget = CreateWidget();
-            bool eventRaised = false;
-            widget.IsVisible = false;
-            widget.VisibilityChanged += delegate { eventRaised = true; };
-
-            widget.IsVisible = true;
-
-            Assert.True(eventRaised);
-
-        }
-
-        [TestCase]
-        public void Visibility_SetSameVisibility_NoEventRaised()
-        {
-            var widget = CreateWidget();
-            bool eventRaised = false;
-            widget.IsVisible = false;
-            widget.VisibilityChanged += delegate { eventRaised = true; };
-
-            widget.IsVisible = false;
-
-            Assert.False(eventRaised);
-
-        }
     }
 }

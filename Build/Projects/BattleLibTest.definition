@@ -16,6 +16,7 @@
     <Reference Include="Castle.Core" />
   </References>
   <Files>
+    <Compile Include="Animations\DamagedAnimationTest.cs" />
     <Compile Include="CommandExecuterTest.cs" />
     <Compile Include="Components\BattleEventProcessorTest.cs" />
     <Compile Include="Components\BattleState\BattleStateComponentTest.cs" />

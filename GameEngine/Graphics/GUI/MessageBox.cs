@@ -24,21 +24,6 @@ namespace GameEngine.Graphics.GUI
 
         public event EventHandler OnAllLineShowed = delegate { };
 
-        public event EventHandler<VisibilityChangedEventArgs> VisibilityChanged = delegate { };
-
-        public bool IsVisible
-        {
-            get { return isVisible; }
-            set
-            {
-                if (value == isVisible)
-                    return;
-
-                isVisible = value;
-                VisibilityChanged(this, new VisibilityChangedEventArgs(isVisible));
-            }
-        }
-
         public void DisplayText(string text)
         {
             textBox.Text = text;

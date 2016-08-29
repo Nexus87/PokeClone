@@ -218,5 +218,66 @@ namespace GameEngineTest.Graphics
             foreach (var obj in batch.DrawnObjects)
                 obj.IsInConstraints(testComponent);
         }
+
+        [TestCase]
+        public void Visibility_ChangeVisibilityToFalse_RaisesEvent()
+        {
+            var testComponent = CreateComponent();
+            bool eventRaised = false;
+            testComponent.IsVisible = true;
+            testComponent.VisibilityChanged += delegate { eventRaised = true; };
+
+            testComponent.IsVisible = false;
+
+            Assert.True(eventRaised);
+
+        }
+
+        [TestCase]
+        public void Visibility_ChangeVisibilityToTrue_RaisesEvent()
+        {
+            var testComponent = CreateComponent();
+            bool eventRaised = false;
+            testComponent.IsVisible = false;
+            testComponent.VisibilityChanged += delegate { eventRaised = true; };
+
+            testComponent.IsVisible = true;
+
+            Assert.True(eventRaised);
+
+        }
+
+        [TestCase]
+        public void Visibility_SetSameVisibility_NoEventRaised()
+        {
+            var testComponent = CreateComponent();
+            bool eventRaised = false;
+            testComponent.IsVisible = false;
+            testComponent.VisibilityChanged += delegate { eventRaised = true; };
+
+            testComponent.IsVisible = false;
+
+            Assert.False(eventRaised);
+
+        }
+
+        [TestCase]
+        public void Draw_SetVisibilityFalse_ComponentIsNotDrawn()
+        {
+            var testComponent = CreateComponent();
+            var batch = new SpriteBatchMock();
+            testComponent.IsVisible = false;
+
+            testComponent.Draw(batch);
+
+            Assert.AreEqual(0, batch.DrawnObjects.Count);
+        }
+
+        [TestCase]
+        public void IsVisible_Default_IsTrue()
+        {
+            var testComponent = CreateComponent();
+            Assert.True(testComponent.IsVisible);
+        }
     }
 }

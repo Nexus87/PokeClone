@@ -1,4 +1,5 @@
 ﻿using GameEngine;
+using GameEngine.Graphics;
 using GameEngine.Graphics.GUI;
 using System;
 using System.Collections.Generic;
@@ -10,10 +11,8 @@ namespace GameEngineTest.TestUtils
 {
     public class WidgetMock : GraphicComponentMock, IWidget
     {
-        public event EventHandler<VisibilityChangedEventArgs> VisibilityChanged;
         public bool WasHandleInputCalled = false;
         public CommandKeys HandleInputArgument;
-        public bool IsVisible { get; set; }
 
         public bool HandleInput(CommandKeys key)
         {
@@ -21,13 +20,6 @@ namespace GameEngineTest.TestUtils
             HandleInputArgument = key;
 
             return true;
-        }
-
-        public void SetVisibility(bool visibility)
-        {
-            IsVisible = visibility;
-            if(VisibilityChanged != null)
-                VisibilityChanged(this, new VisibilityChangedEventArgs(visibility));
         }
     }
 }
