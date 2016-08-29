@@ -13,28 +13,42 @@ namespace BattleLib.Animations
         private long blinkTime;
         private bool firstRun = true;
         private GameTime lastTime;
+        private int numberOfBlinks;
+        private int currentNumberOfBlinks;
 
-        public DamagedAnimation(long blinkTime)
+        public DamagedAnimation(long blinkTime, int numberOfBlinks)
         {
             this.blinkTime = blinkTime;
+            this.numberOfBlinks = numberOfBlinks;
         }
         public void Update(GameTime time, IGraphicComponent component)
         {
-            if (firstRun)
-            {
-                lastTime = time;
-                firstRun = false;
-                component.IsVisible = false;
-                return;
-            }
-
-            var diff = time.TotalGameTime - lastTime.TotalGameTime;
-            
-            if (diff.Ticks < blinkTime)
+            if (!IsTimeIntervalOfer(time, lastTime))
                 return;
 
             lastTime = time;
             component.IsVisible = !component.IsVisible;
+            currentNumberOfBlinks++;
+
+            if (AnimationDone())
+                AnimationFinished(this, EventArgs.Empty);
+        }
+
+        private bool AnimationDone()
+        {
+            return currentNumberOfBlinks == 2 * numberOfBlinks;
+        }
+
+        private bool IsTimeIntervalOfer(GameTime time, GameTime lastTime)
+        {
+            if (firstRun)
+            {
+                firstRun = false;
+                return true;
+            }
+
+            var diff = time.TotalGameTime - lastTime.TotalGameTime;
+            return diff.Milliseconds >= blinkTime;
         }
     }
 }
