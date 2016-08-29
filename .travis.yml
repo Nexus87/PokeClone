@@ -1,10 +1,21 @@
 language: csharp
 solution: PokeClone.sln
 install:
-  - mono ./Protobuild.exe --generate Linux
-  - nuget install NUnit.Runners -Version 3.4.1 -OutputDirectory testrunner
+- mono ./Protobuild.exe --generate Linux
+- nuget install NUnit.Runners -Version 3.4.1 -OutputDirectory testrunner
 mono:
-  - latest
+- latest
 script:
-  - xbuild /p:Configuration=Debug /p:DefineConstants=TRAVIS PokeClone.Linux.sln
-  - mono ./testrunner/NUnit.ConsoleRunner.3.4.1/tools/nunit3-console.exe ./BattleLibTest/bin/Linux/AnyCPU/Debug/BattleLibTest.dll ./GameEngineTest/bin/Linux/AnyCPU/Debug/GameEngineTest.dll
+- xbuild /p:Configuration=Debug /p:DefineConstants=TRAVIS PokeClone.Linux.sln
+- mono ./testrunner/NUnit.ConsoleRunner.3.4.1/tools/nunit3-console.exe ./BattleLibTest/bin/Linux/AnyCPU/Debug/BattleLibTest.dll
+  ./GameEngineTest/bin/Linux/AnyCPU/Debug/GameEngineTest.dll
+- cd Game/bin/Linux/AnyCPU/Release
+- 7z a PokeClone-Linux.zip *.dll *.exe Content
+deploy:
+  provider: releases
+  api_key:
+    secure: A3zYGrQHdKdwJ7CCXHXhOxDG0jp6MHUGqGIMv41BJo1596hwajLwARsoWCBBddms8IeQRBnsahFdu8/2ATBgvqlkxAbRQ4xNLuYPhLeX+n1JzyNYU4IMkTxSxoTOOG4ZWxrEGDtLEPF816r/HiOQgoNs2CZ56NGthQzIyOHscIE5s91lcEAwfCDmv8SxhsbbakRGn9RKfohJkH3fzHKYVkjOKQpNkqxeu/46RI+SKvd3GpB6p+P6d632pOAdsYJWUMwBke19YJ5grIAaH3aiZu8hasx66ppEkaq6enTPilTNlvTCBRDdTK+LbIz11qMshgW7hm0PJn+js4utfvSexyiy+lynu5aFx7DZC4cjGmeEg0synvxK9NVomXDc4GQiNvBlDNUUj1MwSVkC6/XmcdN6zRkg51eWFmizBQcp2tmnwFsIqVrIEBjFY6AiaXD347EpJMzZvtFu34kAJEMJpSyWg4sYx6K7UJQzvtW1urwMMlbvYRK8K6+RBnhaK3qFyTy82dbXdK+wSQ7Ffe/BUgq2v4AJ6ZfbfSgDoMss8mqHB+T7NrVVnRkK1VT/0NOoEJqdpssogCnaMZVSrJC8FnFmRYS6s21dSGoWAvQQgGwJysCglndgnFao5/TeC+QFBoFwRwsqwz/U5A2ZpRFTTRS/BYpHnhz8/1sd9AGAGS8=
+  file: Game/bin/Linux/AnyCPU/Release/PokeClone-Linux.zip
+  on:
+    repo: Nexus87/PokeClone
+    tags: true
