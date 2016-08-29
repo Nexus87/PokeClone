@@ -11,6 +11,10 @@ script:
   ./GameEngineTest/bin/Linux/AnyCPU/Debug/GameEngineTest.dll
 - cd Game/bin/Linux/AnyCPU/Release
 - 7z a PokeClone-Linux.zip *.dll *.exe Content
+addons:
+  apt:
+    packages:
+    - p7zip-full
 deploy:
   provider: releases
   api_key:
