@@ -36,9 +36,15 @@ namespace GameEngineTest.TestUtils
         public Action DrawCallback = null;
         public void Draw(GameTime time, ISpriteBatch batch)
         {
+            if (!isVisible)
+                return;
             WasDrawn = true;
             if (DrawCallback != null)
                 DrawCallback();
+            if (batch is SpriteBatchMock)
+            {
+                batch.Draw(null, new Rectangle((int)XPosition, (int)YPosition, (int)Width, (int)Height), Color);
+            }
         }
 
         public void Setup()
@@ -73,6 +79,25 @@ namespace GameEngineTest.TestUtils
         public void RaiseSizeChanged()
         {
             OnSizeChanged();
+        }
+
+        public event EventHandler<VisibilityChangedEventArgs> VisibilityChanged = delegate { };
+        private bool isVisible = true;
+
+        public bool IsVisible
+        {
+            get
+            {
+                return isVisible;
+            }
+            set
+            {
+                if (isVisible == value)
+                    return;
+
+                isVisible = value;
+                VisibilityChanged(this, new VisibilityChangedEventArgs(value));
+            }
         }
     }
 }

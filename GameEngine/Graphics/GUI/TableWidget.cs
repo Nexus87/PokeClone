@@ -16,7 +16,6 @@ namespace GameEngine.Graphics.GUI
         /// </summary>
         internal int cursorRow;
 
-        bool isVisible;
         readonly ITableView<T> tableView;
 
         public TableWidget(int? visibleRows, int? visibleColumns, ITableModel<T> model, ITableRenderer<T> renderer, ITableSelectionModel selection) :
@@ -41,21 +40,6 @@ namespace GameEngine.Graphics.GUI
         /// This event is called, if the Back key is pressed
         /// </summary>
         public event EventHandler ExitRequested = delegate { };
-
-        public event EventHandler<VisibilityChangedEventArgs> VisibilityChanged = delegate { };
-
-        public bool IsVisible
-        {
-            get { return isVisible; }
-            set
-            {
-                if (value == isVisible)
-                    return;
-
-                isVisible = value;
-                VisibilityChanged(this, new VisibilityChangedEventArgs(isVisible));
-            }
-        }
 
         public ITableModel<T> Model
         {

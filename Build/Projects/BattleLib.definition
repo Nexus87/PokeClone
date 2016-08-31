@@ -11,6 +11,7 @@
     <Reference Include="Base" />
   </References>
   <Files>
+    <Compile Include="Animations\DamagedAnimation.cs" />
     <Compile Include="AttackTableRenderer.cs" />
     <Compile Include="BattleModule.cs" />
     <Compile Include="Client.cs" />

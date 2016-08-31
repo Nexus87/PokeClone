@@ -187,5 +187,19 @@ namespace GameEngineTest.TestUtils
                 throw new NotImplementedException();
             }
         }
+
+        public event EventHandler<VisibilityChangedEventArgs> VisibilityChanged;
+
+        public bool IsVisible
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
     }
 }

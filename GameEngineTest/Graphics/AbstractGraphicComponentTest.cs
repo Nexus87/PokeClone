@@ -1,4 +1,5 @@
-﻿using GameEngine.Graphics;
+﻿using GameEngine;
+using GameEngine.Graphics;
 using GameEngineTest.TestUtils;
 using Microsoft.Xna.Framework;
 using Moq;
@@ -10,12 +11,26 @@ namespace GameEngineTest.Graphics
     [TestFixture]
     public class AbstractGraphicComponentTest : IGraphicComponentTest
     {
+        private readonly Rectangle DUMMY_RECTANGLE = new Rectangle(10, 10, 10, 10);
         private Mock<AbstractGraphicComponent> CreateComponentMock()
         {
             var componentMock = new Mock<AbstractGraphicComponent>();
             componentMock.CallBase = true;
+            componentMock.Protected()
+                .Setup("DrawComponent", ItExpr.IsAny<GameTime>(), ItExpr.IsAny<ISpriteBatch>())
+                .Callback<GameTime, ISpriteBatch>((time, batch) =>
+                {
+                    if (batch is SpriteBatchMock)
+                        batch.Draw(null, Position(componentMock), Color.Black);
+                });
 
             return componentMock;
+        }
+
+        private Rectangle Position(Mock<AbstractGraphicComponent> componentMock)
+        {
+            var component = componentMock.Object;
+            return new Rectangle((int)component.XPosition, (int)component.YPosition, (int)component.Width, (int)component.Height);
         }
 
         private Mock<AbstractGraphicComponent> CreateComponentWithoutInvalidation()

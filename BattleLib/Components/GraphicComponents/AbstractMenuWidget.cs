@@ -41,27 +41,11 @@ namespace BattleLib.Components.GraphicComponents
         {
             tableWidget = widget;
             borderWidget = border;
-
-            borderWidget.VisibilityChanged += (obj, args) => VisibilityChanged(this, args);
         }
 
         public void ResetSelection()
         {
             tableWidget.SelectCell(0, 0);
-        }
-
-        public event EventHandler<VisibilityChangedEventArgs> VisibilityChanged = delegate { };
-
-        public bool IsVisible
-        {
-            get
-            {
-                return borderWidget.IsVisible;
-            }
-            set
-            {
-                borderWidget.IsVisible = value;
-            }
         }
 
         public bool HandleInput(CommandKeys key)

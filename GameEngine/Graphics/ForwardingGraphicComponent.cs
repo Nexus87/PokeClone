@@ -181,5 +181,23 @@ namespace GameEngine.Graphics
                 InnerComponent.VerticalPolicy = value;
             }
         }
+
+        public event EventHandler<VisibilityChangedEventArgs> VisibilityChanged
+        {
+            add { InnerComponent.VisibilityChanged += value; }
+            remove { InnerComponent.VisibilityChanged -= value; }
+        }
+
+        public bool IsVisible
+        {
+            get
+            {
+                return InnerComponent.IsVisible;
+            }
+            set
+            {
+                InnerComponent.IsVisible = value;
+            }
+        }
     }
 }

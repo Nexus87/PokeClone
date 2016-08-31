@@ -72,7 +72,7 @@ namespace GameEngineTest.Graphics.GUI
 
             guiManager.AddWidget(widgetMock1);
             guiManager.AddWidget(widgetMock2);
-            widgetMock2.SetVisibility(false);
+            widgetMock2.IsVisible = false;
 
             guiManager.Draw();
 
@@ -89,7 +89,7 @@ namespace GameEngineTest.Graphics.GUI
 
             guiManager.AddWidget(widgetMock1);
             guiManager.AddWidget(widgetMock2);
-            widgetMock2.SetVisibility(true);
+            widgetMock2.IsVisible = true;
 
             guiManager.Draw();
 
@@ -136,8 +136,8 @@ namespace GameEngineTest.Graphics.GUI
             guiManager.AddWidget(widgetMock1);
             guiManager.AddWidget(widgetMock2);
 
-            widgetMock2.SetVisibility(true);
-            widgetMock1.SetVisibility(true);
+            widgetMock2.IsVisible = true;
+            widgetMock1.IsVisible = true;
 
             guiManager.Draw();
 
@@ -204,7 +204,7 @@ namespace GameEngineTest.Graphics.GUI
 
             guiManager.AddWidget(widgetMock1);
             guiManager.AddWidget(widgetMock2);
-            widgetMock1.SetVisibility(true);
+            widgetMock1.IsVisible = true;
 
             guiManager.HandleInput(CommandKeys.Up);
 
@@ -222,7 +222,7 @@ namespace GameEngineTest.Graphics.GUI
 
             guiManager.AddWidget(widgetMock1);
             guiManager.AddWidget(widgetMock2);
-            widgetMock2.SetVisibility(false);
+            widgetMock2.IsVisible = false;
 
             guiManager.HandleInput(CommandKeys.Up);
 
@@ -249,7 +249,7 @@ namespace GameEngineTest.Graphics.GUI
             guiManager.AddWidget(widgetMock2);
             guiManager.RemoveWidget(widgetMock2);
 
-            widgetMock2.SetVisibility(true);
+            widgetMock2.IsVisible = true;
 
             guiManager.Draw();
 
