@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Name="MainModuleTest" Path="MainModuleTest" Type="Library">
+  <Properties>
+    <NoWarn>1591</NoWarn>
+  </Properties>
+  <References>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="Moq" />
+    <Reference Include="NUnit" />
+    <Reference Include="MonoGame.Framework.DesktopGL" />
+    <Reference Include="GameEngineTest" />
+    <Reference Include="MainModule" />
+    <Reference Include="GameEngine" />
+    <Reference Include="Base" />
+    <Reference Include="Castle.Core" />
+  </References>
+  <Files>
+    <Compile Include="WorldScreenTest.cs" />
+  </Files>
+</Project>

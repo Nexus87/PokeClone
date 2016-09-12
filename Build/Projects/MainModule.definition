@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Name="MainModule" Path="MainModule" Type="Library">
+  <Properties>
+    <NoWarn>1591</NoWarn>
+  </Properties>
+  <References>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="MonoGame.Framework.DesktopGL" />
+    <Reference Include="GameEngine" />
+    <Reference Include="Base" />
+  </References>
+  <Files>
+    <Compile Include="Direction.cs" />
+    <Compile Include="FieldSize.cs" />
+    <Compile Include="GameStateComponent.cs" />
+    <Compile Include="IMap.cs" />
+    <Compile Include="IWorldEvent.cs" />
+    <Compile Include="MainModule.cs" />
+    <Compile Include="MoveComponent.cs" />
+    <Compile Include="PlayerSprite.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WorldObject.cs" />
+    <Compile Include="WorldScreen.cs" />
+  </Files>
+</Project>
