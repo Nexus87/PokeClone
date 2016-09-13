@@ -33,3 +33,4 @@ packages/*
 *.speccache
 !Protobuild.exe
 Content/source/.source
+packages.config
