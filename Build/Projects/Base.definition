@@ -9,11 +9,13 @@
     <Reference Include="System.XML" />
   </References>
   <Files>
-    <Compile Include="Data\Enums.cs" />
+    <Compile Include="Data\DamageCategory.cs" />
     <Compile Include="Data\MoveData.cs" />
     <Compile Include="Data\MoveList.cs" />
     <Compile Include="Data\PokemonData.cs" />
+    <Compile Include="Data\PokemonType.cs" />
     <Compile Include="Data\Stats.cs" />
+    <Compile Include="Data\StatusCondition.cs" />
     <Compile Include="Factory\IMoveRepository.cs" />
     <Compile Include="Factory\IPokemonRepository.cs" />
     <Compile Include="Factory\MoveFactory.cs" />

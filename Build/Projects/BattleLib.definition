@@ -6,12 +6,12 @@
   <References>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-	<Platform Type="Windows">
-		<Reference Include="MonoGame.Framework.WindowsDX" />
-	</Platform>
-	<Platform Type="Linux">
-		<Reference Include="MonoGame.Framework.DesktopGL" />
-	</Platform>
+    <Platform Type="Windows">
+      <Reference Include="MonoGame.Framework.WindowsDX" />
+    </Platform>
+    <Platform Type="Linux">
+      <Reference Include="MonoGame.Framework.DesktopGL" />
+    </Platform>
     <Reference Include="GameEngine" />
     <Reference Include="Base" />
   </References>
@@ -27,34 +27,48 @@
     <Compile Include="Components\BattleState\AbstractState.cs" />
     <Compile Include="Components\BattleState\BattleData.cs" />
     <Compile Include="Components\BattleState\BattleStateComponent.cs" />
+    <Compile Include="Components\BattleState\BattleStates.cs" />
+    <Compile Include="Components\BattleState\ClientPokemonChangedEventArgs.cs" />
+    <Compile Include="Components\BattleState\ClientStatusChangedEventArgs.cs" />
     <Compile Include="Components\BattleState\Commands\ChangeCommand.cs" />
     <Compile Include="Components\BattleState\Commands\ICommand.cs" />
     <Compile Include="Components\BattleState\Commands\ItemCommand.cs" />
     <Compile Include="Components\BattleState\Commands\MoveCommand.cs" />
     <Compile Include="Components\BattleState\EventCreator.cs" />
     <Compile Include="Components\BattleState\ExecuteState.cs" />
-    <Compile Include="Components\BattleState\IActionScheduler.cs" />
+    <Compile Include="Components\BattleState\HPChangedEventArgs.cs" />
+    <Compile Include="Components\BattleState\IBattleEvents.cs" />
     <Compile Include="Components\BattleState\IBattleState.cs" />
     <Compile Include="Components\BattleState\IBattleStateService.cs" />
+    <Compile Include="Components\BattleState\ICommandScheduler.cs" />
     <Compile Include="Components\BattleState\IEventCreator.cs" />
+    <Compile Include="Components\BattleState\ModifyableState.cs" />
+    <Compile Include="Components\BattleState\MoveEffectiveEventArgs.cs" />
+    <Compile Include="Components\BattleState\MoveUsedEventArgs.cs" />
+    <Compile Include="Components\BattleState\PokemonChangedEventArgs.cs" />
     <Compile Include="Components\BattleState\PokemonWrapper.cs" />
+    <Compile Include="Components\BattleState\StateChangedEventArgs.cs" />
     <Compile Include="Components\BattleState\WaitForActionState.cs" />
     <Compile Include="Components\BattleState\WaitForCharState.cs" />
     <Compile Include="Components\Extensions.cs" />
     <Compile Include="Components\GraphicComponents\AbstractMenuWidget.cs" />
+    <Compile Include="Components\GraphicComponents\AIPokemonDataView.cs" />
     <Compile Include="Components\GraphicComponents\BattleGraphicController.cs" />
     <Compile Include="Components\GraphicComponents\BattleGUI.cs" />
     <Compile Include="Components\GraphicComponents\HPLine.cs" />
+    <Compile Include="Components\GraphicComponents\HPResizeAnimation.cs" />
     <Compile Include="Components\GraphicComponents\HPText.cs" />
     <Compile Include="Components\GraphicComponents\IBattleGraphicController.cs" />
     <Compile Include="Components\GraphicComponents\IGUIService.cs" />
     <Compile Include="Components\GraphicComponents\IMenuWidget.cs" />
     <Compile Include="Components\GraphicComponents\ItemMenuWidget.cs" />
     <Compile Include="Components\GraphicComponents\ItemModel.cs" />
+    <Compile Include="Components\GraphicComponents\MainMenuEntries.cs" />
     <Compile Include="Components\GraphicComponents\MainMenuWidget.cs" />
     <Compile Include="Components\GraphicComponents\MoveMenuWidget.cs" />
     <Compile Include="Components\GraphicComponents\MoveModel.cs" />
     <Compile Include="Components\GraphicComponents\MoveTableSelectionModel.cs" />
+    <Compile Include="Components\GraphicComponents\PlayerPokemonDataView.cs" />
     <Compile Include="Components\GraphicComponents\PokemonDataView.cs" />
     <Compile Include="Components\GraphicComponents\PokemonMenuLine.cs" />
     <Compile Include="Components\GraphicComponents\PokemonMenuWidget.cs" />
@@ -68,6 +82,8 @@
     <Compile Include="Components\ShowMenuEvent.cs" />
     <Compile Include="Components\ShowMessageEvent.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="ItemUsedEventArgs.cs" />
+    <Compile Include="MoveEfficiency.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="packages.config" />
   </Files>

@@ -6,12 +6,12 @@
   <References>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    	<Platform Type="Windows">
-		<Reference Include="MonoGame.Framework.WindowsDX" />
-	</Platform>
-	<Platform Type="Linux">
-		<Reference Include="MonoGame.Framework.DesktopGL" />
-	</Platform>
+    <Platform Type="Windows">
+      <Reference Include="MonoGame.Framework.WindowsDX" />
+    </Platform>
+    <Platform Type="Linux">
+      <Reference Include="MonoGame.Framework.DesktopGL" />
+    </Platform>
     <Reference Include="Autofac" />
     <Reference Include="GameEngine" />
     <Reference Include="BattleLib" />
@@ -28,6 +28,7 @@
     <Compile Include="Rules\DummyScheduler.cs" />
     <Compile Include="Rules\DummyTable.cs" />
     <Compile Include="Rules\Gen1CharRules.cs" />
+    <Compile Include="Rules\RndNumGen.cs" />
     <None Include="packages.config" />
   </Files>
 </Project>

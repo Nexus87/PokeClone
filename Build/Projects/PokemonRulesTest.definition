@@ -13,6 +13,7 @@
   </References>
   <Files>
     <Compile Include="CharFactoryTest.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="TestData\CharFactoryTestData.cs" />
   </Files>
 </Project>

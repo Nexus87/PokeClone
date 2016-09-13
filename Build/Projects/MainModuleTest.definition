@@ -8,12 +8,12 @@
     <Reference Include="System.Core" />
     <Reference Include="Moq" />
     <Reference Include="NUnit" />
-    	<Platform Type="Windows">
-		<Reference Include="MonoGame.Framework.WindowsDX" />
-	</Platform>
-	<Platform Type="Linux">
-		<Reference Include="MonoGame.Framework.DesktopGL" />
-	</Platform>
+    <Platform Type="Windows">
+      <Reference Include="MonoGame.Framework.WindowsDX" />
+    </Platform>
+    <Platform Type="Linux">
+      <Reference Include="MonoGame.Framework.DesktopGL" />
+    </Platform>
     <Reference Include="GameEngineTest" />
     <Reference Include="MainModule" />
     <Reference Include="GameEngine" />
@@ -21,6 +21,8 @@
     <Reference Include="Castle.Core" />
   </References>
   <Files>
+    <Compile Include="MapTest.cs" />
+    <Compile Include="Utils\MapMock.cs" />
     <Compile Include="WorldScreenTest.cs" />
     <None Include="packages.config" />
   </Files>

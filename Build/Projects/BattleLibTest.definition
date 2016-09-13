@@ -8,12 +8,12 @@
     <Reference Include="System.Core" />
     <Reference Include="Moq" />
     <Reference Include="NUnit" />
-    	<Platform Type="Windows">
-		<Reference Include="MonoGame.Framework.WindowsDX" />
-	</Platform>
-	<Platform Type="Linux">
-		<Reference Include="MonoGame.Framework.DesktopGL" />
-	</Platform>
+    <Platform Type="Windows">
+      <Reference Include="MonoGame.Framework.WindowsDX" />
+    </Platform>
+    <Platform Type="Linux">
+      <Reference Include="MonoGame.Framework.DesktopGL" />
+    </Platform>
     <Reference Include="GameEngineTest" />
     <Reference Include="BattleLib" />
     <Reference Include="GameEngine" />
@@ -23,13 +23,17 @@
   <Files>
     <Compile Include="Animations\DamagedAnimationTest.cs" />
     <Compile Include="CommandExecuterTest.cs" />
+    <Compile Include="Components\BattleEventFake.cs" />
     <Compile Include="Components\BattleEventProcessorTest.cs" />
     <Compile Include="Components\BattleState\BattleStateComponentTest.cs" />
     <Compile Include="Components\BattleState\WaitForCharStateTest.cs" />
+    <Compile Include="Components\EventQueueFake.cs" />
     <Compile Include="Components\GraphicComponents\HPLineTest.cs" />
     <Compile Include="Components\GraphicComponents\MoveModelTest.cs" />
+    <Compile Include="Components\GraphicComponents\MoveModelTestFactory.cs" />
     <Compile Include="Components\GraphicComponents\MoveTableSelectionModelTest.cs" />
     <Compile Include="Components\GraphicComponents\PokemonModelTest.cs" />
+    <Compile Include="MoveEffectCalculatorStub.cs" />
     <Compile Include="Utils\TestFactory.cs" />
     <None Include="packages.config" />
   </Files>
