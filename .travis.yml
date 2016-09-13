@@ -1,7 +1,9 @@
 language: csharp
 solution: PokeClone.sln
 install:
+- sudo apt-get install -y gtk-sharp2
 - mono ./Protobuild.exe --generate Linux
+- nuget restore PokeClone.Linux.sln
 - nuget install NUnit.Runners -Version 3.4.1 -OutputDirectory testrunner
 mono:
 - latest
