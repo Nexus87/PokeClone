@@ -34,3 +34,5 @@ packages/*
 !Protobuild.exe
 Content/source/.source
 packages.config
+.rider
+.idea
