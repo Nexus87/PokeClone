@@ -10,5 +10,6 @@ Protobuild.exe --generate
 ```
 For Linux:
 ```
-mono Protobuild.exe --generate
+mono ./Protobuild.exe --generate
 ```
+After restoring NuGet packages the above command needs to be repeated
