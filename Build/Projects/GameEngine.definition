@@ -6,7 +6,12 @@
   <References>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="MonoGame.Framework.DesktopGL" />
+    	<Platform Type="Windows">
+		<Reference Include="MonoGame.Framework.WindowsDX" />
+	</Platform>
+	<Platform Type="Linux">
+		<Reference Include="MonoGame.Framework.DesktopGL" />
+	</Platform>
     <Reference Include="Autofac" />
   </References>
   <Files>
@@ -94,5 +99,8 @@
     <Compile Include="XNASpriteBatch.cs" />
     <Compile Include="XNASpriteFont.cs" />
     <Compile Include="XNATexture2D.cs" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </Files>
 </Project>

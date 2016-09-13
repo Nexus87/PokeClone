@@ -4,7 +4,6 @@ using GameEngineTest.TestUtils;
 using MainModule;
 using Moq;
 using NUnit.Framework;
-using OpenTK.Graphics.ES11;
 
 namespace MainModuleTest
 {

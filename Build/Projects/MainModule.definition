@@ -6,7 +6,12 @@
   <References>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="MonoGame.Framework.DesktopGL" />
+    	<Platform Type="Windows">
+		<Reference Include="MonoGame.Framework.WindowsDX" />
+	</Platform>
+	<Platform Type="Linux">
+		<Reference Include="MonoGame.Framework.DesktopGL" />
+	</Platform>
     <Reference Include="GameEngine" />
     <Reference Include="Base" />
   </References>
@@ -22,5 +27,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WorldObject.cs" />
     <Compile Include="WorldScreen.cs" />
+    <None Include="packages.config" />
   </Files>
 </Project>

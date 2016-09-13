@@ -8,7 +8,12 @@
     <Reference Include="System.Core" />
     <Reference Include="Moq" />
     <Reference Include="NUnit" />
-    <Reference Include="MonoGame.Framework.DesktopGL" />
+    	<Platform Type="Windows">
+		<Reference Include="MonoGame.Framework.WindowsDX" />
+	</Platform>
+	<Platform Type="Linux">
+		<Reference Include="MonoGame.Framework.DesktopGL" />
+	</Platform>
     <Reference Include="GameEngine" />
     <Reference Include="Autofac" />
     <Reference Include="Castle.Core" />
@@ -63,5 +68,6 @@
     <Compile Include="TestUtils\WidgetMock.cs" />
     <Compile Include="Utils\DefaultTextSplitterTest.cs" />
     <Compile Include="Utils\TableTest.cs" />
+    <None Include="packages.config" />
   </Files>
 </Project>
