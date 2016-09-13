@@ -6,17 +6,24 @@ namespace GameEngine.Utils
 {
     public class Table<T> : ITable<T>
     {
-        const int INITAL_ROWS = 8;
-        const int INITAL_COLUMNS = 8;
+        private const int InitalRows = 8;
+        private const int InitalColumns = 8;
 
         public int Rows { get; private set; }
         public int Columns { get; private set; }
 
-        T[,] innerTable = new T[INITAL_ROWS, INITAL_COLUMNS];
+        private T[,] innerTable;
+
+        public Table(int rows, int columns)
+        {
+            innerTable = new T[rows, columns];
+            Rows = rows;
+            Columns = columns;
+        }
 
         public Table() 
         {
-            innerTable = new T[INITAL_ROWS, INITAL_COLUMNS];
+            innerTable = new T[InitalRows, InitalColumns];
         }
 
         private Table(T[,] array)
@@ -108,24 +115,24 @@ namespace GameEngine.Utils
             if (column >= Columns)
                 yield break;
 
-            for (int i = 0; i < Rows; i++)
+            for (var i = 0; i < Rows; i++)
                 yield return this[i, column];
         }
 
         public IEnumerable<T> EnumerateAlongRows()
         {
-            for (int row = 0; row < Rows; row++)
+            for (var row = 0; row < Rows; row++)
             {
-                for (int column = 0; column < Columns; column++)
+                for (var column = 0; column < Columns; column++)
                     yield return this[row, column];
             }
         }
 
         public IEnumerable<T> EnumerateAlongColumns()
         {
-            for (int column = 0; column < Columns; column++)
+            for (var column = 0; column < Columns; column++)
             {
-                for (int row = 0; row < Rows; row++)
+                for (var row = 0; row < Rows; row++)
                     yield return this[row, column];
             }
         }
@@ -135,14 +142,14 @@ namespace GameEngine.Utils
             return new SubTable<T>(innerTable, startIndex, endIndex);
         }
 
-        internal class SubTable<S> : ITable<S>
+        internal class SubTable<TS> : ITable<TS>
         {
-            TableIndex startIndex;
-            TableIndex endIndex;
+            private TableIndex startIndex;
+            private TableIndex endIndex;
 
-            S[,] table;
+            private readonly TS[,] table;
 
-            public SubTable(S[,] table, TableIndex startIndex, TableIndex endIndex)
+            public SubTable(TS[,] table, TableIndex startIndex, TableIndex endIndex)
             {
                 this.startIndex = startIndex;
                 this.endIndex = endIndex;
@@ -159,7 +166,7 @@ namespace GameEngine.Utils
                 get { return endIndex.Row - startIndex.Row; }
             }
 
-            public S this[int row, int column]
+            public TS this[int row, int column]
             {
                 get 
                 {
@@ -172,7 +179,7 @@ namespace GameEngine.Utils
                 }
             }
 
-            public IEnumerable<S> EnumerateColumns(int row)
+            public IEnumerable<TS> EnumerateColumns(int row)
             {
                 if (row >= Rows)
                     yield break;
@@ -181,7 +188,7 @@ namespace GameEngine.Utils
                     yield return this[row, i];
             }
 
-            public IEnumerable<S> EnumerateRows(int column)
+            public IEnumerable<TS> EnumerateRows(int column)
             {
                 if (column >= Columns)
                     yield break;
@@ -190,7 +197,7 @@ namespace GameEngine.Utils
                     yield return this[i, column];
             }
 
-            public IEnumerable<S> EnumerateAlongRows()
+            public IEnumerable<TS> EnumerateAlongRows()
             {
                 for (int row = 0; row < Rows; row++)
                 {
@@ -199,7 +206,7 @@ namespace GameEngine.Utils
                 }
             }
 
-            public IEnumerable<S> EnumerateAlongColumns()
+            public IEnumerable<TS> EnumerateAlongColumns()
             {
                 for (int column = 0; column < Columns; column++)
                 {
@@ -208,7 +215,7 @@ namespace GameEngine.Utils
                 }
             }
 
-            public IEnumerator<S> GetEnumerator()
+            public IEnumerator<TS> GetEnumerator()
             {
                 return EnumerateAlongColumns().GetEnumerator();
             }

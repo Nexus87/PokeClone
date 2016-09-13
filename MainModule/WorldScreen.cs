@@ -47,5 +47,10 @@ namespace MainModule
             player.Setup();
             map.Setup();
         }
+
+        public void FocusMapAt(int x, int y)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

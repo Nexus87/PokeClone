@@ -2,6 +2,8 @@
 using GameEngine.Graphics;
 using GameEngineTest.TestUtils;
 using MainModule;
+using MainModuleTest.Utils;
+using Microsoft.Xna.Framework;
 using Moq;
 using NUnit.Framework;
 
@@ -14,16 +16,17 @@ namespace MainModuleTest
         public void Draw_NormalSetup_PlayerAndMapAreDrawn()
         {
             var player = new GraphicComponentMock();
-            var map = CreateMap();
-            var screen = CreateWorldScreen(player, map);
+            var mapMock = CreateMap();
+            var screen = CreateWorldScreen(player, mapMock);
 
             screen.Setup();
             screen.Draw();
 
             Assert.True(player.WasDrawn);
+            Assert.True(mapMock.WasDrawn);
         }
 
-        private static IMap CreateMap()
+        private static MapMock CreateMap()
         {
             const int defaultWidht = 10;
             const int defaultHeight = 10;
@@ -42,16 +45,17 @@ namespace MainModuleTest
             Assert.AreEqual(expected, realSize);
         }
 
-        private static IMap CreateMap(int width, int height)
+        private static MapMock CreateMap(int width, int height)
         {
-            var mock = new Mock<IMap>();
-            mock.SetupGet(o => o.FieldSize).Returns(new FieldSize(width, height));
-            return mock.Object;
+            var mock = new MapMock(new FieldSize(width, height));
+            return mock;
         }
 
-        private static WorldScreen CreateWorldScreen(IGraphicComponent player, IMap map)
+        private static WorldScreen CreateWorldScreen(IGraphicComponent player, IMap map, ScreenConstants screenConstants = null)
         {
-            return new WorldScreen(player, map, new ScreenConstants());
+            if(screenConstants == null)
+                screenConstants = new ScreenConstants();
+            return new WorldScreen(player, map, screenConstants);
         }
     }
 }

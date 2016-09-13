@@ -1,60 +1,12 @@
-﻿using GameEngine;
-using GameEngine.Graphics;
+﻿using GameEngine.Graphics;
 using GameEngine.Utils;
 using GameEngineTest.TestUtils;
 using Moq;
 using NUnit.Framework;
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace GameEngineTest.Graphics
 {
-    public class TestableMultilineTextBox : MultlineTextBox
-    {
-
-        public TestableMultilineTextBox(int lines, ITextSplitter splitter) : base(null, splitter, lines) 
-        { 
-        }
-
-        public ICollection ComponentStrings()
-        {
-            return (from c in CreatedComponents select c.Text).ToList();
-        }
-
-        public List<TextGraphicComponentMock> CreatedComponents = new List<TextGraphicComponentMock>();
-
-        protected override ITextGraphicComponent CreateTextComponent(ISpriteFont font)
-        {
-            var component = new TextGraphicComponentMock();
-            CreatedComponents.Add(component);
-
-            return component;
-        }
-    }
-
-    public class SplitterStub : ITextSplitter
-    {
-        public List<string> Strings = new List<string>();
-        public Action SplitTextCallback = null;
-        public string GetString(int index)
-        {
-            return index < Strings.Count ? Strings[index] : "";
-        }
-
-        public int Count
-        {
-            get { return Strings.Count; }
-        }
-
-        public void SplitText(int charsPerLine, string text)
-        {
-            if (SplitTextCallback != null)
-                SplitTextCallback();
-        }
-    }
-
     [TestFixture]
     public class MultilineTextboxTest : IGraphicComponentTest
     {

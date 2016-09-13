@@ -8,14 +8,6 @@ using System;
 
 namespace BattleLib
 {
-    public enum MoveEfficiency
-    {
-        NoEffect,
-        NotEffective,
-        Normal,
-        VeryEffective
-    }
-
     [GameType]
     public class CommandExecuter
     {

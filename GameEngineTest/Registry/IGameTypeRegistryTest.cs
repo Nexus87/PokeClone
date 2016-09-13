@@ -1,5 +1,4 @@
 ﻿using GameEngine.Registry;
-using Microsoft.Xna.Framework;
 using NUnit.Framework;
 using System;
 using System.Linq;
@@ -7,21 +6,6 @@ using System.Reflection;
 
 namespace GameEngineTest.Registry
 {
-    public class GameComponentClass : GameEngine.IGameComponent
-    {
-        public static int instances;
-        public GameComponentClass() { instances++; }
-        public void Initialize() { throw new NotImplementedException(); }
-        public void Update(GameTime time) { throw new NotImplementedException(); }
-    }
-
-    public interface IGameService { }
-    [GameService(typeof(IGameService))]
-    public class GameService : IGameService { 
-        public static int instances = 0; 
-        public GameService() { instances++; } 
-    }
-
     public abstract class IGameTypeRegistryTest
     {
         protected abstract IGameTypeRegistry CreateRegistry();

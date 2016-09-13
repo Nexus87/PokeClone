@@ -1,7 +1,5 @@
-﻿using GameEngine;
-using GameEngine.Registry;
+﻿using GameEngine.Registry;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -10,33 +8,6 @@ using System.Threading.Tasks;
 
 namespace GameEngineTest.Registry
 {
-    public class TestModule : IModule
-    {
-        public static bool WasCreated;
-        public static bool WasCalled ;
-        public string ModuleName { get { return "TestModule"; } }
-        public TestModule()
-        {
-            WasCreated = true;
-        }
-
-        public void RegisterTypes(IGameTypeRegistry registry)
-        {
-            WasCalled = true;
-        }
-
-
-        public void Start(IGameComponentManager componentManager, IGameTypeRegistry registry)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Stop(IGameComponentManager componentManager)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
     public abstract class IModuleRegistryTest
     {
         [SetUp]

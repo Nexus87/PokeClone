@@ -11,12 +11,24 @@ namespace GameEngine
     [GameService(typeof(ScreenConstants))]
     public class ScreenConstants
     {
-        private const float screenHeight = 1080;
-        private const float screenWidth = 1920;
-        private static readonly Color backgroundColor = new Color(248, 248, 248, 0);
+        public ScreenConstants() :
+            this(DefaultScreenHeight, DefaultScreenWidth, DefaultBackgroundColor)
+        {
+        }
 
-        public float ScreenHeight { get { return screenHeight; } }
-        public float ScreenWidth { get { return screenWidth; } }
-        public Color BackgroundColor { get { return backgroundColor; } }
+        public ScreenConstants(float screenHeight, float screenWidth, Color backgroundColor)
+        {
+            ScreenHeight = screenHeight;
+            ScreenWidth = screenWidth;
+            BackgroundColor = backgroundColor;
+        }
+
+        private const float DefaultScreenHeight = 1080;
+        private const float DefaultScreenWidth = 1920;
+        private static readonly Color DefaultBackgroundColor = new Color(248, 248, 248, 0);
+
+        public float ScreenHeight { get; private set; }
+        public float ScreenWidth { get; private set; }
+        public Color BackgroundColor { get; private set; }
     }
 }

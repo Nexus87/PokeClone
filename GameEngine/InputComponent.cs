@@ -5,17 +5,6 @@ using System.Collections.Generic;
 
 namespace GameEngine
 {
-
-    public enum CommandKeys
-    {
-        Up,
-        Down,
-        Left,
-        Right,
-        Select,
-        Back
-    }
-
     class InputComponent : IGameComponent
     {
         IReadOnlyDictionary<Keys, CommandKeys> keyMap;

@@ -6,16 +6,6 @@ using System.Diagnostics;
 
 namespace GameEngine.Graphics
 {
-    public class SelectionEventArgs<T> : EventArgs
-    {
-        public SelectionEventArgs(T selectedData)
-        {
-            SelectedData = selectedData;
-        }
-
-        public T SelectedData { get; private set; }
-    }
-
     [GameType]
     public class TableView<T> : AbstractGraphicComponent, ITableView<T>
     {

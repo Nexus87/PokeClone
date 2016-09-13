@@ -1,6 +1,4 @@
-﻿using Base;
-using Base.Data;
-using Base.Rules;
+﻿using Base.Data;
 using BattleLib;
 using BattleLib.Components.BattleState;
 using BattleLib.Components.BattleState.Commands;
@@ -15,21 +13,6 @@ using System.Threading.Tasks;
 
 namespace BattleLibTest
 {
-    public class MoveEffectCalculatorStub : IMoveEffectCalculator
-    {
-
-        public void Init(IBattlePokemon source, Move move, IBattlePokemon target)
-        {
-        }
-
-        public bool IsHit { get; set; }
-        public bool IsCritical { get; set; }
-        public float TypeModifier { get; set; }
-        public int Damage { get; set; }
-
-        public StatusCondition StatusCondition { get; set; }
-    }
-
     [TestFixture]
     public class CommandExecuterTest
     {

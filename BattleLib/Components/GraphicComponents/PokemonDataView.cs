@@ -2,7 +2,6 @@
 using BattleLib.Components.GraphicComponents;
 using GameEngine;
 using GameEngine.Graphics;
-using GameEngine.Registry;
 using Microsoft.Xna.Framework;
 using System;
 using System.Linq;
@@ -10,21 +9,7 @@ using System.Linq;
 namespace BattleLib.GraphicComponents
 {
     // TODO come up with a better solution for this
-    [GameType]
-    public class PlayerPokemonDataView : PokemonDataView
-    {
-        public PlayerPokemonDataView(HPLine line, TextBox nameBox, TextBox levelBox, TextBox hpBox, HPText hpTextBox) :
-            base(line, nameBox, levelBox, hpBox, hpTextBox)
-        { }
-    }
 
-    [GameType]
-    public class AIPokemonDataView : PokemonDataView
-    {
-        public AIPokemonDataView(HPLine line, TextBox nameBox, TextBox levelBox, TextBox hpBox) :
-            base(line, nameBox, levelBox, hpBox)
-        { }
-    }
     public class PokemonDataView : ForwardingGraphicComponent<Container>
     {
         public event EventHandler OnHPUpdated;

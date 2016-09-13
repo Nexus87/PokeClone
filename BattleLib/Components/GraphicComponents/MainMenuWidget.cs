@@ -9,14 +9,6 @@ using System.Threading.Tasks;
 
 namespace BattleLib.Components.GraphicComponents
 {
-    public enum MainMenuEntries
-    {
-        Attack,
-        PKMN,
-        Item,
-        Run
-    }
-
     [GameType]
     public class MainMenuWidget : AbstractMenuWidget<MainMenuEntries>
     {

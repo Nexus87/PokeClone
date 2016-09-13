@@ -6,32 +6,6 @@ using System.Collections.Generic;
 
 namespace BattleLib.Components.BattleState
 {
-    public enum ModifyableState
-    {
-        Atk,
-        Def,
-        SpAtk,
-        SpDef,
-        Speed,
-        Accuracy,
-        Evasion
-    }
-
-    public class PokemonChangedEventArgs : EventArgs
-    {
-        public PokemonChangedEventArgs(Pokemon pokemon)
-        {
-            this.Pokemon = pokemon;
-        }
-
-        public Pokemon Pokemon { get; private set; }
-
-        public static implicit operator PokemonChangedEventArgs(Pokemon pokemon)
-        {
-            return new PokemonChangedEventArgs(pokemon);
-        }
-    }
-
     public class PokemonWrapper : IBattlePokemon
     {
         readonly Dictionary<ModifyableState, float> modifier = new Dictionary<ModifyableState, float>();

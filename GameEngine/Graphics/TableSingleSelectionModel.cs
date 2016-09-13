@@ -5,8 +5,6 @@ using GameEngine.Registry;
 
 namespace GameEngine.Graphics
 {
-    public delegate bool IndexValidator(int row, int column);
-
     [GameType]
     public class TableSingleSelectionModel : ITableSelectionModel
     {

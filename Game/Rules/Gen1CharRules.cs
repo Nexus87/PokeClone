@@ -8,8 +8,6 @@ using System.Linq;
 
 namespace PokemonGame.Rules
 {
-    public delegate int RndNumGen(int min, int max);
-
     public class Gen1CharRules : IPokemonRules
     {
         private readonly RndNumGen _generator;

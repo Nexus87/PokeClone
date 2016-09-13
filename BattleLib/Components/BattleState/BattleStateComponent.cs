@@ -6,13 +6,6 @@ using System;
 
 namespace BattleLib.Components.BattleState
 {
-    public enum BattleStates
-    {
-        WaitForPokemon,
-        WaitForAction,
-        Execute
-    }
-
     [GameService(typeof(IBattleStateService))]
     public class BattleStateComponent : GameEngine.IGameComponent, IBattleStateService
     {
@@ -117,15 +110,5 @@ namespace BattleLib.Components.BattleState
 
             throw new InvalidOperationException("Current state is unkown");
         }
-    }
-
-    public class StateChangedEventArgs : EventArgs
-    {
-        public StateChangedEventArgs(BattleStates newState)
-        {
-            NewState = newState;
-        }
-
-        public BattleStates NewState { get; private set; }
     }
 }

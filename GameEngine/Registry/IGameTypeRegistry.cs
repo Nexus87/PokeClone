@@ -8,12 +8,6 @@ using System.Threading.Tasks;
 
 namespace GameEngine.Registry
 {
-    public class TypeNotRegisteredException : Exception {
-        public TypeNotRegisteredException(string message, Exception innerException) :
-            base(message, innerException)
-        { }
-    }
-
     public interface IGameTypeRegistry
     {
         void RegisterType<T>(Func<IGameTypeRegistry, T> creatorFunc);

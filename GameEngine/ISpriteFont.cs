@@ -5,8 +5,6 @@ using System.Text;
 
 namespace GameEngine
 {
-    public delegate ISpriteFont SpriteFontCreator();
-
     /// <summary>
     /// This interface represents a SpriteFont
     /// </summary>
