@@ -3,8 +3,6 @@ using GameEngine.Graphics;
 using GameEngineTest.TestUtils;
 using MainModule;
 using MainModuleTest.Utils;
-using Microsoft.Xna.Framework;
-using Moq;
 using NUnit.Framework;
 
 namespace MainModuleTest

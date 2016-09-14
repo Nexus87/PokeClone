@@ -2,18 +2,18 @@
 {
     public class FieldSize
     {
-        private int height;
-        private int width;
+        public int Height { get; private set; }
+        public int Width { get; private set; }
 
         public FieldSize(int width, int height)
         {
-            this.width = width;
-            this.height = height;
+            this.Width = width;
+            this.Height = height;
         }
 
         protected bool Equals(FieldSize other)
         {
-            return height == other.height && width == other.width;
+            return Height == other.Height && Width == other.Width;
         }
 
         public override bool Equals(object obj)
@@ -28,7 +28,7 @@
         {
             unchecked
             {
-                return (height * 397) ^ width;
+                return (Height * 397) ^ Width;
             }
         }
     }

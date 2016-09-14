@@ -1,5 +1,4 @@
-﻿using GameEngine.Registry;
-using Microsoft.Xna.Framework.Input;
+﻿using Microsoft.Xna.Framework.Input;
 
 namespace GameEngine
 {

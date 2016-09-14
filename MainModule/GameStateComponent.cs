@@ -1,5 +1,4 @@
-﻿using MainModule;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using IGameComponent = GameEngine.IGameComponent;
 
 namespace MainModule
