@@ -11,7 +11,7 @@ mono:
 script:
 - xbuild /p:Configuration=Release /p:DefineConstants=TRAVIS PokeClone.Linux.sln
 - mono ./testrunner/NUnit.ConsoleRunner.3.4.1/tools/nunit3-console.exe ./BattleLibTest/bin/Linux/AnyCPU/Release/BattleLibTest.dll
-  ./GameEngineTest/bin/Linux/AnyCPU/Release/GameEngineTest.dll
+  ./GameEngineTest/bin/Linux/AnyCPU/Release/GameEngineTest.dll ./MainModuleTest/bin/Linux/AnyCPU/Release/MainModuleTest.dll
 - 7z a PokeClone-Linux.zip ./Game/bin/Linux/AnyCPU/Release/*.dll ./Game/bin/Linux/AnyCPU/Release/*.exe ./Game/bin/Linux/AnyCPU/Release/Content
 addons:
   apt:
