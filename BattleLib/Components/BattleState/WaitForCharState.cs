@@ -10,7 +10,7 @@ namespace BattleLib.Components.BattleState
     [GameType]
     public class WaitForCharState : AbstractState
     {
-        private IEventCreator eventCreator;
+        private readonly IEventCreator eventCreator;
 
         private int clientsLeft;
         private Dictionary<ClientIdentifier, Pokemon> clients = new Dictionary<ClientIdentifier, Pokemon>();

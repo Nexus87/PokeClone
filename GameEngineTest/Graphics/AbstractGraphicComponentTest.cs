@@ -104,7 +104,8 @@ namespace GameEngineTest.Graphics
         public void Draw_SetSameXPostion_NoUpdateCall()
         {
             var componentMock = CreateComponentWithoutInvalidation();
-            componentMock.Object.XPosition = componentMock.Object.XPosition;
+            var sameXPosition = componentMock.Object.XPosition;
+            componentMock.Object.XPosition = sameXPosition;
 
             componentMock.Object.Draw();
 
@@ -115,7 +116,8 @@ namespace GameEngineTest.Graphics
         public void Draw_SetSameYPostion_NoUpdateCall()
         {
             var componentMock = CreateComponentWithoutInvalidation();
-            componentMock.Object.YPosition = componentMock.Object.YPosition;
+            var sameYPosition = componentMock.Object.YPosition;
+            componentMock.Object.YPosition = sameYPosition;
 
             componentMock.Object.Draw();
 
@@ -126,7 +128,8 @@ namespace GameEngineTest.Graphics
         public void Draw_SetSameWidth_NoUpdateCall()
         {
             var componentMock = CreateComponentWithoutInvalidation();
-            componentMock.Object.Width = componentMock.Object.Width;
+            var sameWidth = componentMock.Object.Width;
+            componentMock.Object.Width = sameWidth;
 
             componentMock.Object.Draw();
 
@@ -137,7 +140,8 @@ namespace GameEngineTest.Graphics
         public void Draw_SetSameHeight_NoUpdateCall()
         {
             var componentMock = CreateComponentWithoutInvalidation();
-            componentMock.Object.Height = componentMock.Object.Height;
+            var sameHeight = componentMock.Object.Height;
+            componentMock.Object.Height = sameHeight;
 
             componentMock.Object.Draw();
 

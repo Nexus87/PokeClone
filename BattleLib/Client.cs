@@ -7,8 +7,8 @@ namespace BattleLib
 {
     public class Client
     {
-        readonly List<Pokemon> pokemons = new List<Pokemon>();
-        readonly List<Item> items = new List<Item>();
+        private readonly List<Pokemon> pokemons = new List<Pokemon>();
+        private readonly List<Item> items = new List<Item>();
 
         public Client(ClientIdentifier id, List<Pokemon> pokemons)
         {
