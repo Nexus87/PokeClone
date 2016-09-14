@@ -1,19 +1,16 @@
 ﻿using GameEngine.Graphics;
 using Microsoft.Xna.Framework;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace BattleLib.Animations
 {
     public class DamagedAnimation  : IAnimation
     {
-        public event EventHandler AnimationFinished;
-        private long blinkTime;
+        public event EventHandler AnimationFinished = delegate { };
+        private readonly long blinkTime;
         private bool firstRun = true;
         private GameTime lastTime;
-        private int numberOfBlinks;
+        private readonly int numberOfBlinks;
         private int currentNumberOfBlinks;
 
         public DamagedAnimation(long blinkTime, int numberOfBlinks)
@@ -23,7 +20,7 @@ namespace BattleLib.Animations
         }
         public void Update(GameTime time, IGraphicComponent component)
         {
-            if (!IsTimeIntervalOfer(time, lastTime))
+            if (!IsTimeIntervalOver(time, lastTime))
                 return;
 
             lastTime = time;
@@ -39,7 +36,7 @@ namespace BattleLib.Animations
             return currentNumberOfBlinks == 2 * numberOfBlinks;
         }
 
-        private bool IsTimeIntervalOfer(GameTime time, GameTime lastTime)
+        private bool IsTimeIntervalOver(GameTime time, GameTime previousTime)
         {
             if (firstRun)
             {
@@ -47,7 +44,7 @@ namespace BattleLib.Animations
                 return true;
             }
 
-            var diff = time.TotalGameTime - lastTime.TotalGameTime;
+            var diff = time.TotalGameTime - previousTime.TotalGameTime;
             return diff.Milliseconds >= blinkTime;
         }
     }
