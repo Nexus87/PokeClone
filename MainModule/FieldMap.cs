@@ -25,7 +25,7 @@ namespace MainModule
 
             container.SetCoordinates(0, 0, TotalWidth, TotalHeight);
             fieldTextures.
-                EnumerateAlongColumns().
+                EnumerateAlongRows().
                 ToList().
                 ForEach(c => container.AddComponent(c));
 

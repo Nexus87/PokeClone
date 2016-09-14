@@ -6,12 +6,12 @@ using System;
 
 namespace GameEngineTest.TestUtils
 {
-    public sealed class TableViewMock : ITableView<TestType>
+    public class TableViewMock : ITableView<TestType>
     {
-        public event EventHandler<TableResizeEventArgs> TableResized;
+        public virtual event EventHandler<TableResizeEventArgs> TableResized;
         public event EventHandler<GraphicComponentSizeChangedEventArgs> PreferredSizeChanged;
 
-        public event EventHandler<SelectionChangedEventArgs> SelectionChanged { add { } remove { } }
+        public virtual event EventHandler<SelectionChangedEventArgs> SelectionChanged { add { } remove { } }
 
         public bool SelectionReturnValue { get; set; }
 
@@ -68,7 +68,7 @@ namespace GameEngineTest.TestUtils
             {
                 if (value == null)
                 {
-                    startIndex = null;
+                    startIndex = value;
                     return;
                 }
 
@@ -88,7 +88,7 @@ namespace GameEngineTest.TestUtils
             {
                 if (value == null)
                 {
-                    endIndex = null;
+                    endIndex = value;
                     return;
                 }
 
@@ -100,12 +100,12 @@ namespace GameEngineTest.TestUtils
             }
         }
 
-        public bool SetCellSelection(int row, int column, bool isSelected)
+        public virtual bool SetCellSelection(int row, int column, bool isSelected)
         {
             return SelectionReturnValue;
         }
 
-        public ITableModel<TestType> Model { get; set; }
+        public virtual ITableModel<TestType> Model { get; set; }
 
         public IEngineInterface Game
         {
@@ -129,7 +129,7 @@ namespace GameEngineTest.TestUtils
         {
         }
 
-        public void Setup()
+        public virtual void Setup()
         {
         }
 

@@ -11,6 +11,14 @@ namespace GameEngine.Graphics
     /// If not enough components are given for one row, the number of
     /// columns are reduced to the number of components in the container.
     /// </summary>
+    /// <remarks>
+    /// The components are set from left to right. This means:
+    /// | c1 | c2 | c3 | c4 |
+    /// becomes:
+    /// | c1 | c2 |
+    ///  ---- ----
+    /// | c3 | c4 |
+    /// </remarks>
     public class GridLayout : AbstractLayout
     {
         public int Rows { get; set; }

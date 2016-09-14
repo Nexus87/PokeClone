@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using GameEngine;
 using GameEngine.Utils;
 using GameEngineTest.TestUtils;
@@ -37,14 +38,15 @@ namespace MainModuleTest
             float expectedX, float expectedY
         )
         {
+            var screenConstants = new ScreenConstants(screenHeight, screenWidth, Color.Black);
             var componentTable = CreateTable(fieldWidth, fieldHeight);
-            var map = CreateMap(componentTable, textureSize);
+            var map = CreateMap(componentTable, textureSize, screenConstants);
 
             map.CenterField(fieldX, fieldY);
             map.Draw();
 
-            Assert.AreEqual(expectedX, componentTable[fieldX, fieldY].XPosition);
-            Assert.AreEqual(expectedY, componentTable[fieldX, fieldY].YPosition);
+            Assert.AreEqual(expectedX, componentTable[fieldY, fieldX].XPosition);
+            Assert.AreEqual(expectedY, componentTable[fieldY, fieldX].YPosition);
         }
 
         public static Table<Tuple<float, float>> TableFactory1()
@@ -55,7 +57,7 @@ namespace MainModuleTest
             {
                 for (var j = 0; j < 10; j++)
                 {
-                    table[i, j] = new Tuple<float, float>(45.0f + 10*i, 45.0f + 10*j);
+                    table[i, j] = new Tuple<float, float>(45.0f + 10*j, 45.0f + 10*i);
                 }
             }
 
@@ -70,7 +72,7 @@ namespace MainModuleTest
             {
                 for (var j = 0; j < 10; j++)
                 {
-                    table[i, j] = new Tuple<float, float>(45.0f + 10 * i, 20.0f + 10 * j);
+                    table[i, j] = new Tuple<float, float>(45.0f + 10 * j, 20.0f + 10 * i);
                 }
             }
 
@@ -84,7 +86,7 @@ namespace MainModuleTest
             new TestCaseData(100,  50, 10, 20, 10.0f, TableFactory2())
         };
 
-        [TestCaseSource("CenterFieldData")]
+        [Test, TestCaseSource("CenterFieldData")]
         public void CenterField_TopLeftField_AllFieldsCoordinatesAreAsExpected(
             float screenWidth, float screenHeight,
             int fieldWidth, int fieldHeight,
@@ -99,9 +101,10 @@ namespace MainModuleTest
             map.CenterField(0, 0);
             map.Draw();
 
-            var isAsExpected = componentTable
-                .Select(c => new Tuple<float, float>(c.XPosition, c.YPosition))
-                .SequenceEqual(expectedTable);
+            var coordinates = componentTable.EnumerateAlongRows()
+                .Select(c => new Tuple<float, float>(c.XPosition, c.YPosition));
+            var isAsExpected = coordinates
+                .SequenceEqual(expectedTable.EnumerateAlongRows());
 
             Assert.True(isAsExpected);
         }
@@ -111,14 +114,14 @@ namespace MainModuleTest
             var table = new Table<GraphicComponentMock>();
             for(var i = 0; i < fieldWidth; i++)
                 for(var j = 0; j < fieldHeight; j++)
-                    table[i, j] = new GraphicComponentMock();
+                    table[j, i] = new GraphicComponentMock();
 
             return table;
         }
 
         private static FieldMap CreateMap(int fieldWidth, int fieldHeight, float textureSize, ScreenConstants screenConstants = null)
         {
-            var table = CreateTable(fieldHeight, fieldWidth);
+            var table = CreateTable(fieldWidth, fieldHeight);
             return CreateMap(table, textureSize, screenConstants);
         }
 
