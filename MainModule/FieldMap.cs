@@ -14,6 +14,7 @@ namespace MainModule
 
         private readonly float screenCenterX;
         private readonly float screenCenterY;
+
         public FieldMap(ITable<IGraphicComponent> fieldTextures, float textureSize, ScreenConstants screenConstants)
         {
             FieldSize = new FieldSize(fieldTextures.Columns, fieldTextures.Rows);
@@ -56,7 +57,7 @@ namespace MainModule
 
         public void CenterField(int fieldX, int fieldY)
         {
-            if(fieldX >= FieldSize.Width || fieldX < 0)
+            if (fieldX >= FieldSize.Width || fieldX < 0)
                 throw new ArgumentOutOfRangeException("fieldX must be between 0 and " + FieldSize.Width + " " +
                                                       "but was " + fieldX);
             if (fieldY >= FieldSize.Height || fieldY < 0)
@@ -88,6 +89,7 @@ namespace MainModule
 
             DoCenterField(fieldX, fieldY);
         }
+
         public void MoveMap(Direction moveDirection)
         {
             switch (moveDirection)

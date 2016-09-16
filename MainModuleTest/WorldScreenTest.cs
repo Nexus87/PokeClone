@@ -3,6 +3,7 @@ using GameEngine.Graphics;
 using GameEngineTest.TestUtils;
 using MainModule;
 using MainModuleTest.Utils;
+using Moq;
 using NUnit.Framework;
 
 namespace MainModuleTest
@@ -24,23 +25,26 @@ namespace MainModuleTest
             Assert.True(mapMock.WasDrawn);
         }
 
+        [TestCase(Direction.Up, Direction.Down)]
+        [TestCase(Direction.Left, Direction.Right)]
+        [TestCase(Direction.Right, Direction.Left)]
+        [TestCase(Direction.Down, Direction.Up)]
+        public void PlayerMove_GivenDirection_MapIsMovedInExpectedDirection(Direction moveDirection, Direction expectedMapMoveDirection)
+        {
+            var player = new GraphicComponentMock();
+            var mapMock = new Mock<IMap>();
+            var screen = CreateWorldScreen(player, mapMock.Object);
+
+            screen.Setup();
+            screen.PlayerMove(moveDirection);
+
+            mapMock.Verify(m => m.MoveMap(expectedMapMoveDirection), Times.Once());
+        }
         private static MapMock CreateMap()
         {
             const int defaultWidht = 10;
             const int defaultHeight = 10;
             return CreateMap(defaultWidht, defaultHeight);
-        }
-
-        [TestCase(20, 30, 20, 30)]
-        public void GetFieldSize_NormalSetup_SizeAsExpected(int width, int height, int expectedWidth, int expectedHeight)
-        {
-            var expected = new FieldSize(expectedWidth, expectedHeight);
-            var player = new GraphicComponentMock();
-            var map = CreateMap(width, height);
-            var screen = CreateWorldScreen(player, map);
-
-            var realSize = screen.FieldSize;
-            Assert.AreEqual(expected, realSize);
         }
 
         private static MapMock CreateMap(int width, int height)

@@ -1,4 +1,5 @@
-﻿using GameEngine;
+﻿using System;
+using GameEngine;
 using GameEngine.Graphics;
 using Microsoft.Xna.Framework;
 
@@ -23,8 +24,6 @@ namespace MainModule
             this.constants = constants;
         }
 
-        public FieldSize FieldSize { get { return map.FieldSize; } }
-
         protected override void Update()
         {
             base.Update();
@@ -46,11 +45,29 @@ namespace MainModule
         {
             player.Setup();
             map.Setup();
+            map.CenterField(0, 0);
         }
 
-        public void FocusMapAt(int x, int y)
+        public void PlayerMove(Direction direction)
         {
-            throw new System.NotImplementedException();
+            map.MoveMap(ReverseDirection(direction));
+        }
+
+        private static Direction ReverseDirection(Direction direction)
+        {
+            switch (direction)
+            {
+                case Direction.Up:
+                    return Direction.Down;
+                case Direction.Down:
+                    return Direction.Up;
+                case Direction.Left:
+                    return Direction.Right;
+                case Direction.Right:
+                    return Direction.Left;
+                default:
+                    throw new ArgumentOutOfRangeException("direction", direction, null);
+            }
         }
     }
 }

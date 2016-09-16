@@ -13,6 +13,10 @@ namespace MainModuleTest.Utils
         public FieldSize FieldSize { get; set; }
         public void CenterField(int fieldX, int fieldY)
         {
+        }
+
+        public void MoveMap(Direction moveDirection)
+        {
             throw new System.NotImplementedException();
         }
     }

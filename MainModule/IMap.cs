@@ -6,5 +6,6 @@ namespace MainModule
     {
         FieldSize FieldSize { get; }
         void CenterField(int fieldX, int fieldY);
+        void MoveMap(Direction moveDirection);
     }
 }
