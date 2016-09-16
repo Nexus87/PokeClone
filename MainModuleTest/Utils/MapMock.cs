@@ -11,5 +11,9 @@ namespace MainModuleTest.Utils
         }
 
         public FieldSize FieldSize { get; set; }
+        public void CenterField(int fieldX, int fieldY)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

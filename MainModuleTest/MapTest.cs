@@ -6,8 +6,9 @@ using GameEngine;
 using GameEngine.Utils;
 using GameEngineTest.TestUtils;
 using MainModule;
-using Microsoft.Xna.Framework;
 using NUnit.Framework;
+using SharpDX;
+using Color = Microsoft.Xna.Framework.Color;
 
 namespace MainModuleTest
 {
@@ -109,6 +110,41 @@ namespace MainModuleTest
             Assert.True(isAsExpected);
         }
 
+        [TestCase(10, 32, 9, 8)]
+        public void SelectedField_AfterSelection_IsAsExpected(int fieldWidth, int fieldHeight, int fieldX, int fieldY)
+        {
+            var componentTable = CreateTable(fieldWidth, fieldHeight);
+            var map = CreateMap(componentTable);
+
+            map.CenterField(fieldX, fieldY);
+
+            Assert.AreEqual(fieldX, map.CenteredFieldX);
+            Assert.AreEqual(fieldY, map.CenteredFieldY);
+        }
+
+        [TestCase(10, 21, 2, 2, 2, 1, Direction.Up)]
+        [TestCase(10, 21, 2, 2, 1, 2, Direction.Left)]
+        [TestCase(10, 21, 2, 2, 3, 2, Direction.Right)]
+        [TestCase(10, 21, 2, 2, 2, 3, Direction.Down)]
+        [TestCase(1, 1, 0, 0, 0, 0, Direction.Down)]
+        [TestCase(1, 1, 0, 0, 0, 0, Direction.Left)]
+        [TestCase(1, 1, 0, 0, 0, 0, Direction.Right)]
+        [TestCase(1, 1, 0, 0, 0, 0, Direction.Up)]
+        public void MoveMap_StartingAtAGivenPoint_MapIsMoved(
+            int fieldWidth, int fieldHeight,
+            int startingFieldX, int startingFieldY,
+            int expectedFieldX, int expedtedFieldY,
+            Direction moveDirection)
+        {
+            var componentTable = CreateTable(fieldWidth, fieldHeight);
+            var map = CreateMap(componentTable);
+
+            map.CenterField(startingFieldX, startingFieldY);
+            map.MoveMap(moveDirection);
+
+            Assert.AreEqual(expectedFieldX, map.CenteredFieldX);
+            Assert.AreEqual(expedtedFieldY, map.CenteredFieldY);
+        }
         private static Table<GraphicComponentMock> CreateTable(int fieldWidth, int fieldHeight)
         {
             var table = new Table<GraphicComponentMock>();
@@ -119,13 +155,13 @@ namespace MainModuleTest
             return table;
         }
 
-        private static FieldMap CreateMap(int fieldWidth, int fieldHeight, float textureSize, ScreenConstants screenConstants = null)
+        private static FieldMap CreateMap(int fieldWidth, int fieldHeight, float textureSize = 32.0f, ScreenConstants screenConstants = null)
         {
             var table = CreateTable(fieldWidth, fieldHeight);
             return CreateMap(table, textureSize, screenConstants);
         }
 
-        private static FieldMap CreateMap(Table<GraphicComponentMock> componentTable, float textureSize, ScreenConstants screenConstants = null)
+        private static FieldMap CreateMap(Table<GraphicComponentMock> componentTable, float textureSize = 32.0f, ScreenConstants screenConstants = null)
         {
             if(screenConstants == null)
             {
