@@ -1,7 +1,5 @@
 ﻿using GameEngine.Graphics;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace GameEngine.Utils
 {

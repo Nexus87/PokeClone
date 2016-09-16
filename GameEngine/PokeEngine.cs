@@ -3,7 +3,6 @@ using GameEngine.Graphics.GUI;
 using GameEngine.Registry;
 using GameEngine.Utils;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Linq;
 
