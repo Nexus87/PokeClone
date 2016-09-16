@@ -10,7 +10,6 @@ namespace MainModule
     public class FieldMap : AbstractGraphicComponent, IMap
     {
         private readonly float textureSize;
-        private readonly ScreenConstants screenConstants;
         private readonly Container container = new Container();
 
         private readonly float screenCenterX;
@@ -19,7 +18,6 @@ namespace MainModule
         {
             FieldSize = new FieldSize(fieldTextures.Columns, fieldTextures.Rows);
             this.textureSize = textureSize;
-            this.screenConstants = screenConstants;
 
             TotalHeight = fieldTextures.Rows * textureSize;
             TotalWidth = fieldTextures.Columns * textureSize;
@@ -64,7 +62,7 @@ namespace MainModule
             if (fieldY >= FieldSize.Height || fieldY < 0)
                 throw new ArgumentOutOfRangeException("fieldY must be between 0 and " + FieldSize.Height +
                                                       " but was " + fieldY);
-            DoCenterField(fieldX, fieldX);
+            DoCenterField(fieldX, fieldY);
         }
 
         private void DoCenterField(int fieldX, int fieldY)
