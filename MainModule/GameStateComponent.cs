@@ -3,7 +3,7 @@ using IGameComponent = GameEngine.IGameComponent;
 
 namespace MainModule
 {
-    public class GameStateComponent : IGameComponent
+    public class GameStateComponent : IGameComponent, IGameStateComponent
     {
         public void Move(Direction direction){}
 

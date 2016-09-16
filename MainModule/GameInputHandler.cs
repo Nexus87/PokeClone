@@ -5,32 +5,32 @@ using IGameComponent = GameEngine.IGameComponent;
 
 namespace MainModule
 {
-    public class MoveComponent : IInputHandler, IGameComponent
+    public class GameInputHandler : IInputHandler
     {
-        private bool hasDirection = false;
-        private CommandKeys keyDirection;
-        private readonly IEngineInterface engineInterface;
+        private readonly IGameStateComponent gameStateComponent;
 
-        public MoveComponent(IEngineInterface engineInterface)
+        public GameInputHandler(IGameStateComponent gameStateComponent)
         {
-            this.engineInterface = engineInterface;
+            this.gameStateComponent = gameStateComponent;
         }
 
         public bool HandleInput(CommandKeys key)
         {
-            if (hasDirection)
-                return true;
             switch (key)
             {
                 case CommandKeys.Down:
+                    gameStateComponent.Move(Direction.Down);
+                    break;
                 case CommandKeys.Left:
+                    gameStateComponent.Move(Direction.Left);
+                    break;
                 case CommandKeys.Right:
+                    gameStateComponent.Move(Direction.Right);
+                    break;
                 case CommandKeys.Up:
-                    hasDirection = true;
-                    this.keyDirection = key;
+                    gameStateComponent.Move(Direction.Up);
                     break;
                 case CommandKeys.Select:
-                    engineInterface.ShowGUI();
                     break;
                 case CommandKeys.Back:
                     break;
@@ -41,14 +41,5 @@ namespace MainModule
             return true;
         }
 
-        public void Initialize()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void Update(GameTime time)
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }

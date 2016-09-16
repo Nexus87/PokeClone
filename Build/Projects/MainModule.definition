@@ -19,11 +19,12 @@
     <Compile Include="Direction.cs" />
     <Compile Include="FieldMap.cs" />
     <Compile Include="FieldSize.cs" />
+    <Compile Include="GameInputHandler.cs" />
     <Compile Include="GameStateComponent.cs" />
+    <Compile Include="IGameStateComponent.cs" />
     <Compile Include="IMap.cs" />
     <Compile Include="IWorldEvent.cs" />
     <Compile Include="MainModule.cs" />
-    <Compile Include="MoveComponent.cs" />
     <Compile Include="PlayerSprite.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WorldObject.cs" />
