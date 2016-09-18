@@ -2,7 +2,6 @@
 using GameEngine.Graphics;
 using GameEngine.Graphics.GUI;
 using Microsoft.Xna.Framework;
-using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;

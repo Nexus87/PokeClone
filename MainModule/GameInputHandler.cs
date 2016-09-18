@@ -1,7 +1,5 @@
 ﻿using System;
 using GameEngine;
-using Microsoft.Xna.Framework;
-using IGameComponent = GameEngine.IGameComponent;
 
 namespace MainModule
 {

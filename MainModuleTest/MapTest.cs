@@ -7,7 +7,6 @@ using GameEngine.Utils;
 using GameEngineTest.TestUtils;
 using MainModule;
 using NUnit.Framework;
-using SharpDX;
 using Color = Microsoft.Xna.Framework.Color;
 
 namespace MainModuleTest

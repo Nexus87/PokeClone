@@ -1,7 +1,5 @@
-﻿using GameEngine;
-using GameEngine.Graphics;
+﻿using GameEngine.Graphics;
 using GameEngineTest.TestUtils;
-using Moq;
 using NUnit.Framework;
 using System.Collections.Generic;
 

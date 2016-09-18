@@ -1,6 +1,5 @@
 ﻿using GameEngine;
 using GameEngineTest.TestUtils;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Moq;
 using NUnit.Framework;
