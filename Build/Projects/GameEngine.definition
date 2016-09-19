@@ -69,6 +69,7 @@
     <Compile Include="Graphics\SelectionChangedEventArgs.cs" />
     <Compile Include="Graphics\SelectionEventArgs.cs" />
     <Compile Include="Graphics\SingleComponentLayout.cs" />
+    <Compile Include="Graphics\SpriteSheetTexture.cs" />
     <Compile Include="Graphics\TableGrid.cs" />
     <Compile Include="Graphics\TableIndex.cs" />
     <Compile Include="Graphics\TableResizeEventArgs.cs" />
@@ -105,6 +106,7 @@
     <Compile Include="Screen.cs" />
     <Compile Include="ScreenConstants.cs" />
     <Compile Include="SpriteFontCreator.cs" />
+    <Compile Include="SpriteSheetFactory.cs" />
     <Compile Include="TextureProvider.cs" />
     <Compile Include="Utils\DefaultTextSplitter.cs" />
     <Compile Include="Utils\Extensions.cs" />

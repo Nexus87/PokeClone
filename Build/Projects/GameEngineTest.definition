@@ -45,6 +45,7 @@
     <Compile Include="Graphics\SelectableContainerTest.cs" />
     <Compile Include="Graphics\SingleComponentLayoutTest.cs" />
     <Compile Include="Graphics\SplitterStub.cs" />
+    <Compile Include="Graphics\SpriteSheetTextureTest.cs" />
     <Compile Include="Graphics\TableGridTest.cs" />
     <Compile Include="Graphics\TableSingleSelectionModelTest.cs" />
     <Compile Include="Graphics\TableViewTest.cs" />
