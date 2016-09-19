@@ -1,13 +1,7 @@
-﻿using Base.Rules;
-using BattleLib;
-using BattleLib.Components.BattleState;
-using Game.Rules;
+﻿using BattleLib;
 using GameEngine;
-using GameEngine.Graphics;
-using GameEngine.Registry;
-using PokemonGame.Rules;
 using System;
-using System.Reflection;
+using System.Linq;
 
 namespace PokemonGame
 {
@@ -20,14 +14,19 @@ namespace PokemonGame
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        private static void Main(string[] args)
         {
-            var config = new Configuration();
+            var startModule = "BattleModule";
+            if (args.Length != 0)
+                startModule = args[0];
 
+            var config = new Configuration();
             var engine = new PokeEngine(config);
+
             engine.registry.RegisterModule(new PokemonGameModule());
             engine.registry.RegisterModule(new BattleModule(engine));
-            engine.SetStartModule("BattleModule");
+            engine.registry.RegisterModule(new MainModule.MainModule());
+            engine.SetStartModule(startModule);
             engine.Run();
         }
     }

@@ -2,11 +2,13 @@
 using System.Linq;
 using GameEngine;
 using GameEngine.Graphics;
+using GameEngine.Registry;
 using GameEngine.Utils;
 using Microsoft.Xna.Framework;
 
 namespace MainModule
 {
+    [GameService(typeof(IMap))]
     public class FieldMap : AbstractGraphicComponent, IMap
     {
         private readonly float textureSize;
@@ -15,7 +17,12 @@ namespace MainModule
         private readonly float screenCenterX;
         private readonly float screenCenterY;
 
-        public FieldMap(ITable<IGraphicComponent> fieldTextures, float textureSize, ScreenConstants screenConstants)
+        public FieldMap(IMapLoader loader, ScreenConstants screenConstants)
+            : this(loader.GetFieldTextures(), 32.0f, screenConstants)
+        {
+        }
+
+        internal FieldMap(ITable<IGraphicComponent> fieldTextures, float textureSize, ScreenConstants screenConstants)
         {
             FieldSize = new FieldSize(fieldTextures.Columns, fieldTextures.Rows);
             this.textureSize = textureSize;

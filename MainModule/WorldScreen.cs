@@ -1,10 +1,12 @@
 ﻿using System;
 using GameEngine;
 using GameEngine.Graphics;
+using GameEngine.Registry;
 using Microsoft.Xna.Framework;
 
 namespace MainModule
 {
+    [GameType]
     public class WorldScreen : AbstractGraphicComponent
     {
         private readonly IGraphicComponent player;

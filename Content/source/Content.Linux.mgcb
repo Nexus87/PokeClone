@@ -3,7 +3,7 @@
 
 /outputDir:../compiled/Linux
 /intermediateDir:obj/Linux
-/platform:Linux
+/platform:DesktopGL
 /config:
 /profile:Reach
 /compress:False
@@ -78,4 +78,28 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:charmander-back.png
+
+#begin Characters Overworld.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Characters Overworld.png
+
+#begin Tileset.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Tileset.png
 

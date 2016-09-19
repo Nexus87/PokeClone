@@ -1,6 +1,5 @@
 ﻿using BattleLib.Components.BattleState;
 using BattleLib.Components.BattleState.Commands;
-using GameEngine.Registry;
 using System.Collections.Generic;
 
 namespace PokemonGame.Rules
