@@ -17,6 +17,7 @@
     <Reference Include="BattleLib" />
     <Reference Include="Base" />
     <Reference Include="Content" />
+    <Reference Include="MainModule" />
   </References>
   <Files>
     <Compile Include="PokemonGameModule.cs" />
