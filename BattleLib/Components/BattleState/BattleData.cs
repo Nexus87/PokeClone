@@ -8,13 +8,13 @@ namespace BattleLib.Components.BattleState
     [GameService(typeof(BattleData))]
     public class BattleData
     {
-        ClientIdentifier Ai { get; set; }
-        ClientIdentifier Player { get; set; }
+        private ClientIdentifier Ai { get; set; }
+        private ClientIdentifier Player { get; set; }
 
         public ClientIdentifier PlayerId { get { return Player; } }
 
-        readonly Dictionary<ClientIdentifier, ICommand> commands = new Dictionary<ClientIdentifier, ICommand>();
-        readonly List<ClientIdentifier> clients = new List<ClientIdentifier>();
+        private readonly Dictionary<ClientIdentifier, ICommand> commands = new Dictionary<ClientIdentifier, ICommand>();
+        private readonly List<ClientIdentifier> clients = new List<ClientIdentifier>();
 
         public BattleData() :
             this(new ClientIdentifier { IsPlayer = true, Name = "Player" }, new ClientIdentifier { IsPlayer = false, Name = "Ai" })
@@ -31,11 +31,11 @@ namespace BattleLib.Components.BattleState
             AiPokemon = new PokemonWrapper(Ai);
         }
 
-        PokemonWrapper AiPokemon { get; set; }
+        private PokemonWrapper AiPokemon { get; set; }
 
         public IReadOnlyList<ClientIdentifier> Clients { get { return clients.AsReadOnly(); } }
         public IEnumerable<ICommand> Commands { get { return commands.Values; } }
-        PokemonWrapper PlayerPokemon { get; set; }
+        private PokemonWrapper PlayerPokemon { get; set; }
 
         public PokemonWrapper GetPokemon(ClientIdentifier id)
         {

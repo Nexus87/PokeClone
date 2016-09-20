@@ -4,7 +4,7 @@ namespace Base.Factory
 {
     public class MoveFactory
     {
-        readonly IMoveRepository repository;
+        private readonly IMoveRepository repository;
 
         public MoveFactory(IMoveRepository repository)
         {

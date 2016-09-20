@@ -8,8 +8,8 @@ namespace BattleLib.Components.BattleState
     [GameType]
     public class ExecuteState : AbstractState
     {
-        readonly ICommandScheduler scheduler;
-        readonly CommandExecuter executer;
+        private readonly ICommandScheduler scheduler;
+        private readonly CommandExecuter executer;
 
         public ExecuteState(ICommandScheduler scheduler, CommandExecuter executer)
         {

@@ -1,10 +1,10 @@
-﻿using GameEngine;
+﻿using System;
+using GameEngine;
 using GameEngine.Graphics;
 using GameEngine.Registry;
 using Microsoft.Xna.Framework;
-using System;
 
-namespace BattleLib.GraphicComponents
+namespace BattleLib.Components.GraphicComponents
 {
     [GameType]
     public class PokemonSprite : AbstractGraphicComponent
@@ -12,12 +12,12 @@ namespace BattleLib.GraphicComponents
         public event EventHandler OnPokemonAppeared = delegate { };
         public event EventHandler OnAttackAnimationPlayed = delegate { };
 
-        readonly TextureProvider provider;
-        readonly TextureBox box;
-        bool isPlayer;
+        private readonly TextureProvider provider;
+        private readonly TextureBox box;
+        private bool isPlayer;
 
         public bool IsPlayer { get { return isPlayer; } set { isPlayer = value; Invalidate(); } }
-        int id = -1;
+        private int id = -1;
 
         public void SetPokemon(int id)
         {

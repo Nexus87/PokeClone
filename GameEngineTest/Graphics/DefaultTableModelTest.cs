@@ -6,7 +6,7 @@ namespace GameEngineTest.Graphics
     [TestFixture]
     public class DefaultTableModelTest : IItemModelTest
     {
-        DefaultTableModel<TestType> model;
+        private DefaultTableModel<TestType> model;
         [SetUp]
         public void Setup()
         {

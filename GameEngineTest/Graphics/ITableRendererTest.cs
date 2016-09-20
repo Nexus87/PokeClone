@@ -7,7 +7,7 @@ namespace GameEngineTest.Graphics
 {
     public abstract class ITableRendererTest
     {
-        TestType data = new TestType("test");
+        private TestType data = new TestType("test");
         protected abstract ITableRenderer<TestType> CreateRenderer();
 
         [TestCase]

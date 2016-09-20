@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace GameEngineTest.TestUtils
 {
-    class KeyboardManagerStub : IKeyboardManager
+    internal class KeyboardManagerStub : IKeyboardManager
     {
         private KeyboardState oldState;
         private KeyboardState newState;

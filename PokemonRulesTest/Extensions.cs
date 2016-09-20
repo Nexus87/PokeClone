@@ -3,7 +3,7 @@ using Base.Data;
 
 namespace PokemonRulesTest
 {
-    static class Extensions {
+    internal static class Extensions {
         public static bool compare(this PokemonData d, object obj) {
             if (obj == null || !(obj is PokemonData))
                 return false;

@@ -6,7 +6,7 @@ namespace BattleLibTest.Components
 {
     public class EventQueueFake : IEventQueue
     {
-        List<IEvent> events = new List<IEvent>();
+        private List<IEvent> events = new List<IEvent>();
         public void DispatchAllEvents()
         {
             foreach (var ev in events)

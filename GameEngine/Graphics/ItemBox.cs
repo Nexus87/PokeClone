@@ -6,15 +6,13 @@ namespace GameEngine.Graphics
 {
     internal class ItemBox : SelectableContainer<ITextGraphicComponent>, ISelectableTextComponent
     {
-        readonly IGraphicComponent arrow;
-        readonly ITextGraphicComponent textBox;
+        private readonly ITextGraphicComponent textBox;
 
         public string Text { get { return textBox.Text; } set { textBox.Text = value; } }
 
         internal ItemBox(IGraphicComponent arrow, ITextGraphicComponent textBox) :
             base(arrow, textBox)
         {
-            this.arrow = arrow;
             this.textBox = textBox;
 
             VerticalPolicy = ResizePolicy.Preferred;

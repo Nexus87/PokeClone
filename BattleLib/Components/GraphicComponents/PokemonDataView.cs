@@ -1,12 +1,10 @@
-﻿using BattleLib.Components.BattleState;
-using BattleLib.Components.GraphicComponents;
+﻿using System;
+using BattleLib.Components.BattleState;
 using GameEngine;
 using GameEngine.Graphics;
 using Microsoft.Xna.Framework;
-using System;
-using System.Linq;
 
-namespace BattleLib.GraphicComponents
+namespace BattleLib.Components.GraphicComponents
 {
     // TODO come up with a better solution for this
 
@@ -67,10 +65,10 @@ namespace BattleLib.GraphicComponents
             container.Layout = new VBoxLayout { Spacing = 10f };
         }
 
-        HPLine hpLine;
-        HPText hpText;
-        TextBox name;
-        TextBox lvl;
+        private HPLine hpLine;
+        private HPText hpText;
+        private TextBox name;
+        private TextBox lvl;
 
         public override void Draw(GameTime time, ISpriteBatch batch)
         {
@@ -104,12 +102,12 @@ namespace BattleLib.GraphicComponents
 
         private class SetHPAnimation : IAnimation
         {
-            readonly int targetHP;
-            readonly HPLine line;
-            readonly HPText text;
+            private readonly int targetHP;
+            private readonly HPLine line;
+            private readonly HPText text;
 
-            int currentHP;
-            readonly Func<int, int> nextInt;
+            private int currentHP;
+            private readonly Func<int, int> nextInt;
 
             public event EventHandler AnimationFinished;
 

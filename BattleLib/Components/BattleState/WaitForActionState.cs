@@ -11,7 +11,7 @@ namespace BattleLib.Components.BattleState
     public class WaitForActionState : IBattleState
     {
         private int clientCnt;
-        readonly Dictionary<ClientIdentifier, ICommand> commands = new Dictionary<ClientIdentifier, ICommand>();
+        private readonly Dictionary<ClientIdentifier, ICommand> commands = new Dictionary<ClientIdentifier, ICommand>();
         public BattleStateComponent BattleState { get; set; }
 
         public BattleStates State

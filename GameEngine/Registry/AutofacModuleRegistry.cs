@@ -7,8 +7,8 @@ namespace GameEngine.Registry
 {
     public class AutofacModuleRegistry : IModuleRegistry
     {
-        readonly IGameTypeRegistry registry = new AutofacGameTypeRegistry();
-        readonly Dictionary<string, IModule> registeredModules = new Dictionary<string, IModule>();
+        private readonly IGameTypeRegistry registry = new AutofacGameTypeRegistry();
+        private readonly Dictionary<string, IModule> registeredModules = new Dictionary<string, IModule>();
 
         public void RegisterModule(Assembly moduleAssembly)
         {

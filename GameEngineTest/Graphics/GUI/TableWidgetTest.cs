@@ -29,7 +29,7 @@ namespace GameEngineTest.Graphics.GUI
         {
             var endIndex = new TableIndex(endRow, endColumn);
             var view = new TableViewMock();
-            var table = CreateTableWidget(view, rows, columns);
+            CreateTableWidget(view, rows, columns);
             
             view.Rows = newRows;
             view.Columns = newColumns;
@@ -79,6 +79,7 @@ namespace GameEngineTest.Graphics.GUI
             view.Columns = newColumns;
             view.RaiseTableResizeEvent(newRows, newColumns);
 
+            Assert.True(view.StartIndex.HasValue);
             AssertIndex(startIndex, view.StartIndex.Value);
         }
         [TestCase(0, 0, 5, 5, 0, 0)]
@@ -87,11 +88,12 @@ namespace GameEngineTest.Graphics.GUI
         public void CreateTable_WithVisibleColumnsAndRows_EndIndexHasExpectedValue(int rows, int column, int visibleRows, int visibleColumns, int endRow, int endColumn)
         {
             var view = new TableViewMock();
-            var table = CreateTableWidget(view, rows, column, visibleRows, visibleColumns);
+            CreateTableWidget(view, rows, column, visibleRows, visibleColumns);
             var endIndex = new TableIndex(endRow, endColumn);
 
+            Assert.True(view.EndIndex.HasValue);
             AssertIndex(endIndex, view.EndIndex.Value);
-            
+
         }
 
         [TestCase(10, 10, -1, 0)]

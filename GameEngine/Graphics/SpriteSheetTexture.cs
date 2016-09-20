@@ -9,7 +9,7 @@ namespace GameEngine.Graphics
     {
         private readonly ITexture2D spriteSheet;
         private readonly Rectangle sourceRectangle;
-        private Rectangle destinationRectangle;
+        private Rectangle destinationRectangle = new Rectangle();
 
         public SpriteSheetTexture(ITexture2D spriteSheet, Rectangle sourceRectangle)
         {

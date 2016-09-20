@@ -8,10 +8,10 @@ using System.Reflection;
 
 namespace GameEngine.Registry
 {
-    class AutofacGameTypeRegistry : IGameTypeRegistry
+    internal class AutofacGameTypeRegistry : IGameTypeRegistry
     {
-        IContainer container;
-        readonly ContainerBuilder builder = new ContainerBuilder();
+        private IContainer container;
+        private readonly ContainerBuilder builder = new ContainerBuilder();
 
         public AutofacGameTypeRegistry()
         {

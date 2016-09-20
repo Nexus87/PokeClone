@@ -11,8 +11,8 @@ namespace GameEngine
     /// </summary>
     public sealed class XNASpriteFont : ISpriteFont
     {
-        readonly string fontName;
-        readonly ContentManager content;
+        private readonly string fontName;
+        private readonly ContentManager content;
 
         public XNASpriteFont(string fontName, ContentManager content)
         {

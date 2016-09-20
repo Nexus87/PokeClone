@@ -1,6 +1,6 @@
 ﻿using Base.Data;
 using BattleLib.Components.BattleState;
-using BattleLib.GraphicComponents;
+using BattleLib.Components.GraphicComponents;
 using GameEngine;
 
 namespace BattleLib.Components

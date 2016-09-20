@@ -15,12 +15,12 @@ namespace GameEngine.Graphics
         public float SpeedX { get; set; }
         public float SpeedY { get; set; }
 
-        float currentWidth;
-        float currentHeight;
+        private float currentWidth;
+        private float currentHeight;
 
-        bool IsInitialized;
-        bool shrinkX;
-        bool shrinkY;
+        private bool IsInitialized;
+        private bool shrinkX;
+        private bool shrinkY;
 
         public void SetStartSize(IGraphicComponent component)
         {

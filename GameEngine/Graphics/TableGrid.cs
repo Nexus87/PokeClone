@@ -19,7 +19,7 @@ namespace GameEngine.Graphics
         bool autoResizeStart;
         bool autoResizeEnd;
 
-        static readonly TableIndex? NULL;
+        static readonly TableIndex? NULL = null;
 
         public int Rows
         {

@@ -7,9 +7,7 @@ namespace GameEngine.Graphics.GUI
     [GameType]
     public class MessageBox : ForwardingGraphicComponent<ITextGraphicContainer>, IWidget
     {
-        private ITextGraphicContainer textBox;
-
-        private bool isVisible;
+        private readonly ITextGraphicContainer textBox;
 
         public MessageBox(ISpriteFont font, ITextSplitter splitter, int lineNumber = 2)
             : this(new MultlineTextBox(font, splitter, lineNumber))

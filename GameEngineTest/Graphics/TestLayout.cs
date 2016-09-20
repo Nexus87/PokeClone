@@ -4,7 +4,7 @@ using NUnit.Framework;
 
 namespace GameEngineTest.Graphics
 {
-    class TestLayout : AbstractLayout
+    internal class TestLayout : AbstractLayout
     {
         protected override void UpdateComponents(Container container) 
         {

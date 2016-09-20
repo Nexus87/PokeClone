@@ -35,17 +35,17 @@ namespace PokemonGame.Rules
             if (data == null)
                 return null;
 
-            var iStats = GenerateIV();
+            //var iStats = GenerateIV();
 
-            var stats = new Stats
-            {
-                HP = data.BaseStats.HP + iStats.HP,
-                Atk = data.BaseStats.Atk + iStats.Atk,
-                Def = data.BaseStats.Def + iStats.Def,
-                SpAtk = data.BaseStats.SpAtk + iStats.SpAtk,
-                SpDef = data.BaseStats.SpDef + iStats.SpDef,
-                Speed = data.BaseStats.Speed + iStats.Speed
-            };
+//            var stats = new Stats
+//            {
+//                HP = data.BaseStats.HP + iStats.HP,
+//                Atk = data.BaseStats.Atk + iStats.Atk,
+//                Def = data.BaseStats.Def + iStats.Def,
+//                SpAtk = data.BaseStats.SpAtk + iStats.SpAtk,
+//                SpDef = data.BaseStats.SpDef + iStats.SpDef,
+//                Speed = data.BaseStats.Speed + iStats.Speed
+//            };
 
             //var builder = new PokemonBuilder(data);
             //builder.SetIV (iStats).SetStats (stats);

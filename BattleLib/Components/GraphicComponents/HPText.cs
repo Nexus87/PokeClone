@@ -15,8 +15,8 @@ namespace BattleLib.Components.GraphicComponents
     [GameType]
     public class HPText : AbstractGraphicComponent
     {
-        TextBox text;
-        string maxHP;
+        private TextBox text;
+        private string maxHP;
 
         public HPText(TextBox text)
         {

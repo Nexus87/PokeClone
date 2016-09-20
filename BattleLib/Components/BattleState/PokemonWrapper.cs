@@ -8,8 +8,8 @@ namespace BattleLib.Components.BattleState
 {
     public class PokemonWrapper : IBattlePokemon
     {
-        readonly Dictionary<ModifyableState, float> modifier = new Dictionary<ModifyableState, float>();
-        Pokemon pokemon;
+        private readonly Dictionary<ModifyableState, float> modifier = new Dictionary<ModifyableState, float>();
+        private Pokemon pokemon;
 
         public PokemonWrapper(ClientIdentifier id)
         {

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Game.Rules
 {
-    class DummyPokemonRules : IPokemonRules
+    internal class DummyPokemonRules : IPokemonRules
     {
         public Stats GenerateIV()
         {

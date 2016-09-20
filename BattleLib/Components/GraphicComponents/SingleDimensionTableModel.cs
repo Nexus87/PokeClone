@@ -1,17 +1,26 @@
-﻿using GameEngine.Graphics;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using GameEngine.Graphics;
 
-namespace BattleLib.GraphicComponents
+namespace BattleLib.Components.GraphicComponents
 {
     public abstract class SingleDimensionTableModel<T> : ITableModel<T>
     {
         public event EventHandler<DataChangedEventArgs<T>> DataChanged = delegate { };
-        public event EventHandler<TableResizeEventArgs> SizeChanged = delegate { };
+        public event EventHandler<TableResizeEventArgs> SizeChanged
+        {
+            add { }
+            remove { }
+        }
 
-        protected IList<T> items;
+        protected IList<T> Items;
 
-        public virtual int Rows { get { return items.Count; } }
+        protected SingleDimensionTableModel()
+        {
+            SizeChanged += delegate { };
+        }
+
+        public virtual int Rows { get { return Items.Count; } }
 
         public int Columns
         {
@@ -23,7 +32,7 @@ namespace BattleLib.GraphicComponents
             if (row < 0 || row >= Rows || column < 0 || column >= Columns)
                 throw new ArgumentOutOfRangeException("Index out of bound");
 
-            return items[row];
+            return Items[row];
         }
 
         public virtual bool SetDataAt(T data, int row, int column)
@@ -31,10 +40,10 @@ namespace BattleLib.GraphicComponents
             if (row < 0 || row >= Rows || column < 0 || column >= Columns)
                 throw new ArgumentOutOfRangeException("Index out of bound");
 
-            if (Object.Equals(items[row], (data)))
+            if (Object.Equals(Items[row], (data)))
                 return true;
 
-            items[row] = data;
+            Items[row] = data;
             DataChanged(this, new DataChangedEventArgs<T>(row, column, data));
 
             return true;

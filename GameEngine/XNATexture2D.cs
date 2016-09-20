@@ -8,8 +8,8 @@ namespace GameEngine
 {
     public class XNATexture2D : ITexture2D
     {
-        readonly string textureName;
-        readonly ContentManager content;
+        private readonly string textureName;
+        private readonly ContentManager content;
         public Texture2D Texture { get; set; }
 
         public XNATexture2D(){}

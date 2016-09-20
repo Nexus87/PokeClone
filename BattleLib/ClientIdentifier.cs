@@ -4,7 +4,7 @@ namespace BattleLib
 {
     public class ClientIdentifier
     {
-        readonly Guid Guid;
+        private readonly Guid Guid;
 
         public ClientIdentifier()
         {

@@ -11,8 +11,7 @@ namespace GameEngineTest.Graphics
     [TestFixture]
     public class TextGraphicTest
     {
-        
-        TextGraphic CreateTextGraphic(float charHeight = 16.0f)
+        private TextGraphic CreateTextGraphic(float charHeight = 16.0f)
         {
             var spriteFontMock = new Mock<ISpriteFont>();
             var testObj = new TextGraphic(spriteFontMock.Object);

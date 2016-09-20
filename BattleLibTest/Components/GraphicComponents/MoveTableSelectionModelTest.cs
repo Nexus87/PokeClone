@@ -1,18 +1,13 @@
 ﻿using Base;
 using Base.Data;
-using BattleLib.GraphicComponents;
 using GameEngineTest.TestUtils;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using BattleLib.Components.GraphicComponents;
 
 namespace BattleLibTest.Components.GraphicComponents
 {
     [TestFixture]
-    class MoveTableSelectionModelTest
+    internal class MoveTableSelectionModelTest
     {
         [Test]
         public void SelectIndex_ModelHasNoValidValue_ReturnsFalse()

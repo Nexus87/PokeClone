@@ -10,8 +10,6 @@ namespace GameEngine.Graphics
 {
     public class Pixel : ForwardingGraphicComponent<TextureBox>
     {
-        private TextureBox textureBox;
-        
         public Pixel(ITexture2D pixelTexture) :
             base(new TextureBox(pixelTexture))
         {

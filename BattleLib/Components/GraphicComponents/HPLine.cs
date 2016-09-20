@@ -1,21 +1,21 @@
-﻿using GameEngine;
+﻿using System;
+using GameEngine;
 using GameEngine.Graphics;
 using GameEngine.Registry;
 using Microsoft.Xna.Framework;
-using System;
 
-namespace BattleLib.GraphicComponents
+namespace BattleLib.Components.GraphicComponents
 {
     [GameType]
     public class HPLine : AbstractGraphicComponent
     {
-        const float RelativeBorderSize = 0.2f;
-        float BorderSize { get { return RelativeBorderSize * Height; } }
-        int currentHp;
-        readonly IGraphicComponent hpLine;
-        readonly IGraphicComponent innerLine;
-        int maxHp;
-        readonly IGraphicComponent outerLine;
+        private const float RelativeBorderSize = 0.2f;
+        private float BorderSize { get { return RelativeBorderSize * Height; } }
+        private int currentHp;
+        private readonly IGraphicComponent hpLine;
+        private readonly IGraphicComponent innerLine;
+        private int maxHp;
+        private readonly IGraphicComponent outerLine;
 
 
         public HPLine(Line outerLine, Line innerLine, Line hpLine, ScreenConstants screen) :
@@ -61,7 +61,7 @@ namespace BattleLib.GraphicComponents
             if (newHP < 0 || newHP > maxHp)
                 throw new ArgumentOutOfRangeException("newHP");
 
-            var animation = new HPResizeAnimation(newHP, this);
+            var animation = new HpResizeAnimation(newHP, this);
             animation.AnimationFinished += animation_AnimationFinished;
             PlayAnimation(animation);
         }

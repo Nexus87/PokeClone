@@ -8,7 +8,7 @@ namespace GameEngine.Utils
     {
         readonly List<string> lines = new List<string>();
         string lastSplittedText;
-        int lastCharsPerLine;
+        readonly int lastCharsPerLine = 0;
 
         public void SplitText(int charsPerLine, string text)
         {

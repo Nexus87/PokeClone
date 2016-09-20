@@ -1,9 +1,9 @@
-﻿using Base.Data;
+﻿using System;
+using Base.Data;
 using BattleLib.Components.BattleState;
 using GameEngine.Graphics;
-using System;
 
-namespace BattleLib.GraphicComponents
+namespace BattleLib.Components.GraphicComponents
 {
     public interface IBattleGraphicController : IGraphicComponent
     {

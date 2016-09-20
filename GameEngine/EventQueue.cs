@@ -6,12 +6,12 @@ using System.Collections.Generic;
 namespace GameEngine
 {
     [GameService(typeof(IEventQueue))]
-    class EventQueue : IGameComponent, IEventQueue
+    internal class EventQueue : IGameComponent, IEventQueue
     {
-        bool eventDispatched;
-        IEvent dispatchedEvent;
+        private bool eventDispatched;
+        private IEvent dispatchedEvent;
 
-        LinkedList<IEvent> eventQueue = new LinkedList<IEvent>();
+        private LinkedList<IEvent> eventQueue = new LinkedList<IEvent>();
 
         public void Update(GameTime gameTime)
         {

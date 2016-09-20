@@ -1,5 +1,4 @@
-﻿using BattleLib.GraphicComponents;
-using GameEngine.Graphics;
+﻿using GameEngine.Graphics;
 using GameEngine.Utils;
 using GameEngineTest.Graphics;
 using GameEngineTest.TestUtils;
@@ -8,6 +7,7 @@ using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using BattleLib.Components.GraphicComponents;
 
 namespace BattleLibTest.GraphicComponents
 {

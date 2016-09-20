@@ -10,17 +10,17 @@ using System.Linq;
 namespace PokemonRulesTest
 {
     [TestFixture]
-    class CharFactoryTest
+    internal class CharFactoryTest
     {
-		static int PseudoRandom(int min, int max){
+        private static int PseudoRandom(int min, int max){
 			return 0;
 		}
 
-        Mock<IPokemonRepository> charRepositoryMock;
-        PokemonFactory factory;
-		Mock<IPokemonRules> rulesMock;
-        List<PokemonData> testData = new List<PokemonData>();
-        List<Pokemon> testChar = new List<Pokemon>();
+        private Mock<IPokemonRepository> charRepositoryMock;
+        private PokemonFactory factory;
+        private Mock<IPokemonRules> rulesMock;
+        private List<PokemonData> testData = new List<PokemonData>();
+        private List<Pokemon> testChar = new List<Pokemon>();
 
         [SetUp]
         public void Setup()

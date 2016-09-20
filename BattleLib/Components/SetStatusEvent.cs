@@ -1,15 +1,15 @@
 ﻿using Base.Data;
-using BattleLib.GraphicComponents;
 using GameEngine;
 using System;
+using BattleLib.Components.GraphicComponents;
 
 namespace BattleLib.Components
 {
     internal class SetStatusEvent : IEvent
     {
-        readonly StatusCondition condition;
-        readonly IBattleGraphicController graphic;
-        readonly ClientIdentifier id;
+        private readonly StatusCondition condition;
+        private readonly IBattleGraphicController graphic;
+        private readonly ClientIdentifier id;
 
         public SetStatusEvent(IBattleGraphicController graphic, ClientIdentifier id, StatusCondition condition)
         {

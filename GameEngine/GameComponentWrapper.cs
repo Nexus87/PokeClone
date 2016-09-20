@@ -2,7 +2,7 @@
 
 namespace GameEngine
 {
-    class GameComponentWrapper : GameComponent
+    internal class GameComponentWrapper : GameComponent
     {
         public IGameComponent Component { get; private set; }
 

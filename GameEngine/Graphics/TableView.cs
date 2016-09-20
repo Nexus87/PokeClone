@@ -9,10 +9,10 @@ namespace GameEngine.Graphics
     [GameType]
     public class TableView<T> : AbstractGraphicComponent, ITableView<T>
     {
-        readonly ITableModel<T> model;
-        readonly ITableRenderer<T> renderer;
-        readonly ITableSelectionModel selectionModel;
-        readonly ITableGrid tableGrid;
+        private readonly ITableModel<T> model;
+        private readonly ITableRenderer<T> renderer;
+        private readonly ITableSelectionModel selectionModel;
+        private readonly ITableGrid tableGrid;
 
         public TableView(ITableModel<T> model, ITableRenderer<T> renderer, ITableSelectionModel selectionModel)
             : this(model, renderer, selectionModel, new TableGrid())
@@ -66,7 +66,7 @@ namespace GameEngine.Graphics
             set { tableGrid.StartIndex = value; }
         }
 
-        void CellIsInBound(int row, int column)
+        private void CellIsInBound(int row, int column)
         {
             if (row < 0 || row >= Rows)
                 throw new ArgumentOutOfRangeException("row", "value is: " + row);
@@ -74,7 +74,7 @@ namespace GameEngine.Graphics
                 throw new ArgumentOutOfRangeException("column", "value is: " + column);
         }
 
-        void ModelSizeChanged()
+        private void ModelSizeChanged()
         {
             tableGrid.Rows = model.Rows;
             tableGrid.Columns = model.Columns;
@@ -100,7 +100,7 @@ namespace GameEngine.Graphics
             selectionModel.SelectionChanged += SelectionChangedHandler;
         }
 
-        void FillTableGrid()
+        private void FillTableGrid()
         {
             for (int i = 0; i < Rows; i++)
             {
@@ -120,14 +120,14 @@ namespace GameEngine.Graphics
             tableGrid.Draw(time, batch);
         }
 
-        void SelectionChangedHandler(object sender, SelectionChangedEventArgs e)
+        private void SelectionChangedHandler(object sender, SelectionChangedEventArgs e)
         {
             var component = tableGrid.GetComponentAt(e.Row, e.Column);
             Debug.Assert(component != null);
             SetComponentSelection(component, e.IsSelected);
         }
 
-        static void SetComponentSelection(ISelectableGraphicComponent component, bool isSelected)
+        private static void SetComponentSelection(ISelectableGraphicComponent component, bool isSelected)
         {
             if (isSelected)
                 component.Select();
@@ -135,24 +135,24 @@ namespace GameEngine.Graphics
                 component.Unselect();
         }
 
-        void DataChangedHandler(object sender, DataChangedEventArgs<T> e)
+        private void DataChangedHandler(object sender, DataChangedEventArgs<T> e)
         {
             tableGrid.SetComponentAt(e.Row, e.Column, GetComponent(e.Row, e.Column, e.NewData));
         }
 
-        void SizeChangedHandler(object sender, TableResizeEventArgs e)
+        private void SizeChangedHandler(object sender, TableResizeEventArgs e)
         {
             ModelSizeChanged();
             TableResized(this, e);
         }
 
-        ISelectableGraphicComponent GetComponent(int row, int column)
+        private ISelectableGraphicComponent GetComponent(int row, int column)
         {
             var data = model.DataAt(row, column);
             return GetComponent(row, column, data);
         }
 
-        ISelectableGraphicComponent GetComponent(int row, int column, T data)
+        private ISelectableGraphicComponent GetComponent(int row, int column, T data)
         {
             var isSelected = selectionModel.IsSelected(row, column);
             return renderer.GetComponent(row, column, data, isSelected);

@@ -87,11 +87,11 @@ namespace BattleLibTest.GUI
         [TestCase(2, 1)]
         public void DataChangedEvent_ResetPokemon_IsRaised(int oldMoves, int newMoves)
         {
-            bool dataChanged = false;
+            var dataChanged = false;
             var wrapper = MoveModelTestFactory.CreateWrapper();
             wrapper.Pokemon = MoveModelTestFactory.CreatePokemon(oldMoves);
 
-            var eventArgs = new List<DataChangedEventArgs<Move>>();
+            new List<DataChangedEventArgs<Move>>();
             var model = MoveModelTestFactory.CreateModel(wrapper);
 
             model.DataChanged += (a, b) => dataChanged = true;

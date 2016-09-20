@@ -1,17 +1,17 @@
 ﻿using BattleLib.Components.BattleState;
-using BattleLib.GraphicComponents;
 using GameEngine;
 using System;
+using BattleLib.Components.GraphicComponents;
 
 namespace BattleLib.Components
 {
-    class SetPokemonEvent : IEvent
+    internal class SetPokemonEvent : IEvent
     {
         public event EventHandler EventProcessed = delegate { };
-        
-        readonly IBattleGraphicController graphic;
-        readonly ClientIdentifier id;
-        readonly PokemonWrapper pokemon;
+
+        private readonly IBattleGraphicController graphic;
+        private readonly ClientIdentifier id;
+        private readonly PokemonWrapper pokemon;
 
         public SetPokemonEvent(IBattleGraphicController graphic, ClientIdentifier id, PokemonWrapper pokemon)
         {
@@ -20,7 +20,7 @@ namespace BattleLib.Components
             this.pokemon = pokemon;
         }
 
-        void PokemonSetHandler(object sender, EventArgs e)
+        private void PokemonSetHandler(object sender, EventArgs e)
         {
             graphic.OnPokemonSet -= PokemonSetHandler;
             EventProcessed(this, null);

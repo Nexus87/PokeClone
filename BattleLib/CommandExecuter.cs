@@ -11,8 +11,8 @@ namespace BattleLib
     [GameType]
     public class CommandExecuter
     {
-        readonly IEventCreator eventCreator;
-        readonly IMoveEffectCalculator calculator;
+        private readonly IEventCreator eventCreator;
+        private readonly IMoveEffectCalculator calculator;
 
         public CommandExecuter(IMoveEffectCalculator calculator, IEventCreator eventCreator)
         {
@@ -43,7 +43,7 @@ namespace BattleLib
             eventCreator.SwitchPokemon(pokemonWrapper);
         }
 
-        static MoveEfficiency GetEffect(float typeModifier)
+        private static MoveEfficiency GetEffect(float typeModifier)
         {
             if (typeModifier.CompareTo(0) == 0)
                 return MoveEfficiency.NoEffect;
@@ -58,7 +58,7 @@ namespace BattleLib
             return MoveEfficiency.Normal;
         }
 
-        void ExecMove(PokemonWrapper source, Move move, PokemonWrapper target)
+        private void ExecMove(PokemonWrapper source, Move move, PokemonWrapper target)
         {
             eventCreator.UsingMove(source, move);
             calculator.Init(source, move, target);
@@ -69,7 +69,7 @@ namespace BattleLib
             HandleStatusConditionChange(target);
         }
 
-        void HandleStatusConditionChange(PokemonWrapper target)
+        private void HandleStatusConditionChange(PokemonWrapper target)
         {
 
             if (target.Condition != calculator.StatusCondition)
@@ -79,20 +79,20 @@ namespace BattleLib
             }
         }
 
-        void CheckIfCritical()
+        private void CheckIfCritical()
         {
             if (calculator.IsCritical)
                 eventCreator.Critical();
         }
 
-        void DoDamage(PokemonWrapper target)
+        private void DoDamage(PokemonWrapper target)
         {
             var damage = calculator.Damage;
             target.HP -= damage;
             eventCreator.SetHP(target.Identifier, target.HP);
         }
 
-        void HandleEfficiency(PokemonWrapper target)
+        private void HandleEfficiency(PokemonWrapper target)
         {
             var effect = GetEffect(calculator.TypeModifier);
             eventCreator.Effective(effect, target);

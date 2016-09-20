@@ -1,6 +1,5 @@
 ﻿using Base;
 using BattleLib.Components.BattleState;
-using BattleLib.GraphicComponents;
 using GameEngine.Graphics;
 using GameEngine.Registry;
 using System;
@@ -26,7 +25,7 @@ namespace BattleLib.Components.GraphicComponents
 
         private void PokemonValueChangedHandler(object sender, PokemonChangedEventArgs e)
         {
-            int index = pokemons.ToList().IndexOf(e.Pokemon);
+            var index = pokemons.ToList().IndexOf(e.Pokemon);
             if (index == -1)
                 return;
 
@@ -34,7 +33,11 @@ namespace BattleLib.Components.GraphicComponents
         }
 
         public event EventHandler<DataChangedEventArgs<Pokemon>> DataChanged;
-        public event EventHandler<TableResizeEventArgs> SizeChanged;
+        public event EventHandler<TableResizeEventArgs> SizeChanged
+        {
+            add {  }
+            remove { }
+        }
 
         private IReadOnlyList<Pokemon> pokemons;
 

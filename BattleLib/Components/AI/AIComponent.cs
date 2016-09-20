@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace BattleLib.Components.AI
 {
-    class AIComponent : GameEngine.IGameComponent
+    internal class AIComponent : GameEngine.IGameComponent
     {
         private IBattleStateService state;
         private Action nextAction;

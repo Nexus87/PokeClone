@@ -7,14 +7,14 @@ namespace GameEngine.Graphics
     [GameType]
     public class MultlineTextBox : AbstractGraphicComponent, ITextGraphicContainer
     {
-        string text;
-        readonly ITextSplitter splitter;
-        int currentLineIndex;
-        readonly Container container;
-        readonly int lineNumber;
-        readonly ISpriteFont font;
+        private string text;
+        private readonly ITextSplitter splitter;
+        private int currentLineIndex;
+        private readonly Container container;
+        private readonly int lineNumber;
+        private readonly ISpriteFont font;
 
-        ITextGraphicComponent GetComponent(int index)
+        private ITextGraphicComponent GetComponent(int index)
         {
             return (ITextGraphicComponent)container.Components[index];
         }

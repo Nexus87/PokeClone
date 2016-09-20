@@ -13,8 +13,9 @@ namespace GameEngineTest
     [TestFixture]
     public class InputComponentTest
     {
-        readonly IReadOnlyList<Keys> keys = new List<Keys> { Keys.Up, Keys.Down, Keys.Left };
-        readonly IReadOnlyDictionary<Keys, CommandKeys> map = new Dictionary<Keys, CommandKeys>
+        private readonly IReadOnlyList<Keys> keys = new List<Keys> { Keys.Up, Keys.Down, Keys.Left };
+
+        private readonly IReadOnlyDictionary<Keys, CommandKeys> map = new Dictionary<Keys, CommandKeys>
         {
             {Keys.Escape, CommandKeys.Back},
             {Keys.Down, CommandKeys.Down},

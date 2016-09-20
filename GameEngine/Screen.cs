@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace GameEngine
 {
-    class Screen
+    internal class Screen
     {
         private ScreenConstants screenConstants;
         private GraphicsDevice device;

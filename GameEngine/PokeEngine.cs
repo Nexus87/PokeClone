@@ -11,11 +11,10 @@ namespace GameEngine
     public class PokeEngine : Game, IEngineInterface, IGameComponentManager
     {
         public IModuleRegistry registry;
-        GraphicResources factory;
-        private GUIManager GUIManager { get; set; }
+        private readonly GraphicResources factory;
+        private GUIManager GuiManager { get; set; }
 
         private XNASpriteBatch batch;
-        private IInputHandler DefaultInputHandler;
         private InputComponent input;
         private Screen screen;
 
@@ -65,7 +64,6 @@ namespace GameEngine
         {
             set
             {
-                DefaultInputHandler = value;
                 if (input.handler == null)
                     input.handler = value;
             }
@@ -77,15 +75,15 @@ namespace GameEngine
 
         public void ShowGUI()
         {
-            GUIManager.Show();
-            input.handler = GUIManager;
+            GuiManager.Show();
+            input.handler = GuiManager;
         }
 
         protected override void Draw(GameTime gameTime)
         {
             screen.Begin(batch);
             screen.Draw(Graphic, batch, gameTime);
-            screen.Draw(GUIManager, batch, gameTime);
+            screen.Draw(GuiManager, batch, gameTime);
             screen.End(batch);
         }
 
@@ -93,7 +91,7 @@ namespace GameEngine
         {
             base.Initialize();
             screen = new Screen(registry.TypeRegistry.ResolveType<ScreenConstants>(), GraphicsDevice);
-            GUIManager = registry.TypeRegistry.ResolveType<GUIManager>();
+            GuiManager = registry.TypeRegistry.ResolveType<GUIManager>();
             input = registry.TypeRegistry.ResolveType<InputComponent>();
 
             Window.ClientSizeChanged += delegate { screen.WindowsResizeHandler(Window.ClientBounds.Width, Window.ClientBounds.Height); };
@@ -105,7 +103,7 @@ namespace GameEngine
             if (Graphic == null)
                 throw new InvalidOperationException("Graphic component is not set");
             Graphic.Setup();
-            GUIManager.Setup();
+            GuiManager.Setup();
 
         }
 

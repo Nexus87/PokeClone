@@ -1,5 +1,4 @@
 ﻿using BattleLib.Components.BattleState;
-using BattleLib.GraphicComponents;
 using GameEngine;
 using GameEngine.Registry;
 using System;
@@ -7,15 +6,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BattleLib.Components.GraphicComponents;
 
 namespace BattleLib.Components
 {
     [GameService(typeof(BattleEventProcessor))]
     public class BattleEventProcessor
     {
-        readonly IGUIService guiService;
-        readonly IBattleGraphicController graphicService;
-        readonly IEventQueue queue;
+        private readonly IGUIService guiService;
+        private readonly IBattleGraphicController graphicService;
+        private readonly IEventQueue queue;
 
         public BattleEventProcessor(IGUIService guiService, IBattleGraphicController graphicService, IEventQueue queue, IEventCreator events)
         {

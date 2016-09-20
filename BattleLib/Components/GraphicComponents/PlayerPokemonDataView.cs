@@ -1,8 +1,7 @@
-﻿using BattleLib.Components.GraphicComponents;
-using GameEngine.Graphics;
+﻿using GameEngine.Graphics;
 using GameEngine.Registry;
 
-namespace BattleLib.GraphicComponents
+namespace BattleLib.Components.GraphicComponents
 {
     [GameType]
     public class PlayerPokemonDataView : PokemonDataView

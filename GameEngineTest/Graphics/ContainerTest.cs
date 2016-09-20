@@ -93,7 +93,7 @@ namespace GameEngineTest.Graphics
             layoutMock.Verify(l => l.LayoutContainer(container), Times.Never);
         }
 
-        Container CreateContainer(GraphicComponentMock componentMock)
+        private Container CreateContainer(GraphicComponentMock componentMock)
         {
             var container = new Container() { Layout = layoutMock.Object};
             container.AddComponent(componentMock);

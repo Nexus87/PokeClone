@@ -133,7 +133,7 @@ namespace GameEngineTest.Graphics
         {
             var testLayout = CreateLayout();
             var testContainer = CreateContainer(0, 0, width, height);
-            var components = testContainer.SetupContainer(10);
+            testContainer.SetupContainer(10);
             testLayout.SetMargin(left: margin);
 
             testLayout.LayoutContainer(testContainer);
@@ -148,7 +148,7 @@ namespace GameEngineTest.Graphics
         {
             var testLayout = CreateLayout();
             var testContainer = CreateContainer(0, 0, width, height);
-            var components = testContainer.SetupContainer(10);
+            testContainer.SetupContainer(10);
             testLayout.SetMargin(right: margin);
 
             testLayout.LayoutContainer(testContainer);
@@ -163,7 +163,7 @@ namespace GameEngineTest.Graphics
         {
             var testLayout = CreateLayout();
             var testContainer = CreateContainer(0, 0, width, height);
-            var components = testContainer.SetupContainer(10);
+            testContainer.SetupContainer(10);
             testLayout.SetMargin(top: margin);
 
             testLayout.LayoutContainer(testContainer);
@@ -178,7 +178,7 @@ namespace GameEngineTest.Graphics
         {
             var testLayout = CreateLayout();
             var testContainer = CreateContainer(0, 0, width, height);
-            var components = testContainer.SetupContainer(10);
+            testContainer.SetupContainer(10);
             testContainer.SetCoordinates(0, 0, width, height);
             testLayout.SetMargin(bottom: margin);
 
@@ -194,7 +194,7 @@ namespace GameEngineTest.Graphics
         {
             var testLayout = CreateLayout();
             var testContainer = CreateContainer(0, 0, width, height);
-            var components = testContainer.SetupContainer(10);
+            testContainer.SetupContainer(10);
             testLayout.SetMargin(margin, margin, margin, margin);
 
             testLayout.LayoutContainer(testContainer);

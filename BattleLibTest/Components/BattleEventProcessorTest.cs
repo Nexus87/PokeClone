@@ -2,22 +2,19 @@
 using BattleLib;
 using BattleLib.Components;
 using BattleLib.Components.BattleState;
-using BattleLib.GraphicComponents;
 using Moq;
 using NUnit.Framework;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using BattleLib.Components.GraphicComponents;
 
 namespace BattleLibTest.Components
 {
     [TestFixture]
     public class BattleEventProcessorTest
     {
-        EventQueueFake eventQueue;
-        Mock<IGUIService> guiMock;
-        Mock<IBattleGraphicController> graphicMock;
-        BattleEventFake eventMock;
+        private EventQueueFake eventQueue;
+        private Mock<IGUIService> guiMock;
+        private Mock<IBattleGraphicController> graphicMock;
+        private BattleEventFake eventMock;
 
         [SetUp]
         public void Setup()
@@ -31,7 +28,7 @@ namespace BattleLibTest.Components
         [TestCase]
         public void HandleCriticalChangeEvent_AfterDispatchedEvent_GUIMessageIsSent()
         {
-            var eventProcessor = CreateEventProcessor();
+            CreateEventProcessor();
 
             eventMock.RaiseCritcalDamageEvent();
             eventQueue.DispatchAllEvents();
@@ -44,7 +41,7 @@ namespace BattleLibTest.Components
         [TestCase(MoveEfficiency.VeryEffective)]
         public void HandleMoveEffectiveEvent_AfterDispatchedEvent_GUIMessageIsSent(MoveEfficiency efficient)
         {
-            var eventProcessor = CreateEventProcessor();
+            CreateEventProcessor();
 
             eventMock.RaiseMoveEffectiveEvent(efficient);
             eventQueue.DispatchAllEvents();
@@ -55,7 +52,7 @@ namespace BattleLibTest.Components
         [TestCase]
         public void HandleMoveEffectiveEvent_NormalEfficiency_NoGUIMessageIsSent()
         {
-            var eventProcessor = CreateEventProcessor();
+            CreateEventProcessor();
 
             eventMock.RaiseMoveEffectiveEvent(MoveEfficiency.Normal);
             eventQueue.DispatchAllEvents();
@@ -66,7 +63,7 @@ namespace BattleLibTest.Components
         [TestCase]
         public void NewTurnHandler_NormalEvent_ShowGUIIsCalled()
         {
-            var eventProcessor = CreateEventProcessor();
+            CreateEventProcessor();
 
             eventMock.RaiseNewTurnEvent();
             eventQueue.DispatchAllEvents();
@@ -77,7 +74,7 @@ namespace BattleLibTest.Components
         [TestCase]
         public void HPChangedHandler_NormalEvent_GraphicComponentSetHPIsCalled()
         {
-            var eventProcessor = CreateEventProcessor();
+            CreateEventProcessor();
 
             eventMock.RaiseHPChangedEvent(10);
             eventQueue.DispatchAllEvents();
@@ -88,7 +85,7 @@ namespace BattleLibTest.Components
         [TestCase]
         public void PokemonChangedHandler_NormalEvent_GraphicComponentSetPokemonIsCalled()
         {
-            var eventProcessor = CreateEventProcessor();
+            CreateEventProcessor();
 
             eventMock.RaisePokemonChangedEvent();
             eventQueue.DispatchAllEvents();
@@ -99,7 +96,7 @@ namespace BattleLibTest.Components
         [TestCase]
         public void StatusChangedHandler_NormalEvent_GraphicComponentCalled()
         {
-            var eventProcessor = CreateEventProcessor();
+            CreateEventProcessor();
 
             eventMock.RaiseStatusChanged(StatusCondition.KO);
             eventQueue.DispatchAllEvents();
@@ -110,7 +107,7 @@ namespace BattleLibTest.Components
         [TestCase]
         public void StatusChangedHandler_NormalEvent_GUIComponentCalled()
         {
-            var eventProcessor = CreateEventProcessor();
+            CreateEventProcessor();
 
             eventMock.RaiseStatusChanged(StatusCondition.KO);
             eventQueue.DispatchAllEvents();
@@ -121,7 +118,7 @@ namespace BattleLibTest.Components
         [TestCase]
         public void MoveUsedHandler_NormalEvent_GUIComponentCalled()
         {
-            var eventProcessor = CreateEventProcessor();
+            CreateEventProcessor();
 
             eventMock.RaiseMoveUsed();
             eventQueue.DispatchAllEvents();

@@ -7,12 +7,12 @@ namespace GameEngine.Graphics
 {
     public class TextGraphic : IGraphicalText
     {
-        ISpriteFont font;
-        bool needsUpdate;
-        Vector2 position;
-        float scale;
-        string text = "";
-        float charHeight = 32.0f;
+        private ISpriteFont font;
+        private bool needsUpdate;
+        private Vector2 position;
+        private float scale;
+        private string text = "";
+        private float charHeight = 32.0f;
 
         public TextGraphic(ISpriteFont font)
         {
@@ -84,12 +84,12 @@ namespace GameEngine.Graphics
             font.LoadContent();
         }
 
-        void Invalidate()
+        private void Invalidate()
         {
             needsUpdate = true;
         }
 
-        void Update()
+        private void Update()
         {
             if (font == null)
                 return;

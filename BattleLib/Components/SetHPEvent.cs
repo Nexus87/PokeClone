@@ -1,10 +1,10 @@
-﻿using BattleLib.GraphicComponents;
-using GameEngine;
+﻿using GameEngine;
 using System;
+using BattleLib.Components.GraphicComponents;
 
 namespace BattleLib.Components
 {
-    class SetHPEvent : IEvent
+    internal class SetHPEvent : IEvent
     {
         public event EventHandler EventProcessed
         {
@@ -12,9 +12,9 @@ namespace BattleLib.Components
             remove { graphic.OnHPSet -= value; }
         }
 
-        readonly IBattleGraphicController graphic;
-        readonly int hp;
-        readonly ClientIdentifier id;
+        private readonly IBattleGraphicController graphic;
+        private readonly int hp;
+        private readonly ClientIdentifier id;
 
         public SetHPEvent(IBattleGraphicController graphic, ClientIdentifier id, int hp)
         {

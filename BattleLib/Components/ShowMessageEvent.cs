@@ -1,14 +1,14 @@
-﻿using BattleLib.GraphicComponents;
-using GameEngine;
+﻿using GameEngine;
 using System;
+using BattleLib.Components.GraphicComponents;
 
 namespace BattleLib.Components
 {
     public class ShowMessageEvent : IEvent
     {
         public event EventHandler EventProcessed = delegate { };
-        readonly IGUIService guiService;
-        readonly string text;
+        private readonly IGUIService guiService;
+        private readonly string text;
 
         public ShowMessageEvent(IGUIService guiService, string text)
         {
@@ -21,7 +21,7 @@ namespace BattleLib.Components
             guiService.SetText(text);
         }
 
-        void TextDisplayedHandler(object sender, EventArgs e)
+        private void TextDisplayedHandler(object sender, EventArgs e)
         {
             guiService.TextDisplayed -= TextDisplayedHandler;
             EventProcessed(this, EventArgs.Empty);

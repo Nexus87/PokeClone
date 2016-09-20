@@ -3,7 +3,7 @@ using GameEngine.Graphics;
 using GameEngine.Registry;
 using GameEngine.Utils;
 
-namespace BattleLib.GraphicComponents
+namespace BattleLib.Components.GraphicComponents
 {
     [GameType]
     public class MoveTableSelectionModel : TableSingleSelectionModel

@@ -7,7 +7,7 @@ namespace GameEngine.Graphics
     [GameType]
     public class DefaultTableRenderer<T> : ITableRenderer<T>
     {
-        Table<ISelectableTextComponent> boxes = new Table<ISelectableTextComponent>();
+        private Table<ISelectableTextComponent> boxes = new Table<ISelectableTextComponent>();
 
         public string DefaultString { get; set; }
 

@@ -13,13 +13,12 @@ namespace GameEngineTest.Graphics
     [TestFixture]
     public class TableGridTest
     {
-
-        const int ROWS = 5;
-        const int COLUMNS = 5;
-        const float X = 10.0f;
-        const float Y = 5.0f;
-        const float WIDTH = 200.0f;
-        const float HEIGHT = 200.0f;
+        private const int ROWS = 5;
+        private const int COLUMNS = 5;
+        private const float X = 10.0f;
+        private const float Y = 5.0f;
+        private const float WIDTH = 200.0f;
+        private const float HEIGHT = 200.0f;
 
         [TestCase]
         public void Draw_BasicSetup_IsInContraints()

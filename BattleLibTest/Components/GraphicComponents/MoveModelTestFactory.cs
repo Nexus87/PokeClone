@@ -2,7 +2,7 @@
 using Base.Data;
 using BattleLib;
 using BattleLib.Components.BattleState;
-using BattleLib.GraphicComponents;
+using BattleLib.Components.GraphicComponents;
 
 namespace BattleLibTest.GUI
 {

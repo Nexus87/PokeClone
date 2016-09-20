@@ -75,7 +75,7 @@ namespace GameEngineTest.Graphics
             var expectedArgument = new SelectionChangedEventArgs(row, column, false);
             model.SelectionChanged += (obj, arg) => args.Add(arg);
 
-            bool success = model.UnselectIndex(row, column);
+            model.UnselectIndex(row, column);
 
             AssertContainsEvent(expectedArgument, args);
         }

@@ -7,7 +7,7 @@ namespace GameEngine.Graphics
 {
     public class Dialog : ForwardingGraphicComponent<Container>, IWidget
     {
-        readonly IGraphicComponent border;
+        private readonly IGraphicComponent border;
 
         public Dialog(ITexture2D borderTexture = null) :
             this(new TextureBox(borderTexture))

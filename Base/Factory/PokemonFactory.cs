@@ -25,8 +25,8 @@ namespace Base.Factory
 {
     public class PokemonFactory
     {
-        readonly IPokemonRepository repository;
-        readonly IPokemonRules rules;
+        private readonly IPokemonRepository repository;
+        private readonly IPokemonRules rules;
 
         public PokemonFactory(IPokemonRepository repository, IPokemonRules rules)
         {

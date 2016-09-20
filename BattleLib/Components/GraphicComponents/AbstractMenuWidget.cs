@@ -37,7 +37,7 @@ namespace BattleLib.Components.GraphicComponents
             SetComponents(widget, border);
         }
 
-        void SetComponents(TableWidget<T> widget, IWidget border)
+        private void SetComponents(TableWidget<T> widget, IWidget border)
         {
             tableWidget = widget;
             borderWidget = border;

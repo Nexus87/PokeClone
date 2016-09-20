@@ -7,7 +7,7 @@ using System.Reflection;
 
 namespace GameEngine
 {
-    class GameEngineModule : IModule
+    internal class GameEngineModule : IModule
     {
         private GraphicResources resources;
 

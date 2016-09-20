@@ -11,7 +11,6 @@ namespace GameEngineTest.Graphics
     [TestFixture]
     public class AbstractGraphicComponentTest : IGraphicComponentTest
     {
-        private readonly Rectangle DUMMY_RECTANGLE = new Rectangle(10, 10, 10, 10);
         private Mock<AbstractGraphicComponent> CreateComponentMock()
         {
             var componentMock = new Mock<AbstractGraphicComponent>();

@@ -2,7 +2,7 @@
 
 namespace GameEngine.Graphics
 {
-    interface ITableGrid
+    internal interface ITableGrid
     {
         int Columns { get; set; }
         TableIndex? EndIndex { get; set; }

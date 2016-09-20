@@ -3,28 +3,26 @@ using GameEngine.Graphics;
 using GameEngine.Utils;
 using Microsoft.Xna.Framework;
 
-namespace BattleLib.GraphicComponents
+namespace BattleLib.Components.GraphicComponents
 {
-    public class HPResizeAnimation : IAnimation
+    public class HpResizeAnimation : IAnimation
     {
-        int currentHP;
-        readonly HPLine line;
-        readonly bool lower;
-        readonly int startHP;
-        readonly int targetHP;
+        private int currentHP;
+        private readonly HPLine line;
+        private readonly bool lower;
+        private readonly int targetHP;
 
-        public HPResizeAnimation(int startHP, int targetHP, HPLine line)
+        public HpResizeAnimation(int startHp, int targetHp, HPLine line)
         {
-            this.startHP = startHP;
-            this.targetHP = targetHP;
+            this.targetHP = targetHp;
             this.line = line;
-            currentHP = startHP;
+            currentHP = startHp;
 
-            lower = startHP > targetHP;
+            lower = startHp > targetHp;
         }
 
-        public HPResizeAnimation(int targetHP, HPLine line)
-            : this(line.Current, targetHP, line)
+        public HpResizeAnimation(int targetHp, HPLine line)
+            : this(line.Current, targetHp, line)
         {
         }
 
@@ -34,7 +32,7 @@ namespace BattleLib.GraphicComponents
         {
             if (targetHP == currentHP)
             {
-                AnimationFinished(this, null);
+                if (AnimationFinished != null) AnimationFinished(this, null);
                 currentHP = 0;
                 return;
             }

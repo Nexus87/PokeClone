@@ -9,7 +9,11 @@ namespace GameEngineTest.TestUtils
     public class TableViewMock : ITableView<TestType>
     {
         public virtual event EventHandler<TableResizeEventArgs> TableResized;
-        public event EventHandler<GraphicComponentSizeChangedEventArgs> PreferredSizeChanged;
+        public event EventHandler<GraphicComponentSizeChangedEventArgs> PreferredSizeChanged
+        {
+            add { throw new NotImplementedException(); }
+            remove { throw new NotImplementedException(); }
+        }
 
         public virtual event EventHandler<SelectionChangedEventArgs> SelectionChanged { add { } remove { } }
 
@@ -188,7 +192,11 @@ namespace GameEngineTest.TestUtils
             }
         }
 
-        public event EventHandler<VisibilityChangedEventArgs> VisibilityChanged;
+        public event EventHandler<VisibilityChangedEventArgs> VisibilityChanged
+        {
+            add { throw new NotImplementedException(); }
+            remove { throw new NotImplementedException(); }
+        }
 
         public bool IsVisible
         {

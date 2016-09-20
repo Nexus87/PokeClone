@@ -2,7 +2,7 @@
 
 namespace GameEngine
 {
-    interface IKeyboardManager
+    internal interface IKeyboardManager
     {
         bool IsKeyDown(Keys key);
         void Update();

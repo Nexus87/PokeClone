@@ -9,8 +9,8 @@ namespace GameEngine.Graphics.GUI
     public class GUIManager : IInputHandler
     {
         private IWidget FocusedWidget { get { return widgets.Count == 0 ? null : widgets.Last.Value; } }
-        readonly LinkedList<IWidget> widgets = new LinkedList<IWidget>();
-        readonly LinkedList<IWidget> notVisibleWidgets = new LinkedList<IWidget>();
+        private readonly LinkedList<IWidget> widgets = new LinkedList<IWidget>();
+        private readonly LinkedList<IWidget> notVisibleWidgets = new LinkedList<IWidget>();
 
         public void AddWidget(IWidget widget)
         {
@@ -24,7 +24,7 @@ namespace GameEngine.Graphics.GUI
                 notVisibleWidgets.AddLast(widget);
         }
 
-        void VisibilityChangedHandler(object sender, VisibilityChangedEventArgs e)
+        private void VisibilityChangedHandler(object sender, VisibilityChangedEventArgs e)
         {
             var widget = (IWidget)sender;
             if (e.Visible == false)

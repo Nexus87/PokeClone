@@ -52,7 +52,7 @@ namespace GameEngine.Graphics
             OrderComponents(components, realColumns, realRows);
         }
 
-        void OrderComponents(IEnumerable<IGraphicComponent> components, int realColumns, int realRows)
+        private void OrderComponents(IEnumerable<IGraphicComponent> components, int realColumns, int realRows)
         {
             float cellWidth = Width / realColumns;
             float cellHeight = Height / realRows;
@@ -67,7 +67,7 @@ namespace GameEngine.Graphics
             }
         }
 
-        void OrderRow(IEnumerable<IGraphicComponent> rowComponents, float currentY, float cellWidth, float cellHeight)
+        private void OrderRow(IEnumerable<IGraphicComponent> rowComponents, float currentY, float cellWidth, float cellHeight)
         {
             float currentX = XPosition;
             foreach (var c in rowComponents)
@@ -81,7 +81,7 @@ namespace GameEngine.Graphics
             }
         }
 
-        void SetComponentSize(IGraphicComponent c, float cellWidth, float cellHeight)
+        private void SetComponentSize(IGraphicComponent c, float cellWidth, float cellHeight)
         {
             if (c.HorizontalPolicy == ResizePolicy.Preferred)
                 c.Width = Math.Min(cellWidth, c.PreferredWidth);

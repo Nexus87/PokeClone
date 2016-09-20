@@ -16,7 +16,7 @@ namespace GameEngine.Graphics.GUI
         /// </summary>
         internal int cursorRow;
 
-        readonly ITableView<T> tableView;
+        private readonly ITableView<T> tableView;
 
         public TableWidget(int? visibleRows, int? visibleColumns, ITableModel<T> model, ITableRenderer<T> renderer, ITableSelectionModel selection) :
             this(visibleRows, visibleColumns, new TableView<T>(model, renderer, selection)) { }
@@ -267,7 +267,7 @@ namespace GameEngine.Graphics.GUI
             SelectCell(row, column);
         }
 
-        void SetEndCell(int row, int column)
+        private void SetEndCell(int row, int column)
         {
             var endRow = row + 1;
             var endColumn = column + 1;
@@ -279,7 +279,7 @@ namespace GameEngine.Graphics.GUI
             tableView.EndIndex = new TableIndex(endRow, endColumn);
         }
 
-        void SetStartCell(int row, int column)
+        private void SetStartCell(int row, int column)
         {
             var startRow = row;
             var startColumn = column;

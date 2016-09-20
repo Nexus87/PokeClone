@@ -1,13 +1,13 @@
-﻿using BattleLib.GraphicComponents;
-using GameEngine;
+﻿using GameEngine;
 using System;
+using BattleLib.Components.GraphicComponents;
 
 namespace BattleLib.Components
 {
     public class ShowMenuEvent : IEvent
     {
         public event EventHandler EventProcessed = delegate { };
-        readonly IGUIService service;
+        private readonly IGUIService service;
 
         public ShowMenuEvent(IGUIService service)
         {
@@ -20,7 +20,7 @@ namespace BattleLib.Components
             service.ShowMenu();
         }
 
-        void MenuShowedHandler(object sender, EventArgs e)
+        private void MenuShowedHandler(object sender, EventArgs e)
         {
             service.MenuShowed -= MenuShowedHandler;
             EventProcessed(this, EventArgs.Empty);

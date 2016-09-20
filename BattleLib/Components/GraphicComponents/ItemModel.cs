@@ -1,23 +1,26 @@
-﻿using Base;
-using GameEngine.Graphics;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Base;
+using GameEngine.Graphics;
 
-namespace BattleLib.GraphicComponents
+namespace BattleLib.Components.GraphicComponents
 {
     public class ItemModel : ITableModel<Item>
     {
         private int oldRowCount;
-        private Client player;
-        private IReadOnlyList<Item> items;
+        private readonly IReadOnlyList<Item> items;
 
-        public event EventHandler<DataChangedEventArgs<Item>> DataChanged;
+        public event EventHandler<DataChangedEventArgs<Item>> DataChanged
+        {
+            add {  }
+            remove {  }
+        }
+
         public event EventHandler<TableResizeEventArgs> SizeChanged;
 
         public ItemModel(Client player)
         {
-            this.player = player;
             items = player.Items;
             oldRowCount = items.Count;
 

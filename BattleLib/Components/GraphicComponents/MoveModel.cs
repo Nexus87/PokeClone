@@ -1,10 +1,10 @@
-﻿using Base;
+﻿using System;
+using System.Collections.Generic;
+using Base;
 using BattleLib.Components.BattleState;
 using GameEngine.Registry;
-using System;
-using System.Collections.Generic;
 
-namespace BattleLib.GraphicComponents
+namespace BattleLib.Components.GraphicComponents
 {
     [GameType]
     public class MoveModel : SingleDimensionTableModel<Move>
@@ -14,7 +14,7 @@ namespace BattleLib.GraphicComponents
         {}
         internal MoveModel(PokemonWrapper pokemon)
         {
-            items = new List<Move>{null, null, null, null};
+            Items = new List<Move>{null, null, null, null};
             
             pokemon.PokemonChanged += PokemonChangedHandler;
             if (pokemon.Pokemon != null && pokemon.Pokemon.Moves != null)

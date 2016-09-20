@@ -1,21 +1,20 @@
-﻿using Base.Data;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Base.Data;
 using BattleLib.Components.BattleState;
 using GameEngine;
 using GameEngine.Graphics;
-using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using BattleLib.Components.GraphicComponents;
 using GameEngine.Registry;
+using Microsoft.Xna.Framework;
 
-namespace BattleLib.GraphicComponents
+namespace BattleLib.Components.GraphicComponents
 {
     [GameService(typeof(IBattleGraphicController))]
     public class BattleGraphicController : AbstractGraphicComponent, IBattleGraphicController
     {
-        readonly Dictionary<ClientIdentifier, PokemonDataView> dataViews = new Dictionary<ClientIdentifier, PokemonDataView>();
-        readonly Dictionary<ClientIdentifier, PokemonSprite> sprites = new Dictionary<ClientIdentifier, PokemonSprite>();
+        private readonly Dictionary<ClientIdentifier, PokemonDataView> dataViews = new Dictionary<ClientIdentifier, PokemonDataView>();
+        private readonly Dictionary<ClientIdentifier, PokemonSprite> sprites = new Dictionary<ClientIdentifier, PokemonSprite>();
 
         public BattleGraphicController(ScreenConstants screen, 
             PlayerPokemonDataView playerView, AIPokemonDataView aiView, 
@@ -44,7 +43,12 @@ namespace BattleLib.GraphicComponents
             initPlayerGraphic(playerView, playerSprite, screen);
         }
 
-        public event EventHandler ConditionSet;
+        public event EventHandler ConditionSet
+        {
+            add { throw new NotImplementedException(); }
+            remove { throw new NotImplementedException(); }
+        }
+
         public event EventHandler OnHPSet;
         public event EventHandler OnPokemonSet;
 

@@ -4,11 +4,11 @@ using System.Collections.Generic;
 
 namespace GameEngine
 {
-    class InputComponent : IGameComponent
+    internal class InputComponent : IGameComponent
     {
-        IReadOnlyDictionary<Keys, CommandKeys> keyMap;
+        private IReadOnlyDictionary<Keys, CommandKeys> keyMap;
         internal IInputHandler handler;
-        IKeyboardManager manager;
+        private IKeyboardManager manager;
 
         internal InputComponent(IKeyboardManager manager, IReadOnlyDictionary<Keys, CommandKeys> keyMap)
         {

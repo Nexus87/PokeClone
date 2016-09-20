@@ -17,7 +17,7 @@ namespace GameEngine
     /// <see cref="Microsoft.Xna.Framework.Graphics.SpriteBatch"/>
     public interface ISpriteBatch : IDisposable
     {
-        /// <see cref="Microsoft.Xna.Framework.Graphics.SpriteBatch.GraphicsDevice"/>
+        /// <see cref="Microsoft.Xna.Framework.Graphics.GraphicsResource.GraphicsDevice"/>
         GraphicsDevice GraphicsDevice { get; }
         /// <see cref="Microsoft.Xna.Framework.Graphics.SpriteBatch.Begin"/>
         void Begin(SpriteSortMode sortMode = SpriteSortMode.Deferred, BlendState blendState = null, SamplerState samplerState = null, DepthStencilState depthStencilState = null, RasterizerState rasterizerState = null, Effect effect = null, Matrix? transformMatrix = null);
