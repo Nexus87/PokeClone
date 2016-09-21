@@ -1,6 +1,7 @@
 ﻿using System;
 using GameEngine.Registry;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace GameEngine.Graphics
 {
@@ -21,7 +22,10 @@ namespace GameEngine.Graphics
 
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)
         {
-            batch.Draw(spriteSheet, destinationRectangle, sourceRectangle, Color);
+            //batch.Draw(spriteSheet, destinationRectangle, sourceRectangle, Color);
+            batch.Draw(spriteSheet, destinationRectangle, null, Color);
+            var scale = new Vector2(128/16, 128/16);
+            batch.Draw(spriteSheet, Position, sourceRectangle, Color.White, 0, Vector2.Zero, scale, SpriteEffects.None, 0);
         }
 
         protected override void Update()

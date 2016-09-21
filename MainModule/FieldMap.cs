@@ -14,18 +14,33 @@ namespace MainModule
         private readonly float textureSize;
         private readonly Container container = new Container();
 
-        private readonly float screenCenterX;
-        private readonly float screenCenterY;
+        private float screenCenterX;
+        private float screenCenterY;
+        private IMapLoader loader;
+        private ScreenConstants screenConstants;
 
         public FieldMap(IMapLoader loader, ScreenConstants screenConstants)
-            : this(loader.GetFieldTextures(), 32.0f, screenConstants)
+            : this(loader, 128.0f, screenConstants)
         {
         }
 
-        internal FieldMap(ITable<IGraphicComponent> fieldTextures, float textureSize, ScreenConstants screenConstants)
+        internal FieldMap(IMapLoader loader, float textureSize, ScreenConstants screenConstants)
         {
-            FieldSize = new FieldSize(fieldTextures.Columns, fieldTextures.Rows);
             this.textureSize = textureSize;
+            this.loader = loader;
+            this.screenConstants = screenConstants;
+        }
+
+        protected override void DrawComponent(GameTime time, ISpriteBatch batch)
+        {
+            container.Draw(time, batch);
+        }
+
+        public override void Setup()
+        {
+            loader.LoadMap();
+            var fieldTextures = loader.GetFieldTextures();
+            FieldSize = new FieldSize(fieldTextures.Columns, fieldTextures.Rows);
 
             TotalHeight = fieldTextures.Rows * textureSize;
             TotalWidth = fieldTextures.Columns * textureSize;
@@ -43,15 +58,7 @@ namespace MainModule
 
             screenCenterX = centerX - (textureSize / 2.0f);
             screenCenterY = centerY - (textureSize / 2.0f);
-        }
 
-        protected override void DrawComponent(GameTime time, ISpriteBatch batch)
-        {
-            container.Draw(time, batch);
-        }
-
-        public override void Setup()
-        {
             container.Setup();
         }
 

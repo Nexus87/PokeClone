@@ -15,7 +15,7 @@ namespace MainModule
 
         public void Start(IGameComponentManager manager, IGameTypeRegistry registry)
         {
-            throw new System.NotImplementedException();
+            manager.Graphic = registry.ResolveType<WorldScreen>();
         }
 
         public void Stop(IGameComponentManager engine)

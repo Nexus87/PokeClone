@@ -6,6 +6,7 @@ using GameEngine;
 using GameEngine.Utils;
 using GameEngineTest.TestUtils;
 using MainModule;
+using Moq;
 using NUnit.Framework;
 using Color = Microsoft.Xna.Framework.Color;
 
@@ -166,7 +167,11 @@ namespace MainModuleTest
             {
                 screenConstants = DefaultScreenConstant;
             }
-            return new FieldMap(componentTable, textureSize, screenConstants);
+            var loaderMock = new Mock<IMapLoader>();
+            loaderMock.Setup(o => o.GetFieldTextures()).Returns(componentTable);
+            var map = new FieldMap(loaderMock.Object, textureSize, screenConstants);
+            map.Setup();
+            return map;
         }
 
     }
