@@ -20,6 +20,7 @@
     <Compile Include="DummyMapLoader.cs" />
     <Compile Include="FieldMap.cs" />
     <Compile Include="FieldSize.cs" />
+    <Compile Include="FileSpriteSheetProvider.cs" />
     <Compile Include="GameInputHandler.cs" />
     <Compile Include="GameStateComponent.cs" />
     <Compile Include="IGameStateComponent.cs" />

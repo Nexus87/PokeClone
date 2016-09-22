@@ -92,6 +92,7 @@
     <Compile Include="InputComponent.cs" />
     <Compile Include="ISpriteBatch.cs" />
     <Compile Include="ISpriteFont.cs" />
+    <Compile Include="ISpriteSheetProvider.cs" />
     <Compile Include="ITexture2D.cs" />
     <Compile Include="KeyboardManager.cs" />
     <Compile Include="PokeEngine.cs" />
