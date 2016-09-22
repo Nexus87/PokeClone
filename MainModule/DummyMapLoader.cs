@@ -12,23 +12,23 @@ namespace MainModule
         private SpriteSheetFactory factory;
         private Table<IGraphicComponent> table;
 
-        public DummyMapLoader(ContentManager contentManager)
+        public DummyMapLoader(ContentManager contentManager, SpriteSheetFactory factory)
         {
-            factory = new SpriteSheetFactory("Tileset", "Content/TilesetMap.txt", contentManager);
+            this.factory = factory;
         }
         public void LoadMap()
         {
             factory.Setup();
             table = new Table<IGraphicComponent>();
-            table[0, 0] = factory.CreateSpriteSheetTexture("Tile33");
-            table[0, 1] = factory.CreateSpriteSheetTexture("Tile34");
-            table[0, 2] = factory.CreateSpriteSheetTexture("Tile35");
-            table[1, 0] = factory.CreateSpriteSheetTexture("Tile43");
-            table[1, 1] = factory.CreateSpriteSheetTexture("Tile44");
-            table[1, 2] = factory.CreateSpriteSheetTexture("Tile45");
-            table[2, 0] = factory.CreateSpriteSheetTexture("Tile53");
-            table[2, 1] = factory.CreateSpriteSheetTexture("Tile54");
-            table[2, 2] = factory.CreateSpriteSheetTexture("Tile55");
+            table[0, 0] = factory.CreateSpriteSheetTexture("Tile0303");
+            table[0, 1] = factory.CreateSpriteSheetTexture("Tile0304");
+            table[0, 2] = factory.CreateSpriteSheetTexture("Tile0305");
+            table[1, 0] = factory.CreateSpriteSheetTexture("Tile0403");
+            table[1, 1] = factory.CreateSpriteSheetTexture("Tile0404");
+            table[1, 2] = factory.CreateSpriteSheetTexture("Tile0405");
+            table[2, 0] = factory.CreateSpriteSheetTexture("Tile0503");
+            table[2, 1] = factory.CreateSpriteSheetTexture("Tile0504");
+            table[2, 2] = factory.CreateSpriteSheetTexture("Tile0505");
         }
 
         public ITable<IGraphicComponent> GetFieldTextures()

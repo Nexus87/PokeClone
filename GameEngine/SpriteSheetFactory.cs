@@ -2,51 +2,40 @@
 using System.IO;
 using System.Linq;
 using GameEngine.Graphics;
+using GameEngine.Registry;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace GameEngine
 {
+    [GameType]
     public class SpriteSheetFactory
     {
-        private readonly string textureName;
-        private readonly string spriteSheetDictionary;
-        private readonly ContentManager contentManager;
+        private readonly ISpriteSheetProvider provider;
         private readonly Dictionary<string, Rectangle> rectangles = new Dictionary<string, Rectangle>();
-        private XNATexture2D spriteSheet;
+        private ITexture2D spriteSheet;
 
-        public SpriteSheetFactory(string textureName, string spriteSheetDictionary, ContentManager contentManager)
+        public SpriteSheetFactory(ISpriteSheetProvider provider)
         {
-            this.textureName = textureName;
-            this.spriteSheetDictionary = spriteSheetDictionary;
-            this.contentManager = contentManager;
+            this.provider = provider;
         }
 
         public void Setup()
         {
-            spriteSheet = new XNATexture2D(contentManager.Load<Texture2D>(textureName));
-            var tmpList = new List<string>();
-            using (var stream = new StreamReader(spriteSheetDictionary))
-            {
-                string line;
-                while ((line = stream.ReadLine()) != null)
-                    tmpList.Add(line);
-            }
+            spriteSheet = provider.GetTexture();
+            var splitted = provider.GetMapping();
 
-            var splitted = tmpList.Select(
-                s => new {key = s.Split(';')[0], row = int.Parse(s.Split(';')[1]), column = int.Parse(s.Split(';')[2])}
-            ).ToList();
+            var rows = splitted.Values.Max(t => t.Row) + 1;
+            var columns = splitted.Values.Max(t => t.Column) + 1;
 
-            var rows = splitted.Max(t => t.row) + 1;
-            var columns = splitted.Max(t => t.column) + 1;
             var textureHeight = ((float) spriteSheet.Height) / rows;
             var textureWidth = ((float) spriteSheet.Width) / columns;
 
             foreach (var entry in splitted)
             {
-                var sourceRectangle = new Rectangle((int) (entry.column * textureWidth), (int) (entry.row * textureHeight), (int) textureWidth, (int) textureHeight);
-                rectangles[entry.key] = sourceRectangle;
+                var sourceRectangle = new Rectangle((int) (entry.Value.Column * textureWidth), (int) (entry.Value.Row * textureHeight), (int) textureWidth, (int) textureHeight);
+                rectangles[entry.Key] = sourceRectangle;
             }
         }
 
