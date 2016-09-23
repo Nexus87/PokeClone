@@ -4,7 +4,7 @@ using GameEngine.Graphics;
 using GameEngine.Registry;
 using Microsoft.Xna.Framework;
 
-namespace MainModule
+namespace MainModule.Graphics
 {
     [GameService(typeof(IMapController))]
     public class FieldMapController : AbstractGraphicComponent, IMapController
@@ -44,7 +44,6 @@ namespace MainModule
             screenCenterY = centerY - (map.TextureSize / 2.0f);
         }
 
-        public FieldSize FieldSize { get { return map.FieldSize; } }
         internal int CenteredFieldX { get; set; }
         internal int CenteredFieldY { get; set; }
 

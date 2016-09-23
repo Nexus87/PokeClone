@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using GameEngine;
 using GameEngine.Registry;
+using MainModule.Graphics;
 using Microsoft.Xna.Framework.Content;
 
 namespace MainModule

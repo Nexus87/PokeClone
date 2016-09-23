@@ -1,16 +1,12 @@
 ﻿using GameEngineTest.TestUtils;
 using MainModule;
+using MainModule.Graphics;
 
 namespace MainModuleTest.Utils
 {
     public class MapControllerMock : GraphicComponentMock, IMapController
     {
-        public MapControllerMock(FieldSize fieldSize)
-        {
-            FieldSize = fieldSize;
-        }
 
-        public FieldSize FieldSize { get; set; }
         public void CenterField(int fieldX, int fieldY)
         {
         }

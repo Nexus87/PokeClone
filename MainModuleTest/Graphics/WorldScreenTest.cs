@@ -2,11 +2,12 @@
 using GameEngine.Graphics;
 using GameEngineTest.TestUtils;
 using MainModule;
+using MainModule.Graphics;
 using MainModuleTest.Utils;
 using Moq;
 using NUnit.Framework;
 
-namespace MainModuleTest
+namespace MainModuleTest.Graphics
 {
     [TestFixture]
     public class WorldScreenTest
@@ -49,7 +50,7 @@ namespace MainModuleTest
 
         private static MapControllerMock CreateMap(int width, int height)
         {
-            var mock = new MapControllerMock(new FieldSize(width, height));
+            var mock = new MapControllerMock();
             return mock;
         }
 

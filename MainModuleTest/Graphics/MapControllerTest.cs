@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using GameEngine;
+﻿using GameEngine;
 using GameEngine.Utils;
 using GameEngineTest.TestUtils;
 using MainModule;
+using MainModule.Graphics;
 using Moq;
 using NUnit.Framework;
 using Color = Microsoft.Xna.Framework.Color;
 
-namespace MainModuleTest
+namespace MainModuleTest.Graphics
 {
     [TestFixture]
     public class MapControllerTest
@@ -98,7 +96,6 @@ namespace MainModuleTest
         private static Mock<IMap> CreateMapMock(int fieldWidth, int fieldHeight, float textureSize = 32.0f)
         {
             var mock = new Mock<IMap>();
-            mock.Setup(m => m.FieldSize).Returns(new FieldSize(fieldWidth, fieldHeight));
             mock.Setup(m => m.TextureSize).Returns(textureSize);
             mock.Setup(m => m.GetXPositionOfColumn(It.IsAny<int>())).Returns<float>(column => column * textureSize);
             mock.Setup(m => m.GetYPositionOfRow(It.IsAny<int>())).Returns<float>(row => row * textureSize);

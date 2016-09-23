@@ -1,4 +1,4 @@
-﻿namespace MainModule
+﻿namespace MainModule.Graphics
 {
     public class FieldSize
     {

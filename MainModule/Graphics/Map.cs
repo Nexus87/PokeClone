@@ -4,7 +4,7 @@ using GameEngine.Registry;
 using GameEngine.Utils;
 using Microsoft.Xna.Framework;
 
-namespace MainModule
+namespace MainModule.Graphics
 {
     [GameType]
     public class Map : AbstractGraphicComponent, IMap
@@ -17,7 +17,7 @@ namespace MainModule
         public Map(IMapLoader loader, float textureSize = 128.0f)
         {
             this.loader = loader;
-            this.TextureSize = textureSize;
+            TextureSize = textureSize;
         }
 
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)
@@ -36,7 +36,6 @@ namespace MainModule
             loader.LoadMap();
             var fieldTextures = loader.GetFieldTextures();
             InitContainer(fieldTextures);
-            FieldSize = new FieldSize(fieldTextures.Columns, fieldTextures.Rows);
 
             var totalHeight = fieldTextures.Rows * TextureSize;
             var totalWidth = fieldTextures.Columns * TextureSize;
@@ -65,6 +64,5 @@ namespace MainModule
             return row * TextureSize;
         }
 
-        public FieldSize FieldSize { get; private set; }
     }
 }

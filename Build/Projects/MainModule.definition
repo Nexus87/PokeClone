@@ -18,22 +18,23 @@
   <Files>
     <Compile Include="Direction.cs" />
     <Compile Include="DummyMapLoader.cs" />
-    <Compile Include="FieldMapController.cs" />
-    <Compile Include="FieldSize.cs" />
     <Compile Include="FileSpriteSheetProvider.cs" />
     <Compile Include="GameInputHandler.cs" />
     <Compile Include="GameStateComponent.cs" />
+    <Compile Include="Graphics\CharacterSprite.cs" />
+    <Compile Include="Graphics\FieldMapController.cs" />
+    <Compile Include="Graphics\FieldSize.cs" />
+    <Compile Include="Graphics\IMap.cs" />
+    <Compile Include="Graphics\IMapController.cs" />
+    <Compile Include="Graphics\Map.cs" />
+    <Compile Include="Graphics\WorldScreen.cs" />
     <Compile Include="IGameStateComponent.cs" />
-    <Compile Include="IMap.cs" />
-    <Compile Include="IMapController.cs" />
     <Compile Include="IMapLoader.cs" />
     <Compile Include="IWorldEvent.cs" />
     <Compile Include="MainModule.cs" />
-    <Compile Include="Map.cs" />
     <Compile Include="PlayerSprite.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WorldObject.cs" />
-    <Compile Include="WorldScreen.cs" />
     <None Include="packages.config" />
   </Files>
 </Project>

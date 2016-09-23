@@ -4,7 +4,7 @@ using GameEngine.Graphics;
 using GameEngine.Registry;
 using Microsoft.Xna.Framework;
 
-namespace MainModule
+namespace MainModule.Graphics
 {
     [GameService(typeof(WorldScreen))]
     public class WorldScreen : AbstractGraphicComponent
