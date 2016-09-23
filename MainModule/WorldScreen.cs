@@ -10,19 +10,19 @@ namespace MainModule
     public class WorldScreen : AbstractGraphicComponent
     {
         private readonly IGraphicComponent player;
-        private readonly IMap map;
+        private readonly IMapControler mapControler;
         private readonly ScreenConstants constants;
 
 
-        public WorldScreen(TextureBox player, IMap map, ScreenConstants constants)
-            : this((IGraphicComponent) player, map, constants)
+        public WorldScreen(TextureBox player, IMapControler mapControler, ScreenConstants constants)
+            : this((IGraphicComponent) player, mapControler, constants)
         {
         }
 
-        internal WorldScreen(IGraphicComponent player, IMap map, ScreenConstants constants)
+        internal WorldScreen(IGraphicComponent player, IMapControler mapControler, ScreenConstants constants)
         {
             this.player = player;
-            this.map = map;
+            this.mapControler = mapControler;
             this.constants = constants;
         }
 
@@ -40,19 +40,19 @@ namespace MainModule
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)
         {
             player.Draw(time, batch);
-            map.Draw(time, batch);
+            mapControler.Draw(time, batch);
         }
 
         public override void Setup()
         {
             player.Setup();
-            map.Setup();
-            map.CenterField(0, 0);
+            mapControler.Setup();
+            mapControler.CenterField(0, 0);
         }
 
         public void PlayerMove(Direction direction)
         {
-            map.MoveMap(ReverseDirection(direction));
+            mapControler.MoveMap(ReverseDirection(direction));
         }
 
         private static Direction ReverseDirection(Direction direction)

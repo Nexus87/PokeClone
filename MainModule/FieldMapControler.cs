@@ -1,71 +1,50 @@
 ﻿using System;
-using System.Linq;
 using GameEngine;
 using GameEngine.Graphics;
 using GameEngine.Registry;
-using GameEngine.Utils;
 using Microsoft.Xna.Framework;
 
 namespace MainModule
 {
-    [GameService(typeof(IMap))]
-    public class FieldMap : AbstractGraphicComponent, IMap
+    [GameService(typeof(IMapControler))]
+    public class FieldMapControler : AbstractGraphicComponent, IMapControler
     {
-        private readonly float textureSize;
-        private readonly Container container = new Container();
-
         private float screenCenterX;
         private float screenCenterY;
-        private IMapLoader loader;
-        private ScreenConstants screenConstants;
+        private readonly ScreenConstants screenConstants;
+        private readonly IMap map;
 
-        public FieldMap(IMapLoader loader, ScreenConstants screenConstants)
-            : this(loader, 128.0f, screenConstants)
-        {
-        }
+        public FieldMapControler(Map map, ScreenConstants screenConstants) :
+            this((IMap) map, screenConstants)
+        {}
 
-        internal FieldMap(IMapLoader loader, float textureSize, ScreenConstants screenConstants)
+        internal FieldMapControler(IMap map, ScreenConstants screenConstants)
         {
-            this.textureSize = textureSize;
-            this.loader = loader;
+            this.map = map;
             this.screenConstants = screenConstants;
         }
 
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)
         {
-            container.Draw(time, batch);
+            map.Draw(time, batch);
         }
 
         public override void Setup()
         {
-            loader.LoadMap();
-            var fieldTextures = loader.GetFieldTextures();
-            FieldSize = new FieldSize(fieldTextures.Columns, fieldTextures.Rows);
+            CalculateScreenCenter();
+            map.Setup();
+        }
 
-            TotalHeight = fieldTextures.Rows * textureSize;
-            TotalWidth = fieldTextures.Columns * textureSize;
-
-            container.SetCoordinates(0, 0, TotalWidth, TotalHeight);
-            fieldTextures.
-                EnumerateAlongRows().
-                ToList().
-                ForEach(c => container.AddComponent(c));
-
-            container.Layout = new GridLayout(fieldTextures.Rows, fieldTextures.Columns);
-
+        private void CalculateScreenCenter()
+        {
             var centerX = screenConstants.ScreenWidth / 2.0f;
             var centerY = screenConstants.ScreenHeight / 2.0f;
 
-            screenCenterX = centerX - (textureSize / 2.0f);
-            screenCenterY = centerY - (textureSize / 2.0f);
-
-            container.Setup();
+            screenCenterX = centerX - (map.TextureSize / 2.0f);
+            screenCenterY = centerY - (map.TextureSize / 2.0f);
         }
 
-
-        public FieldSize FieldSize { get; private set; }
-        public float TotalWidth { get; private set; }
-        public float TotalHeight { get; private set; }
+        public FieldSize FieldSize { get { return map.FieldSize; } }
         internal int CenteredFieldX { get; set; }
         internal int CenteredFieldY { get; set; }
 
@@ -82,8 +61,8 @@ namespace MainModule
 
         private void DoCenterField(int fieldX, int fieldY)
         {
-            container.XPosition = screenCenterX - fieldX * textureSize;
-            container.YPosition = screenCenterY - fieldY * textureSize;
+            map.XPosition = screenCenterX - map.GetXPositionOfColumn(fieldX);
+            map.YPosition = screenCenterY - map.GetYPositionOfRow(fieldY);
 
             CenteredFieldX = fieldX;
             CenteredFieldY = fieldY;

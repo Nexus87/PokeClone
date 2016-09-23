@@ -4,8 +4,9 @@ namespace MainModule
 {
     public interface IMap : IGraphicComponent
     {
+        float TextureSize { get; }
         FieldSize FieldSize { get; }
-        void CenterField(int fieldX, int fieldY);
-        void MoveMap(Direction moveDirection);
+        float GetXPositionOfColumn(int column);
+        float GetYPositionOfRow(int row);
     }
 }

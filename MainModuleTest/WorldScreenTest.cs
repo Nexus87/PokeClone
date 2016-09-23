@@ -32,7 +32,7 @@ namespace MainModuleTest
         public void PlayerMove_GivenDirection_MapIsMovedInExpectedDirection(Direction moveDirection, Direction expectedMapMoveDirection)
         {
             var player = new GraphicComponentMock();
-            var mapMock = new Mock<IMap>();
+            var mapMock = new Mock<IMapControler>();
             var screen = CreateWorldScreen(player, mapMock.Object);
 
             screen.Setup();
@@ -40,24 +40,24 @@ namespace MainModuleTest
 
             mapMock.Verify(m => m.MoveMap(expectedMapMoveDirection), Times.Once());
         }
-        private static MapMock CreateMap()
+        private static MapControlerMock CreateMap()
         {
             const int defaultWidht = 10;
             const int defaultHeight = 10;
             return CreateMap(defaultWidht, defaultHeight);
         }
 
-        private static MapMock CreateMap(int width, int height)
+        private static MapControlerMock CreateMap(int width, int height)
         {
-            var mock = new MapMock(new FieldSize(width, height));
+            var mock = new MapControlerMock(new FieldSize(width, height));
             return mock;
         }
 
-        private static WorldScreen CreateWorldScreen(IGraphicComponent player, IMap map, ScreenConstants screenConstants = null)
+        private static WorldScreen CreateWorldScreen(IGraphicComponent player, IMapControler mapControler, ScreenConstants screenConstants = null)
         {
             if(screenConstants == null)
                 screenConstants = new ScreenConstants();
-            return new WorldScreen(player, map, screenConstants);
+            return new WorldScreen(player, mapControler, screenConstants);
         }
     }
 }
