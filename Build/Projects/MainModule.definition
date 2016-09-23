@@ -18,14 +18,14 @@
   <Files>
     <Compile Include="Direction.cs" />
     <Compile Include="DummyMapLoader.cs" />
-    <Compile Include="FieldMapControler.cs" />
+    <Compile Include="FieldMapController.cs" />
     <Compile Include="FieldSize.cs" />
     <Compile Include="FileSpriteSheetProvider.cs" />
     <Compile Include="GameInputHandler.cs" />
     <Compile Include="GameStateComponent.cs" />
     <Compile Include="IGameStateComponent.cs" />
     <Compile Include="IMap.cs" />
-    <Compile Include="IMapControler.cs" />
+    <Compile Include="IMapController.cs" />
     <Compile Include="IMapLoader.cs" />
     <Compile Include="IWorldEvent.cs" />
     <Compile Include="MainModule.cs" />

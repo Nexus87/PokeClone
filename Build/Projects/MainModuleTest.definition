@@ -21,8 +21,8 @@
     <Reference Include="Castle.Core" />
   </References>
   <Files>
-    <Compile Include="MapTest.cs" />
-    <Compile Include="Utils\MapControlerMock.cs" />
+    <Compile Include="MapControllerTest.cs" />
+    <Compile Include="Utils\MapControllerMock.cs" />
     <Compile Include="WorldScreenTest.cs" />
     <None Include="packages.config" />
   </Files>
