@@ -1,8 +1,4 @@
-﻿using GameEngine.Registry;
-using Microsoft.Xna.Framework;
-using System;
-
-namespace GameEngine.Graphics
+﻿namespace GameEngine.Graphics
 {
     internal class ItemBox : SelectableContainer<ITextGraphicComponent>, ISelectableTextComponent
     {

@@ -1,5 +1,4 @@
-﻿using System;
-namespace GameEngine.Graphics
+﻿namespace GameEngine.Graphics
 {
     /// <summary>
     /// This interface represents a ITextGraphicComponent, that is able to

@@ -1,6 +1,5 @@
 ﻿using GameEngine.Registry;
 using GameEngine.Utils;
-using System;
 
 namespace GameEngine.Graphics
 {
