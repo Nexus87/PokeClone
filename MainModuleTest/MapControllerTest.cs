@@ -12,13 +12,14 @@ using Color = Microsoft.Xna.Framework.Color;
 namespace MainModuleTest
 {
     [TestFixture]
-    public class MapTest
+    public class MapControllerTest
     {
         private static readonly ScreenConstants DefaultScreenConstant = new ScreenConstants(100, 100, Color.Black);
 
 
         [TestCase(100, 100, 10, 10, 10.0f, 1, 3, 45.0f - 10.0f, 45.0f - 3 * 10.0f)]
         [TestCase(200,  50, 5, 20, 10.0f, 1, 3, 95.0f - 10.0f, 20.0f - 3 * 10.0f)]
+        [TestCase(200, 50, 5, 20, 10.0f, -1, -1, 95.0f + 10.0f, 20.0f +  10.0f)]
         public void CenterField_AtGivenField_MapPositionAsExpected(
             float screenWidth, float screenHeight,
             int fieldWidth, int fieldHeight,
@@ -74,10 +75,10 @@ namespace MainModuleTest
         [TestCase(10, 21, 2, 2, 1, 2, Direction.Left)]
         [TestCase(10, 21, 2, 2, 3, 2, Direction.Right)]
         [TestCase(10, 21, 2, 2, 2, 3, Direction.Down)]
-        [TestCase(1, 1, 0, 0, 0, 0, Direction.Down)]
-        [TestCase(1, 1, 0, 0, 0, 0, Direction.Left)]
-        [TestCase(1, 1, 0, 0, 0, 0, Direction.Right)]
-        [TestCase(1, 1, 0, 0, 0, 0, Direction.Up)]
+        [TestCase(1, 1, 0, 0, 0, 1, Direction.Down)]
+        [TestCase(1, 1, 0, 0, -1, 0, Direction.Left)]
+        [TestCase(1, 1, 0, 0, 1, 0, Direction.Right)]
+        [TestCase(1, 1, 0, 0, 0, -1, Direction.Up)]
         public void MoveMap_StartingAtAGivenPoint_MapIsMoved(
             int fieldWidth, int fieldHeight,
             int startingFieldX, int startingFieldY,

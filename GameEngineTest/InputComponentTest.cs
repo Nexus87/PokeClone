@@ -32,7 +32,7 @@ namespace GameEngineTest
             var managerMock = CreateInputManagerFake(keys.First());
             var component = new InputComponent(managerMock, map);
 
-            component.handler = handlerMock.Object;    
+            component.Handler = handlerMock.Object;
 
             // Assert the that only the first key is detected
             component.Update();
@@ -46,7 +46,7 @@ namespace GameEngineTest
             var managerMock = CreateInputManagerFake(keys.First());
             var component = new InputComponent(managerMock, map);
 
-            component.handler = handlerMock.Object;
+            component.Handler = handlerMock.Object;
 
             // Assert the that only the first key is detected
             component.Update();
@@ -61,7 +61,7 @@ namespace GameEngineTest
             var managerMock = CreateInputManagerFake(keys.ToArray());
             var component = new InputComponent(managerMock, map);
 
-            component.handler = handlerMock.Object;
+            component.Handler = handlerMock.Object;
 
 
             // Assert that every test key is detected once
@@ -77,7 +77,7 @@ namespace GameEngineTest
             var managerMock = CreateInputManagerFake(keys.ToArray());
             var component = new InputComponent(managerMock, map);
 
-            component.handler = handlerMock.Object;
+            component.Handler = handlerMock.Object;
 
 
             // Assert that every test key is detected once
@@ -95,7 +95,7 @@ namespace GameEngineTest
             var managerMock = CreateInputManagerFake(Keys.D);
             var component = new InputComponent(managerMock, map);
 
-            component.handler = handlerMock.Object;
+            component.Handler = handlerMock.Object;
 
 
             // Make sure, that no test key was detected
@@ -111,7 +111,7 @@ namespace GameEngineTest
             var managerMock = CreateInputManagerFake(Keys.D, Keys.Down);
             var component = new InputComponent(managerMock, map);
 
-            component.handler = handlerMock.Object;
+            component.Handler = handlerMock.Object;
 
             component.Update();
 

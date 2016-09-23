@@ -7,5 +7,6 @@ namespace GameEngine
         void AddGameComponent(IGameComponent component);
         void RemoveGameComponent(IGameComponent component);
         IGraphicComponent Graphic { get; set; }
+        IInputHandler InputHandler { get; set; }
     }
 }

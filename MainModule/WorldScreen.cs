@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 
 namespace MainModule
 {
-    [GameType]
+    [GameService(typeof(WorldScreen))]
     public class WorldScreen : AbstractGraphicComponent
     {
         private readonly IGraphicComponent player;

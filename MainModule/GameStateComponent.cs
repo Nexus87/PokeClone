@@ -1,8 +1,10 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GameEngine.Registry;
+using Microsoft.Xna.Framework;
 using IGameComponent = GameEngine.IGameComponent;
 
 namespace MainModule
 {
+    [GameService(typeof(IGameStateComponent))]
     public class GameStateComponent : IGameComponent, IGameStateComponent
     {
         public void Move(Direction direction){}

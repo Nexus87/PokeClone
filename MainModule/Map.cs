@@ -1,6 +1,7 @@
 ﻿using GameEngine;
 using GameEngine.Graphics;
 using GameEngine.Registry;
+using GameEngine.Utils;
 using Microsoft.Xna.Framework;
 
 namespace MainModule
@@ -34,20 +35,24 @@ namespace MainModule
         {
             loader.LoadMap();
             var fieldTextures = loader.GetFieldTextures();
+            InitContainer(fieldTextures);
             FieldSize = new FieldSize(fieldTextures.Columns, fieldTextures.Rows);
 
-            TotalHeight = fieldTextures.Rows * TextureSize;
-            TotalWidth = fieldTextures.Columns * TextureSize;
+            var totalHeight = fieldTextures.Rows * TextureSize;
+            var totalWidth = fieldTextures.Columns * TextureSize;
 
-            container.SetCoordinates(0, 0, TotalWidth, TotalHeight);
+            Height = totalHeight;
+            Width = totalWidth;
+        }
+
+        private void InitContainer(ITable<IGraphicComponent> fieldTextures)
+        {
+
             foreach (var component in fieldTextures.EnumerateAlongRows())
                 container.AddComponent(component);
 
             container.Layout = new GridLayout(fieldTextures.Rows, fieldTextures.Columns);
-
             container.Setup();
-            Height = TotalHeight;
-            Width = TotalWidth;
         }
 
         public float GetXPositionOfColumn(int column)
@@ -59,9 +64,6 @@ namespace MainModule
         {
             return row * TextureSize;
         }
-
-        private float TotalWidth { get; set; }
-        private float TotalHeight { get; set; }
 
         public FieldSize FieldSize { get; private set; }
     }

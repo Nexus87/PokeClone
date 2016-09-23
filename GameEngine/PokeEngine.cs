@@ -10,7 +10,7 @@ namespace GameEngine
 {
     public class PokeEngine : Game, IEngineInterface, IGameComponentManager
     {
-        public IModuleRegistry registry;
+        public IModuleRegistry Registry;
         private readonly GraphicResources factory;
         private GUIManager GuiManager { get; set; }
 
@@ -19,10 +19,11 @@ namespace GameEngine
         private Screen screen;
 
         private string startModule;
+        private IInputHandler inputHandler;
 
         public PokeEngine(Configuration config)         {
             config.CheckNull("config");
-            registry = new AutofacModuleRegistry();
+            Registry = new AutofacModuleRegistry();
             factory = new GraphicResources(config, Content);
 
             new GraphicsDeviceManager(this);
@@ -32,7 +33,7 @@ namespace GameEngine
 
             Content.RootDirectory = "Content";
 
-            registry.RegisterModule(new GameEngineModule(factory));
+            Registry.RegisterModule(new GameEngineModule(factory));
         }
 
         public IGraphicComponent Graphic { get; set; }
@@ -60,23 +61,30 @@ namespace GameEngine
             Components.Remove(res);
         }
 
-        private IInputHandler InputHandler
+        public IInputHandler InputHandler
         {
             set
             {
-                if (input.handler == null)
-                    input.handler = value;
+                inputHandler = value;
+                if (input.Handler == null)
+                    input.Handler = inputHandler;
             }
             get
             {
-                return input.handler;
+                return inputHandler;
             }
         }
 
         public void ShowGUI()
         {
             GuiManager.Show();
-            input.handler = GuiManager;
+            input.Handler = GuiManager;
+        }
+
+        public void CloseGUI()
+        {
+            GuiManager.Close();
+            input.Handler = inputHandler;
         }
 
         protected override void Draw(GameTime gameTime)
@@ -90,15 +98,15 @@ namespace GameEngine
         protected override void Initialize()
         {
             base.Initialize();
-            screen = new Screen(registry.TypeRegistry.ResolveType<ScreenConstants>(), GraphicsDevice);
-            GuiManager = registry.TypeRegistry.ResolveType<GUIManager>();
-            input = registry.TypeRegistry.ResolveType<InputComponent>();
+            screen = new Screen(Registry.TypeRegistry.ResolveType<ScreenConstants>(), GraphicsDevice);
+            GuiManager = Registry.TypeRegistry.ResolveType<GUIManager>();
+            input = Registry.TypeRegistry.ResolveType<InputComponent>();
 
             Window.ClientSizeChanged += delegate { screen.WindowsResizeHandler(Window.ClientBounds.Width, Window.ClientBounds.Height); };
             screen.WindowsResizeHandler(Window.ClientBounds.Width, Window.ClientBounds.Height); 
 
-            registry.StartModule("GameEngine", this);
-            registry.StartModule(startModule, this);
+            Registry.StartModule("GameEngine", this);
+            Registry.StartModule(startModule, this);
 
             if (Graphic == null)
                 throw new InvalidOperationException("Graphic component is not set");

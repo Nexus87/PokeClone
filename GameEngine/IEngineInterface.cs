@@ -4,5 +4,6 @@
     {
         void Exit();
         void ShowGUI();
+        void CloseGUI();
     }
 }

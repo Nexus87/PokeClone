@@ -50,17 +50,6 @@ namespace MainModule
 
         public void CenterField(int fieldX, int fieldY)
         {
-            if (fieldX >= FieldSize.Width || fieldX < 0)
-                throw new ArgumentOutOfRangeException("fieldX must be between 0 and " + FieldSize.Width + " " +
-                                                      "but was " + fieldX);
-            if (fieldY >= FieldSize.Height || fieldY < 0)
-                throw new ArgumentOutOfRangeException("fieldY must be between 0 and " + FieldSize.Height +
-                                                      " but was " + fieldY);
-            DoCenterField(fieldX, fieldY);
-        }
-
-        private void DoCenterField(int fieldX, int fieldY)
-        {
             map.XPosition = screenCenterX - map.GetXPositionOfColumn(fieldX);
             map.YPosition = screenCenterY - map.GetYPositionOfRow(fieldY);
 
@@ -68,36 +57,21 @@ namespace MainModule
             CenteredFieldY = fieldY;
         }
 
-        private void CenterFieldIfPossible(int fieldX, int fieldY)
-        {
-            if (fieldY < 0)
-                fieldY = 0;
-            else if (fieldY >= FieldSize.Height)
-                fieldY = FieldSize.Height - 1;
-
-            if (fieldX < 0)
-                fieldX = 0;
-            else if (fieldX >= FieldSize.Width)
-                fieldX = FieldSize.Width - 1;
-
-            DoCenterField(fieldX, fieldY);
-        }
-
         public void MoveMap(Direction moveDirection)
         {
             switch (moveDirection)
             {
                 case Direction.Up:
-                    CenterFieldIfPossible(CenteredFieldX, CenteredFieldY - 1);
+                    CenterField(CenteredFieldX, CenteredFieldY - 1);
                     break;
                 case Direction.Down:
-                    CenterFieldIfPossible(CenteredFieldX, CenteredFieldY + 1);
+                    CenterField(CenteredFieldX, CenteredFieldY + 1);
                     break;
                 case Direction.Left:
-                    CenterFieldIfPossible(CenteredFieldX - 1, CenteredFieldY);
+                    CenterField(CenteredFieldX - 1, CenteredFieldY);
                     break;
                 case Direction.Right:
-                    CenterFieldIfPossible(CenteredFieldX + 1, CenteredFieldY);
+                    CenterField(CenteredFieldX + 1, CenteredFieldY);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException("moveDirection", moveDirection, null);

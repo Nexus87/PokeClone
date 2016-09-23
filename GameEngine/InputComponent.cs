@@ -6,9 +6,9 @@ namespace GameEngine
 {
     internal class InputComponent : IGameComponent
     {
-        private IReadOnlyDictionary<Keys, CommandKeys> keyMap;
-        internal IInputHandler handler;
-        private IKeyboardManager manager;
+        private readonly IReadOnlyDictionary<Keys, CommandKeys> keyMap;
+        internal IInputHandler Handler;
+        private readonly IKeyboardManager manager;
 
         internal InputComponent(IKeyboardManager manager, IReadOnlyDictionary<Keys, CommandKeys> keyMap)
         {
@@ -25,7 +25,7 @@ namespace GameEngine
             foreach (var entry in keyMap)
             {
                 if (HasKeyChangedToDown(entry.Key))
-                    handler.HandleInput(entry.Value);
+                    Handler.HandleInput(entry.Value);
             }
 
         }
