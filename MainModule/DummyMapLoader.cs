@@ -2,17 +2,16 @@
 using GameEngine.Graphics;
 using GameEngine.Registry;
 using GameEngine.Utils;
-using Microsoft.Xna.Framework.Content;
 
 namespace MainModule
 {
     [GameService(typeof(IMapLoader))]
     public class DummyMapLoader : IMapLoader
     {
-        private SpriteSheetFactory factory;
+        private readonly SpriteSheetFactory factory;
         private Table<IGraphicComponent> table;
 
-        public DummyMapLoader(ContentManager contentManager, SpriteSheetFactory factory)
+        public DummyMapLoader(SpriteSheetFactory factory)
         {
             this.factory = factory;
         }

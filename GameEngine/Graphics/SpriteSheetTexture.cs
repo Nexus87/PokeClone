@@ -18,14 +18,12 @@ namespace GameEngine.Graphics
 
             this.sourceRectangle = sourceRectangle;
             this.spriteSheet = spriteSheet;
+            Color = Color.White;
         }
 
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)
         {
-            //batch.Draw(spriteSheet, destinationRectangle, sourceRectangle, Color);
-            batch.Draw(spriteSheet, destinationRectangle, null, Color);
-            var scale = new Vector2(128/16, 128/16);
-            batch.Draw(spriteSheet, Position, sourceRectangle, Color.White, 0, Vector2.Zero, scale, SpriteEffects.None, 0);
+            batch.Draw(spriteSheet, destinationRectangle, sourceRectangle, Color);
         }
 
         protected override void Update()
