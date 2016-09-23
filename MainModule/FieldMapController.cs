@@ -6,19 +6,19 @@ using Microsoft.Xna.Framework;
 
 namespace MainModule
 {
-    [GameService(typeof(IMapControler))]
-    public class FieldMapControler : AbstractGraphicComponent, IMapControler
+    [GameService(typeof(IMapController))]
+    public class FieldMapController : AbstractGraphicComponent, IMapController
     {
         private float screenCenterX;
         private float screenCenterY;
         private readonly ScreenConstants screenConstants;
         private readonly IMap map;
 
-        public FieldMapControler(Map map, ScreenConstants screenConstants) :
+        public FieldMapController(Map map, ScreenConstants screenConstants) :
             this((IMap) map, screenConstants)
         {}
 
-        internal FieldMapControler(IMap map, ScreenConstants screenConstants)
+        internal FieldMapController(IMap map, ScreenConstants screenConstants)
         {
             this.map = map;
             this.screenConstants = screenConstants;

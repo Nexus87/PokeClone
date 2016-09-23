@@ -114,11 +114,11 @@ namespace MainModuleTest
             return table;
         }
 
-        private static FieldMapControler CreateMapController(IMap map, ScreenConstants screenConstants = null)
+        private static FieldMapController CreateMapController(IMap map, ScreenConstants screenConstants = null)
         {
             if(screenConstants == null)
                 screenConstants = DefaultScreenConstant;
-            var mapController = new FieldMapControler(map, screenConstants);
+            var mapController = new FieldMapController(map, screenConstants);
             mapController.Setup();
             return mapController;
         }

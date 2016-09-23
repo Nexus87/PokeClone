@@ -2,7 +2,7 @@
 
 namespace MainModule
 {
-    public interface IMapControler : IGraphicComponent
+    public interface IMapController : IGraphicComponent
     {
         FieldSize FieldSize { get; }
         void CenterField(int fieldX, int fieldY);

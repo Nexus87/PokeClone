@@ -3,9 +3,9 @@ using MainModule;
 
 namespace MainModuleTest.Utils
 {
-    public class MapControlerMock : GraphicComponentMock, IMapControler
+    public class MapControllerMock : GraphicComponentMock, IMapController
     {
-        public MapControlerMock(FieldSize fieldSize)
+        public MapControllerMock(FieldSize fieldSize)
         {
             FieldSize = fieldSize;
         }
