@@ -3,9 +3,11 @@ using Base.Data;
 using Base.Rules;
 using GameEngine.Utils;
 using System;
+using GameEngine.Registry;
 
 namespace PokemonGame.Rules
 {
+    [GameService(typeof(IMoveEffectCalculator))]
     public class DefaultMoveEffectCalculator : IMoveEffectCalculator
     {
         private IBattlePokemon source;

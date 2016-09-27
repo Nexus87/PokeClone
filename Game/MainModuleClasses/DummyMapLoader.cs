@@ -2,8 +2,9 @@
 using GameEngine.Graphics;
 using GameEngine.Registry;
 using GameEngine.Utils;
+using MainModule;
 
-namespace MainModule
+namespace PokemonGame.MainModuleClasses
 {
     [GameService(typeof(IMapLoader))]
     public class DummyMapLoader : IMapLoader
@@ -15,7 +16,7 @@ namespace MainModule
         {
             this.factory = factory;
         }
-        public void LoadMap()
+        public void LoadMap(string mapName)
         {
             factory.Setup();
             table = new Table<IGraphicComponent>();

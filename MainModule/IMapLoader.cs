@@ -5,7 +5,7 @@ namespace MainModule
 {
     public interface IMapLoader
     {
-        void LoadMap();
+        void LoadMap(string mapName);
         ITable<IGraphicComponent> GetFieldTextures();
     }
 }

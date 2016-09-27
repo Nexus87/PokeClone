@@ -1,9 +1,11 @@
 ﻿using Base.Data;
 using Base.Rules;
 using System;
+using GameEngine.Registry;
 
 namespace PokemonGame.Rules
 {
+    [GameService(typeof(ITypeTable))]
     public class DummyTable : ITypeTable
     {
         private readonly int typeCount = Enum.GetNames(typeof(PokemonType)).Length;

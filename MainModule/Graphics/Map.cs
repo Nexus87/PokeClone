@@ -33,7 +33,7 @@ namespace MainModule.Graphics
 
         public override void Setup()
         {
-            loader.LoadMap();
+            loader.LoadMap("");
             var fieldTextures = loader.GetFieldTextures();
             InitContainer(fieldTextures);
 

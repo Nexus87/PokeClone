@@ -5,6 +5,7 @@ using GameEngine;
 using GameEngine.Registry;
 using PokemonGame.Rules;
 using System;
+using System.Reflection;
 
 namespace PokemonGame
 {
@@ -17,11 +18,7 @@ namespace PokemonGame
 
         public void RegisterTypes(IGameTypeRegistry registry)
         {
-            registry.RegisterAsService<DummyBattleRules, IBattleRules>();
-            registry.RegisterAsService<DummyScheduler, ICommandScheduler>();
-            registry.RegisterAsService<DummyTable, ITypeTable>();
-            registry.RegisterAsService<DummyPokemonRules, IPokemonRules>();
-            registry.RegisterAsService<DefaultMoveEffectCalculator, IMoveEffectCalculator>();
+            registry.ScanAssembly(Assembly.GetExecutingAssembly());
         }
 
         public void Start(IGameComponentManager componentManager, IGameTypeRegistry registry)

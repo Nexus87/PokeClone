@@ -2,10 +2,12 @@
 using Base.Data;
 using Base.Rules;
 using System.Collections.Generic;
+using GameEngine.Registry;
 
 namespace Game.Rules
 {
-    internal class DummyPokemonRules : IPokemonRules
+    [GameService(typeof(IPokemonRules))]
+    public class DummyPokemonRules : IPokemonRules
     {
         public Stats GenerateIV()
         {

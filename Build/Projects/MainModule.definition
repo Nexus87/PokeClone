@@ -17,7 +17,6 @@
   </References>
   <Files>
     <Compile Include="Direction.cs" />
-    <Compile Include="DummyMapLoader.cs" />
     <Compile Include="FileSpriteSheetProvider.cs" />
     <Compile Include="GameInputHandler.cs" />
     <Compile Include="GameStateComponent.cs" />
@@ -30,6 +29,7 @@
     <Compile Include="Graphics\WorldScreen.cs" />
     <Compile Include="IGameStateComponent.cs" />
     <Compile Include="IMapLoader.cs" />
+    <Compile Include="ISpriteLoader.cs" />
     <Compile Include="IWorldEvent.cs" />
     <Compile Include="MainModule.cs" />
     <Compile Include="PlayerSprite.cs" />

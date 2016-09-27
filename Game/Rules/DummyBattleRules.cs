@@ -1,8 +1,10 @@
 ﻿using Base;
 using Base.Rules;
+using GameEngine.Registry;
 
-namespace Game.Rules
+namespace PokemonGame.Rules
 {
+    [GameService(typeof(IBattleRules))]
     public class DummyBattleRules : IBattleRules
     {
         public float CalculateBaseDamage(IBattlePokemon source, IBattlePokemon target, Move move)

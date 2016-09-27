@@ -40,7 +40,10 @@ namespace MainModule.Graphics
 
         public override void Setup()
         {
-
+            foreach (var component in directionDictionary.Values)
+            {
+                component.Setup();
+            }
         }
 
         public void TurnToDirection(Direction direction)
