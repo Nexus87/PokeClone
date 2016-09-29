@@ -2,8 +2,8 @@
 {
     public class FieldSize
     {
-        public int Height { get; private set; }
-        public int Width { get; private set; }
+        private int Height { get; set; }
+        private int Width { get; set; }
 
         public FieldSize(int width, int height)
         {
@@ -11,7 +11,7 @@
             this.Height = height;
         }
 
-        protected bool Equals(FieldSize other)
+        private bool Equals(FieldSize other)
         {
             return Height == other.Height && Width == other.Width;
         }

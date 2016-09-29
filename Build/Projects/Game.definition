@@ -21,6 +21,7 @@
   </References>
   <Files>
     <Compile Include="MainModuleClasses\DummyMapLoader.cs" />
+    <Compile Include="MainModuleClasses\DummySpriteLoader.cs" />
     <Compile Include="PokemonGameModule.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

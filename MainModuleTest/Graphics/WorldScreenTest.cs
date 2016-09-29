@@ -58,7 +58,8 @@ namespace MainModuleTest.Graphics
         {
             if(screenConstants == null)
                 screenConstants = new ScreenConstants();
-            return new WorldScreen(player, mapController, screenConstants);
+            var loaderMock = new Mock<ISpriteLoader>();
+            return new WorldScreen(player, mapController, loaderMock.Object, screenConstants);
         }
     }
 }

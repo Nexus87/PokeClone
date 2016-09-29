@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using GameEngine;
 using GameEngine.Graphics;
-using GameEngine.Registry;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace MainModule
 {
@@ -16,23 +14,27 @@ namespace MainModule
         private const int RowIndex = 1;
         private const int ColumnIndex = 2;
 
-        private readonly string textureName;
         private readonly string fileName;
-        private readonly ContentManager contentManager;
+        private readonly ITexture2D texture;
+        private Dictionary<string, Rectangle> dictionary;
 
         public FileSpriteSheetProvider(string textureName, string fileName, ContentManager contentManager)
         {
-            this.textureName = textureName;
             this.fileName = fileName;
-            this.contentManager = contentManager;
+            texture = new XNATexture2D(textureName, contentManager);
         }
 
         public ITexture2D GetTexture()
         {
-            return new XNATexture2D(contentManager.Load<Texture2D>(textureName));
+            return texture;
         }
 
-        public IDictionary<string, TableIndex> GetMapping()
+        public IDictionary<string, Rectangle> GetMapping()
+        {
+            return dictionary;
+        }
+
+        private IDictionary<string, TableIndex> ReadTableMapping()
         {
             var tmpList = new List<string>();
             using (var stream = new StreamReader(fileName))
@@ -42,16 +44,38 @@ namespace MainModule
                     tmpList.Add(line);
             }
 
-            var dictionary = new Dictionary<string, TableIndex>();
+            var table = new Dictionary<string, TableIndex>();
             foreach (var line in tmpList)
             {
                 var splitted = line.Split(';');
                 var key = splitted[KeyIndex];
                 var value = new TableIndex(int.Parse(splitted[RowIndex]), int.Parse(splitted[ColumnIndex]));
-                dictionary.Add(key, value);
+                table.Add(key, value);
             }
 
-            return dictionary;
+            return table;
+        }
+
+        public void Setup()
+        {
+            texture.LoadContent();
+            var table = ReadTableMapping();
+            var tableRows = table.Values.Max(t => t.Row);
+            var tableColumns = table.Values.Max(t => t.Column);
+            var iconWidth = texture.Width / (float) tableColumns;
+            var iconHeight = texture.Height / (float) tableRows;
+
+            dictionary = table
+                .ToDictionary(v => v.Key, v => TableIndexToRectangle(v.Value, iconWidth, iconHeight));
+
+        }
+
+        private static Rectangle TableIndexToRectangle(TableIndex index, float iconWidth, float iconHeight)
+        {
+            var location = new Point((int) (index.Column * iconWidth), (int) (index.Row * iconHeight));
+            var size = new Point((int) iconWidth, (int) iconHeight);
+
+            return new Rectangle(location, size);
         }
     }
 }

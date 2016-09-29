@@ -31,6 +31,7 @@
     <Compile Include="IMapLoader.cs" />
     <Compile Include="ISpriteLoader.cs" />
     <Compile Include="IWorldEvent.cs" />
+    <Compile Include="JSonSpriteSheetProvider.cs" />
     <Compile Include="MainModule.cs" />
     <Compile Include="PlayerSprite.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -9,20 +9,22 @@ namespace MainModule.Graphics
     [GameService(typeof(WorldScreen))]
     public class WorldScreen : AbstractGraphicComponent
     {
-        private readonly IGraphicComponent player;
+        private IGraphicComponent player;
         private readonly IMapController mapController;
+        private readonly ISpriteLoader spriteLoader;
         private readonly ScreenConstants constants;
 
 
-        public WorldScreen(TextureBox player, IMapController mapController, ScreenConstants constants)
-            : this((IGraphicComponent) player, mapController, constants)
+        public WorldScreen(TextureBox player, IMapController mapController, ISpriteLoader spriteLoader, ScreenConstants constants)
+            : this((IGraphicComponent) player, mapController, spriteLoader, constants)
         {
         }
 
-        internal WorldScreen(IGraphicComponent player, IMapController mapController, ScreenConstants constants)
+        internal WorldScreen(IGraphicComponent player, IMapController mapController, ISpriteLoader spriteLoader, ScreenConstants constants)
         {
             this.player = player;
             this.mapController = mapController;
+            this.spriteLoader = spriteLoader;
             this.constants = constants;
         }
 
@@ -30,22 +32,27 @@ namespace MainModule.Graphics
         {
             base.Update();
 
-            var playerX = constants.ScreenWidth / 2.0f;
-            var playerY = constants.ScreenHeight / 2.0f;
+            var playerX = constants.ScreenWidth / 2.0f - 64;
+            var playerY = constants.ScreenHeight / 2.0f - 64;
 
             player.XPosition = playerX;
             player.YPosition = playerY;
+
+            //TODO remove hardcoded values
+            player.Width = 128;
+            player.Height = 128;
         }
 
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)
         {
-            player.Draw(time, batch);
             mapController.Draw(time, batch);
+            player.Draw(time, batch);
         }
 
         public override void Setup()
         {
-            player.Setup();
+            spriteLoader.Setup();
+            player = spriteLoader.GetSprite("player");
             mapController.Setup();
             mapController.CenterField(0, 0);
         }

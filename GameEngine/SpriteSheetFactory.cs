@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using GameEngine.Graphics;
@@ -13,7 +14,7 @@ namespace GameEngine
     public class SpriteSheetFactory
     {
         private readonly ISpriteSheetProvider provider;
-        private readonly Dictionary<string, Rectangle> rectangles = new Dictionary<string, Rectangle>();
+        private IDictionary<string, Rectangle> rectangles;
         private ITexture2D spriteSheet;
 
         public SpriteSheetFactory(ISpriteSheetProvider provider)
@@ -23,20 +24,9 @@ namespace GameEngine
 
         public void Setup()
         {
+            provider.Setup();
             spriteSheet = provider.GetTexture();
-            var splitted = provider.GetMapping();
-
-            var rows = splitted.Values.Max(t => t.Row) + 1;
-            var columns = splitted.Values.Max(t => t.Column) + 1;
-
-            var textureHeight = ((float) spriteSheet.Height) / rows;
-            var textureWidth = ((float) spriteSheet.Width) / columns;
-
-            foreach (var entry in splitted)
-            {
-                var sourceRectangle = new Rectangle((int) (entry.Value.Column * textureWidth), (int) (entry.Value.Row * textureHeight), (int) textureWidth, (int) textureHeight);
-                rectangles[entry.Key] = sourceRectangle;
-            }
+            rectangles = provider.GetMapping();
         }
 
         public SpriteSheetTexture CreateSpriteSheetTexture(string textureName)

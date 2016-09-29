@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
-using GameEngine.Graphics;
+using Microsoft.Xna.Framework;
 
 namespace GameEngine
 {
     public interface ISpriteSheetProvider
     {
         ITexture2D GetTexture();
-        IDictionary<string, TableIndex> GetMapping();
+        IDictionary<string, Rectangle> GetMapping();
+        void Setup();
     }
 }
