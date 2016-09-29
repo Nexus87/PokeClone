@@ -18,7 +18,7 @@ namespace PokemonGame.MainModuleClasses
             var provider = new JsonSpriteSheetProvider("Characters Overworld", "Content/CharactersMapping.json", contentManager);
             factory = new SpriteSheetFactory(provider);
         }
-        public CharacterSprite GetSprite(string spriteName)
+        public ICharacterSprite GetSprite(string spriteName)
         {
             var left = factory.CreateSpriteSheetTexture(spriteName + "Left");
             var right = factory.CreateSpriteSheetTexture(spriteName + "Left");

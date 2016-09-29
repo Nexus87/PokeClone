@@ -23,6 +23,7 @@
     <Compile Include="Graphics\CharacterSprite.cs" />
     <Compile Include="Graphics\FieldMapController.cs" />
     <Compile Include="Graphics\FieldSize.cs" />
+    <Compile Include="Graphics\ICharacterSprite.cs" />
     <Compile Include="Graphics\IMap.cs" />
     <Compile Include="Graphics\IMapController.cs" />
     <Compile Include="Graphics\Map.cs" />

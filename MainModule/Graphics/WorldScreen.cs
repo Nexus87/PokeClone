@@ -14,15 +14,8 @@ namespace MainModule.Graphics
         private readonly ISpriteLoader spriteLoader;
         private readonly ScreenConstants constants;
 
-
-        public WorldScreen(TextureBox player, IMapController mapController, ISpriteLoader spriteLoader, ScreenConstants constants)
-            : this((IGraphicComponent) player, mapController, spriteLoader, constants)
+        internal WorldScreen(IMapController mapController, ISpriteLoader spriteLoader, ScreenConstants constants)
         {
-        }
-
-        internal WorldScreen(IGraphicComponent player, IMapController mapController, ISpriteLoader spriteLoader, ScreenConstants constants)
-        {
-            this.player = player;
             this.mapController = mapController;
             this.spriteLoader = spriteLoader;
             this.constants = constants;

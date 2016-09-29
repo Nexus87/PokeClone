@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 
 namespace MainModule.Graphics
 {
-    public class CharacterSprite : AbstractGraphicComponent
+    public class CharacterSprite : AbstractGraphicComponent, ICharacterSprite
     {
         private IGraphicComponent currentDirection;
         private readonly Dictionary<Direction, IGraphicComponent> directionDictionary = new Dictionary<Direction, IGraphicComponent>();

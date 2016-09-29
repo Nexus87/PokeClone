@@ -4,7 +4,7 @@ namespace MainModule
 {
     public interface ISpriteLoader
     {
-        CharacterSprite GetSprite(string spriteName);
+        ICharacterSprite GetSprite(string spriteName);
         void Setup();
     }
 }

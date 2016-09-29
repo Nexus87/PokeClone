@@ -15,7 +15,7 @@ namespace MainModuleTest.Graphics
         [TestCase]
         public void Draw_NormalSetup_PlayerAndMapAreDrawn()
         {
-            var player = new GraphicComponentMock();
+            var player = new CharacterSpriteMock();
             var mapMock = CreateMap();
             var screen = CreateWorldScreen(player, mapMock);
 
@@ -32,7 +32,7 @@ namespace MainModuleTest.Graphics
         [TestCase(Direction.Down, Direction.Up)]
         public void PlayerMove_GivenDirection_MapIsMovedInExpectedDirection(Direction moveDirection, Direction expectedMapMoveDirection)
         {
-            var player = new GraphicComponentMock();
+            var player = new CharacterSpriteMock();
             var mapMock = new Mock<IMapController>();
             var screen = CreateWorldScreen(player, mapMock.Object);
 
@@ -54,12 +54,21 @@ namespace MainModuleTest.Graphics
             return mock;
         }
 
-        private static WorldScreen CreateWorldScreen(IGraphicComponent player, IMapController mapController, ScreenConstants screenConstants = null)
+        private static WorldScreen CreateWorldScreen(CharacterSpriteMock player, IMapController mapController, ScreenConstants screenConstants = null)
         {
             if(screenConstants == null)
                 screenConstants = new ScreenConstants();
             var loaderMock = new Mock<ISpriteLoader>();
-            return new WorldScreen(player, mapController, loaderMock.Object, screenConstants);
+            loaderMock.Setup(o => o.GetSprite(It.IsAny<string>())).Returns(player);
+            return new WorldScreen(mapController, loaderMock.Object, screenConstants);
+        }
+    }
+
+    public class CharacterSpriteMock : GraphicComponentMock, ICharacterSprite
+    {
+        public void TurnToDirection(Direction direction)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
