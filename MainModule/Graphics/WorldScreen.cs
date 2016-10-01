@@ -14,7 +14,7 @@ namespace MainModule.Graphics
         private readonly ISpriteLoader spriteLoader;
         private readonly ScreenConstants constants;
 
-        internal WorldScreen(IMapController mapController, ISpriteLoader spriteLoader, ScreenConstants constants)
+        public WorldScreen(IMapController mapController, ISpriteLoader spriteLoader, ScreenConstants constants)
         {
             this.mapController = mapController;
             this.spriteLoader = spriteLoader;

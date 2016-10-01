@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.Eventing.Reader;
-using GameEngine;
+﻿using GameEngine;
 using GameEngine.Registry;
 using MainModule;
 using MainModule.Graphics;
