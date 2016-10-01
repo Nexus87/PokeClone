@@ -69,14 +69,14 @@ namespace MainModuleTest.Graphics
             Assert.AreEqual(fieldY, map.CenteredFieldY);
         }
 
-        [TestCase(10, 21, 2, 2, 2, 1, Direction.Up)]
-        [TestCase(10, 21, 2, 2, 1, 2, Direction.Left)]
-        [TestCase(10, 21, 2, 2, 3, 2, Direction.Right)]
-        [TestCase(10, 21, 2, 2, 2, 3, Direction.Down)]
-        [TestCase(1, 1, 0, 0, 0, 1, Direction.Down)]
-        [TestCase(1, 1, 0, 0, -1, 0, Direction.Left)]
-        [TestCase(1, 1, 0, 0, 1, 0, Direction.Right)]
-        [TestCase(1, 1, 0, 0, 0, -1, Direction.Up)]
+        [TestCase(10, 21, 2, 2, 2, 3, Direction.Up)]
+        [TestCase(10, 21, 2, 2, 3, 2, Direction.Left)]
+        [TestCase(10, 21, 2, 2, 1, 2, Direction.Right)]
+        [TestCase(10, 21, 2, 2, 2, 1, Direction.Down)]
+        [TestCase(1, 1, 0, 0, 0, -1, Direction.Down)]
+        [TestCase(1, 1, 0, 0, 1, 0, Direction.Left)]
+        [TestCase(1, 1, 0, 0, -1, 0, Direction.Right)]
+        [TestCase(1, 1, 0, 0, 0, 1, Direction.Up)]
         public void MoveMap_StartingAtAGivenPoint_MapIsMoved(
             int fieldWidth, int fieldHeight,
             int startingFieldX, int startingFieldY,
