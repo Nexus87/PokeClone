@@ -33,7 +33,7 @@ namespace GameEngine
 
             Content.RootDirectory = "Content";
 
-            Registry.RegisterModule(new GameEngineModule(factory));
+            Registry.RegisterModule(new GameEngineModule(factory, this));
         }
 
         public IGraphicComponent Graphic { get; set; }

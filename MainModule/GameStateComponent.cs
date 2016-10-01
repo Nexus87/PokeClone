@@ -1,4 +1,5 @@
 ﻿using GameEngine.Registry;
+using MainModule.Graphics;
 using Microsoft.Xna.Framework;
 using IGameComponent = GameEngine.IGameComponent;
 
@@ -7,11 +8,29 @@ namespace MainModule
     [GameService(typeof(IGameStateComponent))]
     public class GameStateComponent : IGameComponent, IGameStateComponent
     {
-        public void Move(Direction direction){}
+        private IWorldScreenController controller;
 
-        public void AddWorldEvent(IWorldEvent worldEvent){}
-        public void RemoveWorldEvent(IWorldEvent worldEvent){}
+        public GameStateComponent(IWorldScreenController controller)
+        {
+            this.controller = controller;
+        }
+        public void Move(int spriteId, Direction direction)
+        {
+            if (IsPlayer(spriteId))
+                controller.PlayerMoveDirection(direction);
+        }
 
+
+        private static bool IsPlayer(int spriteId)
+        {
+            return spriteId == 0;
+        }
+
+        public void Turn(int spriteId, Direction direction)
+        {
+            if (IsPlayer(spriteId))
+                controller.PlayerTurnDirection(direction);
+        }
 
         public void Initialize()
         {

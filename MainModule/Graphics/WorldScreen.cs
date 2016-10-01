@@ -6,10 +6,10 @@ using Microsoft.Xna.Framework;
 
 namespace MainModule.Graphics
 {
-    [GameService(typeof(WorldScreen))]
-    public class WorldScreen : AbstractGraphicComponent
+    [GameService(typeof(IWorldScreenController))]
+    public class WorldScreen : AbstractGraphicComponent, IWorldScreenController
     {
-        private IGraphicComponent player;
+        private ICharacterSprite player;
         private readonly IMapController mapController;
         private readonly ISpriteLoader spriteLoader;
         private readonly ScreenConstants constants;
@@ -50,11 +50,6 @@ namespace MainModule.Graphics
             mapController.CenterField(0, 0);
         }
 
-        public void PlayerMove(Direction direction)
-        {
-            mapController.MoveMap(ReverseDirection(direction));
-        }
-
         private static Direction ReverseDirection(Direction direction)
         {
             switch (direction)
@@ -70,6 +65,16 @@ namespace MainModule.Graphics
                 default:
                     throw new ArgumentOutOfRangeException("direction", direction, null);
             }
+        }
+
+        public void PlayerTurnDirection(Direction direction)
+        {
+            player.TurnToDirection(direction);
+        }
+
+        public void PlayerMoveDirection(Direction direction)
+        {
+            mapController.MoveMap(ReverseDirection(direction));
         }
     }
 }

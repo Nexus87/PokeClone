@@ -61,16 +61,16 @@ namespace MainModule.Graphics
             switch (moveDirection)
             {
                 case Direction.Up:
-                    CenterField(CenteredFieldX, CenteredFieldY - 1);
-                    break;
-                case Direction.Down:
                     CenterField(CenteredFieldX, CenteredFieldY + 1);
                     break;
+                case Direction.Down:
+                    CenterField(CenteredFieldX, CenteredFieldY - 1);
+                    break;
                 case Direction.Left:
-                    CenterField(CenteredFieldX - 1, CenteredFieldY);
+                    CenterField(CenteredFieldX + 1, CenteredFieldY);
                     break;
                 case Direction.Right:
-                    CenterField(CenteredFieldX + 1, CenteredFieldY);
+                    CenterField(CenteredFieldX - 1, CenteredFieldY);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException("moveDirection", moveDirection, null);

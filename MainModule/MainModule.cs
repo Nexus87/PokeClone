@@ -18,7 +18,7 @@ namespace MainModule
 
         public void Start(IGameComponentManager manager, IGameTypeRegistry registry)
         {
-            manager.Graphic = registry.ResolveType<WorldScreen>();
+            manager.Graphic = registry.ResolveType<IWorldScreenController>();
             manager.InputHandler = registry.ResolveType<GameInputHandler>();
         }
 

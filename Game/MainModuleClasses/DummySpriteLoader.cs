@@ -24,7 +24,7 @@ namespace PokemonGame.MainModuleClasses
             var up = factory.CreateSpriteSheetTexture(spriteName + "Up");
             var down = factory.CreateSpriteSheetTexture(spriteName + "Down");
 
-            right.SpriteEffects = SpriteEffects.FlipVertically;
+            right.SpriteEffects = SpriteEffects.FlipHorizontally;
             return new CharacterSprite(left, right, up, down);
         }
 

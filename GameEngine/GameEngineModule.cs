@@ -10,11 +10,14 @@ namespace GameEngine
     internal class GameEngineModule : IModule
     {
         private GraphicResources resources;
+        readonly PokeEngine engine;
 
-        public GameEngineModule(GraphicResources resources)
+        public GameEngineModule(GraphicResources resources, PokeEngine engine)
         {
+            this.engine = engine;
             this.resources = resources;
         }
+
         public void RegisterTypes(IGameTypeRegistry registry)
         {
             registry.RegisterType<ISpriteFont>(r => resources.DefaultFont);
@@ -29,7 +32,7 @@ namespace GameEngine
             registry.RegisterAsService<InputComponent, InputComponent>(reg => new InputComponent(resources.Configuration));
             registry.RegisterAsService<ContentManager, ContentManager>(reg => resources.ContentManager);
             registry.RegisterType<Pixel>(r => new Pixel(resources.Pixel));
-            
+            registry.RegisterType<IEngineInterface>(r => engine);
             registry.ScanAssembly(Assembly.GetExecutingAssembly());
         }
 

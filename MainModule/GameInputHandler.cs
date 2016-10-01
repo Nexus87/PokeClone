@@ -8,13 +8,13 @@ namespace MainModule
     [GameType]
     public class GameInputHandler : IInputHandler
     {
-        private readonly IGameStateComponent gameStateComponent;
-        private readonly WorldScreen worldScreen;
+        private SpriteState spriteState;
+        readonly IEngineInterface engineInterface;
 
-        public GameInputHandler(IGameStateComponent gameStateComponent, WorldScreen worldScreen)
+        public GameInputHandler(SpriteState spriteState, IEngineInterface engineInterface)
         {
-            this.gameStateComponent = gameStateComponent;
-            this.worldScreen = worldScreen;
+            this.engineInterface = engineInterface;
+            this.spriteState = spriteState;
         }
 
         public bool HandleInput(CommandKeys key)
@@ -22,24 +22,21 @@ namespace MainModule
             switch (key)
             {
                 case CommandKeys.Down:
-                    gameStateComponent.Move(Direction.Down);
-                    worldScreen.PlayerMove(Direction.Down);
+                    spriteState.MoveDirection(Direction.Down);
                     break;
                 case CommandKeys.Left:
-                    gameStateComponent.Move(Direction.Left);
-                    worldScreen.PlayerMove(Direction.Left);
+                    spriteState.MoveDirection(Direction.Left);
                     break;
                 case CommandKeys.Right:
-                    gameStateComponent.Move(Direction.Right);
-                    worldScreen.PlayerMove(Direction.Right);
+                    spriteState.MoveDirection(Direction.Right);
                     break;
                 case CommandKeys.Up:
-                    gameStateComponent.Move(Direction.Up);
-                    worldScreen.PlayerMove(Direction.Up);
+                    spriteState.MoveDirection(Direction.Up);
                     break;
                 case CommandKeys.Select:
                     break;
                 case CommandKeys.Back:
+                    engineInterface.Exit();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException("key", key, null);

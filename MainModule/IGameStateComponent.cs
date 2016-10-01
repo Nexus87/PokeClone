@@ -2,6 +2,7 @@
 {
     public interface IGameStateComponent
     {
-        void Move(Direction direction);
+        void Move(int spriteId, Direction direction);
+        void Turn(int spriteId, Direction direction);
     }
 }

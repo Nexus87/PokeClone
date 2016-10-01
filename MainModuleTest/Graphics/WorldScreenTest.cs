@@ -37,7 +37,7 @@ namespace MainModuleTest.Graphics
             var screen = CreateWorldScreen(player, mapMock.Object);
 
             screen.Setup();
-            screen.PlayerMove(moveDirection);
+            screen.PlayerMoveDirection(moveDirection);
 
             mapMock.Verify(m => m.MoveMap(expectedMapMoveDirection), Times.Once());
         }
