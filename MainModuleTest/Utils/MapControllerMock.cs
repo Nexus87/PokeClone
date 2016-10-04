@@ -15,5 +15,10 @@ namespace MainModuleTest.Utils
         {
             throw new System.NotImplementedException();
         }
+
+        public void LoadMap(Map map)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

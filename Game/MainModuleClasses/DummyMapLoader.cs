@@ -3,6 +3,7 @@ using GameEngine.Graphics;
 using GameEngine.Registry;
 using GameEngine.Utils;
 using MainModule;
+using MainModule.Graphics;
 
 namespace PokemonGame.MainModuleClasses
 {
@@ -16,19 +17,20 @@ namespace PokemonGame.MainModuleClasses
         {
             this.factory = factory;
         }
-        public void LoadMap(string mapName)
+        public IMapGraphic LoadMap(Map map)
         {
             factory.Setup();
+            var tiles = map.Tiles;
             table = new Table<IGraphicComponent>();
-            table[0, 0] = factory.CreateSpriteSheetTexture("Tile0303");
-            table[0, 1] = factory.CreateSpriteSheetTexture("Tile0304");
-            table[0, 2] = factory.CreateSpriteSheetTexture("Tile0305");
-            table[1, 0] = factory.CreateSpriteSheetTexture("Tile0403");
-            table[1, 1] = factory.CreateSpriteSheetTexture("Tile0404");
-            table[1, 2] = factory.CreateSpriteSheetTexture("Tile0405");
-            table[2, 0] = factory.CreateSpriteSheetTexture("Tile0503");
-            table[2, 1] = factory.CreateSpriteSheetTexture("Tile0504");
-            table[2, 2] = factory.CreateSpriteSheetTexture("Tile0505");
+
+            for (var i = 0; i < tiles.Rows; i++)
+            {
+                for (var j = 0; j < tiles.Columns; j++)
+                {
+                    table[i, j] = factory.CreateSpriteSheetTexture(tiles[i, j].TextureName);
+                }
+            }
+            return new MapGraphic(table);
         }
 
         public ITable<IGraphicComponent> GetFieldTextures()

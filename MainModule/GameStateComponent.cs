@@ -8,8 +8,15 @@ namespace MainModule
     [GameService(typeof(IGameStateComponent))]
     public class GameStateComponent : IGameComponent, IGameStateComponent
     {
-        private IWorldScreenController controller;
+        private readonly IWorldScreenController controller;
+        private Map map;
 
+        public void SetMap(Map map)
+        {
+            this.map = map;
+            controller.SetMap(map);
+
+        }
         public GameStateComponent(IWorldScreenController controller)
         {
             this.controller = controller;

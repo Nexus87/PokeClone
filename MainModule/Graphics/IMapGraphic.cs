@@ -2,7 +2,7 @@
 
 namespace MainModule.Graphics
 {
-    public interface IMap : IGraphicComponent
+    public interface IMapGraphic : IGraphicComponent
     {
         float TextureSize { get; }
         float GetXPositionOfColumn(int column);

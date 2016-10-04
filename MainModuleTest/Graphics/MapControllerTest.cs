@@ -93,9 +93,9 @@ namespace MainModuleTest.Graphics
             Assert.AreEqual(expedtedFieldY, map.CenteredFieldY);
         }
 
-        private static Mock<IMap> CreateMapMock(int fieldWidth, int fieldHeight, float textureSize = 32.0f)
+        private static Mock<IMapGraphic> CreateMapMock(int fieldWidth, int fieldHeight, float textureSize = 32.0f)
         {
-            var mock = new Mock<IMap>();
+            var mock = new Mock<IMapGraphic>();
             mock.Setup(m => m.TextureSize).Returns(textureSize);
             mock.Setup(m => m.GetXPositionOfColumn(It.IsAny<int>())).Returns<float>(column => column * textureSize);
             mock.Setup(m => m.GetYPositionOfRow(It.IsAny<int>())).Returns<float>(row => row * textureSize);
@@ -112,12 +112,15 @@ namespace MainModuleTest.Graphics
             return table;
         }
 
-        private static FieldMapController CreateMapController(IMap map, ScreenConstants screenConstants = null)
+        private static FieldMapController CreateMapController(IMapGraphic mapGraphic, ScreenConstants screenConstants = null)
         {
             if(screenConstants == null)
                 screenConstants = DefaultScreenConstant;
-            var mapController = new FieldMapController(map, screenConstants);
+            var mapLoaderFake = new Mock<IMapLoader>();
+            mapLoaderFake.Setup(l => l.LoadMap(It.IsAny<Map>())).Returns(mapGraphic);
+            var mapController = new FieldMapController(mapLoaderFake.Object, screenConstants);
             mapController.Setup();
+            mapController.LoadMap(null);
             return mapController;
         }
 

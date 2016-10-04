@@ -26,10 +26,10 @@
     <Compile Include="Graphics\FieldMapController.cs" />
     <Compile Include="Graphics\FieldSize.cs" />
     <Compile Include="Graphics\ICharacterSprite.cs" />
-    <Compile Include="Graphics\IMap.cs" />
     <Compile Include="Graphics\IMapController.cs" />
+    <Compile Include="Graphics\IMapGraphic.cs" />
     <Compile Include="Graphics\IWorldScreenController.cs" />
-    <Compile Include="Graphics\Map.cs" />
+    <Compile Include="Graphics\MapGraphic.cs" />
     <Compile Include="Graphics\WorldScreen.cs" />
     <Compile Include="IGameStateComponent.cs" />
     <Compile Include="IMapLoader.cs" />
@@ -37,8 +37,10 @@
     <Compile Include="IWorldEvent.cs" />
     <Compile Include="JSonSpriteSheetProvider.cs" />
     <Compile Include="MainModule.cs" />
+    <Compile Include="Map.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpriteState.cs" />
+    <Compile Include="Tile.cs" />
     <Compile Include="WorldObject.cs" />
     <None Include="packages.config" />
   </Files>

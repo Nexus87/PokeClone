@@ -11,5 +11,6 @@ namespace MainModule.Graphics
     {
         void PlayerTurnDirection(Direction direction);
         void PlayerMoveDirection(Direction direction);
+        void SetMap(Map map);
     }
 }

@@ -6,5 +6,6 @@ namespace MainModule.Graphics
     {
         void CenterField(int fieldX, int fieldY);
         void MoveMap(Direction moveDirection);
+        void LoadMap(Map map);
     }
 }

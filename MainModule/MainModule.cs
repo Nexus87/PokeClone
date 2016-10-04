@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using GameEngine;
 using GameEngine.Registry;
+using GameEngine.Utils;
 using MainModule.Graphics;
 using Microsoft.Xna.Framework.Content;
 
@@ -8,6 +9,12 @@ namespace MainModule
 {
     public class MainModule : IModule
     {
+        private readonly Map map;
+
+        public MainModule(Map map)
+        {
+            this.map = map;
+        }
         public string ModuleName { get { return "MainModule"; } }
 
         public void RegisterTypes(IGameTypeRegistry registry)
@@ -20,6 +27,8 @@ namespace MainModule
         {
             manager.Graphic = registry.ResolveType<IWorldScreenController>();
             manager.InputHandler = registry.ResolveType<GameInputHandler>();
+            var gameStateComponent = registry.ResolveType<IGameStateComponent>();
+            gameStateComponent.SetMap(map);
         }
 
         public void Stop(IGameComponentManager engine)

@@ -7,17 +7,18 @@ using Microsoft.Xna.Framework;
 namespace MainModule.Graphics
 {
     [GameType]
-    public class Map : AbstractGraphicComponent, IMap
+    public class MapGraphic : AbstractGraphicComponent, IMapGraphic
     {
-        private readonly IMapLoader loader;
         public float TextureSize { get; private set; }
         private readonly Container container = new Container();
 
 
-        public Map(IMapLoader loader, float textureSize = 128.0f)
+        public MapGraphic(ITable<IGraphicComponent> fieldTextures, float textureSize = 128.0f)
         {
-            this.loader = loader;
             TextureSize = textureSize;
+            InitContainer(fieldTextures);
+            Rows = fieldTextures.Rows;
+            Columns = fieldTextures.Columns;
         }
 
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)
@@ -33,16 +34,16 @@ namespace MainModule.Graphics
 
         public override void Setup()
         {
-            loader.LoadMap("");
-            var fieldTextures = loader.GetFieldTextures();
-            InitContainer(fieldTextures);
 
-            var totalHeight = fieldTextures.Rows * TextureSize;
-            var totalWidth = fieldTextures.Columns * TextureSize;
+            var totalHeight = Rows * TextureSize;
+            var totalWidth = Columns * TextureSize;
 
             Height = totalHeight;
             Width = totalWidth;
         }
+
+        private float Rows { get;  set; }
+        private float Columns { get; set; }
 
         private void InitContainer(ITable<IGraphicComponent> fieldTextures)
         {
@@ -51,7 +52,6 @@ namespace MainModule.Graphics
                 container.AddComponent(component);
 
             container.Layout = new GridLayout(fieldTextures.Rows, fieldTextures.Columns);
-            container.Setup();
         }
 
         public float GetXPositionOfColumn(int column)

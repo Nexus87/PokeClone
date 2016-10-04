@@ -4,5 +4,6 @@
     {
         void Move(int spriteId, Direction direction);
         void Turn(int spriteId, Direction direction);
+        void SetMap(Map map);
     }
 }

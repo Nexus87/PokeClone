@@ -47,7 +47,6 @@ namespace MainModule.Graphics
             spriteLoader.Setup();
             player = spriteLoader.GetSprite("player");
             mapController.Setup();
-            mapController.CenterField(0, 0);
         }
 
         private static Direction ReverseDirection(Direction direction)
@@ -75,6 +74,12 @@ namespace MainModule.Graphics
         public void PlayerMoveDirection(Direction direction)
         {
             mapController.MoveMap(ReverseDirection(direction));
+        }
+
+        public void SetMap(Map map)
+        {
+            mapController.LoadMap(map);
+            mapController.CenterField(map.PlayerStart.X, map.PlayerStart.Y);
         }
     }
 }
