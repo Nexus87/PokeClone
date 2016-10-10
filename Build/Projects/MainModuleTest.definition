@@ -22,6 +22,7 @@
   </References>
   <Files>
     <Compile Include="Graphics\CharacterSpriteTest.cs" />
+    <Compile Include="Graphics\GameStateComponentTest.cs" />
     <Compile Include="Graphics\MapControllerTest.cs" />
     <Compile Include="Graphics\WorldScreenTest.cs" />
     <Compile Include="Utils\MapControllerMock.cs" />

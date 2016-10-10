@@ -19,6 +19,7 @@
   </References>
   <Files>
     <Compile Include="Direction.cs" />
+    <Compile Include="FieldCoordinate.cs" />
     <Compile Include="FileSpriteSheetProvider.cs" />
     <Compile Include="GameInputHandler.cs" />
     <Compile Include="GameStateComponent.cs" />

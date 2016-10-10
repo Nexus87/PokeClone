@@ -1,7 +1,9 @@
-﻿using GameEngine.Registry;
+﻿using System;
+using GameEngine.Registry;
 using MainModule.Graphics;
 using Microsoft.Xna.Framework;
 using IGameComponent = GameEngine.IGameComponent;
+using System.Collections.Generic;
 
 namespace MainModule
 {
@@ -10,6 +12,7 @@ namespace MainModule
     {
         private readonly IWorldScreenController controller;
         private Map map;
+        private readonly Dictionary<int, FieldCoordinate> sprites = new Dictionary<int, FieldCoordinate>();
 
         public void SetMap(Map map)
         {
@@ -17,16 +20,51 @@ namespace MainModule
             controller.SetMap(map);
 
         }
+
+        public void PlaceSprite(int spriteId, FieldCoordinate fieldCoordinate)
+        {
+            sprites[spriteId] = fieldCoordinate;
+        }
+
+        public FieldCoordinate GetPosition(int spriteId)
+        {
+            return sprites[spriteId];
+        }
+
         public GameStateComponent(IWorldScreenController controller)
         {
             this.controller = controller;
         }
         public void Move(int spriteId, Direction direction)
         {
+            var newPosition = Move(direction, sprites[spriteId]);
+            if (IsBlocked(newPosition))
+                return;
             if (IsPlayer(spriteId))
                 controller.PlayerMoveDirection(direction);
+            sprites[spriteId] = newPosition;
         }
 
+        private bool IsBlocked(FieldCoordinate newPosition)
+        {
+            return !map.Tiles[newPosition.Y, newPosition.X].IsAccessable;
+        }
+
+        private FieldCoordinate Move(Direction direction, FieldCoordinate fieldCoordinate)
+        {
+            switch (direction)
+            {
+                case Direction.Down:
+                    return new FieldCoordinate(fieldCoordinate.X, fieldCoordinate.Y + 1);
+                case Direction.Left:
+                    return new FieldCoordinate(fieldCoordinate.X - 1, fieldCoordinate.Y);
+                case Direction.Right:
+                    return new FieldCoordinate(fieldCoordinate.X + 1, fieldCoordinate.Y);
+                case Direction.Up:
+                    return new FieldCoordinate(fieldCoordinate.X, fieldCoordinate.Y - 1);
+            }
+            return default(FieldCoordinate);
+        }
 
         private static bool IsPlayer(int spriteId)
         {
