@@ -17,6 +17,7 @@ namespace MainModuleTest.Graphics
         private readonly int SpriteId = 0;
 
         [TestCase(1, 1, Direction.Right)]
+        [TestCase(0, 0, Direction.Up)]
         public void MoveDirection_BlockedField_NoMoveIsDone(int startX, int startY, Direction direction)
         {
             var stateComponent = CreateGameStateComponent();

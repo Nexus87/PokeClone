@@ -38,11 +38,23 @@ namespace MainModule
         public void Move(int spriteId, Direction direction)
         {
             var newPosition = Move(direction, sprites[spriteId]);
+            if(IsOutOfBound(newPosition))
+                return;
             if (IsBlocked(newPosition))
                 return;
             if (IsPlayer(spriteId))
                 controller.PlayerMoveDirection(direction);
             sprites[spriteId] = newPosition;
+        }
+
+        private bool IsOutOfBound(FieldCoordinate newPosition)
+        {
+            if (newPosition.X < 0 || newPosition.X > map.Tiles.Columns)
+                return true;
+            if (newPosition.Y < 0 || newPosition.Y > map.Tiles.Rows)
+                return true;
+
+            return false;
         }
 
         private bool IsBlocked(FieldCoordinate newPosition)
