@@ -13,7 +13,7 @@ namespace MainModule
     {
         public int SpriteId { get; set; }
         private Direction currentDirection;
-        private IGameStateComponent gameStateController;
+        private readonly IGameStateComponent gameStateController;
         private int x;
         private int y;
 

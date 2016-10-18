@@ -29,6 +29,7 @@ namespace MainModule
             manager.InputHandler = registry.ResolveType<GameInputHandler>();
             var gameStateComponent = registry.ResolveType<IGameStateComponent>();
             gameStateComponent.SetMap(map);
+            gameStateComponent.PlaceSprite(0, new FieldCoordinate(1, 0));
         }
 
         public void Stop(IGameComponentManager engine)

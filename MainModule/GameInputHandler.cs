@@ -15,6 +15,7 @@ namespace MainModule
         {
             this.engineInterface = engineInterface;
             this.spriteState = spriteState;
+            spriteState.SpriteId = 0;
         }
 
         public bool HandleInput(CommandKeys key)
