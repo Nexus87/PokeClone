@@ -108,6 +108,9 @@
     <Compile Include="ScreenConstants.cs" />
     <Compile Include="SpriteFontCreator.cs" />
     <Compile Include="SpriteSheetFactory.cs" />
+    <Compile Include="TextureLoader\ITextureLoader.cs" />
+    <Compile Include="TextureLoader\ITextureProvider.cs" />
+    <Compile Include="TextureLoader\TextureLoader.cs" />
     <Compile Include="TextureProvider.cs" />
     <Compile Include="Utils\DefaultTextSplitter.cs" />
     <Compile Include="Utils\Extensions.cs" />
