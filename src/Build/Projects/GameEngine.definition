@@ -9,11 +9,12 @@
     <Reference Include="System.Core" />
     <Platform Type="Windows">
       <Reference Include="MonoGame.Framework.WindowsDX" />
+	  <Reference Include="Autofac" />
     </Platform>
     <Platform Type="Linux">
       <Reference Include="MonoGame.Framework.DesktopGL" />
+	  <Reference Include="Autofac" />
     </Platform>
-    <Reference Include="Autofac" />
   </References>
   <Files>
     <Compile Include="CommandKeys.cs" />

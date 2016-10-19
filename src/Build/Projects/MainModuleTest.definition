@@ -7,19 +7,22 @@
   <References>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="Moq" />
-    <Reference Include="NUnit.Framework" />
     <Platform Type="Windows">
       <Reference Include="MonoGame.Framework.WindowsDX" />
+	  <Reference Include="Castle.Core" />
+	  <Reference Include="Moq" />
+	  <Reference Include="NUnit.Framework" />
     </Platform>
     <Platform Type="Linux">
       <Reference Include="MonoGame.Framework.DesktopGL" />
-    </Platform>
+	  <Reference Include="Castle.Core" />
+	  <Reference Include="Moq" />
+	  <Reference Include="NUnit.Framework" />
+	</Platform>
     <Reference Include="GameEngineTest" />
     <Reference Include="MainModule" />
     <Reference Include="GameEngine" />
     <Reference Include="Base" />
-    <Reference Include="Castle.Core" />
   </References>
   <Files>
     <Compile Include="Graphics\CharacterSpriteTest.cs" />
