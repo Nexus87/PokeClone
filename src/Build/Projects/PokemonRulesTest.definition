@@ -7,21 +7,22 @@
   <References>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="Base" />
 	<Platform Type="Windows">
-      <Reference Include="Castle.Core" />
+	  <Reference Include="Castle.Core" />
 	  <Reference Include="Moq" />
 	  <Reference Include="NUnit.Framework" />
     </Platform>
     <Platform Type="Linux">
-      <Reference Include="Castle.Core" />
+	  <Reference Include="Castle.Core" />
 	  <Reference Include="Moq" />
 	  <Reference Include="NUnit.Framework" />
-    </Platform>
+	</Platform>
+    <Reference Include="Base" />
   </References>
   <Files>
     <Compile Include="CharFactoryTest.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="TestData\CharFactoryTestData.cs" />
+    <None Include="packages.config" />
   </Files>
 </Project>
