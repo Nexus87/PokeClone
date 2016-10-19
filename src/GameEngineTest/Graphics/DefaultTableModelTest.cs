@@ -1,4 +1,5 @@
 ﻿using GameEngine.Graphics;
+using GameEngine.Graphics.TableView;
 using NUnit.Framework;
 
 namespace GameEngineTest.Graphics

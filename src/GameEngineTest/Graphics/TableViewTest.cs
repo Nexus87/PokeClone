@@ -3,6 +3,7 @@ using GameEngineTest.TestUtils;
 using Moq;
 using NUnit.Framework;
 using System;
+using GameEngine.Graphics.TableView;
 
 namespace GameEngineTest.Graphics
 {

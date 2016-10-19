@@ -1,5 +1,6 @@
 ﻿using GameEngine;
 using GameEngine.Graphics;
+using GameEngine.Graphics.General;
 using Microsoft.Xna.Framework;
 using Moq;
 using NUnit.Framework;

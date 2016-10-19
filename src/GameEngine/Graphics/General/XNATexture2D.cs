@@ -1,25 +1,25 @@
-﻿using GameEngine.Utils;
+﻿using System.IO;
+using GameEngine.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using System.IO;
 
-namespace GameEngine
+namespace GameEngine.Graphics.General
 {
-    public class XNATexture2D : ITexture2D
+    public class XnaTexture2D : ITexture2D
     {
         private readonly string textureName;
         private readonly ContentManager content;
         public Texture2D Texture { get; set; }
 
-        public XNATexture2D(){}
-        public XNATexture2D(Texture2D texture)
+        public XnaTexture2D(){}
+        public XnaTexture2D(Texture2D texture)
         {
             texture.CheckNull("texture");
             Texture = texture;
         }
 
-        public XNATexture2D(string textureName, ContentManager content)
+        public XnaTexture2D(string textureName, ContentManager content)
         {
             textureName.CheckNull("textureName");
             content.CheckNull("content");

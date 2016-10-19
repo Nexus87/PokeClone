@@ -1,4 +1,5 @@
-﻿using GameEngine.Registry;
+﻿using GameEngine.Graphics.General;
+using GameEngine.Registry;
 using Microsoft.Xna.Framework.Content;
 
 namespace GameEngine
@@ -17,7 +18,7 @@ namespace GameEngine
         {
             if (id == -1)
                 return null;
-            var texture = new XNATexture2D("charmander-front", Content);
+            var texture = new XnaTexture2D("charmander-front", Content);
             texture.LoadContent();
             return texture;
         }
@@ -26,7 +27,7 @@ namespace GameEngine
         {
             if (id == -1)
                 return null;
-            var texture = new XNATexture2D("charmander-back", Content);
+            var texture = new XnaTexture2D("charmander-back", Content);
             texture.LoadContent();
             return texture;
         }

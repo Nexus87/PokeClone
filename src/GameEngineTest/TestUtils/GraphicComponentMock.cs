@@ -2,6 +2,7 @@
 using GameEngine.Graphics;
 using Microsoft.Xna.Framework;
 using System;
+using GameEngine.Graphics.General;
 
 namespace GameEngineTest.TestUtils
 {

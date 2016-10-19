@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GameEngine.Graphics.General;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -6,7 +7,7 @@ namespace GameEngine.Graphics
 {
     public class GraphicResources
     {
-        internal XNATexture2D pixel;
+        internal XnaTexture2D pixel;
         internal ISpriteFont DefaultFont { get; set; }
         internal ITexture2D DefaultArrowTexture { get; set; }
         internal ITexture2D DefaultBorderTexture { get; set; }
@@ -17,11 +18,11 @@ namespace GameEngine.Graphics
 
         internal GraphicResources(Configuration.Configuration config, ContentManager content)
         {
-            DefaultArrowTexture = new XNATexture2D(config.DefaultArrowTexture, content);
-            DefaultFont = new XNASpriteFont(config.DefaultFont, content);
-            DefaultBorderTexture = new XNATexture2D(config.DefaultBorderTexture, content);
-            pixel = new XNATexture2D();
-            Cup = new XNATexture2D("circle", content);
+            DefaultArrowTexture = new XnaTexture2D(config.DefaultArrowTexture, content);
+            DefaultFont = new XnaSpriteFont(config.DefaultFont, content);
+            DefaultBorderTexture = new XnaTexture2D(config.DefaultBorderTexture, content);
+            pixel = new XnaTexture2D();
+            Cup = new XnaTexture2D("circle", content);
             ContentManager = content;
             Configuration = config;
         }

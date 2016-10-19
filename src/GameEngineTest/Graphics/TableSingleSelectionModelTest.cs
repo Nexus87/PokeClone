@@ -2,6 +2,7 @@
 using GameEngineTest.TestUtils;
 using NUnit.Framework;
 using System.Collections.Generic;
+using GameEngine.Graphics.TableView;
 
 namespace GameEngineTest.Graphics
 {

@@ -1,11 +1,11 @@
 ﻿
-namespace GameEngine.Graphics
+namespace GameEngine.Graphics.TableView
 {
     /// <summary>
     /// This class is used, to build the GraphicComponents, used to display the cells in a TableView
     /// </summary>
     /// <typeparam name="T">Type of the data</typeparam>
-    public interface ITableRenderer<T>
+    public interface ITableRenderer<in T>
     {
         /// <summary>
         /// This function constructs the GraphicComponent for the cell (row, column), with

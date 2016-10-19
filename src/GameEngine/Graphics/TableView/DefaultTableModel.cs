@@ -1,8 +1,7 @@
-﻿using GameEngine.Registry;
+﻿using System;
 using GameEngine.Utils;
-using System;
 
-namespace GameEngine.Graphics
+namespace GameEngine.Graphics.TableView
 {
     public class DefaultTableModel<T> : ITableModel<T>
     {
@@ -27,9 +26,7 @@ namespace GameEngine.Graphics
 
         public virtual bool SetDataAt(T data, int row, int column)
         {
-            bool sizeChanged = false;
-            if (row >= Rows || column >= Columns)
-                sizeChanged = true;
+            bool sizeChanged = row >= Rows || column >= Columns;
 
             var oldValue = items[row, column];
             items[row, column] = data;
@@ -37,7 +34,7 @@ namespace GameEngine.Graphics
             if(sizeChanged)
                 SizeChanged(this, new TableResizeEventArgs(Rows, Columns));
 
-            if (!Object.Equals(oldValue, data))
+            if (!Equals(oldValue, data))
                 DataChanged(this, new DataChangedEventArgs<T>(row, column, data));
             return true;
         }

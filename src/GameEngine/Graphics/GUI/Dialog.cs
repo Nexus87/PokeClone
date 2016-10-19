@@ -1,9 +1,9 @@
-﻿using GameEngine.Graphics.GUI;
+﻿using GameEngine.Graphics.General;
 using GameEngine.Graphics.Layouts;
 using GameEngine.Utils;
 using Microsoft.Xna.Framework;
 
-namespace GameEngine.Graphics
+namespace GameEngine.Graphics.GUI
 {
     public class Dialog : ForwardingGraphicComponent<Container>, IWidget
     {

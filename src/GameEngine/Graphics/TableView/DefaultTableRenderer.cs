@@ -1,30 +1,30 @@
 ﻿using GameEngine.Registry;
 using GameEngine.Utils;
 
-namespace GameEngine.Graphics
+namespace GameEngine.Graphics.TableView
 {
     [GameType]
     public class DefaultTableRenderer<T> : ITableRenderer<T>
     {
-        private Table<ISelectableTextComponent> boxes = new Table<ISelectableTextComponent>();
+        private readonly Table<ISelectableTextComponent> boxes = new Table<ISelectableTextComponent>();
 
         public string DefaultString { get; set; }
 
 
         public DefaultTableRenderer(IGameTypeRegistry registry)
         {
-            this.registry = registry;
+            Registry = registry;
             DefaultString = "";
         }
 
-        public ISelectableGraphicComponent GetComponent(int row, int column, T data, bool IsSelected)
+        public ISelectableGraphicComponent GetComponent(int row, int column, T data, bool isSelected)
         {
             CreateComponent(row, column);
 
             var ret = boxes[row, column];
             ret.Text = data == null ? DefaultString : data.ToString();
             
-            if (IsSelected)
+            if (isSelected)
                 ret.Select();
             else
                 ret.Unselect();
@@ -35,20 +35,20 @@ namespace GameEngine.Graphics
 
         private void CreateComponent(int row, int column)
         {
-            if (boxes[row, column] == null)
-            {
-                var box = CreateComponent(); 
-                box.Setup();
-                boxes[row, column] = box;
-            }
+            if (boxes[row, column] != null)
+                return;
+
+            var box = CreateComponent();
+            box.Setup();
+            boxes[row, column] = box;
         }
 
         protected virtual ISelectableTextComponent CreateComponent()
         {
-            return registry.ResolveType<ItemBox>();
+            return Registry.ResolveType<ItemBox>();
         }
 
 
-        public IGameTypeRegistry registry { get; set; }
+        public IGameTypeRegistry Registry { get; set; }
     }
 }

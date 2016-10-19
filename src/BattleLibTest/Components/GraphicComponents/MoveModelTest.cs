@@ -4,6 +4,7 @@ using GameEngine.Graphics;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using GameEngine.Graphics.TableView;
 
 namespace BattleLibTest.GUI
 {

@@ -1,6 +1,7 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GameEngine.Graphics.General;
+using Microsoft.Xna.Framework;
 
-namespace GameEngine.Graphics
+namespace GameEngine.Graphics.TableView
 {
     internal interface ITableGrid
     {

@@ -3,6 +3,8 @@ using GameEngine.Graphics;
 using GameEngineTest.Graphics;
 using Microsoft.Xna.Framework;
 using System;
+using GameEngine.Graphics.General;
+using GameEngine.Graphics.TableView;
 
 namespace GameEngineTest.TestUtils
 {

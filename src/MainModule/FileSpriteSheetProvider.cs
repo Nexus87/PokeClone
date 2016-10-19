@@ -3,6 +3,8 @@ using System.IO;
 using System.Linq;
 using GameEngine;
 using GameEngine.Graphics;
+using GameEngine.Graphics.General;
+using GameEngine.Graphics.TableView;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 
@@ -21,7 +23,7 @@ namespace MainModule
         public FileSpriteSheetProvider(string textureName, string fileName, ContentManager contentManager)
         {
             this.fileName = fileName;
-            texture = new XNATexture2D(textureName, contentManager);
+            texture = new XnaTexture2D(textureName, contentManager);
         }
 
         public ITexture2D GetTexture()

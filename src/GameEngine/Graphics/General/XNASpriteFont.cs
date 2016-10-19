@@ -1,20 +1,20 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Collections.ObjectModel;
+using System.Text;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using System.Collections.ObjectModel;
-using System.Text;
 
-namespace GameEngine
+namespace GameEngine.Graphics.General
 {
     /// <summary>
     /// Wrapper for XNAs SpriteFont class
     /// </summary>
-    public sealed class XNASpriteFont : ISpriteFont
+    public sealed class XnaSpriteFont : ISpriteFont
     {
         private readonly string fontName;
         private readonly ContentManager content;
 
-        public XNASpriteFont(string fontName, ContentManager content)
+        public XnaSpriteFont(string fontName, ContentManager content)
         {
             this.fontName = fontName;
             this.content = content;

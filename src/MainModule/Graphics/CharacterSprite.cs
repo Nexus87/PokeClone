@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using GameEngine;
 using GameEngine.Graphics;
+using GameEngine.Graphics.General;
 using Microsoft.Xna.Framework;
 
 namespace MainModule.Graphics

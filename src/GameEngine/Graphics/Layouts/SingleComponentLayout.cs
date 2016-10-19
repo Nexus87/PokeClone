@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using GameEngine.Graphics.Layouts;
 
-namespace GameEngine.Graphics
+namespace GameEngine.Graphics.Layouts
 {
     public class SingleComponentLayout : AbstractLayout
     {

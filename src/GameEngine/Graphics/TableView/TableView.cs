@@ -1,10 +1,11 @@
-﻿using GameEngine.Registry;
+﻿using System;
+using System.Diagnostics;
+using GameEngine.Graphics.General;
+using GameEngine.Registry;
 using GameEngine.Utils;
 using Microsoft.Xna.Framework;
-using System;
-using System.Diagnostics;
 
-namespace GameEngine.Graphics
+namespace GameEngine.Graphics.TableView
 {
     [GameType]
     public class TableView<T> : AbstractGraphicComponent, ITableView<T>

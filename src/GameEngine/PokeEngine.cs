@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using System;
 using System.Linq;
 using GameEngine.GameEngineComponents;
+using GameEngine.Graphics.General;
 
 namespace GameEngine
 {
@@ -15,7 +16,7 @@ namespace GameEngine
         private readonly GraphicResources factory;
         private GUIManager GuiManager { get; set; }
 
-        private XNASpriteBatch batch;
+        private XnaSpriteBatch batch;
         private InputComponent input;
         private Screen screen;
 
@@ -119,7 +120,7 @@ namespace GameEngine
         protected override void LoadContent()
         {
             base.LoadContent();
-            batch = new XNASpriteBatch(GraphicsDevice);
+            batch = new XnaSpriteBatch(GraphicsDevice);
             factory.Setup(this);
         }
 

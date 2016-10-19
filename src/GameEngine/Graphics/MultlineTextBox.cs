@@ -1,4 +1,5 @@
-﻿using GameEngine.Graphics.Layouts;
+﻿using GameEngine.Graphics.General;
+using GameEngine.Graphics.Layouts;
 using GameEngine.Registry;
 using GameEngine.Utils;
 using Microsoft.Xna.Framework;

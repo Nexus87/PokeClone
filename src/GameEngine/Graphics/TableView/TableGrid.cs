@@ -1,25 +1,26 @@
-﻿using GameEngine.Utils;
-using Microsoft.Xna.Framework;
-using System;
+﻿using System;
+using GameEngine.Graphics.General;
 using GameEngine.Graphics.Layouts;
+using GameEngine.Utils;
+using Microsoft.Xna.Framework;
 
-namespace GameEngine.Graphics
+namespace GameEngine.Graphics.TableView
 {
-    class TableGrid : ITableGrid
+    internal class TableGrid : ITableGrid
     {
-        readonly Table<ISelectableGraphicComponent> components;
-        readonly Container itemContainer;
-        readonly GridLayout layout;
+        private readonly Table<ISelectableGraphicComponent> components;
+        private readonly Container itemContainer;
+        private readonly GridLayout layout;
 
-        bool needsUpdate = true;
+        private bool needsUpdate = true;
 
-        TableIndex startIndex;
-        TableIndex endIndex;
+        private TableIndex startIndex;
+        private TableIndex endIndex;
 
-        bool autoResizeStart;
-        bool autoResizeEnd;
+        private bool autoResizeStart;
+        private bool autoResizeEnd;
 
-        static readonly TableIndex? NULL = null;
+        private static readonly TableIndex? Null = null;
 
         public int Rows
         {
@@ -45,7 +46,7 @@ namespace GameEngine.Graphics
 
         public TableIndex? StartIndex
         {
-            get { return autoResizeStart ? NULL : startIndex; }
+            get { return autoResizeStart ? Null : startIndex; }
             set
             {
                 Invalidate();
@@ -65,7 +66,7 @@ namespace GameEngine.Graphics
 
         public TableIndex? EndIndex
         {
-            get { return autoResizeEnd ? NULL : endIndex; }
+            get { return autoResizeEnd ? Null : endIndex; }
             set
             {
                 Invalidate();
@@ -84,7 +85,7 @@ namespace GameEngine.Graphics
             }
         }
 
-        void CheckOrder(TableIndex? start, TableIndex? end)
+        private void CheckOrder(TableIndex? start, TableIndex? end)
         {
             if (start == null || end == null)
                 return;
@@ -98,15 +99,15 @@ namespace GameEngine.Graphics
             }
         }
 
-        void CheckEndRange(TableIndex index)
+        private void CheckEndRange(TableIndex index)
         {
             var row = index.Row;
             var column = index.Column;
 
             if (row > Rows || row < 0)
-                throw new ArgumentOutOfRangeException("row");
+                throw new ArgumentOutOfRangeException("index");
             if (column > Columns || column < 0)
-                throw new ArgumentOutOfRangeException("column");
+                throw new ArgumentOutOfRangeException("index");
         }
 
         public TableGrid(int rows = 0, int columns = 0)
@@ -115,47 +116,46 @@ namespace GameEngine.Graphics
 
             components = new Table<ISelectableGraphicComponent>();
 
-            itemContainer = new Container();
-            itemContainer.Layout = layout;
+            itemContainer = new Container {Layout = layout};
         }
 
-        void FixIndexesRow()
+        private void FixIndexesRow()
         {
             FixEndRow();
             FixStartRow();
         }
 
-        void FixEndRow()
+        private void FixEndRow()
         {
             if (autoResizeEnd || endIndex.Row > Rows)
                 endIndex.Row = Rows;
         }
 
-        void FixStartRow()
+        private void FixStartRow()
         {
             if (startIndex.Row >= Rows)
                 startIndex.Row = Math.Max(0, Rows - 1);
         }
 
-        void FixIndexesColumn()
+        private void FixIndexesColumn()
         {
             FixEndColumn();
             FixStartColumn();
         }
 
-        void FixEndColumn()
+        private void FixEndColumn()
         {
             if (autoResizeEnd || endIndex.Column > Columns)
                 endIndex.Column = Columns;
         }
 
-        void FixStartColumn()
+        private void FixStartColumn()
         {
             if (startIndex.Column >= Columns)
                 startIndex.Column = Math.Max(0, Columns - 1);
         }
 
-        void Invalidate()
+        private void Invalidate()
         {
             needsUpdate = true;
         }
@@ -167,14 +167,14 @@ namespace GameEngine.Graphics
             Invalidate();
         }
 
-        void CheckStartRange(TableIndex index)
+        private void CheckStartRange(TableIndex index)
         {
             if (index.Row == 0 && index.Column == 0)
                 return;
             CheckRange(index.Row, index.Column);
         }
 
-        void CheckRange(int row, int column)
+        private void CheckRange(int row, int column)
         {
             if (row >= Rows || row < 0)
                 throw new ArgumentOutOfRangeException("row");
@@ -205,7 +205,7 @@ namespace GameEngine.Graphics
             itemContainer.Draw(time, spriteBatch);
         }
 
-        void Update()
+        private void Update()
         {
             itemContainer.RemoveAllComponents();
             var subTable = components.CreateSubtable(startIndex, endIndex);

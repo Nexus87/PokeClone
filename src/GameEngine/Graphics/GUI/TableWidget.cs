@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using System.Diagnostics;
+using GameEngine.Graphics.General;
+using GameEngine.Graphics.TableView;
 
 namespace GameEngine.Graphics.GUI
 {

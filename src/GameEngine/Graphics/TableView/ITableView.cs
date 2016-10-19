@@ -1,5 +1,6 @@
 ﻿using System;
-namespace GameEngine.Graphics
+
+namespace GameEngine.Graphics.TableView
 {
     public interface ITableView<T> : IGraphicComponent
     {

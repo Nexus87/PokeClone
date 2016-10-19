@@ -1,6 +1,7 @@
 ﻿using GameEngine;
 using GameEngine.Graphics;
 using System;
+using GameEngine.Graphics.General;
 
 namespace GameEngineTest.TestUtils
 {

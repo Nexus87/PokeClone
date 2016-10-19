@@ -1,4 +1,4 @@
-﻿namespace GameEngine.Graphics
+﻿namespace GameEngine.Graphics.TableView
 {
     public struct TableIndex
     {

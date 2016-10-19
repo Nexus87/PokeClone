@@ -1,8 +1,8 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Text;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.Text;
 
-namespace GameEngine
+namespace GameEngine.Graphics.General
 {
     /// <summary>
     /// XNA implementation of the ISpriteBatch interface
@@ -11,9 +11,9 @@ namespace GameEngine
     /// This class is a wrapper around XNAs SpriteBatch class, with the only difference that
     /// it uses ISpriteFont instead of a SpriteFont
     /// </remarks>
-    sealed class XNASpriteBatch : SpriteBatch, ISpriteBatch
+    internal sealed class XnaSpriteBatch : SpriteBatch, ISpriteBatch
     {
-        public XNASpriteBatch(GraphicsDevice device) : base(device){ }
+        public XnaSpriteBatch(GraphicsDevice device) : base(device){ }
 
         /// <see cref="Microsoft.Xna.Framework.Graphics.SpriteBatch.DrawString(SpriteFont, StringBuilder, Vector2, Color)"/>
         public void DrawString(ISpriteFont spriteFont, StringBuilder text, Vector2 position, Color color)

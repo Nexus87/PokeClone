@@ -5,6 +5,9 @@ using Microsoft.Xna.Framework.Content;
 using System;
 using System.Reflection;
 using GameEngine.GameEngineComponents;
+using GameEngine.Graphics.General;
+using GameEngine.Graphics.GUI;
+using GameEngine.Graphics.TableView;
 
 namespace GameEngine
 {

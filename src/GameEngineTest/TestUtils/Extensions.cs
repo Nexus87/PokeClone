@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using GameEngine.Graphics.General;
 
 namespace GameEngineTest.TestUtils
 {

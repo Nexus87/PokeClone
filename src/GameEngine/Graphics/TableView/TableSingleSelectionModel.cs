@@ -1,9 +1,8 @@
-﻿
-using System;
-using GameEngine.Utils;
+﻿using System;
 using GameEngine.Registry;
+using GameEngine.Utils;
 
-namespace GameEngine.Graphics
+namespace GameEngine.Graphics.TableView
 {
     [GameType]
     public class TableSingleSelectionModel : ITableSelectionModel
@@ -13,7 +12,7 @@ namespace GameEngine.Graphics
         private int CurrentColumn { get { return currentSelection.Item2; } }
 
         public event EventHandler<SelectionChangedEventArgs> SelectionChanged = delegate { };
-        private IndexValidator indexValidator;
+        private readonly IndexValidator indexValidator;
 
         public TableSingleSelectionModel() : this(delegate { return true; }) { }
 
@@ -62,7 +61,7 @@ namespace GameEngine.Graphics
             SelectionChanged(this, new SelectionChangedEventArgs(row, column, false));
         }
 
-        private void AssertIndexIsPositive(int row, int column)
+        private static void AssertIndexIsPositive(int row, int column)
         {
             if (row < 0 || column < 0)
                 throw new ArgumentOutOfRangeException("row and column must be positive");

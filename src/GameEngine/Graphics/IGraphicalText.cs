@@ -1,4 +1,6 @@
-﻿namespace GameEngine.Graphics
+﻿using GameEngine.Graphics.General;
+
+namespace GameEngine.Graphics
 {
     public interface IGraphicalText
     {

@@ -6,6 +6,7 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 using GameEngine;
 using GameEngine.Graphics;
+using GameEngine.Graphics.General;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -52,7 +53,7 @@ namespace MainModule
 
         public void Setup()
         {
-            texture = new XNATexture2D(content.Load<Texture2D>(filename));
+            texture = new XnaTexture2D(content.Load<Texture2D>(filename));
             mapping = ReadAreaMapping().ToDictionary(p => p.Key, p => AreaToRectangle(p.Value));
 
         }

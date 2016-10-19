@@ -2,6 +2,7 @@
 using GameEngine.Utils;
 using Microsoft.Xna.Framework;
 using System;
+using GameEngine.Graphics.General;
 
 namespace GameEngine.Graphics
 {

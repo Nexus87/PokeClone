@@ -1,8 +1,8 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.IO;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.IO;
 
-namespace GameEngine
+namespace GameEngine.Graphics.General
 {
     public interface ITexture2D
     {

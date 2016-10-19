@@ -6,6 +6,7 @@ using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using GameEngine.Graphics.General;
 
 namespace GameEngineTest.Graphics
 {
