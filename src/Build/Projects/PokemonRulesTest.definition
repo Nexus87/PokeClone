@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project Name="PokemonRulesTest" Path="src/PokemonRulesTest" Type="Library">
+<Project Name="PokemonRulesTest" Path="PokemonRulesTest" Type="Library">
   <Properties>
     <NoWarn>1591</NoWarn>
 	<LangVersion>5</LangVersion>
@@ -16,6 +16,5 @@
     <Compile Include="CharFactoryTest.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="TestData\CharFactoryTestData.cs" />
-	<None Include="packages.config" />
   </Files>
 </Project>

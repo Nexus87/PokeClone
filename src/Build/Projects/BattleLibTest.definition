@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project Name="BattleLibTest" Path="src/BattleLibTest" Type="Library">
+<Project Name="BattleLibTest" Path="BattleLibTest" Type="Library">
   <Properties>
     <NoWarn>1591</NoWarn>
 	<LangVersion>5</LangVersion>

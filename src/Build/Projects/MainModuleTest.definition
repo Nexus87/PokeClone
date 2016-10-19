@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project Name="MainModuleTest" Path="src/MainModuleTest" Type="Library">
+<Project Name="MainModuleTest" Path="MainModuleTest" Type="Library">
   <Properties>
     <NoWarn>1591</NoWarn>
 	<LangVersion>5</LangVersion>

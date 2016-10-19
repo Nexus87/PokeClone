@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project Name="PokemonGame" Path="src/PokemonGame" Type="App">
+<Project Name="PokemonGame" Path="PokemonGame" Type="App">
   <Properties>
     <NoWarn>1591</NoWarn>
 	<LangVersion>5</LangVersion>
