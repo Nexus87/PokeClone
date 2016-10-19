@@ -5,6 +5,7 @@ using GameEngine.Utils;
 using Microsoft.Xna.Framework;
 using System;
 using System.Linq;
+using GameEngine.GameEngineComponents;
 
 namespace GameEngine
 {
@@ -21,7 +22,7 @@ namespace GameEngine
         private string startModule;
         private IInputHandler inputHandler;
 
-        public PokeEngine(Configuration config)         {
+        public PokeEngine(Configuration.Configuration config)         {
             config.CheckNull("config");
             Registry = new AutofacModuleRegistry();
             factory = new GraphicResources(config, Content);

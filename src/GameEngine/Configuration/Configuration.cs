@@ -1,7 +1,7 @@
-﻿using Microsoft.Xna.Framework.Input;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Microsoft.Xna.Framework.Input;
 
-namespace GameEngine
+namespace GameEngine.Configuration
 {
     public class Configuration
     {

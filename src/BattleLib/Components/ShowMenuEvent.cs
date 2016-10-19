@@ -1,6 +1,7 @@
 ﻿using GameEngine;
 using System;
 using BattleLib.Components.GraphicComponents;
+using GameEngine.GameEngineComponents;
 
 namespace BattleLib.Components
 {

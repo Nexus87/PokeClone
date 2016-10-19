@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Moq;
 using NUnit.Framework;
 using System;
+using GameEngine.GameEngineComponents;
 
 namespace GameEngineTest.EventComponent
 {

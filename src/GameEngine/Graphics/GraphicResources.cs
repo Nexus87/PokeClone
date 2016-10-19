@@ -13,9 +13,9 @@ namespace GameEngine.Graphics
         internal ITexture2D Pixel { get { return pixel; } }
         internal ITexture2D Cup { get; set; }
         internal ContentManager ContentManager { get; set; }
-        internal Configuration Configuration { get; set; }
+        internal Configuration.Configuration Configuration { get; set; }
 
-        internal GraphicResources(Configuration config, ContentManager content)
+        internal GraphicResources(Configuration.Configuration config, ContentManager content)
         {
             DefaultArrowTexture = new XNATexture2D(config.DefaultArrowTexture, content);
             DefaultFont = new XNASpriteFont(config.DefaultFont, content);

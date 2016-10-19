@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GameEngine
+namespace GameEngine.GameEngineComponents
 {
     /// <summary>
     /// Represents an event that can be added to the IEventQueue service

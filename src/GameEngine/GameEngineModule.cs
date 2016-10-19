@@ -4,6 +4,7 @@ using GameEngine.Utils;
 using Microsoft.Xna.Framework.Content;
 using System;
 using System.Reflection;
+using GameEngine.GameEngineComponents;
 
 namespace GameEngine
 {

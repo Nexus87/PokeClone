@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Input;
 
-namespace GameEngine
+namespace GameEngine.GameEngineComponents
 {
     internal class KeyboardManager : IKeyboardManager
     {

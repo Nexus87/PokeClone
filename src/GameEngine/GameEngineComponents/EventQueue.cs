@@ -1,17 +1,17 @@
-﻿using GameEngine.Registry;
-using Microsoft.Xna.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using GameEngine.Registry;
+using Microsoft.Xna.Framework;
 
-namespace GameEngine
+namespace GameEngine.GameEngineComponents
 {
     [GameService(typeof(IEventQueue))]
-    internal class EventQueue : IGameComponent, IEventQueue
+    internal class EventQueue : IEventQueue
     {
         private bool eventDispatched;
         private IEvent dispatchedEvent;
 
-        private LinkedList<IEvent> eventQueue = new LinkedList<IEvent>();
+        private readonly LinkedList<IEvent> eventQueue = new LinkedList<IEvent>();
 
         public void Update(GameTime gameTime)
         {
@@ -27,7 +27,7 @@ namespace GameEngine
             ev.Dispatch();
         }
 
-        private void OnEventProcessedHandler(Object sender, EventArgs args)
+        private void OnEventProcessedHandler(object sender, EventArgs args)
         {
             dispatchedEvent.EventProcessed -= OnEventProcessedHandler;
             eventDispatched = false;

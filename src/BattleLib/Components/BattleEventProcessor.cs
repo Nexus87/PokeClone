@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BattleLib.Components.GraphicComponents;
+using GameEngine.GameEngineComponents;
 
 namespace BattleLib.Components
 {
