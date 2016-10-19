@@ -8,7 +8,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Moq" />
-    <Reference Include="NUnit" />
+    <Reference Include="NUnit.Framework" />
     <Reference Include="Base" />
     <Reference Include="Castle.Core" />
   </References>
