@@ -1,5 +1,6 @@
 ﻿using GameEngine;
 using GameEngine.Graphics;
+using GameEngine.Graphics.Layouts;
 using GameEngine.Registry;
 using GameEngine.Utils;
 using Microsoft.Xna.Framework;

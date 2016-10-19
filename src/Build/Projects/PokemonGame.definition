@@ -2,18 +2,18 @@
 <Project Name="PokemonGame" Path="PokemonGame" Type="App">
   <Properties>
     <NoWarn>1591</NoWarn>
-	<LangVersion>5</LangVersion>
+    <LangVersion>5</LangVersion>
   </Properties>
   <References>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Platform Type="Windows">
       <Reference Include="MonoGame.Framework.WindowsDX" />
-	  <Reference Include="Autofac" />
+      <Reference Include="Autofac" />
     </Platform>
     <Platform Type="Linux">
       <Reference Include="MonoGame.Framework.DesktopGL" />
-	  <Reference Include="Autofac" />
+      <Reference Include="Autofac" />
     </Platform>
     <Reference Include="GameEngine" />
     <Reference Include="BattleLib" />

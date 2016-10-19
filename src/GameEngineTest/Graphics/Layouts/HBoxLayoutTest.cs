@@ -1,13 +1,13 @@
 ﻿using GameEngine.Graphics;
+using GameEngine.Graphics.Layouts;
 using GameEngineTest.TestUtils;
 using NUnit.Framework;
 
-namespace GameEngineTest.Graphics
+namespace GameEngineTest.Graphics.Layouts
 {
     [TestFixture]
     public class HBoxLayoutTest : ILayoutTest
     {
-
 
         [TestCase(4, 0, 0, 200, 200)]
         public void LayoutContainer_NormalSetup_ComponentsInRightOrder(int cnt, float x, float y, float width, float height)

@@ -1,14 +1,13 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace GameEngine.Graphics
+namespace GameEngine.Graphics.Layouts
 {
     public abstract class BoxLayout : AbstractLayout
     {
         private readonly NullGraphicObject spacer;
-        private List<IGraphicComponent> components;
+        private List<IGraphicComponent> internalComponants;
 
         public float Spacing
         {
@@ -35,34 +34,34 @@ namespace GameEngine.Graphics
 
         protected void SetComponents(IReadOnlyList<IGraphicComponent> components)
         {
-            this.components = new List<IGraphicComponent>();
+            internalComponants = new List<IGraphicComponent>();
             if (components.Count == 0)
                 return;
 
-            this.components.Capacity = components.Count * 2;
+            internalComponants.Capacity = components.Count * 2;
             foreach (var c in components)
             {
-                this.components.Add(c);
-                this.components.Add(spacer);
+                internalComponants.Add(c);
+                internalComponants.Add(spacer);
             }
-            this.components.RemoveAt(this.components.Count - 1);
+            internalComponants.RemoveAt(internalComponants.Count - 1);
         }
 
 
         protected float CalculateWidthForExtendingComponents()
         {
-            float totalPreferredWidth = components.Where(c => c.HorizontalPolicy == ResizePolicy.Preferred).Sum(c => c.PreferredWidth);
-            float totalFixedWidth = components.Where(c => c.HorizontalPolicy == ResizePolicy.Fixed).Sum(c => c.Width);
-            int extendingComponentsCount = components.Where(c => c.HorizontalPolicy == ResizePolicy.Extending).Count();
+            var totalPreferredWidth = internalComponants.Where(c => c.HorizontalPolicy == ResizePolicy.Preferred).Sum(c => c.PreferredWidth);
+            var totalFixedWidth = internalComponants.Where(c => c.HorizontalPolicy == ResizePolicy.Fixed).Sum(c => c.Width);
+            var extendingComponentsCount = internalComponants.Count(c => c.HorizontalPolicy == ResizePolicy.Extending);
             return Math.Max(0, Width - totalFixedWidth - totalPreferredWidth) / extendingComponentsCount;
             
         }
 
         protected float CalculateHeightForExtendingComponents()
         {
-            float totalPreferredHeight = components.Where(c => c.VerticalPolicy == ResizePolicy.Preferred).Sum(c => c.PreferredHeight);
-            float totalFixedHeight = components.Where(c => c.VerticalPolicy == ResizePolicy.Fixed).Sum(c => c.Height);
-            int extendingComponentsCount = components.Where(c => c.VerticalPolicy == ResizePolicy.Extending).Count();
+            var totalPreferredHeight = internalComponants.Where(c => c.VerticalPolicy == ResizePolicy.Preferred).Sum(c => c.PreferredHeight);
+            var totalFixedHeight = internalComponants.Where(c => c.VerticalPolicy == ResizePolicy.Fixed).Sum(c => c.Height);
+            var extendingComponentsCount = internalComponants.Count(c => c.VerticalPolicy == ResizePolicy.Extending);
             return Math.Max(0, Height - totalFixedHeight - totalPreferredHeight) / extendingComponentsCount;
 
         }
@@ -70,15 +69,15 @@ namespace GameEngine.Graphics
         protected void LayoutComponents()
         {
 
-            float totalWidthLeft = Width;
-            float currentXPosition = XPosition;
-            float totalHeightLeft = Height;
-            float currentYPosition = YPosition;
+            var totalWidthLeft = Width;
+            var currentXPosition = XPosition;
+            var totalHeightLeft = Height;
+            var currentYPosition = YPosition;
 
-            float upperXLimit = XPosition + Width;
-            float upperYLimit = YPosition + Height;
+            var upperXLimit = XPosition + Width;
+            var upperYLimit = YPosition + Height;
             
-            foreach(var component in components)
+            foreach(var component in internalComponants)
             {
                 SetComponentPosition(component, currentXPosition, currentYPosition);
                 SetSizeWithLimits(component, HeightForExtendingComponents, WidthForExtendingComponents, totalHeightLeft, totalWidthLeft);
@@ -113,15 +112,6 @@ namespace GameEngine.Graphics
         {
             component.XPosition = xPosition;
             component.YPosition = yPosition;
-        }
-
-        private float RemoveFixedHeights(float height, List<IGraphicComponent> components)
-        {
-            float remainingHeight = height - components
-                .Where(c => c.VerticalPolicy == ResizePolicy.Preferred)
-                .Sum(c => c.PreferredHeight);
-
-            return Math.Max(0, remainingHeight);
         }
     }
 }

@@ -1,11 +1,12 @@
-﻿using GameEngine.Graphics;
-using GameEngineTest.TestUtils;
-using NUnit.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using GameEngine.Graphics;
+using GameEngine.Graphics.Layouts;
+using GameEngineTest.TestUtils;
+using NUnit.Framework;
 
-namespace GameEngineTest.Graphics
+namespace GameEngineTest.Graphics.Layouts
 {
     [TestFixture]
     public class GridLayoutTest : ILayoutTest
@@ -95,10 +96,10 @@ namespace GameEngineTest.Graphics
             var container = CreateDefaultContainer();
             var layout = new GridLayout(gridRows, gridColumns);
 
-            float X = container.XPosition;
-            float Y = container.YPosition;
-            float Width = container.Width / ((float) realColumns);
-            float Height = container.Height / ((float) realRows);
+            var x = container.XPosition;
+            var y = container.YPosition;
+            var width = container.Width / realColumns;
+            var height = container.Height / realRows;
 
             container.SetupContainer(componentCnt);
             container.Layout = layout;
@@ -106,24 +107,24 @@ namespace GameEngineTest.Graphics
             layout.LayoutContainer(container);
 
             var components = container.Components;
-            for (int i = 0; i < components.Count; i++)
+            for (var i = 0; i < components.Count; i++)
             {
-                int row = ToRow(i, realRows, realColumns);
-                int column = ToColumn(i, realRows, realColumns);
+                var row = ToRow(i, realRows, realColumns);
+                var column = ToColumn(i, realRows, realColumns);
 
-                Assert.AreEqual(X + column * Width, components[i].XPosition);
-                Assert.AreEqual(Y + row * Height, components[i].YPosition);
-                Assert.AreEqual(Width, components[i].Width);
-                Assert.AreEqual(Height, components[i].Height);
+                Assert.AreEqual(x + column * width, components[i].XPosition);
+                Assert.AreEqual(y + row * height, components[i].YPosition);
+                Assert.AreEqual(width, components[i].Width);
+                Assert.AreEqual(height, components[i].Height);
             }
         }
 
-        private int ToRow(int index, int rows, int columns)
+        private static int ToRow(int index, int rows, int columns)
         {
             return (int)Math.Floor((double) index / columns);
         }
 
-        private int ToColumn(int index, int rows, int columns)
+        private static int ToColumn(int index, int rows, int columns)
         {
             return index % columns;
         }

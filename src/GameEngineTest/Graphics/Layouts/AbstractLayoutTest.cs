@@ -1,19 +1,19 @@
-﻿using GameEngine;
+﻿using System.Collections.Generic;
 using GameEngine.Graphics;
+using GameEngine.Graphics.Layouts;
+using GameEngineTest.TestUtils;
 using Moq;
 using Moq.Protected;
 using NUnit.Framework;
-using System.Collections.Generic;
 
-namespace GameEngineTest.Graphics
+namespace GameEngineTest.Graphics.Layouts
 {
     [TestFixture]
     public class AbstractLayoutTest
     {
-        private Mock<AbstractLayout> CreateLayoutMock()
+        private static Mock<AbstractLayout> CreateLayoutMock()
         {
-            var layoutMock = new Mock<AbstractLayout>();
-            layoutMock.CallBase = true;
+            var layoutMock = new Mock<AbstractLayout> {CallBase = true};
 
             return layoutMock;
         }
@@ -35,69 +35,69 @@ namespace GameEngineTest.Graphics
         };
 
         [TestCaseSource("ValidPropertyData")]
-        public void ProtectedProperties_SetLeftMargin_RespectsSetMargins(float X, float Y, float Width, float Height, int Margin)
+        public void ProtectedProperties_SetLeftMargin_RespectsSetMargins(float x, float y, float width, float height, int margin)
         {
             var testObj = new TestLayout();
             var container = CreateContainer();
-            container.SetCoordinates(X, Y, Width, Height);
+            container.SetCoordinates(x, y, width, height);
 
-            testObj.SetMargin(left: Margin);
+            testObj.SetMargin(left: margin);
             testObj.LayoutContainer(container);
 
-            testObj.TestProperties(X + Margin, Y, Width - Margin, Height);
+            testObj.TestProperties(x + margin, y, width - margin, height);
         }
             
         [TestCaseSource("ValidPropertyData")]
-        public void ProtectedProperties_SetRightMargin_RespectsSetMargins(float X, float Y, float Width, float Height, int Margin)
+        public void ProtectedProperties_SetRightMargin_RespectsSetMargins(float x, float y, float width, float height, int margin)
         {
             var testObj = new TestLayout();
             var container = CreateContainer();
-            container.SetCoordinates(X, Y, Width, Height);
+            container.SetCoordinates(x, y, width, height);
 
-            testObj.SetMargin(right: Margin);
+            testObj.SetMargin(right: margin);
             testObj.LayoutContainer(container);
 
-            testObj.TestProperties(X, Y, Width - Margin, Height);
+            testObj.TestProperties(x, y, width - margin, height);
         }
 
         [TestCaseSource("ValidPropertyData")]
-        public void ProtectedProperties_SetTopMargin_RespectsSetMargins(float X, float Y, float Width, float Height, int Margin)
+        public void ProtectedProperties_SetTopMargin_RespectsSetMargins(float x, float y, float width, float height, int margin)
         {
             var testObj = new TestLayout();
             var container = CreateContainer();
-            container.SetCoordinates(X, Y, Width, Height);
+            container.SetCoordinates(x, y, width, height);
 
-            testObj.SetMargin(top: Margin);
+            testObj.SetMargin(top: margin);
             testObj.LayoutContainer(container);
 
-            testObj.TestProperties(X, Y + Margin, Width, Height - Margin);
+            testObj.TestProperties(x, y + margin, width, height - margin);
         }
 
         
         [TestCaseSource("ValidPropertyData")]
-        public void ProtectedProperties_SetBottomMargin_RespectsSetMargins(float X, float Y, float Width, float Height, int Margin)
+        public void ProtectedProperties_SetBottomMargin_RespectsSetMargins(float x, float y, float width, float height, int margin)
         {
             var testObj = new TestLayout();
             var container = CreateContainer();
-            container.SetCoordinates(X, Y, Width, Height);
+            container.SetCoordinates(x, y, width, height);
 
-            testObj.SetMargin(bottom: Margin);
+            testObj.SetMargin(bottom: margin);
             testObj.LayoutContainer(container);
 
-            testObj.TestProperties(X, Y, Width, Height - Margin);
+            testObj.TestProperties(x, y, width, height - margin);
         }
 
         [TestCaseSource("ValidPropertyData")]
-        public void ProtectedProperties_SetAllMargins_RespectsSetMargins(float X, float Y, float Width, float Height, int Margin)
+        public void ProtectedProperties_SetAllMargins_RespectsSetMargins(float x, float y, float width, float height, int margin)
         {
             var testObj = new TestLayout();
             var container = CreateContainer();
-            container.SetCoordinates(X, Y, Width, Height);
+            container.SetCoordinates(x, y, width, height);
 
-            testObj.SetMargin(Margin, Margin, Margin, Margin);
+            testObj.SetMargin(margin, margin, margin, margin);
             testObj.LayoutContainer(container);
 
-            testObj.TestProperties(X + Margin, Y + Margin, Width - 2*Margin, Height - 2*Margin);
+            testObj.TestProperties(x + margin, y + margin, width - 2*margin, height - 2*margin);
         }
         
 

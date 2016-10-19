@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace GameEngine.Graphics
+namespace GameEngine.Graphics.Layouts
 {
     /// <summary>
     /// A layout that orders the components in a grid.
@@ -52,13 +52,13 @@ namespace GameEngine.Graphics
             OrderComponents(components, realColumns, realRows);
         }
 
-        private void OrderComponents(IEnumerable<IGraphicComponent> components, int realColumns, int realRows)
+        private void OrderComponents(IReadOnlyList<IGraphicComponent> components, int realColumns, int realRows)
         {
-            float cellWidth = Width / realColumns;
-            float cellHeight = Height / realRows;
-            float currentY = YPosition;
+            var cellWidth = Width / realColumns;
+            var cellHeight = Height / realRows;
+            var currentY = YPosition;
 
-            for (int row = 0; row < realRows; row++)
+            for (var row = 0; row < realRows; row++)
             {
                 var rowComponents = components.Where((c, i) => i >= row * realColumns && i < (row + 1) * realColumns);
                 OrderRow(rowComponents, currentY, cellWidth, cellHeight);
@@ -69,7 +69,7 @@ namespace GameEngine.Graphics
 
         private void OrderRow(IEnumerable<IGraphicComponent> rowComponents, float currentY, float cellWidth, float cellHeight)
         {
-            float currentX = XPosition;
+            var currentX = XPosition;
             foreach (var c in rowComponents)
             {
                 c.XPosition = currentX;
@@ -81,17 +81,27 @@ namespace GameEngine.Graphics
             }
         }
 
-        private void SetComponentSize(IGraphicComponent c, float cellWidth, float cellHeight)
+        private static void SetComponentSize(IGraphicComponent c, float cellWidth, float cellHeight)
         {
-            if (c.HorizontalPolicy == ResizePolicy.Preferred)
-                c.Width = Math.Min(cellWidth, c.PreferredWidth);
-            else if(c.HorizontalPolicy == ResizePolicy.Extending)
-                c.Width = cellWidth;
+            switch (c.HorizontalPolicy)
+            {
+                case ResizePolicy.Preferred:
+                    c.Width = Math.Min(cellWidth, c.PreferredWidth);
+                    break;
+                case ResizePolicy.Extending:
+                    c.Width = cellWidth;
+                    break;
+            }
 
-            if (c.VerticalPolicy == ResizePolicy.Preferred)
-                c.Height = Math.Min(cellHeight, c.PreferredHeight);
-            else if (c.VerticalPolicy == ResizePolicy.Extending)
-                c.Height = cellHeight;
+            switch (c.VerticalPolicy)
+            {
+                case ResizePolicy.Preferred:
+                    c.Height = Math.Min(cellHeight, c.PreferredHeight);
+                    break;
+                case ResizePolicy.Extending:
+                    c.Height = cellHeight;
+                    break;
+            }
         }
     }
 }

@@ -1,8 +1,9 @@
 ﻿using GameEngine.Graphics;
+using GameEngine.Graphics.Layouts;
 using GameEngineTest.TestUtils;
 using NUnit.Framework;
 
-namespace GameEngineTest.Graphics
+namespace GameEngineTest.Graphics.Layouts
 {
     [TestFixture]
     public class VBoxLayoutTest : ILayoutTest
@@ -13,11 +14,11 @@ namespace GameEngineTest.Graphics
             var layout = new VBoxLayout();
             var container = CreateContainer(x, y, width, height);
             var components = container.SetupContainer(cnt);
-            float componentHeight = height / cnt;
+            var componentHeight = height / cnt;
 
             layout.LayoutContainer(container);
             
-            for (int i = 0; i < components.Count; i++ )
+            for (var i = 0; i < components.Count; i++ )
             {
                 var comp = components[i];
                 Assert.AreEqual(x, comp.XPosition);

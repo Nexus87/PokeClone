@@ -1,10 +1,11 @@
-﻿using GameEngine.Graphics;
+﻿using System.Linq;
+using GameEngine.Graphics;
+using GameEngine.Graphics.Layouts;
 using GameEngine.Utils;
 using GameEngineTest.TestUtils;
 using NUnit.Framework;
-using System.Linq;
 
-namespace GameEngineTest.Graphics
+namespace GameEngineTest.Graphics.Layouts
 {
     [TestFixture]
     public class SingleComponentLayoutTest : ILayoutTest

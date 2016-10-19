@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="Texture" nillable="true" type="Texture" />
+  <xs:complexType name="Texture">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="Key" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="FileFormat" type="FileFormat" />
+      <xs:element minOccurs="0" maxOccurs="1" name="FileName" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="FileFormat">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="xna" />
+      <xs:enumeration value="image" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="SpriteSheet" nillable="true" type="SpriteSheet" />
+  <xs:complexType name="SpriteSheet">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="MapFile" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="FileFormat" type="FileFormat" />
+      <xs:element minOccurs="0" maxOccurs="1" name="FileName" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="TextureConfig" nillable="true" type="TextureConfig" />
+  <xs:complexType name="TextureConfig">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="ContentRoot" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="Textures" type="ArrayOfTexture" />
+      <xs:element minOccurs="0" maxOccurs="1" name="SpriteSheets" type="ArrayOfSpriteSheet" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ArrayOfTexture">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Texture" nillable="true" type="Texture" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ArrayOfSpriteSheet">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SpriteSheet" nillable="true" type="SpriteSheet" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FileFormat" type="FileFormat" />
+</xs:schema>

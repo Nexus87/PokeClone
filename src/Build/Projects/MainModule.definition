@@ -2,7 +2,7 @@
 <Project Name="MainModule" Path="MainModule" Type="Library">
   <Properties>
     <NoWarn>1591</NoWarn>
-	<LangVersion>5</LangVersion>
+    <LangVersion>5</LangVersion>
   </Properties>
   <References>
     <Reference Include="System" />

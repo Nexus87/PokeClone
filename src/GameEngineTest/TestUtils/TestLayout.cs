@@ -1,8 +1,9 @@
 ﻿using System;
 using GameEngine.Graphics;
+using GameEngine.Graphics.Layouts;
 using NUnit.Framework;
 
-namespace GameEngineTest.Graphics
+namespace GameEngineTest.TestUtils
 {
     internal class TestLayout : AbstractLayout
     {

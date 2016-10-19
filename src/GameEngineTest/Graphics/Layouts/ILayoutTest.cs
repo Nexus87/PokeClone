@@ -1,12 +1,11 @@
-﻿using GameEngine;
-using GameEngine.Graphics;
-using GameEngineTest.TestUtils;
-using Moq;
-using NUnit.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using GameEngine.Graphics;
+using GameEngine.Graphics.Layouts;
+using GameEngineTest.TestUtils;
+using NUnit.Framework;
 
-namespace GameEngineTest.Graphics
+namespace GameEngineTest.Graphics.Layouts
 {
     public abstract class ILayoutTest
     {
@@ -20,8 +19,6 @@ namespace GameEngineTest.Graphics
             return container;
         }
 
-        public IEngineInterface gameStub = new Mock<IEngineInterface>().Object;
-
         public static List<TestCaseData> ValidData = new List<TestCaseData>
         {
             new TestCaseData(1.0f, 1.0f, 50.0f, 50.0f),
@@ -34,10 +31,10 @@ namespace GameEngineTest.Graphics
         };
 
         [TestCaseSource(typeof(ILayoutTest), "ValidData")]
-        public void LayoutContainer_SetupContainer_ComponentsAreInContainersContraints(float X, float Y, float Width, float Height)
+        public void LayoutContainer_SetupContainer_ComponentsAreInContainersContraints(float x, float y, float width, float height)
         {
             var testLayout = CreateLayout();
-            var testContainer = CreateContainer(X, Y, Width, Height);
+            var testContainer = CreateContainer(x, y, width, height);
             var components = testContainer.SetupContainer(10);
 
             testLayout.LayoutContainer(testContainer);
@@ -47,76 +44,76 @@ namespace GameEngineTest.Graphics
         }
 
         [TestCaseSource(typeof(ILayoutTest), "ValidData")]
-        public void LayoutContainer_SetLeftMargin_ComponentsInContainersConstraints(float X, float Y, float Width, float Height)
+        public void LayoutContainer_SetLeftMargin_ComponentsInContainersConstraints(float x, float y, float width, float height)
         {
             var testLayout = CreateLayout();
-            int Margin = 10;
-            var testContainer = CreateContainer(X, Y, Width, Height);
+            int margin = 10;
+            var testContainer = CreateContainer(x, y, width, height);
             var components = testContainer.SetupContainer(10);
 
-            testLayout.SetMargin(left: Margin);
+            testLayout.SetMargin(left: margin);
             testLayout.LayoutContainer(testContainer);
             foreach (var obj in components)
-                obj.IsInConstraints(X + Margin, Y, Width - Margin, Height);
+                obj.IsInConstraints(x + margin, y, width - margin, height);
         }
 
         [TestCaseSource(typeof(ILayoutTest), "ValidData")]
-        public void LayoutContainer_SetRightMargin_ComponentsInContainersConstraints(float X, float Y, float Width, float Height)
+        public void LayoutContainer_SetRightMargin_ComponentsInContainersConstraints(float x, float y, float width, float height)
         {
             var testLayout = CreateLayout();
-            int Margin = 10;
-            var testContainer = CreateContainer(X, Y, Width, Height);
+            int margin = 10;
+            var testContainer = CreateContainer(x, y, width, height);
             var components = testContainer.SetupContainer(10);
 
-            testLayout.SetMargin(right: Margin);
+            testLayout.SetMargin(right: margin);
             testLayout.LayoutContainer(testContainer);
             foreach (var obj in components)
-                obj.IsInConstraints(X, Y, Width - Margin, Height);
+                obj.IsInConstraints(x, y, width - margin, height);
         }
 
         [TestCaseSource(typeof(ILayoutTest), "ValidData")]
-        public void LayoutContainer_SetTopMargin_ComponentsInContainersConstraints(float X, float Y, float Width, float Height)
+        public void LayoutContainer_SetTopMargin_ComponentsInContainersConstraints(float x, float y, float width, float height)
         {
             var testLayout = CreateLayout();
-            int Margin = 10;
-            var testContainer = CreateContainer(X, Y, Width, Height);
+            int margin = 10;
+            var testContainer = CreateContainer(x, y, width, height);
             var components = testContainer.SetupContainer(10);       
 
-            testLayout.SetMargin(top: Margin);
+            testLayout.SetMargin(top: margin);
             testLayout.LayoutContainer(testContainer);
 
             foreach (var obj in components)
-                obj.IsInConstraints(X, Y + Margin, Width, Height - Margin);
+                obj.IsInConstraints(x, y + margin, width, height - margin);
         }
         
         [TestCaseSource(typeof(ILayoutTest), "ValidData")]
-        public void LayoutContainer_SetBottomMargin_ComponentsInContainersConstraints(float X, float Y, float Width, float Height)
+        public void LayoutContainer_SetBottomMargin_ComponentsInContainersConstraints(float x, float y, float width, float height)
         {
             var testLayout = CreateLayout();
-            int Margin = 10;
-            var testContainer = CreateContainer(X, Y, Width, Height);
+            int margin = 10;
+            var testContainer = CreateContainer(x, y, width, height);
             var components = testContainer.SetupContainer(10);
 
-            testLayout.SetMargin(bottom: Margin);
+            testLayout.SetMargin(bottom: margin);
             testLayout.LayoutContainer(testContainer);
 
             foreach (var obj in components)
-                obj.IsInConstraints(X, Y, Width, Height - Margin);
+                obj.IsInConstraints(x, y, width, height - margin);
         }
 
         [TestCaseSource(typeof(ILayoutTest), "ValidData")]
-        public void LayoutContainer_SetAllMargins_ComponentsInContainersConstraints(float X, float Y, float Width, float Height)
+        public void LayoutContainer_SetAllMargins_ComponentsInContainersConstraints(float x, float y, float width, float height)
         {
             var testLayout = CreateLayout();
-            int Margin = 10;
-            var testContainer = CreateContainer(X, Y, Width, Height);
+            int margin = 10;
+            var testContainer = CreateContainer(x, y, width, height);
             var components = testContainer.SetupContainer(10);
 
-            testLayout.SetMargin(Margin, Margin, Margin, Margin); 
+            testLayout.SetMargin(margin, margin, margin, margin);
             testLayout.LayoutContainer(testContainer);
 
             foreach (var obj in components)
-                obj.IsInConstraints(X + Margin, Y + Margin, Width - 2*Margin, Height - 2*Margin);
+                obj.IsInConstraints(x + margin, y + margin, width - 2*margin, height - 2*margin);
         }
 
         [TestCase]

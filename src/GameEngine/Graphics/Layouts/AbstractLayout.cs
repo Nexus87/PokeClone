@@ -1,8 +1,8 @@
-﻿using GameEngine.Utils;
+﻿using System;
+using GameEngine.Utils;
 using Microsoft.Xna.Framework;
-using System;
 
-namespace GameEngine.Graphics
+namespace GameEngine.Graphics.Layouts
 {
     /// <summary>
     /// This class provides a skeletal implementation for ILayout
