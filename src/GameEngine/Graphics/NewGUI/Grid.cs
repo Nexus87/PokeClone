@@ -1,6 +1,5 @@
-﻿using SharpDX.MediaFoundation.OPM;
+﻿namespace GameEngine.Graphics.NewGUI
 
-namespace GameEngine.Graphics.NewGUI
 {
     public class GridProperty
     {
