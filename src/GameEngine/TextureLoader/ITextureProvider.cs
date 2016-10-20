@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using GameEngine.Graphics;
 using GameEngine.Graphics.General;
 
 namespace GameEngine.TextureLoader
@@ -6,6 +7,6 @@ namespace GameEngine.TextureLoader
     public interface ITextureProvider
     {
         IEnumerable<string> GetProvidedNames();
-        ITexture2D GetTexture(string name);
+        IImageBox GetTexture(string name);
     }
 }

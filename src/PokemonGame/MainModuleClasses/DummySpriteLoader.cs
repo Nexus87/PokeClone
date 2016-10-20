@@ -1,5 +1,6 @@
 ﻿using GameEngine;
 using GameEngine.Registry;
+using GameEngine.TextureLoader;
 using MainModule;
 using MainModule.Graphics;
 using Microsoft.Xna.Framework.Content;

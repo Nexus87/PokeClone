@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 namespace GameEngine.Graphics
 {
     [GameType]
-    public class SpriteSheetTexture : AbstractGraphicComponent
+    public class SpriteSheetTexture : AbstractGraphicComponent, IImageBox
     {
         private readonly ITexture2D spriteSheet;
         private readonly Rectangle sourceRectangle;

@@ -1,15 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GameEngine.Graphics.General;
+using GameEngine.Configuration;
+using GameEngine.Graphics;
+using Microsoft.Xna.Framework.Content;
 
 namespace GameEngine.TextureLoader
 {
     public class TextureLoader : ITextureLoader
     {
+        private readonly ContentManager contentManager;
         private readonly Dictionary<string, ITextureProvider> providerMap = new Dictionary<string, ITextureProvider>();
+
+        public TextureLoader(ContentManager contentManager)
+        {
+            this.contentManager = contentManager;
+        }
+
+        public void AddFromConfiguration(TextureConfig textureConfig)
+        {
+            foreach (var textureConfigSpriteSheet in textureConfig.SpriteSheets)
+            {
+                AddTextureProvider(TextureProviderFactory.GetProviderFromConfiguration(textureConfigSpriteSheet, contentManager));
+            }
+            foreach (var textureConfigTexture in textureConfig.Textures)
+            {
+                AddTextureProvider(TextureProviderFactory.GetProviderFromConfiguration(textureConfigTexture, contentManager));
+            }
+        }
 
         public void AddTextureProvider(ITextureProvider provider)
         {
@@ -18,7 +36,7 @@ namespace GameEngine.TextureLoader
                 .ForEach(s => providerMap[s] = provider);
         }
 
-        public ITexture2D LoadTexture(string textureName)
+        public IImageBox LoadTexture(string textureName)
         {
             ITextureProvider provider;
 

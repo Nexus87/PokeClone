@@ -1,12 +1,11 @@
 ﻿using GameEngine.Graphics.General;
 using GameEngine.Registry;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace GameEngine.Graphics
 {
     [GameType]
-    public class TextureBox : AbstractGraphicComponent
+    public class TextureBox : AbstractGraphicComponent, IImageBox
     {
         private ITexture2D image;
 
@@ -30,7 +29,7 @@ namespace GameEngine.Graphics
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)
         {
             if (image != null)
-                batch.Draw(image, Position, null, Color.White, 0, Vector2.Zero, scale, SpriteEffects.None, 0);
+                batch.Draw(texture: image, position: Position, scale: scale, color: Color.White);
         }
 
         protected override void Update()

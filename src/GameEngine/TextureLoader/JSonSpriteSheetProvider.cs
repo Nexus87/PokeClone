@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
-using GameEngine;
-using GameEngine.Graphics;
 using GameEngine.Graphics.General;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace MainModule
+namespace GameEngine.TextureLoader
 {
     public class JsonSpriteSheetProvider : ISpriteSheetProvider
     {

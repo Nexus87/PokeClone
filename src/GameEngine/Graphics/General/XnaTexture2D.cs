@@ -27,6 +27,8 @@ namespace GameEngine.Graphics.General
             this.textureName = textureName;
             this.content = content;
         }
+
+        public Rectangle Source { get; private set; }
         public Rectangle Bounds { get { return Texture.Bounds; } }
         public int Height { get { return Texture.Height; } } 
         public int Width { get { return Texture.Width; } }
