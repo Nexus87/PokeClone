@@ -1,42 +1,68 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 
 namespace GameEngine.Graphics.NewGUI
 {
     public abstract class AbstractGraphicComponent : IGraphicComponent
     {
-        protected readonly List<IGraphicComponent> children;
+        protected readonly List<IGraphicComponent> ChildrenList;
+        protected Vector2 Position;
+        protected Vector2 Size;
+        private float preferedWidth;
+        private float preferedHeight;
 
         protected AbstractGraphicComponent()
         {
-            children = new List<IGraphicComponent>();
+            ChildrenList = new List<IGraphicComponent>();
         }
 
-        public double X { get; set; }
-        public double Y { get; set; }
-        public double Width { get; set; }
-        public double Height { get; set; }
+        public event EventHandler PreferedSizeChanged;
+        public Rectangle Constraints { get; set; }
+        public Rectangle ScissorArea { get; set; }
 
-        public abstract double CalculatePreferedWidth();
-        public abstract double CalculatePreferedHeight();
+        public float PreferedWidth
+        {
+            get { return preferedWidth; }
+            protected set
+            {
+                if(Math.Abs(preferedWidth - value) > 1e-15)
+                    return;
+                preferedWidth = value;
+                OnPreferedSizeChanged();
+            }
+        }
 
-        public double ParentWidthConstraint { get; set; }
-        public double ParentHeightConstraint { get; set; }
+        public float PreferedHeight
+        {
+            get { return preferedHeight; }
+            protected set
+            {
+                if(Math.Abs(preferedHeight - value) > 1e-15)
+                    return;
+                preferedHeight = value;
+                OnPreferedSizeChanged();
+            }
+        }
 
-        public event EventHandler<UpdateRequestedArgs> UpdateRequested;
+        public ResizeBehavoir VerticalBehavoir { get; set; }
+        public ResizeBehavoir HorizontalBehavoir { get; set; }
+
 
         public IGraphicComponent Parent { get; protected set; }
 
         public IEnumerable<IGraphicComponent> Children
         {
-            get { return children; }
+            get { return ChildrenList; }
         }
 
-        public IDrawable Drawable { get; protected set; }
+        public IRenderer Renderer { get; protected set; }
+        public abstract void Update(GameTime time);
 
-        public virtual void Update()
+        protected virtual void OnPreferedSizeChanged()
         {
-            throw new NotImplementedException();
+            var handler = PreferedSizeChanged;
+            if (handler != null) handler(this, EventArgs.Empty);
         }
     }
 }

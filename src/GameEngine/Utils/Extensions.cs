@@ -46,11 +46,17 @@ namespace GameEngine.Utils
         {
             var rows = Math.Min(source.GetLength(0), target.GetLength(0));
             var columns = Math.Min(source.GetLength(1), target.GetLength(1));
-            for (int i = 0; i < rows; i++)
+
+            LoopOverTable(rows, columns, (i, j) => target[i,j] = source[i,j] );
+        }
+
+        public static void LoopOverTable(int rows, int columns, Action<int, int> action)
+        {
+            for(var i = 0; i < rows; i++)
             {
-                for (int j = 0; j < columns; j++)
+                for (var j = 0; j < columns; j++)
                 {
-                    target[i, j] = source[i, j];
+                    action(i, j);
                 }
             }
         }

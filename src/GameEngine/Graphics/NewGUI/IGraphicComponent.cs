@@ -1,26 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
+using GameEngine.Graphics.General;
+using Microsoft.Xna.Framework;
 
 namespace GameEngine.Graphics.NewGUI
 {
+    public interface IRenderer
+    {
+        void Render(ISpriteBatch spriteBatch, Rectangle parentConstraints);
+    }
+
     public interface IGraphicComponent : IArea
     {
-        event EventHandler<UpdateRequestedArgs> UpdateRequested;
-
         IGraphicComponent Parent { get; }
         IEnumerable<IGraphicComponent> Children { get; }
 
-        IDrawable Drawable { get; }
-        void Update();
+        IRenderer Renderer { get; }
+        void Update(GameTime time);
     }
 
-    public class UpdateRequestedArgs : EventArgs
-    {
-        public UpdateRequestedArgs(IGraphicComponent requestingComponent)
-        {
-            RequestingComponent = requestingComponent;
-        }
-
-        public IGraphicComponent RequestingComponent { get; private set; }
-    }
 }

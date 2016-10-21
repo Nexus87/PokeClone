@@ -1,22 +1,23 @@
-﻿namespace GameEngine.Graphics.NewGUI
+﻿using System;
+using Microsoft.Xna.Framework;
+
+namespace GameEngine.Graphics.NewGUI
 {
-    public static class Layout
+    public enum ResizeBehavoir
     {
-        public const double UseComputedSize = -1;
+        Auto,
+        Preferred
     }
 
     public interface IArea
     {
-        double X { get; set; }
-        double Y { get; set; }
-        double Width { get; set; }
-        double Height { get; set; }
+        event EventHandler PreferedSizeChanged;
 
-        double CalculatePreferedWidth();
-        double CalculatePreferedHeight();
+        Rectangle Constraints { get; set; }
+        Rectangle ScissorArea { get; set; }
 
-        double ParentWidthConstraint { get; set; }
-        double ParentHeightConstraint { get; set; }
+        float PreferedWidth { get; }
+        float PreferedHeight { get; }
 
     }
 }

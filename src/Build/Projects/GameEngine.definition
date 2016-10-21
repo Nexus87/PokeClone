@@ -75,9 +75,7 @@
     <Compile Include="Graphics\NewGUI\AbstractGraphicComponent.cs" />
     <Compile Include="Graphics\NewGUI\Grid.cs" />
     <Compile Include="Graphics\NewGUI\IArea.cs" />
-    <Compile Include="Graphics\NewGUI\IDrawable.cs" />
     <Compile Include="Graphics\NewGUI\IGraphicComponent.cs" />
-    <Compile Include="Graphics\NewGUI\ImageBox.cs" />
     <Compile Include="Graphics\NewGUI\Scene.cs" />
     <Compile Include="Graphics\NewGUI\TextBox.cs" />
     <Compile Include="Graphics\NullGraphicObject.cs" />

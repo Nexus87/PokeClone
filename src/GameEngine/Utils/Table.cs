@@ -27,7 +27,7 @@ namespace GameEngine.Utils
             innerTable = new T[InitalRows, InitalColumns];
         }
 
-        private Table(T[,] array)
+        public Table(T[,] array)
         {
             innerTable = array;
             Rows = array.Rows();
