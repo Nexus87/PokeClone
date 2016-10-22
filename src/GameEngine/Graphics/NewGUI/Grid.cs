@@ -22,12 +22,14 @@ namespace GameEngine.Graphics.NewGUI
     public class RowProperty
     {
         public ValueType Type { get; set; }
+        public int Share { get; set; }
         public float Height { get; set; }
     }
 
     public class ColumnProperty
     {
         public ValueType Type { get; set; }
+        public int Share { get; set; }
         public float Width { get; set; }
     }
 
@@ -89,14 +91,59 @@ namespace GameEngine.Graphics.NewGUI
 
         private void Layout()
         {
-            var width = (int)((float)Constraints.Width / Columns);
-            var height = (int)((float) Constraints.Height / Rows);
+
+            var height = (float) Constraints.Height;
+            var width = (float)Constraints.Width;
+
+            var totalShareColumns = columnPoperties.Sum(p => p.Type == ValueType.Percent ? p.Share : 0);
+            var totalShareRows = rowProperties.Sum(p => p.Type == ValueType.Percent ? p.Share : 0);
+
             Utils.Extensions.LoopOverTable(Rows, Columns, (row, column) =>
             {
-                   cells[row,column].Constraints = new Rectangle(column*width + Constraints.X, row * height + Constraints.Y, width, height);
+                var leftRec = GetComponentConstaints(row, column - 1);
+                var topRec = GetComponentConstaints(row - 1, column);
+                var rowProperty = rowProperties[row];
+                var columnProperty = columnPoperties[column];
+
+                var currentComponentRec = new Rectangle(
+                    x: leftRec.X + leftRec.Width, y: topRec.Y + topRec.Height,
+                    width: (int) ((width * columnProperty.Share) / totalShareColumns), height: (int) ((height * rowProperty.Share) / totalShareRows)
+                );
+
+                cells[row, column].Constraints = currentComponentRec;
             });
 
         }
+
+        private Rectangle GetComponentConstaints(int row, int column)
+        {
+            var rec = new Rectangle();
+            if (row < 0)
+            {
+                rec.Y = Constraints.Y;
+                rec.Height = 0;
+            }
+            else
+            {
+                rec.Y = cells[row, 0].Constraints.Y;
+                rec.Height = cells[row, 0].Constraints.Height;
+            }
+
+            if (column < 0)
+            {
+                rec.X = Constraints.X;
+                rec.Width = 0;
+            }
+            else
+            {
+                rec.X = cells[0, column].Constraints.X;
+                rec.Width = cells[0, column].Constraints.Width;
+            }
+
+            return rec;
+
+        }
+
     }
 
     public static class GridExtensions

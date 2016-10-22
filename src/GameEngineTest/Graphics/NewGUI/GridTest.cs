@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using GameEngine.Graphics.NewGUI;
 using GameEngine.Utils;
 using Microsoft.Xna.Framework;
@@ -15,9 +13,9 @@ namespace GameEngineTest.Graphics.NewGUI
         public static List<TestCaseData> TestCaseDatas = new List<TestCaseData>()
         {
             new TestCaseData(new Rectangle(0, 0, 100, 100),
-                new List<RowProperty>{new RowProperty{Height = 0.5f, Type = ValueType.Percent}, new RowProperty{Height = 0.5f, Type = ValueType.Percent}},
-                new List<ColumnProperty>{new ColumnProperty{Width = 0.5f, Type = ValueType.Percent}, new ColumnProperty{Width = 0.5f, Type = ValueType.Percent}},
-                new Table<Rectangle>(new Rectangle[,]
+                new List<RowProperty>{new RowProperty{Share = 1, Type = ValueType.Percent}, new RowProperty{Share = 1, Type = ValueType.Percent}},
+                new List<ColumnProperty>{new ColumnProperty{Share = 1, Type = ValueType.Percent}, new ColumnProperty{Share = 1, Type = ValueType.Percent}},
+                new Table<Rectangle>(new[,]
                 {
                     {new Rectangle(0, 0, 50, 50), new Rectangle(50, 0, 50, 50)},
                     {new Rectangle(0, 50, 50, 50), new Rectangle(50, 50, 50, 50)}
@@ -25,17 +23,25 @@ namespace GameEngineTest.Graphics.NewGUI
             ),
 
             new TestCaseData(new Rectangle(50, 20, 100, 200),
-                new List<RowProperty>{new RowProperty{Height = 0.5f, Type = ValueType.Percent}, new RowProperty{Height = 0.5f, Type = ValueType.Percent}},
-                new List<ColumnProperty>{new ColumnProperty{Width = 0.5f, Type = ValueType.Percent}, new ColumnProperty{Width = 0.5f, Type = ValueType.Percent}},
-                new Table<Rectangle>(new Rectangle[,]
+                new List<RowProperty>{new RowProperty{Share = 1, Type = ValueType.Percent}, new RowProperty{Share = 1, Type = ValueType.Percent}},
+                new List<ColumnProperty>{new ColumnProperty{Share = 1, Type = ValueType.Percent}, new ColumnProperty{Share = 1, Type = ValueType.Percent}},
+                new Table<Rectangle>(new[,]
                 {
                     {new Rectangle(50, 20, 50, 100), new Rectangle(100, 20, 50, 100)},
                     {new Rectangle(50, 120, 50, 100), new Rectangle(100, 120, 50, 100)}
+                })),
+            new TestCaseData(new Rectangle(0, 0, 90, 300),
+                new List<RowProperty>{new RowProperty{Share = 1, Type = ValueType.Percent}, new RowProperty{Share = 2, Type = ValueType.Percent}},
+                new List<ColumnProperty>{new ColumnProperty{Share = 2, Type = ValueType.Percent}, new ColumnProperty{Share = 1, Type = ValueType.Percent}},
+                new Table<Rectangle>(new[,]
+                {
+                    {new Rectangle(0, 0, 60, 100), new Rectangle(60, 0, 30, 100)},
+                    {new Rectangle(0, 100, 60, 200), new Rectangle(60, 100, 30, 200)}
                 }))
         };
 
         [TestCaseSource("TestCaseDatas")]
-        public void Update_SetUpGridWithContent_ContentComponentsAreOrdered(
+        public void Update_RowsAndColumnsWithPercentType_ContentComponentsAreOrdered(
             Rectangle gridPosition,
             List<RowProperty> rows, List<ColumnProperty> columns,
             Table<Rectangle> expectedPositions)
@@ -88,6 +94,7 @@ namespace GameEngineTest.Graphics.NewGUI
             Extensions.LoopOverTable(rows, columns, (i, j) =>
             {
                 var componentMock = new Mock<IGraphicComponent>();
+                componentMock.SetupAllProperties();
                 table[i, j] = componentMock;
                 grid.SetComponent(componentMock.Object, i, j);
             });
