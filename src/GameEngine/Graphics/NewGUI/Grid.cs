@@ -44,12 +44,12 @@ namespace GameEngine.Graphics.NewGUI
         private readonly List<RowProperty> rowProperties = new List<RowProperty>();
         private readonly List<ColumnProperty> columnPoperties = new List<ColumnProperty>();
 
-        private int Rows
+        internal int Rows
         {
             get { return rowProperties.Count; }
         }
 
-        private int Columns
+        internal int Columns
         {
             get { return columnPoperties.Count; }
         }
@@ -66,9 +66,12 @@ namespace GameEngine.Graphics.NewGUI
 
         public void SetComponent(IGraphicComponent component, int row, int column)
         {
-            if (component == null) throw new ArgumentNullException("component");
-            if (column <= 0 || column >= Columns) throw new ArgumentOutOfRangeException("column");
-            if (row <= 0 || row >= Rows) throw new ArgumentOutOfRangeException("row");
+            if (component == null)
+                throw new ArgumentNullException("component");
+            if (column < 0 || column >= Columns)
+                throw new ArgumentOutOfRangeException("column", "Was " + column);
+            if (row < 0 || row >= Rows)
+                throw new ArgumentOutOfRangeException("row", "Was " + row);
 
             cells[row, column] = component;
         }
@@ -76,11 +79,22 @@ namespace GameEngine.Graphics.NewGUI
         public void SetCellProperty(CellProperty cellProperty, int row, int column)
         {
             if (cellProperty == null) throw new ArgumentNullException("cellProperty");
-            if (column <= 0 || column >= Columns) throw new ArgumentOutOfRangeException("column");
-            if (row <= 0 || row >= Rows) throw new ArgumentOutOfRangeException("row");
+            if (column < 0 || column >= Columns) throw new ArgumentOutOfRangeException("column");
+            if (row < 0 || row >= Rows) throw new ArgumentOutOfRangeException("row");
         }
         public override void Update(GameTime time)
         {
+            Layout();
+        }
+
+        private void Layout()
+        {
+            var width = (int)((float)Constraints.Width / Columns);
+            var height = (int)((float) Constraints.Height / Rows);
+            Utils.Extensions.LoopOverTable(Rows, Columns, (row, column) =>
+            {
+                   cells[row,column].Constraints = new Rectangle(column*width + Constraints.X, row * height + Constraints.Y, width, height);
+            });
 
         }
     }
