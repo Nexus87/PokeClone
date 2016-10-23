@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿﻿using System.Collections.Generic;
 using GameEngine.Graphics.NewGUI;
 using GameEngine.Utils;
 using Microsoft.Xna.Framework;
@@ -10,7 +10,7 @@ namespace GameEngineTest.Graphics.NewGUI
     [TestFixture]
     public class GridTest
     {
-        public static List<TestCaseData> TestCaseDatas = new List<TestCaseData>()
+        public static List<TestCaseData> PercentPropertiesData = new List<TestCaseData>()
         {
             new TestCaseData(new Rectangle(0, 0, 100, 100),
                 new List<RowProperty>{new RowProperty{Share = 1, Type = ValueType.Percent}, new RowProperty{Share = 1, Type = ValueType.Percent}},
@@ -40,8 +40,56 @@ namespace GameEngineTest.Graphics.NewGUI
                 }))
         };
 
-        [TestCaseSource("TestCaseDatas")]
+        [TestCaseSource("PercentPropertiesData")]
         public void Update_RowsAndColumnsWithPercentType_ContentComponentsAreOrdered(
+            Rectangle gridPosition,
+            List<RowProperty> rows, List<ColumnProperty> columns,
+            Table<Rectangle> expectedPositions)
+        {
+            var grid = CreateGrid(gridPosition, rows, columns);
+            var components = FillGrid(grid, rows.Count, columns.Count);
+
+            grid.Update(new GameTime());
+
+            VerifyComponentsHaveExpectedPosition(components, expectedPositions);
+
+        }
+
+        public static List<TestCaseData> FixedPropertiesTestData = new List<TestCaseData>()
+        {
+            new TestCaseData(new Rectangle(0, 0, 100, 100),
+                new List<RowProperty>{new RowProperty{Height = 20, Type = ValueType.Absolute}, new RowProperty{Height = 10, Type = ValueType.Absolute}},
+                new List<ColumnProperty>{new ColumnProperty{Width = 30, Type = ValueType.Absolute}, new ColumnProperty{Width = 70, Type = ValueType.Absolute}},
+                new Table<Rectangle>(new[,]
+                {
+                    {new Rectangle(0, 0, 30, 20), new Rectangle(30, 0, 70, 20)},
+                    {new Rectangle(0, 20, 30, 10), new Rectangle(30, 20, 70, 10)}
+                })
+            ),
+
+//            new TestCaseData(new Rectangle(50, 20, 100, 200),
+//                new List<RowProperty>{new RowProperty{Height = 20, Type = ValueType.Absolute}, new RowProperty{Height = 10, Type = ValueType.Absolute}},
+//                new List<ColumnProperty>{new ColumnProperty{Width = 30, Type = ValueType.Absolute}, new ColumnProperty{Width = 70, Type = ValueType.Absolute}},
+//                new Table<Rectangle>(new[,]
+//                {
+//                    {new Rectangle(50, 20, 30, 20), new Rectangle(80, 20, 70, 20)},
+//                    {new Rectangle(50, 40, 30, 10), new Rectangle(80, 40, 70, 10)}
+//                })
+//            ),
+//            new TestCaseData(new Rectangle(0, 0, 90, 300),
+//                new List<RowProperty>{new RowProperty{Height = 200, Type = ValueType.Absolute}, new RowProperty{Height = 200, Type = ValueType.Absolute}},
+//                new List<ColumnProperty>{new ColumnProperty{Width = 100, Type = ValueType.Absolute}, new ColumnProperty{Width = 80, Type = ValueType.Absolute}},
+//                new Table<Rectangle>(new[,]
+//                {
+//                    {new Rectangle(0, 0, 100, 200), new Rectangle(100, 0, 80, 200)},
+//                    {new Rectangle(0, 200, 100, 200), new Rectangle(100, 200, 80, 200)}
+//                })
+//            )
+
+        };
+
+        [TestCaseSource("FixedPropertiesTestData")]
+        public void Update_RowsAndColumnsWithFixedType_ContentComponentsAreOrdered(
             Rectangle gridPosition,
             List<RowProperty> rows, List<ColumnProperty> columns,
             Table<Rectangle> expectedPositions)

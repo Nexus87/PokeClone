@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using GameEngine.Utils;
@@ -86,36 +86,84 @@ namespace GameEngine.Graphics.NewGUI
         }
         public override void Update(GameTime time)
         {
-            Layout();
+            var grid = new Table<Rectangle>(Rows, Columns);
+            grid = SetAbsoluteWidhts(grid);
+            grid = LayoutPercent(grid);
+            grid = SetPosition(grid);
+            ApplyGridToComponents(grid);
         }
 
-        private void Layout()
+        private void ApplyGridToComponents(ITable<Rectangle> grid)
+        {
+            Utils.Extensions.LoopOverTable(Rows, Columns, (row, column) =>
+            {
+                cells[row, column].Constraints = grid[row, column];
+            });
+        }
+
+        private Table<Rectangle> SetPosition(Table<Rectangle> grid)
+        {
+            Utils.Extensions.LoopOverTable(Rows, Columns, (row, column) =>
+            {
+                var leftRec = GetComponentConstaints(row, column - 1, grid);
+                var topRec = GetComponentConstaints(row - 1, column, grid);
+                var currentRec = grid[row, column];
+                currentRec.X = leftRec.X + leftRec.Width;
+                currentRec.Y = topRec.Y + topRec.Height;
+
+                grid[row, column] = currentRec;
+            });
+
+            return grid;
+        }
+
+        private Table<Rectangle> SetAbsoluteWidhts(Table<Rectangle> grid)
+        {
+            Utils.Extensions.LoopOverTable(Rows, Columns, (row, column) =>
+            {
+                var rowProperty = rowProperties[row];
+                var columnProperty = columnPoperties[column];
+                var height = rowProperty.Type == ValueType.Absolute ? rowProperty.Height : 0;
+                var width = columnProperty.Type == ValueType.Absolute ? columnProperty.Width : 0;
+
+                grid[row, column] = new Rectangle(0, 0, (int) width, (int) height);
+            });
+
+            return grid;
+        }
+
+        private void LayoutAbsolute()
         {
 
-            var height = (float) Constraints.Height;
-            var width = (float)Constraints.Width;
+        }
+
+        private Table<Rectangle> LayoutPercent(Table<Rectangle> grid)
+        {
+
+            var height = Constraints.Height -
+                         rowProperties.Sum(property => property.Type == ValueType.Percent ? 0 : property.Height);
+            var width = Constraints.Width -
+                        columnPoperties.Sum(property => property.Type == ValueType.Percent ? 0 : property.Width);
 
             var totalShareColumns = columnPoperties.Sum(p => p.Type == ValueType.Percent ? p.Share : 0);
             var totalShareRows = rowProperties.Sum(p => p.Type == ValueType.Percent ? p.Share : 0);
 
             Utils.Extensions.LoopOverTable(Rows, Columns, (row, column) =>
             {
-                var leftRec = GetComponentConstaints(row, column - 1);
-                var topRec = GetComponentConstaints(row - 1, column);
-                var rowProperty = rowProperties[row];
-                var columnProperty = columnPoperties[column];
+                var constraints = grid[row, column];
+                if (rowProperties[row].Type == ValueType.Percent)
+                    constraints.Height = (int) ((height * rowProperties[row].Share) / totalShareRows);
+                if (columnPoperties[column].Type == ValueType.Percent)
+                    constraints.Width = (int) ((width * columnPoperties[column].Share) / totalShareColumns);
 
-                var currentComponentRec = new Rectangle(
-                    x: leftRec.X + leftRec.Width, y: topRec.Y + topRec.Height,
-                    width: (int) ((width * columnProperty.Share) / totalShareColumns), height: (int) ((height * rowProperty.Share) / totalShareRows)
-                );
-
-                cells[row, column].Constraints = currentComponentRec;
+                grid[row, column] = constraints;
             });
+
+            return grid;
 
         }
 
-        private Rectangle GetComponentConstaints(int row, int column)
+        private Rectangle GetComponentConstaints(int row, int column, Table<Rectangle> grid)
         {
             var rec = new Rectangle();
             if (row < 0)
@@ -125,8 +173,8 @@ namespace GameEngine.Graphics.NewGUI
             }
             else
             {
-                rec.Y = cells[row, 0].Constraints.Y;
-                rec.Height = cells[row, 0].Constraints.Height;
+                rec.Y = grid[row, 0].Y;
+                rec.Height = grid[row, 0].Height;
             }
 
             if (column < 0)
@@ -136,8 +184,8 @@ namespace GameEngine.Graphics.NewGUI
             }
             else
             {
-                rec.X = cells[0, column].Constraints.X;
-                rec.Width = cells[0, column].Constraints.Width;
+                rec.X = grid[0, column].X;
+                rec.Width = grid[0, column].Width;
             }
 
             return rec;
