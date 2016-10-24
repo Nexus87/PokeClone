@@ -86,6 +86,8 @@ namespace GameEngine.Graphics.NewGUI
         }
         public override void Update(GameTime time)
         {
+            if (Rows == 0 || Columns == 0)
+                return;
             var grid = new Table<Rectangle>(Rows, Columns);
             grid = SetAbsoluteWidhts(grid);
             grid = LayoutPercent(grid);
