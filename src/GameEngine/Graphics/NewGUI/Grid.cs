@@ -121,15 +121,55 @@ namespace GameEngine.Graphics.NewGUI
         {
             Utils.Extensions.LoopOverTable(Rows, Columns, (row, column) =>
             {
-                var rowProperty = rowProperties[row];
-                var columnProperty = columnPoperties[column];
-                var height = rowProperty.Type == ValueType.Absolute ? rowProperty.Height : 0;
-                var width = columnProperty.Type == ValueType.Absolute ? columnProperty.Width : 0;
+                var width = GetColumnWidth(column);
+                var height = GetRowHeight(row);
 
                 grid[row, column] = new Rectangle(0, 0, (int) width, (int) height);
             });
 
             return grid;
+        }
+
+        private float GetColumnWidth(int column)
+        {
+            var columnProperty = columnPoperties[column];
+            switch (columnProperty.Type)
+            {
+                case ValueType.Percent:
+                    return 0;
+                case ValueType.Absolute:
+                    return columnProperty.Width;
+                case ValueType.Auto:
+                    return ColumnMaxWidth(column);
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        private float ColumnMaxWidth(int column)
+        {
+            return cells.EnumerateRows(column).Max(c => c.PreferedWidth);
+        }
+
+        private float GetRowHeight(int row)
+        {
+            var rowProperty = rowProperties[row];
+            switch (rowProperty.Type)
+            {
+                case ValueType.Percent:
+                    return 0;
+                case ValueType.Absolute:
+                    return rowProperty.Height;
+                case ValueType.Auto:
+                    return RowMaxHeight(row);
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        private float RowMaxHeight(int row)
+        {
+            return cells.EnumerateColumns(row).Max(c => c.PreferedHeight);
         }
 
         private void LayoutAbsolute()
