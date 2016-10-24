@@ -172,18 +172,16 @@ namespace GameEngine.Graphics.NewGUI
             return cells.EnumerateColumns(row).Max(c => c.PreferedHeight);
         }
 
-        private void LayoutAbsolute()
-        {
-
-        }
-
         private Table<Rectangle> LayoutPercent(Table<Rectangle> grid)
         {
 
-            var height = Constraints.Height -
-                         rowProperties.Sum(property => property.Type == ValueType.Percent ? 0 : property.Height);
-            var width = Constraints.Width -
-                        columnPoperties.Sum(property => property.Type == ValueType.Percent ? 0 : property.Width);
+            var height = Constraints.Height - grid.EnumerateRows(0).Sum(rec => rec.Height);
+            var width = Constraints.Width - grid.EnumerateColumns(0).Sum(rec => rec.Width);
+
+            if (height < 0)
+                height = 0;
+            if (width < 0)
+                width = 0;
 
             var totalShareColumns = columnPoperties.Sum(p => p.Type == ValueType.Percent ? p.Share : 0);
             var totalShareRows = rowProperties.Sum(p => p.Type == ValueType.Percent ? p.Share : 0);

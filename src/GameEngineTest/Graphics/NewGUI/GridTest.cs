@@ -167,6 +167,39 @@ namespace GameEngineTest.Graphics.NewGUI
 
         }
 
+        public static List<TestCaseData> MixedPropertiesTestData = new List<TestCaseData>()
+        {
+            new TestCaseData(new Rectangle(0, 0, 100, 100),
+                new List<RowProperty>{new RowProperty{Type = ValueType.Auto}, new RowProperty{Type = ValueType.Percent, Share = 1}},
+                new List<ColumnProperty>{new ColumnProperty{Type = ValueType.Absolute, Width = 110}, new ColumnProperty{Type = ValueType.Percent, Share = 1}},
+                new Table<Rectangle>(new[,]
+                {
+                    {new Rectangle(0, 0, 30, 20), new Rectangle(0, 0, 30, 20)},
+                    {new Rectangle(0, 0, 30, 20), new Rectangle(0, 0, 20, 20)}
+                }),
+                new Table<Rectangle>(new[,]
+                {
+                    {new Rectangle(0, 0, 110, 20), new Rectangle(110, 0, 0, 20)},
+                    {new Rectangle(0, 20, 110, 80), new Rectangle(110, 20, 0, 80)}
+                })
+            ),
+        };
+
+        [TestCaseSource("MixedPropertiesTestData")]
+        public void Update_RowsAndColumnsWithMixedTypes_ContentComponentsAreOrdered(
+            Rectangle gridPosition,
+            List<RowProperty> rows, List<ColumnProperty> columns,
+            Table<Rectangle> preferredSizes,
+            Table<Rectangle> expectedPositions)
+        {
+            var grid = CreateGrid(gridPosition, rows, columns);
+            var components = FillGridWithPreferedSizes(grid, preferredSizes, rows.Count, columns.Count);
+
+            grid.Update(new GameTime());
+
+            VerifyComponentsHaveExpectedPosition(components, expectedPositions);
+
+        }
         private static ITable<Mock<IGraphicComponent>> FillGridWithPreferedSizes(Grid grid, ITable<Rectangle> preferredSizes,
             int rowsCount, int columnsCount)
         {
@@ -183,6 +216,7 @@ namespace GameEngineTest.Graphics.NewGUI
 
             return table;
         }
+
 
         [TestCase]
         public void Rows_AfterAddRowAndColumn_AsExpected()
