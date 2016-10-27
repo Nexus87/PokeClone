@@ -14,12 +14,12 @@ namespace GameEngine.Graphics.NewGUI.Panels
         public int Row { get; }
         public int Column { get; }
 
-        public void SetConstraints(Rectangle constraints)
+        public void SetConstraints(Rectangle constraints, Rectangle gridConstraints)
         {
             if(GraphicComponent == null)
                 return;
             GraphicComponent.Constraints = constraints;
-            GraphicComponent.ScissorArea = GraphicComponent.ScissorArea = constraints;
+            GraphicComponent.ScissorArea = GraphicComponent.ScissorArea = Rectangle.Intersect(constraints, gridConstraints);
         }
         public float PreferedWidth => GraphicComponent?.PreferedWidth ?? 0;
         public float PreferedHeight => GraphicComponent?.PreferedHeight ?? 0;

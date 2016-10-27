@@ -117,7 +117,7 @@ namespace GameEngine.Graphics.NewGUI.Panels
         private void ApplyGridToComponents(ITable<Rectangle> grid)
         {
             Utils.Extensions.LoopOverTable(Rows, Columns,
-                (row, column) => { _cells[row, column].SetConstraints(grid[row, column]); });
+                (row, column) => { _cells[row, column].SetConstraints(grid[row, column], Constraints); });
         }
 
         private Table<Rectangle> SetPosition(Table<Rectangle> grid)
