@@ -1,5 +1,4 @@
-﻿using GameEngine.Graphics;
-using GameEngine.Graphics.TableView;
+﻿using GameEngine.Graphics.TableView;
 using GameEngineTest.TestUtils;
 using Microsoft.Xna.Framework;
 

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Base;
-using GameEngine.Graphics;
 using GameEngine.Graphics.TableView;
 
 namespace BattleLib.Components.GraphicComponents

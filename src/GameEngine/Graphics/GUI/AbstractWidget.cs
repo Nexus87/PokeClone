@@ -1,7 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using System;
-
-namespace GameEngine.Graphics.GUI
+﻿namespace GameEngine.Graphics.GUI
 {
     public abstract class AbstractWidget : AbstractGraphicComponent, IWidget
     {

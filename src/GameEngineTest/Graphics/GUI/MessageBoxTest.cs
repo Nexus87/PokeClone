@@ -4,11 +4,6 @@ using GameEngine.Graphics.GUI;
 using GameEngineTest.TestUtils;
 using Moq;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GameEngineTest.Graphics.GUI
 {

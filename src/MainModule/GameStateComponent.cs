@@ -1,5 +1,4 @@
-﻿using System;
-using GameEngine.Registry;
+﻿using GameEngine.Registry;
 using MainModule.Graphics;
 using Microsoft.Xna.Framework;
 using IGameComponent = GameEngine.IGameComponent;

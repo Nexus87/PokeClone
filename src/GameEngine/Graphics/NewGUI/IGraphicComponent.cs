@@ -7,7 +7,7 @@ namespace GameEngine.Graphics.NewGUI
     public interface IGraphicComponent : IArea
     {
         bool IsSelectable { get; }
-        IGraphicComponent Parent { get; }
+        IGraphicComponent Parent { get; set; }
         IEnumerable<IGraphicComponent> Children { get; }
 
         IRenderer Renderer { get; }

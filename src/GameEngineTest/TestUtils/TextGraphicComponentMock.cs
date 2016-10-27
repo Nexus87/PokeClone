@@ -1,5 +1,4 @@
-﻿using GameEngine;
-using GameEngine.Graphics;
+﻿using GameEngine.Graphics;
 using System;
 using GameEngine.Graphics.General;
 

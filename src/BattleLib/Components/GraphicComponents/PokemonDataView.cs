@@ -1,6 +1,5 @@
 ﻿using System;
 using BattleLib.Components.BattleState;
-using GameEngine;
 using GameEngine.Graphics;
 using GameEngine.Graphics.General;
 using GameEngine.Graphics.Layouts;

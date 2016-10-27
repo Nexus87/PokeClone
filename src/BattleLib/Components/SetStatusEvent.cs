@@ -1,5 +1,4 @@
 ﻿using Base.Data;
-using GameEngine;
 using System;
 using BattleLib.Components.GraphicComponents;
 using GameEngine.GameEngineComponents;

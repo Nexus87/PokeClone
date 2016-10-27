@@ -1,5 +1,4 @@
 ﻿using GameEngine;
-using GameEngine.Graphics;
 using GameEngineTest.TestUtils;
 using MainModule;
 using MainModule.Graphics;

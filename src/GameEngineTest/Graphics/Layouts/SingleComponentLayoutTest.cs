@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using GameEngine.Graphics;
 using GameEngine.Graphics.Layouts;
 using GameEngine.Utils;
 using GameEngineTest.TestUtils;

@@ -1,5 +1,4 @@
-﻿using GameEngine.Graphics;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using GameEngine.Graphics.TableView;
 

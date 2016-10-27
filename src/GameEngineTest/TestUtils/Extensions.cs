@@ -1,5 +1,4 @@
-﻿using GameEngine;
-using GameEngine.Graphics;
+﻿using GameEngine.Graphics;
 using GameEngine.Graphics.GUI;
 using Microsoft.Xna.Framework;
 using NUnit.Framework;

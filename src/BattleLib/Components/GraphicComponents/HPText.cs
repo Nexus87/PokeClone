@@ -1,14 +1,7 @@
 ﻿using Base;
-using BattleLib.Components.BattleState;
-using GameEngine;
 using GameEngine.Graphics;
 using GameEngine.Registry;
 using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using GameEngine.Graphics.General;
 
 namespace BattleLib.Components.GraphicComponents

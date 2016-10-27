@@ -1,5 +1,4 @@
-﻿using GameEngine.Graphics;
-using GameEngine.Utils;
+﻿using GameEngine.Utils;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;

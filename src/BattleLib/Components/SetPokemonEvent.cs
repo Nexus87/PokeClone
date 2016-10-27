@@ -1,5 +1,4 @@
 ﻿using BattleLib.Components.BattleState;
-using GameEngine;
 using System;
 using BattleLib.Components.GraphicComponents;
 using GameEngine.GameEngineComponents;

@@ -1,5 +1,4 @@
-﻿using GameEngine.Graphics;
-using System;
+﻿using System;
 using GameEngine.Graphics.TableView;
 
 namespace GameEngineTest.TestUtils

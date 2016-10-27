@@ -28,41 +28,6 @@ namespace GameEngine.Graphics.NewGUI.Panels
         public float Width { get; set; }
     }
 
-    internal class GridCell
-    {
-        public GridCell(int row, int column)
-        {
-            Row = row;
-            Column = column;
-        }
-
-        public IGraphicComponent GraphicComponent { get; set; }
-        public int Row { get; }
-        public int Column { get; }
-
-        public void SetConstraints(Rectangle constraints)
-        {
-            if(GraphicComponent == null)
-                return;
-            GraphicComponent.Constraints = constraints;
-            GraphicComponent.ScissorArea = GraphicComponent.ScissorArea = constraints;
-        }
-        public float PreferedWidth => GraphicComponent?.PreferedWidth ?? 0;
-        public float PreferedHeight => GraphicComponent?.PreferedHeight ?? 0;
-        public bool IsSelectable => GraphicComponent?.IsSelectable ?? false;
-        public bool IsSelected {
-            get
-            {
-                return GraphicComponent.IsSelected;
-
-            }
-            set
-            {
-                GraphicComponent.IsSelected = value;
-            }
-        }
-    }
-
     public class Grid : AbstractGraphicComponent
     {
         private readonly Table<GridCell> _cells = new Table<GridCell>();
@@ -118,6 +83,8 @@ namespace GameEngine.Graphics.NewGUI.Panels
             if (row < 0 || row >= Rows)
                 throw new ArgumentOutOfRangeException(nameof(row), "Was " + row);
 
+            ChildrenList.Add(component);
+            component.Parent = this;
             _cells[row, column].GraphicComponent = component;
         }
 

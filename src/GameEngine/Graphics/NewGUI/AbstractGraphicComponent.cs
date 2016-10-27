@@ -48,7 +48,7 @@ namespace GameEngine.Graphics.NewGUI
 
 
         public bool IsSelectable { get; protected set; }
-        public IGraphicComponent Parent { get; protected set; }
+        public IGraphicComponent Parent { get; set; }
 
         public IEnumerable<IGraphicComponent> Children => ChildrenList;
 

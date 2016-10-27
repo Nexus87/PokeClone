@@ -5,7 +5,6 @@ using GameEngineTest.TestUtils;
 using Moq;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
 using GameEngine.Graphics.TableView;
 
 namespace GameEngineTest.Graphics.GUI

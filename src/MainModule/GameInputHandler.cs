@@ -1,7 +1,6 @@
 ﻿using System;
 using GameEngine;
 using GameEngine.Registry;
-using MainModule.Graphics;
 
 namespace MainModule
 {
