@@ -76,6 +76,7 @@
     <Compile Include="Graphics\NewGUI\IArea.cs" />
     <Compile Include="Graphics\NewGUI\IGraphicComponent.cs" />
     <Compile Include="Graphics\NewGUI\Panels\Grid.cs" />
+    <Compile Include="Graphics\NewGUI\Panels\GridCell.cs" />
     <Compile Include="Graphics\NewGUI\Panels\GridExtensions.cs" />
     <Compile Include="Graphics\NewGUI\Panels\GridInputHandler.cs" />
     <Compile Include="Graphics\NewGUI\Renderers\AbstractRenderer.cs" />
