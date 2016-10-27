@@ -7,9 +7,9 @@ namespace GameEngine.Graphics.NewGUI.Panels
     {
         private int _selectedRow;
         private int _selectedColumn;
-        private Table<IGraphicComponent> _cells;
+        private Table<GridCell> _cells;
 
-        public GridInputHandler(Table<IGraphicComponent> cells)
+        public GridInputHandler(Table<GridCell> cells)
         {
             _cells = cells;
         }

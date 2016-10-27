@@ -28,12 +28,52 @@ namespace GameEngine.Graphics.NewGUI.Panels
         public float Width { get; set; }
     }
 
+    internal class GridCell
+    {
+        public GridCell(int row, int column)
+        {
+            Row = row;
+            Column = column;
+        }
+
+        public IGraphicComponent GraphicComponent { get; set; }
+        public int Row { get; }
+        public int Column { get; }
+
+        public void SetConstraints(Rectangle constraints)
+        {
+            if(GraphicComponent == null)
+                return;
+            GraphicComponent.Constraints = constraints;
+            GraphicComponent.ScissorArea = GraphicComponent.ScissorArea = constraints;
+        }
+        public float PreferedWidth => GraphicComponent?.PreferedWidth ?? 0;
+        public float PreferedHeight => GraphicComponent?.PreferedHeight ?? 0;
+        public bool IsSelectable => GraphicComponent?.IsSelectable ?? false;
+        public bool IsSelected {
+            get
+            {
+                return GraphicComponent.IsSelected;
+
+            }
+            set
+            {
+                GraphicComponent.IsSelected = value;
+            }
+        }
+    }
+
     public class Grid : AbstractGraphicComponent
     {
-        internal readonly Table<IGraphicComponent> Cells = new Table<IGraphicComponent>();
+        private readonly Table<GridCell> _cells = new Table<GridCell>();
         private readonly List<RowProperty> _rowProperties = new List<RowProperty>();
         private readonly List<ColumnProperty> _columnPoperties = new List<ColumnProperty>();
-        private GridInputHandler gridInputHandler;
+        private readonly GridInputHandler _gridInputHandler;
+
+        public Grid()
+        {
+            _gridInputHandler = new GridInputHandler(_cells);
+        }
 
         internal int Rows => _rowProperties.Count;
 
@@ -44,11 +84,29 @@ namespace GameEngine.Graphics.NewGUI.Panels
         public void AddRow(RowProperty property)
         {
             _rowProperties.Add(property);
+            InitRow(_rowProperties.Count - 1);
+        }
+
+        private void InitRow(int row)
+        {
+            for(var column = 0; column < _columnPoperties.Count; column++)
+            {
+                _cells[row, column] = new GridCell(row, column);
+            }
         }
 
         public void AddColumn(ColumnProperty property)
         {
             _columnPoperties.Add(property);
+            InitColumn(_columnPoperties.Count - 1);
+        }
+
+        private void InitColumn(int column)
+        {
+            for (var row = 0; row < _rowProperties.Count; row++)
+            {
+                _cells[row, column] = new GridCell(row, column);
+            }
         }
 
         public void SetComponent(IGraphicComponent component, int row, int column)
@@ -60,7 +118,7 @@ namespace GameEngine.Graphics.NewGUI.Panels
             if (row < 0 || row >= Rows)
                 throw new ArgumentOutOfRangeException(nameof(row), "Was " + row);
 
-            Cells[row, column] = component;
+            _cells[row, column].GraphicComponent = component;
         }
 
         public override void Update(GameTime time)
@@ -77,13 +135,13 @@ namespace GameEngine.Graphics.NewGUI.Panels
         public override void HandleKeyInput(CommandKeys key)
         {
             if (HandleDirectionInput)
-                gridInputHandler.HandleKeyInput(key);
+                _gridInputHandler.HandleKeyInput(key);
         }
 
         private void ApplyGridToComponents(ITable<Rectangle> grid)
         {
             Utils.Extensions.LoopOverTable(Rows, Columns,
-                (row, column) => { Cells[row, column].Constraints = grid[row, column]; });
+                (row, column) => { _cells[row, column].SetConstraints(grid[row, column]); });
         }
 
         private Table<Rectangle> SetPosition(Table<Rectangle> grid)
@@ -133,7 +191,7 @@ namespace GameEngine.Graphics.NewGUI.Panels
 
         private float ColumnMaxWidth(int column)
         {
-            return Cells.EnumerateRows(column).Max(c => c.PreferedWidth);
+            return _cells.EnumerateRows(column).Max(c => c.PreferedWidth);
         }
 
         private float GetRowHeight(int row)
@@ -154,7 +212,7 @@ namespace GameEngine.Graphics.NewGUI.Panels
 
         private float RowMaxHeight(int row)
         {
-            return Cells.EnumerateColumns(row).Max(c => c.PreferedHeight);
+            return _cells.EnumerateColumns(row).Max(c => c.PreferedHeight);
         }
 
         private Table<Rectangle> LayoutPercent(Table<Rectangle> grid)

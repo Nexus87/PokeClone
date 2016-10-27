@@ -41,7 +41,7 @@ namespace GameEngineTest.Graphics.NewGUI.Panels
                 }))
         };
 
-        [TestCaseSource("PercentPropertiesData")]
+        [TestCaseSource(nameof(PercentPropertiesData))]
         public void Update_RowsAndColumnsWithPercentType_ContentComponentsAreOrdered(
             Rectangle gridPosition,
             List<RowProperty> rows, List<ColumnProperty> columns,
@@ -89,7 +89,7 @@ namespace GameEngineTest.Graphics.NewGUI.Panels
 
         };
 
-        [TestCaseSource("FixedPropertiesTestData")]
+        [TestCaseSource(nameof(FixedPropertiesTestData))]
         public void Update_RowsAndColumnsWithFixedType_ContentComponentsAreOrdered(
             Rectangle gridPosition,
             List<RowProperty> rows, List<ColumnProperty> columns,
@@ -152,7 +152,7 @@ namespace GameEngineTest.Graphics.NewGUI.Panels
 
         };
 
-        [TestCaseSource("AutoPropertiesTestData")]
+        [TestCaseSource(nameof(AutoPropertiesTestData))]
         public void Update_RowsAndColumnsWithAutoType_ContentComponentsAreOrdered(
             Rectangle gridPosition,
             List<RowProperty> rows, List<ColumnProperty> columns,
@@ -186,7 +186,7 @@ namespace GameEngineTest.Graphics.NewGUI.Panels
             ),
         };
 
-        [TestCaseSource("MixedPropertiesTestData")]
+        [TestCaseSource(nameof(MixedPropertiesTestData))]
         public void Update_RowsAndColumnsWithMixedTypes_ContentComponentsAreOrdered(
             Rectangle gridPosition,
             List<RowProperty> rows, List<ColumnProperty> columns,

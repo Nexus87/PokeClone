@@ -99,20 +99,21 @@ namespace GameEngineTest.Graphics.NewGUI.Panels
             Assert.IsTrue(componentTable[expectedRow, expectedColumn].IsSelected);
         }
 
-        private static GridInputHandler CreateGridInputHandler(Table<IGraphicComponent> componentTable)
+        private static GridInputHandler CreateGridInputHandler(Table<GridCell> componentTable)
         {
             return new GridInputHandler(componentTable);
         }
 
-        private static Table<IGraphicComponent> CreateComponentTable(bool[,] selectableComponents)
+        private static Table<GridCell> CreateComponentTable(bool[,] selectableComponents)
         {
-            var table = new Table<IGraphicComponent>();
+            var table = new Table<GridCell>();
             Extensions.LoopOverTable(selectableComponents.Rows(), selectableComponents.Columns(), (row, column) =>
             {
                 var component = new Mock<IGraphicComponent>();
                 component.SetupAllProperties();
                 component.SetupGet(c => c.IsSelectable).Returns(selectableComponents[row, column]);
-                table[row, column] = component.Object;
+                var gridCell = new GridCell(row, column) {GraphicComponent = component.Object};
+                table[row, column] = gridCell;
             });
 
             return table;
