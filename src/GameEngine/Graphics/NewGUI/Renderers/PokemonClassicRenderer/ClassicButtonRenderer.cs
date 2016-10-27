@@ -3,8 +3,11 @@ using Microsoft.Xna.Framework;
 
 namespace GameEngine.Graphics.NewGUI.Renderers.PokemonClassicRenderer
 {
-    public class ClassicButtonRenderer : AbstractRenderer
+    public class ClassicButtonRenderer : AbstractRenderer, IButtonRenderer
     {
+        public float PreferedWidth => TextHeight + _font.MeasureString(Text).Y;
+        public float PreferedHeight => TextHeight;
+
         public bool IsSelected { get; set; }
         public string Text { get; set; }
         public float TextHeight { get; set; }

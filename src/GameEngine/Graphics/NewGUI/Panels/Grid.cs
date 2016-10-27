@@ -34,6 +34,7 @@ namespace GameEngine.Graphics.NewGUI.Panels
         private readonly List<RowProperty> _rowProperties = new List<RowProperty>();
         private readonly List<ColumnProperty> _columnPoperties = new List<ColumnProperty>();
         private readonly GridInputHandler _gridInputHandler;
+        private bool _needsUpdate = true;
 
         public Grid()
         {
@@ -50,6 +51,7 @@ namespace GameEngine.Graphics.NewGUI.Panels
         {
             _rowProperties.Add(property);
             InitRow(_rowProperties.Count - 1);
+            _needsUpdate = true;
         }
 
         private void InitRow(int row)
@@ -64,6 +66,7 @@ namespace GameEngine.Graphics.NewGUI.Panels
         {
             _columnPoperties.Add(property);
             InitColumn(_columnPoperties.Count - 1);
+            _needsUpdate = true;
         }
 
         private void InitColumn(int column)
@@ -86,17 +89,23 @@ namespace GameEngine.Graphics.NewGUI.Panels
             ChildrenList.Add(component);
             component.Parent = this;
             _cells[row, column].GraphicComponent = component;
+            _needsUpdate = true;
         }
 
         public override void Update(GameTime time)
         {
             if (Rows == 0 || Columns == 0)
                 return;
+
+            if (!_needsUpdate)
+                return;
+
             var grid = new Table<Rectangle>(Rows, Columns);
             grid = SetAbsoluteWidths(grid);
             grid = LayoutPercent(grid);
             grid = SetPosition(grid);
             ApplyGridToComponents(grid);
+            _needsUpdate = false;
         }
 
         public override void HandleKeyInput(CommandKeys key)

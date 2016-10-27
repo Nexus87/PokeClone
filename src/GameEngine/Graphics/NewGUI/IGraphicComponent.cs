@@ -14,6 +14,7 @@ namespace GameEngine.Graphics.NewGUI
         bool IsSelected { get; set; }
         void Update(GameTime time);
         void HandleKeyInput(CommandKeys key);
+        void Init();
     }
 
 }

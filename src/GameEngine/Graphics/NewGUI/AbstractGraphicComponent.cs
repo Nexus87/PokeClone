@@ -9,14 +9,9 @@ namespace GameEngine.Graphics.NewGUI
     {
         public static readonly NullRenderer NullRenderer = new NullRenderer();
 
-        protected readonly List<IGraphicComponent> ChildrenList;
+        protected readonly List<IGraphicComponent> ChildrenList = new List<IGraphicComponent>();
         private float _preferedWidth;
         private float _preferedHeight;
-
-        protected AbstractGraphicComponent()
-        {
-            ChildrenList = new List<IGraphicComponent>();
-        }
 
         public event EventHandler PreferedSizeChanged;
         public Rectangle Constraints { get; set; }
@@ -52,7 +47,7 @@ namespace GameEngine.Graphics.NewGUI
 
         public IEnumerable<IGraphicComponent> Children => ChildrenList;
 
-        public IRenderer Renderer { get; protected set; } = NullRenderer;
+        public virtual IRenderer Renderer { get; protected set; } = NullRenderer;
         public virtual bool IsSelected { get; set; }
 
         public virtual void Update(GameTime time)
@@ -60,6 +55,10 @@ namespace GameEngine.Graphics.NewGUI
         }
 
         public abstract void HandleKeyInput(CommandKeys key);
+        public virtual void Init()
+        {
+
+        }
 
         protected virtual void OnPreferedSizeChanged()
         {
