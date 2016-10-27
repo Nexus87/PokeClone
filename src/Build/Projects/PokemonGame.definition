@@ -2,7 +2,6 @@
 <Project Name="PokemonGame" Path="PokemonGame" Type="App">
   <Properties>
     <NoWarn>1591</NoWarn>
-    <LangVersion>5</LangVersion>
   </Properties>
   <References>
     <Reference Include="System" />

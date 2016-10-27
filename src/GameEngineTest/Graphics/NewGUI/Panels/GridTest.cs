@@ -1,11 +1,12 @@
-﻿﻿using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using GameEngine.Graphics.NewGUI;
+using GameEngine.Graphics.NewGUI.Panels;
 using GameEngine.Utils;
 using Microsoft.Xna.Framework;
 using Moq;
 using NUnit.Framework;
 
-namespace GameEngineTest.Graphics.NewGUI
+namespace GameEngineTest.Graphics.NewGUI.Panels
 {
     [TestFixture]
     public class GridTest

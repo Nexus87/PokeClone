@@ -7,18 +7,18 @@ namespace GameEngine.Graphics.NewGUI
     public class Scene
     {
         public IGraphicComponent Root { get; set; }
-        private readonly ISpriteBatch spriteBatch;
+        private readonly ISpriteBatch _spriteBatch;
 
         public Scene(ISpriteBatch spriteBatch)
         {
-            this.spriteBatch = spriteBatch;
+            this._spriteBatch = spriteBatch;
         }
 
         public void Draw(GameTime gameTime)
         {
-            spriteBatch.Begin();
+            _spriteBatch.Begin();
             DrawComponent(gameTime, Root);
-            spriteBatch.End();
+            _spriteBatch.End();
         }
 
 
@@ -27,7 +27,9 @@ namespace GameEngine.Graphics.NewGUI
             foreach (var graphicComponent in component.Children)
             {
                 graphicComponent.Update(gameTime);
-                graphicComponent.Renderer.Render(spriteBatch, component.Constraints);
+                var renderer = graphicComponent.Renderer;
+                renderer.SpriteBatch = _spriteBatch;
+                graphicComponent.Renderer.Render(component);
             }
         }
     }

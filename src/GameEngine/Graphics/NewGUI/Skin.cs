@@ -1,6 +1,6 @@
 ﻿namespace GameEngine.Graphics.NewGUI
 {
-    public class TextBox
+    public class Skin
     {
 
     }

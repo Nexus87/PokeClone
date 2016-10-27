@@ -2,7 +2,6 @@
 <Project Name="GameEngineTest" Path="GameEngineTest" Type="Library">
   <Properties>
     <NoWarn>1591</NoWarn>
-    <LangVersion>5</LangVersion>
   </Properties>
   <References>
     <Reference Include="System" />
@@ -48,7 +47,8 @@
     <Compile Include="Graphics\LineTest.cs" />
     <Compile Include="Graphics\MultiLayeredComponentTest.cs" />
     <Compile Include="Graphics\MultilineTextboxTest.cs" />
-    <Compile Include="Graphics\NewGUI\GridTest.cs" />
+    <Compile Include="Graphics\NewGUI\Panels\GridInputHandlerTest.cs" />
+    <Compile Include="Graphics\NewGUI\Panels\GridTest.cs" />
     <Compile Include="Graphics\NullGraphicObjectTest.cs" />
     <Compile Include="Graphics\SelectableContainerTest.cs" />
     <Compile Include="Graphics\SplitterStub.cs" />

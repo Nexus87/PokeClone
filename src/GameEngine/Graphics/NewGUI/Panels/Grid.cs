@@ -1,24 +1,19 @@
-﻿﻿using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using GameEngine.Utils;
 using Microsoft.Xna.Framework;
 
-namespace GameEngine.Graphics.NewGUI
+namespace GameEngine.Graphics.NewGUI.Panels
 
 {
-    public class GridProperty
-    {
-        public int RowSpan { get; set; }
-        public int ColumnSpan { get; set; }
-    }
-
     public enum ValueType
     {
         Percent,
         Absolute,
         Auto
     }
+
     public class RowProperty
     {
         public ValueType Type { get; set; }
@@ -33,74 +28,62 @@ namespace GameEngine.Graphics.NewGUI
         public float Width { get; set; }
     }
 
-    public class CellProperty
-    {
-        public Vector2? Size { get; set; }
-        public float[] Margins = {0, 0, 0, 0};
-    }
-
     public class Grid : AbstractGraphicComponent
     {
+        internal readonly Table<IGraphicComponent> Cells = new Table<IGraphicComponent>();
+        private readonly List<RowProperty> _rowProperties = new List<RowProperty>();
+        private readonly List<ColumnProperty> _columnPoperties = new List<ColumnProperty>();
+        private GridInputHandler gridInputHandler;
 
-        private readonly Table<IGraphicComponent> cells = new Table<IGraphicComponent>();
-        private readonly List<RowProperty> rowProperties = new List<RowProperty>();
-        private readonly List<ColumnProperty> columnPoperties = new List<ColumnProperty>();
+        internal int Rows => _rowProperties.Count;
 
-        internal int Rows
-        {
-            get { return rowProperties.Count; }
-        }
+        internal int Columns => _columnPoperties.Count;
 
-        internal int Columns
-        {
-            get { return columnPoperties.Count; }
-        }
-
+        public bool HandleDirectionInput { get; set; }
+        
         public void AddRow(RowProperty property)
         {
-            rowProperties.Add(property);
+            _rowProperties.Add(property);
         }
 
         public void AddColumn(ColumnProperty property)
         {
-            columnPoperties.Add(property);
+            _columnPoperties.Add(property);
         }
 
         public void SetComponent(IGraphicComponent component, int row, int column)
         {
             if (component == null)
-                throw new ArgumentNullException("component");
+                throw new ArgumentNullException(nameof(component));
             if (column < 0 || column >= Columns)
-                throw new ArgumentOutOfRangeException("column", "Was " + column);
+                throw new ArgumentOutOfRangeException(nameof(column), "Was " + column);
             if (row < 0 || row >= Rows)
-                throw new ArgumentOutOfRangeException("row", "Was " + row);
+                throw new ArgumentOutOfRangeException(nameof(row), "Was " + row);
 
-            cells[row, column] = component;
+            Cells[row, column] = component;
         }
 
-        public void SetCellProperty(CellProperty cellProperty, int row, int column)
-        {
-            if (cellProperty == null) throw new ArgumentNullException("cellProperty");
-            if (column < 0 || column >= Columns) throw new ArgumentOutOfRangeException("column");
-            if (row < 0 || row >= Rows) throw new ArgumentOutOfRangeException("row");
-        }
         public override void Update(GameTime time)
         {
             if (Rows == 0 || Columns == 0)
                 return;
             var grid = new Table<Rectangle>(Rows, Columns);
-            grid = SetAbsoluteWidhts(grid);
+            grid = SetAbsoluteWidths(grid);
             grid = LayoutPercent(grid);
             grid = SetPosition(grid);
             ApplyGridToComponents(grid);
         }
 
+        public override void HandleKeyInput(CommandKeys key)
+        {
+            if (HandleDirectionInput)
+                gridInputHandler.HandleKeyInput(key);
+        }
+
         private void ApplyGridToComponents(ITable<Rectangle> grid)
         {
-            Utils.Extensions.LoopOverTable(Rows, Columns, (row, column) =>
-            {
-                cells[row, column].Constraints = grid[row, column];
-            });
+            Utils.Extensions.LoopOverTable(Rows, Columns,
+                (row, column) => { Cells[row, column].Constraints = grid[row, column]; });
         }
 
         private Table<Rectangle> SetPosition(Table<Rectangle> grid)
@@ -119,7 +102,7 @@ namespace GameEngine.Graphics.NewGUI
             return grid;
         }
 
-        private Table<Rectangle> SetAbsoluteWidhts(Table<Rectangle> grid)
+        private Table<Rectangle> SetAbsoluteWidths(Table<Rectangle> grid)
         {
             Utils.Extensions.LoopOverTable(Rows, Columns, (row, column) =>
             {
@@ -134,7 +117,7 @@ namespace GameEngine.Graphics.NewGUI
 
         private float GetColumnWidth(int column)
         {
-            var columnProperty = columnPoperties[column];
+            var columnProperty = _columnPoperties[column];
             switch (columnProperty.Type)
             {
                 case ValueType.Percent:
@@ -150,12 +133,12 @@ namespace GameEngine.Graphics.NewGUI
 
         private float ColumnMaxWidth(int column)
         {
-            return cells.EnumerateRows(column).Max(c => c.PreferedWidth);
+            return Cells.EnumerateRows(column).Max(c => c.PreferedWidth);
         }
 
         private float GetRowHeight(int row)
         {
-            var rowProperty = rowProperties[row];
+            var rowProperty = _rowProperties[row];
             switch (rowProperty.Type)
             {
                 case ValueType.Percent:
@@ -171,36 +154,34 @@ namespace GameEngine.Graphics.NewGUI
 
         private float RowMaxHeight(int row)
         {
-            return cells.EnumerateColumns(row).Max(c => c.PreferedHeight);
+            return Cells.EnumerateColumns(row).Max(c => c.PreferedHeight);
         }
 
         private Table<Rectangle> LayoutPercent(Table<Rectangle> grid)
         {
-
-            var height = Constraints.Height - grid.EnumerateRows(0).Sum(rec => rec.Height);
-            var width = Constraints.Width - grid.EnumerateColumns(0).Sum(rec => rec.Width);
+            var height = (float) Constraints.Height - grid.EnumerateRows(0).Sum(rec => rec.Height);
+            var width = (float) Constraints.Width - grid.EnumerateColumns(0).Sum(rec => rec.Width);
 
             if (height < 0)
                 height = 0;
             if (width < 0)
                 width = 0;
 
-            var totalShareColumns = columnPoperties.Sum(p => p.Type == ValueType.Percent ? p.Share : 0);
-            var totalShareRows = rowProperties.Sum(p => p.Type == ValueType.Percent ? p.Share : 0);
+            var totalShareColumns = _columnPoperties.Sum(p => p.Type == ValueType.Percent ? p.Share : 0);
+            var totalShareRows = _rowProperties.Sum(p => p.Type == ValueType.Percent ? p.Share : 0);
 
             Utils.Extensions.LoopOverTable(Rows, Columns, (row, column) =>
             {
                 var constraints = grid[row, column];
-                if (rowProperties[row].Type == ValueType.Percent)
-                    constraints.Height = (int) ((height * rowProperties[row].Share) / totalShareRows);
-                if (columnPoperties[column].Type == ValueType.Percent)
-                    constraints.Width = (int) ((width * columnPoperties[column].Share) / totalShareColumns);
+                if (_rowProperties[row].Type == ValueType.Percent)
+                    constraints.Height = (int) ((height * _rowProperties[row].Share) / totalShareRows);
+                if (_columnPoperties[column].Type == ValueType.Percent)
+                    constraints.Width = (int) ((width * _columnPoperties[column].Share) / totalShareColumns);
 
                 grid[row, column] = constraints;
             });
 
             return grid;
-
         }
 
         private Rectangle GetComponentConstaints(int row, int column, Table<Rectangle> grid)
@@ -229,27 +210,6 @@ namespace GameEngine.Graphics.NewGUI
             }
 
             return rec;
-
-        }
-
-    }
-
-    public static class GridExtensions
-    {
-        public static void AddAllRows(this Grid grid, IEnumerable<RowProperty> rowProperties)
-        {
-            foreach (var rowProperty in rowProperties)
-            {
-                grid.AddRow(rowProperty);
-            }
-        }
-
-        public static void AddAllColumns(this Grid grid, IEnumerable<ColumnProperty> columnProperties)
-        {
-            foreach (var columnProperty in columnProperties)
-            {
-                grid.AddColumn(columnProperty);
-            }
         }
     }
 }

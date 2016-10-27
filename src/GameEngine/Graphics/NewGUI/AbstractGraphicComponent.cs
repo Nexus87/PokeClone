@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using GameEngine.Graphics.NewGUI.Renderers;
 using Microsoft.Xna.Framework;
 
 namespace GameEngine.Graphics.NewGUI
 {
     public abstract class AbstractGraphicComponent : IGraphicComponent
     {
+        public static readonly NullRenderer NullRenderer = new NullRenderer();
+
         protected readonly List<IGraphicComponent> ChildrenList;
-        protected Vector2 Position;
-        protected Vector2 Size;
-        private float preferedWidth;
-        private float preferedHeight;
+        private float _preferedWidth;
+        private float _preferedHeight;
 
         protected AbstractGraphicComponent()
         {
@@ -23,46 +24,46 @@ namespace GameEngine.Graphics.NewGUI
 
         public float PreferedWidth
         {
-            get { return preferedWidth; }
+            get { return _preferedWidth; }
             protected set
             {
-                if(Math.Abs(preferedWidth - value) > 1e-15)
+                if(Math.Abs(_preferedWidth - value) > 1e-15)
                     return;
-                preferedWidth = value;
+                _preferedWidth = value;
                 OnPreferedSizeChanged();
             }
         }
 
         public float PreferedHeight
         {
-            get { return preferedHeight; }
+            get { return _preferedHeight; }
             protected set
             {
-                if(Math.Abs(preferedHeight - value) > 1e-15)
+                if(Math.Abs(_preferedHeight - value) > 1e-15)
                     return;
-                preferedHeight = value;
+                _preferedHeight = value;
                 OnPreferedSizeChanged();
             }
         }
 
-        public ResizeBehavoir VerticalBehavoir { get; set; }
-        public ResizeBehavoir HorizontalBehavoir { get; set; }
 
-
+        public bool IsSelectable { get; protected set; }
         public IGraphicComponent Parent { get; protected set; }
 
-        public IEnumerable<IGraphicComponent> Children
+        public IEnumerable<IGraphicComponent> Children => ChildrenList;
+
+        public IRenderer Renderer { get; protected set; } = NullRenderer;
+        public virtual bool IsSelected { get; set; }
+
+        public virtual void Update(GameTime time)
         {
-            get { return ChildrenList; }
         }
 
-        public IRenderer Renderer { get; protected set; }
-        public abstract void Update(GameTime time);
+        public abstract void HandleKeyInput(CommandKeys key);
 
         protected virtual void OnPreferedSizeChanged()
         {
-            var handler = PreferedSizeChanged;
-            if (handler != null) handler(this, EventArgs.Empty);
+            PreferedSizeChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 }
