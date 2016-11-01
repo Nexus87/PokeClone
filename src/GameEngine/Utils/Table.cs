@@ -137,7 +137,7 @@ namespace GameEngine.Utils
 
         public ITable<T> CreateSubtable(TableIndex startIndex, TableIndex endIndex)
         {
-            return new SubTable<T, T>(_innerTable, startIndex, endIndex);
+            return new SubTable<T>(_innerTable, startIndex, endIndex);
         }
 
         public static ITable<T> FromArray(T[,] array)
