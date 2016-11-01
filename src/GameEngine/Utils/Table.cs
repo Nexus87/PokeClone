@@ -154,5 +154,49 @@ namespace GameEngine.Utils
         {
             return EnumerateAlongColumns().GetEnumerator();
         }
+
+        public void RemoveRow(int removedRow)
+        {
+            if(removedRow >= Rows || removedRow < 0)
+                return;
+
+            var newTable = new T[Rows - 1, Columns];
+            CopyRows(0, removedRow, newTable, 0);
+            CopyRows(removedRow + 1, Rows, newTable, removedRow);
+
+            _innerTable = newTable;
+            Rows--;
+        }
+
+        private void CopyRows(int startRow, int endRow, T[,] newTable, int offset)
+        {
+            var realOffset = offset * Columns;
+            var entriesToCopy = (endRow - startRow) * Columns;
+            Array.Copy(_innerTable, startRow * Columns, newTable, realOffset, entriesToCopy);
+        }
+
+        public void RemoveColumn(int removedColumn)
+        {
+            if(removedColumn >= Columns || removedColumn < 0)
+                return;
+
+            var newTable = new T[Rows, Columns - 1];
+            CopyColumns(0, removedColumn, newTable, 0);
+            CopyColumns(removedColumn + 1, Columns, newTable, removedColumn);
+
+            _innerTable = newTable;
+            Columns--;
+        }
+
+        private void CopyColumns(int startColumn, int endColumn, T[,] target, int offset)
+        {
+            var columnsToCopy = endColumn - startColumn;
+            for (var row = 0; row < Rows; row++)
+            {
+                var sourceOffset = row * Columns + startColumn;
+                var targetOffset = row * (Columns-1) + offset;
+                Array.Copy(_innerTable, sourceOffset, target, targetOffset, columnsToCopy);
+            }
+        }
     }
 }

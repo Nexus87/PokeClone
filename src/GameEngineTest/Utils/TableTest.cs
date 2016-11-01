@@ -3,6 +3,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using GameEngine.Graphics.TableView;
 
 namespace GameEngineTest.Utils
@@ -250,6 +251,121 @@ namespace GameEngineTest.Utils
             var table = new Table<object>();
 
             Assert.Throws<ArgumentOutOfRangeException>(() => table[0, -1] = new object());
+        }
+
+        public static List<TestCaseData> RemoveRowData = new List<TestCaseData>
+        {
+            new TestCaseData(
+                new[,]
+                {
+                    {1, 2, 3},
+                    {4, 5, 6},
+                    {7, 8, 9}
+                },
+                1,
+                new[,]
+                {
+                    {1, 2, 3},
+                    {7, 8, 9}
+                }
+            ),
+            new TestCaseData(
+                new[,]
+                {
+                    {1, 2, 3},
+                    {4, 5, 6},
+                    {7, 8, 9}
+                },
+                0,
+                new[,]
+                {
+                    {4, 5, 6},
+                    {7, 8, 9}
+                }
+            ),
+            new TestCaseData(
+                new[,]
+                {
+                    {1, 2, 3},
+                    {4, 5, 6},
+                    {7, 8, 9}
+                },
+                2,
+                new[,]
+                {
+                    {1, 2, 3},
+                    {4, 5, 6}
+                }
+            )
+        };
+        [TestCaseSource(nameof(RemoveRowData))]
+        public void RemoveRow_AfterFillingTable_ResultingTableAsExpected(
+            int[,] startTable, int removedRow, int[,] resultTable)
+        {
+            var table = new Table<int>(startTable);
+            var expectedTable = new Table<int>(resultTable);
+            table.RemoveRow(removedRow);
+
+            Assert.True(table.EnumerateAlongColumns().SequenceEqual(expectedTable.EnumerateAlongColumns()));
+        }
+
+        public static List<TestCaseData> RemoveColumnData = new List<TestCaseData>
+        {
+            new TestCaseData(
+                new[,]
+                {
+                    {1, 2, 3},
+                    {4, 5, 6},
+                    {7, 8, 9}
+                },
+                1,
+                new[,]
+                {
+                    {1, 3},
+                    {4, 6},
+                    {7, 9}
+                }
+            ),
+            new TestCaseData(
+                new[,]
+                {
+                    {1, 2, 3},
+                    {4, 5, 6},
+                    {7, 8, 9}
+                },
+                0,
+                new[,]
+                {
+                    {2, 3},
+                    {5, 6},
+                    {8, 9}
+                }
+            ),
+            new TestCaseData(
+                new[,]
+                {
+                    {1, 2, 3},
+                    {4, 5, 6},
+                    {7, 8, 9}
+                },
+                2,
+                new[,]
+                {
+                    {1, 2},
+                    {4, 5},
+                    {7, 8}
+                }
+            )
+        };
+        [TestCaseSource(nameof(RemoveColumnData))]
+        public void RemoveColumn_AfterFillingTable_ResultingTableAsExpected(
+            int[,] startTable, int removedColumn, int[,] resultTable)
+        {
+            var table = new Table<int>(startTable);
+            var expectedTable = new Table<int>(resultTable);
+            table.RemoveColumn(removedColumn);
+
+            Assert.True(table.EnumerateAlongColumns().SequenceEqual(expectedTable.EnumerateAlongColumns()));
         }
     }
 }
