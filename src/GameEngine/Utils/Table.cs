@@ -21,7 +21,7 @@ namespace GameEngine.Utils
             Columns = columns;
         }
 
-        public Table() 
+        public Table()
         {
             _innerTable = new T[InitalRows, InitalColumns];
         }
@@ -39,10 +39,7 @@ namespace GameEngine.Utils
             {
                 CheckIndexIsPositive(row, column);
 
-                if(!IsInBounds(row, column))
-                    return default(T);
-
-                return _innerTable[row, column];
+                return IsInBounds(row, column) ? _innerTable[row, column] : default(T);
             }
             set
             {
@@ -55,7 +52,8 @@ namespace GameEngine.Utils
             }
         }
 
-        private static void CheckIndexIsPositive(int row, int column){
+        private static void CheckIndexIsPositive(int row, int column)
+        {
             if (row < 0)
                 throw new ArgumentOutOfRangeException(nameof(row), "was: " + row);
             if (column < 0)
@@ -106,7 +104,7 @@ namespace GameEngine.Utils
             if (row >= Rows)
                 yield break;
 
-            for (int i = 0; i < Columns; i++)
+            for (var i = 0; i < Columns; i++)
                 yield return this[row, i];
         }
 
@@ -162,11 +160,11 @@ namespace GameEngine.Utils
 
             public TS this[int row, int column]
             {
-                get 
+                get
                 {
                     if (row >= Rows || row < 0)
                         throw new ArgumentOutOfRangeException(nameof(row));
-                    if(column >= Columns || column < 0)
+                    if (column >= Columns || column < 0)
                         throw new ArgumentOutOfRangeException(nameof(row));
 
                     return _table[_startIndex.Row + row, _startIndex.Column + column];
@@ -178,7 +176,7 @@ namespace GameEngine.Utils
                 if (row >= Rows)
                     yield break;
 
-                for (int i = 0; i < Columns; i++)
+                for (var i = 0; i < Columns; i++)
                     yield return this[row, i];
             }
 
@@ -187,24 +185,24 @@ namespace GameEngine.Utils
                 if (column >= Columns)
                     yield break;
 
-                for (int i = 0; i < Rows; i++)
+                for (var i = 0; i < Rows; i++)
                     yield return this[i, column];
             }
 
             public IEnumerable<TS> EnumerateAlongRows()
             {
-                for (int row = 0; row < Rows; row++)
+                for (var row = 0; row < Rows; row++)
                 {
-                    for (int column = 0; column < Columns; column++)
+                    for (var column = 0; column < Columns; column++)
                         yield return this[row, column];
                 }
             }
 
             public IEnumerable<TS> EnumerateAlongColumns()
             {
-                for (int column = 0; column < Columns; column++)
+                for (var column = 0; column < Columns; column++)
                 {
-                    for (int row = 0; row < Rows; row++)
+                    for (var row = 0; row < Rows; row++)
                         yield return this[row, column];
                 }
             }
