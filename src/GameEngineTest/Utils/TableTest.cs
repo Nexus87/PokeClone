@@ -13,7 +13,7 @@ namespace GameEngineTest.Utils
         [TestCase]
         public void RowsColumns_InitalSetup_Zero()
         {
-            var table = new Table<Object>();
+            var table = new Table<object>();
 
             Assert.AreEqual(0, table.Rows);
             Assert.AreEqual(0, table.Columns);
@@ -22,9 +22,8 @@ namespace GameEngineTest.Utils
         [TestCase]
         public void Rows_SetData_ResizeAsNeeded()
         {
-            var table = new Table<Object>();
+            var table = new Table<object> {[5, 0] = new object()};
 
-            table[5, 0] = new Object();
 
             Assert.AreEqual(6, table.Rows);
         }
@@ -32,9 +31,8 @@ namespace GameEngineTest.Utils
         [TestCase]
         public void Columns_SetData_ResizeAsNeeded()
         {
-            var table = new Table<Object>();
+            var table = new Table<object> {[0, 5] = new object()};
 
-            table[0, 5] = new Object();
 
             Assert.AreEqual(6, table.Columns);
         }
@@ -42,9 +40,7 @@ namespace GameEngineTest.Utils
         [TestCase]
         public void RowsColumns_SetData_ResizeAsNeeded()
         {
-            var table = new Table<Object>();
-
-            table[3, 5] = new Object();
+            var table = new Table<object> {[3, 5] = new object()};
 
             Assert.AreEqual(6, table.Columns);
             Assert.AreEqual(4, table.Rows);
@@ -53,21 +49,20 @@ namespace GameEngineTest.Utils
         [TestCase]
         public void IndexerGet_DataNotSet_ReturnsDefault()
         {
-            var table = new Table<Object>();
+            var table = new Table<object> {[5, 5] = new object()};
 
-            table[5, 5] = new Object();
-
-            Assert.AreEqual(default(Object), table[0, 0]);
+            Assert.AreEqual(default(object), table[0, 0]);
         }
 
         [TestCase]
         public void IndexerGet_TryGetAfterResize_ReturnsSameValue()
         {
-            var testObject = new Object();
-            var table = new Table<Object>();
-
-            table[4, 4] = testObject;
-            table[8, 6] = new Object();
+            var testObject = new object();
+            var table = new Table<object>
+            {
+                [4, 4] = testObject,
+                [8, 6] = new object()
+            };
 
             Assert.AreEqual(testObject, table[4, 4]);
         }
@@ -75,10 +70,12 @@ namespace GameEngineTest.Utils
         [TestCase]
         public void IndexerGet_InsertSecondOnlyWithColumnResize_DoesNotShrink()
         {
-            var table = new Table<Object>();
+            var table = new Table<object>
+            {
+                [3, 5] = new object(),
+                [6, 3] = new object()
+            };
 
-            table[3, 5] = new Object();
-            table[6, 3] = new Object();
 
             Assert.AreEqual(7, table.Rows);
             Assert.AreEqual(6, table.Columns);
@@ -87,10 +84,11 @@ namespace GameEngineTest.Utils
         [TestCase]
         public void IndexerGet_InsertSecondOnlyWithRowResize_DoesNotShrink()
         {
-            var table = new Table<Object>();
-
-            table[5, 3] = new Object();
-            table[3, 6] = new Object();
+            var table = new Table<object>
+            {
+                [5, 3] = new object(),
+                [3, 6] = new object()
+            };
 
             Assert.AreEqual(6, table.Rows);
             Assert.AreEqual(7, table.Columns);
@@ -99,7 +97,7 @@ namespace GameEngineTest.Utils
         [TestCase]
         public void EnumerateColumns_OnEmptyTable_CountZero()
         {
-            var table = new Table<Object>();
+            var table = new Table<object>();
 
             var enumerator = table.EnumerateColumns(0);
 
@@ -109,7 +107,7 @@ namespace GameEngineTest.Utils
         [TestCase]
         public void EnumerateRows_OnEmptyTable_CountZero()
         {
-            var table = new Table<Object>();
+            var table = new Table<object>();
 
             var enumerator = table.EnumerateRows(0);
 
@@ -119,12 +117,11 @@ namespace GameEngineTest.Utils
         [TestCase]
         public void EnumerateColumns_SetLastEntry_ReturnsExpected()
         {
-            var testObject = new Object();
-            var table = new Table<Object>();
+            var testObject = new object();
+            var table = new Table<object> {[4, 4] = testObject};
 
-            table[4, 4] = testObject;
 
-            var enumerator = table.EnumerateColumns(4);
+            var enumerator = table.EnumerateColumns(4).ToList();
 
             Assert.AreEqual(4, enumerator.Count(o => o == null));
             Assert.AreEqual(testObject, enumerator.Last());
@@ -133,12 +130,10 @@ namespace GameEngineTest.Utils
         [TestCase]
         public void EnumerateRows_SetLastEntry_ReturnsExpected()
         {
-            var testObject = new Object();
-            var table = new Table<Object>();
+            var testObject = new object();
+            var table = new Table<object> {[4, 4] = testObject};
 
-            table[4, 4] = testObject;
-
-            var enumerator = table.EnumerateRows(4);
+            var enumerator = table.EnumerateRows(4).ToList();
 
             Assert.AreEqual(4, enumerator.Count(o => o == null));
             Assert.AreEqual(testObject, enumerator.Last());
@@ -147,10 +142,8 @@ namespace GameEngineTest.Utils
         [TestCase]
         public void EnumerateColumns_ArgumentOutOfBound_CountZero()
         {
-            var testObject = new Object();
-            var table = new Table<Object>();
-
-            table[4, 4] = testObject;
+            var testObject = new object();
+            var table = new Table<object> {[4, 4] = testObject};
 
             var enumerator = table.EnumerateColumns(5);
 
@@ -160,10 +153,8 @@ namespace GameEngineTest.Utils
         [TestCase]
         public void EnumerateRows_ArgumentOutOfBound_CountZero()
         {
-            var testObject = new Object();
-            var table = new Table<Object>();
-
-            table[4, 4] = testObject;
+            var testObject = new object();
+            var table = new Table<object> {[4, 4] = testObject};
 
             var enumerator = table.EnumerateRows(5);
 
@@ -175,30 +166,30 @@ namespace GameEngineTest.Utils
             new TestCaseData(new List<int>{1, 2, 3, 4, 5, 6, 7, 8, 9})
         };
 
-        [TestCaseSource("EnumeratedData")]
+        [TestCaseSource(nameof(EnumeratedData))]
         public void EnumerateAlongColumns_BasicSetup_Order(List<int> result)
         {
             var table = new Table<int>();
-            int start = 1;
-            for (int column = 0; column < 3; column++, start+=3)
+            var start = 1;
+            for (var column = 0; column < 3; column++, start+=3)
                 SetColumn(table, column, start);
 
-            int cnt = 0;
+            var cnt = 0;
             foreach(var i in table.EnumerateAlongColumns()){
                 Assert.AreEqual(result[cnt], i);
                 cnt++;
             }
         }
 
-        [TestCaseSource("EnumeratedData")]
+        [TestCaseSource(nameof(EnumeratedData))]
         public void EnumerateAlongRows_BasicSetup_Order(List<int> result)
         {
             var table = new Table<int>();
-            int start = 1;
-            for (int row = 0; row < 3; row++, start += 3)
+            var start = 1;
+            for (var row = 0; row < 3; row++, start += 3)
                 SetRow(table, row, start);
 
-            int cnt = 0;
+            var cnt = 0;
             foreach (var i in table.EnumerateAlongRows())
             {
                 Assert.AreEqual(result[cnt], i);
@@ -206,23 +197,22 @@ namespace GameEngineTest.Utils
             }
         }
 
-        private void SetRow(Table<int> table, int row, int start)
+        private static void SetRow(Table<int> table, int row, int start)
         {
-            for (int i = 0; i < 3; i++, start++)
+            for (var i = 0; i < 3; i++, start++)
                 table[row, i] = start;
         }
 
-        private void SetColumn(Table<int> table, int column, int start)
+        private static void SetColumn(Table<int> table, int column, int start)
         {
-            for (int i = 0; i < 3; i++, start++)
+            for (var i = 0; i < 3; i++, start++)
                 table[i, column] = start;
         }
 
         [TestCase]
         public void CreateSubtable_WithValidIndexes_RightNumberOfRowsAndColumns()
         {
-            var table = new Table<Object>();
-            table[5, 5] = new Object();
+            var table = new Table<object> {[5, 5] = new object()};
 
             var subTable = table.CreateSubtable(new TableIndex(1, 1), new TableIndex(3, 3));
 
@@ -234,8 +224,8 @@ namespace GameEngineTest.Utils
         public void CreateSubtable_DataFilledTable_HasEntries()
         {
             var table = new Table<int>();
-            for (int i = 0; i < 3; i++)
-                for (int j = 0; j < 3; j++)
+            for (var i = 0; i < 3; i++)
+                for (var j = 0; j < 3; j++)
                     table[i, j] = i + j;
 
             var subTable = table.CreateSubtable(new TableIndex(1, 1), new TableIndex(3, 3));
@@ -249,17 +239,17 @@ namespace GameEngineTest.Utils
         [TestCase]
         public void IndexerSet_InvalidRow_ThrowsException()
         {
-            var table = new Table<Object>();
+            var table = new Table<object>();
 
-            Assert.Throws<ArgumentOutOfRangeException>(() => table[-1, 0] = new Object());
+            Assert.Throws<ArgumentOutOfRangeException>(() => table[-1, 0] = new object());
         }
 
         [TestCase]
         public void IndexerSet_InvalidColumn_ThrowsException()
         {
-            var table = new Table<Object>();
+            var table = new Table<object>();
 
-            Assert.Throws<ArgumentOutOfRangeException>(() => table[0, -1] = new Object());
+            Assert.Throws<ArgumentOutOfRangeException>(() => table[0, -1] = new object());
         }
     }
 }
