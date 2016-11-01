@@ -146,6 +146,7 @@
     <Compile Include="Utils\ITable.cs" />
     <Compile Include="Utils\ITextSplitter.cs" />
     <Compile Include="Utils\PublicExtensions.cs" />
+    <Compile Include="Utils\SubTable.cs" />
     <Compile Include="Utils\Table.cs" />
     <None Include="packages.config">
       <SubType>Designer</SubType>

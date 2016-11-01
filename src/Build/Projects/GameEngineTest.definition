@@ -47,6 +47,7 @@
     <Compile Include="Graphics\LineTest.cs" />
     <Compile Include="Graphics\MultiLayeredComponentTest.cs" />
     <Compile Include="Graphics\MultilineTextboxTest.cs" />
+    <Compile Include="Graphics\NewGUI\Controls\ListViewTest.cs" />
     <Compile Include="Graphics\NewGUI\Panels\GridInputHandlerTest.cs" />
     <Compile Include="Graphics\NewGUI\Panels\GridTest.cs" />
     <Compile Include="Graphics\NullGraphicObjectTest.cs" />
