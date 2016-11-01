@@ -2,7 +2,12 @@
 
 namespace GameEngine.Graphics.NewGUI.Controlls
 {
-    public class ListCell : AbstractGraphicComponent
+    public interface IListCell : IGraphicComponent
+    {
+        event EventHandler CellSelected;
+    }
+
+    public class ListCell : AbstractGraphicComponent, IListCell
     {
         public event EventHandler CellSelected;
 
