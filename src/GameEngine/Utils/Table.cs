@@ -12,23 +12,23 @@ namespace GameEngine.Utils
         public int Rows { get; private set; }
         public int Columns { get; private set; }
 
-        private T[,] innerTable;
+        private T[,] _innerTable;
 
         public Table(int rows, int columns)
         {
-            innerTable = new T[rows, columns];
+            _innerTable = new T[rows, columns];
             Rows = rows;
             Columns = columns;
         }
 
         public Table() 
         {
-            innerTable = new T[InitalRows, InitalColumns];
+            _innerTable = new T[InitalRows, InitalColumns];
         }
 
         public Table(T[,] array)
         {
-            innerTable = array;
+            _innerTable = array;
             Rows = array.Rows();
             Columns = array.Columns();
         }
@@ -42,7 +42,7 @@ namespace GameEngine.Utils
                 if(!IsInBounds(row, column))
                     return default(T);
 
-                return innerTable[row, column];
+                return _innerTable[row, column];
             }
             set
             {
@@ -51,15 +51,15 @@ namespace GameEngine.Utils
                 if (!IsInBounds(row, column))
                     ResizeTable(row, column);
 
-                innerTable[row, column] = value;
+                _innerTable[row, column] = value;
             }
         }
 
-        private void CheckIndexIsPositive(int row, int column){
+        private static void CheckIndexIsPositive(int row, int column){
             if (row < 0)
-                throw new ArgumentOutOfRangeException("row", "was: " + row);
+                throw new ArgumentOutOfRangeException(nameof(row), "was: " + row);
             if (column < 0)
-                throw new ArgumentOutOfRangeException("column", "was: " + column);
+                throw new ArgumentOutOfRangeException(nameof(column), "was: " + column);
         }
 
         private bool IsInBounds(int row, int column)
@@ -90,15 +90,15 @@ namespace GameEngine.Utils
 
         private void ResizeInnerTable(int newColumns, int newRows)
         {
-            if (innerTable.Rows() >= newRows && innerTable.Columns() >= newColumns)
+            if (_innerTable.Rows() >= newRows && _innerTable.Columns() >= newColumns)
                 return;
 
-            newRows = Math.Max(newRows, 2 * innerTable.Rows());
-            newColumns = Math.Max(newColumns, 2 * innerTable.Columns());
+            newRows = Math.Max(newRows, 2 * _innerTable.Rows());
+            newColumns = Math.Max(newColumns, 2 * _innerTable.Columns());
 
             var tmpTable = new T[newRows, newColumns];
-            innerTable.Copy(tmpTable);
-            innerTable = tmpTable;
+            _innerTable.Copy(tmpTable);
+            _innerTable = tmpTable;
         }
 
         public IEnumerable<T> EnumerateColumns(int row)
@@ -139,43 +139,37 @@ namespace GameEngine.Utils
 
         public ITable<T> CreateSubtable(TableIndex startIndex, TableIndex endIndex)
         {
-            return new SubTable<T>(innerTable, startIndex, endIndex);
+            return new SubTable<T>(_innerTable, startIndex, endIndex);
         }
 
         internal class SubTable<TS> : ITable<TS>
         {
-            private TableIndex startIndex;
-            private TableIndex endIndex;
+            private TableIndex _startIndex;
+            private TableIndex _endIndex;
 
-            private readonly TS[,] table;
+            private readonly TS[,] _table;
 
             public SubTable(TS[,] table, TableIndex startIndex, TableIndex endIndex)
             {
-                this.startIndex = startIndex;
-                this.endIndex = endIndex;
-                this.table = table;
+                _startIndex = startIndex;
+                _endIndex = endIndex;
+                _table = table;
             }
 
-            public int Columns
-            {
-                get { return endIndex.Column - startIndex.Column; }
-            }
+            public int Columns => _endIndex.Column - _startIndex.Column;
 
-            public int Rows
-            {
-                get { return endIndex.Row - startIndex.Row; }
-            }
+            public int Rows => _endIndex.Row - _startIndex.Row;
 
             public TS this[int row, int column]
             {
                 get 
                 {
                     if (row >= Rows || row < 0)
-                        throw new ArgumentOutOfRangeException("row");
+                        throw new ArgumentOutOfRangeException(nameof(row));
                     if(column >= Columns || column < 0)
-                        throw new ArgumentOutOfRangeException("row");
+                        throw new ArgumentOutOfRangeException(nameof(row));
 
-                    return table[startIndex.Row + row, startIndex.Column + column]; 
+                    return _table[_startIndex.Row + row, _startIndex.Column + column];
                 }
             }
 
