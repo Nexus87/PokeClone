@@ -4,15 +4,7 @@ namespace GameEngine.Graphics.NewGUI.Panels
 {
     internal class GridCell
     {
-        public GridCell(int row, int column)
-        {
-            Row = row;
-            Column = column;
-        }
-
         public IGraphicComponent GraphicComponent { get; set; }
-        public int Row { get; }
-        public int Column { get; }
 
         public void SetConstraints(Rectangle constraints, Rectangle gridConstraints)
         {

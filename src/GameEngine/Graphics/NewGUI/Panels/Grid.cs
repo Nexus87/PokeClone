@@ -50,7 +50,7 @@ namespace GameEngine.Graphics.NewGUI.Panels
         public void AddRow(RowProperty property)
         {
             _rowProperties.Add(property);
-            InitRow(_rowProperties.Count - 1);
+            InitRow(Rows - 1);
             _needsUpdate = true;
         }
 
@@ -58,7 +58,7 @@ namespace GameEngine.Graphics.NewGUI.Panels
         {
             for(var column = 0; column < _columnPoperties.Count; column++)
             {
-                _cells[row, column] = new GridCell(row, column);
+                _cells[row, column] = new GridCell();
             }
         }
 
@@ -73,7 +73,7 @@ namespace GameEngine.Graphics.NewGUI.Panels
         {
             for (var row = 0; row < _rowProperties.Count; row++)
             {
-                _cells[row, column] = new GridCell(row, column);
+                _cells[row, column] = new GridCell();
             }
         }
 
@@ -244,6 +244,34 @@ namespace GameEngine.Graphics.NewGUI.Panels
             }
 
             return rec;
+        }
+
+        public void RemoveColumn(int columnToBeRemoved)
+        {
+            if (columnToBeRemoved < 0 || columnToBeRemoved >= Columns) throw new ArgumentOutOfRangeException(nameof(columnToBeRemoved));
+
+            foreach (var cell in _cells.EnumerateRows(columnToBeRemoved))
+            {
+                ChildrenList.Remove(cell.GraphicComponent);
+            }
+
+            _cells.RemoveColumn(columnToBeRemoved);
+            _columnPoperties.RemoveAt(columnToBeRemoved);
+            _needsUpdate = true;
+        }
+
+        public void RemoveRow(int rowToBeRemoved)
+        {
+            if (rowToBeRemoved < 0 || rowToBeRemoved >= Rows) throw new ArgumentOutOfRangeException(nameof(rowToBeRemoved));
+
+            foreach (var cell in _cells.EnumerateColumns(rowToBeRemoved))
+            {
+                ChildrenList.Remove(cell.GraphicComponent);
+            }
+
+            _cells.RemoveRow(rowToBeRemoved);
+            _rowProperties.RemoveAt(rowToBeRemoved);
+            _needsUpdate = true;
         }
     }
 }

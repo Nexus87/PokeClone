@@ -1,4 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.InteropServices;
+using Autofac;
 using GameEngine.Graphics.NewGUI;
 using GameEngine.Graphics.NewGUI.Panels;
 using GameEngine.Utils;
@@ -243,6 +246,45 @@ namespace GameEngineTest.Graphics.NewGUI.Panels
             Assert.AreEqual(expected, grid.Columns);
         }
 
+        public static List<TestCaseData> RemoveColumnData = new List<TestCaseData>
+        {
+            new TestCaseData(new Rectangle(100, 200, 100, 300), 10, 8, 1)
+        };
+
+        [TestCaseSource(nameof(RemoveColumnData))]
+        public void RemoveColumn_ValidColumn_PreviousAddedComponentsAreNotUpdated(Rectangle position, int rows, int columns, int columnToBeRemoved)
+        {
+            var grid = CreateGrid(position, rows, columns);
+            var components = FillGrid(grid, rows, columns);
+
+            grid.RemoveColumn(columnToBeRemoved);
+            grid.Update(new GameTime());
+
+            foreach (var component in components.EnumerateRows(columnToBeRemoved))
+            {
+                component.VerifySet(c => c.Constraints = It.IsAny<Rectangle>(), Times.Never);
+            }
+        }
+
+        public static List<TestCaseData> RemoveRowData = new List<TestCaseData>
+        {
+            new TestCaseData(new Rectangle(100, 200, 100, 300), 10, 8, 1)
+        };
+
+        [TestCaseSource(nameof(RemoveRowData))]
+        public void RemoveRow_ValidColumn_PreviousAddedComponentsAreNotUpdated(Rectangle position, int rows, int columns, int rowToBeRemoved)
+        {
+            var grid = CreateGrid(position, rows, columns);
+            var components = FillGrid(grid, rows, columns);
+
+            grid.RemoveRow(rowToBeRemoved);
+            grid.Update(new GameTime());
+
+            foreach (var component in components.EnumerateColumns(rowToBeRemoved))
+            {
+                component.VerifySet(c => c.Constraints = It.IsAny<Rectangle>(), Times.Never);
+            }
+        }
         private static void VerifyComponentsHaveExpectedPosition(ITable<Mock<IGraphicComponent>> components, ITable<Rectangle> expectedPositions)
         {
             Extensions.LoopOverTable(components.Rows, components.Columns, (i, j) =>
@@ -273,6 +315,18 @@ namespace GameEngineTest.Graphics.NewGUI.Panels
             grid.AddAllRows(rows);
 
             return grid;
+        }
+
+        private static Grid CreateGrid(Rectangle gridPosition, int rows, int column)
+        {
+            var rowProperties = Enumerable
+                .Range(0, rows)
+                .Select(i => new RowProperty {Type = ValueType.Auto, Share = 1});
+            var columnProperties = Enumerable
+                .Range(0, column)
+                .Select(i => new ColumnProperty {Type = ValueType.Auto, Share = 1});
+
+            return CreateGrid(gridPosition, rowProperties, columnProperties);
         }
     }
 }

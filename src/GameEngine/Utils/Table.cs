@@ -6,8 +6,8 @@ namespace GameEngine.Utils
 {
     public class Table<T> : ITable<T>
     {
-        private const int InitalRows = 8;
-        private const int InitalColumns = 8;
+        private const int InitalRows = 0;
+        private const int InitalColumns = 0;
 
         public int Rows { get; private set; }
         public int Columns { get; private set; }
@@ -90,9 +90,6 @@ namespace GameEngine.Utils
         {
             if (_innerTable.Rows() >= newRows && _innerTable.Columns() >= newColumns)
                 return;
-
-            newRows = Math.Max(newRows, 2 * _innerTable.Rows());
-            newColumns = Math.Max(newColumns, 2 * _innerTable.Columns());
 
             var tmpTable = new T[newRows, newColumns];
             _innerTable.Copy(tmpTable);

@@ -112,7 +112,7 @@ namespace GameEngineTest.Graphics.NewGUI.Panels
                 var component = new Mock<IGraphicComponent>();
                 component.SetupAllProperties();
                 component.SetupGet(c => c.IsSelectable).Returns(selectableComponents[row, column]);
-                var gridCell = new GridCell(row, column) {GraphicComponent = component.Object};
+                var gridCell = new GridCell() {GraphicComponent = component.Object};
                 table[row, column] = gridCell;
             });
 
