@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Name="GameEngine.GUI.Test" Path="GameEngine.GUI.Test" Type="Library">
+  <Properties>
+    <NoWarn>1591</NoWarn>
+    <Property Name="IDEFolder" Value="GameEngine" />
+  </Properties>
+  <References>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Platform Type="Windows">
+      <Reference Include="MonoGame.Framework.WindowsDX" />
+      <Reference Include="Castle.Core" />
+      <Reference Include="Moq" />
+      <Reference Include="NUnit.Framework" />
+      <Reference Include="Autofac" />
+    </Platform>
+    <Platform Type="Linux">
+      <Reference Include="MonoGame.Framework.DesktopGL" />
+      <Reference Include="Castle.Core" />
+      <Reference Include="Moq" />
+      <Reference Include="NUnit.Framework" />
+      <Reference Include="Autofac" />
+    </Platform>
+    <Reference Include="GameEngine.GUI" />
+	<Reference Include="GameEngine" />
+  </References>
+  <Files>
+    <Compile Include="Controls\ListViewTest.cs" />
+    <Compile Include="Panels\GridInputHandlerTest.cs" />
+    <Compile Include="Panels\GridTest.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="packages.config" />
+  </Files>
+</Project>
