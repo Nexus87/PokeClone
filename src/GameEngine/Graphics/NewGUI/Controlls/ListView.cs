@@ -1,7 +1,9 @@
-﻿using System.Collections.ObjectModel;
-using System.IO;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using GameEngine.Graphics.NewGUI.Panels;
 using Microsoft.Xna.Framework;
+using ValueType = GameEngine.Graphics.NewGUI.Panels.ValueType;
 
 namespace GameEngine.Graphics.NewGUI.Controlls
 {
@@ -12,8 +14,27 @@ namespace GameEngine.Graphics.NewGUI.Controlls
         private ListCellFactory _listCellFactory = row => new ListCell();
         private Grid _grid;
         private bool _needsUpdate = true;
+        private ObservableCollection<T> _model;
 
-        public ObservableCollection<T> Model { get; set; }
+        public ObservableCollection<T> Model
+        {
+            get { return _model; }
+            set
+            {
+                if(value == null)
+                    throw new ArgumentNullException(nameof(value));
+
+                if (_model != null)
+                    _model.CollectionChanged -= ModelOnCollectionChanged;
+                _model = value;
+                _model.CollectionChanged += ModelOnCollectionChanged;
+            }
+        }
+
+        private void ModelOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
+        {
+            _needsUpdate = true;
+        }
 
         public ListCellFactory ListCellFactory
         {

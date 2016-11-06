@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using GameEngine.Graphics.NewGUI.Controlls;
@@ -17,7 +16,7 @@ namespace GameEngineTest.Graphics.NewGUI.Controls
         {
             var model = CreateModel(rows);
             var components = CreateComponentMockList(rows);
-            var listView = CreateListView(r => components[r].Object);
+            var listView = CreateListViewWithCellFactory(r => components[r].Object);
 
             listView.Model = model;
             listView.Update(new GameTime());
@@ -28,7 +27,47 @@ namespace GameEngineTest.Graphics.NewGUI.Controls
             }
         }
 
-        private static ListView<string> CreateListView(ListCellFactory factory)
+        [TestCase(10)]
+        public void Update_RemoveComponentFromModel_ChangeIsReflected(int rows)
+        {
+            var model = CreateModel(rows);
+            var components = CreateComponentMockList(rows);
+            var listView = CreateListViewWithCellFactory(r => components[r].Object);
+
+            listView.Model = model;
+            listView.Update(new GameTime());
+            ResetComponents(components);
+
+            model.Remove(model.Last());
+            listView.Update(new GameTime());
+
+            components.Last().VerifySet(c => c.Constraints = It.IsAny<Rectangle>(), Times.Never);
+        }
+
+        [TestCase(10)]
+        public void Update_AddComponentToModel_NewComponentIsResized(int rows)
+        {
+            var model = CreateModel(rows);
+            var components = CreateComponentMockList(rows + 1);
+            var listView = CreateListViewWithCellFactory(r => components[r].Object);
+
+            listView.Model = model;
+            listView.Update(new GameTime());
+            ResetComponents(components);
+
+            model.Add((rows + 1) + "");
+            listView.Update(new GameTime());
+
+            components.Last().VerifySet(c => c.Constraints = It.IsAny<Rectangle>(), Times.AtLeastOnce);
+
+        }
+
+        private void ResetComponents(List<Mock<IListCell>> components)
+        {
+            components.ForEach(c => c.ResetCalls());
+        }
+
+        private static ListView<string> CreateListViewWithCellFactory(ListCellFactory factory)
         {
             return new ListView<string> {ListCellFactory = factory};
         }
