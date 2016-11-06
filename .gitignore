@@ -36,3 +36,4 @@ Content/source/.source
 packages.config
 .rider
 .idea
+src/packages/
