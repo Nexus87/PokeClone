@@ -13,7 +13,7 @@ namespace GameEngine.GUI.Controlls
             set
             {
                 if (value == null) throw new ArgumentNullException(nameof(value));
-                _buttonRenderer.Text = Text;
+                _buttonRenderer.Text = value;
                 UpdatePreferredSize();
             }
         }
