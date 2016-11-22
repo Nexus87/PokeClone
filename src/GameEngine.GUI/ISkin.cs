@@ -6,7 +6,6 @@ namespace GameEngine.GUI
     {
         IButtonRenderer BuildButtonRenderer();
 
-        T GetRendererForType<T>() where T : IRenderer;
         float DefaultTextHeight { get; }
     }
 }

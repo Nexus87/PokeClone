@@ -1,6 +1,4 @@
-﻿using System;
-using System.Runtime.InteropServices;
-using System.Xml;
+﻿using System.Xml.Linq;
 using GameEngine.GUI.Builder.Controls;
 using GameEngine.GUI.Renderers;
 using Moq;
@@ -15,12 +13,13 @@ namespace GameEngine.GUI.Test.Builder.Controls
         [TestCase("<Button Text=\"Text\" TextHeight=\"16.0\" />", "Text", 16.0f)]
         [TestCase("<Button TextHeight=\"16.0\" />", "", 16.0f)]
         [TestCase("<Button />", "", DefaultFontSize)]
-        public void BuildComponent_ValidXML_IsAsExpected(string xml, string expectedText, float expectedTextHeight)
+        [TestCase("<Button Text=\"Text\" TextHeight=\"16.0\" Row=\"2\"/>", "Text", 16.0f)]
+        public void BuildFromNode_ValidXML_IsAsExpected(string xml, string expectedText, float expectedTextHeight)
         {
             var xmlDocument = PrepareXmlDocument(xml);
             var buttonBuilder = CreateButtonBuilder();
 
-            var button = buttonBuilder.ParseValue(xmlDocument);
+            var button = buttonBuilder.BuildButtonFromNode(xmlDocument.Root);
 
             Assert.AreEqual(expectedText, button.Text);
             Assert.AreEqual(expectedTextHeight, button.TextHeight);
@@ -29,18 +28,16 @@ namespace GameEngine.GUI.Test.Builder.Controls
         private static ButtonBuilder CreateButtonBuilder()
         {
             var skinFake = new Mock<ISkin>();
-            skinFake.Setup(s => s.GetRendererForType<IButtonRenderer>()).Returns(new Mock<IButtonRenderer>().SetupAllProperties().Object);
+            skinFake.Setup(s => s.BuildButtonRenderer()).Returns(new Mock<IButtonRenderer>().SetupAllProperties().Object);
             skinFake.Setup(s => s.DefaultTextHeight).Returns(DefaultFontSize);
 
             var buttonBuilder = new ButtonBuilder(skinFake.Object);
             return buttonBuilder;
         }
 
-        private static XmlDocument PrepareXmlDocument(string xml)
+        private static XDocument PrepareXmlDocument(string xml)
         {
-            var xmlDocument = new XmlDocument();
-            xmlDocument.LoadXml(xml);
-            return xmlDocument;
+            return XDocument.Parse(xml);
         }
     }
 }

@@ -1,8 +1,5 @@
-﻿using System.Globalization;
-using System.Xml;
+﻿using System.Xml.Linq;
 using System.Xml.Serialization;
-using GameEngine.GUI;
-using GameEngine.GUI.Builder.Controls;
 using GameEngine.GUI.Controlls;
 using GameEngine.GUI.Renderers;
 
@@ -14,7 +11,7 @@ namespace GameEngine.GUI.Builder.Controls
         private float _textHeight;
 
         [XmlIgnore]
-        public bool HasTextHeight { get; set; } = false;
+        public bool HasTextHeight { get; set; }
 
         [XmlAttribute]
         public string Text { get; set; }
@@ -31,24 +28,29 @@ namespace GameEngine.GUI.Builder.Controls
         }
     }
 
-    public class ButtonBuilder
+    public class ButtonBuilder : IBuilder
     {
-        private ISkin skin;
+        private readonly ISkin _skin;
 
         public ButtonBuilder(ISkin skin)
         {
-            this.skin = skin;
+            _skin = skin;
         }
 
-        public Button ParseValue(XmlNode xmlNode)
+        public IGraphicComponent BuildFromNode(XElement element)
+        {
+            return BuildButtonFromNode(element);
+        }
+
+        internal Button BuildButtonFromNode(XElement element)
         {
             var xmlSerializer = new XmlSerializer(typeof(IntermediateButton));
-            var intermediateButton = (IntermediateButton) xmlSerializer.Deserialize(new XmlNodeReader(xmlNode));
+            var intermediateButton = (IntermediateButton) xmlSerializer.Deserialize(element.CreateReader());
 
-            var button = new Button(skin.GetRendererForType<IButtonRenderer>())
+            var button = new Button(_skin.BuildButtonRenderer())
             {
                 Text = intermediateButton.Text ?? "",
-                TextHeight = intermediateButton.HasTextHeight ? intermediateButton.TextHeight : skin.DefaultTextHeight
+                TextHeight = intermediateButton.HasTextHeight ? intermediateButton.TextHeight : _skin.DefaultTextHeight
             };
 
 

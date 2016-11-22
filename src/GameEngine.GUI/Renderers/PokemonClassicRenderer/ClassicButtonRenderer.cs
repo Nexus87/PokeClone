@@ -15,6 +15,12 @@ namespace GameEngine.GUI.Renderers.PokemonClassicRenderer
         private ITexture2D _arrow;
         private ISpriteFont _font;
 
+        public ClassicButtonRenderer(ITexture2D arrow, ISpriteFont font)
+        {
+            _arrow = arrow;
+            _font = font;
+        }
+
         public override void Render(IArea area)
         {
             SpriteBatch.GraphicsDevice.ScissorRectangle = area.ScissorArea;

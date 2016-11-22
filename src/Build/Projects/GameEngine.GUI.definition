@@ -17,13 +17,22 @@
     </Platform>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml" />
-	<Reference Include="GameEngine" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="GameEngine" />
   </References>
   <Files>
     <Compile Include="AbstractGraphicComponent.cs" />
+    <Compile Include="Builder\BuilderFactory.cs" />
+    <Compile Include="Builder\Controls\ButtonBuilder.cs" />
+    <Compile Include="Builder\IBuilder.cs" />
+    <Compile Include="Builder\IBuilderFactory.cs" />
+    <Compile Include="Builder\Panels\GridBuilder.cs" />
+    <Compile Include="ComponentRegistry\GuiComponentRegistry.cs" />
     <Compile Include="Controlls\Button.cs" />
     <Compile Include="Controlls\ListCell.cs" />
     <Compile Include="Controlls\ListView.cs" />
+    <Compile Include="GraphicComponentLoader.cs" />
+    <Compile Include="GuiModule.cs" />
     <Compile Include="IArea.cs" />
     <Compile Include="IGraphicComponent.cs" />
     <Compile Include="ISkin.cs" />

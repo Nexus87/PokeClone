@@ -22,13 +22,22 @@
       <Reference Include="Autofac" />
     </Platform>
     <Reference Include="GameEngine.GUI" />
-	<Reference Include="GameEngine" />
+    <Reference Include="GameEngine" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xml" />
   </References>
   <Files>
+    <Compile Include="Builder\Controls\ButtonBuilderTest.cs" />
+    <Compile Include="Builder\Panels\GridBuilderTest.cs" />
+    <Compile Include="ComponentRegistry\GuiComponentRegistryTest.cs" />
     <Compile Include="Controls\ListViewTest.cs" />
+    <Compile Include="IntegrationTests.cs" />
     <Compile Include="Panels\GridInputHandlerTest.cs" />
     <Compile Include="Panels\GridTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="packages.config" />
+    <Content Include="Resources\BuildFromXml.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </Files>
 </Project>

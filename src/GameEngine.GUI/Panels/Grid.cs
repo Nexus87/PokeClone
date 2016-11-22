@@ -28,7 +28,7 @@ namespace GameEngine.GUI.Panels
         public float Width { get; set; }
     }
 
-    public class Grid : GameEngine.GUI.AbstractGraphicComponent
+    public class Grid : AbstractGraphicComponent
     {
         private readonly Table<GridCell> _cells = new Table<GridCell>();
         private readonly List<RowProperty> _rowProperties = new List<RowProperty>();
@@ -116,13 +116,13 @@ namespace GameEngine.GUI.Panels
 
         private void ApplyGridToComponents(ITable<Rectangle> grid)
         {
-            Utils.Extensions.LoopOverTable(Rows, Columns,
+            Extensions.LoopOverTable(Rows, Columns,
                 (row, column) => { _cells[row, column].SetConstraints(grid[row, column], Constraints); });
         }
 
         private Table<Rectangle> SetPosition(Table<Rectangle> grid)
         {
-            Utils.Extensions.LoopOverTable(Rows, Columns, (row, column) =>
+            Extensions.LoopOverTable(Rows, Columns, (row, column) =>
             {
                 var leftRec = GetComponentConstaints(row, column - 1, grid);
                 var topRec = GetComponentConstaints(row - 1, column, grid);
@@ -138,7 +138,7 @@ namespace GameEngine.GUI.Panels
 
         private Table<Rectangle> SetAbsoluteWidths(Table<Rectangle> grid)
         {
-            Utils.Extensions.LoopOverTable(Rows, Columns, (row, column) =>
+            Extensions.LoopOverTable(Rows, Columns, (row, column) =>
             {
                 var width = GetColumnWidth(column);
                 var height = GetRowHeight(row);
@@ -204,7 +204,7 @@ namespace GameEngine.GUI.Panels
             var totalShareColumns = _columnPoperties.Sum(p => p.Type == ValueType.Percent ? p.Share : 0);
             var totalShareRows = _rowProperties.Sum(p => p.Type == ValueType.Percent ? p.Share : 0);
 
-            Utils.Extensions.LoopOverTable(Rows, Columns, (row, column) =>
+            Extensions.LoopOverTable(Rows, Columns, (row, column) =>
             {
                 var constraints = grid[row, column];
                 if (_rowProperties[row].Type == ValueType.Percent)
@@ -272,6 +272,11 @@ namespace GameEngine.GUI.Panels
             _cells.RemoveRow(rowToBeRemoved);
             _rowProperties.RemoveAt(rowToBeRemoved);
             _needsUpdate = true;
+        }
+
+        public IGraphicComponent GetComponent(int row, int column)
+        {
+            return _cells[row, column].GraphicComponent;
         }
     }
 }
