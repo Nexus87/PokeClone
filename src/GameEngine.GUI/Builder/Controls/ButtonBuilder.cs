@@ -1,7 +1,8 @@
-﻿using System.Xml.Linq;
+﻿using System;
+using System.Linq;
+using System.Xml.Linq;
 using System.Xml.Serialization;
 using GameEngine.GUI.Controlls;
-using GameEngine.GUI.Renderers;
 
 namespace GameEngine.GUI.Builder.Controls
 {
@@ -37,9 +38,12 @@ namespace GameEngine.GUI.Builder.Controls
             _skin = skin;
         }
 
-        public IGraphicComponent BuildFromNode(XElement element)
+        public IGraphicComponent BuildFromNode(XElement element, object controller = null)
         {
-            return BuildButtonFromNode(element);
+            var button =  BuildButtonFromNode(element);
+            WireUpController(element, button, controller);
+
+            return button;
         }
 
         internal Button BuildButtonFromNode(XElement element)
@@ -55,6 +59,39 @@ namespace GameEngine.GUI.Builder.Controls
 
 
             return button;
+        }
+
+        public static void WireUpController<TComponent>(XElement xmlDocumentRoot, TComponent component, object controller)
+        {
+            if(controller == null)
+                return;
+
+            var events = typeof(TComponent).GetEvents();
+            var attributes = events
+                .Where(e => xmlDocumentRoot.Attribute(e.Name) != null)
+                .Select(e => new {Event = e, Value = xmlDocumentRoot.Attribute(e.Name).Value});
+
+            foreach (var attribute in attributes)
+            {
+                var d = Delegate.CreateDelegate(attribute.Event.EventHandlerType, controller, attribute.Value);
+                attribute.Event.AddEventHandler(component, d);
+            }
+
+        }
+        public void WireUpController(XElement xmlDocumentRoot, Button button, object controller)
+        {
+            WireUpController<Button>(xmlDocumentRoot, button, controller);
+//
+//
+//            var xAttribute = xmlDocumentRoot.Attribute(nameof(Button.ButtonPressed));
+//            if (xAttribute == null)
+//                return;
+//
+//            var methodname = xAttribute.Value;
+//
+//            var eventInfo = button.GetType().GetEvent(nameof(button.ButtonPressed));
+//            var handler = Delegate.CreateDelegate(eventInfo.EventHandlerType, controller, methodname);
+//            eventInfo.AddEventHandler(button, handler);
         }
     }
 }

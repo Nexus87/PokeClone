@@ -1,4 +1,5 @@
-﻿using System.Xml.Linq;
+﻿using System;
+using System.Xml.Linq;
 using GameEngine.GUI.Builder.Controls;
 using GameEngine.GUI.Renderers;
 using Moq;
@@ -23,6 +24,31 @@ namespace GameEngine.GUI.Test.Builder.Controls
 
             Assert.AreEqual(expectedText, button.Text);
             Assert.AreEqual(expectedTextHeight, button.TextHeight);
+        }
+
+        [TestCase("<Button ButtonPressed=\"Action\"/>")]
+        public void WireUpController_WithDummyController_ControllerIsConnctedToButtonEvent(string xml)
+        {
+            var xmlDocument = PrepareXmlDocument(xml);
+            var buttonBuilder = CreateButtonBuilder();
+            var controller = new DummyController();
+
+            var button = buttonBuilder.BuildButtonFromNode(xmlDocument.Root);
+            buttonBuilder.WireUpController(xmlDocument.Root, button, controller);
+
+            button.OnButtonPressed();
+
+            Assert.True(controller.ActionTriggered);
+
+        }
+        private class DummyController
+        {
+            public void Action(object sender, EventArgs args)
+            {
+                ActionTriggered = true;
+            }
+
+            public bool ActionTriggered { get; private set; }
         }
 
         private static ButtonBuilder CreateButtonBuilder()

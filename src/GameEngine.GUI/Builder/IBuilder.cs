@@ -4,6 +4,6 @@ namespace GameEngine.GUI.Builder
 {
     public interface IBuilder
     {
-        IGraphicComponent BuildFromNode(XElement element);
+        IGraphicComponent BuildFromNode(XElement element, object controller = null);
     }
 }

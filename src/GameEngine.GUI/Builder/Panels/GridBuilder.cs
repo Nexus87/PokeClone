@@ -62,21 +62,21 @@ namespace GameEngine.GUI.Builder.Panels
             public ColumnDefinitions ColumnDefinitions { get; set; }
         }
 
-        public Grid BuildGridFromNode(XElement element)
+        public Grid BuildGridFromNode(XElement element, object controller = null)
         {
             var grid = ReadColumnsRowsDefinition(element);
-            ParseContenComponents(grid, element);
+            ParseContenComponents(grid, element, controller);
             return grid;
         }
 
-        private void ParseContenComponents(Grid grid, XElement element)
+        private void ParseContenComponents(Grid grid, XElement element, object controller)
         {
             var componentElements = element.Elements().Where(x => x.Name != "Grid.RowDefinitions" && x.Name != "Grid.ColumnDefinitions");
             foreach (var componentElement in componentElements)
             {
                 var row = componentElement.Attribute("Grid.Row")?.Value ?? "0";
                 var column = componentElement.Attribute("Grid.Column")?.Value ?? "0";
-                var component = _builderFactory.GetBuilder(componentElement).BuildFromNode(componentElement);
+                var component = _builderFactory.GetBuilder(componentElement).BuildFromNode(componentElement, controller);
 
                 grid.SetComponent(component, int.Parse(row), int.Parse(column));
             }
@@ -118,7 +118,7 @@ namespace GameEngine.GUI.Builder.Panels
             return new ColumnProperty {Type = ValueType.Absolute, Width = int.Parse(s)};
         }
 
-        public IGraphicComponent BuildFromNode(XElement element)
+        public IGraphicComponent BuildFromNode(XElement element, object controller = null)
         {
             return BuildGridFromNode(element);
         }

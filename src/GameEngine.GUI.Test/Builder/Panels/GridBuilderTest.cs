@@ -114,7 +114,7 @@ namespace GameEngine.GUI.Test.Builder.Panels
             var builderFactory = new Mock<IBuilderFactory>();
             var builder = new Mock<IBuilder>();
 
-            builder.Setup(o => o.BuildFromNode(It.IsAny<XElement>()))
+            builder.Setup(o => o.BuildFromNode(It.IsAny<XElement>(), It.IsAny<object>()))
                 .Returns<XElement>(element => new DummyLabel{Text = element.Attribute("Text")?.Value});
             builderFactory.Setup(o => o.GetBuilder(It.IsAny<XElement>())).Returns(builder.Object);
 

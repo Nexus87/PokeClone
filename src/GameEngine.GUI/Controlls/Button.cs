@@ -47,7 +47,7 @@ namespace GameEngine.GUI.Controlls
             OnButtonPressed();
         }
 
-        private void OnButtonPressed()
+        internal void OnButtonPressed()
         {
             ButtonPressed?.Invoke(this, EventArgs.Empty);
         }
