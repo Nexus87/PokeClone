@@ -1,7 +1,7 @@
-﻿using GameEngine.Graphics;
+﻿using FakeItEasy;
+using GameEngine.Graphics;
 using GameEngine.Graphics.General;
 using Microsoft.Xna.Framework;
-using Moq;
 using NUnit.Framework;
 
 namespace GameEngineTest.Graphics
@@ -11,7 +11,7 @@ namespace GameEngineTest.Graphics
     {
         protected override IGraphicComponent CreateComponent()
         {
-            var textureMock = new Mock<ITexture2D>().Object;
+            var textureMock = A.Fake<ITexture2D>();
             var source = new Rectangle(10, 10, 200, 200);
             return new SpriteSheetTexture(textureMock, source);
         }

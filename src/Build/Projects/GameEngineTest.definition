@@ -9,14 +9,14 @@
     <Platform Type="Windows">
       <Reference Include="MonoGame.Framework.WindowsDX" />
       <Reference Include="Castle.Core" />
-      <Reference Include="Moq" />
+      <Reference Include="FakeItEasy" />
       <Reference Include="NUnit.Framework" />
       <Reference Include="Autofac" />
     </Platform>
     <Platform Type="Linux">
       <Reference Include="MonoGame.Framework.DesktopGL" />
       <Reference Include="Castle.Core" />
-      <Reference Include="Moq" />
+      <Reference Include="FakeItEasy" />
       <Reference Include="NUnit.Framework" />
       <Reference Include="Autofac" />
     </Platform>

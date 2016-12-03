@@ -2,9 +2,9 @@
 using GameEngine.Graphics;
 using GameEngine.Graphics.GUI;
 using GameEngineTest.TestUtils;
-using Moq;
 using NUnit.Framework;
 using System;
+using FakeItEasy;
 using GameEngine.Graphics.TableView;
 
 namespace GameEngineTest.Graphics.GUI
@@ -166,13 +166,12 @@ namespace GameEngineTest.Graphics.GUI
         [TestCase(10, 4, 9, 3)]
         public void SelectCell_WithValidData_TableViewSelectCellIsCalled(int rows, int columns, int selectedRow, int selectedColumn)
         {
-            var tableViewMock = new Mock<TableViewMock> { CallBase = true };
-            var table = CreateTableWidget(tableViewMock.Object, rows, columns);
-            tableViewMock.Setup(o => o.SetCellSelection(selectedRow, selectedColumn, true)).Verifiable();
+            var tableViewMock = A.Fake<TableViewMock>(option => option.CallsBaseMethods());
+            var table = CreateTableWidget(tableViewMock, rows, columns);
 
             table.SelectCell(selectedRow, selectedColumn);
 
-            tableViewMock.Verify();
+            A.CallTo(() => tableViewMock.SetCellSelection(selectedRow, selectedColumn, true)).MustHaveHappened();
 
         }
 
@@ -183,16 +182,14 @@ namespace GameEngineTest.Graphics.GUI
         public void HandleInput_StartingFromSomeCell_TableViewSelectCellIsCalled(int rows, int columns, int selectedRow, int selectedColumn, 
                                           CommandKeys key, int newRow, int newColumns)
         {
-            var tableViewMock = new Mock<TableViewMock> { CallBase = true };
-            var table = CreateTableWidget(tableViewMock.Object, rows, columns);
+            var tableViewMock = A.Fake<TableViewMock>(option => option.CallsBaseMethods());
+            var table = CreateTableWidget(tableViewMock, rows, columns);
             table.SelectCell(selectedRow, selectedColumn);
 
-            tableViewMock.ResetCalls();
-            tableViewMock.Setup(o => o.SetCellSelection(newRow, newColumns, true)).Verifiable();
 
             table.HandleInput(key);
 
-            tableViewMock.Verify();
+            A.CallTo(() => tableViewMock.SetCellSelection(newRow, newColumns, true)).MustHaveHappened();
         }
 
         [TestCase(20, 32, 5, 3, 10, 21, 11, 22)]
@@ -323,14 +320,14 @@ namespace GameEngineTest.Graphics.GUI
             return CreateTableWidget(view, visibleRows, visibleColumns);
         }
 
-        private TableWidget<TestType> CreateTableWidget(TableViewMock view, int? visibleRows = null, int? visibleColumns = null)
+        private static TableWidget<TestType> CreateTableWidget(TableViewMock view, int? visibleRows = null, int? visibleColumns = null)
         {
 
             var widget = new TableWidget<TestType>(visibleRows, visibleColumns, view);
             widget.SetCoordinates(10, 10, 500, 500);
             return widget;
         }
-        private void SetupView(TableViewMock tableViewMock, int rows, int columns)
+        private static void SetupView(TableViewMock tableViewMock, int rows, int columns)
         {
             tableViewMock.Rows = rows;
             tableViewMock.Columns = columns;

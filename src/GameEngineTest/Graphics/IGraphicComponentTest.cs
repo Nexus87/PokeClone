@@ -1,9 +1,9 @@
 ﻿using GameEngine.Graphics;
 using GameEngineTest.TestUtils;
-using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using FakeItEasy;
 using GameEngine.Graphics.General;
 
 namespace GameEngineTest.Graphics
@@ -11,13 +11,13 @@ namespace GameEngineTest.Graphics
 
     public abstract class IGraphicComponentTest
     {
-        public Mock<ISpriteFont> fontMock;
+        public ISpriteFont FontMock;
 
         protected abstract IGraphicComponent CreateComponent();
 
-        public IGraphicComponentTest()
+        protected IGraphicComponentTest()
         {
-            fontMock = new Mock<ISpriteFont>();
+            FontMock = A.Fake<ISpriteFont>();
         }
 
         public static List<TestCaseData> InvalidData = new List<TestCaseData>{

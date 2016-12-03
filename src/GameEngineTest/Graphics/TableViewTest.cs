@@ -1,8 +1,8 @@
 ﻿using GameEngine.Graphics;
 using GameEngineTest.TestUtils;
-using Moq;
 using NUnit.Framework;
 using System;
+using FakeItEasy;
 using GameEngine.Graphics.TableView;
 
 namespace GameEngineTest.Graphics
@@ -15,13 +15,13 @@ namespace GameEngineTest.Graphics
         [TestCase]
         public void RowsColumns_ResizeModelBeforeSetup_ReturnsNewSize()
         {
-            var modelStub = new Mock<ITableModel<Object>>();
+            var modelStub = A.Fake<ITableModel<object>>();
             var table = CreateTable(modelStub);
-            int rows = 10;
-            int columns = 20;
+            const int rows = 10;
+            const int columns = 20;
 
             SetDimension(modelStub, rows, columns);
-            modelStub.Raise(o => o.SizeChanged += null, new TableResizeEventArgs(rows, columns));
+            modelStub.SizeChanged += Raise.With(new TableResizeEventArgs(rows, columns));
 
             Assert.AreEqual(rows, table.Rows);
             Assert.AreEqual(columns, table.Columns);
@@ -30,14 +30,14 @@ namespace GameEngineTest.Graphics
         [TestCase]
         public void SetStartIndex_ResizeModelBeforeSetup_GetReturnsStartIndex()
         {
-            var modelStub = new Mock<ITableModel<Object>>();
+            var modelStub = A.Fake<ITableModel<object>>();
             var table = CreateTable(modelStub);
-            int rows = 10;
-            int columns = 20;
+            const int rows = 10;
+            const int columns = 20;
             var expectedStartIndex = new TableIndex(rows - 1, columns - 1);
 
             SetDimension(modelStub, rows, columns);
-            modelStub.Raise(o => o.SizeChanged += null, new TableResizeEventArgs(rows, columns));
+            modelStub.SizeChanged += Raise.With(new TableResizeEventArgs(rows, columns));
 
             table.StartIndex = expectedStartIndex;
 
@@ -47,14 +47,14 @@ namespace GameEngineTest.Graphics
         [TestCase]
         public void SetEndIndex_ResizeModelBeforeSetup_GetReturnsEndIndex()
         {
-            var modelStub = new Mock<ITableModel<Object>>();
+            var modelStub = A.Fake<ITableModel<object>>();
             var table = CreateTable(modelStub);
-            int rows = 10;
-            int columns = 20;
+            const int rows = 10;
+            const int columns = 20;
             var expectedEndIndex = new TableIndex(rows, columns);
 
             SetDimension(modelStub, rows, columns);
-            modelStub.Raise(o => o.SizeChanged += null, new TableResizeEventArgs(rows, columns));
+            modelStub.SizeChanged += Raise.With(new TableResizeEventArgs(rows, columns));
 
             table.EndIndex = expectedEndIndex;
 
@@ -64,13 +64,13 @@ namespace GameEngineTest.Graphics
         [TestCase]
         public void SelectionChanged_SelectionModelRaisesEventBeforeSetup_IsRaised()
         {
-            var selectionModelStub = new Mock<ITableSelectionModel>();
+            var selectionModelStub = A.Fake<ITableSelectionModel>();
             var table = CreateTable(10, 20, selectionModelStub);
-            bool eventWasRaised = false;
-            SelectionChangedEventArgs eventArgs = new SelectionChangedEventArgs(5, 4, true);
+            var eventWasRaised = false;
+            var eventArgs = new SelectionChangedEventArgs(5, 4, true);
             table.SelectionChanged += (obj, args) => eventWasRaised = true;
 
-            selectionModelStub.Raise(o => o.SelectionChanged += null, selectionModelStub.Object, eventArgs);
+            selectionModelStub.SelectionChanged += Raise.With(selectionModelStub, eventArgs);
 
             Assert.True(eventWasRaised);
         }
@@ -78,13 +78,13 @@ namespace GameEngineTest.Graphics
         [TestCase]
         public void SelectionChanged_SelectionModelRaisesEventBeforeSetup_RightEventArgs()
         {
-            var selectionModelStub = new Mock<ITableSelectionModel>();
+            var selectionModelStub = A.Fake<ITableSelectionModel>();
             var table = CreateTable(10, 20, selectionModelStub);
-            SelectionChangedEventArgs eventArgs = new SelectionChangedEventArgs(5, 4, true);
+            var eventArgs = new SelectionChangedEventArgs(5, 4, true);
             SelectionChangedEventArgs returnedArgs = null;
             table.SelectionChanged += (obj, args) => returnedArgs = args;
 
-            selectionModelStub.Raise(o => o.SelectionChanged += null, selectionModelStub.Object, eventArgs);
+            selectionModelStub.SelectionChanged += Raise.With(selectionModelStub, eventArgs);
 
             Assert.NotNull(returnedArgs);
             Assert.AreEqual(eventArgs.Row, returnedArgs.Row);
@@ -95,29 +95,29 @@ namespace GameEngineTest.Graphics
         [TestCase]
         public void Draw_SetStartIndex_IndexIsHandedToTableGrid()
         {
-            var grid = new Mock<ITableGrid>();
-            var table = CreateTable(10, 20, grid.Object);
+            var grid = A.Fake<ITableGrid>();
+            var table = CreateTable(10, 20, grid);
             var startIndex = new TableIndex(5, 10);
             table.StartIndex = startIndex;
             table.Setup();
 
             table.Draw();
 
-            grid.VerifySet(o => o.StartIndex = startIndex, Times.AtLeastOnce);
+            A.CallToSet(() => grid.StartIndex).To(startIndex).MustHaveHappened(Repeated.AtLeast.Once);
         }
 
         [TestCase]
         public void Draw_SetEndIndex_IndexIsHandedToTableGrid()
         {
-            var grid = new Mock<ITableGrid>();
-            var table = CreateTable(10, 20, grid.Object);
+            var grid = A.Fake<ITableGrid>();
+            var table = CreateTable(10, 20, grid);
             var endIndex = new TableIndex(5, 10);
             table.EndIndex = endIndex;
             table.Setup();
 
             table.Draw();
 
-            grid.VerifySet(o => o.EndIndex = endIndex, Times.AtLeastOnce);
+            A.CallToSet(() => grid.EndIndex).To(endIndex).MustHaveHappened(Repeated.AtLeast.Once);
         }
 
         [TestCase(5, 4, 5, 0)]
@@ -136,18 +136,18 @@ namespace GameEngineTest.Graphics
         [TestCase]
         public void Draw_ModelDataChangedRaised_RenderedComponentHasNewData()
         {
-            var modelStub = new Mock<ITableModel<Object>>();
-            var tableRendererMock = new TableRendererMock<Object>();
+            var modelStub = A.Fake<ITableModel<object>>();
+            var tableRendererMock = new TableRendererMock<object>();
             SetDimension(modelStub, 10, 20);
-            var table = CreateTable(modelStub, tableRendererMock, new Mock<ITableSelectionModel>());
-            var newData = new Object();
-            int row = 4;
-            int column = 5;
-            var eventArgs = new DataChangedEventArgs<Object>(row, column, newData);
+            var table = CreateTable(modelStub, tableRendererMock, A.Fake<ITableSelectionModel>());
+            var newData = new object();
+            const int row = 4;
+            const int column = 5;
+            var eventArgs = new DataChangedEventArgs<object>(row, column, newData);
 
             table.Setup();
-            modelStub.Setup(o => o.DataAt(row, column) ).Returns(newData);
-            modelStub.Raise( o => o.DataChanged += null, modelStub.Object, eventArgs);
+            A.CallTo(() => modelStub.DataAt(row, column)).Returns(newData);
+            modelStub.DataChanged += Raise.With(modelStub, eventArgs);
             table.Draw();
 
             var changedComponent = tableRendererMock.components[row, column];
@@ -157,18 +157,19 @@ namespace GameEngineTest.Graphics
         [TestCase]
         public void Draw_SelectionChangedRaised_RenderedComponentHasRightSelection()
         {
-            var modelStub = new Mock<ITableModel<Object>>();
-            var tableRendererMock = new TableRendererMock<Object>();
-            var selectionModelStub = new Mock<ITableSelectionModel>();
+            var modelStub = A.Fake<ITableModel<object>>();
+            var tableRendererMock = new TableRendererMock<object>();
+            var selectionModelStub = A.Fake<ITableSelectionModel>();
             SetDimension(modelStub, 10, 20);
             var table = CreateTable(modelStub, tableRendererMock, selectionModelStub);
-            int row = 4;
-            int column = 5;
+            const int row = 4;
+            const int column = 5;
             var eventArgs = new SelectionChangedEventArgs(row, column, true);
 
             table.Setup();
-            selectionModelStub.Setup(o => o.IsSelected(row, column)).Returns(true);
-            selectionModelStub.Raise(o => o.SelectionChanged += null, selectionModelStub.Object, eventArgs);
+            A.CallTo(() => selectionModelStub.IsSelected(row, column)).Returns(true);
+
+            selectionModelStub.SelectionChanged += Raise.With(selectionModelStub, eventArgs);
             table.Draw();
 
             var changedComponent = tableRendererMock.components[row, column];
@@ -178,20 +179,20 @@ namespace GameEngineTest.Graphics
         [TestCase]
         public void DrawCalledTwice_ModelDataChangedRaised_RenderedComponentHasNewData()
         {
-            var modelStub = new Mock<ITableModel<Object>>();
-            var tableRendererMock = new TableRendererMock<Object>();
+            var modelStub = A.Fake<ITableModel<object>>();
+            var tableRendererMock = new TableRendererMock<object>();
             SetDimension(modelStub, 10, 20);
-            var table = CreateTable(modelStub, tableRendererMock, new Mock<ITableSelectionModel>());
-            var newData = new Object();
-            int row = 4;
-            int column = 5;
-            var eventArgs = new DataChangedEventArgs<Object>(row, column, newData);
+            var table = CreateTable(modelStub, tableRendererMock, A.Fake<ITableSelectionModel>());
+            var newData = new object();
+            const int row = 4;
+            const int column = 5;
+            var eventArgs = new DataChangedEventArgs<object>(row, column, newData);
 
             table.Setup();
             table.Draw();
 
-            modelStub.Setup(o => o.DataAt(row, column)).Returns(newData);
-            modelStub.Raise(o => o.DataChanged += null, modelStub.Object, eventArgs);
+            A.CallTo(() => modelStub.DataAt(row, column)).Returns(newData);
+            modelStub.DataChanged += Raise.With(modelStub, eventArgs);
             table.Draw();
 
             var changedComponent = tableRendererMock.components[row, column];
@@ -201,20 +202,20 @@ namespace GameEngineTest.Graphics
         [TestCase]
         public void DrawCalledTwice_SelectionChangedRaised_RenderedComponentHasRightSelection()
         {
-            var modelStub = new Mock<ITableModel<Object>>();
-            var tableRendererMock = new TableRendererMock<Object>();
-            var selectionModelStub = new Mock<ITableSelectionModel>();
+            var modelStub = A.Fake<ITableModel<object>>();
+            var tableRendererMock = new TableRendererMock<object>();
+            var selectionModelStub = A.Fake<ITableSelectionModel>();
             SetDimension(modelStub, 10, 20);
             var table = CreateTable(modelStub, tableRendererMock, selectionModelStub);
-            int row = 4;
-            int column = 5;
+            var row = 4;
+            var column = 5;
             var eventArgs = new SelectionChangedEventArgs(row, column, true);
 
             table.Setup();
             table.Draw(new SpriteBatchMock());
 
-            selectionModelStub.Setup(o => o.IsSelected(row, column)).Returns(true);
-            selectionModelStub.Raise(o => o.SelectionChanged += null, selectionModelStub.Object, eventArgs);
+            A.CallTo(() => selectionModelStub.IsSelected(row, column)).Returns(true);
+            selectionModelStub.SelectionChanged += Raise.With(selectionModelStub, eventArgs);
             table.Draw(new SpriteBatchMock());
 
             var changedComponent = tableRendererMock.components[row, column];
@@ -224,61 +225,61 @@ namespace GameEngineTest.Graphics
         [TestCase]
         public void SetCellSelection_ValidIndex_IsHandedToSelectionModel()
         {
-            var selectionModelMock = new Mock<ITableSelectionModel>();
+            var selectionModelMock = A.Fake<ITableSelectionModel>();
             var table = CreateTable(10, 20, selectionModelMock);
 
             table.Setup();
             table.SetCellSelection(4, 6, true);
 
-            selectionModelMock.Verify(o => o.SelectIndex(4, 6), Times.AtLeastOnce);
+            A.CallTo(() => selectionModelMock.SelectIndex(4, 6)).MustHaveHappened(Repeated.AtLeast.Once);
         }
 
-        private void AssertIndexesAreEqual(TableIndex expectedStartIndex, TableIndex? testIndex)
+        private static void AssertIndexesAreEqual(TableIndex expectedStartIndex, TableIndex? testIndex)
         {
             Assert.NotNull(testIndex);
             Assert.AreEqual(expectedStartIndex.Column, testIndex.Value.Column);
             Assert.AreEqual(expectedStartIndex.Row, testIndex.Value.Row);
         }
 
-        private TableView<Object> CreateTable(int rows, int columns, ITableGrid grid = null)
+        private TableView<object> CreateTable(int rows, int columns, ITableGrid grid = null)
         {
-            var selectionModelStub = new Mock<ITableSelectionModel>();
+            var selectionModelStub = A.Fake<ITableSelectionModel>();
             return CreateTable(rows, columns, selectionModelStub, grid);
         }
-        private TableView<Object> CreateTable(int rows, int columns, Mock<ITableSelectionModel> selectionModel, ITableGrid grid = null)
+        private TableView<object> CreateTable(int rows, int columns, ITableSelectionModel selectionModel, ITableGrid grid = null)
         {
-            var modelStub = new Mock<ITableModel<Object>>();
+            var modelStub = A.Fake<ITableModel<object>>();
             SetDimension(modelStub, rows, columns);
-            return CreateTable(modelStub, new TableRendererMock<Object>(), selectionModel, grid);
+            return CreateTable(modelStub, new TableRendererMock<object>(), selectionModel, grid);
         }
 
-        private TableView<Object> CreateTable(Mock<ITableModel<Object>> modelMock, ITableGrid grid = null)
+        private TableView<object> CreateTable(ITableModel<object> modelMock, ITableGrid grid = null)
         {
-            return CreateTable(modelMock, new TableRendererMock<Object>(), new Mock<ITableSelectionModel>(), grid);
+            return CreateTable(modelMock, new TableRendererMock<object>(), A.Fake<ITableSelectionModel>(), grid);
         }
 
-        private TableView<Object> CreateTable(Mock<ITableModel<Object>> modelMock, TableRendererMock<Object> renderer, Mock<ITableSelectionModel> selectionModelMock, ITableGrid grid = null)
+        private TableView<object> CreateTable(ITableModel<object> modelMock, TableRendererMock<object> renderer, ITableSelectionModel selectionModelMock, ITableGrid grid = null)
         {
             if (grid == null)
                 grid = new TableGrid();
 
-            var table = new TableView<Object>(modelMock.Object, renderer, selectionModelMock.Object, grid);
+            var table = new TableView<object>(modelMock, renderer, selectionModelMock, grid);
             table.SetCoordinates(0, 0, 500, 500);
             return table;
         }
 
-        private static void SetDimension(Mock<ITableModel<Object>> modelMock, int rows, int columns)
+        private static void SetDimension(ITableModel<object> modelMock, int rows, int columns)
         {
-            modelMock.Setup(o => o.Rows).Returns(rows);
-            modelMock.Setup(o => o.Columns).Returns(columns);
+            A.CallTo(() => modelMock.Rows).Returns(rows);
+            A.CallTo(()=> modelMock.Columns).Returns(columns);
         }
 
         protected override IGraphicComponent CreateComponent()
         {
-            var modelMock = new Mock<ITableModel<Object>>();
-            var selectionModelMock = new Mock<ITableSelectionModel>();
-            var renderer = new TableRendererMock<Object>();
-            var table = new TableView<Object>(modelMock.Object, renderer, selectionModelMock.Object);
+            var modelMock = A.Fake<ITableModel<object>>();
+            var selectionModelMock = A.Fake<ITableSelectionModel>();
+            var renderer = new TableRendererMock<object>();
+            var table = new TableView<object>(modelMock, renderer, selectionModelMock);
             table.Setup();
             return table;
         }

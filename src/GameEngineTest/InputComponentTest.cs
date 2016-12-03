@@ -1,10 +1,10 @@
 ﻿using GameEngine;
 using GameEngineTest.TestUtils;
 using Microsoft.Xna.Framework.Input;
-using Moq;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
+using FakeItEasy;
 using GameEngine.GameEngineComponents;
 
 namespace GameEngineTest
@@ -15,9 +15,8 @@ namespace GameEngineTest
     [TestFixture]
     public class InputComponentTest
     {
-        private readonly IReadOnlyList<Keys> keys = new List<Keys> { Keys.Up, Keys.Down, Keys.Left };
-
-        private readonly IReadOnlyDictionary<Keys, CommandKeys> map = new Dictionary<Keys, CommandKeys>
+        private readonly IReadOnlyList<Keys> _keys = new List<Keys> { Keys.Up, Keys.Down, Keys.Left };
+        private readonly IReadOnlyDictionary<Keys, CommandKeys> _map = new Dictionary<Keys, CommandKeys>
         {
             {Keys.Escape, CommandKeys.Back},
             {Keys.Down, CommandKeys.Down},
@@ -30,108 +29,94 @@ namespace GameEngineTest
         [TestCase]
         public void Update_SingleRegisteredKeyPressed_InputHandlerGetNotification()
         {
-            var handlerMock = new Mock<IInputHandler>();
-            var managerMock = CreateInputManagerFake(keys.First());
-            var component = new InputComponent(managerMock, map);
-
-            component.Handler = handlerMock.Object;
+            var handlerMock = A.Fake<IInputHandler>();
+            var managerMock = CreateInputManagerFake(_keys.First());
+            var component = new InputComponent(managerMock, _map) {Handler = handlerMock};
 
             // Assert the that only the first key is detected
             component.Update();
-            handlerMock.Verify(o => o.HandleInput(It.IsAny<CommandKeys>()), Times.Once);
+            A.CallTo(() => handlerMock.HandleInput(A<CommandKeys>.Ignored)).MustHaveHappened(Repeated.Exactly.Once);
         }
 
         [TestCase]
         public void Update_SingleRegisteredKeyPressedUpdateCalledTwice_InputHandlerGetNotificationOnce()
         {
-            var handlerMock = new Mock<IInputHandler>();
-            var managerMock = CreateInputManagerFake(keys.First());
-            var component = new InputComponent(managerMock, map);
-
-            component.Handler = handlerMock.Object;
+            var handlerMock = A.Fake<IInputHandler>();
+            var managerMock = CreateInputManagerFake(_keys.First());
+            var component = new InputComponent(managerMock, _map) {Handler = handlerMock};
 
             // Assert the that only the first key is detected
             component.Update();
             component.Update();
-            handlerMock.Verify(o => o.HandleInput(It.IsAny<CommandKeys>()), Times.Once);
+            A.CallTo(() => handlerMock.HandleInput(A<CommandKeys>.Ignored)).MustHaveHappened(Repeated.Exactly.Once);
         }
 
         [TestCase]
         public void Update_MultipleRegistredKeysPressed_AllKeysAreGivenToInputHandler()
         {
-            var handlerMock = new Mock<IInputHandler>();
-            var managerMock = CreateInputManagerFake(keys.ToArray());
-            var component = new InputComponent(managerMock, map);
-
-            component.Handler = handlerMock.Object;
-
+            var handlerMock = A.Fake<IInputHandler>();
+            var managerMock = CreateInputManagerFake(_keys.ToArray());
+            var component = new InputComponent(managerMock, _map) {Handler = handlerMock};
 
             // Assert that every test key is detected once
             component.Update();
-            foreach(var key in keys)
-                handlerMock.Verify(o => o.HandleInput(map[key]), Times.Once);
+            foreach (var key in _keys)
+                A.CallTo(() => handlerMock.HandleInput(_map[key])).MustHaveHappened(Repeated.Exactly.Once);
         }
 
         [TestCase]
         public void Update_MultipleRegistredKeysPressedUpdateCalledTwice_AllKeysAreGivenToInputHandlerOnce()
         {
-            var handlerMock = new Mock<IInputHandler>();
-            var managerMock = CreateInputManagerFake(keys.ToArray());
-            var component = new InputComponent(managerMock, map);
+            var handlerMock = A.Fake<IInputHandler>();
+            var managerMock = CreateInputManagerFake(_keys.ToArray());
+            var component = new InputComponent(managerMock, _map) {Handler = handlerMock};
 
-            component.Handler = handlerMock.Object;
 
 
             // Assert that every test key is detected once
             component.Update();
             component.Update();
-            foreach (var key in keys)
-                handlerMock.Verify(o => o.HandleInput(map[key]), Times.Once);
+            foreach (var key in _keys)
+                A.CallTo(() => handlerMock.HandleInput(_map[key])).MustHaveHappened(Repeated.Exactly.Once);
         }
 
         [TestCase]
         public void Update_SingleUnregistredKeyIsPressed_InputHandlerIsNotCalled()
         {
             // The component should not watch out for D
-            var handlerMock = new Mock<IInputHandler>();
+            var handlerMock = A.Fake<IInputHandler>();
             var managerMock = CreateInputManagerFake(Keys.D);
-            var component = new InputComponent(managerMock, map);
-
-            component.Handler = handlerMock.Object;
-
+            var component = new InputComponent(managerMock, _map) {Handler = handlerMock};
 
             // Make sure, that no test key was detected
             component.Update();
-            handlerMock.Verify(o => o.HandleInput(It.IsAny<CommandKeys>()), Times.Never);
+            A.CallTo(() => handlerMock.HandleInput(A<CommandKeys>.Ignored)).MustNotHaveHappened();
         }
 
         [TestCase]
         public void Update_OneRegistredAndOneUnregistredKeyArePressed_InputHandlerIsCalledOnce()
         {
 
-            var handlerMock = new Mock<IInputHandler>();
+            var handlerMock = A.Fake<IInputHandler>();
             var managerMock = CreateInputManagerFake(Keys.D, Keys.Down);
-            var component = new InputComponent(managerMock, map);
-
-            component.Handler = handlerMock.Object;
-
+            var component = new InputComponent(managerMock, _map) {Handler = handlerMock};
             component.Update();
 
-            handlerMock.Verify(o => o.HandleInput(It.IsAny<CommandKeys>()), Times.Once);
-            handlerMock.Verify(o => o.HandleInput(map[Keys.Down]), Times.Once);
+            A.CallTo(() => handlerMock.HandleInput(A<CommandKeys>.Ignored)).MustHaveHappened(Repeated.Exactly.Once);
+            A.CallTo(() => handlerMock.HandleInput(_map[Keys.Down])).MustHaveHappened(Repeated.Exactly.Once);
         }
 
-        private KeyboardState CreateKeyboardState(params Keys[] keys)
+        private static KeyboardState CreateKeyboardState(params Keys[] keys)
         {
             return new KeyboardState(keys);
         }
 
-        private IKeyboardManager CreateInputManagerFake(KeyboardState state)
+        private static IKeyboardManager CreateInputManagerFake(KeyboardState state)
         {
             return new KeyboardManagerStub(state);
         }
 
-        private IKeyboardManager CreateInputManagerFake(params Keys[] keys)
+        private static IKeyboardManager CreateInputManagerFake(params Keys[] keys)
         {
             return CreateInputManagerFake(CreateKeyboardState(keys));
         }

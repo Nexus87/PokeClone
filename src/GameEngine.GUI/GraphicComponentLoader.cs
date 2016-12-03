@@ -13,6 +13,7 @@ namespace GameEngine.GUI
             _factory = factory;
         }
 
+        public object Controller { get; set; }
         public string FilePath { get; set; }
 
         public IGraphicComponent Load()
@@ -20,7 +21,7 @@ namespace GameEngine.GUI
             var rootElement = XDocument.Load(FilePath).Root;
             var builder = _factory.GetBuilder(rootElement);
 
-            return builder.BuildFromNode(rootElement);
+            return builder.BuildFromNode(rootElement, Controller);
         }
     }
 }

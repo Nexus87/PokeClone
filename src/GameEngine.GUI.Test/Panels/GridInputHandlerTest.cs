@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
+using FakeItEasy;
 using GameEngine.GUI.Panels;
 using GameEngine.Utils;
-using Moq;
 using NUnit.Framework;
 
 namespace GameEngine.GUI.Test.Panels
@@ -107,10 +107,9 @@ namespace GameEngine.GUI.Test.Panels
             var table = new Table<GridCell>();
             Extensions.LoopOverTable(selectableComponents.Rows(), selectableComponents.Columns(), (row, column) =>
             {
-                var component = new Mock<IGraphicComponent>();
-                component.SetupAllProperties();
-                component.SetupGet(c => c.IsSelectable).Returns(selectableComponents[row, column]);
-                var gridCell = new GridCell() {GraphicComponent = component.Object};
+                var component = A.Fake<IGraphicComponent>();
+                A.CallTo(() => component.IsSelectable).Returns(selectableComponents[row, column]);
+                var gridCell = new GridCell() {GraphicComponent = component};
                 table[row, column] = gridCell;
             });
 

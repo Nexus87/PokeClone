@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using FakeItEasy;
 using GameEngine.GUI.Panels;
 using GameEngine.Utils;
 using Microsoft.Xna.Framework;
-using Moq;
 using NUnit.Framework;
 
 namespace GameEngine.GUI.Test.Panels
@@ -201,18 +201,17 @@ namespace GameEngine.GUI.Test.Panels
             VerifyComponentsHaveExpectedPosition(components, expectedPositions);
 
         }
-        private static ITable<Mock<IGraphicComponent>> FillGridWithPreferedSizes(Grid grid, ITable<Rectangle> preferredSizes,
+        private static ITable<IGraphicComponent> FillGridWithPreferedSizes(Grid grid, ITable<Rectangle> preferredSizes,
             int rowsCount, int columnsCount)
         {
-            var table = new Table<Mock<IGraphicComponent>>(rowsCount, columnsCount);
+            var table = new Table<IGraphicComponent>(rowsCount, columnsCount);
             Extensions.LoopOverTable(rowsCount, columnsCount, (i, j) =>
             {
-                var componentMock = new Mock<IGraphicComponent>();
-                componentMock.SetupAllProperties();
-                componentMock.SetupGet(c => c.PreferedHeight).Returns(preferredSizes[i, j].Height);
-                componentMock.SetupGet(c => c.PreferedWidth).Returns(preferredSizes[i, j].Width);
+                var componentMock = A.Fake<IGraphicComponent>();
+                A.CallTo(() => componentMock.PreferedHeight).Returns(preferredSizes[i, j].Height);
+                A.CallTo(() => componentMock.PreferedWidth).Returns(preferredSizes[i, j].Width);
                 table[i, j] = componentMock;
-                grid.SetComponent(componentMock.Object, i, j);
+                grid.SetComponent(componentMock, i, j);
             });
 
             return table;
@@ -259,7 +258,7 @@ namespace GameEngine.GUI.Test.Panels
 
             foreach (var component in components.EnumerateRows(columnToBeRemoved))
             {
-                component.VerifySet(c => c.Constraints = It.IsAny<Rectangle>(), Times.Never);
+                A.CallToSet(() => component.Constraints).MustNotHaveHappened();
             }
         }
 
@@ -279,27 +278,26 @@ namespace GameEngine.GUI.Test.Panels
 
             foreach (var component in components.EnumerateColumns(rowToBeRemoved))
             {
-                component.VerifySet(c => c.Constraints = It.IsAny<Rectangle>(), Times.Never);
+                A.CallToSet(() => component.Constraints).MustNotHaveHappened();
             }
         }
-        private static void VerifyComponentsHaveExpectedPosition(ITable<Mock<IGraphicComponent>> components, ITable<Rectangle> expectedPositions)
+        private static void VerifyComponentsHaveExpectedPosition(ITable<IGraphicComponent> components, ITable<Rectangle> expectedPositions)
         {
             Extensions.LoopOverTable(components.Rows, components.Columns, (i, j) =>
             {
                 var expectedPosition = expectedPositions[i, j];
-                components[i, j].VerifySet(c => c.Constraints = expectedPosition);
+                A.CallToSet(() => components[i, j].Constraints).To(expectedPosition).MustHaveHappened(Repeated.AtLeast.Once);
             });
         }
 
-        private static Table<Mock<IGraphicComponent>> FillGrid(Grid grid, int rows, int columns)
+        private static Table<IGraphicComponent> FillGrid(Grid grid, int rows, int columns)
         {
-            var table = new Table<Mock<IGraphicComponent>>(rows, columns);
+            var table = new Table<IGraphicComponent>(rows, columns);
             Extensions.LoopOverTable(rows, columns, (i, j) =>
             {
-                var componentMock = new Mock<IGraphicComponent>();
-                componentMock.SetupAllProperties();
+                var componentMock = A.Fake<IGraphicComponent>();
                 table[i, j] = componentMock;
-                grid.SetComponent(componentMock.Object, i, j);
+                grid.SetComponent(componentMock, i, j);
             });
 
             return table;

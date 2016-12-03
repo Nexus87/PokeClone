@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Xml.Linq;
+using FakeItEasy;
 using GameEngine.GUI.Builder.Controls;
 using GameEngine.GUI.Renderers;
-using Moq;
 using NUnit.Framework;
 
 namespace GameEngine.GUI.Test.Builder.Controls
@@ -53,11 +53,11 @@ namespace GameEngine.GUI.Test.Builder.Controls
 
         private static ButtonBuilder CreateButtonBuilder()
         {
-            var skinFake = new Mock<ISkin>();
-            skinFake.Setup(s => s.BuildButtonRenderer()).Returns(new Mock<IButtonRenderer>().SetupAllProperties().Object);
-            skinFake.Setup(s => s.DefaultTextHeight).Returns(DefaultFontSize);
+            var skinFake = A.Fake<ISkin>();
+            A.CallTo(() => skinFake.BuildButtonRenderer()).Returns( A.Fake<IButtonRenderer>());
+            A.CallTo(() => skinFake.DefaultTextHeight).Returns(DefaultFontSize);
 
-            var buttonBuilder = new ButtonBuilder(skinFake.Object);
+            var buttonBuilder = new ButtonBuilder(skinFake);
             return buttonBuilder;
         }
 

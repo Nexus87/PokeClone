@@ -1,9 +1,7 @@
-﻿using GameEngine.Graphics;
-using GameEngine.Graphics.General;
+﻿using FakeItEasy;
+using GameEngine.Graphics;
 using GameEngineTest.TestUtils;
 using Microsoft.Xna.Framework;
-using Moq;
-using Moq.Protected;
 using NUnit.Framework;
 
 namespace GameEngineTest.Graphics
@@ -11,38 +9,29 @@ namespace GameEngineTest.Graphics
     [TestFixture]
     public class AbstractGraphicComponentTest : IGraphicComponentTest
     {
-        private Mock<AbstractGraphicComponent> CreateComponentMock()
+        private const int IntialCallTimes = 1;
+
+        private AbstractGraphicComponent CreateComponentMock()
         {
-            var componentMock = new Mock<AbstractGraphicComponent>();
-            componentMock.CallBase = true;
-            componentMock.Protected()
-                .Setup("DrawComponent", ItExpr.IsAny<GameTime>(), ItExpr.IsAny<ISpriteBatch>())
-                .Callback<GameTime, ISpriteBatch>((time, batch) =>
-                {
-                    if (batch is SpriteBatchMock)
-                        batch.Draw(null, Position(componentMock), Color.Black);
-                });
+            var componentMock = A.Fake<AbstractGraphicComponent>(options => options.CallsBaseMethods());
+
+            A.CallTo(componentMock)
+                .Where(x => x.Method.Name == "DrawComponent")
+                .Invokes(call => ((SpriteBatchMock) call.Arguments[1]).Draw(null, Position(componentMock), Color.Black));
 
             return componentMock;
         }
 
-        private Rectangle Position(Mock<AbstractGraphicComponent> componentMock)
-        {
-            var component = componentMock.Object;
-            return new Rectangle((int)component.XPosition, (int)component.YPosition, (int)component.Width, (int)component.Height);
-        }
-
-        private Mock<AbstractGraphicComponent> CreateComponentWithoutInvalidation()
+        private AbstractGraphicComponent CreateComponentMockWithoutInvalidation()
         {
             var mock = CreateComponentMock();
-            ResetInvalidation(mock);
+            mock.Draw();
             return mock;
-
         }
-        private void ResetInvalidation(Mock<AbstractGraphicComponent> componentMock)
+
+        private static Rectangle Position(IGraphicComponent componentMock)
         {
-            componentMock.Object.Draw();
-            componentMock.ResetCalls();
+            return new Rectangle((int)componentMock.XPosition, (int)componentMock.YPosition, (int)componentMock.Width, (int)componentMock.Height);
         }
 
         [TestCase]
@@ -50,118 +39,137 @@ namespace GameEngineTest.Graphics
         {
             var componentMock = CreateComponentMock();
 
-            componentMock.Object.Draw();
+            componentMock.Draw();
 
-            componentMock.Protected().Verify("Update", Times.Once());
+            A.CallTo(componentMock)
+                .Where(x => x.Method.Name == "Update")
+                .MustHaveHappened(Repeated.AtLeast.Once);
         }
 
         [TestCase]
         public void Draw_SetXPosition_TriggerUpdateMethod()
         {
-            var componentMock = CreateComponentWithoutInvalidation();
-            componentMock.Object.XPosition += 10.0f;
+            var componentMock = CreateComponentMockWithoutInvalidation();
+            componentMock.XPosition += 10.0f;
 
-            componentMock.Object.Draw();
+            componentMock.Draw();
 
-            componentMock.Protected().Verify("Update", Times.Once());
+            A.CallTo(componentMock)
+                .Where(x => x.Method.Name == "Update")
+                .MustHaveHappened(Repeated.Exactly.Times(IntialCallTimes + 1));
         }
 
         [TestCase]
         public void Draw_SetYPosition_TriggerUpdateMethod()
         {
-            var componentMock = CreateComponentWithoutInvalidation();
-            componentMock.Object.YPosition += 10.0f;
+            var componentMock = CreateComponentMockWithoutInvalidation();
+            componentMock.YPosition += 10.0f;
 
-            componentMock.Object.Draw();
+            componentMock.Draw();
 
-            componentMock.Protected().Verify("Update", Times.Once());
+            A.CallTo(componentMock)
+                .Where(x => x.Method.Name == "Update")
+                .MustHaveHappened(Repeated.Exactly.Times(IntialCallTimes + 1));
         }
 
         [TestCase]
         public void Draw_SetWidth_TriggerUpdateMethod()
         {
-            var componentMock = CreateComponentWithoutInvalidation();
-            componentMock.Object.Width += 10.0f;
+            var componentMock = CreateComponentMockWithoutInvalidation();
+            componentMock.Width += 10.0f;
 
-            componentMock.Object.Draw();
+            componentMock.Draw();
 
-            componentMock.Protected().Verify("Update", Times.Once());
+            A.CallTo(componentMock)
+                .Where(x => x.Method.Name == "Update")
+                .MustHaveHappened(Repeated.Exactly.Times(IntialCallTimes + 1));
         }
 
         [TestCase]
         public void Draw_SetHeight_TriggerUpdateMethod()
         {
-            var componentMock = CreateComponentWithoutInvalidation();
-            componentMock.Object.Height += 10.0f;
+            var componentMock = CreateComponentMockWithoutInvalidation();
+            componentMock.Height += 10.0f;
 
-            componentMock.Object.Draw();
+            componentMock.Draw();
 
-            componentMock.Protected().Verify("Update", Times.Once());
+            A.CallTo(componentMock)
+                .Where(x => x.Method.Name == "Update")
+                .MustHaveHappened(Repeated.Exactly.Times(IntialCallTimes + 1));
         }
 
         [TestCase]
         public void Draw_SetSameXPostion_NoUpdateCall()
         {
-            var componentMock = CreateComponentWithoutInvalidation();
-            var sameXPosition = componentMock.Object.XPosition;
-            componentMock.Object.XPosition = sameXPosition;
+            var componentMock = CreateComponentMockWithoutInvalidation();
+            var sameXPosition = componentMock.XPosition;
+            componentMock.XPosition = sameXPosition;
 
-            componentMock.Object.Draw();
+            componentMock.Draw();
 
-            componentMock.Protected().Verify("Update", Times.Never());
+            A.CallTo(componentMock)
+                .Where(x => x.Method.Name == "Update")
+                .MustHaveHappened(Repeated.Exactly.Times(IntialCallTimes));
         }
 
         [TestCase]
         public void Draw_SetSameYPostion_NoUpdateCall()
         {
-            var componentMock = CreateComponentWithoutInvalidation();
-            var sameYPosition = componentMock.Object.YPosition;
-            componentMock.Object.YPosition = sameYPosition;
+            var componentMock = CreateComponentMockWithoutInvalidation();
+            var sameYPosition = componentMock.YPosition;
+            componentMock.YPosition = sameYPosition;
 
-            componentMock.Object.Draw();
+            componentMock.Draw();
 
-            componentMock.Protected().Verify("Update", Times.Never());
+            A.CallTo(componentMock)
+                .Where(x => x.Method.Name == "Update")
+                .MustHaveHappened(Repeated.Exactly.Times(IntialCallTimes));
         }
 
         [TestCase]
         public void Draw_SetSameWidth_NoUpdateCall()
         {
-            var componentMock = CreateComponentWithoutInvalidation();
-            var sameWidth = componentMock.Object.Width;
-            componentMock.Object.Width = sameWidth;
+            var componentMock = CreateComponentMockWithoutInvalidation();
+            var sameWidth = componentMock.Width;
+            componentMock.Width = sameWidth;
 
-            componentMock.Object.Draw();
+            componentMock.Draw();
 
-            componentMock.Protected().Verify("Update", Times.Never());
+            A.CallTo(componentMock)
+                .Where(x => x.Method.Name == "Update")
+                .MustHaveHappened(Repeated.Exactly.Times(IntialCallTimes));
         }
 
         [TestCase]
         public void Draw_SetSameHeight_NoUpdateCall()
         {
-            var componentMock = CreateComponentWithoutInvalidation();
-            var sameHeight = componentMock.Object.Height;
-            componentMock.Object.Height = sameHeight;
+            var componentMock = CreateComponentMockWithoutInvalidation();
+            var sameHeight = componentMock.Height;
+            componentMock.Height = sameHeight;
 
-            componentMock.Object.Draw();
+            componentMock.Draw();
 
-            componentMock.Protected().Verify("Update", Times.Never());
+            A.CallTo(componentMock)
+                .Where(x => x.Method.Name == "Update")
+                .MustHaveHappened(Repeated.Exactly.Times(IntialCallTimes));
         }
 
         [TestCase]
         public void Draw_Call_DrawComponentCalled()
         {
-            var componentMock = CreateComponentWithoutInvalidation();
-            var time = new GameTime();
-            var spriteBatchStub = new SpriteBatchMock();
+            var componentMock = CreateComponentMock();
 
-            componentMock.Object.Draw(time, spriteBatchStub);
-            componentMock.Protected().Verify("DrawComponent", Times.Once(), time, spriteBatchStub);
+            componentMock.Draw();
+
+            A.CallTo(componentMock)
+                .Where(x => x.Method.Name == "DrawComponent")
+                .MustHaveHappened(Repeated.AtLeast.Once);
         }
 
 
         protected override IGraphicComponent CreateComponent()
         {
-            return CreateComponentMock().Object;
+            return CreateComponentMock();
         }
     }
 }

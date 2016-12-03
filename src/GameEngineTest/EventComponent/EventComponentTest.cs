@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
-using Moq;
 using NUnit.Framework;
 using System;
+using FakeItEasy;
 using GameEngine.GameEngineComponents;
 
 namespace GameEngineTest.EventComponent
@@ -9,12 +9,12 @@ namespace GameEngineTest.EventComponent
     [TestFixture]
     public class EventComponentTest
     {
-        private EventQueue eventComponent;
+        private EventQueue _eventComponent;
 
         [SetUp]
         public void Setup()
         {
-            eventComponent = new EventQueue();
+            _eventComponent = new EventQueue();
         }
 
 
@@ -26,8 +26,7 @@ namespace GameEngineTest.EventComponent
 
             public void Dispatch()
             {
-                if (Callback != null)
-                    Callback();
+                Callback?.Invoke();
 
                 EventProcessed(this, EventArgs.Empty);
                 DispatchCalled = true;
@@ -37,10 +36,10 @@ namespace GameEngineTest.EventComponent
         [TestCase]
         public void Update_WithThreeEvent_IsDispatchedInFIFOOrder()
         {
-            int counter = 0;
-            int event1Number = 0;
-            int event2Number = 0;
-            int event3Number = 0;
+            var counter = 0;
+            var event1Number = 0;
+            var event2Number = 0;
+            var event3Number = 0;
 
             var eventMock1 = new TestEvent();
             var eventMock2 = new TestEvent();
@@ -50,12 +49,12 @@ namespace GameEngineTest.EventComponent
             eventMock2.Callback = () => { event2Number = counter; counter++; };
             eventMock3.Callback = () => { event3Number = counter; counter++; };
 
-            eventComponent.AddEvent(eventMock1);
-            eventComponent.AddEvent(eventMock2);
-            eventComponent.AddEvent(eventMock3);
+            _eventComponent.AddEvent(eventMock1);
+            _eventComponent.AddEvent(eventMock2);
+            _eventComponent.AddEvent(eventMock3);
 
             while (UndispatchedEventsLeft(eventMock1, eventMock2, eventMock3))
-                eventComponent.Update(new GameTime());
+                _eventComponent.Update(new GameTime());
 
             Assert.AreEqual(0, event1Number);
             Assert.AreEqual(1, event2Number);
@@ -64,7 +63,7 @@ namespace GameEngineTest.EventComponent
 
         private bool UndispatchedEventsLeft(params TestEvent[] events)
         {
-            bool areAllEventsDispatched = true;
+            var areAllEventsDispatched = true;
             foreach (var ev in events)
                 areAllEventsDispatched &= ev.DispatchCalled;
 
@@ -74,24 +73,24 @@ namespace GameEngineTest.EventComponent
         [TestCase]
         public void Update_AppendTwoEvents_BlocksUntilFirstEventIsDone()
         {
-            var eventMock1 = new Mock<IEvent>();
+            var eventMock1 = A.Fake<IEvent>();
             var eventMock2 = new TestEvent();
 
-            eventComponent.AddEvent(eventMock1.Object);
-            eventComponent.AddEvent(eventMock2);
+            _eventComponent.AddEvent(eventMock1);
+            _eventComponent.AddEvent(eventMock2);
 
-            eventComponent.Update(new GameTime());
+            _eventComponent.Update(new GameTime());
 
-            eventMock1.Verify(o => o.Dispatch(), Times.Once);
+            A.CallTo(() => eventMock1.Dispatch()).MustHaveHappened(Repeated.Exactly.Once);
             Assert.False(eventMock2.DispatchCalled);
 
-            eventComponent.Update(new GameTime());
+            _eventComponent.Update(new GameTime());
 
             Assert.False(eventMock2.DispatchCalled);
 
-            eventMock1.Raise(o => o.EventProcessed += null, eventMock1.Object, null);
+            eventMock1.EventProcessed += Raise.With(eventMock1, EventArgs.Empty);
 
-            eventComponent.Update(new GameTime());
+            _eventComponent.Update(new GameTime());
 
             Assert.True(eventMock2.DispatchCalled);
 

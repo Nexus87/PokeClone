@@ -2,59 +2,55 @@
 using Base.Data;
 using Base.Factory;
 using Base.Rules;
-using Moq;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
+using FakeItEasy;
 
 namespace PokemonRulesTest
 {
     [TestFixture]
     internal class CharFactoryTest
     {
-        private static int PseudoRandom(int min, int max){
-			return 0;
-		}
-
-        private Mock<IPokemonRepository> charRepositoryMock;
-        private PokemonFactory factory;
-        private Mock<IPokemonRules> rulesMock;
-        private List<PokemonData> testData = new List<PokemonData>();
-        private List<Pokemon> testChar = new List<Pokemon>();
+        private IPokemonRepository _charRepositoryMock;
+        private PokemonFactory _factory;
+        private IPokemonRules _rulesMock;
+        private readonly List<PokemonData> _testData = new List<PokemonData>();
+        private readonly List<Pokemon> _testChar = new List<Pokemon>();
 
         [SetUp]
         public void Setup()
         {
-            charRepositoryMock = new Mock<IPokemonRepository>();
-            rulesMock = new Mock<IPokemonRules>();
+            _charRepositoryMock = A.Fake<IPokemonRepository>();
+            _rulesMock = A.Fake<IPokemonRules>();
 
-            factory = new PokemonFactory(charRepositoryMock.Object, rulesMock.Object);
+            _factory = new PokemonFactory(_charRepositoryMock, _rulesMock);
 
-            Stats testStats = new Stats();
-            testData.Add(new PokemonData { Id = 0, BaseStats = testStats, Name = "Data1" });
-            testData.Add(new PokemonData { Id = 1, BaseStats = testStats, Name = "Data2" });
-            testData.Add(new PokemonData { Id = 2, BaseStats = testStats, Name = "Data3" });
+            var testStats = new Stats();
+            _testData.Add(new PokemonData { Id = 0, BaseStats = testStats, Name = "Data1" });
+            _testData.Add(new PokemonData { Id = 1, BaseStats = testStats, Name = "Data2" });
+            _testData.Add(new PokemonData { Id = 2, BaseStats = testStats, Name = "Data3" });
 
-            foreach(var data in testData)
-                testChar.Add(new Pokemon(data, testStats));
+            foreach(var data in _testData)
+                _testChar.Add(new Pokemon(data, testStats));
         }
 
         [TestCase]
         public void GetCharTest()
         {
-            for (int i = 0; i < testData.Count; i++)
+            for (var i = 0; i < _testData.Count; i++)
             {
-                var retData = testData[i];
-                var retChar = testChar[i];
+                var retData = _testData[i];
+                var retChar = _testChar[i];
 
-                charRepositoryMock.Setup(rep => rep.GetPokemonData(retData.Id)).Returns(retData).Verifiable();
-                rulesMock.Setup(rules => rules.FromPokemonData(retData)).Returns(retChar).Verifiable();
+                A.CallTo(() => _charRepositoryMock.GetPokemonData(retData.Id)).Returns(retData);
+                A.CallTo(() => _rulesMock.FromPokemonData(retData)).Returns(retChar);
 
-                var result = factory.GetPokemon(retData.Id);
+                var result = _factory.GetPokemon(retData.Id);
 
                 Assert.AreEqual(result, retChar);
-                charRepositoryMock.Verify();
-                rulesMock.Verify();
+                A.CallTo(() => _charRepositoryMock.GetPokemonData(retData.Id)).MustHaveHappened(Repeated.AtLeast.Once);
+                A.CallTo(() => _rulesMock.FromPokemonData(retData)).MustHaveHappened(Repeated.AtLeast.Once);
             }
 
         }
@@ -62,32 +58,34 @@ namespace PokemonRulesTest
         [TestCase]
         public void GetCharLeveledTest()
         {
-            for (int i = 0; i < testData.Count; i++)
+            for (var i = 0; i < _testData.Count; i++)
             {
-                var retData = testData[i];
-                var retChar = testChar[i];
-                int retLevel = 0;
-                int testLevel = 15;
-                charRepositoryMock.Setup(rep => rep.GetPokemonData(retData.Id)).Returns(retData).Verifiable();
-                rulesMock.Setup(rules => rules.FromPokemonData(retData)).Returns(retChar).Verifiable();
-                rulesMock.Setup(rules => rules.ToLevel(retChar, It.IsAny<int>())).Callback<Pokemon, int>( (pkm, lvl) => retLevel = lvl).Verifiable();
+                var retData = _testData[i];
+                var retChar = _testChar[i];
+                var retLevel = 0;
+                const int testLevel = 15;
 
-                var result = factory.GetPokemon(retData.Id, testLevel);
+                A.CallTo(() => _charRepositoryMock.GetPokemonData(retData.Id)).Returns(retData);
+                A.CallTo(() => _rulesMock.FromPokemonData(retData)).Returns(retChar);
+                A.CallTo(() => _rulesMock.ToLevel(retChar, A<int>.Ignored)).Invokes( (Pokemon pkm, int lvl) => retLevel = lvl);
+
+                var result = _factory.GetPokemon(retData.Id, testLevel);
 
                 Assert.AreEqual(result, retChar);
                 Assert.AreEqual(retLevel, testLevel);
-                charRepositoryMock.Verify();
-                rulesMock.Verify();
+                A.CallTo(() => _charRepositoryMock.GetPokemonData(retData.Id)).MustHaveHappened(Repeated.AtLeast.Once);
+                A.CallTo(() => _rulesMock.FromPokemonData(retData)).MustHaveHappened(Repeated.AtLeast.Once);
+                A.CallTo(() => _rulesMock.ToLevel(retChar, A<int>.Ignored)).MustHaveHappened(Repeated.AtLeast.Once);
             }
         }
         [TestCase]
         public void GetIdTest()
         {
-            var ids = from data in testData
+            var ids = from data in _testData
                       select data.Id;
-            charRepositoryMock.Setup(rep => rep.Ids).Returns(ids);
+            A.CallTo(() => _charRepositoryMock.Ids).Returns(ids);
 
-            var result = factory.Ids;
+            var result = _factory.Ids;
             Assert.AreEqual(result, ids);
         }
     }

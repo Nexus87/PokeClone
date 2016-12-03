@@ -8,12 +8,12 @@
     <Reference Include="System.Core" />
     <Platform Type="Windows">
       <Reference Include="Castle.Core" />
-      <Reference Include="Moq" />
+      <Reference Include="FakeItEasy" />
       <Reference Include="NUnit.Framework" />
     </Platform>
     <Platform Type="Linux">
       <Reference Include="Castle.Core" />
-      <Reference Include="Moq" />
+      <Reference Include="FakeItEasy" />
       <Reference Include="NUnit.Framework" />
     </Platform>
     <Reference Include="Base" />

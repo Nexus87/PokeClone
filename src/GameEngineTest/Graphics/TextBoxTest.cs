@@ -1,10 +1,10 @@
 ﻿using GameEngine.Graphics;
 using GameEngineTest.TestUtils;
 using Microsoft.Xna.Framework;
-using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using FakeItEasy;
 using GameEngine.Graphics.General;
 
 namespace GameEngineTest.Graphics
@@ -12,7 +12,16 @@ namespace GameEngineTest.Graphics
     [TestFixture]
     public class TextBoxTest : IGraphicComponentTest
     {
-        static public List<TestCaseData> ValidData = new List<TestCaseData>{
+        [SetUp]
+        public void Setup()
+        {
+            FontMock = A.Fake<ISpriteFont>();
+            A.CallTo(() => FontMock.MeasureString(A<string>.Ignored))
+                .ReturnsLazily((string s) => new Vector2(16.0f * s.Length, 16.0f));
+        }
+
+        public static List<TestCaseData> ValidData = new List<TestCaseData>
+        {
             new TestCaseData(150.0f, 50.0f, 32.0f),
             new TestCaseData(0.0f, 50.0f, 32.0f),
             new TestCaseData(150.0f, 0.0f, 32.0f),
@@ -25,11 +34,12 @@ namespace GameEngineTest.Graphics
         [TestCase(150.0f, 0.0f, 32.0f)]
         [TestCase(150.0f, 40.0f, 0.0f)]
         [TestCase(150.0f, 40.0f, 50.0f)]
-        public void RealTextHeigth_SetPreferredTextHeight_IsAlwaysLessThanHeight(float width, float height, float TextSize)
+        public void RealTextHeigth_SetPreferredTextHeight_IsAlwaysLessThanHeight(float width, float height,
+            float textSize)
         {
             var box = CreateTextBox(width, height);
 
-            box.PreferredTextHeight = TextSize;
+            box.PreferredTextHeight = textSize;
 
             Assert.LessOrEqual(box.RealTextHeight, height);
         }
@@ -39,7 +49,8 @@ namespace GameEngineTest.Graphics
         [TestCase(100.0f, 50.0f, 49.0f)]
         [TestCase(100.0f, 50.0f, 0.0f)]
         [TestCase(0.0f, 50.0f, 32.0f)]
-        public void RealTextHeigth_SetPreferredTextHeightLessThanHeight_IsEqualToPreferredHeight(float width, float height, float textSize)
+        public void RealTextHeigth_SetPreferredTextHeightLessThanHeight_IsEqualToPreferredHeight(float width,
+            float height, float textSize)
         {
             var box = CreateTextBox(width, height);
 
@@ -49,10 +60,10 @@ namespace GameEngineTest.Graphics
         }
 
         [TestCase(-1.0f)]
-        public void SetPreferredTextHeight_InvalidValue_ThrowsArgumentException(float TextSize)
+        public void SetPreferredTextHeight_InvalidValue_ThrowsArgumentException(float textSize)
         {
             var box = CreateTextBox(100, 100);
-            Assert.Throws<ArgumentException>(() => box.PreferredTextHeight = TextSize);
+            Assert.Throws<ArgumentException>(() => box.PreferredTextHeight = textSize);
         }
 
 
@@ -60,20 +71,22 @@ namespace GameEngineTest.Graphics
         [TestCase(100.0f, 150.0f, 10.0f, 100.0f, 1)]
         [TestCase(100.0f, 150.0f, 10.0f, 99.0f, 1)]
         [TestCase(100.0f, 150.0f, 10.0f, 101.0f, 0)]
-        public void DisplayableChars_SetPreferredTextHeight_RightNumberOfChars(float width, float height, float TextSize, float charSize, int expectedNumber)
+        public void DisplayableChars_SetPreferredTextHeight_RightNumberOfChars(float width, float height, float textSize,
+            float charSize, int expectedNumber)
         {
-            var textStub = new GraphicalTextStub { SingleCharWidth = charSize };
+            var textStub = new GraphicalTextStub {SingleCharWidth = charSize};
             var box = CreateTextBox(width, height, textStub);
-            box.PreferredTextHeight = TextSize;
+            box.PreferredTextHeight = textSize;
 
-            int displayedChars = box.DisplayableChars();
-            
+            var displayedChars = box.DisplayableChars();
+
             Assert.AreEqual(expectedNumber, displayedChars);
         }
 
 
         [TestCase(100, 200, 12)]
-        public void GetPreferredHeight_SettingPrefredTextSize_PreferredHeightEqualsTextSize(float width, float height, float textSize)
+        public void GetPreferredHeight_SettingPrefredTextSize_PreferredHeightEqualsTextSize(float width, float height,
+            float textSize)
         {
             var box = CreateTextBox(width, height);
 
@@ -83,18 +96,20 @@ namespace GameEngineTest.Graphics
         }
 
         [TestCase(100, 200, 12)]
-        public void GetPreferredHeight_CreateWithTextSize_PreferredHeightEqualsTextSize(float width, float height, float textSize)
+        public void GetPreferredHeight_CreateWithTextSize_PreferredHeightEqualsTextSize(float width, float height,
+            float textSize)
         {
-            var textStub = new GraphicalTextStub { CharHeight = textSize };
+            var textStub = new GraphicalTextStub {CharHeight = textSize};
             var box = CreateTextBox(width, height, textStub);
             box.Draw();
             Assert.AreEqual(textSize, box.PreferredHeight);
         }
 
         [TestCase(100, 200, "test", 4)]
-        public void GetPrefredWidth_SetText_PrefredWidthEqualsTextLenght(float width, float height, String text, float expectedWidth)
+        public void GetPrefredWidth_SetText_PrefredWidthEqualsTextLenght(float width, float height, string text,
+            float expectedWidth)
         {
-            var textStub = new GraphicalTextStub { SingleCharWidth = 1 };
+            var textStub = new GraphicalTextStub {SingleCharWidth = 1};
             var box = CreateTextBox(width, height, textStub);
 
             box.Text = text;
@@ -104,29 +119,31 @@ namespace GameEngineTest.Graphics
 
         protected override IGraphicComponent CreateComponent()
         {
-            fontMock = new Mock<ISpriteFont>();
-            fontMock.Setup(o => o.MeasureString(It.IsAny<string>())).Returns<string>(s => new Vector2(16.0f * s.Length, 16.0f));
-            return new TextBox(fontMock.Object);
+            return new TextBox(FontMock);
         }
 
-        private TextBox CreateTextBox(float width, float height, GraphicalTextStub stub)
+        private static TextBox CreateTextBox(float width, float height, GraphicalTextStub stub)
         {
-            var box = new TextBox(stub);
-            box.Width = width;
-            box.Height = height;
+            var box = new TextBox(stub)
+            {
+                Width = width,
+                Height = height
+            };
 
             return box;
         }
+
         private TextBox CreateTextBox(float width, float height, float charSize = 16.0f)
         {
-            var fontStub = new Mock<ISpriteFont>();
-            fontStub.Setup(o => o.MeasureString(It.IsAny<string>())).Returns<string>(s => new Vector2(charSize * s.Length, charSize));
-            var textBox = new TextBox(fontMock.Object);
-            textBox.Height = height;
-            textBox.Width = width;
+            A.CallTo(() => FontMock.MeasureString(A<string>.Ignored))
+                .ReturnsLazily((string s) => new Vector2(charSize * s.Length, charSize));
+            var textBox = new TextBox(FontMock)
+            {
+                Height = height,
+                Width = width
+            };
 
             return textBox;
-            
         }
     }
 }

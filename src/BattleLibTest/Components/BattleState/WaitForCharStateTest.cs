@@ -3,31 +3,31 @@ using Base.Data;
 using BattleLib;
 using BattleLib.Components.BattleState;
 using BattleLibTest.Utils;
-using Moq;
 using NUnit.Framework;
 using System;
+using FakeItEasy;
 
 namespace BattleLibTest.Components.BattleState
 {
     [TestFixture]
     public class WaitForCharStateTest
     {
-        private TestFactory factory;
+        private TestFactory _factory;
 
         [SetUp]
         public void Setup()
         {
-            factory = new TestFactory();
+            _factory = new TestFactory();
         }
 
         [TestCase]
         public void Init_SomePKMNAreKO_IsDoneReturnsFalse()
         {
             var state = CreateWaitForCharState();
-            factory.CreatePlayerPokemon(StatusCondition.KO);
-            factory.CreateAIPokemon();
+            _factory.CreatePlayerPokemon(StatusCondition.KO);
+            _factory.CreateAIPokemon();
 
-            state.Init(factory.BattleData);
+            state.Init(_factory.BattleData);
 
             Assert.IsFalse(state.IsDone);
         }
@@ -36,10 +36,10 @@ namespace BattleLibTest.Components.BattleState
         public void Init_NoPKMNAreKO_IsDoneReturnsTrue()
         {
             var state = CreateWaitForCharState();
-            factory.CreatePlayerPokemon();
-            factory.CreateAIPokemon();
+            _factory.CreatePlayerPokemon();
+            _factory.CreateAIPokemon();
 
-            state.Init(factory.BattleData);
+            state.Init(_factory.BattleData);
 
             Assert.IsTrue(state.IsDone);
         }
@@ -47,33 +47,33 @@ namespace BattleLibTest.Components.BattleState
         [TestCase]
         public void SetMove_SomeData_ThrowsException()
         {
-            var state = CreateWaitForCharState(factory.BattleData);
+            var state = CreateWaitForCharState(_factory.BattleData);
 
             Assert.Throws<InvalidOperationException>(() => 
-                state.SetMove(factory.PlayerID, factory.AIID, factory.CreateMove())
+                state.SetMove(_factory.PlayerID, _factory.AIID, _factory.CreateMove())
                 );
         }
 
         [TestCase]
         public void SetItem_SomeData_ThrowsException()
         {
-            var state = CreateWaitForCharState(factory.BattleData);
+            var state = CreateWaitForCharState(_factory.BattleData);
 
             Assert.Throws<InvalidOperationException>(() => 
-                state.SetItem(factory.PlayerID, factory.AIID, factory.CreateItem())
+                state.SetItem(_factory.PlayerID, _factory.AIID, _factory.CreateItem())
                 );
         }
 
         [TestCase]
         public void SetCharacter_IdNeedsNoChar_ThrowsException()
         {
-            factory.CreatePlayerPokemon();
-            factory.CreateAIPokemon(StatusCondition.KO);
+            _factory.CreatePlayerPokemon();
+            _factory.CreateAIPokemon(StatusCondition.KO);
 
-            var state = CreateWaitForCharState(factory.BattleData);
+            var state = CreateWaitForCharState(_factory.BattleData);
 
             Assert.Throws<InvalidOperationException>(() => 
-                state.SetCharacter(factory.PlayerID, TestFactory.CreatePokemon())
+                state.SetCharacter(_factory.PlayerID, TestFactory.CreatePokemon())
                 );
 
         }
@@ -81,23 +81,23 @@ namespace BattleLibTest.Components.BattleState
         [TestCase]
         public void SetCharacter_NeededChar_UpdateDoesNotChangeBattleData()
         {
-            var state = CreateWaitForCharState(factory.BattleData);
+            var state = CreateWaitForCharState(_factory.BattleData);
 
             SetNewPlayerCharacter(state);
-            state.Update(factory.BattleData);
+            state.Update(_factory.BattleData);
 
-            var playerPkmn = factory.GetPlayerPokemon();
+            var playerPkmn = _factory.GetPlayerPokemon();
             Assert.IsNull(playerPkmn);
         }
 
         [TestCase]
         public void Update_AfterSettingAllCharacters_IsDoneReturnsTrue()
         {
-            var state = CreateWaitForCharState(factory.BattleData);
+            var state = CreateWaitForCharState(_factory.BattleData);
 
             SetNewPlayerCharacter(state);
-            SetNewAICharacter(state);
-            state.Update(factory.BattleData);
+            SetNewAiCharacter(state);
+            state.Update(_factory.BattleData);
 
             Assert.IsTrue(state.IsDone);
         }
@@ -105,10 +105,10 @@ namespace BattleLibTest.Components.BattleState
         [TestCase]
         public void Update_AfterSettingSomeCharacters_IsDoneReturnsFalse()
         {
-            var state = CreateWaitForCharState(factory.BattleData);
+            var state = CreateWaitForCharState(_factory.BattleData);
 
             SetNewPlayerCharacter(state);
-            state.Update(factory.BattleData);
+            state.Update(_factory.BattleData);
 
             Assert.IsFalse(state.IsDone);
         }
@@ -116,10 +116,10 @@ namespace BattleLibTest.Components.BattleState
         [TestCase]
         public void Init_SomePKMNAreNull_IsDoneReturnsFalse()
         {
-            factory.CreateAIPokemon();
+            _factory.CreateAIPokemon();
             var state = CreateWaitForCharState();
 
-            state.Init(factory.BattleData);
+            state.Init(_factory.BattleData);
 
             Assert.IsFalse(state.IsDone);
         }
@@ -127,38 +127,41 @@ namespace BattleLibTest.Components.BattleState
         [TestCase]
         public void Update_SetAllCharacters_BattleDataContainsTheRightCharacters()
         {
-            var state = CreateWaitForCharState(factory.BattleData);
+            var state = CreateWaitForCharState(_factory.BattleData);
             var playerCharacter = TestFactory.CreatePokemon();
             var aiCharacter = TestFactory.CreatePokemon();
 
             SetNewPlayerCharacter(state, playerCharacter);
-            SetNewAICharacter(state, aiCharacter);
-            state.Update(factory.BattleData);
+            SetNewAiCharacter(state, aiCharacter);
+            state.Update(_factory.BattleData);
 
-            Assert.AreEqual(playerCharacter, factory.GetPlayerPokemon());
-            Assert.AreEqual(aiCharacter, factory.GetAIPokemon());
+            Assert.AreEqual(playerCharacter, _factory.GetPlayerPokemon());
+            Assert.AreEqual(aiCharacter, _factory.GetAIPokemon());
         }
-        private WaitForCharState CreateWaitForCharState(BattleData battleData)
+
+        private static WaitForCharState CreateWaitForCharState(BattleData battleData)
         {
             var state = CreateWaitForCharState();
             state.Init(battleData);
             return state;
         }
-        private WaitForCharState CreateWaitForCharState()
+
+        private static WaitForCharState CreateWaitForCharState()
         {
-            return new WaitForCharState(new Mock<IEventCreator>().Object);
+            return new WaitForCharState(A.Fake<IEventCreator>());
         }
 
-        private void SetNewPlayerCharacter(WaitForCharState state, Pokemon pokemon = null)
+        private void SetNewPlayerCharacter(IBattleState state, Pokemon pokemon = null)
         {
-            SetNewCharacter(state, factory.PlayerID, pokemon);
-        }
-        private void SetNewAICharacter(WaitForCharState state, Pokemon pokemon = null)
-        {
-            SetNewCharacter(state, factory.AIID, pokemon);
+            SetNewCharacter(state, _factory.PlayerID, pokemon);
         }
 
-        private void SetNewCharacter(WaitForCharState state, ClientIdentifier id, Pokemon pokemon = null){
+        private void SetNewAiCharacter(IBattleState state, Pokemon pokemon = null)
+        {
+            SetNewCharacter(state, _factory.AIID, pokemon);
+        }
+
+        private static void SetNewCharacter(IBattleState state, ClientIdentifier id, Pokemon pokemon = null){
             if(pokemon == null)
                 pokemon = TestFactory.CreatePokemon();
 

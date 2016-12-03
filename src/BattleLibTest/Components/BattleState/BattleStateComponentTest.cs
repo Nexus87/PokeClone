@@ -1,6 +1,6 @@
 ﻿using BattleLib.Components.BattleState;
+using FakeItEasy;
 using GameEngineTest.TestUtils;
-using Moq;
 using NUnit.Framework;
 
 namespace BattleLibTest.Components.BattleState
@@ -12,23 +12,23 @@ namespace BattleLibTest.Components.BattleState
         public void Update_StateIsDoneReturnsFromBeginningTrue_DoesNotCallStatesUpdateMethod()
         {
             var waitForCharState = CreateStateMock(BattleStates.WaitForPokemon);
-            var battleStateComponent = CreateStateComponent(waitForChar: waitForCharState.Object);
-            waitForCharState.SetupGet(state => state.IsDone).Returns(true);
+            var battleStateComponent = CreateStateComponent(waitForCharState);
+            A.CallTo(() => waitForCharState.IsDone).Returns(true);
 
             battleStateComponent.Update();
 
-            waitForCharState.Verify(s => s.Update(It.IsAny<BattleData>()), Times.Never);
+            A.CallTo(() => waitForCharState.Update(A<BattleData>.Ignored)).MustNotHaveHappened();
         }
 
         [TestCase]
         public void Update_InitialState_FirstStateIsWaitForChar()
         {
             var waitForCharState = CreateStateMock(BattleStates.WaitForPokemon);
-            var battleStateComponent = CreateStateComponent(waitForChar: waitForCharState.Object);
+            var battleStateComponent = CreateStateComponent(waitForCharState);
 
             battleStateComponent.Update();
 
-            waitForCharState.Verify(s => s.Update(It.IsAny<BattleData>()), Times.Once);
+            A.CallTo(() => waitForCharState.Update(A<BattleData>.Ignored)).MustHaveHappened(Repeated.Exactly.Once);
         }
 
         [TestCase]
@@ -36,13 +36,13 @@ namespace BattleLibTest.Components.BattleState
         {
             var waitForCharState = CreateStateMock(BattleStates.WaitForPokemon);
             var waitForActionState = CreateStateMock(BattleStates.WaitForAction);
-            var battleStateComponent = CreateStateComponent(waitForChar: waitForCharState.Object, waitForAction: waitForActionState.Object);
+            var battleStateComponent = CreateStateComponent(waitForCharState, waitForActionState);
 
-            waitForCharState.SetupGet(state => state.IsDone).Returns(true);
+            A.CallTo(() => waitForCharState.IsDone).Returns(true);
 
             battleStateComponent.Update();
 
-            waitForActionState.Verify(s => s.Update(It.IsAny<BattleData>()), Times.Once);
+            A.CallTo(() => waitForActionState.Update(A<BattleData>.Ignored)).MustHaveHappened(Repeated.Exactly.Once);
         }
 
         [TestCase]
@@ -51,14 +51,14 @@ namespace BattleLibTest.Components.BattleState
             var waitForCharState = CreateStateMock(BattleStates.WaitForPokemon);
             var waitForActionState = CreateStateMock(BattleStates.WaitForAction);
             var executeState = CreateStateMock(BattleStates.Execute);
-            var battleStateComponent = CreateStateComponent(waitForCharState.Object, waitForActionState.Object, executeState.Object);
+            var battleStateComponent = CreateStateComponent(waitForCharState, waitForActionState, executeState);
 
-            waitForCharState.SetupGet(state => state.IsDone).Returns(true);
-            waitForActionState.SetupGet(state => state.IsDone).Returns(true);
+            A.CallTo(() => waitForCharState.IsDone).Returns(true);
+            A.CallTo(() => waitForActionState.IsDone).Returns(true);
 
             battleStateComponent.Update();
 
-            executeState.Verify(s => s.Update(It.IsAny<BattleData>()), Times.Once);
+            A.CallTo(() => executeState.Update(A<BattleData>.Ignored)).MustHaveHappened(Repeated.Exactly.Once);
         }
         [TestCase]
         public void Update_CharAndActionExecutionStateIsDone_CharStateIsCalled()
@@ -66,29 +66,29 @@ namespace BattleLibTest.Components.BattleState
             var waitForCharState = CreateStateMock(BattleStates.WaitForPokemon);
             var waitForActionState = CreateStateMock(BattleStates.WaitForAction);
             var executeState = CreateStateMock(BattleStates.Execute);
-            var battleStateComponent = CreateStateComponent(waitForCharState.Object, waitForActionState.Object, executeState.Object);
+            var battleStateComponent = CreateStateComponent(waitForCharState, waitForActionState, executeState);
 
-            waitForCharState.SetupGet(state => state.IsDone).Returns(true);
-            waitForActionState.SetupGet(state => state.IsDone).Returns(true);
-
-            battleStateComponent.Update();
-            waitForCharState.Verify(s => s.Update(It.IsAny<BattleData>()), Times.Never);
-
-            waitForCharState.SetupGet(state => state.IsDone).Returns(false);
-            executeState.SetupGet(state => state.IsDone).Returns(true);
+            A.CallTo(() => waitForCharState.IsDone).Returns(true);
+            A.CallTo(() => waitForActionState.IsDone).Returns(true);
 
             battleStateComponent.Update();
-            waitForCharState.Verify(state => state.Update(It.IsAny<BattleData>()), Times.Once);
+            A.CallTo(() => waitForCharState.Update(A<BattleData>.Ignored)).MustNotHaveHappened();
+
+            A.CallTo(() => waitForCharState.IsDone).Returns(false);
+            A.CallTo(() => executeState.IsDone).Returns(true);
+
+            battleStateComponent.Update();
+            A.CallTo(() => waitForCharState.Update(A<BattleData>.Ignored)).MustHaveHappened(Repeated.Exactly.Once);
         }
 
         [TestCase]
         public void Update_OnChangingState_RaiseEvent()
         {
-            bool eventRaised = false;
+            var eventRaised = false;
             var waitForCharState = CreateStateMock(BattleStates.WaitForPokemon);
-            var battleStateComponent = CreateStateComponent(waitForChar: waitForCharState.Object);
+            var battleStateComponent = CreateStateComponent(waitForCharState);
             
-            waitForCharState.SetupGet(state => state.IsDone).Returns(true);
+            A.CallTo(() => waitForCharState.IsDone).Returns(true);
             battleStateComponent.StateChanged += delegate { eventRaised = true; };
 
             battleStateComponent.Update();
@@ -102,9 +102,9 @@ namespace BattleLibTest.Components.BattleState
             StateChangedEventArgs sentArgs = null;
             var waitForCharState = CreateStateMock(BattleStates.WaitForPokemon);
             var waitForActionState = CreateStateMock(BattleStates.WaitForAction);
-            var battleStateComponent = CreateStateComponent(waitForChar: waitForCharState.Object, waitForAction: waitForActionState.Object);
+            var battleStateComponent = CreateStateComponent(waitForCharState, waitForActionState);
 
-            waitForCharState.SetupGet(state => state.IsDone).Returns(true);
+            A.CallTo(() => waitForCharState.IsDone).Returns(true);
             battleStateComponent.StateChanged += (o, args) => sentArgs = args;
 
             battleStateComponent.Update();
@@ -120,10 +120,10 @@ namespace BattleLibTest.Components.BattleState
             var waitForCharState = CreateStateMock(BattleStates.WaitForPokemon);
             var waitForActionState = CreateStateMock(BattleStates.WaitForAction);
             var executeState = CreateStateMock(BattleStates.Execute);
-            var battleStateComponent = CreateStateComponent(waitForCharState.Object, waitForActionState.Object, executeState.Object);
+            var battleStateComponent = CreateStateComponent(waitForCharState, waitForActionState, executeState);
 
-            waitForCharState.SetupGet(state => state.IsDone).Returns(true);
-            waitForActionState.SetupGet(state => state.IsDone).Returns(true);
+            A.CallTo(() => waitForCharState.IsDone).Returns(true);
+            A.CallTo(() => waitForActionState.IsDone).Returns(true);
 
             battleStateComponent.StateChanged += (o, args) => sentArgs = args;
 
@@ -133,23 +133,24 @@ namespace BattleLibTest.Components.BattleState
             Assert.AreEqual(BattleStates.Execute, sentArgs.NewState);
         }
 
-        private Mock<IBattleState> CreateStateMock(BattleStates state)
+        private static IBattleState CreateStateMock(BattleStates state)
         {
-            var mock = new Mock<IBattleState>();
-            mock.SetupGet(s => s.State).Returns(state);
+            var mock = A.Fake<IBattleState>();
+            A.CallTo(() => mock.State).Returns(state);
 
             return mock;
         }
-        private BattleStateComponent CreateStateComponent(IBattleState waitForChar = null, IBattleState waitForAction = null, IBattleState execute = null, IEventCreator creator = null)
+
+        private static BattleStateComponent CreateStateComponent(IBattleState waitForChar = null, IBattleState waitForAction = null, IBattleState execute = null, IEventCreator creator = null)
         {
             if (waitForChar == null)
-                waitForChar = CreateStateMock(BattleStates.WaitForPokemon).Object;
+                waitForChar = CreateStateMock(BattleStates.WaitForPokemon);
             if (waitForAction == null)
-                waitForAction = CreateStateMock(BattleStates.WaitForAction).Object;
+                waitForAction = CreateStateMock(BattleStates.WaitForAction);
             if (execute == null)
-                execute = CreateStateMock(BattleStates.Execute).Object;
+                execute = CreateStateMock(BattleStates.Execute);
             if(creator == null)
-                creator = new Mock<IEventCreator>().Object;
+                creator = A.Fake<IEventCreator>();
 
             var state = new BattleStateComponent(new BattleData(), waitForAction, waitForChar, execute, creator);
             state.Initialize();

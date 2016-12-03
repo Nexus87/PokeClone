@@ -1,8 +1,8 @@
-﻿using GameEngine.Graphics;
+﻿using FakeItEasy;
+using GameEngine.Graphics;
 using GameEngine.Graphics.General;
 using GameEngineTest.TestUtils;
 using Microsoft.Xna.Framework;
-using Moq;
 using NUnit.Framework;
 
 namespace GameEngineTest.Graphics
@@ -30,13 +30,13 @@ namespace GameEngineTest.Graphics
         protected override IGraphicComponent CreateComponent()
         {
             var box = CreateEmptyBox();
-            var textureStub = new Mock<ITexture2D>();
-            textureStub.Setup(o => o.Height).Returns(10);
-            textureStub.Setup(o => o.Width).Returns(10);
-            textureStub.Setup(o => o.Bounds).Returns(new Rectangle(0, 0, 10, 10));
+            var textureStub = A.Fake<ITexture2D>();
+            A.CallTo(() => textureStub.Height).Returns(10);
+            A.CallTo(() => textureStub.Width).Returns(10);
+            A.CallTo(() => textureStub.Bounds).Returns(new Rectangle(0, 0, 10, 10));
             box.Setup();
 
-            box.Image = textureStub.Object;
+            box.Image = textureStub;
 
             return box;
         }

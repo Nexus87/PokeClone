@@ -2,27 +2,27 @@
 using BattleLib;
 using BattleLib.Components;
 using BattleLib.Components.BattleState;
-using Moq;
 using NUnit.Framework;
 using BattleLib.Components.GraphicComponents;
+using FakeItEasy;
 
 namespace BattleLibTest.Components
 {
     [TestFixture]
     public class BattleEventProcessorTest
     {
-        private EventQueueFake eventQueue;
-        private Mock<IGUIService> guiMock;
-        private Mock<IBattleGraphicController> graphicMock;
-        private BattleEventFake eventMock;
+        private EventQueueFake _eventQueue;
+        private IGUIService _guiMock;
+        private IBattleGraphicController _graphicMock;
+        private BattleEventFake _eventMock;
 
         [SetUp]
         public void Setup()
         {
-            eventQueue = new EventQueueFake();
-            guiMock = new Mock<IGUIService>();
-            eventMock = new BattleEventFake();
-            graphicMock = new Mock<IBattleGraphicController>();
+            _eventQueue = new EventQueueFake();
+            _guiMock = A.Fake<IGUIService>();
+            _eventMock = new BattleEventFake();
+            _graphicMock = A.Fake<IBattleGraphicController>();
         }
 
         [TestCase]
@@ -30,10 +30,10 @@ namespace BattleLibTest.Components
         {
             CreateEventProcessor();
 
-            eventMock.RaiseCritcalDamageEvent();
-            eventQueue.DispatchAllEvents();
+            _eventMock.RaiseCritcalDamageEvent();
+            _eventQueue.DispatchAllEvents();
 
-            guiMock.Verify(o => o.SetText(It.IsAny<string>()), Times.Once);
+            A.CallTo(() => _guiMock.SetText(A<string>.Ignored)).MustHaveHappened(Repeated.Exactly.Once);
         }
 
         [TestCase(MoveEfficiency.NoEffect)]
@@ -43,10 +43,10 @@ namespace BattleLibTest.Components
         {
             CreateEventProcessor();
 
-            eventMock.RaiseMoveEffectiveEvent(efficient);
-            eventQueue.DispatchAllEvents();
+            _eventMock.RaiseMoveEffectiveEvent(efficient);
+            _eventQueue.DispatchAllEvents();
 
-            guiMock.Verify(o => o.SetText(It.IsAny<string>()), Times.Once);
+            A.CallTo(() => _guiMock.SetText(A<string>.Ignored)).MustHaveHappened(Repeated.Exactly.Once);
         }
 
         [TestCase]
@@ -54,10 +54,10 @@ namespace BattleLibTest.Components
         {
             CreateEventProcessor();
 
-            eventMock.RaiseMoveEffectiveEvent(MoveEfficiency.Normal);
-            eventQueue.DispatchAllEvents();
+            _eventMock.RaiseMoveEffectiveEvent(MoveEfficiency.Normal);
+            _eventQueue.DispatchAllEvents();
 
-            guiMock.Verify(o => o.SetText(It.IsAny<string>()), Times.Never);
+            A.CallTo(() => _guiMock.SetText(A<string>.Ignored)).MustNotHaveHappened();
         }
 
         [TestCase]
@@ -65,10 +65,10 @@ namespace BattleLibTest.Components
         {
             CreateEventProcessor();
 
-            eventMock.RaiseNewTurnEvent();
-            eventQueue.DispatchAllEvents();
+            _eventMock.RaiseNewTurnEvent();
+            _eventQueue.DispatchAllEvents();
 
-            guiMock.Verify(o => o.ShowMenu(), Times.Once);
+            A.CallTo(() => _guiMock.ShowMenu()).MustHaveHappened(Repeated.Exactly.Once);
         }
 
         [TestCase]
@@ -76,10 +76,10 @@ namespace BattleLibTest.Components
         {
             CreateEventProcessor();
 
-            eventMock.RaiseHPChangedEvent(10);
-            eventQueue.DispatchAllEvents();
+            _eventMock.RaiseHPChangedEvent();
+            _eventQueue.DispatchAllEvents();
 
-            graphicMock.Verify(o => o.SetHP(It.IsAny<ClientIdentifier>(), 10), Times.Once);
+            A.CallTo(() => _graphicMock.SetHP(A<ClientIdentifier>.Ignored, 10)).MustHaveHappened(Repeated.Exactly.Once);
         }
 
         [TestCase]
@@ -87,10 +87,11 @@ namespace BattleLibTest.Components
         {
             CreateEventProcessor();
 
-            eventMock.RaisePokemonChangedEvent();
-            eventQueue.DispatchAllEvents();
+            _eventMock.RaisePokemonChangedEvent();
+            _eventQueue.DispatchAllEvents();
 
-            graphicMock.Verify(o => o.SetPokemon(It.IsAny<ClientIdentifier>(), It.IsAny<PokemonWrapper>()), Times.Once);
+            A.CallTo(() => _graphicMock.SetPokemon(A<ClientIdentifier>.Ignored, A<PokemonWrapper>.Ignored))
+                .MustHaveHappened(Repeated.Exactly.Once);
         }
 
         [TestCase]
@@ -98,10 +99,11 @@ namespace BattleLibTest.Components
         {
             CreateEventProcessor();
 
-            eventMock.RaiseStatusChanged(StatusCondition.KO);
-            eventQueue.DispatchAllEvents();
+            _eventMock.RaiseStatusChanged(StatusCondition.KO);
+            _eventQueue.DispatchAllEvents();
 
-            graphicMock.Verify(o => o.SetPokemonStatus(It.IsAny<ClientIdentifier>(), StatusCondition.KO), Times.Once);
+            A.CallTo(() => _graphicMock.SetPokemonStatus(A<ClientIdentifier>.Ignored, StatusCondition.KO))
+                .MustHaveHappened(Repeated.Exactly.Once);
         }
 
         [TestCase]
@@ -109,10 +111,10 @@ namespace BattleLibTest.Components
         {
             CreateEventProcessor();
 
-            eventMock.RaiseStatusChanged(StatusCondition.KO);
-            eventQueue.DispatchAllEvents();
+            _eventMock.RaiseStatusChanged(StatusCondition.KO);
+            _eventQueue.DispatchAllEvents();
 
-            guiMock.Verify(o => o.SetText(It.IsAny<string>()), Times.Once);
+            A.CallTo(() => _guiMock.SetText(A<string>.Ignored)).MustHaveHappened(Repeated.Exactly.Once);
         }
 
         [TestCase]
@@ -120,15 +122,12 @@ namespace BattleLibTest.Components
         {
             CreateEventProcessor();
 
-            eventMock.RaiseMoveUsed();
-            eventQueue.DispatchAllEvents();
+            _eventMock.RaiseMoveUsed();
+            _eventQueue.DispatchAllEvents();
 
-            guiMock.Verify(o => o.SetText(It.IsAny<string>()), Times.Once);
+            A.CallTo(() => _guiMock.SetText(A<string>.Ignored)).MustHaveHappened(Repeated.Exactly.Once);
         }
 
-        private BattleEventProcessor CreateEventProcessor()
-        {
-             return new BattleEventProcessor(guiMock.Object, graphicMock.Object, eventQueue, eventMock);
-        }
+        private void CreateEventProcessor() => new BattleEventProcessor(_guiMock, _graphicMock, _eventQueue, _eventMock);
     }
 }

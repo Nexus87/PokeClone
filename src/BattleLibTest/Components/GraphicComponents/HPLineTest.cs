@@ -1,49 +1,48 @@
-﻿using GameEngine.Graphics;
+﻿using System;
+using System.Collections.Generic;
+using BattleLib.Components.GraphicComponents;
+using FakeItEasy;
+using GameEngine.Graphics;
 using GameEngine.Utils;
 using GameEngineTest.Graphics;
 using GameEngineTest.TestUtils;
 using Microsoft.Xna.Framework;
-using Moq;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using BattleLib.Components.GraphicComponents;
 
-namespace BattleLibTest.GraphicComponents
+namespace BattleLibTest.Components.GraphicComponents
 {
     [TestFixture]
-    public class HPLineTest : IGraphicComponentTest
+    public class HpLineTest : IGraphicComponentTest
     {
 
-        private HPLine CreateLine()
+        private static HPLine CreateLine()
         {
-            var hpLineStub = new Mock<IGraphicComponent>();
+            var hpLineStub = A.Fake<IGraphicComponent>();
 
-            return CreateLine(hpLineStub.Object);
+            return CreateLine(hpLineStub);
         }
 
-        private HPLine CreateLine(IGraphicComponent hpLine)
+        private static HPLine CreateLine(IGraphicComponent hpLine)
         {
-            var outerLine = new Mock<IGraphicComponent>().Object;
-            var innerLine = new Mock<IGraphicComponent>().Object;
-            var line = new HPLine(outerLine, innerLine, hpLine, Color.White);
-            line.MaxHP = 100;
+            var outerLine = A.Fake<IGraphicComponent>();
+            var innerLine = A.Fake<IGraphicComponent>();
+            var line = new HPLine(outerLine, innerLine, hpLine, Color.White) {MaxHP = 100};
             line.Setup();
 
             return line;
         }
 
-        public static List<TestCaseData> HPTestData = new List<TestCaseData>
+        public static List<TestCaseData> HpTestData = new List<TestCaseData>
         {
             new TestCaseData(100),
             new TestCaseData(25),
             new TestCaseData(0),
         };
 
-        [TestCaseSource("HPTestData")]
+        [TestCaseSource(nameof(HpTestData))]
         public void AnimationSetHP_WaitTillAnimationFinished_CurrentHPIsAsExpected(int hp)
         {
-            bool animationDone = false;
+            var animationDone = false;
             var line = CreateLine();
             line.SetCoordinates(0, 0, 300, 300);
             line.AnimationDone += delegate { animationDone = true; };
@@ -66,7 +65,7 @@ namespace BattleLibTest.GraphicComponents
             Assert.Throws<ArgumentOutOfRangeException>(() => line.AnimationSetHP(hp));
         }
 
-        public static List<TestCaseData> HPColorTestData = new List<TestCaseData>
+        public static List<TestCaseData> HpColorTestData = new List<TestCaseData>
         {
             new TestCaseData(100, Color.Green),
             new TestCaseData(50, Color.Green),
@@ -75,17 +74,17 @@ namespace BattleLibTest.GraphicComponents
             new TestCaseData(24, Color.Red)
         };
 
-        [TestCaseSource("HPColorTestData")]
+        [TestCaseSource(nameof(HpColorTestData))]
         public void Draw_SetNumberOfHp_HPLineHasExpectedColor(int hp, Color color)
         {
-            var hpLineStub = new Mock<IGraphicComponent>();
-            var line = CreateLine(hpLineStub.Object);
+            var hpLineStub = A.Fake<IGraphicComponent>();
+            var line = CreateLine(hpLineStub);
             line.SetCoordinates(0, 0, 500, 500);
 
             line.Current = hp;
             line.Draw();
 
-            hpLineStub.VerifySet(o => o.Color = color, Times.Once);
+            A.CallToSet(() => hpLineStub.Color).To(color).MustHaveHappened(Repeated.Exactly.Once);
         }
 
         [TestCase]
@@ -103,12 +102,10 @@ namespace BattleLibTest.GraphicComponents
         [TestCase]
         public void Draw_ZeroMaxHP_HPLineHasZeroSize()
         {
-            float height = -1.0f;
-            float width = -1.0f;
-            var hpLine = new Mock<IGraphicComponent>();
-            hpLine.SetupSet(o => o.Height = It.IsAny<float>()).Callback<float>(f => height = f);
-            hpLine.SetupSet(o => o.Width = It.IsAny<float>()).Callback<float>(f => width = f);
-            var line = CreateLine(hpLine.Object);
+            var hpLine = A.Fake<IGraphicComponent>();
+            hpLine.Height = -1.0f;
+            hpLine.Width = -1.0f;
+            var line = CreateLine(hpLine);
             
             line.SetCoordinates(0, 0, 500, 500);
 
@@ -117,7 +114,7 @@ namespace BattleLibTest.GraphicComponents
 
             line.Draw();
 
-            Assert.IsTrue(height.AlmostEqual(0) || width.AlmostEqual(0));
+            Assert.IsTrue(hpLine.Width.AlmostEqual(0) || hpLine.Height.AlmostEqual(0));
             
         }
 
@@ -133,13 +130,13 @@ namespace BattleLibTest.GraphicComponents
         [TestCase(100, 90, 90)]
         [TestCase(80, 70, 70)]
         [TestCase(20, 0, 0)]
-        public void Current_LowerMaxHp_IsChangedToFitInRange(int initalHP, int maxHP, int resultHP)
+        public void Current_LowerMaxHp_IsChangedToFitInRange(int initalHp, int maxHp, int resultHp)
         {
             var line = CreateLine();
-            line.Current = initalHP;
-            line.MaxHP = maxHP;
+            line.Current = initalHp;
+            line.MaxHP = maxHp;
 
-            Assert.AreEqual(resultHP, line.Current);
+            Assert.AreEqual(resultHp, line.Current);
         }
 
         [TestCase(-10)]

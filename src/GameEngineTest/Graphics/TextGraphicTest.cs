@@ -1,9 +1,9 @@
 ﻿using GameEngine.Graphics;
 using Microsoft.Xna.Framework;
-using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using FakeItEasy;
 using GameEngine.Graphics.General;
 
 namespace GameEngineTest.Graphics
@@ -13,10 +13,11 @@ namespace GameEngineTest.Graphics
     {
         private TextGraphic CreateTextGraphic(float charHeight = 16.0f)
         {
-            var spriteFontMock = new Mock<ISpriteFont>();
-            var testObj = new TextGraphic(spriteFontMock.Object);
+            var spriteFontMock = A.Fake<ISpriteFont>();
+            var testObj = new TextGraphic(spriteFontMock);
 
-            spriteFontMock.Setup(o => o.MeasureString(It.IsAny<string>())).Returns<string>(s => new Vector2(charHeight * s.Length, charHeight));
+            A.CallTo(() => spriteFontMock.MeasureString(A<string>.Ignored))
+                .ReturnsLazily((string s) => new Vector2(charHeight * s.Length, charHeight));
 
             return testObj;
         }

@@ -1,8 +1,8 @@
 ﻿using System.Xml.Linq;
+using FakeItEasy;
 using GameEngine.GUI.Builder;
 using GameEngine.GUI.Builder.Panels;
 using Microsoft.Xna.Framework;
-using Moq;
 using NUnit.Framework;
 
 namespace GameEngine.GUI.Test.Builder.Panels
@@ -28,7 +28,7 @@ namespace GameEngine.GUI.Test.Builder.Panels
             var xmlDocument = XDocument.Parse(xml);
             var builder = CreateBuilder();
 
-            var grid = builder.BuildGridFromNode(xmlDocument.Root);
+            var grid = builder.BuildGridFromNode(xmlDocument.Root, null);
 
             Assert.AreEqual(rows, grid.Rows);
             Assert.AreEqual(columns, grid.Columns);
@@ -73,7 +73,7 @@ namespace GameEngine.GUI.Test.Builder.Panels
             var xmlDocument = XDocument.Parse(xml);
             var builder = CreateBuilder();
 
-            var grid = builder.BuildGridFromNode(xmlDocument.Root);
+            var grid = builder.BuildGridFromNode(xmlDocument.Root, null);
 
             for (var i = 0; i < rows; i++)
             {
@@ -104,21 +104,22 @@ namespace GameEngine.GUI.Test.Builder.Panels
             var xmlDocument = XDocument.Parse(xml);
             var builder = CreateBuilder();
 
-            var grid = builder.BuildGridFromNode(xmlDocument.Root);
+            var grid = builder.BuildGridFromNode(xmlDocument.Root, null);
 
             Assert.AreEqual(expectedContraint, grid.Constraints);
         }
 
         private static GridBuilder CreateBuilder()
         {
-            var builderFactory = new Mock<IBuilderFactory>();
-            var builder = new Mock<IBuilder>();
+            var builderFactory = A.Fake<IBuilderFactory>();
+            var builder = A.Fake<IBuilder>();
 
-            builder.Setup(o => o.BuildFromNode(It.IsAny<XElement>(), It.IsAny<object>()))
-                .Returns<XElement>(element => new DummyLabel{Text = element.Attribute("Text")?.Value});
-            builderFactory.Setup(o => o.GetBuilder(It.IsAny<XElement>())).Returns(builder.Object);
+            A.CallTo(() => builder.BuildFromNode(A<XElement>.Ignored, A<object>.Ignored))
+                .ReturnsLazily((XElement x, object o) => new DummyLabel {Text = x.Attribute("Text")?.Value});
 
-            return new GridBuilder(builderFactory.Object);
+            A.CallTo(() => builderFactory.GetBuilder(A<XElement>.Ignored)).Returns(builder);
+
+            return new GridBuilder(builderFactory);
         }
     }
 

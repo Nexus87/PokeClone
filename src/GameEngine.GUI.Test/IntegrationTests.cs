@@ -1,4 +1,5 @@
 ﻿using Castle.Core.Internal;
+using FakeItEasy;
 using GameEngine.Graphics.General;
 using GameEngine.GUI.Builder;
 using GameEngine.GUI.Builder.Controls;
@@ -9,7 +10,6 @@ using GameEngine.GUI.Panels;
 using GameEngine.GUI.Renderers;
 using GameEngine.GUI.Renderers.PokemonClassicRenderer;
 using Microsoft.Xna.Framework;
-using Moq;
 using NUnit.Framework;
 
 namespace GameEngine.GUI.Test
@@ -53,7 +53,7 @@ namespace GameEngine.GUI.Test
             public IButtonRenderer BuildButtonRenderer()
             {
 
-                return new ClassicButtonRenderer(new Mock<ITexture2D>().Object, new Mock<ISpriteFont>().Object);
+                return new ClassicButtonRenderer(A.Fake<ITexture2D>(), A.Fake<ISpriteFont>());
             }
 
             public float DefaultTextHeight { get; } = 16;

@@ -1,9 +1,9 @@
 ﻿using GameEngine.Graphics;
 using GameEngine.Utils;
 using GameEngineTest.TestUtils;
-using Moq;
 using NUnit.Framework;
 using System.Collections.Generic;
+using FakeItEasy;
 
 namespace GameEngineTest.Graphics
 {
@@ -23,16 +23,17 @@ namespace GameEngineTest.Graphics
         [TestCase]
         public void SetText_ValidText_CallsSplitter()
         {
-            var splitterMock = new Mock<ITextSplitter>();
-            var textBox = CreateTextBox(splitterMock.Object);
+            var splitterMock = A.Fake<ITextSplitter>();
+            var textBox = CreateTextBox(splitterMock);
 
             // Return 0 so we don't have to provide the splitted text
-            splitterMock.Setup(o => o.Count).Returns(0);
+            A.CallTo(() => splitterMock.Count).Returns(0);
             textBox.Text = SAMPLE_STRING;
 
             textBox.Draw(new SpriteBatchMock());
 
-            splitterMock.Verify(o => o.SplitText(It.IsAny<int>(), SAMPLE_STRING), Times.AtLeastOnce());
+            A.CallTo(() => splitterMock.SplitText(A<int>.Ignored, SAMPLE_STRING))
+                .MustHaveHappened(Repeated.AtLeast.Once);
         }
 
         [TestCase]
@@ -55,7 +56,7 @@ namespace GameEngineTest.Graphics
             var initialLines = new List<string> { "Text", "Text" };
 
             var splitterStub = CreateSplitterStub(initialLines);
-            var textBox = CreateTextBox(splitterStub, 2);
+            var textBox = CreateTextBox(splitterStub);
 
             textBox.Text = SAMPLE_STRING;
 
@@ -70,11 +71,11 @@ namespace GameEngineTest.Graphics
         [TestCase]
         public void Draw_SetValidText_SplittedTextIsDrawn()
         {
-            var firstLine = "String1";
-            var secondLine = "String2";
+            const string firstLine = "String1";
+            const string secondLine = "String2";
 
             var splitterStub = CreateSplitterStub(new List<string> { firstLine, secondLine });
-            var textBox = CreateTextBox(splitterStub, 2);
+            var textBox = CreateTextBox(splitterStub);
 
             textBox.Text = SAMPLE_STRING;
             textBox.Draw(new SpriteBatchMock());
@@ -86,11 +87,11 @@ namespace GameEngineTest.Graphics
         [TestCase]
         public void NextLine_HasNoNextLines_DoesNothing()
         {
-            var firstLine = "String1";
-            var secondLine = "String2";
+            const string firstLine = "String1";
+            const string secondLine = "String2";
 
             var splitterStub = CreateSplitterStub(new List<string> { firstLine, secondLine });
-            var textBox = CreateTextBox(splitterStub, 2);
+            var textBox = CreateTextBox(splitterStub);
 
             textBox.Text = SAMPLE_STRING;
             textBox.NextLine();
@@ -103,11 +104,11 @@ namespace GameEngineTest.Graphics
         [TestCase]
         public void NextLine_CalledTwiceWithNoNextLine_DoesNothing()
         {
-            var firstLine = "String1";
-            var secondLine = "String2";
+            const string firstLine = "String1";
+            const string secondLine = "String2";
 
             var splitterStub = CreateSplitterStub(new List<string> { firstLine, secondLine });
-            var textBox = CreateTextBox(splitterStub, 2);
+            var textBox = CreateTextBox(splitterStub);
 
             textBox.Text = SAMPLE_STRING;
             textBox.NextLine();
@@ -126,7 +127,7 @@ namespace GameEngineTest.Graphics
             var thirdLine = "String3";
 
             var splitterStub = CreateSplitterStub(new List<string> { firstLine, secondLine, thirdLine });
-            var textBox = CreateTextBox(splitterStub, 2);
+            var textBox = CreateTextBox(splitterStub);
 
             textBox.Text = SAMPLE_STRING;
             textBox.NextLine();
@@ -145,7 +146,7 @@ namespace GameEngineTest.Graphics
             var fourthLine = "String4";
 
             var splitterStub = CreateSplitterStub(new List<string> { firstLine, secondLine, thirdLine, fourthLine });
-            var textBox = CreateTextBox(splitterStub, 2);
+            var textBox = CreateTextBox(splitterStub);
 
             textBox.Text = SAMPLE_STRING;
             textBox.NextLine();

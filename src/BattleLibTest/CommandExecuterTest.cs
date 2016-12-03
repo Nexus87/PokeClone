@@ -3,7 +3,7 @@ using BattleLib;
 using BattleLib.Components.BattleState;
 using BattleLib.Components.BattleState.Commands;
 using BattleLibTest.Utils;
-using Moq;
+using FakeItEasy;
 using NUnit.Framework;
 
 namespace BattleLibTest
@@ -11,60 +11,60 @@ namespace BattleLibTest
     [TestFixture]
     public class CommandExecuterTest
     {
-        private MoveEffectCalculatorStub calculator;
-        private Mock<IEventCreator> creatorMock;
-        private TestFactory factory;
+        private MoveEffectCalculatorStub _calculator;
+        private IEventCreator _creatorMock;
+        private TestFactory _factory;
 
         [SetUp]
         public void Setup()
         {
-            calculator = new MoveEffectCalculatorStub();
-            creatorMock = new Mock<IEventCreator>();
-            factory = new TestFactory();
-        }
-        
-        [TestCase(100, 10, 90)]
-        public void ExecuteMove_NonCritical_PokemonHPReduces(int HP, int damage, int result)
-        {
-            var executer = CreateExecuter();
-            factory.CreateAllPokemon(HP: HP);
-            
-            ExecuteMoveCommand(executer, factory.PlayerID, damage);
-
-            Assert.AreEqual(result, factory.GetPlayerPokemon().HP);
+            _calculator = new MoveEffectCalculatorStub();
+            _creatorMock = A.Fake<IEventCreator>();
+            _factory = new TestFactory();
         }
 
         [TestCase(100, 10, 90)]
-        public void ExecuteMove_NonCritical_EventCreatorSetHPCalled(int HP, int damage, int result)
+        public void ExecuteMove_NonCritical_PokemonHPReduces(int hp, int damage, int result)
         {
             var executer = CreateExecuter();
-            factory.CreateAllPokemon(HP: HP);
+            _factory.CreateAllPokemon(hp);
 
-            ExecuteMoveCommand(executer, factory.PlayerID, damage);
+            ExecuteMoveCommand(executer, _factory.PlayerID, damage);
 
-            creatorMock.Verify(c => c.SetHP(factory.PlayerID, result), Times.Once);
+            Assert.AreEqual(result, _factory.GetPlayerPokemon().HP);
+        }
+
+        [TestCase(100, 10, 90)]
+        public void ExecuteMove_NonCritical_EventCreatorSetHPCalled(int hp, int damage, int result)
+        {
+            var executer = CreateExecuter();
+            _factory.CreateAllPokemon(hp);
+
+            ExecuteMoveCommand(executer, _factory.PlayerID, damage);
+
+            A.CallTo(() => _creatorMock.SetHP(_factory.PlayerID, result)).MustHaveHappened(Repeated.Exactly.Once);
         }
 
         [Test]
         public void ExecuteMove_Critical_EventCreatorCriticalCalled()
         {
             var executer = CreateExecuter();
-            factory.CreateAllPokemon();
+            _factory.CreateAllPokemon();
 
-            ExecuteMoveCommand(executer, critical: true);
+            ExecuteMoveCommand(executer, true);
 
-            creatorMock.Verify(c => c.Critical(), Times.Once);
+            A.CallTo(() => _creatorMock.Critical()).MustHaveHappened(Repeated.Exactly.Once);
         }
 
         [Test]
         public void ExecuteMove_Critical_EventCreatorCriticalNotCalled()
         {
             var executer = CreateExecuter();
-            factory.CreateAllPokemon();
+            _factory.CreateAllPokemon();
 
-            ExecuteMoveCommand(executer, critical: false);
+            ExecuteMoveCommand(executer);
 
-            creatorMock.Verify(c => c.Critical(), Times.Never);
+            A.CallTo(() => _creatorMock.Critical()).MustNotHaveHappened();
         }
 
         [TestCase(1.1f, MoveEfficiency.VeryEffective)]
@@ -74,11 +74,12 @@ namespace BattleLibTest
         public void ExecuteMove_MoveEffective_EventCreatorEffectivCalled(float modifier, MoveEfficiency expected)
         {
             var executer = CreateExecuter();
-            factory.CreateAllPokemon();
+            _factory.CreateAllPokemon();
 
             ExecuteMoveCommand(executer, typeModifier: modifier);
 
-            creatorMock.Verify(c => c.Effective(expected, It.IsAny<PokemonWrapper>()), Times.Once);
+            A.CallTo(() => _creatorMock.Effective(expected, A<PokemonWrapper>.Ignored))
+                .MustHaveHappened(Repeated.Exactly.Once);
         }
 
         [TestCase(StatusCondition.Normal)]
@@ -87,11 +88,11 @@ namespace BattleLibTest
         public void ExecuteMove_ChangingStatusCondition_PokemonConditionChanged(StatusCondition condition)
         {
             var executer = CreateExecuter();
-            factory.CreateAllPokemon();
+            _factory.CreateAllPokemon();
 
-            ExecuteMoveCommand(executer, target: factory.PlayerID, newCondition: condition);
+            ExecuteMoveCommand(executer, target: _factory.PlayerID, newCondition: condition);
 
-            Assert.AreEqual(condition, factory.GetPlayerPokemon().Condition);
+            Assert.AreEqual(condition, _factory.GetPlayerPokemon().Condition);
         }
 
         [TestCase(StatusCondition.KO)]
@@ -99,45 +100,48 @@ namespace BattleLibTest
         public void ExecuteMove_ChangingStatusCondition_EventCreatorSetStatusCalled(StatusCondition condition)
         {
             var executer = CreateExecuter();
-            factory.CreateAllPokemon();
+            _factory.CreateAllPokemon();
 
-            ExecuteMoveCommand(executer, target: factory.PlayerID, newCondition: condition);
+            ExecuteMoveCommand(executer, target: _factory.PlayerID, newCondition: condition);
 
-            creatorMock.Verify(c => c.SetStatus(It.IsAny<PokemonWrapper>(), condition), Times.Once);
+            A.CallTo(() => _creatorMock.SetStatus(A<PokemonWrapper>.Ignored, condition))
+                .MustHaveHappened(Repeated.Exactly.Once);
         }
 
         [Test]
         public void ExecuteMove_StatusDoesNotChange_EventCreatorSetStatusNotCalled()
         {
             var executer = CreateExecuter();
-            factory.CreateAllPokemon();
+            _factory.CreateAllPokemon();
 
-            ExecuteMoveCommand(executer, target: factory.PlayerID, newCondition: StatusCondition.Normal);
+            ExecuteMoveCommand(executer, target: _factory.PlayerID);
 
-            creatorMock.Verify(c => c.SetStatus(It.IsAny<PokemonWrapper>(), It.IsAny<StatusCondition>()), Times.Never);
+            A.CallTo(() => _creatorMock.SetStatus(A<PokemonWrapper>.Ignored, A<StatusCondition>.Ignored))
+                .MustNotHaveHappened();
         }
 
         private void ExecuteMoveCommand(CommandExecuter executer, ClientIdentifier clientIdentifier, int damage)
         {
-            var command = new MoveCommand(clientIdentifier, clientIdentifier, factory.CreateMove());
-            calculator.Damage = damage;
+            var command = new MoveCommand(clientIdentifier, clientIdentifier, _factory.CreateMove());
+            _calculator.Damage = damage;
             executer.DispatchCommand(command);
         }
 
-        private void ExecuteMoveCommand(CommandExecuter executer, bool critical = false, float typeModifier = 1, ClientIdentifier target = null, StatusCondition newCondition = StatusCondition.Normal)
+        private void ExecuteMoveCommand(CommandExecuter executer, bool critical = false, float typeModifier = 1,
+            ClientIdentifier target = null, StatusCondition newCondition = StatusCondition.Normal)
         {
             if (target == null)
-                target = factory.PlayerID;
-            var command = new MoveCommand(target, target, factory.CreateMove());
-            calculator.IsCritical = critical;
-            calculator.TypeModifier = typeModifier;
-            calculator.StatusCondition = newCondition;
+                target = _factory.PlayerID;
+            var command = new MoveCommand(target, target, _factory.CreateMove());
+            _calculator.IsCritical = critical;
+            _calculator.TypeModifier = typeModifier;
+            _calculator.StatusCondition = newCondition;
             executer.DispatchCommand(command);
         }
 
         private CommandExecuter CreateExecuter()
         {
-            return new CommandExecuter(calculator, creatorMock.Object) { Data = factory.BattleData };
+            return new CommandExecuter(_calculator, _creatorMock) {Data = _factory.BattleData};
         }
     }
 }

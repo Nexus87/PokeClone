@@ -1,6 +1,6 @@
-﻿using GameEngine.Graphics;
+﻿using FakeItEasy;
+using GameEngine.Graphics;
 using GameEngineTest.TestUtils;
-using Moq;
 using NUnit.Framework;
 using GameEngine.Graphics.Layouts;
 
@@ -9,92 +9,98 @@ namespace GameEngineTest.Graphics
     [TestFixture]
     public class ContainerTest
     {
-        private Mock<ILayout> layoutMock;
+        private ILayout _layoutMock;
+        private const int InitialCallTimes = 1;
 
         [SetUp]
         public void SetUp()
         {
-            layoutMock = new Mock<ILayout>();
+            _layoutMock = A.Fake<ILayout>();
         }
 
         [TestCase]
         public void Draw_PreferredWidthOfAComponentChange_LayoutContainerIsTriggered()
         {
-            var componentMock = new GraphicComponentMock { HorizontalPolicy = ResizePolicy.Preferred };
+            var componentMock = new GraphicComponentMock {HorizontalPolicy = ResizePolicy.Preferred};
             var container = CreateContainer(componentMock);
 
             componentMock.RaisePreferredSizeChanged();
             container.Draw();
 
-            layoutMock.Verify(l => l.LayoutContainer(container), Times.Once);
+            A.CallTo(() => _layoutMock.LayoutContainer(container))
+                .MustHaveHappened(Repeated.AtLeast.Times(InitialCallTimes + 1));
         }
 
         [TestCase]
         public void Draw_PreferredHeightOfAComponentChange_LayoutContainerIsTriggered()
         {
-            var componentMock = new GraphicComponentMock { VerticalPolicy = ResizePolicy.Preferred };
+            var componentMock = new GraphicComponentMock {VerticalPolicy = ResizePolicy.Preferred};
             var container = CreateContainer(componentMock);
 
             componentMock.RaisePreferredSizeChanged();
             container.Draw();
 
-            layoutMock.Verify(l => l.LayoutContainer(container), Times.Once);
+            A.CallTo(() => _layoutMock.LayoutContainer(container))
+                .MustHaveHappened(Repeated.AtLeast.Times(InitialCallTimes + 1));
         }
 
         [TestCase]
         public void Draw_FixeWidthComponentSizeChanged_LayoutContainerIsTriggered()
         {
-            var componentMock = new GraphicComponentMock { HorizontalPolicy = ResizePolicy.Fixed };
+            var componentMock = new GraphicComponentMock {HorizontalPolicy = ResizePolicy.Fixed};
             var container = CreateContainer(componentMock);
 
             componentMock.RaiseSizeChanged();
             container.Draw();
 
-            layoutMock.Verify(l => l.LayoutContainer(container), Times.Once);
+            A.CallTo(() => _layoutMock.LayoutContainer(container))
+                .MustHaveHappened(Repeated.AtLeast.Times(InitialCallTimes + 1));
         }
 
         [TestCase]
         public void Draw_FixedHightComponentSizeChanged_LayoutContainerIsTriggered()
         {
-            var componentMock = new GraphicComponentMock { VerticalPolicy = ResizePolicy.Fixed };
+            var componentMock = new GraphicComponentMock {VerticalPolicy = ResizePolicy.Fixed};
             var container = CreateContainer(componentMock);
 
             componentMock.RaiseSizeChanged();
             container.Draw();
 
-            layoutMock.Verify(l => l.LayoutContainer(container), Times.Once);
+            A.CallTo(() => _layoutMock.LayoutContainer(container))
+                .MustHaveHappened(Repeated.AtLeast.Times(InitialCallTimes + 1));
         }
 
         [TestCase]
         public void Draw_NoFixeWidthComponentSizeChanged_LayoutContainerIsNotTriggered()
         {
-            var componentMock = new GraphicComponentMock { HorizontalPolicy = ResizePolicy.Extending };
+            var componentMock = new GraphicComponentMock {HorizontalPolicy = ResizePolicy.Extending};
             var container = CreateContainer(componentMock);
 
             componentMock.RaiseSizeChanged();
             container.Draw();
 
-            layoutMock.Verify(l => l.LayoutContainer(container), Times.Never);
+            A.CallTo(() => _layoutMock.LayoutContainer(container))
+                .MustHaveHappened(Repeated.Exactly.Times(InitialCallTimes));
         }
 
         [TestCase]
         public void Draw_NoFixedHightComponentSizeChanged_LayoutContainerIsNotTriggered()
         {
-            var componentMock = new GraphicComponentMock { VerticalPolicy = ResizePolicy.Extending };
+            var componentMock = new GraphicComponentMock {VerticalPolicy = ResizePolicy.Extending};
             var container = CreateContainer(componentMock);
 
             componentMock.RaiseSizeChanged();
             container.Draw();
 
-            layoutMock.Verify(l => l.LayoutContainer(container), Times.Never);
+            A.CallTo(() => _layoutMock.LayoutContainer(container))
+                .MustHaveHappened(Repeated.Exactly.Times(InitialCallTimes));
         }
 
-        private Container CreateContainer(GraphicComponentMock componentMock)
+        private Container CreateContainer(IGraphicComponent componentMock)
         {
-            var container = new Container() { Layout = layoutMock.Object};
+            var container = new Container() {Layout = _layoutMock};
             container.AddComponent(componentMock);
             container.Draw();
-            layoutMock.ResetCalls();
 
             return container;
         }

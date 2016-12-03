@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
+using FakeItEasy;
 using GameEngine.Graphics;
 using GameEngine.Graphics.Layouts;
 using GameEngineTest.TestUtils;
-using Moq;
-using Moq.Protected;
 using NUnit.Framework;
 
 namespace GameEngineTest.Graphics.Layouts
@@ -11,9 +10,9 @@ namespace GameEngineTest.Graphics.Layouts
     [TestFixture]
     public class AbstractLayoutTest
     {
-        private static Mock<AbstractLayout> CreateLayoutMock()
+        private static AbstractLayout CreateLayoutMock()
         {
-            var layoutMock = new Mock<AbstractLayout> {CallBase = true};
+            var layoutMock = A.Fake<AbstractLayout>();
 
             return layoutMock;
         }
@@ -34,7 +33,7 @@ namespace GameEngineTest.Graphics.Layouts
             new TestCaseData(0.0f, 0.0f, 0.0f, 0.0f, 10),
         };
 
-        [TestCaseSource("ValidPropertyData")]
+        [TestCaseSource(nameof(ValidPropertyData))]
         public void ProtectedProperties_SetLeftMargin_RespectsSetMargins(float x, float y, float width, float height, int margin)
         {
             var testObj = new TestLayout();
@@ -47,7 +46,7 @@ namespace GameEngineTest.Graphics.Layouts
             testObj.TestProperties(x + margin, y, width - margin, height);
         }
             
-        [TestCaseSource("ValidPropertyData")]
+        [TestCaseSource(nameof(ValidPropertyData))]
         public void ProtectedProperties_SetRightMargin_RespectsSetMargins(float x, float y, float width, float height, int margin)
         {
             var testObj = new TestLayout();
@@ -60,7 +59,7 @@ namespace GameEngineTest.Graphics.Layouts
             testObj.TestProperties(x, y, width - margin, height);
         }
 
-        [TestCaseSource("ValidPropertyData")]
+        [TestCaseSource(nameof(ValidPropertyData))]
         public void ProtectedProperties_SetTopMargin_RespectsSetMargins(float x, float y, float width, float height, int margin)
         {
             var testObj = new TestLayout();
@@ -74,7 +73,7 @@ namespace GameEngineTest.Graphics.Layouts
         }
 
         
-        [TestCaseSource("ValidPropertyData")]
+        [TestCaseSource(nameof(ValidPropertyData))]
         public void ProtectedProperties_SetBottomMargin_RespectsSetMargins(float x, float y, float width, float height, int margin)
         {
             var testObj = new TestLayout();
@@ -87,7 +86,7 @@ namespace GameEngineTest.Graphics.Layouts
             testObj.TestProperties(x, y, width, height - margin);
         }
 
-        [TestCaseSource("ValidPropertyData")]
+        [TestCaseSource(nameof(ValidPropertyData))]
         public void ProtectedProperties_SetAllMargins_RespectsSetMargins(float x, float y, float width, float height, int margin)
         {
             var testObj = new TestLayout();
@@ -106,15 +105,15 @@ namespace GameEngineTest.Graphics.Layouts
         {
             var container = CreateContainer();
             var layoutMock = CreateLayoutMock();
-            var testLayout = layoutMock.Object;
+            var testLayout = layoutMock;
 
             container.SetCoordinates(200, 200, 200, 200);
             testLayout.LayoutContainer(container);
-            
-            layoutMock.Protected().Verify("UpdateComponents", Times.AtLeastOnce(), container);
+
+            A.CallTo(layoutMock).Where(x => x.Method.Name == "UpdateComponents").MustHaveHappened(Repeated.AtLeast.Once);
         }
 
-        private Container CreateContainer()
+        private static Container CreateContainer()
         {
             return new Container();
         }

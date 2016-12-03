@@ -1,9 +1,9 @@
-﻿using GameEngine;
+﻿using FakeItEasy;
+using GameEngine;
 using GameEngineTest.TestUtils;
 using MainModule;
 using MainModule.Graphics;
 using MainModuleTest.Utils;
-using Moq;
 using NUnit.Framework;
 
 namespace MainModuleTest.Graphics
@@ -32,34 +32,28 @@ namespace MainModuleTest.Graphics
         public void PlayerMove_GivenDirection_MapIsMovedInExpectedDirection(Direction moveDirection, Direction expectedMapMoveDirection)
         {
             var player = new CharacterSpriteMock();
-            var mapMock = new Mock<IMapController>();
-            var screen = CreateWorldScreen(player, mapMock.Object);
+            var mapMock = A.Fake<IMapController>();
+            var screen = CreateWorldScreen(player, mapMock);
 
             screen.Setup();
             screen.PlayerMoveDirection(moveDirection);
 
-            mapMock.Verify(m => m.MoveMap(expectedMapMoveDirection), Times.Once());
-        }
-        private static MapControllerMock CreateMap()
-        {
-            const int defaultWidht = 10;
-            const int defaultHeight = 10;
-            return CreateMap(defaultWidht, defaultHeight);
+            A.CallTo(() => mapMock.MoveMap(expectedMapMoveDirection)).MustHaveHappened(Repeated.Exactly.Once);
         }
 
-        private static MapControllerMock CreateMap(int width, int height)
+        private static MapControllerMock CreateMap()
         {
             var mock = new MapControllerMock();
             return mock;
         }
 
-        private static WorldScreen CreateWorldScreen(CharacterSpriteMock player, IMapController mapController, ScreenConstants screenConstants = null)
+        private static WorldScreen CreateWorldScreen(ICharacterSprite player, IMapController mapController, ScreenConstants screenConstants = null)
         {
             if(screenConstants == null)
                 screenConstants = new ScreenConstants();
-            var loaderMock = new Mock<ISpriteLoader>();
-            loaderMock.Setup(o => o.GetSprite(It.IsAny<string>())).Returns(player);
-            return new WorldScreen(mapController, loaderMock.Object, screenConstants);
+            var loaderMock = A.Fake<ISpriteLoader>();
+            A.CallTo(() => loaderMock.GetSprite(A<string>.Ignored)).Returns(player);
+            return new WorldScreen(mapController, loaderMock, screenConstants);
         }
     }
 

@@ -38,7 +38,7 @@ namespace GameEngine.GUI.Builder.Controls
             _skin = skin;
         }
 
-        public IGraphicComponent BuildFromNode(XElement element, object controller = null)
+        public IGraphicComponent BuildFromNode(XElement element, object controller)
         {
             var button =  BuildButtonFromNode(element);
             WireUpController(element, button, controller);

@@ -1,9 +1,8 @@
-﻿using GameEngine;
-using GameEngine.Utils;
+﻿using FakeItEasy;
+using GameEngine;
 using GameEngineTest.TestUtils;
 using MainModule;
 using MainModule.Graphics;
-using Moq;
 using NUnit.Framework;
 using Color = Microsoft.Xna.Framework.Color;
 
@@ -27,14 +26,14 @@ namespace MainModuleTest.Graphics
         )
         {
             var screenConstants = new ScreenConstants(screenHeight, screenWidth, Color.Black);
-            var mapMock = CreateMapMock(fieldWidth, fieldHeight, textureSize);
-            var mapController = CreateMapController(mapMock.Object, screenConstants);
+            var mapMock = CreateMapMock(textureSize);
+            var mapController = CreateMapController(mapMock, screenConstants);
 
             mapController.CenterField(fieldX, fieldY);
             mapController.Draw();
 
-            mapMock.VerifySet(m => m.XPosition = expectedX);
-            mapMock.VerifySet(m => m.YPosition = expectedY);
+            A.CallToSet(() => mapMock.XPosition).To(expectedX).MustHaveHappened();
+            A.CallToSet(() => mapMock.YPosition).To(expectedY).MustHaveHappened();
         }
 
         [TestCase(100, 100, 10, 20, 10, 45.0f, 45.0f)]
@@ -47,21 +46,21 @@ namespace MainModuleTest.Graphics
         )
         {
             var screenConstants = new ScreenConstants(screenHeight, screenWidth, Color.Black);
-            var mapMock = CreateMapMock(fieldWidth, fieldHeight, textureSize);
-            var mapController = CreateMapController(mapMock.Object, screenConstants);
+            var mapMock = CreateMapMock(textureSize);
+            var mapController = CreateMapController(mapMock, screenConstants);
 
             mapController.CenterField(0, 0);
             mapController.Draw();
 
-            mapMock.VerifySet(m => m.XPosition = expectedX);
-            mapMock.VerifySet(m => m.YPosition = expectedY);
+            A.CallToSet(() => mapMock.XPosition).To(expectedX).MustHaveHappened();
+            A.CallToSet(() => mapMock.YPosition).To(expectedY).MustHaveHappened();
         }
 
         [TestCase(10, 32, 9, 8)]
         public void SelectedField_AfterSelection_IsAsExpected(int fieldWidth, int fieldHeight, int fieldX, int fieldY)
         {
-            var mapMock = CreateMapMock(fieldWidth, fieldHeight);
-            var map = CreateMapController(mapMock.Object);
+            var mapMock = CreateMapMock();
+            var map = CreateMapController(mapMock);
 
             map.CenterField(fieldX, fieldY);
 
@@ -83,8 +82,8 @@ namespace MainModuleTest.Graphics
             int expectedFieldX, int expedtedFieldY,
             Direction moveDirection)
         {
-            var mapMock = CreateMapMock(fieldWidth, fieldHeight);
-            var map = CreateMapController(mapMock.Object);
+            var mapMock = CreateMapMock();
+            var map = CreateMapController(mapMock);
 
             map.CenterField(startingFieldX, startingFieldY);
             map.MoveMap(moveDirection);
@@ -93,32 +92,22 @@ namespace MainModuleTest.Graphics
             Assert.AreEqual(expedtedFieldY, map.CenteredFieldY);
         }
 
-        private static Mock<IMapGraphic> CreateMapMock(int fieldWidth, int fieldHeight, float textureSize = 32.0f)
+        private static IMapGraphic CreateMapMock(float textureSize = 32.0f)
         {
-            var mock = new Mock<IMapGraphic>();
-            mock.Setup(m => m.TextureSize).Returns(textureSize);
-            mock.Setup(m => m.GetXPositionOfColumn(It.IsAny<int>())).Returns<float>(column => column * textureSize);
-            mock.Setup(m => m.GetYPositionOfRow(It.IsAny<int>())).Returns<float>(row => row * textureSize);
+            var mock = A.Fake<IMapGraphic>();
+            A.CallTo(() => mock.TextureSize).Returns(textureSize);
+            A.CallTo(() => mock.GetXPositionOfColumn(A<int>.Ignored)).ReturnsLazily( (int column) => column * textureSize);
+            A.CallTo(() => mock.GetYPositionOfRow(A<int>.Ignored)).ReturnsLazily((int row) => row * textureSize);
             return mock;
-        }
-
-        private static Table<GraphicComponentMock> CreateTable(int fieldWidth, int fieldHeight)
-        {
-            var table = new Table<GraphicComponentMock>();
-            for(var i = 0; i < fieldWidth; i++)
-                for(var j = 0; j < fieldHeight; j++)
-                    table[j, i] = new GraphicComponentMock();
-
-            return table;
         }
 
         private static FieldMapController CreateMapController(IMapGraphic mapGraphic, ScreenConstants screenConstants = null)
         {
             if(screenConstants == null)
                 screenConstants = DefaultScreenConstant;
-            var mapLoaderFake = new Mock<IMapLoader>();
-            mapLoaderFake.Setup(l => l.LoadMap(It.IsAny<Map>())).Returns(mapGraphic);
-            var mapController = new FieldMapController(mapLoaderFake.Object, screenConstants);
+            var mapLoaderFake = A.Fake<IMapLoader>();
+            A.CallTo(() => mapLoaderFake.LoadMap(A<Map>.Ignored)).Returns(mapGraphic);
+            var mapController = new FieldMapController(mapLoaderFake, screenConstants);
             mapController.Setup();
             mapController.LoadMap(null);
             return mapController;
