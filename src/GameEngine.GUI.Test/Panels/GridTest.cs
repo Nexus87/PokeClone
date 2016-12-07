@@ -50,7 +50,7 @@ namespace GameEngine.GUI.Test.Panels
             var grid = CreateGrid(gridPosition, rows, columns);
             var components = FillGrid(grid, rows.Count, columns.Count);
 
-            grid.Update(new GameTime());
+            grid.Draw();
 
             VerifyComponentsHaveExpectedPosition(components, expectedPositions);
 
@@ -98,7 +98,7 @@ namespace GameEngine.GUI.Test.Panels
             var grid = CreateGrid(gridPosition, rows, columns);
             var components = FillGrid(grid, rows.Count, columns.Count);
 
-            grid.Update(new GameTime());
+            grid.Draw();
 
             VerifyComponentsHaveExpectedPosition(components, expectedPositions);
 
@@ -162,7 +162,7 @@ namespace GameEngine.GUI.Test.Panels
             var grid = CreateGrid(gridPosition, rows, columns);
             var components = FillGridWithPreferedSizes(grid, preferredSizes, rows.Count, columns.Count);
 
-            grid.Update(new GameTime());
+            grid.Draw();
 
             VerifyComponentsHaveExpectedPosition(components, expectedPositions);
 
@@ -196,7 +196,7 @@ namespace GameEngine.GUI.Test.Panels
             var grid = CreateGrid(gridPosition, rows, columns);
             var components = FillGridWithPreferedSizes(grid, preferredSizes, rows.Count, columns.Count);
 
-            grid.Update(new GameTime());
+            grid.Draw();
 
             VerifyComponentsHaveExpectedPosition(components, expectedPositions);
 
@@ -207,7 +207,7 @@ namespace GameEngine.GUI.Test.Panels
             var table = new Table<IGraphicComponent>(rowsCount, columnsCount);
             Extensions.LoopOverTable(rowsCount, columnsCount, (i, j) =>
             {
-                var componentMock = A.Fake<IGraphicComponent>();
+                var componentMock = A.Fake<IGuiComponent>();
                 A.CallTo(() => componentMock.PreferedHeight).Returns(preferredSizes[i, j].Height);
                 A.CallTo(() => componentMock.PreferedWidth).Returns(preferredSizes[i, j].Width);
                 table[i, j] = componentMock;
@@ -254,7 +254,7 @@ namespace GameEngine.GUI.Test.Panels
             var components = FillGrid(grid, rows, columns);
 
             grid.RemoveColumn(columnToBeRemoved);
-            grid.Update(new GameTime());
+            grid.Draw();
 
             foreach (var component in components.EnumerateRows(columnToBeRemoved))
             {
@@ -274,7 +274,7 @@ namespace GameEngine.GUI.Test.Panels
             var components = FillGrid(grid, rows, columns);
 
             grid.RemoveRow(rowToBeRemoved);
-            grid.Update(new GameTime());
+            grid.Draw();
 
             foreach (var component in components.EnumerateColumns(rowToBeRemoved))
             {
@@ -295,7 +295,7 @@ namespace GameEngine.GUI.Test.Panels
             var table = new Table<IGraphicComponent>(rows, columns);
             Extensions.LoopOverTable(rows, columns, (i, j) =>
             {
-                var componentMock = A.Fake<IGraphicComponent>();
+                var componentMock = A.Fake<IGuiComponent>();
                 table[i, j] = componentMock;
                 grid.SetComponent(componentMock, i, j);
             });

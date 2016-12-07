@@ -1,12 +1,10 @@
+using GameEngine.GUI.Controlls;
+
 namespace GameEngine.GUI.Renderers
 {
-    public interface IButtonRenderer : IRenderer
+    public interface IButtonRenderer : IRenderer<Button>
     {
-        float PreferedWidth { get; }
-        float PreferedHeight { get; }
-
-        bool IsSelected { get; set; }
-        string Text { get; set; }
-        float TextHeight { get; set; }
+        float GetPreferedWidth(Button button);
+        float GetPreferedHeight(Button button);
     }
 }

@@ -4,26 +4,24 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace GameEngine.GUI.Renderers
 {
-    public abstract class AbstractRenderer : IRenderer
+    public abstract class AbstractRenderer<T> : IRenderer<T> where T : IGuiComponent
     {
-        public abstract void Render(IArea area);
-
-        protected void RenderText(ISpriteFont font, string text, Vector2 position, float textHeight)
+        protected void RenderText(ISpriteBatch spriteBatch, ISpriteFont font, string text, Vector2 position, float textHeight)
         {
             var scale = textHeight / font.MeasureString(" ").Y;
-            SpriteBatch.DrawString(font, text, position, Color.Black, 0, Vector2.Zero, scale, SpriteEffects.None, 0);
+            spriteBatch.DrawString(font, text, position, Color.Black, 0, Vector2.Zero, scale, SpriteEffects.None, 0);
         }
 
-        protected void RenderText(ISpriteFont font, string text, Rectangle position, float textHeight)
+        protected void RenderText(ISpriteBatch spriteBatch, ISpriteFont font, string text, Rectangle position, float textHeight)
         {
-            RenderText(font, text, position.Location.ToVector2(), textHeight);
+            RenderText(spriteBatch, font, text, position.Location.ToVector2(), textHeight);
         }
 
-        protected void RenderImage(ITexture2D texture, Rectangle position)
+        protected void RenderImage(ISpriteBatch spriteBatch, ITexture2D texture, Rectangle position)
         {
-            SpriteBatch.Draw(texture, position, Color.Black);
+            spriteBatch.Draw(texture, position, Color.Black);
         }
 
-        public ISpriteBatch SpriteBatch { get; set; }
+        public abstract void Render(ISpriteBatch spriteBatch, T component);
     }
 }

@@ -35,6 +35,7 @@
     <Compile Include="Panels\GridInputHandlerTest.cs" />
     <Compile Include="Panels\GridTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestExtensions.cs" />
     <Content Include="packages.config" />
     <Content Include="Resources\BuildFromXml.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

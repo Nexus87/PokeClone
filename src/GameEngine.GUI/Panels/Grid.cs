@@ -77,7 +77,7 @@ namespace GameEngine.GUI.Panels
             }
         }
 
-        public void SetComponent(IGraphicComponent component, int row, int column)
+        public void SetComponent(IGuiComponent component, int row, int column)
         {
             if (component == null)
                 throw new ArgumentNullException(nameof(component));
@@ -88,11 +88,11 @@ namespace GameEngine.GUI.Panels
 
             ChildrenList.Add(component);
             component.Parent = this;
-            _cells[row, column].GraphicComponent = component;
+            _cells[row, column].GuiComponent = component;
             _needsUpdate = true;
         }
 
-        public override void Update(GameTime time)
+        protected override void Update(GameTime time)
         {
             if (Rows == 0 || Columns == 0)
                 return;
@@ -252,7 +252,7 @@ namespace GameEngine.GUI.Panels
 
             foreach (var cell in _cells.EnumerateRows(columnToBeRemoved))
             {
-                ChildrenList.Remove(cell.GraphicComponent);
+                ChildrenList.Remove(cell.GuiComponent);
             }
 
             _cells.RemoveColumn(columnToBeRemoved);
@@ -266,7 +266,7 @@ namespace GameEngine.GUI.Panels
 
             foreach (var cell in _cells.EnumerateColumns(rowToBeRemoved))
             {
-                ChildrenList.Remove(cell.GraphicComponent);
+                ChildrenList.Remove(cell.GuiComponent);
             }
 
             _cells.RemoveRow(rowToBeRemoved);
@@ -274,9 +274,9 @@ namespace GameEngine.GUI.Panels
             _needsUpdate = true;
         }
 
-        public IGraphicComponent GetComponent(int row, int column)
+        public IGuiComponent GetComponent(int row, int column)
         {
-            return _cells[row, column].GraphicComponent;
+            return _cells[row, column].GuiComponent;
         }
     }
 }

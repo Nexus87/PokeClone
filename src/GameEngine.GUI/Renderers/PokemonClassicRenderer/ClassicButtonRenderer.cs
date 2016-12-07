@@ -1,17 +1,11 @@
 ﻿using GameEngine.Graphics.General;
+using GameEngine.GUI.Controlls;
 using Microsoft.Xna.Framework;
 
 namespace GameEngine.GUI.Renderers.PokemonClassicRenderer
 {
-    public class ClassicButtonRenderer : AbstractRenderer, IButtonRenderer
+    public class ClassicButtonRenderer : AbstractRenderer<Button>, IButtonRenderer
     {
-        public float PreferedWidth => TextHeight + _font.MeasureString(Text).Y;
-        public float PreferedHeight => TextHeight;
-
-        public bool IsSelected { get; set; }
-        public string Text { get; set; }
-        public float TextHeight { get; set; }
-
         private ITexture2D _arrow;
         private ISpriteFont _font;
 
@@ -21,28 +15,40 @@ namespace GameEngine.GUI.Renderers.PokemonClassicRenderer
             _font = font;
         }
 
-        public override void Render(IArea area)
+        public override void Render(ISpriteBatch spriteBatch, Button component)
         {
-            SpriteBatch.GraphicsDevice.ScissorRectangle = area.ScissorArea;
-            if (IsSelected)
-                DrawArrow(area.Constraints);
-            DrawText(area.Constraints);
+            spriteBatch.GraphicsDevice.ScissorRectangle = component.ScissorArea;
+            if (component.IsSelected)
+                DrawArrow(spriteBatch, component.Constraints, component);
+            DrawText(spriteBatch, component.Constraints, component);
         }
 
-        private void DrawText(Rectangle position)
+        private void DrawText(ISpriteBatch spriteBatch, Rectangle position, Button button)
         {
             // Position + arrow width
-            position.X += (int) TextHeight;
+            position.X += (int) button.TextHeight;
 
-            RenderText(_font, Text, position, TextHeight);
+            RenderText(spriteBatch, _font, button.Text, position, button.TextHeight);
         }
 
-        private void DrawArrow(Rectangle position)
+        private void DrawArrow(ISpriteBatch spriteBatch, Rectangle position, Button button)
         {
-            position.Height = (int) TextHeight;
-            position.Width = (int) TextHeight;
+            position.Height = (int) button.TextHeight;
+            position.Width = (int) button.TextHeight;
 
-            RenderImage(_arrow, position);
+            RenderImage(spriteBatch, _arrow, position);
+        }
+
+        public float GetPreferedWidth(Button button)
+        {
+            var scale = button.TextHeight / _font.MeasureString(" ").Y;
+            // Text + Arrow
+            return scale * _font.MeasureString(button.Text).X + button.TextHeight;
+        }
+
+        public float GetPreferedHeight(Button button)
+        {
+            return button.TextHeight;
         }
     }
 }

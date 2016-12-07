@@ -18,7 +18,7 @@ namespace GameEngine.GUI.Test.ComponentRegistry
 
         public class DummyComponentBuilder : IBuilder
         {
-            public IGraphicComponent BuildFromNode(XElement element, object controller)
+            public IGuiComponent BuildFromNode(XElement element, object controller)
             {
                 throw new System.NotImplementedException();
             }

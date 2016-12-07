@@ -9,7 +9,7 @@ namespace GameEngine.GUI
         Preferred
     }
 
-    public interface IArea
+    public interface INode
     {
         event EventHandler PreferedSizeChanged;
 

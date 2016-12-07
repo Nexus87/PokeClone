@@ -119,7 +119,7 @@ namespace GameEngine.GUI.Builder.Panels
             return new ColumnProperty {Type = ValueType.Absolute, Width = int.Parse(s)};
         }
 
-        public IGraphicComponent BuildFromNode(XElement element, object controller)
+        public IGuiComponent BuildFromNode(XElement element, object controller)
         {
             return BuildGridFromNode(element, controller);
         }

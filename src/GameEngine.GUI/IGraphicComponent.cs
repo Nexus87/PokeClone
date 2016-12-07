@@ -1,19 +1,16 @@
 ﻿using System.Collections.Generic;
-using GameEngine.GUI.Renderers;
+using GameEngine.Graphics.General;
 using Microsoft.Xna.Framework;
 
 namespace GameEngine.GUI
 {
-    public interface IGraphicComponent : IArea
+    public interface IGraphicComponent : INode
     {
-        bool IsSelectable { get; }
+
         IGraphicComponent Parent { get; set; }
         IEnumerable<IGraphicComponent> Children { get; }
 
-        IRenderer Renderer { get; }
-        bool IsSelected { get; set; }
-        void Update(GameTime time);
-        void HandleKeyInput(CommandKeys key);
+        void Draw(GameTime time, ISpriteBatch spriteBatch);
         void Init();
     }
 

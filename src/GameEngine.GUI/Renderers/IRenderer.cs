@@ -2,9 +2,8 @@ using GameEngine.Graphics.General;
 
 namespace GameEngine.GUI.Renderers
 {
-    public interface IRenderer
+    public interface IRenderer<in TComponentType> where TComponentType : IGuiComponent
     {
-        ISpriteBatch SpriteBatch { get; set; }
-        void Render(IArea area);
+        void Render(ISpriteBatch spriteBatch, TComponentType component);
     }
 }

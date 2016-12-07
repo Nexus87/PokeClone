@@ -107,9 +107,9 @@ namespace GameEngine.GUI.Test.Panels
             var table = new Table<GridCell>();
             Extensions.LoopOverTable(selectableComponents.Rows(), selectableComponents.Columns(), (row, column) =>
             {
-                var component = A.Fake<IGraphicComponent>();
+                var component = A.Fake<IGuiComponent>();
                 A.CallTo(() => component.IsSelectable).Returns(selectableComponents[row, column]);
-                var gridCell = new GridCell() {GraphicComponent = component};
+                var gridCell = new GridCell() {GuiComponent = component};
                 table[row, column] = gridCell;
             });
 

@@ -10,7 +10,7 @@ namespace GameEngine.GUI
 
         public Scene(ISpriteBatch spriteBatch)
         {
-            this._spriteBatch = spriteBatch;
+            _spriteBatch = spriteBatch;
         }
 
         public void Draw(GameTime gameTime)
@@ -25,10 +25,7 @@ namespace GameEngine.GUI
         {
             foreach (var graphicComponent in component.Children)
             {
-                graphicComponent.Update(gameTime);
-                var renderer = graphicComponent.Renderer;
-                renderer.SpriteBatch = _spriteBatch;
-                graphicComponent.Renderer.Render(component);
+                graphicComponent.Draw(gameTime, _spriteBatch);
             }
         }
     }

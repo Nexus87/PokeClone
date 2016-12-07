@@ -23,6 +23,7 @@
   <Files>
     <Compile Include="AbstractGraphicComponent.cs" />
     <Compile Include="Builder\BuilderFactory.cs" />
+    <Compile Include="Builder\BuilderUtils.cs" />
     <Compile Include="Builder\Controls\ButtonBuilder.cs" />
     <Compile Include="Builder\IBuilder.cs" />
     <Compile Include="Builder\IBuilderFactory.cs" />
@@ -33,8 +34,9 @@
     <Compile Include="Controlls\ListView.cs" />
     <Compile Include="GraphicComponentLoader.cs" />
     <Compile Include="GuiModule.cs" />
-    <Compile Include="IArea.cs" />
     <Compile Include="IGraphicComponent.cs" />
+    <Compile Include="IGuiComponent.cs" />
+    <Compile Include="INode.cs" />
     <Compile Include="ISkin.cs" />
     <Compile Include="Panels\Grid.cs" />
     <Compile Include="Panels\GridCell.cs" />

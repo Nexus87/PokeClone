@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using GameEngine.Graphics.General;
 using GameEngine.GUI.Panels;
 using Microsoft.Xna.Framework;
 using ValueType = GameEngine.GUI.Panels.ValueType;
@@ -9,11 +10,10 @@ namespace GameEngine.GUI.Controlls
 {
     public delegate IListCell ListCellFactory(int row);
 
-    public class ListView<T> : GameEngine.GUI.AbstractGraphicComponent
+    public class ListView<T> : AbstractGraphicComponent
     {
         private ListCellFactory _listCellFactory = row => new ListCell();
         private Grid _grid;
-        private bool _needsUpdate = true;
         private ObservableCollection<T> _model;
 
         public ObservableCollection<T> Model
@@ -33,7 +33,7 @@ namespace GameEngine.GUI.Controlls
 
         private void ModelOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
         {
-            _needsUpdate = true;
+            Invalidate();
         }
 
         public ListCellFactory ListCellFactory
@@ -42,7 +42,7 @@ namespace GameEngine.GUI.Controlls
             set
             {
                 _listCellFactory = value;
-                _needsUpdate = true;
+                Invalidate();
             }
         }
 
@@ -51,12 +51,8 @@ namespace GameEngine.GUI.Controlls
 
         }
 
-        public override void Update(GameTime time)
+        protected override void Update(GameTime time)
         {
-            base.Update(time);
-            if(!_needsUpdate)
-                return;
-
             _grid = new Grid {Constraints = Constraints};
             _grid.AddColumn(new ColumnProperty{Type = ValueType.Percent, Share = 1});
             for(var i = 0; i < Model.Count; i++)
@@ -64,7 +60,11 @@ namespace GameEngine.GUI.Controlls
                 _grid.AddRow(new RowProperty{Type = ValueType.Absolute, Height = 100});
                 _grid.SetComponent(ListCellFactory(i), i, 0);
             }
-            _grid.Update(time);
+        }
+
+        protected override void DrawComponent(GameTime time, ISpriteBatch spriteBatch)
+        {
+            _grid.Draw(time, spriteBatch);
         }
     }
 }

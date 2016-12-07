@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using FakeItEasy;
 using GameEngine.GUI.Controlls;
-using Microsoft.Xna.Framework;
 using NUnit.Framework;
 
 namespace GameEngine.GUI.Test.Controls
@@ -21,7 +20,7 @@ namespace GameEngine.GUI.Test.Controls
             var listView = CreateListViewWithCellFactory(r => components[r]);
 
             listView.Model = model;
-            listView.Update(new GameTime());
+            listView.Draw();
 
             foreach (var mock in components)
             {
@@ -37,10 +36,10 @@ namespace GameEngine.GUI.Test.Controls
             var listView = CreateListViewWithCellFactory(r => components[r]);
 
             listView.Model = model;
-            listView.Update(new GameTime());
+            listView.Draw();
 
             model.Remove(model.Last());
-            listView.Update(new GameTime());
+            listView.Draw();
 
             A.CallToSet(() => components.Last().Constraints).MustHaveHappened(Repeated.Exactly.Times(InitialCallTimes));
         }
@@ -53,10 +52,10 @@ namespace GameEngine.GUI.Test.Controls
             var listView = CreateListViewWithCellFactory(r => components[r]);
 
             listView.Model = model;
-            listView.Update(new GameTime());
+            listView.Draw();
 
             model.Add((rows + 1) + "");
-            listView.Update(new GameTime());
+            listView.Draw();
 
             A.CallToSet(() => components.Last().Constraints).MustHaveHappened(Repeated.AtLeast.Once);
 

@@ -2,12 +2,12 @@
 
 namespace GameEngine.GUI.Controlls
 {
-    public interface IListCell : IGraphicComponent
+    public interface IListCell : IGuiComponent
     {
         event EventHandler CellSelected;
     }
 
-    public class ListCell : GameEngine.GUI.AbstractGraphicComponent, IListCell
+    public class ListCell : AbstractGraphicComponent, IListCell
     {
         public event EventHandler CellSelected;
 

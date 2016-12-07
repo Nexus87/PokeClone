@@ -2,10 +2,9 @@
 
 namespace GameEngine.GUI.Renderers
 {
-    public class NullRenderer : IRenderer
+    public class NullRenderer<T> : IRenderer<T> where T : IGuiComponent
     {
-        public ISpriteBatch SpriteBatch { get; set; }
-        public void Render(IArea area)
+        public void Render(ISpriteBatch spriteBatch, T component)
         {
         }
     }
