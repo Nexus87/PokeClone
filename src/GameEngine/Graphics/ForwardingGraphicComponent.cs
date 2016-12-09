@@ -25,7 +25,7 @@ namespace GameEngine.Graphics
         /// set in the constructor.
         /// </remarks>
         protected T InnerComponent { get; private set; }
-        private bool needsUpdate = true;
+        private bool _needsUpdate = true;
 
         public event EventHandler<GraphicComponentSizeChangedEventArgs> PreferredSizeChanged
         {
@@ -81,10 +81,10 @@ namespace GameEngine.Graphics
         /// <see cref="IGraphicComponent.Draw"/>
         public virtual void Draw(GameTime time, ISpriteBatch batch)
         {
-            if (needsUpdate)
+            if (_needsUpdate)
             {
                 Update();
-                needsUpdate = false;
+                _needsUpdate = false;
             }
             InnerComponent.Draw(time, batch);
         }
@@ -107,7 +107,7 @@ namespace GameEngine.Graphics
         /// </remarks>
         protected void Invalidate()
         {
-            needsUpdate = true;
+            _needsUpdate = true;
         }
 
         /// <summary>
@@ -173,6 +173,12 @@ namespace GameEngine.Graphics
                 InnerComponent.VerticalPolicy = value;
             }
         }
+
+        public Rectangle ScissorArea {
+            get { return InnerComponent.ScissorArea; }
+            set { InnerComponent.ScissorArea = value;}
+        }
+        public Rectangle Area => InnerComponent.Area;
 
         public event EventHandler<VisibilityChangedEventArgs> VisibilityChanged
         {

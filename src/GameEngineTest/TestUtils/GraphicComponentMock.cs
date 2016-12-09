@@ -63,6 +63,8 @@ namespace GameEngineTest.TestUtils
         public ResizePolicy HorizontalPolicy { get; set; }
 
         public ResizePolicy VerticalPolicy { get; set; }
+        public Rectangle ScissorArea { get; set; }
+        public Rectangle Area => new Rectangle((int) XPosition, (int) YPosition, (int) Width, (int) Height);
 
         protected void OnSizeChanged()
         {

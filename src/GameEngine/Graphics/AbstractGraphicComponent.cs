@@ -7,20 +7,20 @@ namespace GameEngine.Graphics
 {
     public abstract class AbstractGraphicComponent : IGraphicComponent
     {
-        private bool isVisible = true;
+        private bool _isVisible = true;
 
         public event EventHandler<VisibilityChangedEventArgs> VisibilityChanged = delegate { };
 
         public bool IsVisible
         {
-            get { return isVisible; }
+            get { return _isVisible; }
             set
             {
-                if (value == isVisible)
+                if (value == _isVisible)
                     return;
 
-                isVisible = value;
-                VisibilityChanged(this, new VisibilityChangedEventArgs(isVisible));
+                _isVisible = value;
+                VisibilityChanged(this, new VisibilityChangedEventArgs(_isVisible));
             }
         }
 
@@ -30,26 +30,26 @@ namespace GameEngine.Graphics
         }
 
         protected bool NeedsUpdate { get; set; }
-        private Vector2 position;
-        private Vector2 size;
-        private float preferredHeight;
-        private float preferredWidth;
+        private Vector2 _position;
+        private Vector2 _size;
+        private float _preferredHeight;
+        private float _preferredWidth;
 
         public event EventHandler<GraphicComponentSizeChangedEventArgs> SizeChanged = (a, b) => { };
         public event EventHandler<GraphicComponentSizeChangedEventArgs> PreferredSizeChanged = (a, b) => { };
 
         public float Height
         {
-            get { return size.Y; }
+            get { return _size.Y; }
             set
             {
                 if (value.CompareTo(0) < 0)
                     throw new ArgumentException("Height must be >=0");
-                if (size.Y.AlmostEqual(value))
+                if (_size.Y.AlmostEqual(value))
                     return;
-                size.Y = value;
+                _size.Y = value;
                 Invalidate();
-                SizeChanged(this, new GraphicComponentSizeChangedEventArgs(this, size.X, size.Y));
+                SizeChanged(this, new GraphicComponentSizeChangedEventArgs(this, _size.X, _size.Y));
             }
         }
 
@@ -57,54 +57,54 @@ namespace GameEngine.Graphics
         {
             get
             {
-                return size.X;
+                return _size.X;
             }
             set
             {
                 if (value.CompareTo(0) < 0)
                     throw new ArgumentException("Width must be >=0");
-                if (size.X.AlmostEqual(value))
+                if (_size.X.AlmostEqual(value))
                     return;
-                size.X = value;
+                _size.X = value;
                 Invalidate();
-                SizeChanged(this, new GraphicComponentSizeChangedEventArgs(this, size.X, size.Y));
+                SizeChanged(this, new GraphicComponentSizeChangedEventArgs(this, _size.X, _size.Y));
             }
         }
 
         public float XPosition
         {
-            get { return position.X; }
+            get { return _position.X; }
             set
             {
-                if (position.X.AlmostEqual(value))
+                if (_position.X.AlmostEqual(value))
                     return;
 
-                position.X = value;
+                _position.X = value;
                 Invalidate();
             }
         }
 
         public float YPosition
         {
-            get { return position.Y; }
+            get { return _position.Y; }
             set
             {
-                if (position.Y.AlmostEqual(value))
+                if (_position.Y.AlmostEqual(value))
                     return;
 
-                position.Y = value;
+                _position.Y = value;
                 Invalidate();
             }
         }
 
-        protected Vector2 Position { get { return position; } }
-        protected Vector2 Size { get { return size; } }
+        protected Vector2 Position { get { return _position; } }
+        protected Vector2 Size { get { return _size; } }
         
         public void Draw(GameTime time, ISpriteBatch batch)
         {
             if (Animation != null)
                 Animation.Update(time, this);
-            if (!isVisible)
+            if (!_isVisible)
                 return;
 
             if (NeedsUpdate)
@@ -149,13 +149,13 @@ namespace GameEngine.Graphics
         public float PreferredHeight {
             get
             {
-                return preferredHeight;
+                return _preferredHeight;
             }
             protected set
             {
-                if (value.AlmostEqual(preferredHeight))
+                if (value.AlmostEqual(_preferredHeight))
                     return;
-                preferredHeight = value;
+                _preferredHeight = value;
                 PreferredSizeChanged(this, new GraphicComponentSizeChangedEventArgs(this, PreferredWidth, PreferredHeight));
             }
         }
@@ -163,17 +163,19 @@ namespace GameEngine.Graphics
         {
             get
             {
-                return preferredWidth;
+                return _preferredWidth;
             }
             set
             {
-                if (value.AlmostEqual(preferredWidth))
+                if (value.AlmostEqual(_preferredWidth))
                     return;
-                preferredWidth = value;
+                _preferredWidth = value;
                 PreferredSizeChanged(this, new GraphicComponentSizeChangedEventArgs(this, PreferredWidth, PreferredHeight));
             }
         }
         public ResizePolicy HorizontalPolicy { get; set; }
         public ResizePolicy VerticalPolicy { get; set; }
+        public Rectangle ScissorArea { get; set; }
+        public Rectangle Area => new Rectangle(_position.ToPoint(), _size.ToPoint());
     }
 }

@@ -57,24 +57,23 @@ namespace GameEngineTest.TestUtils
 
                 EndIndex = newEndIdx;
             }
-            
-            if (TableResized != null)
-                TableResized(this, new TableResizeEventArgs(rows, columns));
+
+            TableResized?.Invoke(this, new TableResizeEventArgs(rows, columns));
         }
 
         public int Columns { get; set; }
         public int Rows { get; set; }
 
-        private TableIndex? startIndex;
-        private TableIndex? endIndex;
+        private TableIndex? _startIndex;
+        private TableIndex? _endIndex;
         public TableIndex? StartIndex
         {
-            get { return startIndex; }
+            get { return _startIndex; }
             set
             {
                 if (value == null)
                 {
-                    startIndex = value;
+                    _startIndex = null;
                     return;
                 }
 
@@ -83,18 +82,18 @@ namespace GameEngineTest.TestUtils
                 if ((idx.Row >= Rows || idx.Column >= Columns) && idx.Row != 0 && idx.Column != 0)
                     throw new ArgumentOutOfRangeException();
 
-                startIndex = idx;
+                _startIndex = idx;
             }
         }
 
         public TableIndex? EndIndex
         {
-            get { return endIndex; }
+            get { return _endIndex; }
             set
             {
                 if (value == null)
                 {
-                    endIndex = value;
+                    _endIndex = null;
                     return;
                 }
 
@@ -102,7 +101,7 @@ namespace GameEngineTest.TestUtils
                 if (idx.Row > Rows || idx.Column > Columns)
                     throw new ArgumentOutOfRangeException();
 
-                endIndex = idx;
+                _endIndex = idx;
             }
         }
 
@@ -192,6 +191,9 @@ namespace GameEngineTest.TestUtils
                 throw new NotImplementedException();
             }
         }
+
+        public Rectangle ScissorArea { get; set; }
+        public Rectangle Area => new Rectangle((int) XPosition, (int) YPosition, (int) Width, (int) Height);
 
         public event EventHandler<VisibilityChangedEventArgs> VisibilityChanged
         {

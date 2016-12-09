@@ -86,7 +86,7 @@ namespace GameEngine.Graphics
         ResizePolicy HorizontalPolicy { get; set; }
         ResizePolicy VerticalPolicy { get; set; }
 
-//        Rectangle ScissorArea { get; set; }
-//        Rectangle Area { get; set; }
+        Rectangle ScissorArea { get; set; }
+        Rectangle Area { get; }
     }
 }
