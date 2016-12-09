@@ -16,16 +16,15 @@ namespace GameEngineTest.TestUtils
 
         public void PlayAnimation(IAnimation animation)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public event EventHandler<GraphicComponentSizeChangedEventArgs> SizeChanged;
-        public event EventHandler<GraphicComponentPositionChangedEventArgs> PositionChanged;
         public event EventHandler<GraphicComponentSizeChangedEventArgs> PreferredSizeChanged;
 
         public void RaisePreferredSizeChanged()
         {
-            PreferredSizeChanged(this, new GraphicComponentSizeChangedEventArgs(this, 0, 0));
+            PreferredSizeChanged?.Invoke(this, new GraphicComponentSizeChangedEventArgs(this, 0, 0));
         }
 
         public virtual float XPosition { get; set; }
@@ -37,11 +36,11 @@ namespace GameEngineTest.TestUtils
         public Action DrawCallback = null;
         public void Draw(GameTime time, ISpriteBatch batch)
         {
-            if (!isVisible)
+            if (!_isVisible)
                 return;
             WasDrawn = true;
-            if (DrawCallback != null)
-                DrawCallback();
+            DrawCallback?.Invoke();
+
             if (batch is SpriteBatchMock)
             {
                 batch.Draw(null, new Rectangle((int)XPosition, (int)YPosition, (int)Width, (int)Height), Color);
@@ -67,15 +66,9 @@ namespace GameEngineTest.TestUtils
 
         protected void OnSizeChanged()
         {
-            if (SizeChanged != null)
-                SizeChanged(this, new GraphicComponentSizeChangedEventArgs(this, Width, Height));
+            SizeChanged?.Invoke(this, new GraphicComponentSizeChangedEventArgs(this, Width, Height));
         }
 
-        protected void OnPositionChanged()
-        {
-            if (PositionChanged != null)
-                PositionChanged(this, new GraphicComponentPositionChangedEventArgs(XPosition, YPosition));
-        }
 
         public void RaiseSizeChanged()
         {
@@ -83,20 +76,20 @@ namespace GameEngineTest.TestUtils
         }
 
         public event EventHandler<VisibilityChangedEventArgs> VisibilityChanged = delegate { };
-        private bool isVisible = true;
+        private bool _isVisible = true;
 
         public bool IsVisible
         {
             get
             {
-                return isVisible;
+                return _isVisible;
             }
             set
             {
-                if (isVisible == value)
+                if (_isVisible == value)
                     return;
 
-                isVisible = value;
+                _isVisible = value;
                 VisibilityChanged(this, new VisibilityChangedEventArgs(value));
             }
         }

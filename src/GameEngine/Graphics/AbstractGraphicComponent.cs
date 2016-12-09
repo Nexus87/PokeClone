@@ -35,7 +35,6 @@ namespace GameEngine.Graphics
         private float preferredHeight;
         private float preferredWidth;
 
-        public event EventHandler<GraphicComponentPositionChangedEventArgs> PositionChanged = (a, b) => { };
         public event EventHandler<GraphicComponentSizeChangedEventArgs> SizeChanged = (a, b) => { };
         public event EventHandler<GraphicComponentSizeChangedEventArgs> PreferredSizeChanged = (a, b) => { };
 
@@ -82,7 +81,6 @@ namespace GameEngine.Graphics
 
                 position.X = value;
                 Invalidate();
-                PositionChanged(this, new GraphicComponentPositionChangedEventArgs(position.X, position.Y));
             }
         }
 
@@ -96,7 +94,6 @@ namespace GameEngine.Graphics
 
                 position.Y = value;
                 Invalidate();
-                PositionChanged(this, new GraphicComponentPositionChangedEventArgs(position.X, position.Y));
             }
         }
 

@@ -34,15 +34,6 @@ namespace GameEngine.Graphics
         }
 
         /// <summary>
-        /// Signals that either X or Y has changed.
-        /// </summary>
-        /// <see cref="IGraphicComponent.PositionChanged"/>
-        public event EventHandler<GraphicComponentPositionChangedEventArgs> PositionChanged
-        {
-            add { InnerComponent.PositionChanged += value; }
-            remove { InnerComponent.PositionChanged -= value; }
-        }
-        /// <summary>
         /// Signals that either Width or Height changed.
         /// </summary>
         /// <see cref="IGraphicComponent.SizeChanged"/>

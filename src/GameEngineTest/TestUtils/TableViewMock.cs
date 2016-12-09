@@ -124,7 +124,6 @@ namespace GameEngineTest.TestUtils
         }
 
         public event EventHandler<GraphicComponentSizeChangedEventArgs> SizeChanged { add { } remove { } }
-        public event EventHandler<GraphicComponentPositionChangedEventArgs> PositionChanged { add { } remove { } }
 
         public float XPosition { get; set; }
         public float YPosition { get; set; }

@@ -44,7 +44,7 @@ namespace GameEngineTest.Graphics
         public void Height_SetData_RaiseSizeChangedEvent()
         {
             var testComponent = CreateComponent();
-            bool sizeChangedRaised = false;
+            var sizeChangedRaised = false;
             GraphicComponentSizeChangedEventArgs eventArgs = null;
 
             testComponent.SizeChanged += (obj, args) => { sizeChangedRaised = true; eventArgs = args; };
@@ -61,7 +61,7 @@ namespace GameEngineTest.Graphics
         public void Width_SetData_RaiseSizeChangedEvent()
         {
             var testComponent = CreateComponent();
-            bool sizeChangedRaised = false;
+            var sizeChangedRaised = false;
             GraphicComponentSizeChangedEventArgs eventArgs = null;
 
             testComponent.SizeChanged += (obj, args) => { sizeChangedRaised = true; eventArgs = args; };
@@ -75,43 +75,11 @@ namespace GameEngineTest.Graphics
         }
 
         [TestCase]
-        public void XPosition_SetData_RaisePositionChangedEvent()
-        {
-            var testComponent = CreateComponent();
-            bool positionChangedRaised = false;
-            GraphicComponentPositionChangedEventArgs eventArgs = null;
-            testComponent.PositionChanged += (obj, args) => { positionChangedRaised = true; eventArgs = args; };
-
-            testComponent.XPosition += 1.0f;
-
-            Assert.True(positionChangedRaised);
-            Assert.NotNull(eventArgs);
-            Assert.AreEqual(testComponent.XPosition, eventArgs.XPosition);
-            Assert.AreEqual(testComponent.YPosition, eventArgs.YPosition);
-        }
-
-        [TestCase]
-        public void YPosition_SetData_RaisePositionChangedEvent()
-        {
-            var testComponent = CreateComponent();
-            bool positionChangedRaised = false;
-            GraphicComponentPositionChangedEventArgs eventArgs = null;
-            testComponent.PositionChanged += (obj, args) => { positionChangedRaised = true; eventArgs = args; };
-
-            testComponent.YPosition += 1.0f;
-
-            Assert.True(positionChangedRaised);
-            Assert.NotNull(eventArgs);
-            Assert.AreEqual(testComponent.XPosition, eventArgs.XPosition);
-            Assert.AreEqual(testComponent.YPosition, eventArgs.YPosition);
-        }
-
-        [TestCase]
         public void Width_SetSameData_NoEventRaised()
         {
-            bool sizeEventRaised = false;
+            var sizeEventRaised = false;
             var testComponent = CreateComponent();
-            float currentWidth = testComponent.Width;
+            var currentWidth = testComponent.Width;
             testComponent.SizeChanged += delegate { sizeEventRaised = true; };
 
             testComponent.Width = currentWidth;
@@ -122,40 +90,14 @@ namespace GameEngineTest.Graphics
         [TestCase]
         public void Height_SetSameData_NoEventRaised()
         {
-            bool sizeEventRaised = false;
+            var sizeEventRaised = false;
             var testComponent = CreateComponent();
-            float currentHeight = testComponent.Height;
+            var currentHeight = testComponent.Height;
             testComponent.SizeChanged += delegate { sizeEventRaised = true; };
 
             testComponent.Height = currentHeight;
 
             Assert.False(sizeEventRaised);
-        }
-
-        [TestCase]
-        public void XPosition_SetSameData_NoEventRaised()
-        {
-            bool positionEventRaised = false;
-            var testComponent = CreateComponent();
-            float xPosition = testComponent.XPosition;
-            testComponent.PositionChanged += delegate { positionEventRaised = true; };
-
-            testComponent.XPosition = xPosition;
-
-            Assert.False(positionEventRaised);
-        }
-
-        [TestCase]
-        public void YPosition_SetSameData_NoEventRaised()
-        {
-            bool positionEventRaised = false;
-            var testComponent = CreateComponent();
-            float yPosition = testComponent.YPosition;
-            testComponent.PositionChanged += delegate { positionEventRaised = true; };
-
-            testComponent.YPosition = yPosition;
-
-            Assert.False(positionEventRaised);
         }
 
         [TestCase]
@@ -223,7 +165,7 @@ namespace GameEngineTest.Graphics
         public void Visibility_ChangeVisibilityToFalse_RaisesEvent()
         {
             var testComponent = CreateComponent();
-            bool eventRaised = false;
+            var eventRaised = false;
             testComponent.IsVisible = true;
             testComponent.VisibilityChanged += delegate { eventRaised = true; };
 
@@ -237,7 +179,7 @@ namespace GameEngineTest.Graphics
         public void Visibility_ChangeVisibilityToTrue_RaisesEvent()
         {
             var testComponent = CreateComponent();
-            bool eventRaised = false;
+            var eventRaised = false;
             testComponent.IsVisible = false;
             testComponent.VisibilityChanged += delegate { eventRaised = true; };
 
@@ -251,7 +193,7 @@ namespace GameEngineTest.Graphics
         public void Visibility_SetSameVisibility_NoEventRaised()
         {
             var testComponent = CreateComponent();
-            bool eventRaised = false;
+            var eventRaised = false;
             testComponent.IsVisible = false;
             testComponent.VisibilityChanged += delegate { eventRaised = true; };
 

@@ -40,10 +40,6 @@ namespace GameEngine.Graphics
         /// This event signals that either Width or Height has changed
         /// </summary>
         event EventHandler<GraphicComponentSizeChangedEventArgs> SizeChanged;
-        /// <summary>
-        /// This event signals that either X or Y has changed
-        /// </summary>
-        event EventHandler<GraphicComponentPositionChangedEventArgs> PositionChanged;
 
         event EventHandler<GraphicComponentSizeChangedEventArgs> PreferredSizeChanged;
 
@@ -90,5 +86,7 @@ namespace GameEngine.Graphics
         ResizePolicy HorizontalPolicy { get; set; }
         ResizePolicy VerticalPolicy { get; set; }
 
+//        Rectangle ScissorArea { get; set; }
+//        Rectangle Area { get; set; }
     }
 }

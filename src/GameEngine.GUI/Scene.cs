@@ -6,26 +6,20 @@ namespace GameEngine.GUI
     public class Scene
     {
         public IGraphicComponent Root { get; set; }
-        private readonly ISpriteBatch _spriteBatch;
 
-        public Scene(ISpriteBatch spriteBatch)
+        public void Draw(ISpriteBatch spriteBatch, GameTime gameTime)
         {
-            _spriteBatch = spriteBatch;
-        }
-
-        public void Draw(GameTime gameTime)
-        {
-            _spriteBatch.Begin();
-            DrawComponent(gameTime, Root);
-            _spriteBatch.End();
+            spriteBatch.Begin();
+            DrawComponent(spriteBatch, gameTime, Root);
+            spriteBatch.End();
         }
 
 
-        private void DrawComponent(GameTime gameTime, IGraphicComponent component)
+        private static void DrawComponent(ISpriteBatch spriteBatch, GameTime gameTime, IGraphicComponent component)
         {
             foreach (var graphicComponent in component.Children)
             {
-                graphicComponent.Draw(gameTime, _spriteBatch);
+                graphicComponent.Draw(gameTime, spriteBatch);
             }
         }
     }

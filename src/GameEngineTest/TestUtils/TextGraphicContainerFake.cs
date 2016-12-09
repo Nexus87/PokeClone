@@ -6,10 +6,10 @@ namespace GameEngineTest.TestUtils
 {
     public class TextGraphicContainerFake : GraphicComponentMock, ITextGraphicContainer
     {
-        private float height;
-        private float width;
-        private float x;
-        private float y;
+        private float _height;
+        private float _width;
+        private float _x;
+        private float _y;
         public bool HasNext()
         {
             return true;
@@ -25,20 +25,20 @@ namespace GameEngineTest.TestUtils
         {
             get
             {
-                return height;
+                return _height;
             }
             set
             {
                 if (value < 0)
                     throw new ArgumentException("value");
 
-                if (!height.AlmostEqual(value))
+                if (!_height.AlmostEqual(value))
                 {
-                    height = value;
+                    _height = value;
                     OnSizeChanged();
                 }
                 else
-                    height = value;
+                    _height = value;
 
             }
         }
@@ -47,17 +47,17 @@ namespace GameEngineTest.TestUtils
         {
             get
             {
-                return width;
+                return _width;
             }
             set
             {
                 if (value < 0)
                     throw new ArgumentException("value");
 
-                if (width.AlmostEqual(value))
+                if (_width.AlmostEqual(value))
                     return;
 
-                    width = value;
+                    _width = value;
                     OnSizeChanged();
             }
         }
@@ -66,14 +66,13 @@ namespace GameEngineTest.TestUtils
         {
             get
             {
-                return x;
+                return _x;
             }
             set
             {
-                if (x.AlmostEqual(value))
+                if (_x.AlmostEqual(value))
                     return;
-                x = value;
-                OnPositionChanged();
+                _x = value;
             }
         }
 
@@ -81,14 +80,13 @@ namespace GameEngineTest.TestUtils
         {
             get
             {
-                return y;
+                return _y;
             }
             set
             {
-                if (y.AlmostEqual(value))
+                if (_y.AlmostEqual(value))
                     return;
-                y = value;
-                OnPositionChanged();
+                _y = value;
             }
         }
     }
