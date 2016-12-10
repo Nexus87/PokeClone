@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
+using System.Collections.Generic;
 using GameEngine.Graphics.General;
 
 namespace GameEngine.Graphics
@@ -24,7 +25,7 @@ namespace GameEngine.Graphics
         /// This property provides access to the inner component. It can only be
         /// set in the constructor.
         /// </remarks>
-        protected T InnerComponent { get; private set; }
+        protected T InnerComponent { get; }
         private bool _needsUpdate = true;
 
         public event EventHandler<GraphicComponentSizeChangedEventArgs> PreferredSizeChanged
@@ -132,21 +133,9 @@ namespace GameEngine.Graphics
 
         public Color Color { get; set; }
 
-        public float PreferredHeight
-        {
-            get
-            {
-                return InnerComponent.PreferredHeight;
-            }
-        }
+        public float PreferredHeight => InnerComponent.PreferredHeight;
 
-        public float PreferredWidth
-        {
-            get
-            {
-                return InnerComponent.PreferredWidth;
-            }
-        }
+        public float PreferredWidth => InnerComponent.PreferredWidth;
 
         public ResizePolicy HorizontalPolicy
         {
@@ -179,6 +168,14 @@ namespace GameEngine.Graphics
             set { InnerComponent.ScissorArea = value;}
         }
         public Rectangle Area => InnerComponent.Area;
+
+        public IGraphicComponent Parent
+        {
+            get { return InnerComponent.Parent; }
+            set { InnerComponent.Parent = value; }
+        }
+
+        public IEnumerable<IGraphicComponent> Children => InnerComponent.Children;
 
         public event EventHandler<VisibilityChangedEventArgs> VisibilityChanged
         {

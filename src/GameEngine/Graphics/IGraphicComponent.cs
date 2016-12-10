@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
+using System.Collections.Generic;
 using GameEngine.Graphics.General;
 
 namespace GameEngine.Graphics
@@ -88,5 +89,8 @@ namespace GameEngine.Graphics
 
         Rectangle ScissorArea { get; set; }
         Rectangle Area { get; }
+
+        IGraphicComponent Parent { get; set; }
+        IEnumerable<IGraphicComponent> Children { get; }
     }
 }

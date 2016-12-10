@@ -41,7 +41,6 @@
     <Compile Include="Graphics\General\XnaSpriteBatch.cs" />
     <Compile Include="Graphics\General\XnaSpriteFont.cs" />
     <Compile Include="Graphics\General\XnaTexture2D.cs" />
-    <Compile Include="Graphics\GraphicComponentPositionChangedEventArgs.cs" />
     <Compile Include="Graphics\GraphicComponentSizeChangedEventArgs.cs" />
     <Compile Include="Graphics\GraphicResources.cs" />
     <Compile Include="Graphics\GUI\AbstractWidget.cs" />

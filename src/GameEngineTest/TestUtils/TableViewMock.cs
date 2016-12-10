@@ -3,6 +3,7 @@ using GameEngine.Graphics;
 using GameEngineTest.Graphics;
 using Microsoft.Xna.Framework;
 using System;
+using System.Collections.Generic;
 using GameEngine.Graphics.General;
 using GameEngine.Graphics.TableView;
 
@@ -194,6 +195,8 @@ namespace GameEngineTest.TestUtils
 
         public Rectangle ScissorArea { get; set; }
         public Rectangle Area => new Rectangle((int) XPosition, (int) YPosition, (int) Width, (int) Height);
+        public IGraphicComponent Parent { get; set; }
+        public IEnumerable<IGraphicComponent> Children { get; } = new List<IGraphicComponent>();
 
         public event EventHandler<VisibilityChangedEventArgs> VisibilityChanged
         {

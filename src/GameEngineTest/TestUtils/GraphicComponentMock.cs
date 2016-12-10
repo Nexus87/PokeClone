@@ -2,6 +2,7 @@
 using GameEngine.Graphics;
 using Microsoft.Xna.Framework;
 using System;
+using System.Collections.Generic;
 using GameEngine.Graphics.General;
 
 namespace GameEngineTest.TestUtils
@@ -65,6 +66,8 @@ namespace GameEngineTest.TestUtils
         public ResizePolicy VerticalPolicy { get; set; }
         public Rectangle ScissorArea { get; set; }
         public Rectangle Area => new Rectangle((int) XPosition, (int) YPosition, (int) Width, (int) Height);
+        public IGraphicComponent Parent { get; set; }
+        public IEnumerable<IGraphicComponent> Children { get; } = new List<IGraphicComponent>();
 
         protected void OnSizeChanged()
         {

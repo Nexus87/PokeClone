@@ -1,6 +1,7 @@
 ﻿using GameEngine.Utils;
 using Microsoft.Xna.Framework;
 using System;
+using System.Collections.Generic;
 using GameEngine.Graphics.General;
 
 namespace GameEngine.Graphics
@@ -34,6 +35,7 @@ namespace GameEngine.Graphics
         private Vector2 _size;
         private float _preferredHeight;
         private float _preferredWidth;
+        protected readonly List<IGraphicComponent> children = new List<IGraphicComponent>();
 
         public event EventHandler<GraphicComponentSizeChangedEventArgs> SizeChanged = (a, b) => { };
         public event EventHandler<GraphicComponentSizeChangedEventArgs> PreferredSizeChanged = (a, b) => { };
@@ -99,7 +101,7 @@ namespace GameEngine.Graphics
 
         protected Vector2 Position { get { return _position; } }
         protected Vector2 Size { get { return _size; } }
-        
+
         public void Draw(GameTime time, ISpriteBatch batch)
         {
             if (Animation != null)
@@ -177,5 +179,8 @@ namespace GameEngine.Graphics
         public ResizePolicy VerticalPolicy { get; set; }
         public Rectangle ScissorArea { get; set; }
         public Rectangle Area => new Rectangle(_position.ToPoint(), _size.ToPoint());
+        public IGraphicComponent Parent { get; set; }
+
+        public IEnumerable<IGraphicComponent> Children => children;
     }
 }
