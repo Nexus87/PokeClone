@@ -38,6 +38,8 @@ namespace GameEngine
             registry.RegisterType<Pixel>(r => new Pixel(resources.Pixel));
             registry.RegisterType<IEngineInterface>(r => engine);
             registry.ScanAssembly(Assembly.GetExecutingAssembly());
+            registry.ScanAssembly(Assembly.GetAssembly(typeof(Line)));
+            registry.ScanAssembly(Assembly.GetAssembly(typeof(IGameTypeRegistry)));
         }
 
         public string ModuleName

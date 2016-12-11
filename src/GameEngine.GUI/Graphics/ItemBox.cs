@@ -2,13 +2,13 @@
 
 namespace GameEngine.Graphics
 {
-    internal class ItemBox : SelectableContainer<ITextGraphicComponent>, ISelectableTextComponent
+    public class ItemBox : SelectableContainer<ITextGraphicComponent>, ISelectableTextComponent
     {
         private readonly ITextGraphicComponent textBox;
 
         public string Text { get { return textBox.Text; } set { textBox.Text = value; } }
 
-        internal ItemBox(IGraphicComponent arrow, ITextGraphicComponent textBox) :
+        public ItemBox(IGraphicComponent arrow, ITextGraphicComponent textBox) :
             base(arrow, textBox)
         {
             this.textBox = textBox;

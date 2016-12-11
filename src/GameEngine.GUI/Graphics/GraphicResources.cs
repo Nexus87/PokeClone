@@ -7,16 +7,16 @@ namespace GameEngine.Graphics
 {
     public class GraphicResources
     {
-        internal XnaTexture2D pixel;
-        internal ISpriteFont DefaultFont { get; set; }
-        internal ITexture2D DefaultArrowTexture { get; set; }
-        internal ITexture2D DefaultBorderTexture { get; set; }
-        internal ITexture2D Pixel { get { return pixel; } }
-        internal ITexture2D Cup { get; set; }
-        internal ContentManager ContentManager { get; set; }
-        internal Configuration.Configuration Configuration { get; set; }
+        private XnaTexture2D pixel;
+        public ISpriteFont DefaultFont { get; set; }
+        public ITexture2D DefaultArrowTexture { get; set; }
+        public ITexture2D DefaultBorderTexture { get; set; }
+        public ITexture2D Pixel { get { return pixel; } }
+        public ITexture2D Cup { get; set; }
+        public ContentManager ContentManager { get; set; }
+        public Configuration.Configuration Configuration { get; set; }
 
-        internal GraphicResources(Configuration.Configuration config, ContentManager content)
+        public GraphicResources(Configuration.Configuration config, ContentManager content)
         {
             DefaultArrowTexture = new XnaTexture2D(config.DefaultArrowTexture, content);
             DefaultFont = new XnaSpriteFont(config.DefaultFont, content);

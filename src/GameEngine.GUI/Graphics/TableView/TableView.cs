@@ -20,7 +20,7 @@ namespace GameEngine.Graphics.TableView
         {}
 
         //grid argument is for testing purpose
-        internal TableView(ITableModel<T> model, ITableRenderer<T> renderer, ITableSelectionModel selectionModel, ITableGrid grid)
+        public TableView(ITableModel<T> model, ITableRenderer<T> renderer, ITableSelectionModel selectionModel, ITableGrid grid)
         {
             renderer.CheckNull("renderer");
             model.CheckNull("model");

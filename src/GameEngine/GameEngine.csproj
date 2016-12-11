@@ -33,12 +33,16 @@
     <OutputPath>bin\AnyCPU\Release</OutputPath>
     <IntermediateOutputPath>obj\AnyCPU\Release</IntermediateOutputPath>
     <DocumentationFile>bin\AnyCPU\Release\GameEngine.xml</DocumentationFile>
-    <DefineConstants></DefineConstants>
+    <DefineConstants>
+    </DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=4.2.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da">
+      <HintPath>..\packages\Autofac.4.2.1\lib\net45\Autofac.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
@@ -52,13 +56,8 @@
     <Reference Include="OpenTK">
       <HintPath>..\packages\MonoGame.Framework.DesktopGL.3.5.1.1679\lib\net40\OpenTK.dll</HintPath>
     </Reference>
-    <Reference Include="Autofac">
-      <HintPath>..\packages\Autofac.4.1.1\lib\net45\Autofac.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration\Configuration.cs" />
-    <Compile Include="Configuration\TextureConfiguration.cs" />
     <Compile Include="GameComponentWrapper.cs" />
     <Compile Include="GameEngineComponents\EventQueue.cs" />
     <Compile Include="GameEngineComponents\IEvent.cs" />
@@ -68,87 +67,16 @@
     <Compile Include="GameEngineComponents\KeyboardManager.cs" />
     <Compile Include="GameEngineModule.cs" />
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="Graphics\AbstractGraphicComponent.cs" />
-    <Compile Include="Graphics\AnimatedTextureBox.cs" />
-    <Compile Include="Graphics\Container.cs" />
-    <Compile Include="Graphics\Extensions.cs" />
-    <Compile Include="Graphics\ForwardingGraphicComponent.cs" />
-    <Compile Include="Graphics\General\ISpriteBatch.cs" />
-    <Compile Include="Graphics\General\ISpriteFont.cs" />
-    <Compile Include="Graphics\General\ITexture2D.cs" />
-    <Compile Include="Graphics\General\XnaSpriteBatch.cs" />
-    <Compile Include="Graphics\General\XnaSpriteFont.cs" />
-    <Compile Include="Graphics\General\XnaTexture2D.cs" />
-    <Compile Include="Graphics\GraphicComponentSizeChangedEventArgs.cs" />
-    <Compile Include="Graphics\GraphicResources.cs" />
-    <Compile Include="Graphics\GUI\AbstractWidget.cs" />
-    <Compile Include="Graphics\GUI\Button.cs" />
-    <Compile Include="Graphics\GUI\Dialog.cs" />
-    <Compile Include="Graphics\GUI\GUIManager.cs" />
-    <Compile Include="Graphics\GUI\IWidget.cs" />
-    <Compile Include="Graphics\GUI\MessageBox.cs" />
-    <Compile Include="Graphics\GUI\TableWidget.cs" />
-    <Compile Include="Graphics\IAnimation.cs" />
-    <Compile Include="Graphics\IGraphicalText.cs" />
-    <Compile Include="Graphics\IGraphicComponent.cs" />
-    <Compile Include="Graphics\IImageBox.cs" />
-    <Compile Include="Graphics\ISelectable.cs" />
-    <Compile Include="Graphics\ISelectableGraphicComponent.cs" />
-    <Compile Include="Graphics\ISelectableTextComponent.cs" />
-    <Compile Include="Graphics\ItemBox.cs" />
-    <Compile Include="Graphics\ITextGraphicComponent.cs" />
-    <Compile Include="Graphics\ITextGraphicContainer.cs" />
-    <Compile Include="Graphics\Layouts\AbstractLayout.cs" />
-    <Compile Include="Graphics\Layouts\BoxLayout.cs" />
-    <Compile Include="Graphics\Layouts\GridLayout.cs" />
-    <Compile Include="Graphics\Layouts\HBoxLayout.cs" />
-    <Compile Include="Graphics\Layouts\ILayout.cs" />
-    <Compile Include="Graphics\Layouts\SingleComponentLayout.cs" />
-    <Compile Include="Graphics\Layouts\VBoxLayout.cs" />
-    <Compile Include="Graphics\Line.cs" />
-    <Compile Include="Graphics\MultiLayeredComponent.cs" />
-    <Compile Include="Graphics\MultlineTextBox.cs" />
-    <Compile Include="Graphics\NullGraphicObject.cs" />
-    <Compile Include="Graphics\Pixel.cs" />
-    <Compile Include="Graphics\ResizeAnimation.cs" />
-    <Compile Include="Graphics\ResizePolicy.cs" />
-    <Compile Include="Graphics\SelectableContainer.cs" />
-    <Compile Include="Graphics\SelectionChangedEventArgs.cs" />
-    <Compile Include="Graphics\SelectionEventArgs.cs" />
-    <Compile Include="Graphics\SpriteSheetTexture.cs" />
-    <Compile Include="Graphics\TableView\DataChangedEventArgs.cs" />
-    <Compile Include="Graphics\TableView\DefaultTableModel.cs" />
-    <Compile Include="Graphics\TableView\DefaultTableRenderer.cs" />
-    <Compile Include="Graphics\TableView\IndexValidator.cs" />
-    <Compile Include="Graphics\TableView\ITableGrid.cs" />
-    <Compile Include="Graphics\TableView\ITableModel.cs" />
-    <Compile Include="Graphics\TableView\ITableRenderer.cs" />
-    <Compile Include="Graphics\TableView\ITableSelectionModel.cs" />
-    <Compile Include="Graphics\TableView\ITableView.cs" />
-    <Compile Include="Graphics\TableView\TableGrid.cs" />
-    <Compile Include="Graphics\TableView\TableIndex.cs" />
-    <Compile Include="Graphics\TableView\TableResizeEventArgs.cs" />
-    <Compile Include="Graphics\TableView\TableSingleSelectionModel.cs" />
-    <Compile Include="Graphics\TableView\TableView.cs" />
-    <Compile Include="Graphics\TextBox.cs" />
-    <Compile Include="Graphics\TextGraphic.cs" />
-    <Compile Include="Graphics\TextureBox.cs" />
-    <Compile Include="Graphics\VisibilityChangedEventArgs.cs" />
+    <Compile Include="GUIManager.cs" />
     <Compile Include="IEngineInterface.cs" />
     <Compile Include="IGameComponent.cs" />
     <Compile Include="IGameComponentManager.cs" />
-    <Compile Include="IInputHandler.cs" />
     <Compile Include="ISpriteSheetProvider.cs" />
     <Compile Include="PokeEngine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Registry\AutofacGameTypeRegistry.cs" />
     <Compile Include="Registry\AutofacModuleRegistry.cs" />
-    <Compile Include="Registry\GameServiceAttribute.cs" />
-    <Compile Include="Registry\GameTypeAttribute.cs" />
-    <Compile Include="Registry\IGameTypeRegistry.cs" />
     <Compile Include="Registry\IModule.cs" />
     <Compile Include="Registry\IModuleRegistry.cs" />
-    <Compile Include="Registry\TypeNotRegisteredException.cs" />
     <Compile Include="Screen.cs" />
     <Compile Include="ScreenConstants.cs" />
     <Compile Include="SpriteFontCreator.cs" />
@@ -161,18 +89,19 @@
     <Compile Include="TextureLoader\TextureLoader.cs" />
     <Compile Include="TextureLoader\TextureProviderFactory.cs" />
     <Compile Include="TextureProvider.cs" />
-    <Compile Include="Utils\DefaultTextSplitter.cs" />
-    <Compile Include="Utils\Extensions.cs" />
-    <Compile Include="Utils\ITable.cs" />
-    <Compile Include="Utils\ITextSplitter.cs" />
-    <Compile Include="Utils\PublicExtensions.cs" />
-    <Compile Include="Utils\SubTable.cs" />
-    <Compile Include="Utils\Table.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GameEngine.Globals\GameEngine.Globals.csproj">
       <Project>{B19BD4B3-DCAE-E1DC-6E65-2E476C6F6261}</Project>
       <Name>GameEngine.Globals</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GameEngine.GUI\GameEngine.GUI.csproj">
+      <Project>{DDE2CFB0-6E45-6967-6E65-2E4755492E4C}</Project>
+      <Name>GameEngine.GUI</Name>
+    </ProjectReference>
+    <ProjectReference Include="GameEngine.TypeRegistry\GameEngine.TypeRegistry.csproj">
+      <Project>{73200884-85C6-4A3D-A3C2-A53D9C632613}</Project>
+      <Name>GameEngine.TypeRegistry</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -180,7 +109,9 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Registry" />
+  </ItemGroup>
   <ItemGroup />
   <ItemGroup />
   <ItemGroup />

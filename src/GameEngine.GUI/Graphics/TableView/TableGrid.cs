@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 
 namespace GameEngine.Graphics.TableView
 {
-    internal class TableGrid : ITableGrid
+    public class TableGrid : ITableGrid
     {
         private readonly Table<ISelectableGraphicComponent> components;
         private readonly Container itemContainer;

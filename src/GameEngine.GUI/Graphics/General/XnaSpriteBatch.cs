@@ -11,7 +11,7 @@ namespace GameEngine.Graphics.General
     /// This class is a wrapper around XNAs SpriteBatch class, with the only difference that
     /// it uses ISpriteFont instead of a SpriteFont
     /// </remarks>
-    internal sealed class XnaSpriteBatch : SpriteBatch, ISpriteBatch
+    public sealed class XnaSpriteBatch : SpriteBatch, ISpriteBatch
     {
         public XnaSpriteBatch(GraphicsDevice device) : base(device){ }
 

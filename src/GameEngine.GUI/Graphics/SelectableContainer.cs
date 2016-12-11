@@ -18,9 +18,9 @@ namespace GameEngine.Graphics
         public SelectableContainer(GraphicResources resources) : 
             this(new TextureBox(resources.DefaultArrowTexture))
         {}
-       
 
-        internal SelectableContainer(IGraphicComponent arrowTextureBox, T component)
+
+        public SelectableContainer(IGraphicComponent arrowTextureBox, T component)
         {
             container = new Container { Layout = new HBoxLayout() };
             arrowBox = new ArrowDecorator(arrowTextureBox);
@@ -29,7 +29,7 @@ namespace GameEngine.Graphics
             Content = component;
         }
 
-        internal SelectableContainer(IGraphicComponent arrowTextureBox) :
+        public SelectableContainer(IGraphicComponent arrowTextureBox) :
             this(arrowTextureBox, default(T))
         {
         }

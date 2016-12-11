@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 
 namespace GameEngine.Graphics.TableView
 {
-    internal interface ITableGrid
+    public interface ITableGrid
     {
         int Columns { get; set; }
         TableIndex? EndIndex { get; set; }

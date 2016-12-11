@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Reflection;
 
 namespace GameEngine.Registry
@@ -14,9 +13,7 @@ namespace GameEngine.Registry
         void RegisterTypeAs(Type t, Type s);
         void RegisterAsService<T, S>();
         void RegisterAsService<T, S>(Func<IGameTypeRegistry, T> creatorFunc);
-        void RegisterGameComponentForModule<T>(string moduleName) where T : GameEngine.IGameComponent;
 
-        IEnumerable<IGameComponent> CreateGameComponents(string moduleName);
         T ResolveType<T>();
         void ScanAssembly(Assembly assembly);
     }

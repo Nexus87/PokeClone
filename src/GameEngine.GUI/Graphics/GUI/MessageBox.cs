@@ -16,7 +16,7 @@ namespace GameEngine.Graphics.GUI
         {
         }
 
-        internal MessageBox(ITextGraphicContainer textBox) :
+        public MessageBox(ITextGraphicContainer textBox) :
             base(textBox)
         {
             this.textBox = InnerComponent;

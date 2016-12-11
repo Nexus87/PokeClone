@@ -1,13 +1,12 @@
 ﻿using Autofac;
 using Autofac.Core.Registration;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
 namespace GameEngine.Registry
 {
-    internal class AutofacGameTypeRegistry : IGameTypeRegistry
+    public class AutofacGameTypeRegistry : IGameTypeRegistry
     {
         private IContainer container;
         private readonly ContainerBuilder builder = new ContainerBuilder();
@@ -20,11 +19,6 @@ namespace GameEngine.Registry
         {
             builder.RegisterType<T>().As<S>();
             container = null;
-        }
-
-        public IEnumerable<IGameComponent> CreateGameComponents()
-        {
-            return new List<IGameComponent>();
         }
 
         public T ResolveType<T>()
@@ -73,23 +67,6 @@ namespace GameEngine.Registry
             builder.RegisterType<T>().As<S>().SingleInstance();
             container = null;
         }
-
-        public void RegisterGameComponentForModule<T>(string moduleName) where T : GameEngine.IGameComponent
-        {
-            builder.RegisterType<T>().
-                As<T>().
-                SingleInstance().
-                Keyed<GameEngine.IGameComponent>(moduleName).
-                PreserveExistingDefaults();
-        }
-
-        public IEnumerable<IGameComponent> CreateGameComponents(string moduleName)
-        {
-            if (container == null)
-                container = builder.Build();
-            return container.ResolveKeyed<IEnumerable<GameEngine.IGameComponent>>(moduleName);
-        }
-
 
         public void RegisterType(Type t)
         {

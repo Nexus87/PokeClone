@@ -12,12 +12,12 @@ namespace GameEngine.Graphics.GUI
         /// <summary>
         /// The current column of the selected cell
         /// </summary>
-        internal int cursorColumn;
+        public int cursorColumn;
 
         /// <summary>
         /// The current row of the selected cell
         /// </summary>
-        internal int cursorRow;
+        public int cursorRow;
 
         private readonly ITableView<T> tableView;
 

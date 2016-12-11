@@ -33,12 +33,16 @@
     <OutputPath>bin\AnyCPU\Release</OutputPath>
     <IntermediateOutputPath>obj\AnyCPU\Release</IntermediateOutputPath>
     <DocumentationFile>bin\AnyCPU\Release\PokemonGame.xml</DocumentationFile>
-    <DefineConstants></DefineConstants>
+    <DefineConstants>
+    </DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=4.2.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da">
+      <HintPath>..\packages\Autofac.4.2.1\lib\net45\Autofac.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="MonoGame.Framework">
@@ -49,9 +53,6 @@
     </Reference>
     <Reference Include="OpenTK">
       <HintPath>..\packages\MonoGame.Framework.DesktopGL.3.5.1.1679\lib\net40\OpenTK.dll</HintPath>
-    </Reference>
-    <Reference Include="Autofac">
-      <HintPath>..\packages\Autofac.4.1.1\lib\net45\Autofac.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -77,9 +78,17 @@
       <Project>{74746142-656C-694C-622E-4C696E757842}</Project>
       <Name>BattleLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\GameEngine.GUI\GameEngine.GUI.csproj">
+      <Project>{DDE2CFB0-6E45-6967-6E65-2E4755492E4C}</Project>
+      <Name>GameEngine.GUI</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GameEngine\GameEngine.csproj">
       <Project>{656D6147-6E45-6967-6E65-2E4C696E7578}</Project>
       <Name>GameEngine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GameEngine\GameEngine.TypeRegistry\GameEngine.TypeRegistry.csproj">
+      <Project>{73200884-85C6-4A3D-A3C2-A53D9C632613}</Project>
+      <Name>GameEngine.TypeRegistry</Name>
     </ProjectReference>
     <ProjectReference Include="..\MainModule\MainModule.csproj">
       <Project>{6E69614D-6F4D-7564-6C65-2E4C696E7578}</Project>
