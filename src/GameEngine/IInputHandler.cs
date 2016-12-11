@@ -1,4 +1,6 @@
 ﻿
+using GameEngine.Globals;
+
 namespace GameEngine
 {
     /// <summary>

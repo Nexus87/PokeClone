@@ -1,5 +1,6 @@
 ﻿using System.Xml.Linq;
 using FakeItEasy;
+using GameEngine.Globals;
 using GameEngine.GUI.Builder;
 using GameEngine.GUI.Builder.Panels;
 using Microsoft.Xna.Framework;

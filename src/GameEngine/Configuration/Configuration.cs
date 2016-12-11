@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using GameEngine.Globals;
 using Microsoft.Xna.Framework.Input;
 
 namespace GameEngine.Configuration

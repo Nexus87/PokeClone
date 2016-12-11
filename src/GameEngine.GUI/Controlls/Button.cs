@@ -1,4 +1,5 @@
 ﻿using System;
+using GameEngine.Globals;
 using GameEngine.GUI.Renderers;
 using GameEngine.Utils;
 

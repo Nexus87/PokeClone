@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using FakeItEasy;
+using GameEngine.Globals;
 using GameEngine.GUI.Panels;
 using GameEngine.Utils;
 using NUnit.Framework;

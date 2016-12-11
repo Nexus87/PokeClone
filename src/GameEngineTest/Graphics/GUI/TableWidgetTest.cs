@@ -5,6 +5,7 @@ using GameEngineTest.TestUtils;
 using NUnit.Framework;
 using System;
 using FakeItEasy;
+using GameEngine.Globals;
 using GameEngine.Graphics.TableView;
 
 namespace GameEngineTest.Graphics.GUI

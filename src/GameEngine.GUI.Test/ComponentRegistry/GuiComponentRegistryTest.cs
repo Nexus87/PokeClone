@@ -1,4 +1,5 @@
 ﻿using System.Xml.Linq;
+using GameEngine.Globals;
 using GameEngine.GUI.Builder;
 using GameEngine.GUI.ComponentRegistry;
 using NUnit.Framework;

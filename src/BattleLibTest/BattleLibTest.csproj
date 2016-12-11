@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{74ECD6B0-656C-694C-6254-6573742E4C69}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>BattleLibTest</RootNamespace>
+    <AssemblyName>BattleLibTest</AssemblyName>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <NoWarn>1591</NoWarn>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+    <LangVersion>6</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <Optimize>false</Optimize>
+    <DebugType>full</DebugType>
+    <OutputPath>bin\AnyCPU\Debug</OutputPath>
+    <IntermediateOutputPath>obj\AnyCPU\Debug</IntermediateOutputPath>
+    <DocumentationFile>bin\AnyCPU\Debug\BattleLibTest.xml</DocumentationFile>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <DebugType>none</DebugType>
+    <OutputPath>bin\AnyCPU\Release</OutputPath>
+    <IntermediateOutputPath>obj\AnyCPU\Release</IntermediateOutputPath>
+    <DocumentationFile>bin\AnyCPU\Release\BattleLibTest.xml</DocumentationFile>
+    <DefineConstants></DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="MonoGame.Framework">
+      <HintPath>..\packages\MonoGame.Framework.DesktopGL.3.5.1.1679\lib\net40\MonoGame.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="NVorbis">
+      <HintPath>..\packages\MonoGame.Framework.DesktopGL.3.5.1.1679\lib\net40\NVorbis.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenTK">
+      <HintPath>..\packages\MonoGame.Framework.DesktopGL.3.5.1.1679\lib\net40\OpenTK.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Core">
+      <HintPath>..\packages\Castle.Core.3.3.3\lib\net45\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="FakeItEasy">
+      <HintPath>..\packages\FakeItEasy.2.3.1\lib\net40\FakeItEasy.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\packages\NUnit.3.5.0\lib\net45\nunit.framework.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Animations\DamagedAnimationTest.cs" />
+    <Compile Include="CommandExecuterTest.cs" />
+    <Compile Include="Components\BattleEventFake.cs" />
+    <Compile Include="Components\BattleEventProcessorTest.cs" />
+    <Compile Include="Components\BattleState\BattleStateComponentTest.cs" />
+    <Compile Include="Components\BattleState\WaitForCharStateTest.cs" />
+    <Compile Include="Components\EventQueueFake.cs" />
+    <Compile Include="Components\GraphicComponents\HPLineTest.cs" />
+    <Compile Include="Components\GraphicComponents\MoveModelTest.cs" />
+    <Compile Include="Components\GraphicComponents\MoveModelTestFactory.cs" />
+    <Compile Include="Components\GraphicComponents\MoveTableSelectionModelTest.cs" />
+    <Compile Include="Components\GraphicComponents\PokemonModelTest.cs" />
+    <Compile Include="MoveEffectCalculatorStub.cs" />
+    <Compile Include="Utils\TestFactory.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup />
+  <ItemGroup />
+  <ItemGroup />
+  <ItemGroup />
+  <ItemGroup />
+  <ItemGroup />
+  <ItemGroup />
+  <ItemGroup />
+  <ItemGroup />
+  <ItemGroup />
+  <ItemGroup />
+  <ItemGroup />
+  <ItemGroup />
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <_PostBuildHookTimestamp>@(IntermediateAssembly->'%(FullPath).timestamp')</_PostBuildHookTimestamp>
+    <_PostBuildHookHostPlatform>$(Platform)</_PostBuildHookHostPlatform>
+  </PropertyGroup>
+  <Target Name="PostBuildHooks" Inputs="@(IntermediateAssembly);@(ReferencePath)" Outputs="@(IntermediateAssembly);$(_PostBuildHookTimestamp)" AfterTargets="CoreCompile" BeforeTargets="AfterCompile">
+    <Touch Files="$(_PostBuildHookTimestamp)" AlwaysCreate="True" />
+  </Target>
+  <ItemGroup>
+    <ProjectReference Include="..\Base\Base.csproj">
+      <Project>{65736142-4C2E-6E69-7578-426173652E4C}</Project>
+      <Name>Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BattleLib\BattleLib.csproj">
+      <Project>{74746142-656C-694C-622E-4C696E757842}</Project>
+      <Name>BattleLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GameEngineTest\GameEngineTest.csproj">
+      <Project>{DDE2CFB0-6E45-6967-6E65-546573742E4C}</Project>
+      <Name>GameEngineTest</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GameEngine\GameEngine.csproj">
+      <Project>{656D6147-6E45-6967-6E65-2E4C696E7578}</Project>
+      <Name>GameEngine</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

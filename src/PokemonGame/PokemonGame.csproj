@@ -1,0 +1,202 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{656B6FC8-6F6D-476E-616D-652E4C696E75}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>PokemonGame</RootNamespace>
+    <AssemblyName>PokemonGame</AssemblyName>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <NoWarn>1591</NoWarn>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+    <LangVersion>6</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <Optimize>false</Optimize>
+    <DebugType>full</DebugType>
+    <OutputPath>bin\AnyCPU\Debug</OutputPath>
+    <IntermediateOutputPath>obj\AnyCPU\Debug</IntermediateOutputPath>
+    <DocumentationFile>bin\AnyCPU\Debug\PokemonGame.xml</DocumentationFile>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <DebugType>none</DebugType>
+    <OutputPath>bin\AnyCPU\Release</OutputPath>
+    <IntermediateOutputPath>obj\AnyCPU\Release</IntermediateOutputPath>
+    <DocumentationFile>bin\AnyCPU\Release\PokemonGame.xml</DocumentationFile>
+    <DefineConstants></DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="MonoGame.Framework">
+      <HintPath>..\packages\MonoGame.Framework.DesktopGL.3.5.1.1679\lib\net40\MonoGame.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="NVorbis">
+      <HintPath>..\packages\MonoGame.Framework.DesktopGL.3.5.1.1679\lib\net40\NVorbis.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenTK">
+      <HintPath>..\packages\MonoGame.Framework.DesktopGL.3.5.1.1679\lib\net40\OpenTK.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac">
+      <HintPath>..\packages\Autofac.4.1.1\lib\net45\Autofac.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="MainModuleClasses\DummyMapLoader.cs" />
+    <Compile Include="MainModuleClasses\DummySpriteLoader.cs" />
+    <Compile Include="PokemonGameModule.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rules\DefaultMoveEffectCalculator.cs" />
+    <Compile Include="Rules\DummyBattleRules.cs" />
+    <Compile Include="Rules\DummyPokemonRules.cs" />
+    <Compile Include="Rules\DummyScheduler.cs" />
+    <Compile Include="Rules\DummyTable.cs" />
+    <Compile Include="Rules\Gen1CharRules.cs" />
+    <Compile Include="Rules\RndNumGen.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Base\Base.csproj">
+      <Project>{65736142-4C2E-6E69-7578-426173652E4C}</Project>
+      <Name>Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BattleLib\BattleLib.csproj">
+      <Project>{74746142-656C-694C-622E-4C696E757842}</Project>
+      <Name>BattleLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GameEngine\GameEngine.csproj">
+      <Project>{656D6147-6E45-6967-6E65-2E4C696E7578}</Project>
+      <Name>GameEngine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MainModule\MainModule.csproj">
+      <Project>{6E69614D-6F4D-7564-6C65-2E4C696E7578}</Project>
+      <Name>MainModule</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Content\compiled\Linux\Characters%20Overworld.xnb">
+      <Link>Content\Linux\Characters Overworld.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <FromContentProject>True</FromContentProject>
+    </None>
+    <None Include="..\Content\compiled\Linux\MenuFont.xnb">
+      <Link>Content\Linux\MenuFont.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <FromContentProject>True</FromContentProject>
+    </None>
+    <None Include="..\Content\compiled\Linux\Tileset.xnb">
+      <Link>Content\Linux\Tileset.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <FromContentProject>True</FromContentProject>
+    </None>
+    <None Include="..\Content\compiled\Linux\arrow.xnb">
+      <Link>Content\Linux\arrow.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <FromContentProject>True</FromContentProject>
+    </None>
+    <None Include="..\Content\compiled\Linux\border.xnb">
+      <Link>Content\Linux\border.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <FromContentProject>True</FromContentProject>
+    </None>
+    <None Include="..\Content\compiled\Linux\charmander-back.xnb">
+      <Link>Content\Linux\charmander-back.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <FromContentProject>True</FromContentProject>
+    </None>
+    <None Include="..\Content\compiled\Linux\charmander-front.xnb">
+      <Link>Content\Linux\charmander-front.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <FromContentProject>True</FromContentProject>
+    </None>
+    <None Include="..\Content\compiled\Linux\circle.xnb">
+      <Link>Content\Linux\circle.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <FromContentProject>True</FromContentProject>
+    </None>
+    <None Include="..\Content\compiled\Linux\TilesetMap.txt">
+      <Link>Content\Linux\TilesetMap.txt</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <FromContentProject>True</FromContentProject>
+    </None>
+    <None Include="..\Content\compiled\Linux\CharactersMapping.json">
+      <Link>Content\Linux\CharactersMapping.json</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <FromContentProject>True</FromContentProject>
+    </None>
+    <None Include="..\Content\compiled\Windows\Characters%20Overworld.xnb">
+      <Link>Content\Windows\Characters Overworld.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <FromContentProject>True</FromContentProject>
+    </None>
+    <None Include="..\Content\compiled\Windows\MenuFont.xnb">
+      <Link>Content\Windows\MenuFont.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <FromContentProject>True</FromContentProject>
+    </None>
+    <None Include="..\Content\compiled\Windows\Tileset.xnb">
+      <Link>Content\Windows\Tileset.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <FromContentProject>True</FromContentProject>
+    </None>
+    <None Include="..\Content\compiled\Windows\arrow.xnb">
+      <Link>Content\Windows\arrow.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <FromContentProject>True</FromContentProject>
+    </None>
+    <None Include="..\Content\compiled\Windows\border.xnb">
+      <Link>Content\Windows\border.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <FromContentProject>True</FromContentProject>
+    </None>
+    <None Include="..\Content\compiled\Windows\charmander-back.xnb">
+      <Link>Content\Windows\charmander-back.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <FromContentProject>True</FromContentProject>
+    </None>
+    <None Include="..\Content\compiled\Windows\charmander-front.xnb">
+      <Link>Content\Windows\charmander-front.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <FromContentProject>True</FromContentProject>
+    </None>
+    <None Include="..\Content\compiled\Windows\circle.xnb">
+      <Link>Content\Windows\circle.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <FromContentProject>True</FromContentProject>
+    </None>
+    <None Include="..\Content\compiled\Windows\TilesetMap.txt">
+      <Link>Content\Windows\TilesetMap.txt</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <FromContentProject>True</FromContentProject>
+    </None>
+    <None Include="..\Content\compiled\Windows\CharactersMapping.json">
+      <Link>Content\Windows\CharactersMapping.json</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <FromContentProject>True</FromContentProject>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <_PostBuildHookTimestamp>@(IntermediateAssembly->'%(FullPath).timestamp')</_PostBuildHookTimestamp>
+    <_PostBuildHookHostPlatform>$(Platform)</_PostBuildHookHostPlatform>
+  </PropertyGroup>
+  <Target Name="PostBuildHooks" Inputs="@(IntermediateAssembly);@(ReferencePath)" Outputs="@(IntermediateAssembly);$(_PostBuildHookTimestamp)" AfterTargets="CoreCompile" BeforeTargets="AfterCompile">
+    <Touch Files="$(_PostBuildHookTimestamp)" AlwaysCreate="True" />
+  </Target>
+</Project>

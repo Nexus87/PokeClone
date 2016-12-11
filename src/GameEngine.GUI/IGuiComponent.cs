@@ -1,4 +1,6 @@
-﻿namespace GameEngine.GUI
+﻿using GameEngine.Globals;
+
+namespace GameEngine.GUI
 {
     public interface IGuiComponent : IGraphicComponent
     {

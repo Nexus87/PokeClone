@@ -1,4 +1,6 @@
-﻿namespace GameEngine.Graphics.GUI
+﻿using GameEngine.Globals;
+
+namespace GameEngine.Graphics.GUI
 {
     public abstract class AbstractWidget : AbstractGraphicComponent, IWidget
     {

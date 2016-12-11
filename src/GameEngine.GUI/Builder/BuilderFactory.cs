@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Xml;
 using System.Xml.Linq;
-using GameEngine.Graphics.GUI;
 using GameEngine.GUI.Builder.Controls;
 using GameEngine.GUI.ComponentRegistry;
-using GameEngine.Registry;
 
 namespace GameEngine.GUI.Builder
 {

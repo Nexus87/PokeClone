@@ -1,4 +1,4 @@
-﻿namespace GameEngine
+﻿namespace GameEngine.Globals
 {
     public enum CommandKeys
     {

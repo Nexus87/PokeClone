@@ -3,6 +3,7 @@ using GameEngine.Graphics;
 using GameEngine.Graphics.GUI;
 using Microsoft.Xna.Framework;
 using System;
+using GameEngine.Globals;
 using GameEngine.Graphics.General;
 
 namespace BattleLib.Components.GraphicComponents

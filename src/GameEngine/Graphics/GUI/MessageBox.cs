@@ -1,6 +1,7 @@
 ﻿using GameEngine.Registry;
 using GameEngine.Utils;
 using System;
+using GameEngine.Globals;
 using GameEngine.Graphics.General;
 
 namespace GameEngine.Graphics.GUI

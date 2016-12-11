@@ -28,12 +28,8 @@ obj/
 _ReSharper*/
 [Tt]est[Rr]esult*
 packages/*
-*.sln
-*.csproj
-*.speccache
 !Protobuild.exe
 Content/source/.source
-packages.config
 .rider
 .idea
 src/packages/

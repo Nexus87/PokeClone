@@ -32,8 +32,8 @@ namespace GameEngine
 
             Window.AllowUserResizing = true;
             
-
-            Content.RootDirectory = "Content";
+            var runningOnMono = Type.GetType ("Mono.Runtime") != null;
+            Content.RootDirectory = runningOnMono ? @"Content\Linux" : @"Content\Windows";
 
             Registry.RegisterModule(new GameEngineModule(factory, this));
         }

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FakeItEasy;
 using GameEngine.GameEngineComponents;
+using GameEngine.Globals;
 
 namespace GameEngineTest
 {

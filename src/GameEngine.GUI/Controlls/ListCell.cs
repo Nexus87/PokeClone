@@ -1,4 +1,5 @@
 ﻿using System;
+using GameEngine.Globals;
 
 namespace GameEngine.GUI.Controlls
 {

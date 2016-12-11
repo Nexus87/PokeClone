@@ -1,8 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Module>
-  <Name>PokeClone</Name>
-  <DefaultAction>Generate</DefaultAction>
-  <DisableSynchronisation>false</DisableSynchronisation>
-  <GenerateNuGetRepositories>true</GenerateNuGetRepositories>
-  <DefaultStartupProject>PokemonGame</DefaultStartupProject> 
-</Module>
