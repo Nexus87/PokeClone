@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using GameEngine.Globals;
 using GameEngine.Graphics.General;
 
 namespace GameEngine.Graphics
@@ -167,6 +168,8 @@ namespace GameEngine.Graphics
             get { return InnerComponent.ScissorArea; }
             set { InnerComponent.ScissorArea = value;}
         }
+
+        Rectangle IGraphicComponent.Area { get; set; }
         public Rectangle Area => InnerComponent.Area;
 
         public IGraphicComponent Parent
@@ -176,6 +179,12 @@ namespace GameEngine.Graphics
         }
 
         public IEnumerable<IGraphicComponent> Children => InnerComponent.Children;
+        public bool IsSelected { get; set; }
+        public bool IsSelectable { get; set; }
+        public void HandleKeyInput(CommandKeys key)
+        {
+            throw new NotImplementedException();
+        }
 
         public event EventHandler<VisibilityChangedEventArgs> VisibilityChanged
         {

@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using FakeItEasy;
+using GameEngine.Graphics;
 using GameEngine.GUI.Panels;
 using GameEngine.Utils;
 using Microsoft.Xna.Framework;
 using NUnit.Framework;
+using Extensions = GameEngine.Utils.Extensions;
 
 namespace GameEngine.GUI.Test.Panels
 {
@@ -207,9 +209,9 @@ namespace GameEngine.GUI.Test.Panels
             var table = new Table<IGraphicComponent>(rowsCount, columnsCount);
             Extensions.LoopOverTable(rowsCount, columnsCount, (i, j) =>
             {
-                var componentMock = A.Fake<IGuiComponent>();
-                A.CallTo(() => componentMock.PreferedHeight).Returns(preferredSizes[i, j].Height);
-                A.CallTo(() => componentMock.PreferedWidth).Returns(preferredSizes[i, j].Width);
+                var componentMock = A.Fake<IGraphicComponent>();
+                A.CallTo(() => componentMock.PreferredHeight).Returns(preferredSizes[i, j].Height);
+                A.CallTo(() => componentMock.PreferredWidth).Returns(preferredSizes[i, j].Width);
                 table[i, j] = componentMock;
                 grid.SetComponent(componentMock, i, j);
             });
@@ -258,7 +260,7 @@ namespace GameEngine.GUI.Test.Panels
 
             foreach (var component in components.EnumerateRows(columnToBeRemoved))
             {
-                A.CallToSet(() => component.Constraints).MustNotHaveHappened();
+                A.CallToSet(() => component.Area).MustNotHaveHappened();
             }
         }
 
@@ -278,7 +280,7 @@ namespace GameEngine.GUI.Test.Panels
 
             foreach (var component in components.EnumerateColumns(rowToBeRemoved))
             {
-                A.CallToSet(() => component.Constraints).MustNotHaveHappened();
+                A.CallToSet(() => component.Area).MustNotHaveHappened();
             }
         }
         private static void VerifyComponentsHaveExpectedPosition(ITable<IGraphicComponent> components, ITable<Rectangle> expectedPositions)
@@ -286,7 +288,7 @@ namespace GameEngine.GUI.Test.Panels
             Extensions.LoopOverTable(components.Rows, components.Columns, (i, j) =>
             {
                 var expectedPosition = expectedPositions[i, j];
-                A.CallToSet(() => components[i, j].Constraints).To(expectedPosition).MustHaveHappened(Repeated.AtLeast.Once);
+                A.CallToSet(() => components[i, j].Area).To(expectedPosition).MustHaveHappened(Repeated.AtLeast.Once);
             });
         }
 
@@ -295,7 +297,7 @@ namespace GameEngine.GUI.Test.Panels
             var table = new Table<IGraphicComponent>(rows, columns);
             Extensions.LoopOverTable(rows, columns, (i, j) =>
             {
-                var componentMock = A.Fake<IGuiComponent>();
+                var componentMock = A.Fake<IGraphicComponent>();
                 table[i, j] = componentMock;
                 grid.SetComponent(componentMock, i, j);
             });
@@ -305,7 +307,7 @@ namespace GameEngine.GUI.Test.Panels
 
         private static Grid CreateGrid(Rectangle gridPosition, IEnumerable<RowProperty> rows, IEnumerable<ColumnProperty> columns)
         {
-            var grid = new Grid {Constraints = gridPosition};
+            var grid = new Grid {Area = gridPosition};
             grid.AddAllColumns(columns);
             grid.AddAllRows(rows);
 

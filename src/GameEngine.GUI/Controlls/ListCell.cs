@@ -1,9 +1,10 @@
 ﻿using System;
 using GameEngine.Globals;
+using GameEngine.Graphics;
 
 namespace GameEngine.GUI.Controlls
 {
-    public interface IListCell : IGuiComponent
+    public interface IListCell : IGraphicComponent
     {
         event EventHandler CellSelected;
     }

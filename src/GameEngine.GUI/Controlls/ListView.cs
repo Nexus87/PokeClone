@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using GameEngine.Globals;
+using GameEngine.Graphics;
 using GameEngine.Graphics.General;
 using GameEngine.GUI.Panels;
 using Microsoft.Xna.Framework;
@@ -52,9 +53,9 @@ namespace GameEngine.GUI.Controlls
 
         }
 
-        protected override void Update(GameTime time)
+        protected override void Update()
         {
-            _grid = new Grid {Constraints = Constraints};
+            _grid = new Grid {Area = Area};
             _grid.AddColumn(new ColumnProperty{Type = ValueType.Percent, Share = 1});
             for(var i = 0; i < Model.Count; i++)
             {

@@ -128,12 +128,9 @@ namespace GameEngine.Graphics.TableView
             SetComponentSelection(component, e.IsSelected);
         }
 
-        private static void SetComponentSelection(ISelectableGraphicComponent component, bool isSelected)
+        private static void SetComponentSelection(IGraphicComponent component, bool isSelected)
         {
-            if (isSelected)
-                component.Select();
-            else
-                component.Unselect();
+            component.IsSelected = isSelected;
         }
 
         private void DataChangedHandler(object sender, DataChangedEventArgs<T> e)
@@ -147,13 +144,13 @@ namespace GameEngine.Graphics.TableView
             TableResized(this, e);
         }
 
-        private ISelectableGraphicComponent GetComponent(int row, int column)
+        private IGraphicComponent GetComponent(int row, int column)
         {
             var data = model.DataAt(row, column);
             return GetComponent(row, column, data);
         }
 
-        private ISelectableGraphicComponent GetComponent(int row, int column, T data)
+        private IGraphicComponent GetComponent(int row, int column, T data)
         {
             var isSelected = selectionModel.IsSelected(row, column);
             return renderer.GetComponent(row, column, data, isSelected);

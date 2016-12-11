@@ -8,7 +8,7 @@ namespace GameEngine.Graphics.TableView
 {
     public class TableGrid : ITableGrid
     {
-        private readonly Table<ISelectableGraphicComponent> components;
+        private readonly Table<IGraphicComponent> components;
         private readonly Container itemContainer;
         private readonly GridLayout layout;
 
@@ -114,7 +114,7 @@ namespace GameEngine.Graphics.TableView
         {
             layout = new GridLayout(rows, columns);
 
-            components = new Table<ISelectableGraphicComponent>();
+            components = new Table<IGraphicComponent>();
 
             itemContainer = new Container {Layout = layout};
         }
@@ -160,7 +160,7 @@ namespace GameEngine.Graphics.TableView
             needsUpdate = true;
         }
 
-        public void SetComponentAt(int row, int column, ISelectableGraphicComponent component)
+        public void SetComponentAt(int row, int column, IGraphicComponent component)
         {
             CheckRange(row, column);
             components[row, column] = component;
@@ -182,7 +182,7 @@ namespace GameEngine.Graphics.TableView
                 throw new ArgumentOutOfRangeException("column");
         }
 
-        public ISelectableGraphicComponent GetComponentAt(int row, int column)
+        public IGraphicComponent GetComponentAt(int row, int column)
         {
             CheckRange(row, column);
 

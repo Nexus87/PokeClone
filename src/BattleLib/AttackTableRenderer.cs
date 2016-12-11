@@ -16,7 +16,7 @@ namespace BattleLib
             this.renderer = renderer;
         }
 
-        public ISelectableGraphicComponent GetComponent(int row, int column, Move data, bool isSelected)
+        public IGraphicComponent GetComponent(int row, int column, Move data, bool isSelected)
         {
             return renderer.GetComponent(row, column, data, isSelected);
         }

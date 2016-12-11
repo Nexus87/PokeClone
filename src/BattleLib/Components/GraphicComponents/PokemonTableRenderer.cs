@@ -17,7 +17,7 @@ namespace BattleLib.Components.GraphicComponents
             this.registry = registry;
         }
 
-        public ISelectableGraphicComponent GetComponent(int row, int column, Pokemon data, bool isSelected)
+        public IGraphicComponent GetComponent(int row, int column, Pokemon data, bool isSelected)
         {
             var component = components[row, column];
             if (component == null)

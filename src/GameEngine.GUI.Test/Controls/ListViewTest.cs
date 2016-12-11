@@ -24,7 +24,7 @@ namespace GameEngine.GUI.Test.Controls
 
             foreach (var mock in components)
             {
-                A.CallToSet(() => mock.Constraints).MustHaveHappened(Repeated.AtLeast.Once);
+                A.CallToSet(() => mock.Area).MustHaveHappened(Repeated.AtLeast.Once);
             }
         }
 
@@ -41,7 +41,7 @@ namespace GameEngine.GUI.Test.Controls
             model.Remove(model.Last());
             listView.Draw();
 
-            A.CallToSet(() => components.Last().Constraints).MustHaveHappened(Repeated.Exactly.Times(InitialCallTimes));
+            A.CallToSet(() => components.Last().Area).MustHaveHappened(Repeated.Exactly.Times(InitialCallTimes));
         }
 
         [TestCase(10)]
@@ -57,7 +57,7 @@ namespace GameEngine.GUI.Test.Controls
             model.Add((rows + 1) + "");
             listView.Draw();
 
-            A.CallToSet(() => components.Last().Constraints).MustHaveHappened(Repeated.AtLeast.Once);
+            A.CallToSet(() => components.Last().Area).MustHaveHappened(Repeated.AtLeast.Once);
 
         }
 

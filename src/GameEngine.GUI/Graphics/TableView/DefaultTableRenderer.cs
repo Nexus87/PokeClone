@@ -17,7 +17,7 @@ namespace GameEngine.Graphics.TableView
             DefaultString = "";
         }
 
-        public ISelectableGraphicComponent GetComponent(int row, int column, T data, bool isSelected)
+        public IGraphicComponent GetComponent(int row, int column, T data, bool isSelected)
         {
             CreateComponent(row, column);
 

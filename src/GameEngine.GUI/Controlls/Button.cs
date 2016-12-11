@@ -1,7 +1,10 @@
 ﻿using System;
 using GameEngine.Globals;
+using GameEngine.Graphics;
+using GameEngine.Graphics.General;
 using GameEngine.GUI.Renderers;
 using GameEngine.Utils;
+using Microsoft.Xna.Framework;
 
 namespace GameEngine.GUI.Controlls
 {
@@ -53,16 +56,21 @@ namespace GameEngine.GUI.Controlls
             ButtonPressed?.Invoke(this, EventArgs.Empty);
         }
 
-        public override void Init()
+        protected override void DrawComponent(GameTime time, ISpriteBatch batch)
         {
-            base.Init();
+            _buttonRenderer.Render(batch, this);
+        }
+
+        public override void Setup()
+        {
+            base.Setup();
             UpdatePreferredSize();
         }
 
         private void UpdatePreferredSize()
         {
-            PreferedHeight = _buttonRenderer.GetPreferedHeight(this);
-            PreferedWidth = _buttonRenderer.GetPreferedWidth(this);
+            PreferredHeight = _buttonRenderer.GetPreferedHeight(this);
+            PreferredWidth = _buttonRenderer.GetPreferedWidth(this);
         }
     }
 }

@@ -22,6 +22,6 @@ namespace GameEngine.Graphics.TableView
         /// <param name="data">Data from the model</param>
         /// <param name="isSelected">Cell selection</param>
         /// <returns></returns>
-        ISelectableGraphicComponent GetComponent(int row, int column, T data, bool isSelected);
+        IGraphicComponent GetComponent(int row, int column, T data, bool isSelected);
     }
 }

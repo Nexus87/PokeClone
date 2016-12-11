@@ -11,8 +11,8 @@ namespace GameEngine.Graphics.TableView
         TableIndex? StartIndex { get; set; }
 
         void Draw(GameTime time, ISpriteBatch spriteBatch);
-        ISelectableGraphicComponent GetComponentAt(int row, int column);
-        void SetComponentAt(int row, int column, ISelectableGraphicComponent component);
+        IGraphicComponent GetComponentAt(int row, int column);
+        void SetComponentAt(int row, int column, IGraphicComponent component);
         void SetCoordinates(float x, float y, float width, float height);
     }
 }

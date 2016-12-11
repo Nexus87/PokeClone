@@ -67,11 +67,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Builder\Controls\ButtonBuilderTest.cs" />
-    <Compile Include="Builder\Panels\GridBuilderTest.cs" />
-    <Compile Include="ComponentRegistry\GuiComponentRegistryTest.cs" />
     <Compile Include="Controls\ListViewTest.cs" />
-    <Compile Include="IntegrationTests.cs" />
     <Compile Include="Panels\GridInputHandlerTest.cs" />
     <Compile Include="Panels\GridTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

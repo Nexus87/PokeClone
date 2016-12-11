@@ -59,20 +59,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AbstractGraphicComponent.cs" />
-    <Compile Include="Builder\BuilderFactory.cs" />
-    <Compile Include="Builder\BuilderUtils.cs" />
-    <Compile Include="Builder\Controls\ButtonBuilder.cs" />
-    <Compile Include="Builder\IBuilder.cs" />
-    <Compile Include="Builder\IBuilderFactory.cs" />
-    <Compile Include="Builder\Panels\GridBuilder.cs" />
-    <Compile Include="ComponentRegistry\GuiComponentRegistry.cs" />
     <Compile Include="Configuration\Configuration.cs" />
     <Compile Include="Configuration\TextureConfiguration.cs" />
     <Compile Include="Controlls\Button.cs" />
     <Compile Include="Controlls\ListCell.cs" />
     <Compile Include="Controlls\ListView.cs" />
-    <Compile Include="GraphicComponentLoader.cs" />
     <Compile Include="Graphics\AbstractGraphicComponent.cs" />
     <Compile Include="Graphics\AnimatedTextureBox.cs" />
     <Compile Include="Graphics\Container.cs" />
@@ -138,8 +129,6 @@
     <Compile Include="Graphics\TextGraphic.cs" />
     <Compile Include="Graphics\TextureBox.cs" />
     <Compile Include="Graphics\VisibilityChangedEventArgs.cs" />
-    <Compile Include="IGraphicComponent.cs" />
-    <Compile Include="IGuiComponent.cs" />
     <Compile Include="IInputHandler.cs" />
     <Compile Include="INode.cs" />
     <Compile Include="ISkin.cs" />

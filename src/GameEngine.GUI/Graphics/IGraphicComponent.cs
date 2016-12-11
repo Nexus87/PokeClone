@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using GameEngine.Globals;
 using GameEngine.Graphics.General;
 
 namespace GameEngine.Graphics
@@ -88,9 +89,12 @@ namespace GameEngine.Graphics
         ResizePolicy VerticalPolicy { get; set; }
 
         Rectangle ScissorArea { get; set; }
-        Rectangle Area { get; }
+        Rectangle Area { get; set; }
 
         IGraphicComponent Parent { get; set; }
         IEnumerable<IGraphicComponent> Children { get; }
+        bool IsSelected { get; set; }
+        bool IsSelectable { get; set; }
+        void HandleKeyInput(CommandKeys key);
     }
 }

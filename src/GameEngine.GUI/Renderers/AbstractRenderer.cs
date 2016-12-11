@@ -1,10 +1,11 @@
-﻿using GameEngine.Graphics.General;
+﻿using GameEngine.Graphics;
+using GameEngine.Graphics.General;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace GameEngine.GUI.Renderers
 {
-    public abstract class AbstractRenderer<T> : IRenderer<T> where T : IGuiComponent
+    public abstract class AbstractRenderer<T> : IRenderer<T> where T : IGraphicComponent
     {
         protected void RenderText(ISpriteBatch spriteBatch, ISpriteFont font, string text, Vector2 position, float textHeight)
         {

@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using GameEngine.Globals;
+using GameEngine.Graphics;
 using GameEngine.Utils;
 using Microsoft.Xna.Framework;
+using Extensions = GameEngine.Utils.Extensions;
 
 namespace GameEngine.GUI.Panels
 
@@ -78,7 +80,7 @@ namespace GameEngine.GUI.Panels
             }
         }
 
-        public void SetComponent(IGuiComponent component, int row, int column)
+        public void SetComponent(IGraphicComponent component, int row, int column)
         {
             if (component == null)
                 throw new ArgumentNullException(nameof(component));
@@ -87,13 +89,13 @@ namespace GameEngine.GUI.Panels
             if (row < 0 || row >= Rows)
                 throw new ArgumentOutOfRangeException(nameof(row), "Was " + row);
 
-            ChildrenList.Add(component);
+            children.Add(component);
             component.Parent = this;
             _cells[row, column].GuiComponent = component;
             _needsUpdate = true;
         }
 
-        protected override void Update(GameTime time)
+        protected override void Update()
         {
             if (Rows == 0 || Columns == 0)
                 return;
@@ -118,7 +120,7 @@ namespace GameEngine.GUI.Panels
         private void ApplyGridToComponents(ITable<Rectangle> grid)
         {
             Extensions.LoopOverTable(Rows, Columns,
-                (row, column) => { _cells[row, column].SetConstraints(grid[row, column], Constraints); });
+                (row, column) => { _cells[row, column].SetConstraints(grid[row, column], Area); });
         }
 
         private Table<Rectangle> SetPosition(Table<Rectangle> grid)
@@ -194,8 +196,8 @@ namespace GameEngine.GUI.Panels
 
         private Table<Rectangle> LayoutPercent(Table<Rectangle> grid)
         {
-            var height = (float) Constraints.Height - grid.EnumerateRows(0).Sum(rec => rec.Height);
-            var width = (float) Constraints.Width - grid.EnumerateColumns(0).Sum(rec => rec.Width);
+            var height = (float) Area.Height - grid.EnumerateRows(0).Sum(rec => rec.Height);
+            var width = (float) Area.Width - grid.EnumerateColumns(0).Sum(rec => rec.Width);
 
             if (height < 0)
                 height = 0;
@@ -224,7 +226,7 @@ namespace GameEngine.GUI.Panels
             var rec = new Rectangle();
             if (row < 0)
             {
-                rec.Y = Constraints.Y;
+                rec.Y = Area.Y;
                 rec.Height = 0;
             }
             else
@@ -235,7 +237,7 @@ namespace GameEngine.GUI.Panels
 
             if (column < 0)
             {
-                rec.X = Constraints.X;
+                rec.X = Area.X;
                 rec.Width = 0;
             }
             else
@@ -253,7 +255,7 @@ namespace GameEngine.GUI.Panels
 
             foreach (var cell in _cells.EnumerateRows(columnToBeRemoved))
             {
-                ChildrenList.Remove(cell.GuiComponent);
+                children.Remove(cell.GuiComponent);
             }
 
             _cells.RemoveColumn(columnToBeRemoved);
@@ -267,7 +269,7 @@ namespace GameEngine.GUI.Panels
 
             foreach (var cell in _cells.EnumerateColumns(rowToBeRemoved))
             {
-                ChildrenList.Remove(cell.GuiComponent);
+                children.Remove(cell.GuiComponent);
             }
 
             _cells.RemoveRow(rowToBeRemoved);
@@ -275,7 +277,7 @@ namespace GameEngine.GUI.Panels
             _needsUpdate = true;
         }
 
-        public IGuiComponent GetComponent(int row, int column)
+        public IGraphicComponent GetComponent(int row, int column)
         {
             return _cells[row, column].GuiComponent;
         }

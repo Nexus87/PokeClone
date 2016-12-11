@@ -62,7 +62,7 @@ namespace GameEngineTest.Graphics
             new TestCaseData(-10, -10)
         };
 
-        [TestCaseSource(typeof(ITableRendererTest), "InvalidIndexes")]
+        [TestCaseSource(typeof(ITableRendererTest), nameof(InvalidIndexes))]
         public void GetComponent_CallWithInvalidIndexes_ThrowsException(int row, int column)
         {
             var testRenderer = CreateRenderer();

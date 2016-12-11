@@ -4,6 +4,7 @@ using GameEngineTest.Graphics;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using GameEngine.Globals;
 using GameEngine.Graphics.General;
 using GameEngine.Graphics.TableView;
 
@@ -194,9 +195,16 @@ namespace GameEngineTest.TestUtils
         }
 
         public Rectangle ScissorArea { get; set; }
+        Rectangle IGraphicComponent.Area { get; set; }
         public Rectangle Area => new Rectangle((int) XPosition, (int) YPosition, (int) Width, (int) Height);
         public IGraphicComponent Parent { get; set; }
         public IEnumerable<IGraphicComponent> Children { get; } = new List<IGraphicComponent>();
+        public bool IsSelected { get; set; }
+        public bool IsSelectable { get; set; }
+        public void HandleKeyInput(CommandKeys key)
+        {
+            throw new NotImplementedException();
+        }
 
         public event EventHandler<VisibilityChangedEventArgs> VisibilityChanged
         {

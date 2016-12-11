@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using GameEngine.Globals;
 using GameEngine.Graphics.General;
 
 namespace GameEngine.Graphics
@@ -118,7 +119,9 @@ namespace GameEngine.Graphics
         }
 
 
-        protected abstract void DrawComponent(GameTime time, ISpriteBatch batch);
+        protected virtual void DrawComponent(GameTime time, ISpriteBatch batch)
+        {
+        }
 
         protected void Invalidate()
         {
@@ -143,7 +146,7 @@ namespace GameEngine.Graphics
 
         protected IAnimation Animation { get; set; }
 
-        public abstract void Setup();
+        public virtual void Setup(){}
 
 
         public Color Color { get; set; }
@@ -178,9 +181,27 @@ namespace GameEngine.Graphics
         public ResizePolicy HorizontalPolicy { get; set; }
         public ResizePolicy VerticalPolicy { get; set; }
         public Rectangle ScissorArea { get; set; }
-        public Rectangle Area => new Rectangle(_position.ToPoint(), _size.ToPoint());
+        public Rectangle Area
+        {
+            get
+            {
+                return new Rectangle(_position.ToPoint(), _size.ToPoint());
+            }
+
+            set
+            {
+                _position = value.Location.ToVector2();
+                _size = value.Size.ToVector2();
+            }
+        }
         public IGraphicComponent Parent { get; set; }
 
         public IEnumerable<IGraphicComponent> Children => children;
+        public virtual bool IsSelected { get; set; }
+        public bool IsSelectable { get; set; }
+
+        public virtual void HandleKeyInput(CommandKeys key)
+        {
+        }
     }
 }

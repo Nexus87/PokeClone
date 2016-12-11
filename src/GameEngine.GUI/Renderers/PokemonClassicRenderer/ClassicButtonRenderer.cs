@@ -19,8 +19,8 @@ namespace GameEngine.GUI.Renderers.PokemonClassicRenderer
         {
             spriteBatch.GraphicsDevice.ScissorRectangle = component.ScissorArea;
             if (component.IsSelected)
-                DrawArrow(spriteBatch, component.Constraints, component);
-            DrawText(spriteBatch, component.Constraints, component);
+                DrawArrow(spriteBatch, component.Area, component);
+            DrawText(spriteBatch, component.Area, component);
         }
 
         private void DrawText(ISpriteBatch spriteBatch, Rectangle position, Button button)

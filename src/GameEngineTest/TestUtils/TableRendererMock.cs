@@ -1,5 +1,6 @@
 ﻿using GameEngine.Utils;
 using System;
+using GameEngine.Graphics;
 using GameEngine.Graphics.TableView;
 
 namespace GameEngineTest.TestUtils
@@ -10,7 +11,7 @@ namespace GameEngineTest.TestUtils
         public bool[,] selections = new bool[0,0];
         public TableComponentMock<T>[,] components = new TableComponentMock<T>[0,0];
 
-        public GameEngine.Graphics.ISelectableGraphicComponent GetComponent(int row, int column, T data, bool isSelected)
+        public IGraphicComponent GetComponent(int row, int column, T data, bool isSelected)
         {
             entries = Resize(row, column, entries);
             selections = Resize(row, column, selections);
