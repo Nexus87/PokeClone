@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using GameEngine.Globals;
 using GameEngine.GUI.Graphics;
+using GameEngine.GUI.Graphics.General;
 using GameEngine.Utils;
 using Microsoft.Xna.Framework;
 using Extensions = GameEngine.Utils.Extensions;
@@ -37,7 +38,6 @@ namespace GameEngine.GUI.Panels
         private readonly List<RowProperty> _rowProperties = new List<RowProperty>();
         private readonly List<ColumnProperty> _columnPoperties = new List<ColumnProperty>();
         private readonly GridInputHandler _gridInputHandler;
-        private bool _needsUpdate = true;
 
         public Grid()
         {
@@ -54,7 +54,7 @@ namespace GameEngine.GUI.Panels
         {
             _rowProperties.Add(property);
             InitRow(Rows - 1);
-            _needsUpdate = true;
+            Invalidate();
         }
 
         private void InitRow(int row)
@@ -69,7 +69,7 @@ namespace GameEngine.GUI.Panels
         {
             _columnPoperties.Add(property);
             InitColumn(_columnPoperties.Count - 1);
-            _needsUpdate = true;
+            Invalidate();
         }
 
         private void InitColumn(int column)
@@ -92,7 +92,7 @@ namespace GameEngine.GUI.Panels
             children.Add(component);
             component.Parent = this;
             _cells[row, column].GuiComponent = component;
-            _needsUpdate = true;
+            Invalidate();
         }
 
         protected override void Update()
@@ -100,15 +100,20 @@ namespace GameEngine.GUI.Panels
             if (Rows == 0 || Columns == 0)
                 return;
 
-            if (!_needsUpdate)
-                return;
 
             var grid = new Table<Rectangle>(Rows, Columns);
             grid = SetAbsoluteWidths(grid);
             grid = LayoutPercent(grid);
             grid = SetPosition(grid);
             ApplyGridToComponents(grid);
-            _needsUpdate = false;
+        }
+
+        protected override void DrawComponent(GameTime time, ISpriteBatch batch)
+        {
+            foreach (var gridCell in _cells)
+            {
+                gridCell.Draw(time, batch);
+            }
         }
 
         public override void HandleKeyInput(CommandKeys key)
@@ -260,7 +265,7 @@ namespace GameEngine.GUI.Panels
 
             _cells.RemoveColumn(columnToBeRemoved);
             _columnPoperties.RemoveAt(columnToBeRemoved);
-            _needsUpdate = true;
+            Invalidate();
         }
 
         public void RemoveRow(int rowToBeRemoved)
@@ -274,12 +279,21 @@ namespace GameEngine.GUI.Panels
 
             _cells.RemoveRow(rowToBeRemoved);
             _rowProperties.RemoveAt(rowToBeRemoved);
-            _needsUpdate = true;
+            Invalidate();
         }
 
         public IGraphicComponent GetComponent(int row, int column)
         {
             return _cells[row, column].GuiComponent;
+        }
+
+        public override void Setup()
+        {
+            base.Setup();
+            foreach (var gridCell in _cells)
+            {
+                gridCell.Setup();
+            }
         }
     }
 }

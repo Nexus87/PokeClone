@@ -7,7 +7,7 @@ namespace BattleLib.Components.GraphicComponents
     [GameType]
     public class AIPokemonDataView : PokemonDataView
     {
-        public AIPokemonDataView(HPLine line, TextBox nameBox, TextBox levelBox, TextBox hpBox) :
+        public AIPokemonDataView(HpLine line, TextBox nameBox, TextBox levelBox, TextBox hpBox) :
             base(line, nameBox, levelBox, hpBox)
         { }
     }

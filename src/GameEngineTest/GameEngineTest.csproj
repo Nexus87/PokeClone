@@ -67,7 +67,6 @@
   <ItemGroup>
     <Compile Include="EventComponent\EventComponentTest.cs" />
     <Compile Include="Graphics\AbstractGraphicComponentTest.cs" />
-    <Compile Include="Graphics\ContainerTest.cs" />
     <Compile Include="Graphics\DefaultTableModelTest.cs" />
     <Compile Include="Graphics\DefaultTableSelectionModelTest.cs" />
     <Compile Include="Graphics\GraphicalTextStub.cs" />
@@ -80,12 +79,6 @@
     <Compile Include="Graphics\IItemModelTest.cs" />
     <Compile Include="Graphics\ITableRendererTest.cs" />
     <Compile Include="Graphics\ItemBoxTest.cs" />
-    <Compile Include="Graphics\Layouts\AbstractLayoutTest.cs" />
-    <Compile Include="Graphics\Layouts\GridLayoutTest.cs" />
-    <Compile Include="Graphics\Layouts\HBoxLayoutTest.cs" />
-    <Compile Include="Graphics\Layouts\ILayoutTest.cs" />
-    <Compile Include="Graphics\Layouts\SingleComponentLayoutTest.cs" />
-    <Compile Include="Graphics\Layouts\VBoxLayoutTest.cs" />
     <Compile Include="Graphics\LineTest.cs" />
     <Compile Include="Graphics\MultiLayeredComponentTest.cs" />
     <Compile Include="Graphics\MultilineTextboxTest.cs" />
@@ -121,7 +114,6 @@
     <Compile Include="TestUtils\TableModelStub.cs" />
     <Compile Include="TestUtils\TableRendererMock.cs" />
     <Compile Include="TestUtils\TableViewMock.cs" />
-    <Compile Include="TestUtils\TestLayout.cs" />
     <Compile Include="TestUtils\TextGraphicComponentMock.cs" />
     <Compile Include="TestUtils\TextGraphicContainerFake.cs" />
     <Compile Include="TestUtils\WidgetMock.cs" />
@@ -149,7 +141,10 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Graphics" />
+    <Folder Include="TestUtils" />
+  </ItemGroup>
   <ItemGroup />
   <ItemGroup />
   <ItemGroup />

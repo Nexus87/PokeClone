@@ -4,7 +4,6 @@ using System.Linq;
 using Base.Data;
 using BattleLib.Components.BattleState;
 using GameEngine;
-using GameEngine.Graphics;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Graphics.General;
 using GameEngine.Registry;
@@ -15,8 +14,8 @@ namespace BattleLib.Components.GraphicComponents
     [GameService(typeof(IBattleGraphicController))]
     public class BattleGraphicController : AbstractGraphicComponent, IBattleGraphicController
     {
-        private readonly Dictionary<ClientIdentifier, PokemonDataView> dataViews = new Dictionary<ClientIdentifier, PokemonDataView>();
-        private readonly Dictionary<ClientIdentifier, PokemonSprite> sprites = new Dictionary<ClientIdentifier, PokemonSprite>();
+        private readonly Dictionary<ClientIdentifier, PokemonDataView> _dataViews = new Dictionary<ClientIdentifier, PokemonDataView>();
+        private readonly Dictionary<ClientIdentifier, PokemonSprite> _sprites = new Dictionary<ClientIdentifier, PokemonSprite>();
 
         public BattleGraphicController(ScreenConstants screen, 
             PlayerPokemonDataView playerView, AIPokemonDataView aiView, 
@@ -29,17 +28,17 @@ namespace BattleLib.Components.GraphicComponents
             playerSprite.IsPlayer = true;
             aiSprite.IsPlayer = false;
 
-            dataViews[player] = playerView;
-            dataViews[ai] = aiView;
+            _dataViews[player] = playerView;
+            _dataViews[ai] = aiView;
 
-            sprites[player] = playerSprite;
-            sprites[ai] = aiSprite;
+            _sprites[player] = playerSprite;
+            _sprites[ai] = aiSprite;
 
-            foreach (var view in dataViews.Values)
-                view.OnHPUpdated += delegate { OnHPSet(this, null); };
+            foreach (var view in _dataViews.Values)
+                view.HpUpdated += delegate { OnHPSet?.Invoke(this, null); };
 
-            foreach (var sprite in sprites.Values)
-                sprite.OnPokemonAppeared += delegate { OnPokemonSet(this, null); };
+            foreach (var sprite in _sprites.Values)
+                sprite.OnPokemonAppeared += delegate { OnPokemonSet?.Invoke(this, null); };
 
             initAIGraphic(aiView, aiSprite, screen);
             initPlayerGraphic(playerView, playerSprite, screen);
@@ -56,18 +55,18 @@ namespace BattleLib.Components.GraphicComponents
 
         public void PlayAttackAnimation(ClientIdentifier id)
         {
-            sprites[id].PlayAttackAnimation();
+            _sprites[id].PlayAttackAnimation();
         }
 
         public void SetHP(ClientIdentifier id, int value)
         {
-            dataViews[id].SetHP(value);
+            _dataViews[id].SetHp(value);
         }
 
         public void SetPokemon(ClientIdentifier id, PokemonWrapper pokemon)
         {
-            dataViews[id].SetPokemon(pokemon);
-            sprites[id].SetPokemon(pokemon.ID);
+            _dataViews[id].SetPokemon(pokemon);
+            _sprites[id].SetPokemon(pokemon.ID);
         }
 
         public void SetPokemonStatus(ClientIdentifier id, StatusCondition condition)
@@ -77,60 +76,60 @@ namespace BattleLib.Components.GraphicComponents
 
         public override void Setup()
         {
-            foreach (var view in dataViews.Values)
+            foreach (var view in _dataViews.Values)
                 view.Setup();
 
-            foreach (var sprite in sprites.Values)
+            foreach (var sprite in _sprites.Values)
                 sprite.Setup();
 
         }
 
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)
         {
-            foreach (var view in dataViews.Values)
+            foreach (var view in _dataViews.Values)
                 view.Draw(time, batch);
 
-            foreach (var sprite in sprites.Values)
+            foreach (var sprite in _sprites.Values)
                 sprite.Draw(time, batch);
         }
 
         private void initAIGraphic(PokemonDataView aiView, PokemonSprite aiSprite, ScreenConstants screen)
         {
 
-            var XPosition = screen.ScreenWidth * 0.2f;
-            var YPosition = screen.ScreenHeight * 0.1f;
+            var xPosition = screen.ScreenWidth * 0.2f;
+            var yPosition = screen.ScreenHeight * 0.1f;
 
-            var Height = screen.ScreenHeight * 0.1f;
-            var Width = screen.ScreenWidth * 0.15f;
+            var height = screen.ScreenHeight * 0.1f;
+            var width = screen.ScreenWidth * 0.15f;
 
-            aiView.SetCoordinates(XPosition, YPosition, Width, Height);
+            aiView.SetCoordinates(xPosition, yPosition, width, height);
 
-            XPosition = screen.ScreenWidth * 0.6f;
-            YPosition = screen.ScreenHeight * 0.1f;
+            xPosition = screen.ScreenWidth * 0.6f;
+            yPosition = screen.ScreenHeight * 0.1f;
 
-            Height = screen.ScreenHeight * 0.25f;
-            Width = screen.ScreenHeight * 0.25f;
+            height = screen.ScreenHeight * 0.25f;
+            width = screen.ScreenHeight * 0.25f;
 
-            aiSprite.SetCoordinates(XPosition, YPosition, Width, Height);
+            aiSprite.SetCoordinates(xPosition, yPosition, width, height);
         }
 
         private void initPlayerGraphic(PokemonDataView playerView, PokemonSprite playerSprite, ScreenConstants screen)
         {
-            var XPosition = screen.ScreenWidth * 0.55f;
-            var YPosition = screen.ScreenHeight * 0.45f;
+            var xPosition = screen.ScreenWidth * 0.55f;
+            var yPosition = screen.ScreenHeight * 0.45f;
 
-            var Height = screen.ScreenHeight * 0.15f;
-            var Width = screen.ScreenWidth * 0.15f;
+            var height = screen.ScreenHeight * 0.15f;
+            var width = screen.ScreenWidth * 0.15f;
 
-            playerView.SetCoordinates(XPosition, YPosition, Width, Height);
+            playerView.SetCoordinates(xPosition, yPosition, width, height);
 
-            XPosition = screen.ScreenWidth * 0.2f;
-            YPosition = screen.ScreenHeight * 0.4f;
+            xPosition = screen.ScreenWidth * 0.2f;
+            yPosition = screen.ScreenHeight * 0.4f;
 
-            Height = screen.ScreenHeight * 0.25f;
-            Width = screen.ScreenHeight * 0.25f;
+            height = screen.ScreenHeight * 0.25f;
+            width = screen.ScreenHeight * 0.25f;
 
-            playerSprite.SetCoordinates(XPosition, YPosition, Width, Height);
+            playerSprite.SetCoordinates(xPosition, yPosition, width, height);
         }
     }
 }

@@ -1,19 +1,20 @@
 ﻿using System;
 using GameEngine.GUI.Graphics.General;
-using GameEngine.GUI.Graphics.Layouts;
+using GameEngine.GUI.Panels;
 using GameEngine.Registry;
 using Microsoft.Xna.Framework;
+using NVorbis;
+using ValueType = GameEngine.GUI.Panels.ValueType;
 
 namespace GameEngine.GUI.Graphics
 {
     [GameType]
     public class SelectableContainer<T> : AbstractGraphicComponent, ISelectableGraphicComponent where T : IGraphicComponent
     {
-        private readonly Container _container;
-
         private readonly ArrowDecorator _arrowBox;
 
         private T _content;
+        private readonly Grid _grid;
 
         public SelectableContainer(GraphicResources resources) : 
             this(new TextureBox(resources.DefaultArrowTexture))
@@ -22,10 +23,11 @@ namespace GameEngine.GUI.Graphics
 
         public SelectableContainer(IGraphicComponent arrowTextureBox, T component)
         {
-            _container = new Container { Layout = new HBoxLayout() };
             _arrowBox = new ArrowDecorator(arrowTextureBox);
-
-            _container.AddComponent(_arrowBox);
+            _grid = new Grid();
+            _grid.AddPercentRow();
+            _grid.AddColumn(new ColumnProperty{Type = ValueType.Auto});
+            _grid.AddColumn(new ColumnProperty{Type = ValueType.Percent, Share = 1});
             Content = component;
         }
 
@@ -42,14 +44,17 @@ namespace GameEngine.GUI.Graphics
             }
             set
             {
-                _container.RemoveComponent(_content);
                 UnregisterHandler();
                 _content = value;
                 if (_content != null)
                 {
                     PreferredHeight = _content.PreferredHeight;
                     RegisterHandler();
-                    _container.AddComponent(_content);
+                    _grid.SetComponent(_content, 0, 1);
+                }
+                else
+                {
+                    _grid.SetComponent(new NullGraphicObject(), 0, 1);
                 }
             }
         }
@@ -68,19 +73,19 @@ namespace GameEngine.GUI.Graphics
 
         public override void Setup()
         {
-            _container.Setup();
+            _grid.SetComponent(_arrowBox, 0, 0);
         }
 
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)
         {
-            _container.Draw(time, batch);
+            _grid.Draw(time, batch);
         }
 
         protected override void Update()
         {
-            _container.SetCoordinates(this);
             SetArrowBoxSize();
             _arrowBox.ShouldDraw = IsSelected;
+            _grid.SetCoordinates(this);
         }
 
         private void UnregisterHandler()
@@ -94,7 +99,7 @@ namespace GameEngine.GUI.Graphics
             _content.PreferredSizeChanged += OnPreferredSizeChanged;
         }
 
-        private void OnPreferredSizeChanged(Object sender, GraphicComponentSizeChangedEventArgs args)
+        private void OnPreferredSizeChanged(object sender, GraphicComponentSizeChangedEventArgs args)
         {
             PreferredHeight = _content.PreferredHeight;
         }
@@ -103,17 +108,19 @@ namespace GameEngine.GUI.Graphics
         {
             if (CanArrowBoxBeSquare())
             {
-                _arrowBox.SetCoordinates(_arrowBox.Area.X, _arrowBox.Area.Y, _container.Area.Height, _container.Area.Height);
+                _arrowBox.PreferredHeight = Area.Height;
+                _arrowBox.PreferredWidth = Area.Height;
             }
             else
             {
-                _arrowBox.SetCoordinates(_arrowBox.Area.X, _arrowBox.Area.Y, 0, 0);
+                _arrowBox.PreferredHeight = 0;
+                _arrowBox.PreferredWidth = 0;
             }
         }
 
         private bool CanArrowBoxBeSquare()
         {
-            return _container.Area.Height < _container.Area.Width;
+            return Area.Height < Area.Width;
         }
 
         private class ArrowDecorator : AbstractGraphicComponent

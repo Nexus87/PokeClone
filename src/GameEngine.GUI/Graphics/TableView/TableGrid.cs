@@ -1,33 +1,35 @@
 ﻿using System;
 using GameEngine.GUI.Graphics.General;
-using GameEngine.GUI.Graphics.Layouts;
+using GameEngine.GUI.Panels;
 using GameEngine.Utils;
 using Microsoft.Xna.Framework;
+using ValueType = GameEngine.GUI.Panels.ValueType;
 
 namespace GameEngine.GUI.Graphics.TableView
 {
     public class TableGrid : ITableGrid
     {
-        private readonly Table<IGraphicComponent> components;
-        private readonly Container itemContainer;
-        private readonly GridLayout layout;
+        private readonly Table<IGraphicComponent> _components;
+        private readonly Grid _itemContainer;
 
-        private bool needsUpdate = true;
+        private bool _needsUpdate = true;
 
-        private TableIndex startIndex;
-        private TableIndex endIndex;
+        private TableIndex _startIndex;
+        private TableIndex _endIndex;
 
-        private bool autoResizeStart;
-        private bool autoResizeEnd;
+        private bool _autoResizeStart;
+        private bool _autoResizeEnd;
 
         private static readonly TableIndex? Null = null;
+        private int _rows;
+        private int _columns;
 
         public int Rows
         {
-            get { return layout.Rows; }
+            get { return _rows; }
             set
             {
-                layout.Rows = value;
+                _rows = value;
                 Invalidate();
                 FixIndexesRow();
             }
@@ -35,10 +37,10 @@ namespace GameEngine.GUI.Graphics.TableView
 
         public int Columns
         {
-            get { return layout.Columns; }
+            get { return _columns; }
             set
             {
-                layout.Columns = value;
+                _columns = value;
                 Invalidate();
                 FixIndexesColumn();
             }
@@ -46,33 +48,33 @@ namespace GameEngine.GUI.Graphics.TableView
 
         public TableIndex? StartIndex
         {
-            get { return autoResizeStart ? Null : startIndex; }
+            get { return _autoResizeStart ? Null : _startIndex; }
             set
             {
                 Invalidate();
                 if (!value.HasValue)
                 {
-                    autoResizeStart = true;
-                    startIndex = new TableIndex(0, 0);
+                    _autoResizeStart = true;
+                    _startIndex = new TableIndex(0, 0);
                     return;
                 }
 
                 CheckStartRange(value.Value);
                 CheckOrder(value, EndIndex);
-                startIndex = value.Value;
-                autoResizeStart = false;
+                _startIndex = value.Value;
+                _autoResizeStart = false;
             }
         }
 
         public TableIndex? EndIndex
         {
-            get { return autoResizeEnd ? Null : endIndex; }
+            get { return _autoResizeEnd ? Null : _endIndex; }
             set
             {
                 Invalidate();
                 if (!value.HasValue)
                 {
-                    autoResizeEnd = true;
+                    _autoResizeEnd = true;
                     FixEndColumn();
                     FixEndRow();
                     return;
@@ -80,8 +82,8 @@ namespace GameEngine.GUI.Graphics.TableView
 
                 CheckEndRange(value.Value);
                 CheckOrder(StartIndex, value);
-                endIndex = value.Value;
-                autoResizeEnd = false;
+                _endIndex = value.Value;
+                _autoResizeEnd = false;
             }
         }
 
@@ -105,18 +107,18 @@ namespace GameEngine.GUI.Graphics.TableView
             var column = index.Column;
 
             if (row > Rows || row < 0)
-                throw new ArgumentOutOfRangeException("index");
+                throw new ArgumentOutOfRangeException(nameof(index));
             if (column > Columns || column < 0)
-                throw new ArgumentOutOfRangeException("index");
+                throw new ArgumentOutOfRangeException(nameof(index));
         }
 
         public TableGrid(int rows = 0, int columns = 0)
         {
-            layout = new GridLayout(rows, columns);
+            _rows = rows;
+            _columns = columns;
+            _components = new Table<IGraphicComponent>();
 
-            components = new Table<IGraphicComponent>();
-
-            itemContainer = new Container {Layout = layout};
+            _itemContainer = new Grid();
         }
 
         private void FixIndexesRow()
@@ -127,14 +129,14 @@ namespace GameEngine.GUI.Graphics.TableView
 
         private void FixEndRow()
         {
-            if (autoResizeEnd || endIndex.Row > Rows)
-                endIndex.Row = Rows;
+            if (_autoResizeEnd || _endIndex.Row > Rows)
+                _endIndex.Row = Rows;
         }
 
         private void FixStartRow()
         {
-            if (startIndex.Row >= Rows)
-                startIndex.Row = Math.Max(0, Rows - 1);
+            if (_startIndex.Row >= Rows)
+                _startIndex.Row = Math.Max(0, Rows - 1);
         }
 
         private void FixIndexesColumn()
@@ -145,25 +147,25 @@ namespace GameEngine.GUI.Graphics.TableView
 
         private void FixEndColumn()
         {
-            if (autoResizeEnd || endIndex.Column > Columns)
-                endIndex.Column = Columns;
+            if (_autoResizeEnd || _endIndex.Column > Columns)
+                _endIndex.Column = Columns;
         }
 
         private void FixStartColumn()
         {
-            if (startIndex.Column >= Columns)
-                startIndex.Column = Math.Max(0, Columns - 1);
+            if (_startIndex.Column >= Columns)
+                _startIndex.Column = Math.Max(0, Columns - 1);
         }
 
         private void Invalidate()
         {
-            needsUpdate = true;
+            _needsUpdate = true;
         }
 
         public void SetComponentAt(int row, int column, IGraphicComponent component)
         {
             CheckRange(row, column);
-            components[row, column] = component;
+            _components[row, column] = component;
             Invalidate();
         }
 
@@ -177,41 +179,72 @@ namespace GameEngine.GUI.Graphics.TableView
         private void CheckRange(int row, int column)
         {
             if (row >= Rows || row < 0)
-                throw new ArgumentOutOfRangeException("row");
+                throw new ArgumentOutOfRangeException(nameof(row));
             if (column >= Columns || column < 0)
-                throw new ArgumentOutOfRangeException("column");
+                throw new ArgumentOutOfRangeException(nameof(column));
         }
 
         public IGraphicComponent GetComponentAt(int row, int column)
         {
             CheckRange(row, column);
 
-            return components[row, column];
+            return _components[row, column];
         }
 
         public void SetCoordinates(float x, float y, float width, float height)
         {
             Invalidate();
-            itemContainer.SetCoordinates(x, y, width, height);
+            _itemContainer.SetCoordinates(x, y, width, height);
         }
 
         public void Draw(GameTime time, ISpriteBatch spriteBatch)
         {
-            if (needsUpdate)
+            if (_needsUpdate)
             {
                 Update();
-                needsUpdate = false;
+                _needsUpdate = false;
             }
-            itemContainer.Draw(time, spriteBatch);
+            _itemContainer.Draw(time, spriteBatch);
         }
 
         private void Update()
         {
-            itemContainer.RemoveAllComponents();
-            var subTable = components.CreateSubtable(startIndex, endIndex);
+            UpdateRows();
+            UpdateColumns();
+            var subTable = _components.CreateSubtable(_startIndex, _endIndex);
+            for (var i = 0; i < subTable.Rows; i++)
+            {
+                for (var j = 0; j < subTable.Columns; j++)
+                {
+                    _itemContainer.SetComponent(subTable[i, j], i, j);
+                }
+            }
+        }
 
-            foreach (var component in subTable.EnumerateAlongRows())
-                itemContainer.AddComponent(component);
+        private void UpdateColumns()
+        {
+            while (_columns > _itemContainer.Columns)
+            {
+                _itemContainer.AddColumn(new ColumnProperty {Type = ValueType.Percent, Share = 1});
+            }
+
+            while (_columns < _itemContainer.Columns)
+            {
+                _itemContainer.RemoveColumn(0);
+            }
+        }
+
+        private void UpdateRows()
+        {
+            while (_rows > _itemContainer.Rows)
+            {
+                _itemContainer.AddRow(new RowProperty{Type = ValueType.Percent, Share = 1});
+            }
+
+            while (_rows < _itemContainer.Rows)
+            {
+                _itemContainer.RemoveRow(0);
+            }
         }
     }
 }

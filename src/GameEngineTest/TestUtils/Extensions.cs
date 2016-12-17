@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Graphics.General;
 
@@ -27,22 +26,6 @@ namespace GameEngineTest.TestUtils
         public static void Update(this GameEngine.IGameComponent component)
         {
             component.Update(new GameTime());
-        }
-
-        public static List<GraphicComponentMock> SetupContainer(this Container container, int number, float initialSize = 30.0f)
-        {
-            var ret = new List<GraphicComponentMock>();
-
-            for(var i = 0; i < number; i++)
-            {
-                var comp = new GraphicComponentMock();
-                comp.Width(initialSize);
-                comp.Height(initialSize);
-                ret.Add(comp);
-                container.AddComponent(comp);
-            }
-
-            return ret;
         }
 
         public static void IsInConstraints(this IGraphicComponent component, float x, float y, float width, float height)

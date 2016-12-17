@@ -15,18 +15,18 @@ namespace BattleLibTest.Components.GraphicComponents
     public class HpLineTest : IGraphicComponentTest
     {
 
-        private static HPLine CreateLine()
+        private static HpLine CreateLine()
         {
             var hpLineStub = A.Fake<IGraphicComponent>();
 
             return CreateLine(hpLineStub);
         }
 
-        private static HPLine CreateLine(IGraphicComponent hpLine)
+        private static HpLine CreateLine(IGraphicComponent hpLine)
         {
             var outerLine = A.Fake<IGraphicComponent>();
             var innerLine = A.Fake<IGraphicComponent>();
-            var line = new HPLine(outerLine, innerLine, hpLine, Color.White) {MaxHP = 100};
+            var line = new HpLine(outerLine, innerLine, hpLine, Color.White) {MaxHp = 100};
             line.Setup();
 
             return line;
@@ -47,7 +47,7 @@ namespace BattleLibTest.Components.GraphicComponents
             line.SetCoordinates(0, 0, 300, 300);
             line.AnimationDone += delegate { animationDone = true; };
             
-            line.AnimationSetHP(hp);
+            line.AnimationSetHp(hp);
 
             while (!animationDone)
                 line.Draw();
@@ -62,7 +62,7 @@ namespace BattleLibTest.Components.GraphicComponents
             var line = CreateLine();
             line.SetCoordinates(0, 0, 300, 300);
 
-            Assert.Throws<ArgumentOutOfRangeException>(() => line.AnimationSetHP(hp));
+            Assert.Throws<ArgumentOutOfRangeException>(() => line.AnimationSetHp(hp));
         }
 
         public static List<TestCaseData> HpColorTestData = new List<TestCaseData>
@@ -93,7 +93,7 @@ namespace BattleLibTest.Components.GraphicComponents
             var line = CreateLine();
             line.SetCoordinates(0, 0, 500, 500);
 
-            line.MaxHP = 0;
+            line.MaxHp = 0;
             line.Current = 0;
 
             Assert.DoesNotThrow(()=> line.Draw());
@@ -109,7 +109,7 @@ namespace BattleLibTest.Components.GraphicComponents
             
             line.SetCoordinates(0, 0, 500, 500);
 
-            line.MaxHP = 0;
+            line.MaxHp = 0;
             line.Current = 0;
 
             line.Draw();
@@ -134,7 +134,7 @@ namespace BattleLibTest.Components.GraphicComponents
         {
             var line = CreateLine();
             line.Current = initalHp;
-            line.MaxHP = maxHp;
+            line.MaxHp = maxHp;
 
             Assert.AreEqual(resultHp, line.Current);
         }
@@ -144,7 +144,7 @@ namespace BattleLibTest.Components.GraphicComponents
         {
             var line = CreateLine();
 
-            Assert.Throws<ArgumentOutOfRangeException>(() => line.MaxHP = hp);
+            Assert.Throws<ArgumentOutOfRangeException>(() => line.MaxHp = hp);
         }
 
         protected override IGraphicComponent CreateComponent()

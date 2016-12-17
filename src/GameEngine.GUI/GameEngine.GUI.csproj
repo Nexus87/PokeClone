@@ -66,7 +66,6 @@
     <Compile Include="Controlls\ListView.cs" />
     <Compile Include="Graphics\AbstractGraphicComponent.cs" />
     <Compile Include="Graphics\AnimatedTextureBox.cs" />
-    <Compile Include="Graphics\Container.cs" />
     <Compile Include="Graphics\Extensions.cs" />
     <Compile Include="Graphics\ForwardingGraphicComponent.cs" />
     <Compile Include="Graphics\General\ISpriteBatch.cs" />
@@ -93,13 +92,6 @@
     <Compile Include="Graphics\ItemBox.cs" />
     <Compile Include="Graphics\ITextGraphicComponent.cs" />
     <Compile Include="Graphics\ITextGraphicContainer.cs" />
-    <Compile Include="Graphics\Layouts\AbstractLayout.cs" />
-    <Compile Include="Graphics\Layouts\BoxLayout.cs" />
-    <Compile Include="Graphics\Layouts\GridLayout.cs" />
-    <Compile Include="Graphics\Layouts\HBoxLayout.cs" />
-    <Compile Include="Graphics\Layouts\ILayout.cs" />
-    <Compile Include="Graphics\Layouts\SingleComponentLayout.cs" />
-    <Compile Include="Graphics\Layouts\VBoxLayout.cs" />
     <Compile Include="Graphics\Line.cs" />
     <Compile Include="Graphics\MultiLayeredComponent.cs" />
     <Compile Include="Graphics\MultlineTextBox.cs" />
@@ -165,6 +157,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Graphics" />
     <Folder Include="Graphics\GUI" />
   </ItemGroup>
   <ItemGroup />

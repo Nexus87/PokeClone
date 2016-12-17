@@ -9,11 +9,11 @@ namespace BattleLib.Components.GraphicComponents
     public class HpResizeAnimation : IAnimation
     {
         private int currentHP;
-        private readonly HPLine line;
+        private readonly HpLine line;
         private readonly bool lower;
         private readonly int targetHP;
 
-        public HpResizeAnimation(int startHp, int targetHp, HPLine line)
+        public HpResizeAnimation(int startHp, int targetHp, HpLine line)
         {
             this.targetHP = targetHp;
             this.line = line;
@@ -22,7 +22,7 @@ namespace BattleLib.Components.GraphicComponents
             lower = startHp > targetHp;
         }
 
-        public HpResizeAnimation(int targetHp, HPLine line)
+        public HpResizeAnimation(int targetHp, HpLine line)
             : this(line.Current, targetHp, line)
         {
         }

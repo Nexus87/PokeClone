@@ -1,6 +1,5 @@
 ﻿using System;
 using GameEngine;
-using GameEngine.Graphics;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Graphics.General;
 using GameEngine.Registry;
@@ -9,25 +8,25 @@ using Microsoft.Xna.Framework;
 namespace BattleLib.Components.GraphicComponents
 {
     [GameType]
-    public class HPLine : AbstractGraphicComponent
+    public class HpLine : AbstractGraphicComponent
     {
         private const float RelativeBorderSize = 0.2f;
-        private float BorderSize { get { return RelativeBorderSize * Area.Height; } }
-        private int currentHp;
-        private readonly IGraphicComponent hpLine;
-        private readonly IGraphicComponent innerLine;
-        private int maxHp;
-        private readonly IGraphicComponent outerLine;
+        private float BorderSize => RelativeBorderSize * Area.Height;
+        private int _currentHp;
+        private readonly IGraphicComponent _hpLine;
+        private readonly IGraphicComponent _innerLine;
+        private int _maxHp;
+        private readonly IGraphicComponent _outerLine;
 
 
-        public HPLine(Line outerLine, Line innerLine, Line hpLine, ScreenConstants screen) :
+        public HpLine(Line outerLine, Line innerLine, Line hpLine, ScreenConstants screen) :
             this(outerLine, innerLine, hpLine, screen.BackgroundColor)
         {}
-        internal HPLine(IGraphicComponent outerLine, IGraphicComponent innerLine, IGraphicComponent hpLine, Color backgroundColor)
+        internal HpLine(IGraphicComponent outerLine, IGraphicComponent innerLine, IGraphicComponent hpLine, Color backgroundColor)
         {
-            this.outerLine = outerLine;
-            this.innerLine = innerLine;
-            this.hpLine = hpLine;
+            _outerLine = outerLine;
+            _innerLine = innerLine;
+            _hpLine = hpLine;
             outerLine.Color = Color.Black;
             innerLine.Color = backgroundColor;
         }
@@ -35,51 +34,51 @@ namespace BattleLib.Components.GraphicComponents
         public event EventHandler AnimationDone = delegate { };
 
         public int Current { 
-            get { return currentHp; }
+            get { return _currentHp; }
             set
             {
-                if (value < 0 || value > maxHp)
-                    throw new ArgumentOutOfRangeException("value");
-                currentHp = value; 
+                if (value < 0 || value > _maxHp)
+                    throw new ArgumentOutOfRangeException(nameof(value));
+                _currentHp = value;
                 Invalidate();
             } 
         }
 
-        public int MaxHP { 
-            get { return maxHp; } 
+        public int MaxHp {
+            get { return _maxHp; }
             set 
             {
                 if (value < 0)
-                    throw new ArgumentOutOfRangeException("value");
-                maxHp = value;
-                if (Current > maxHp)
-                    Current = maxHp;
+                    throw new ArgumentOutOfRangeException(nameof(value));
+                _maxHp = value;
+                if (Current > _maxHp)
+                    Current = _maxHp;
                 Invalidate(); 
             } 
         }
 
-        public void AnimationSetHP(int newHP)
+        public void AnimationSetHp(int newHp)
         {
-            if (newHP < 0 || newHP > maxHp)
-                throw new ArgumentOutOfRangeException("newHP");
+            if (newHp < 0 || newHp > _maxHp)
+                throw new ArgumentOutOfRangeException(nameof(newHp));
 
-            var animation = new HpResizeAnimation(newHP, this);
+            var animation = new HpResizeAnimation(newHp, this);
             animation.AnimationFinished += animation_AnimationFinished;
             PlayAnimation(animation);
         }
 
         public override void Setup()
         {
-            outerLine.Setup();
-            innerLine.Setup();
-            hpLine.Setup();
+            _outerLine.Setup();
+            _innerLine.Setup();
+            _hpLine.Setup();
         }
 
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)
         {
-            outerLine.Draw(time, batch);
-            innerLine.Draw(time, batch);
-            hpLine.Draw(time, batch);
+            _outerLine.Draw(time, batch);
+            _innerLine.Draw(time, batch);
+            _hpLine.Draw(time, batch);
         }
 
         protected override void Update()
@@ -87,47 +86,47 @@ namespace BattleLib.Components.GraphicComponents
             SetOuterLineCoordinates();
             SetInnerLineCoordinates();
 
-            float factor = maxHp == 0 ? 0 : ((float)currentHp) / ((float)maxHp);
-            SetHPLineCoordinates(factor);
-            SetHPLineColor(factor);
+            float factor = _maxHp == 0 ? 0 : _currentHp / ((float)_maxHp);
+            SetHpLineCoordinates(factor);
+            SetHpLineColor(factor);
         }
 
-        private void SetHPLineCoordinates(float factor)
+        private void SetHpLineCoordinates(float factor)
         {
-            var XPosition = Area.X + BorderSize;
-            var YPosition = Area.Y + BorderSize;
-            var Width = Math.Max(0, factor * (Area.Width - 2 * BorderSize));
-            var Height = Math.Max(0, Area.Height - 2 * BorderSize);
+            var xPosition = Area.X + BorderSize;
+            var yPosition = Area.Y + BorderSize;
+            var width = Math.Max(0, factor * (Area.Width - 2 * BorderSize));
+            var height = Math.Max(0, Area.Height - 2 * BorderSize);
 
-            hpLine.SetCoordinates(XPosition, YPosition, Width, Height);
+            _hpLine.SetCoordinates(xPosition, yPosition, width, height);
         }
 
         private void SetInnerLineCoordinates()
         {
-            var XPosition = Area.X + BorderSize;
-            var YPosition = Area.Y + BorderSize;
-            var Width = Math.Max(0, Area.Width - 2 * BorderSize);
-            var Height = Math.Max(0, Area.Height - 2 * BorderSize);
-            innerLine.SetCoordinates(XPosition, YPosition, Width, Height);
+            var xPosition = Area.X + BorderSize;
+            var yPosition = Area.Y + BorderSize;
+            var width = Math.Max(0, Area.Width - 2 * BorderSize);
+            var height = Math.Max(0, Area.Height - 2 * BorderSize);
+            _innerLine.SetCoordinates(xPosition, yPosition, width, height);
         }
 
         private void SetOuterLineCoordinates()
         {
-            var XPosition = Area.X;
-            var YPosition = Area.Y;
-            var Width = Area.Width;
-            var Height = Area.Height;
-            outerLine.SetCoordinates(XPosition, YPosition, Width, Height);
+            var xPosition = Area.X;
+            var yPosition = Area.Y;
+            var width = Area.Width;
+            var height = Area.Height;
+            _outerLine.SetCoordinates(xPosition, yPosition, width, height);
         }
 
-        private void SetHPLineColor(float factor)
+        private void SetHpLineColor(float factor)
         {
             if (factor >= 0.50f)
-                hpLine.Color = Color.Green;
+                _hpLine.Color = Color.Green;
             else if (factor >= 0.25f)
-                hpLine.Color = Color.Yellow;
+                _hpLine.Color = Color.Yellow;
             else
-                hpLine.Color = Color.Red;
+                _hpLine.Color = Color.Red;
         }
 
         private void animation_AnimationFinished(object sender, EventArgs e)

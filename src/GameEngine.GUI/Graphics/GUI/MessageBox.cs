@@ -42,6 +42,11 @@ namespace GameEngine.GUI.Graphics.GUI
             return true;
         }
 
+        public override void HandleKeyInput(CommandKeys key)
+        {
+            HandleInput(key);
+        }
+
         public void ResetText()
         {
             textBox.Text = "";

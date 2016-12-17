@@ -93,7 +93,7 @@ namespace GameEngine.GUI.Graphics
             {
                 return _preferredHeight;
             }
-            protected set
+            set
             {
                 if (value.AlmostEqual(_preferredHeight))
                     return;

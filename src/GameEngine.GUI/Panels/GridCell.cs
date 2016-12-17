@@ -1,4 +1,5 @@
 using GameEngine.GUI.Graphics;
+using GameEngine.GUI.Graphics.General;
 using Microsoft.Xna.Framework;
 
 namespace GameEngine.GUI.Panels
@@ -27,6 +28,16 @@ namespace GameEngine.GUI.Panels
             {
                 GuiComponent.IsSelected = value;
             }
+        }
+
+        public void Draw(GameTime time, ISpriteBatch spriteBatch)
+        {
+            GuiComponent?.Draw(time, spriteBatch);
+        }
+
+        public void Setup()
+        {
+            GuiComponent?.Setup();
         }
     }
 }

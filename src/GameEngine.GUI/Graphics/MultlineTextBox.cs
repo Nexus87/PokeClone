@@ -1,5 +1,6 @@
-﻿using GameEngine.GUI.Graphics.General;
-using GameEngine.GUI.Graphics.Layouts;
+﻿using System.Collections.Generic;
+using GameEngine.GUI.Graphics.General;
+using GameEngine.GUI.Panels;
 using GameEngine.Registry;
 using GameEngine.Utils;
 using Microsoft.Xna.Framework;
@@ -9,38 +10,32 @@ namespace GameEngine.GUI.Graphics
     [GameType]
     public class MultlineTextBox : AbstractGraphicComponent, ITextGraphicContainer
     {
-        private string text;
-        private readonly ITextSplitter splitter;
-        private int currentLineIndex;
-        private readonly Container container;
-        private readonly int lineNumber;
-        private readonly ISpriteFont font;
-
-        private ITextGraphicComponent GetComponent(int index)
-        {
-            return (ITextGraphicComponent)container.Components[index];
-        }
+        private string _text;
+        private readonly ITextSplitter _splitter;
+        private int _currentLineIndex;
+        private readonly int _lineNumber;
+        private readonly ISpriteFont _font;
+        private readonly List<ITextGraphicComponent> _textBoxes = new List<ITextGraphicComponent>();
+        private readonly Grid _grid = new Grid();
 
         public MultlineTextBox(ISpriteFont font, ITextSplitter splitter, int lineNumber)
         {
-            this.lineNumber = lineNumber;
-            this.font = font;
-            this.splitter = splitter;
-            container = new Container();
-            container.Layout = new VBoxLayout();
+            _lineNumber = lineNumber;
+            _font = font;
+            _splitter = splitter;
         }
 
         public string Text
         {
             set
             {
-                text = value;
-                currentLineIndex = 0;
+                _text = value;
+                _currentLineIndex = 0;
                 Invalidate();
             }
             get
             {
-                return text;
+                return _text;
             }
         }
 
@@ -51,7 +46,8 @@ namespace GameEngine.GUI.Graphics
                 Update();
                 NeedsUpdate = false;
             }
-            return currentLineIndex + lineNumber < splitter.Count;
+
+            return _currentLineIndex + _lineNumber < _splitter.Count;
         }
 
         public void NextLine()
@@ -59,7 +55,7 @@ namespace GameEngine.GUI.Graphics
             if (!HasNext())
                 return;
 
-            currentLineIndex += lineNumber;
+            _currentLineIndex += _lineNumber;
             Invalidate();
         }
 
@@ -72,23 +68,21 @@ namespace GameEngine.GUI.Graphics
 
         private void UpdateContainer()
         {
-            container.SetCoordinates(this);
-            // Layout the container now, otherwise DisplayableChars might return a wrong value
-            container.ForceLayout();
+            _grid.SetCoordinates(this);
         }
 
         private void UpdateTextComponents()
         {
-            for (int i = 0; i < lineNumber; i++)
+            for (int i = 0; i < _lineNumber; i++)
             {
-                var line = splitter.GetString(i + currentLineIndex);
-                GetComponent(i).Text = line;
+                var line = _splitter.GetString(i + _currentLineIndex);
+                _textBoxes[i].Text = line;
             }
         }
 
         private void SplitText()
         {
-            splitter.SplitText(GetComponent(0).DisplayableChars(), text);
+            _splitter.SplitText(_textBoxes[0].DisplayableChars(), _text);
         }
 
         protected virtual ITextGraphicComponent CreateTextComponent(ISpriteFont font)
@@ -98,15 +92,20 @@ namespace GameEngine.GUI.Graphics
 
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)
         {
-            container.Draw(time, batch);
+            _grid.Draw(time, batch);
         }
 
         public override void Setup()
         {
-            for (int i = 0; i < lineNumber; i++)
-                container.AddComponent(CreateTextComponent(font));
-
-            container.Setup();
+            _grid.AddPercentColumn();
+            for (var i = 0; i < _lineNumber; i++)
+            {
+                var component = CreateTextComponent(_font);
+                component.Setup();
+                _textBoxes.Add(component);
+                _grid.AddRow(new RowProperty{Type = ValueType.Percent, Share = 1});
+                _grid.SetComponent(component, i, 0);
+            }
         }
     }
 }

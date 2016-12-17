@@ -1,7 +1,6 @@
-﻿using GameEngine.Graphics;
-using GameEngine.GUI.Graphics;
+﻿using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Graphics.General;
-using GameEngine.GUI.Graphics.Layouts;
+using GameEngine.GUI.Panels;
 using GameEngine.Registry;
 using GameEngine.Utils;
 using Microsoft.Xna.Framework;
@@ -11,8 +10,8 @@ namespace MainModule.Graphics
     [GameType]
     public class MapGraphic : AbstractGraphicComponent, IMapGraphic
     {
-        public float TextureSize { get; private set; }
-        private readonly Container container = new Container();
+        public float TextureSize { get; }
+        private readonly Grid _container = new Grid();
 
 
         public MapGraphic(ITable<IGraphicComponent> fieldTextures, float textureSize = 128.0f)
@@ -25,13 +24,13 @@ namespace MainModule.Graphics
 
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)
         {
-            container.Draw(time, batch);
+            _container.Draw(time, batch);
         }
 
         protected override void Update()
         {
             base.Update();
-            container.SetCoordinates(this);
+            _container.SetCoordinates(this);
         }
 
         public override void Setup()
@@ -43,16 +42,21 @@ namespace MainModule.Graphics
             Area = new Rectangle(Area.X, Area.Y, (int) totalWidth, (int) totalHeight);
         }
 
-        private float Rows { get;  set; }
-        private float Columns { get; set; }
+        private float Rows { get; }
+        private float Columns { get; }
 
         private void InitContainer(ITable<IGraphicComponent> fieldTextures)
         {
 
-            foreach (var component in fieldTextures.EnumerateAlongRows())
-                container.AddComponent(component);
-
-            container.Layout = new GridLayout(fieldTextures.Rows, fieldTextures.Columns);
+            for (var i = 0; i < fieldTextures.Rows; i++)
+            {
+                _container.AddPercentRow();
+                for (var j = 0; j < fieldTextures.Columns; j++)
+                {
+                    _container.AddPercentColumn();
+                    _container.SetComponent(fieldTextures[i, j], i, j);
+                }
+            }
         }
 
         public float GetXPositionOfColumn(int column)

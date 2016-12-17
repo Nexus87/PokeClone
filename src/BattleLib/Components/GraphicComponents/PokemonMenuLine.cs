@@ -1,9 +1,8 @@
 ﻿using Base;
 using GameEngine;
-using GameEngine.Graphics;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Graphics.General;
-using GameEngine.GUI.Graphics.Layouts;
+using GameEngine.GUI.Panels;
 using GameEngine.Registry;
 using Microsoft.Xna.Framework;
 
@@ -12,94 +11,100 @@ namespace BattleLib.Components.GraphicComponents
     [GameType]
     public class PokemonMenuLine : AbstractGraphicComponent
     {
-        private Container mainContainer;
+        private Grid _mainContainer;
 
-        private readonly TextureBox icon;
-        private readonly HPLine hpLine;
-        private readonly HPText hpText;
-        private readonly TextBox nameBox;
-        private readonly TextBox hpLabel;
-        private readonly TextBox level;
-        private readonly TextureProvider textureProvider;
+        private readonly TextureBox _icon;
+        private readonly HpLine _hpLine;
+        private readonly HPText _hpText;
+        private readonly TextBox _nameBox;
+        private readonly TextBox _hpLabel;
+        private readonly TextBox _level;
+        private readonly TextureProvider _textureProvider;
 
-        public PokemonMenuLine(TextureBox icon, HPLine hpLine, TextBox nameBox, HPText hpText, TextBox level,
+        public PokemonMenuLine(TextureBox icon, HpLine hpLine, TextBox nameBox, HPText hpText, TextBox level,
             TextBox hpLabel, TextureProvider textureProvider)
         {
-            mainContainer = new Container();
-            this.icon = icon;
-            this.hpLine = hpLine;
-            this.hpText = hpText;
+            _mainContainer = new Grid();
+            _icon = icon;
+            _hpLine = hpLine;
+            _hpText = hpText;
 
-            this.nameBox = nameBox;
-            this.level = level;
-            this.hpLabel = hpLabel;
-            this.textureProvider = textureProvider;
+            _nameBox = nameBox;
+            _level = level;
+            _hpLabel = hpLabel;
+            _textureProvider = textureProvider;
         }
 
         public void SetPokemon(Pokemon pokemon)
         {
-            hpText.SetPokemon(pokemon);
+            _hpText.SetPokemon(pokemon);
 
-            hpLine.MaxHP = pokemon.MaxHP;
-            hpLine.Current = pokemon.HP;
+            _hpLine.MaxHp = pokemon.MaxHP;
+            _hpLine.Current = pokemon.HP;
 
-            nameBox.Text = pokemon.Name;
+            _nameBox.Text = pokemon.Name;
 
-            level.Text = "L" + pokemon.Level;
+            _level.Text = "L" + pokemon.Level;
 
-            icon.Image = textureProvider.GetIcon(pokemon.Id);
+            _icon.Image = _textureProvider.GetIcon(pokemon.Id);
         }
 
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)
         {
-            mainContainer.Draw(time, batch);
+            _mainContainer.Draw(time, batch);
         }
 
         public override void Setup()
         {
-            var iconDataContainer = new Container() {Layout = new HBoxLayout()};
-            var hpLineContainer = new Container() {Layout = new HBoxLayout()};
-            var nameLevelContainer = new Container() {Layout = new HBoxLayout()};
-            var dataContainer = new Container() {Layout = new VBoxLayout()};
+            var iconDataContainer = new Grid();
+            var hpLineContainer = new Grid();
+            var nameLevelContainer = new Grid();
+            var dataContainer = new Grid();
 
-            hpLabel.Text = "HP:";
-            hpLabel.HorizontalPolicy = ResizePolicy.Preferred;
-            hpLabel.PreferredTextHeight = 24;
+            _hpLabel.Text = "HP:";
+            _hpLabel.PreferredTextHeight = 24;
 
-
-            hpText.HorizontalPolicy = ResizePolicy.Preferred;
-
-
-            hpLine.VerticalPolicy = ResizePolicy.Fixed;
-            hpLine.SetCoordinates(0, 0, 0, 24);
-
-            hpLineContainer.AddComponent(hpLabel);
-            hpLineContainer.AddComponent(hpLine);
-            hpLineContainer.AddComponent(hpText);
+            hpLineContainer.AddPercentRow();
+            hpLineContainer.AddAutoColumn();
+            hpLineContainer.AddPercentColumn();
+            hpLineContainer.AddAutoColumn();
+            hpLineContainer.SetComponent(_hpLabel, 0, 0);
+            hpLineContainer.SetComponent(_hpLine, 0, 1);
+            hpLineContainer.SetComponent(_hpText, 0, 2);
 
 
-            level.HorizontalPolicy = ResizePolicy.Preferred;
+            _level.HorizontalPolicy = ResizePolicy.Preferred;
 
-            nameLevelContainer.AddComponent(nameBox);
-            nameLevelContainer.AddComponent(level);
+            nameLevelContainer.AddPercentRow();
+            nameLevelContainer.AddPercentColumn();
+            nameLevelContainer.AddAutoColumn();
+            nameLevelContainer.SetComponent(_nameBox, 0, 0);
+            nameLevelContainer.SetComponent(_level, 0, 1);
 
-            dataContainer.AddComponent(nameLevelContainer);
-            dataContainer.AddComponent(hpLineContainer);
 
-            icon.VerticalPolicy = icon.HorizontalPolicy = ResizePolicy.Fixed;
+            dataContainer.AddPercentColumn();
+            dataContainer.AddPercentRow();
+            dataContainer.AddPercentRow();
+            dataContainer.SetComponent(nameLevelContainer, 0, 0);
+            dataContainer.SetComponent(hpLineContainer, 1, 0);
 
-            iconDataContainer.AddComponent(icon);
-            iconDataContainer.AddComponent(dataContainer);
+            _icon.VerticalPolicy = _icon.HorizontalPolicy = ResizePolicy.Fixed;
 
-            mainContainer = iconDataContainer;
+            dataContainer.AddPercentRow();
+            dataContainer.AddAutoColumn();
+            dataContainer.AddPercentColumn();
+            iconDataContainer.SetComponent(_icon, 0, 0);
+            iconDataContainer.SetComponent(dataContainer, 0, 1);
 
-            mainContainer.Setup();
+            _mainContainer = iconDataContainer;
+
+            _mainContainer.Setup();
         }
 
         protected override void Update()
         {
-            mainContainer.SetCoordinates(this);
-            icon.SetCoordinates(icon.Area.X, icon.Area.Y, mainContainer.Area.Height, mainContainer.Area.Height);
+            _mainContainer.SetCoordinates(this);
+            _icon.SetCoordinates(_icon.Area.X, _icon.Area.Y, _mainContainer.Area.Height, _mainContainer.Area.Height);
         }
     }
 }

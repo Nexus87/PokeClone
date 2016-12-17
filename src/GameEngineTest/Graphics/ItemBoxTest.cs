@@ -33,7 +33,6 @@ namespace GameEngineTest.Graphics
         [TestCase(0.0f, 0.0f, 50.0f, 150.0f)]
         public void Draw_SelectedDraw_ArroLeftOfText(float x, float y, float width, float height)
         {
-            SpriteBatchMock spriteBatch = new SpriteBatchMock();
             var arrow = new GraphicComponentMock();
             var textBox = new TextGraphicComponentMock();
 
@@ -41,7 +40,7 @@ namespace GameEngineTest.Graphics
             item.SetCoordinates(x, y, width, height);
             item.Select();
 
-            item.Draw(spriteBatch);
+            item.Draw();
 
             Assert.LessOrEqual(arrow.XPosition(), textBox.XPosition());
         }

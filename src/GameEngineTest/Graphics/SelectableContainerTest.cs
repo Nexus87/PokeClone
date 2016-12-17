@@ -105,6 +105,7 @@ namespace GameEngineTest.Graphics
                 container = new SelectableContainer<GraphicComponentMock>(arrowMock);
 
             container.SetCoordinates(10, 10, 100, 100);
+            container.Setup();
             return container;
         }
     }

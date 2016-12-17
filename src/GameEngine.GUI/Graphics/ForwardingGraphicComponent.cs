@@ -26,7 +26,7 @@ namespace GameEngine.GUI.Graphics
         /// This property provides access to the inner component. It can only be
         /// set in the constructor.
         /// </remarks>
-        protected T InnerComponent { get; }
+        protected T InnerComponent { get; set; }
         private bool _needsUpdate = true;
 
         public event EventHandler<GraphicComponentSizeChangedEventArgs> PreferredSizeChanged
@@ -162,9 +162,9 @@ namespace GameEngine.GUI.Graphics
         public IEnumerable<IGraphicComponent> Children => InnerComponent.Children;
         public bool IsSelected { get; set; }
         public bool IsSelectable { get; set; }
-        public void HandleKeyInput(CommandKeys key)
+        public virtual void HandleKeyInput(CommandKeys key)
         {
-            throw new NotImplementedException();
+            InnerComponent.HandleKeyInput(key);
         }
 
         public event EventHandler<VisibilityChangedEventArgs> VisibilityChanged

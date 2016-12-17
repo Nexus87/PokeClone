@@ -18,21 +18,22 @@ namespace GameEngine.GUI.Graphics
     {
         public Line(ITexture2D pixel, ITexture2D cupTexture)
         {
-            cupTexture.CheckNull("cupTexture");
+            pixel.CheckNull(nameof(pixel));
+            cupTexture.CheckNull(nameof(cupTexture));
 
-            this.pixel = pixel;
-            this.cupTexture = cupTexture;
+            _pixel = pixel;
+            _cupTexture = cupTexture;
             Color = Color.Black;
         }
 
-        private float circleTextureScale;
-        private ITexture2D cupTexture;
-        private Vector2 cupScale;
-        private Vector2 leftCup;
-        private Vector2 line;
-        private Vector2 lineScale;
-        private ITexture2D pixel;
-        private Vector2 rightCup;
+        private float _circleTextureScale;
+        private readonly ITexture2D _cupTexture;
+        private Vector2 _cupScale;
+        private Vector2 _leftCup;
+        private Vector2 _line;
+        private Vector2 _lineScale;
+        private readonly ITexture2D _pixel;
+        private Vector2 _rightCup;
 
         /// <summary>
         /// Setup this component
@@ -40,8 +41,7 @@ namespace GameEngine.GUI.Graphics
         /// <see cref="IGraphicComponent.Setup"/>
         public override void Setup()
         {
-            cupTexture.LoadContent();
-            circleTextureScale = 1.0f / cupTexture.Height;
+            _circleTextureScale = 1.0f / _cupTexture.Height;
         }
 
         /// <summary>
@@ -52,10 +52,10 @@ namespace GameEngine.GUI.Graphics
         /// <see cref="AbstractGraphicComponent.DrawComponent"/>
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)
         {
-            batch.Draw(pixel, position: line, scale: lineScale, color: Color);
+            batch.Draw(_pixel, position: _line, scale: _lineScale, color: Color);
 
-            batch.Draw(cupTexture, position: leftCup, scale: cupScale, color: Color);
-            batch.Draw(cupTexture, position: rightCup, scale: cupScale, color: Color);
+            batch.Draw(_cupTexture, position: _leftCup, scale: _cupScale, color: Color);
+            batch.Draw(_cupTexture, position: _rightCup, scale: _cupScale, color: Color);
         }
 
         /// <summary>
@@ -66,9 +66,8 @@ namespace GameEngine.GUI.Graphics
         {
             if(Area.Width == 0)
             {
-                lineScale.X = 0;
-                cupScale.X = 0;
-                return;
+                _lineScale.X = 0;
+                _cupScale.X = 0;
             }
             else if (Area.Width.CompareTo(Area.Height) < 0)
                 SetComponentsFlatCups();
@@ -88,26 +87,26 @@ namespace GameEngine.GUI.Graphics
 
         private void SetCupsCoordinates()
         {
-            cupScale.X = cupScale.Y = Area.Height * circleTextureScale;
+            _cupScale.X = _cupScale.Y = Area.Height * _circleTextureScale;
 
-            leftCup = Area.Location.ToVector2();
+            _leftCup = Area.Location.ToVector2();
 
-            rightCup.Y = Area.Y;
-            rightCup.X = Area.X + Area.Width - Area.Height;
+            _rightCup.Y = Area.Y;
+            _rightCup.X = Area.X + Area.Width - Area.Height;
 
-            rightCup.X = rightCup.X.CompareTo(leftCup.X) > 0 ? rightCup.X : leftCup.X;
+            _rightCup.X = _rightCup.X.CompareTo(_leftCup.X) > 0 ? _rightCup.X : _leftCup.X;
         }
 
         private void SetLineCoordinates()
         {
             // Width >= Height && Width != 0
-            float cupRadius = 0.5f * Area.Height;
+            var cupRadius = 0.5f * Area.Height;
 
-            lineScale.Y = Area.Height;
-            lineScale.X = Area.Width - 2 * cupRadius; // >= 0
+            _lineScale.Y = Area.Height;
+            _lineScale.X = Area.Width - 2 * cupRadius; // >= 0
 
-            line.X = Area.X + cupRadius;
-            line.Y = Area.Y;
+            _line.X = Area.X + cupRadius;
+            _line.Y = Area.Y;
         }
 
         /// <summary>
@@ -115,12 +114,12 @@ namespace GameEngine.GUI.Graphics
         /// </summary>
         private void SetComponentsFlatCups()
         {
-            line =  leftCup = rightCup = Area.Location.ToVector2();
+            _line =  _leftCup = _rightCup = Area.Location.ToVector2();
 
-            lineScale = Vector2.Zero;
+            _lineScale = Vector2.Zero;
 
-            cupScale.X = Area.Width * circleTextureScale;
-            cupScale.Y = Area.Height * circleTextureScale;
+            _cupScale.X = Area.Width * _circleTextureScale;
+            _cupScale.Y = Area.Height * _circleTextureScale;
         }
     }
 }

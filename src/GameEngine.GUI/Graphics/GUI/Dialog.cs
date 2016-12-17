@@ -1,71 +1,53 @@
 ﻿using GameEngine.Globals;
 using GameEngine.GUI.Graphics.General;
-using GameEngine.GUI.Graphics.Layouts;
 using GameEngine.Utils;
 using Microsoft.Xna.Framework;
 
 namespace GameEngine.GUI.Graphics.GUI
 {
-    public class Dialog : ForwardingGraphicComponent<Container>, IWidget
+    public class Dialog : AbstractGraphicComponent, IWidget
     {
-        private readonly IGraphicComponent border;
+        private readonly IGraphicComponent _border;
+        private IGraphicComponent _widget;
 
         public Dialog(ITexture2D borderTexture = null) :
             this(new TextureBox(borderTexture))
         {}
         public Dialog(IGraphicComponent border)
-            : base(new Container())
-
         {
-            this.border = border;
-            InnerComponent.Layout = new SingleComponentLayout();
+            _border = border;
+            _widget = new NullGraphicObject();
         }
 
-        public ILayout Layout
-        {
-            get { return InnerComponent.Layout; }
-            set
-            {
-                InnerComponent.Layout = value;
-                Invalidate();
-            }
-        }
 
         public void AddWidget(IWidget widget)
         {
             widget.CheckNull("widget");
-            InnerComponent.AddComponent(widget);
+            _widget = widget;
         }
 
         public override void Setup()
         {
-            border.Setup();
-            base.Setup();
+            _border.Setup();
+            _widget.Setup();
         }
 
         public bool HandleInput(CommandKeys key)
         {
-            var compontents = InnerComponent.Components;
-
-            foreach (var c in compontents)
-            {
-                if (((IWidget)c).HandleInput(key))
-                    return true;
-            }
-
-            return false;
+            _widget.HandleKeyInput(key);
+            return true;
         }
 
-        public override void Draw(GameTime time, ISpriteBatch batch)
+        protected override void DrawComponent(GameTime time, ISpriteBatch batch)
         {
-            border.Draw(time, batch);
-            base.Draw(time, batch);
+            _border?.Draw(time, batch);
+            _widget.Draw(time, batch);
         }
 
         protected override void Update()
         {
-            Layout.SetMargin(100, 50, 100, 50);
-            border.SetCoordinates(this);
+            _widget.Area = new Rectangle(Area.X + 100, Area.Y + 100, Area.Width - 200, Area.Height - 200);
+            _border.SetCoordinates(this);
         }
     }
 }
