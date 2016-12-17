@@ -17,7 +17,7 @@ namespace GameEngine.GUI.Renderers.PokemonClassicRenderer
 
         public override void Render(ISpriteBatch spriteBatch, Button component)
         {
-            //spriteBatch.GraphicsDevice.ScissorRectangle = component.ScissorArea;
+            spriteBatch.GraphicsDevice.ScissorRectangle = component.ScissorArea;
             if (component.IsSelected)
                 DrawArrow(spriteBatch, component.Area, component);
             DrawText(spriteBatch, component.Area, component);

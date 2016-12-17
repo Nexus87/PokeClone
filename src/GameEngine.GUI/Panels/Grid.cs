@@ -61,8 +61,20 @@ namespace GameEngine.GUI.Panels
         {
             for(var column = 0; column < _columnPoperties.Count; column++)
             {
-                _cells[row, column] = new GridCell();
+                _cells[row, column] = CreateGridCell();
             }
+        }
+
+        private GridCell CreateGridCell()
+        {
+            var cell = new GridCell();
+            cell.PreferredSizeChanged += PreferredSizeChangedHandler;
+            return cell;
+        }
+
+        private void PreferredSizeChangedHandler(object sender, EventArgs e)
+        {
+            Invalidate();
         }
 
         public void AddColumn(ColumnProperty property)
@@ -76,7 +88,7 @@ namespace GameEngine.GUI.Panels
         {
             for (var row = 0; row < _rowProperties.Count; row++)
             {
-                _cells[row, column] = new GridCell();
+                _cells[row, column] = CreateGridCell();
             }
         }
 
@@ -263,6 +275,10 @@ namespace GameEngine.GUI.Panels
                 children.Remove(cell.GuiComponent);
             }
 
+            foreach (var cell in _cells.EnumerateRows(columnToBeRemoved))
+            {
+                cell.PreferredSizeChanged -= PreferredSizeChangedHandler;
+            }
             _cells.RemoveColumn(columnToBeRemoved);
             _columnPoperties.RemoveAt(columnToBeRemoved);
             Invalidate();
@@ -276,7 +292,10 @@ namespace GameEngine.GUI.Panels
             {
                 children.Remove(cell.GuiComponent);
             }
-
+            foreach (var cell in _cells.EnumerateColumns(rowToBeRemoved))
+            {
+                cell.PreferredSizeChanged -= PreferredSizeChangedHandler;
+            }
             _cells.RemoveRow(rowToBeRemoved);
             _rowProperties.RemoveAt(rowToBeRemoved);
             Invalidate();
