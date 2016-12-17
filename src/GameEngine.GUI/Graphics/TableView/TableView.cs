@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
-using GameEngine.Graphics.General;
+using GameEngine.GUI.Graphics.General;
 using GameEngine.Registry;
 using GameEngine.Utils;
 using Microsoft.Xna.Framework;
 
-namespace GameEngine.Graphics.TableView
+namespace GameEngine.GUI.Graphics.TableView
 {
     [GameType]
     public class TableView<T> : AbstractGraphicComponent, ITableView<T>
@@ -112,7 +112,7 @@ namespace GameEngine.Graphics.TableView
 
         protected override void Update()
         {
-            tableGrid.SetCoordinates(XPosition, YPosition, Width, Height);
+            tableGrid.SetCoordinates(Area.X, Area.Y, Area.Width, Area.Height);
             FillTableGrid();
         }
 

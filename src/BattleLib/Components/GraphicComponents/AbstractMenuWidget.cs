@@ -4,7 +4,9 @@ using GameEngine.Graphics.GUI;
 using Microsoft.Xna.Framework;
 using System;
 using GameEngine.Globals;
-using GameEngine.Graphics.General;
+using GameEngine.GUI.Graphics;
+using GameEngine.GUI.Graphics.General;
+using GameEngine.GUI.Graphics.GUI;
 
 namespace BattleLib.Components.GraphicComponents
 {

@@ -1,7 +1,8 @@
 ﻿using System;
 using GameEngine;
 using GameEngine.Graphics;
-using GameEngine.Graphics.General;
+using GameEngine.GUI.Graphics;
+using GameEngine.GUI.Graphics.General;
 using GameEngine.Registry;
 using Microsoft.Xna.Framework;
 
@@ -11,7 +12,7 @@ namespace BattleLib.Components.GraphicComponents
     public class HPLine : AbstractGraphicComponent
     {
         private const float RelativeBorderSize = 0.2f;
-        private float BorderSize { get { return RelativeBorderSize * Height; } }
+        private float BorderSize { get { return RelativeBorderSize * Area.Height; } }
         private int currentHp;
         private readonly IGraphicComponent hpLine;
         private readonly IGraphicComponent innerLine;
@@ -93,26 +94,30 @@ namespace BattleLib.Components.GraphicComponents
 
         private void SetHPLineCoordinates(float factor)
         {
-            hpLine.XPosition = XPosition + BorderSize;
-            hpLine.YPosition = YPosition + BorderSize;
-            hpLine.Width = Math.Max(0, factor * (Width - 2 * BorderSize));
-            hpLine.Height = Math.Max(0, Height - 2 * BorderSize);
+            var XPosition = Area.X + BorderSize;
+            var YPosition = Area.Y + BorderSize;
+            var Width = Math.Max(0, factor * (Area.Width - 2 * BorderSize));
+            var Height = Math.Max(0, Area.Height - 2 * BorderSize);
+
+            hpLine.SetCoordinates(XPosition, YPosition, Width, Height);
         }
 
         private void SetInnerLineCoordinates()
         {
-            innerLine.XPosition = XPosition + BorderSize;
-            innerLine.YPosition = YPosition + BorderSize;
-            innerLine.Width = Math.Max(0, Width - 2 * BorderSize);
-            innerLine.Height = Math.Max(0, Height - 2 * BorderSize);
+            var XPosition = Area.X + BorderSize;
+            var YPosition = Area.Y + BorderSize;
+            var Width = Math.Max(0, Area.Width - 2 * BorderSize);
+            var Height = Math.Max(0, Area.Height - 2 * BorderSize);
+            innerLine.SetCoordinates(XPosition, YPosition, Width, Height);
         }
 
         private void SetOuterLineCoordinates()
         {
-            outerLine.XPosition = XPosition;
-            outerLine.YPosition = YPosition;
-            outerLine.Width = Width;
-            outerLine.Height = Height;
+            var XPosition = Area.X;
+            var YPosition = Area.Y;
+            var Width = Area.Width;
+            var Height = Area.Height;
+            outerLine.SetCoordinates(XPosition, YPosition, Width, Height);
         }
 
         private void SetHPLineColor(float factor)

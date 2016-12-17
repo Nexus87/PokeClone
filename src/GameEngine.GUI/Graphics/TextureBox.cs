@@ -1,8 +1,8 @@
-﻿using GameEngine.Graphics.General;
+﻿using GameEngine.GUI.Graphics.General;
 using GameEngine.Registry;
 using Microsoft.Xna.Framework;
 
-namespace GameEngine.Graphics
+namespace GameEngine.GUI.Graphics
 {
     [GameType]
     public class TextureBox : AbstractGraphicComponent, IImageBox
@@ -20,16 +20,13 @@ namespace GameEngine.Graphics
 
         public override void Setup()
         {
-            if (image == null)
-                return;
-
-            image.LoadContent();
+            image?.LoadContent();
         }
 
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)
         {
             if (image != null)
-                batch.Draw(texture: image, position: Position, scale: scale, color: Color.White);
+                batch.Draw(texture: image, destinationRectangle: Area, color: Color.White);
         }
 
         protected override void Update()
@@ -40,8 +37,8 @@ namespace GameEngine.Graphics
             var imageWidthScale = 1.0f / image.Width;
             var imageHeightScale = 1.0f / image.Height;
 
-            scale.X = Width * imageWidthScale;
-            scale.Y = Height * imageHeightScale;
+            scale.X = Area.Width * imageWidthScale;
+            scale.Y = Area.Height * imageHeightScale;
         }
     }
 }

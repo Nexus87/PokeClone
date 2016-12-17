@@ -1,8 +1,9 @@
 ﻿using FakeItEasy;
 using GameEngine.Graphics;
+using GameEngine.GUI.Graphics;
+using GameEngine.GUI.Graphics.Layouts;
 using GameEngineTest.TestUtils;
 using NUnit.Framework;
-using GameEngine.Graphics.Layouts;
 
 namespace GameEngineTest.Graphics
 {

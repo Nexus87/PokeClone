@@ -1,6 +1,7 @@
 ﻿using System;
 using GameEngine.Graphics;
-using GameEngine.Graphics.Layouts;
+using GameEngine.GUI.Graphics;
+using GameEngine.GUI.Graphics.Layouts;
 using NUnit.Framework;
 
 namespace GameEngineTest.TestUtils

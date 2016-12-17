@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using GameEngine.Graphics.Layouts;
+using GameEngine.GUI.Graphics.Layouts;
 using GameEngine.Utils;
 using GameEngineTest.TestUtils;
 using NUnit.Framework;
@@ -31,8 +31,8 @@ namespace GameEngineTest.Graphics.Layouts
 
             layout.LayoutContainer(testContainer);
 
-            for (int i = 1; i < components.Count; i++)
-                Assert.IsTrue(components[i].Width.AlmostEqual(0) || components[i].Height.AlmostEqual(0));
+            for (var i = 1; i < components.Count; i++)
+                Assert.IsTrue(components[i].Width().AlmostEqual(0) || components[i].Height().AlmostEqual(0));
         }
         protected override ILayout CreateLayout()
         {

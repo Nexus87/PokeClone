@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Xna.Framework;
 
-namespace GameEngine.Graphics.Layouts
+namespace GameEngine.GUI.Graphics.Layouts
 {
     public abstract class BoxLayout : AbstractLayout
     {
@@ -13,11 +14,12 @@ namespace GameEngine.Graphics.Layouts
         {
             get
             {
-                return spacer.Width;
+                return spacer.Area.Width;
             }
             set
             {
-                spacer.Width = spacer.Height = value;
+                var area = new Rectangle(spacer.Area.X, spacer.Area.Y, (int) value, (int) value);
+                spacer.Area = area;
             }
         }
 
@@ -51,7 +53,7 @@ namespace GameEngine.Graphics.Layouts
         protected float CalculateWidthForExtendingComponents()
         {
             var totalPreferredWidth = internalComponants.Where(c => c.HorizontalPolicy == ResizePolicy.Preferred).Sum(c => c.PreferredWidth);
-            var totalFixedWidth = internalComponants.Where(c => c.HorizontalPolicy == ResizePolicy.Fixed).Sum(c => c.Width);
+            var totalFixedWidth = internalComponants.Where(c => c.HorizontalPolicy == ResizePolicy.Fixed).Sum(c => c.Area.Width);
             var extendingComponentsCount = internalComponants.Count(c => c.HorizontalPolicy == ResizePolicy.Extending);
             return Math.Max(0, Width - totalFixedWidth - totalPreferredWidth) / extendingComponentsCount;
             
@@ -60,7 +62,7 @@ namespace GameEngine.Graphics.Layouts
         protected float CalculateHeightForExtendingComponents()
         {
             var totalPreferredHeight = internalComponants.Where(c => c.VerticalPolicy == ResizePolicy.Preferred).Sum(c => c.PreferredHeight);
-            var totalFixedHeight = internalComponants.Where(c => c.VerticalPolicy == ResizePolicy.Fixed).Sum(c => c.Height);
+            var totalFixedHeight = internalComponants.Where(c => c.VerticalPolicy == ResizePolicy.Fixed).Sum(c => c.Area.Height);
             var extendingComponentsCount = internalComponants.Count(c => c.VerticalPolicy == ResizePolicy.Extending);
             return Math.Max(0, Height - totalFixedHeight - totalPreferredHeight) / extendingComponentsCount;
 
@@ -97,21 +99,33 @@ namespace GameEngine.Graphics.Layouts
 
         private static void SetSizeWithLimits(IGraphicComponent component, float height, float width, float heightLimit, float widthLimit)
         {
+            var location = component.Area.Location;
+            var newHeight = component.Area.Height;
+            var newWidth = component.Area.Width;
             if (component.VerticalPolicy == ResizePolicy.Preferred)
-                component.Height = Math.Min(component.PreferredHeight, heightLimit);
-            else if(component.VerticalPolicy == ResizePolicy.Extending)
-                component.Height = height;
+            {
+                newHeight = (int) Math.Min(component.PreferredHeight, heightLimit);
+            }
+            else if (component.VerticalPolicy == ResizePolicy.Extending)
+            {
+                newHeight = (int) height;
+            }
 
             if (component.HorizontalPolicy == ResizePolicy.Preferred)
-                component.Width = Math.Min(component.PreferredWidth, widthLimit);
+                newWidth = (int) Math.Min(component.PreferredWidth, widthLimit);
             else if (component.HorizontalPolicy == ResizePolicy.Extending)
-                component.Width = width;
+                newWidth = (int) width;
+
+            var size = new Point(newWidth, newHeight);
+
+            component.Area = new Rectangle(location, size);
         }
 
         private static void SetComponentPosition(IGraphicComponent component, float xPosition, float yPosition)
         {
-            component.XPosition = xPosition;
-            component.YPosition = yPosition;
+            var location = new Point((int) xPosition, (int) yPosition);
+            var size = component.Area.Size;
+            component.Area = new Rectangle(location, size);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GameEngine.Graphics
+namespace GameEngine.GUI.Graphics
 {
     public class SelectionEventArgs<T> : EventArgs
     {

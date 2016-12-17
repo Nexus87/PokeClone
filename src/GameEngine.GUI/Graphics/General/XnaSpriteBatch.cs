@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace GameEngine.Graphics.General
+namespace GameEngine.GUI.Graphics.General
 {
     /// <summary>
     /// XNA implementation of the ISpriteBatch interface

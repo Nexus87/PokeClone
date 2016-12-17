@@ -2,7 +2,7 @@
 using GameEngine.Utils;
 using Microsoft.Xna.Framework;
 
-namespace GameEngine.Graphics.Layouts
+namespace GameEngine.GUI.Graphics.Layouts
 {
     /// <summary>
     /// This class provides a skeletal implementation for ILayout
@@ -50,10 +50,10 @@ namespace GameEngine.Graphics.Layouts
         {
             container.CheckNull("container");
 
-            position.X = container.XPosition;
-            position.Y = container.YPosition;
-            size.X = container.Width;
-            size.Y = container.Height;
+            position.X = container.Area.X;
+            position.Y = container.Area.Y;
+            size.X = container.Area.Width;
+            size.Y = container.Area.Height;
 
             UpdateComponents(container);
         }

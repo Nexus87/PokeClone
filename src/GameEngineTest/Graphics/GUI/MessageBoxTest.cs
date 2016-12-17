@@ -1,8 +1,7 @@
 ﻿using FakeItEasy;
-using GameEngine;
 using GameEngine.Globals;
-using GameEngine.Graphics;
-using GameEngine.Graphics.GUI;
+using GameEngine.GUI.Graphics;
+using GameEngine.GUI.Graphics.GUI;
 using GameEngineTest.TestUtils;
 using NUnit.Framework;
 

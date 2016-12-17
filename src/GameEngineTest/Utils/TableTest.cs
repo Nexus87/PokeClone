@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
-using GameEngine.Graphics.TableView;
+using GameEngine.GUI.Graphics.TableView;
 
 namespace GameEngineTest.Utils
 {

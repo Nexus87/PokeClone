@@ -1,9 +1,8 @@
 ﻿
-namespace GameEngine.Graphics
+namespace GameEngine.GUI.Graphics
 {
     public interface ISelectable
     {
-        bool IsSelected { get; }
         void Select();
         void Unselect();
     }

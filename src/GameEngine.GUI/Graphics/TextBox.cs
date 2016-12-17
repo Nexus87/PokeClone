@@ -1,10 +1,10 @@
-﻿using GameEngine.Registry;
+﻿using System;
+using GameEngine.GUI.Graphics.General;
+using GameEngine.Registry;
 using GameEngine.Utils;
 using Microsoft.Xna.Framework;
-using System;
-using GameEngine.Graphics.General;
 
-namespace GameEngine.Graphics
+namespace GameEngine.GUI.Graphics
 {
     [GameType]
     public class TextBox : AbstractGraphicComponent, ITextGraphicComponent
@@ -55,7 +55,7 @@ namespace GameEngine.Graphics
                 Invalidate();
             }
         }
-        public float RealTextHeight { get { return preferredTextSize <= Height ? preferredTextSize : Height; } }
+        public float RealTextHeight { get { return preferredTextSize <= Area.Height ? preferredTextSize : Area.Height; } }
         
         public int DisplayableChars()
         {
@@ -64,7 +64,7 @@ namespace GameEngine.Graphics
             if (charWidth.CompareTo(0) == 0)
                 return 0;
 
-            var num = (int)Math.Floor(Width / charWidth);
+            var num = (int)Math.Floor(Area.Width / charWidth);
             return num;
         }
 
@@ -81,8 +81,8 @@ namespace GameEngine.Graphics
         protected override void Update()
         {
             SetPreferredSize();
-            textGraphic.XPosition = XPosition;
-            textGraphic.YPosition = YPosition;
+            textGraphic.XPosition = Area.X;
+            textGraphic.YPosition = Area.Y;
             textGraphic.CharHeight = RealTextHeight;
 
             var length = textGraphic.CalculateTextLength(" ");
@@ -92,7 +92,7 @@ namespace GameEngine.Graphics
                 return;
             }
 
-            var cnt = (int)Math.Floor(Width / length);
+            var cnt = (int)Math.Floor(Area.Width / length);
             textGraphic.Text = text.Substring(0, Math.Min(text.Length, cnt));
         }
 

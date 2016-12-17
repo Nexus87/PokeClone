@@ -1,4 +1,4 @@
-﻿namespace GameEngine.Graphics.GUI
+﻿namespace GameEngine.GUI.Graphics.GUI
 {
     /// <summary>
     /// A widget is a GrapicComponent, that can handle user input.

@@ -5,7 +5,8 @@ using Base.Data;
 using BattleLib.Components.BattleState;
 using GameEngine;
 using GameEngine.Graphics;
-using GameEngine.Graphics.General;
+using GameEngine.GUI.Graphics;
+using GameEngine.GUI.Graphics.General;
 using GameEngine.Registry;
 using Microsoft.Xna.Framework;
 
@@ -95,32 +96,41 @@ namespace BattleLib.Components.GraphicComponents
 
         private void initAIGraphic(PokemonDataView aiView, PokemonSprite aiSprite, ScreenConstants screen)
         {
-            aiView.XPosition = screen.ScreenWidth * 0.2f;
-            aiView.YPosition = screen.ScreenHeight * 0.1f;
 
-            aiView.Height = screen.ScreenHeight * 0.1f;
-            aiView.Width = screen.ScreenWidth * 0.15f;
+            var XPosition = screen.ScreenWidth * 0.2f;
+            var YPosition = screen.ScreenHeight * 0.1f;
 
-            aiSprite.XPosition = screen.ScreenWidth * 0.6f;
-            aiSprite.YPosition = screen.ScreenHeight * 0.1f;
+            var Height = screen.ScreenHeight * 0.1f;
+            var Width = screen.ScreenWidth * 0.15f;
 
-            aiSprite.Height = screen.ScreenHeight * 0.25f;
-            aiSprite.Width = screen.ScreenHeight * 0.25f;
+            aiView.SetCoordinates(XPosition, YPosition, Width, Height);
+
+            XPosition = screen.ScreenWidth * 0.6f;
+            YPosition = screen.ScreenHeight * 0.1f;
+
+            Height = screen.ScreenHeight * 0.25f;
+            Width = screen.ScreenHeight * 0.25f;
+
+            aiSprite.SetCoordinates(XPosition, YPosition, Width, Height);
         }
 
         private void initPlayerGraphic(PokemonDataView playerView, PokemonSprite playerSprite, ScreenConstants screen)
         {
-            playerView.XPosition = screen.ScreenWidth * 0.55f;
-            playerView.YPosition = screen.ScreenHeight * 0.45f;
+            var XPosition = screen.ScreenWidth * 0.55f;
+            var YPosition = screen.ScreenHeight * 0.45f;
 
-            playerView.Height = screen.ScreenHeight * 0.15f;
-            playerView.Width = screen.ScreenWidth * 0.15f;
+            var Height = screen.ScreenHeight * 0.15f;
+            var Width = screen.ScreenWidth * 0.15f;
 
-            playerSprite.XPosition = screen.ScreenWidth * 0.2f;
-            playerSprite.YPosition = screen.ScreenHeight * 0.4f;
+            playerView.SetCoordinates(XPosition, YPosition, Width, Height);
 
-            playerSprite.Height = screen.ScreenHeight * 0.25f;
-            playerSprite.Width = screen.ScreenHeight * 0.25f;
+            XPosition = screen.ScreenWidth * 0.2f;
+            YPosition = screen.ScreenHeight * 0.4f;
+
+            Height = screen.ScreenHeight * 0.25f;
+            Width = screen.ScreenHeight * 0.25f;
+
+            playerSprite.SetCoordinates(XPosition, YPosition, Width, Height);
         }
     }
 }

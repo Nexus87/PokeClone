@@ -3,7 +3,9 @@ using GameEngine.Utils;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using GameEngine.Globals;
-using GameEngine.Graphics.General;
+using GameEngine.GUI.Graphics;
+using GameEngine.GUI.Graphics.General;
+using GameEngine.GUI.Graphics.GUI;
 
 namespace GameEngine.Graphics.GUI
 {

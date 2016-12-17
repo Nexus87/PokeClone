@@ -1,5 +1,5 @@
-using GameEngine.Graphics;
-using GameEngine.Graphics.General;
+using GameEngine.GUI.Graphics;
+using GameEngine.GUI.Graphics.General;
 
 namespace GameEngine.GUI.Renderers
 {

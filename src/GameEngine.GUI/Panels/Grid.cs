@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using GameEngine.Globals;
-using GameEngine.Graphics;
+using GameEngine.GUI.Graphics;
 using GameEngine.Utils;
 using Microsoft.Xna.Framework;
 using Extensions = GameEngine.Utils.Extensions;

@@ -1,5 +1,5 @@
-﻿using GameEngine.Graphics;
-using GameEngine.Graphics.Layouts;
+﻿using GameEngine.GUI.Graphics;
+using GameEngine.GUI.Graphics.Layouts;
 using GameEngineTest.TestUtils;
 using NUnit.Framework;
 
@@ -21,10 +21,10 @@ namespace GameEngineTest.Graphics.Layouts
             for (var i = 0; i < components.Count; i++ )
             {
                 var comp = components[i];
-                Assert.AreEqual(x, comp.XPosition);
-                Assert.AreEqual(componentHeight * i, comp.YPosition);
-                Assert.AreEqual(width, comp.Width);
-                Assert.AreEqual(componentHeight, comp.Height);
+                Assert.AreEqual(x, comp.XPosition());
+                Assert.AreEqual(componentHeight * i, comp.YPosition());
+                Assert.AreEqual(width, comp.Width());
+                Assert.AreEqual(componentHeight, comp.Height());
             }
         }
 
@@ -50,10 +50,10 @@ namespace GameEngineTest.Graphics.Layouts
 
             layout.LayoutContainer(container);
 
-            Assert.AreEqual(expectedWidth, fixedComponent.Width, 10E-10);
-            Assert.AreEqual(fixedHeight, fixedComponent.Height, 10E-10);
-            Assert.AreEqual(expectedWidth, expandingComponent.Width, 10E-10);
-            Assert.AreEqual(expectedHeight, expandingComponent.Height, 10E-10);
+            Assert.AreEqual(expectedWidth, fixedComponent.Width(), 10E-10);
+            Assert.AreEqual(fixedHeight, fixedComponent.Height(), 10E-10);
+            Assert.AreEqual(expectedWidth, expandingComponent.Width(), 10E-10);
+            Assert.AreEqual(expectedHeight, expandingComponent.Height(), 10E-10);
         }
 
         [TestCase(10, 20, 100, 300, 10, 100, 150)]
@@ -78,10 +78,10 @@ namespace GameEngineTest.Graphics.Layouts
 
             layout.LayoutContainer(container);
 
-            Assert.AreEqual(fixedWidth, fixedComponent.Width, 10E-10);
-            Assert.AreEqual(expectedHeight, fixedComponent.Height, 10E-10);
-            Assert.AreEqual(expectedWidth, expandingComponent.Width, 10E-10);
-            Assert.AreEqual(expectedHeight, expandingComponent.Height, 10E-10);
+            Assert.AreEqual(fixedWidth, fixedComponent.Width(), 10E-10);
+            Assert.AreEqual(expectedHeight, fixedComponent.Height(), 10E-10);
+            Assert.AreEqual(expectedWidth, expandingComponent.Width(), 10E-10);
+            Assert.AreEqual(expectedHeight, expandingComponent.Height(), 10E-10);
         }
 
         [TestCase(10, 20, 100, 200, 10, 10, 20, 10, 125)]
@@ -98,10 +98,10 @@ namespace GameEngineTest.Graphics.Layouts
 
             layout.LayoutContainer(container);
 
-            Assert.AreEqual(expectedX1, components[0].XPosition);
-            Assert.AreEqual(expectedY1, components[0].YPosition);
-            Assert.AreEqual(expectedX2, components[1].XPosition);
-            Assert.AreEqual(expectedY2, components[1].YPosition);
+            Assert.AreEqual(expectedX1, components[0].XPosition());
+            Assert.AreEqual(expectedY1, components[0].YPosition());
+            Assert.AreEqual(expectedX2, components[1].XPosition());
+            Assert.AreEqual(expectedY2, components[1].YPosition());
         }
 
         [TestCase(10, 20, 100, 200, 10, 100, 95, 100, 95)]
@@ -118,10 +118,10 @@ namespace GameEngineTest.Graphics.Layouts
 
             layout.LayoutContainer(container);
 
-            Assert.AreEqual(expectedWidth1, components[0].Width);
-            Assert.AreEqual(expectedHeight1, components[0].Height);
-            Assert.AreEqual(expectedWidth2, components[1].Width);
-            Assert.AreEqual(expectedHeight2, components[1].Height);
+            Assert.AreEqual(expectedWidth1, components[0].Width());
+            Assert.AreEqual(expectedHeight1, components[0].Height());
+            Assert.AreEqual(expectedWidth2, components[1].Width());
+            Assert.AreEqual(expectedHeight2, components[1].Height());
         }
 
         protected override ILayout CreateLayout()

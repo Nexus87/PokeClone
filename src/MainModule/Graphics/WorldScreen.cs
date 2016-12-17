@@ -1,7 +1,8 @@
 ﻿using System;
 using GameEngine;
 using GameEngine.Graphics;
-using GameEngine.Graphics.General;
+using GameEngine.GUI.Graphics;
+using GameEngine.GUI.Graphics.General;
 using GameEngine.Registry;
 using Microsoft.Xna.Framework;
 
@@ -29,12 +30,8 @@ namespace MainModule.Graphics
             var playerX = constants.ScreenWidth / 2.0f - 64;
             var playerY = constants.ScreenHeight / 2.0f - 64;
 
-            player.XPosition = playerX;
-            player.YPosition = playerY;
-
             //TODO remove hardcoded values
-            player.Width = 128;
-            player.Height = 128;
+            player.Area = new Rectangle((int) playerX, (int) playerY, 128, 128);
         }
 
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)

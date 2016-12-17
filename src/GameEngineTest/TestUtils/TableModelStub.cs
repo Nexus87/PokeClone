@@ -1,5 +1,5 @@
 ﻿using System;
-using GameEngine.Graphics.TableView;
+using GameEngine.GUI.Graphics.TableView;
 
 namespace GameEngineTest.TestUtils
 {

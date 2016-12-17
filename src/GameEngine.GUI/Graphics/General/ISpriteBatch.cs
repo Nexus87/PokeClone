@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace GameEngine.Graphics.General
+namespace GameEngine.GUI.Graphics.General
 {
     /// <summary>
     /// This interface represents a SpriteBatch, that is used for drawing 2D graphics

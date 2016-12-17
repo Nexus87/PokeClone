@@ -1,12 +1,12 @@
 ﻿using GameEngine;
-using GameEngine.Graphics;
 using GameEngineTest.Graphics;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using GameEngine.Globals;
-using GameEngine.Graphics.General;
-using GameEngine.Graphics.TableView;
+using GameEngine.GUI.Graphics;
+using GameEngine.GUI.Graphics.General;
+using GameEngine.GUI.Graphics.TableView;
 
 namespace GameEngineTest.TestUtils
 {
@@ -68,6 +68,7 @@ namespace GameEngineTest.TestUtils
 
         private TableIndex? _startIndex;
         private TableIndex? _endIndex;
+
         public TableIndex? StartIndex
         {
             get { return _startIndex; }
@@ -80,7 +81,7 @@ namespace GameEngineTest.TestUtils
                 }
 
                 var idx = value.Value;
-                
+
                 if ((idx.Row >= Rows || idx.Column >= Columns) && idx.Row != 0 && idx.Column != 0)
                     throw new ArgumentOutOfRangeException();
 
@@ -125,11 +126,6 @@ namespace GameEngineTest.TestUtils
         }
 
         public event EventHandler<GraphicComponentSizeChangedEventArgs> SizeChanged { add { } remove { } }
-
-        public float XPosition { get; set; }
-        public float YPosition { get; set; }
-        public float Width { get; set; }
-        public float Height { get; set; }
 
         public void Draw(GameTime time, ISpriteBatch batch)
         {
@@ -196,7 +192,9 @@ namespace GameEngineTest.TestUtils
 
         public Rectangle ScissorArea { get; set; }
         Rectangle IGraphicComponent.Area { get; set; }
-        public Rectangle Area => new Rectangle((int) XPosition, (int) YPosition, (int) Width, (int) Height);
+
+        public Rectangle Area { get; set; }
+
         public IGraphicComponent Parent { get; set; }
         public IEnumerable<IGraphicComponent> Children { get; } = new List<IGraphicComponent>();
         public bool IsSelected { get; set; }

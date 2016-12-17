@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using GameEngine.Configuration;
 using GameEngine.Graphics;
+using GameEngine.GUI.Graphics;
 using Microsoft.Xna.Framework.Content;
 
 namespace GameEngine.TextureLoader

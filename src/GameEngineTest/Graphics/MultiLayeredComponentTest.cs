@@ -2,6 +2,7 @@
 using GameEngineTest.TestUtils;
 using NUnit.Framework;
 using System;
+using GameEngine.GUI.Graphics;
 
 namespace GameEngineTest.Graphics
 {
@@ -94,10 +95,10 @@ namespace GameEngineTest.Graphics
 
         private void AssertCoordinatesEqual(IGraphicComponent firstComponent, IGraphicComponent secondComponent)
         {
-            Assert.AreEqual(firstComponent.XPosition, secondComponent.XPosition);
-            Assert.AreEqual(firstComponent.YPosition, secondComponent.YPosition);
-            Assert.AreEqual(firstComponent.Width, secondComponent.Width);
-            Assert.AreEqual(firstComponent.Height, secondComponent.Height);
+            Assert.AreEqual(firstComponent.XPosition(), secondComponent.XPosition());
+            Assert.AreEqual(firstComponent.YPosition(), secondComponent.YPosition());
+            Assert.AreEqual(firstComponent.Width(), secondComponent.Width());
+            Assert.AreEqual(firstComponent.Height(), secondComponent.Height());
         }
 
         private MultiLayeredComponent CreateComponent(IGraphicComponent mainComponent = null, IGraphicComponent background = null, IGraphicComponent foreground = null)

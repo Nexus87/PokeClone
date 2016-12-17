@@ -1,5 +1,5 @@
 ﻿
-namespace GameEngine.Graphics.TableView
+namespace GameEngine.GUI.Graphics.TableView
 {
     /// <summary>
     /// This class is used, to build the GraphicComponents, used to display the cells in a TableView

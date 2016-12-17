@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using Microsoft.Xna.Framework;
 
-namespace GameEngine.Graphics.Layouts
+namespace GameEngine.GUI.Graphics.Layouts
 {
     public class SingleComponentLayout : AbstractLayout
     {
@@ -14,29 +16,31 @@ namespace GameEngine.Graphics.Layouts
                 return;
 
             var component = components.First();
-            component.XPosition = XPosition;
-            component.YPosition = YPosition;
+            var location = new Point((int) XPosition, (int) YPosition);
+            var height = component.Area.Height;
+            var width = component.Area.Width;
 
             switch (component.VerticalPolicy)
             {
                 case ResizePolicy.Extending:
-                    component.Height = Height;
+                    height = (int) Height;
                     break;
                 case ResizePolicy.Preferred:
-                    component.Height = Math.Min(Height, component.PreferredHeight);
+                    height = (int) Math.Min(Height, component.PreferredHeight);
                     break;
             }
 
             switch (component.HorizontalPolicy)
             {
                 case ResizePolicy.Extending:
-                    component.Width = Width;
+                    width = (int) Width;
                     break;
                 case ResizePolicy.Preferred:
-                    component.Width = Math.Min(Width, component.PreferredWidth);
+                    width = (int) Math.Min(Width, component.PreferredWidth);
                     break;
             }
 
+            component.Area = new Rectangle(location, new Point(width, height));
             SetRemainingComponentsSizeZero(components);
         }
 

@@ -1,10 +1,10 @@
 ﻿using GameEngine.Globals;
-using GameEngine.Graphics.General;
-using GameEngine.Graphics.Layouts;
+using GameEngine.GUI.Graphics.General;
+using GameEngine.GUI.Graphics.Layouts;
 using GameEngine.Utils;
 using Microsoft.Xna.Framework;
 
-namespace GameEngine.Graphics.GUI
+namespace GameEngine.GUI.Graphics.GUI
 {
     public class Dialog : ForwardingGraphicComponent<Container>, IWidget
     {
@@ -65,10 +65,7 @@ namespace GameEngine.Graphics.GUI
         protected override void Update()
         {
             Layout.SetMargin(100, 50, 100, 50);
-            border.XPosition = XPosition;
-            border.YPosition = YPosition;
-            border.Width = Width;
-            border.Height = Height;
+            border.SetCoordinates(this);
         }
     }
 }

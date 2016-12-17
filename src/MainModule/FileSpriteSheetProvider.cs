@@ -2,8 +2,8 @@
 using System.IO;
 using System.Linq;
 using GameEngine;
-using GameEngine.Graphics.General;
-using GameEngine.Graphics.TableView;
+using GameEngine.GUI.Graphics.General;
+using GameEngine.GUI.Graphics.TableView;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 

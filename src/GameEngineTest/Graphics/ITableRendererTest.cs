@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using GameEngine.Graphics.TableView;
+using GameEngine.GUI.Graphics.TableView;
 
 namespace GameEngineTest.Graphics
 {

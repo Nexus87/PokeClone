@@ -1,4 +1,5 @@
 ﻿using GameEngine.Graphics;
+using GameEngine.GUI.Graphics;
 using GameEngine.Registry;
 
 namespace BattleLib.Components.GraphicComponents

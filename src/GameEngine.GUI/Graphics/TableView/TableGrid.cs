@@ -1,10 +1,10 @@
 ﻿using System;
-using GameEngine.Graphics.General;
-using GameEngine.Graphics.Layouts;
+using GameEngine.GUI.Graphics.General;
+using GameEngine.GUI.Graphics.Layouts;
 using GameEngine.Utils;
 using Microsoft.Xna.Framework;
 
-namespace GameEngine.Graphics.TableView
+namespace GameEngine.GUI.Graphics.TableView
 {
     public class TableGrid : ITableGrid
     {

@@ -1,10 +1,10 @@
 ﻿using GameEngine;
-using GameEngine.Graphics;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using GameEngine.Globals;
-using GameEngine.Graphics.General;
+using GameEngine.GUI.Graphics;
+using GameEngine.GUI.Graphics.General;
 
 namespace GameEngineTest.TestUtils
 {
@@ -29,12 +29,6 @@ namespace GameEngineTest.TestUtils
             PreferredSizeChanged?.Invoke(this, new GraphicComponentSizeChangedEventArgs(this, 0, 0));
         }
 
-        public virtual float XPosition { get; set; }
-        public virtual float YPosition { get; set; }
-
-        public virtual float Width { get; set; }
-        public virtual float Height { get; set; }
-
         public Action DrawCallback = null;
         public void Draw(GameTime time, ISpriteBatch batch)
         {
@@ -45,7 +39,7 @@ namespace GameEngineTest.TestUtils
 
             if (batch is SpriteBatchMock)
             {
-                batch.Draw(null, new Rectangle((int)XPosition, (int)YPosition, (int)Width, (int)Height), Color);
+                batch.Draw(null, Area, Color);
             }
         }
 
@@ -67,7 +61,20 @@ namespace GameEngineTest.TestUtils
         public ResizePolicy VerticalPolicy { get; set; }
         public Rectangle ScissorArea { get; set; }
         Rectangle IGraphicComponent.Area { get; set; }
-        public Rectangle Area => new Rectangle((int) XPosition, (int) YPosition, (int) Width, (int) Height);
+
+        public Rectangle Area
+        {
+            get { return _area; }
+            set
+            {
+                var sizeChanged = _area.Width != value.Width || _area.Height != value.Height;
+                _area = value;
+
+                if(sizeChanged)
+                    OnSizeChanged();
+            }
+        }
+
         public IGraphicComponent Parent { get; set; }
         public IEnumerable<IGraphicComponent> Children { get; } = new List<IGraphicComponent>();
         public bool IsSelected { get; set; }
@@ -79,7 +86,7 @@ namespace GameEngineTest.TestUtils
 
         protected void OnSizeChanged()
         {
-            SizeChanged?.Invoke(this, new GraphicComponentSizeChangedEventArgs(this, Width, Height));
+            SizeChanged?.Invoke(this, new GraphicComponentSizeChangedEventArgs(this, Area.Width, Area.Height));
         }
 
 
@@ -90,6 +97,7 @@ namespace GameEngineTest.TestUtils
 
         public event EventHandler<VisibilityChangedEventArgs> VisibilityChanged = delegate { };
         private bool _isVisible = true;
+        private Rectangle _area;
 
         public bool IsVisible
         {

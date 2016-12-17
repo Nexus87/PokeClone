@@ -1,12 +1,11 @@
-﻿using GameEngine;
-using GameEngine.Graphics;
-using GameEngine.Graphics.GUI;
-using GameEngineTest.TestUtils;
+﻿using GameEngineTest.TestUtils;
 using NUnit.Framework;
 using System;
 using FakeItEasy;
 using GameEngine.Globals;
-using GameEngine.Graphics.TableView;
+using GameEngine.GUI.Graphics;
+using GameEngine.GUI.Graphics.GUI;
+using GameEngine.GUI.Graphics.TableView;
 
 namespace GameEngineTest.Graphics.GUI
 {
@@ -120,10 +119,10 @@ namespace GameEngineTest.Graphics.GUI
 
             table.Draw();
 
-            Assert.AreEqual(x, tableViewMock.XPosition);
-            Assert.AreEqual(y, tableViewMock.YPosition);
-            Assert.AreEqual(width, tableViewMock.Width);
-            Assert.AreEqual(height, tableViewMock.Height);
+            Assert.AreEqual(x, tableViewMock.XPosition());
+            Assert.AreEqual(y, tableViewMock.YPosition());
+            Assert.AreEqual(width, tableViewMock.Width());
+            Assert.AreEqual(height, tableViewMock.Height());
         }
 
         [TestCase(2, 2, 1, 0)]

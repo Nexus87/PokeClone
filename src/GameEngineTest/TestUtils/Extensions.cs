@@ -1,10 +1,10 @@
-﻿using GameEngine.Graphics;
-using GameEngine.Graphics.GUI;
+﻿using GameEngine.Graphics.GUI;
 using Microsoft.Xna.Framework;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using GameEngine.Graphics.General;
+using GameEngine.GUI.Graphics;
+using GameEngine.GUI.Graphics.General;
 
 namespace GameEngineTest.TestUtils
 {
@@ -33,11 +33,11 @@ namespace GameEngineTest.TestUtils
         {
             var ret = new List<GraphicComponentMock>();
 
-            for(int i = 0; i < number; i++)
+            for(var i = 0; i < number; i++)
             {
                 var comp = new GraphicComponentMock();
-                comp.Width = initialSize;
-                comp.Height = initialSize;
+                comp.Width(initialSize);
+                comp.Height(initialSize);
                 ret.Add(comp);
                 container.AddComponent(comp);
             }
@@ -45,27 +45,66 @@ namespace GameEngineTest.TestUtils
             return ret;
         }
 
-        public static void IsInConstraints(this IGraphicComponent component, float X, float Y, float Width, float Height)
+        public static void IsInConstraints(this IGraphicComponent component, float x, float y, float width, float height)
         {
-            float realWidth = Math.Max(0, Width);
-            float realHeight = Math.Max(0, Height);
-            bool ret = true;
-            ret &= (realWidth.CompareTo(0) == 0) || (component.Width.CompareTo(0) == 0) ||
-                (component.XPosition.CompareTo(X) >= 0 && component.XPosition.CompareTo(X + realWidth) <= 0);
+            var realWidth = Math.Max(0, width);
+            var realHeight = Math.Max(0, height);
+            var ret = true;
+            ret &= (realWidth.CompareTo(0) == 0) || (component.Width().CompareTo(0) == 0) ||
+                (component.XPosition().CompareTo(x) >= 0 && component.XPosition().CompareTo(x + realWidth) <= 0);
             Assert.IsTrue(ret);
-            ret &= (realHeight.CompareTo(0) == 0) || (component.Width.CompareTo(0) == 0) ||
-                (component.YPosition.CompareTo(Y) >= 0 && component.YPosition.CompareTo(Y + realHeight) <= 0);
+            ret &= (realHeight.CompareTo(0) == 0) || (component.Width().CompareTo(0) == 0) ||
+                (component.YPosition().CompareTo(y) >= 0 && component.YPosition().CompareTo(y + realHeight) <= 0);
             Assert.IsTrue(ret);
 
-            ret &= component.Width.CompareTo(realWidth) <= 0;
+            ret &= component.Width().CompareTo(realWidth) <= 0;
             Assert.IsTrue(ret);
-            ret &= component.Height.CompareTo(realHeight) <= 0;
+            ret &= component.Height().CompareTo(realHeight) <= 0;
             Assert.IsTrue(ret);
         }
 
         public static void IsInConstraints(this IGraphicComponent component, IGraphicComponent other)
         {
-            component.IsInConstraints(other.XPosition, other.YPosition, other.Width, other.Height);
+            component.IsInConstraints(other.XPosition(), other.YPosition(), other.Width(), other.Height());
+        }
+        public static float YPosition(this IGraphicComponent component)
+        {
+            return component.Area.Y;
+        }
+
+        public static float XPosition(this IGraphicComponent component)
+        {
+            return component.Area.X;
+        }
+
+        public static float Width(this IGraphicComponent component)
+        {
+            return component.Area.Width;
+        }
+
+        public static float Height(this IGraphicComponent component)
+        {
+            return component.Area.Height;
+        }
+
+        public static void YPosition(this IGraphicComponent component, float value)
+        {
+            component.Area = new Rectangle(component.Area.X, (int) value, component.Area.Width, component.Area.Height);
+        }
+
+        public static void XPosition(this IGraphicComponent component, float value)
+        {
+            component.Area = new Rectangle((int) value, component.Area.Y, component.Area.Width, component.Area.Height);
+        }
+
+        public static void Width(this IGraphicComponent component, float value)
+        {
+            component.Area = new Rectangle(component.Area.X, component.Area.Y, (int) value, component.Area.Height);
+        }
+
+        public static void Height(this IGraphicComponent component, float value)
+        {
+            component.Area = new Rectangle(component.Area.X, component.Area.Y, component.Area.Width, (int) value);
         }
     }
 }

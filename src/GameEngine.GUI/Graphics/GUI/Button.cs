@@ -1,9 +1,9 @@
 ﻿using System;
 using GameEngine.Globals;
-using GameEngine.Graphics.General;
+using GameEngine.GUI.Graphics.General;
 using Microsoft.Xna.Framework;
 
-namespace GameEngine.Graphics.GUI
+namespace GameEngine.GUI.Graphics.GUI
 {
     public class Button : AbstractWidget
     {

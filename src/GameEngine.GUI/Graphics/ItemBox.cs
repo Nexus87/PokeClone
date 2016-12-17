@@ -1,17 +1,17 @@
-﻿using GameEngine.Graphics.General;
+﻿using GameEngine.GUI.Graphics.General;
 
-namespace GameEngine.Graphics
+namespace GameEngine.GUI.Graphics
 {
     public class ItemBox : SelectableContainer<ITextGraphicComponent>, ISelectableTextComponent
     {
-        private readonly ITextGraphicComponent textBox;
+        private readonly ITextGraphicComponent _textBox;
 
-        public string Text { get { return textBox.Text; } set { textBox.Text = value; } }
+        public string Text { get { return _textBox.Text; } set { _textBox.Text = value; } }
 
         public ItemBox(IGraphicComponent arrow, ITextGraphicComponent textBox) :
             base(arrow, textBox)
         {
-            this.textBox = textBox;
+            this._textBox = textBox;
 
             VerticalPolicy = ResizePolicy.Preferred;
         }
@@ -21,24 +21,24 @@ namespace GameEngine.Graphics
 
         public int DisplayableChars()
         {
-            return textBox.DisplayableChars();
+            return _textBox.DisplayableChars();
         }
 
         public float PreferredTextHeight
         {
             get
             {
-                return textBox.PreferredTextHeight;
+                return _textBox.PreferredTextHeight;
             }
             set
             {
-                textBox.PreferredTextHeight = value;
+                _textBox.PreferredTextHeight = value;
             }
         }
 
         public float RealTextHeight
         {
-            get { return textBox.RealTextHeight; }
+            get { return _textBox.RealTextHeight; }
         }
 
 
@@ -46,11 +46,11 @@ namespace GameEngine.Graphics
         {
             get
             {
-                return textBox.SpriteFont;
+                return _textBox.SpriteFont;
             }
             set
             {
-                textBox.SpriteFont = value;
+                _textBox.SpriteFont = value;
             }
         }
     }

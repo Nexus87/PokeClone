@@ -1,4 +1,4 @@
-using GameEngine.Graphics;
+using GameEngine.GUI.Graphics;
 using Microsoft.Xna.Framework;
 
 namespace GameEngine.GUI.Panels

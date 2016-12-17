@@ -2,6 +2,7 @@
 using FakeItEasy;
 using GameEngine.Globals;
 using GameEngine.Graphics;
+using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Panels;
 using GameEngine.Utils;
 using NUnit.Framework;

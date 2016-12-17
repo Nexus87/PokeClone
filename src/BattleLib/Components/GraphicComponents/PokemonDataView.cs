@@ -1,8 +1,9 @@
 ﻿using System;
 using BattleLib.Components.BattleState;
 using GameEngine.Graphics;
-using GameEngine.Graphics.General;
-using GameEngine.Graphics.Layouts;
+using GameEngine.GUI.Graphics;
+using GameEngine.GUI.Graphics.General;
+using GameEngine.GUI.Graphics.Layouts;
 using Microsoft.Xna.Framework;
 
 namespace BattleLib.Components.GraphicComponents
@@ -35,14 +36,14 @@ namespace BattleLib.Components.GraphicComponents
             lvlContainer.AddComponent(new NullGraphicObject());
             lvlContainer.Layout = new HBoxLayout();
             lvlContainer.VerticalPolicy = ResizePolicy.Fixed;
-            lvlContainer.Height = lvl.PreferredTextHeight;
+            lvlContainer.SetCoordinates(0, 0, 0, lvl.PreferredTextHeight);
 
             hpBox.Text = "hp:";
             hpBox.PreferredTextHeight = 24.0f;
             hpBox.HorizontalPolicy = ResizePolicy.Preferred;
 
             hpLineContainer.VerticalPolicy = ResizePolicy.Fixed;
-            hpLineContainer.Height = hpBox.PreferredTextHeight;
+            hpLineContainer.SetCoordinates(0, 0, 0, hpBox.PreferredTextHeight);
             hpLineContainer.Layout = new HBoxLayout();
             hpLineContainer.AddComponent(hpBox);
             hpLineContainer.AddComponent(hpLine);

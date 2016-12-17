@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using GameEngine.Graphics;
-using GameEngine.Graphics.Layouts;
+using GameEngine.GUI.Graphics;
+using GameEngine.GUI.Graphics.Layouts;
 using GameEngineTest.TestUtils;
 using NUnit.Framework;
 
@@ -30,7 +30,7 @@ namespace GameEngineTest.Graphics.Layouts
             new TestCaseData(0.0f, 0.0f, 50.0f, 150.0f)
         };
 
-        [TestCaseSource(typeof(ILayoutTest), "ValidData")]
+        [TestCaseSource(typeof(ILayoutTest), nameof(ValidData))]
         public void LayoutContainer_SetupContainer_ComponentsAreInContainersContraints(float x, float y, float width, float height)
         {
             var testLayout = CreateLayout();
@@ -43,7 +43,7 @@ namespace GameEngineTest.Graphics.Layouts
                 obj.IsInConstraints(testContainer);
         }
 
-        [TestCaseSource(typeof(ILayoutTest), "ValidData")]
+        [TestCaseSource(typeof(ILayoutTest), nameof(ValidData))]
         public void LayoutContainer_SetLeftMargin_ComponentsInContainersConstraints(float x, float y, float width, float height)
         {
             var testLayout = CreateLayout();
@@ -57,7 +57,7 @@ namespace GameEngineTest.Graphics.Layouts
                 obj.IsInConstraints(x + margin, y, width - margin, height);
         }
 
-        [TestCaseSource(typeof(ILayoutTest), "ValidData")]
+        [TestCaseSource(typeof(ILayoutTest), nameof(ValidData))]
         public void LayoutContainer_SetRightMargin_ComponentsInContainersConstraints(float x, float y, float width, float height)
         {
             var testLayout = CreateLayout();
@@ -71,7 +71,7 @@ namespace GameEngineTest.Graphics.Layouts
                 obj.IsInConstraints(x, y, width - margin, height);
         }
 
-        [TestCaseSource(typeof(ILayoutTest), "ValidData")]
+        [TestCaseSource(typeof(ILayoutTest), nameof(ValidData))]
         public void LayoutContainer_SetTopMargin_ComponentsInContainersConstraints(float x, float y, float width, float height)
         {
             var testLayout = CreateLayout();
@@ -86,7 +86,7 @@ namespace GameEngineTest.Graphics.Layouts
                 obj.IsInConstraints(x, y + margin, width, height - margin);
         }
         
-        [TestCaseSource(typeof(ILayoutTest), "ValidData")]
+        [TestCaseSource(typeof(ILayoutTest), nameof(ValidData))]
         public void LayoutContainer_SetBottomMargin_ComponentsInContainersConstraints(float x, float y, float width, float height)
         {
             var testLayout = CreateLayout();
@@ -101,7 +101,7 @@ namespace GameEngineTest.Graphics.Layouts
                 obj.IsInConstraints(x, y, width, height - margin);
         }
 
-        [TestCaseSource(typeof(ILayoutTest), "ValidData")]
+        [TestCaseSource(typeof(ILayoutTest), nameof(ValidData))]
         public void LayoutContainer_SetAllMargins_ComponentsInContainersConstraints(float x, float y, float width, float height)
         {
             var testLayout = CreateLayout();
@@ -136,7 +136,7 @@ namespace GameEngineTest.Graphics.Layouts
             testLayout.LayoutContainer(testContainer);
 
             foreach (var c in testContainer.Components)
-                Assert.IsTrue(c.Width.CompareTo(0) == 0 || c.Height.CompareTo(0) == 0);
+                Assert.IsTrue(c.Width().CompareTo(0) == 0 || c.Height().CompareTo(0) == 0);
         }
 
         [TestCase(10.0f, 10.0f, 10)]
@@ -151,7 +151,7 @@ namespace GameEngineTest.Graphics.Layouts
             testLayout.LayoutContainer(testContainer);
 
             foreach (var c in testContainer.Components)
-                Assert.IsTrue(c.Width.CompareTo(0) == 0 || c.Height.CompareTo(0) == 0);
+                Assert.IsTrue(c.Width().CompareTo(0) == 0 || c.Height().CompareTo(0) == 0);
         }
 
         [TestCase(10.0f, 10.0f, 10)]
@@ -166,7 +166,7 @@ namespace GameEngineTest.Graphics.Layouts
             testLayout.LayoutContainer(testContainer);
 
             foreach (var c in testContainer.Components)
-                Assert.IsTrue(c.Width.CompareTo(0) == 0 || c.Height.CompareTo(0) == 0);
+                Assert.IsTrue(c.Width().CompareTo(0) == 0 || c.Height().CompareTo(0) == 0);
         }
 
         [TestCase(10.0f, 10.0f, 10)]
@@ -182,7 +182,7 @@ namespace GameEngineTest.Graphics.Layouts
             testLayout.LayoutContainer(testContainer);
 
             foreach (var c in testContainer.Components)
-                Assert.IsTrue(c.Width.CompareTo(0) == 0 || c.Height.CompareTo(0) == 0);
+                Assert.IsTrue(c.Width().CompareTo(0) == 0 || c.Height().CompareTo(0) == 0);
         }
 
         [TestCase(10.0f, 10.0f, 10)]
@@ -197,7 +197,7 @@ namespace GameEngineTest.Graphics.Layouts
             testLayout.LayoutContainer(testContainer);
 
             foreach (var c in testContainer.Components)
-                Assert.IsTrue(c.Width.CompareTo(0) == 0 || c.Height.CompareTo(0) == 0);
+                Assert.IsTrue(c.Width().CompareTo(0) == 0 || c.Height().CompareTo(0) == 0);
         }
 
         [TestCase]
@@ -221,12 +221,12 @@ namespace GameEngineTest.Graphics.Layouts
             var testContainer = CreateContainer(containerX, containerY, containerWidth, containerHeight);
             var component = testContainer.SetupContainer(1);
 
-            component[0].Height = componentHeight;
+            component[0].Height(componentHeight);
             component[0].VerticalPolicy = ResizePolicy.Fixed;
 
             testLayout.LayoutContainer(testContainer);
 
-            Assert.AreEqual(expectedHeight, component[0].Height);
+            Assert.AreEqual(expectedHeight, component[0].Height());
 
         }
 
@@ -242,12 +242,12 @@ namespace GameEngineTest.Graphics.Layouts
             var testContainer = CreateContainer(containerX, containerY, containerWidth, containerHeight);
             var component = testContainer.SetupContainer(1);
 
-            component[0].Width = componentWidth;
+            component[0].Width(componentWidth);
             component[0].HorizontalPolicy = ResizePolicy.Fixed;
 
             testLayout.LayoutContainer(testContainer);
 
-            Assert.AreEqual(expectedWidth, component[0].Width);
+            Assert.AreEqual(expectedWidth, component[0].Width());
 
         }
 
@@ -268,7 +268,7 @@ namespace GameEngineTest.Graphics.Layouts
 
             testLayout.LayoutContainer(testContainer);
 
-            Assert.AreEqual(expectedHeight, component[0].Height);
+            Assert.AreEqual(expectedHeight, component[0].Height());
 
         }
 
@@ -289,7 +289,7 @@ namespace GameEngineTest.Graphics.Layouts
 
             testLayout.LayoutContainer(testContainer);
 
-            Assert.AreEqual(expectedWidth, component[0].Width);
+            Assert.AreEqual(expectedWidth, component[0].Width());
 
         }
     }

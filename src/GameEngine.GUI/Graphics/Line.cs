@@ -1,8 +1,8 @@
-﻿using GameEngine.Graphics.General;
+﻿using GameEngine.GUI.Graphics.General;
 using GameEngine.Utils;
 using Microsoft.Xna.Framework;
 
-namespace GameEngine.Graphics
+namespace GameEngine.GUI.Graphics
 {
     /// <summary>
     /// Draws a line with rounded cups
@@ -64,13 +64,13 @@ namespace GameEngine.Graphics
         /// <see cref="AbstractGraphicComponent.Update"/>
         protected override void Update()
         {
-            if(Width.AlmostEqual(0))
+            if(Area.Width == 0)
             {
                 lineScale.X = 0;
                 cupScale.X = 0;
                 return;
             }
-            else if (Width.CompareTo(Height) < 0)
+            else if (Area.Width.CompareTo(Area.Height) < 0)
                 SetComponentsFlatCups();
             else
                 SetComponentsWithCups();
@@ -88,12 +88,12 @@ namespace GameEngine.Graphics
 
         private void SetCupsCoordinates()
         {
-            cupScale.X = cupScale.Y = Height * circleTextureScale;
+            cupScale.X = cupScale.Y = Area.Height * circleTextureScale;
 
-            leftCup = Position;
+            leftCup = Area.Location.ToVector2();
 
-            rightCup.Y = Position.Y;
-            rightCup.X = Position.X + Width - Height;
+            rightCup.Y = Area.Y;
+            rightCup.X = Area.X + Area.Width - Area.Height;
 
             rightCup.X = rightCup.X.CompareTo(leftCup.X) > 0 ? rightCup.X : leftCup.X;
         }
@@ -101,13 +101,13 @@ namespace GameEngine.Graphics
         private void SetLineCoordinates()
         {
             // Width >= Height && Width != 0
-            float cupRadius = 0.5f * Height;
+            float cupRadius = 0.5f * Area.Height;
 
-            lineScale.Y = Height;
-            lineScale.X = Width - 2 * cupRadius; // >= 0
+            lineScale.Y = Area.Height;
+            lineScale.X = Area.Width - 2 * cupRadius; // >= 0
 
-            line.X = Position.X + cupRadius;
-            line.Y = Position.Y;
+            line.X = Area.X + cupRadius;
+            line.Y = Area.Y;
         }
 
         /// <summary>
@@ -115,12 +115,12 @@ namespace GameEngine.Graphics
         /// </summary>
         private void SetComponentsFlatCups()
         {
-            line =  leftCup = rightCup = Position;
+            line =  leftCup = rightCup = Area.Location.ToVector2();
 
             lineScale = Vector2.Zero;
 
-            cupScale.X = Width * circleTextureScale;
-            cupScale.Y = Height * circleTextureScale;
+            cupScale.X = Area.Width * circleTextureScale;
+            cupScale.Y = Area.Height * circleTextureScale;
         }
     }
 }

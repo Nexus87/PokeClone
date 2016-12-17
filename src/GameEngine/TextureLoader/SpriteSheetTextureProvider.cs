@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using GameEngine.Configuration;
 using GameEngine.Graphics;
+using GameEngine.GUI.Graphics;
 using Microsoft.Xna.Framework.Content;
 
 namespace GameEngine.TextureLoader

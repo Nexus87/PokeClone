@@ -1,4 +1,4 @@
-﻿namespace GameEngine.Graphics.Layouts
+﻿namespace GameEngine.GUI.Graphics.Layouts
 {
     public class VBoxLayout : BoxLayout
     {
@@ -6,7 +6,7 @@
         {
             SetComponents(container.Components);
 
-            HeightModifier = c => c.Height;
+            HeightModifier = c => c.Area.Height;
             WidthModifier = c => 0;
             WidthForExtendingComponents = Width;
             HeightForExtendingComponents = CalculateHeightForExtendingComponents();

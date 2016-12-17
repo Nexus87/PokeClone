@@ -1,4 +1,4 @@
-﻿namespace GameEngine.Graphics
+﻿namespace GameEngine.GUI.Graphics
 {
     /// <summary>
     /// This determines how layouts resize components in a container

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using BattleLib.Components.GraphicComponents;
 using FakeItEasy;
-using GameEngine.Graphics;
+using GameEngine.GUI.Graphics;
 using GameEngine.Utils;
 using GameEngineTest.Graphics;
 using GameEngineTest.TestUtils;
@@ -103,8 +103,8 @@ namespace BattleLibTest.Components.GraphicComponents
         public void Draw_ZeroMaxHP_HPLineHasZeroSize()
         {
             var hpLine = A.Fake<IGraphicComponent>();
-            hpLine.Height = -1.0f;
-            hpLine.Width = -1.0f;
+            hpLine.Height(-1.0f);
+            hpLine.Width(1.0f);
             var line = CreateLine(hpLine);
             
             line.SetCoordinates(0, 0, 500, 500);
@@ -114,7 +114,7 @@ namespace BattleLibTest.Components.GraphicComponents
 
             line.Draw();
 
-            Assert.IsTrue(hpLine.Width.AlmostEqual(0) || hpLine.Height.AlmostEqual(0));
+            Assert.IsTrue(hpLine.Width().AlmostEqual(0) || hpLine.Height().AlmostEqual(0));
             
         }
 

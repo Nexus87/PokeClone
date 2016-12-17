@@ -1,8 +1,8 @@
-﻿using Microsoft.Xna.Framework;
-using System.Collections.Generic;
-using GameEngine.Graphics.General;
+﻿using System.Collections.Generic;
+using GameEngine.GUI.Graphics.General;
+using Microsoft.Xna.Framework;
 
-namespace GameEngine.Graphics
+namespace GameEngine.GUI.Graphics
 {
     internal class AnimatedTextureBox : ForwardingGraphicComponent<TextureBox>
     {

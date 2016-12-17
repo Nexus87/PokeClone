@@ -1,4 +1,4 @@
-﻿namespace GameEngine.Graphics
+﻿namespace GameEngine.GUI.Graphics
 {
     /// <summary>
     /// This interface represents a ITextGraphicComponent, that is able to

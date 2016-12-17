@@ -1,6 +1,7 @@
 ﻿using GameEngine.Graphics;
 using Microsoft.Xna.Framework;
 using System;
+using GameEngine.GUI.Graphics;
 
 namespace BattleLib.Animations
 {

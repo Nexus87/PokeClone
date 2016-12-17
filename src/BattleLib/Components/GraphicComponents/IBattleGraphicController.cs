@@ -2,6 +2,7 @@
 using Base.Data;
 using BattleLib.Components.BattleState;
 using GameEngine.Graphics;
+using GameEngine.GUI.Graphics;
 
 namespace BattleLib.Components.GraphicComponents
 {

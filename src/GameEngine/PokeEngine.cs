@@ -6,7 +6,8 @@ using Microsoft.Xna.Framework;
 using System;
 using System.Linq;
 using GameEngine.GameEngineComponents;
-using GameEngine.Graphics.General;
+using GameEngine.GUI.Graphics;
+using GameEngine.GUI.Graphics.General;
 
 namespace GameEngine
 {

@@ -1,10 +1,10 @@
-﻿using Microsoft.Xna.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using GameEngine.Globals;
-using GameEngine.Graphics.General;
+using GameEngine.GUI.Graphics.General;
+using Microsoft.Xna.Framework;
 
-namespace GameEngine.Graphics
+namespace GameEngine.GUI.Graphics
 {
     /// <summary>
     /// Skeletal implementation of an IGraphicComponent to utilize composition.
@@ -53,28 +53,6 @@ namespace GameEngine.Graphics
         {
             InnerComponent = component;
         }
-
-        /// <summary>
-        /// Height of the component
-        /// </summary>
-        /// <see cref="IGraphicComponent.Height"/>
-        public float Height { get { return InnerComponent.Height; } set { InnerComponent.Height = value; } }
-        /// <summary>
-        /// Width of the component
-        /// </summary>
-        /// <see cref="IGraphicComponent.Width"/>
-        public float Width { get { return InnerComponent.Width; } set { InnerComponent.Width = value; } }
-        /// <summary>
-        /// X coordinate of the component
-        /// </summary>
-        /// <see cref="IGraphicComponent.XPosition"/>
-        public float XPosition { get { return InnerComponent.XPosition; } set { InnerComponent.XPosition = value; } }
-        /// <summary>
-        /// Y coordinate of the component
-        /// </summary>
-        /// <see cref="IGraphicComponent.YPosition"/>
-        public float YPosition { get { return InnerComponent.YPosition; } set { InnerComponent.YPosition = value; } }
-
         /// <summary>
         /// This function is called when the component needs to be drawn
         /// </summary>
@@ -169,8 +147,11 @@ namespace GameEngine.Graphics
             set { InnerComponent.ScissorArea = value;}
         }
 
-        Rectangle IGraphicComponent.Area { get; set; }
-        public Rectangle Area => InnerComponent.Area;
+        public Rectangle Area
+        {
+            get { return InnerComponent.Area; }
+            set { InnerComponent.Area = value; }
+        }
 
         public IGraphicComponent Parent
         {

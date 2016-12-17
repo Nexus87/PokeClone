@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GameEngine.Graphics.TableView
+namespace GameEngine.GUI.Graphics.TableView
 {
     public class DataChangedEventArgs<T> : EventArgs
     {

@@ -5,6 +5,8 @@ using BattleLib.Components.BattleState;
 using GameEngine;
 using GameEngine.Graphics;
 using GameEngine.Graphics.GUI;
+using GameEngine.GUI.Graphics;
+using GameEngine.GUI.Graphics.GUI;
 using GameEngine.Registry;
 
 namespace BattleLib.Components.GraphicComponents
@@ -91,8 +93,8 @@ namespace BattleLib.Components.GraphicComponents
         private void InitAttackMenu(ScreenConstants screen, GUIManager manager)
         {
             moveWidget.SetCoordinates(
-                X: screen.ScreenWidth / 2.0f,
-                Y: 2.0f * screen.ScreenHeight / 3.0f,
+                screen.ScreenWidth / 2.0f,
+                2.0f * screen.ScreenHeight / 3.0f,
                 width: screen.ScreenWidth - screen.ScreenWidth / 2.0f,
                 height: screen.ScreenHeight - 2.0f * screen.ScreenHeight / 3.0f
             );
@@ -107,11 +109,13 @@ namespace BattleLib.Components.GraphicComponents
 
         private void InitItemMenu(ScreenConstants screen, GUIManager manager)
         {
-            itemWidget.XPosition = 3.0f * screen.ScreenWidth / 8.0f;
-            itemWidget.YPosition = 1.0f * screen.ScreenHeight / 8.0f;
+            var XPosition = 3.0f * screen.ScreenWidth / 8.0f;
+            var YPosition = 1.0f * screen.ScreenHeight / 8.0f;
 
-            itemWidget.Width = screen.ScreenWidth - itemWidget.XPosition;
-            itemWidget.Height = (2.0f * screen.ScreenHeight / 3.0f) - itemWidget.YPosition;
+            var Width = screen.ScreenWidth - XPosition;
+            var Height = (2.0f * screen.ScreenHeight / 3.0f) - YPosition;
+
+            itemWidget.SetCoordinates(XPosition, YPosition, Width, Height);
 
             itemWidget.ItemSelected += ItemMenu_ItemSelected;
             itemWidget.ExitRequested += BackToMain;
@@ -124,11 +128,12 @@ namespace BattleLib.Components.GraphicComponents
 
         private void InitMainMenu(ScreenConstants screen, GUIManager manager)
         {
-            mainWidget.XPosition = 0.5f * screen.ScreenWidth;
-            mainWidget.YPosition = 2.0f * screen.ScreenHeight / 3.0f;
-            mainWidget.Width = screen.ScreenWidth - mainWidget.XPosition;
-            mainWidget.Height = screen.ScreenHeight - mainWidget.YPosition;
+            var XPosition = 0.5f * screen.ScreenWidth;
+            var YPosition = 2.0f * screen.ScreenHeight / 3.0f;
+            var Width = screen.ScreenWidth - XPosition;
+            var Height = screen.ScreenHeight - YPosition;
 
+            mainWidget.SetCoordinates(XPosition, YPosition, Width, Height);
             mainWidget.ItemSelected += MainMenu_ItemSelected;
             //mainWidget.ExitRequested += delegate { manager.Exit(); };
 
@@ -139,11 +144,12 @@ namespace BattleLib.Components.GraphicComponents
         private void InitMessageBox(ScreenConstants screen, GUIManager manager)
         {
             messageFrame.AddWidget(messageBox);
-            messageFrame.XPosition = 0;
-            messageFrame.YPosition = 2.0f * screen.ScreenHeight / 3.0f;
-            messageFrame.Width = screen.ScreenWidth;
-            messageFrame.Height = screen.ScreenHeight - messageFrame.YPosition;
+            var XPosition = 0;
+            var YPosition = 2.0f * screen.ScreenHeight / 3.0f;
+            var Width = screen.ScreenWidth;
+            var Height = screen.ScreenHeight - YPosition;
 
+            messageFrame.SetCoordinates(XPosition, YPosition, Width, Height);
             messageFrame.IsVisible = true;
             manager.AddWidget(messageFrame);
 
@@ -157,11 +163,12 @@ namespace BattleLib.Components.GraphicComponents
 
         private void InitPKMNMenu(ScreenConstants screen, GUIManager manager)
         {
-            pokemonWidget.XPosition = 0;
-            pokemonWidget.YPosition = 0;
-            pokemonWidget.Width = screen.ScreenWidth;
-            pokemonWidget.Height = 2.0f * screen.ScreenHeight / 3.0f;
+            var XPosition = 0;
+            var YPosition = 0;
+            var Width = screen.ScreenWidth;
+            var Height = 2.0f * screen.ScreenHeight / 3.0f;
 
+            pokemonWidget.SetCoordinates(XPosition, YPosition, Width, Height);
             pokemonWidget.ItemSelected += PKMNMenu_ItemSelected;
             pokemonWidget.ExitRequested += BackToMain;
             pokemonWidget.ExitRequested += delegate { pokemonWidget.ResetSelection(); };

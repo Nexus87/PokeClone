@@ -1,5 +1,6 @@
 ﻿using System;
 using GameEngine.Graphics;
+using GameEngine.GUI.Graphics;
 using GameEngine.Utils;
 using Microsoft.Xna.Framework;
 using NUnit.Framework;
@@ -32,7 +33,7 @@ namespace GameEngineTest.TestUtils
 
         public void IsInConstraints(IGraphicComponent component)
         {
-            IsInConstraints(component.XPosition, component.YPosition, component.Width, component.Height);
+            IsInConstraints(component.XPosition(), component.YPosition(), component.Width(), component.Height());
         }
     }
 }

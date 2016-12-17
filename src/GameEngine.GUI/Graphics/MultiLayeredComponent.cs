@@ -1,8 +1,8 @@
-﻿using GameEngine.Graphics.General;
+﻿using GameEngine.GUI.Graphics.General;
 using GameEngine.Utils;
 using Microsoft.Xna.Framework;
 
-namespace GameEngine.Graphics
+namespace GameEngine.GUI.Graphics
 {
     public class MultiLayeredComponent : AbstractGraphicComponent
     {

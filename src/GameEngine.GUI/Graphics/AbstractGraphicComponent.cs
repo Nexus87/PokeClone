@@ -1,11 +1,11 @@
-﻿using GameEngine.Utils;
-using Microsoft.Xna.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using GameEngine.Globals;
-using GameEngine.Graphics.General;
+using GameEngine.GUI.Graphics.General;
+using GameEngine.Utils;
+using Microsoft.Xna.Framework;
 
-namespace GameEngine.Graphics
+namespace GameEngine.GUI.Graphics
 {
     public abstract class AbstractGraphicComponent : IGraphicComponent
     {
@@ -32,81 +32,18 @@ namespace GameEngine.Graphics
         }
 
         protected bool NeedsUpdate { get; set; }
-        private Vector2 _position;
-        private Vector2 _size;
         private float _preferredHeight;
         private float _preferredWidth;
         protected readonly List<IGraphicComponent> children = new List<IGraphicComponent>();
+        private Rectangle _area;
+        private bool _isSelected;
 
         public event EventHandler<GraphicComponentSizeChangedEventArgs> SizeChanged = (a, b) => { };
         public event EventHandler<GraphicComponentSizeChangedEventArgs> PreferredSizeChanged = (a, b) => { };
 
-        public float Height
-        {
-            get { return _size.Y; }
-            set
-            {
-                if (value.CompareTo(0) < 0)
-                    throw new ArgumentException("Height must be >=0");
-                if (_size.Y.AlmostEqual(value))
-                    return;
-                _size.Y = value;
-                Invalidate();
-                SizeChanged(this, new GraphicComponentSizeChangedEventArgs(this, _size.X, _size.Y));
-            }
-        }
-
-        public float Width
-        {
-            get
-            {
-                return _size.X;
-            }
-            set
-            {
-                if (value.CompareTo(0) < 0)
-                    throw new ArgumentException("Width must be >=0");
-                if (_size.X.AlmostEqual(value))
-                    return;
-                _size.X = value;
-                Invalidate();
-                SizeChanged(this, new GraphicComponentSizeChangedEventArgs(this, _size.X, _size.Y));
-            }
-        }
-
-        public float XPosition
-        {
-            get { return _position.X; }
-            set
-            {
-                if (_position.X.AlmostEqual(value))
-                    return;
-
-                _position.X = value;
-                Invalidate();
-            }
-        }
-
-        public float YPosition
-        {
-            get { return _position.Y; }
-            set
-            {
-                if (_position.Y.AlmostEqual(value))
-                    return;
-
-                _position.Y = value;
-                Invalidate();
-            }
-        }
-
-        protected Vector2 Position { get { return _position; } }
-        protected Vector2 Size { get { return _size; } }
-
         public void Draw(GameTime time, ISpriteBatch batch)
         {
-            if (Animation != null)
-                Animation.Update(time, this);
+            Animation?.Update(time, this);
             if (!_isVisible)
                 return;
 
@@ -181,23 +118,40 @@ namespace GameEngine.Graphics
         public ResizePolicy HorizontalPolicy { get; set; }
         public ResizePolicy VerticalPolicy { get; set; }
         public Rectangle ScissorArea { get; set; }
+
         public Rectangle Area
         {
-            get
-            {
-                return new Rectangle(_position.ToPoint(), _size.ToPoint());
-            }
-
+            get { return _area; }
             set
             {
-                _position = value.Location.ToVector2();
-                _size = value.Size.ToVector2();
+                if(_area == value)
+                    return;
+
+                var sizeChanged = _area.Width != value.Width || _area.Height != value.Height;
+
+                _area = value;
+                Invalidate();
+                if(sizeChanged)
+                    SizeChanged(this, new GraphicComponentSizeChangedEventArgs(this, _area.Width, _area.Height));
             }
         }
+
         public IGraphicComponent Parent { get; set; }
 
         public IEnumerable<IGraphicComponent> Children => children;
-        public virtual bool IsSelected { get; set; }
+
+        public virtual bool IsSelected
+        {
+            get { return _isSelected; }
+            set
+            {
+                if(_isSelected == value)
+                    return;
+                _isSelected = value;
+                Invalidate();
+            }
+        }
+
         public bool IsSelectable { get; set; }
 
         public virtual void HandleKeyInput(CommandKeys key)

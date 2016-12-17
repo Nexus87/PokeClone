@@ -1,9 +1,9 @@
-﻿using GameEngine.Graphics.General;
+﻿using GameEngine.GUI.Graphics.General;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace GameEngine.Graphics
+namespace GameEngine.GUI.Graphics
 {
     public class GraphicResources
     {

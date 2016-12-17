@@ -1,6 +1,7 @@
 ﻿using GameEngine.Graphics;
-using GameEngine.Graphics.General;
-using GameEngine.Graphics.Layouts;
+using GameEngine.GUI.Graphics;
+using GameEngine.GUI.Graphics.General;
+using GameEngine.GUI.Graphics.Layouts;
 using GameEngine.Registry;
 using GameEngine.Utils;
 using Microsoft.Xna.Framework;
@@ -39,8 +40,7 @@ namespace MainModule.Graphics
             var totalHeight = Rows * TextureSize;
             var totalWidth = Columns * TextureSize;
 
-            Height = totalHeight;
-            Width = totalWidth;
+            Area = new Rectangle(Area.X, Area.Y, (int) totalWidth, (int) totalHeight);
         }
 
         private float Rows { get;  set; }

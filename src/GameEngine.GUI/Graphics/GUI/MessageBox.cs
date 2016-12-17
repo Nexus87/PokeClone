@@ -1,10 +1,10 @@
-﻿using GameEngine.Registry;
-using GameEngine.Utils;
-using System;
+﻿using System;
 using GameEngine.Globals;
-using GameEngine.Graphics.General;
+using GameEngine.GUI.Graphics.General;
+using GameEngine.Registry;
+using GameEngine.Utils;
 
-namespace GameEngine.Graphics.GUI
+namespace GameEngine.GUI.Graphics.GUI
 {
     [GameType]
     public class MessageBox : ForwardingGraphicComponent<ITextGraphicContainer>, IWidget

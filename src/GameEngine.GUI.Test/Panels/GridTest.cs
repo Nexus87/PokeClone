@@ -2,6 +2,7 @@
 using System.Linq;
 using FakeItEasy;
 using GameEngine.Graphics;
+using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Panels;
 using GameEngine.Utils;
 using Microsoft.Xna.Framework;

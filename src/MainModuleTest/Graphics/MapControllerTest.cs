@@ -32,8 +32,8 @@ namespace MainModuleTest.Graphics
             mapController.CenterField(fieldX, fieldY);
             mapController.Draw();
 
-            A.CallToSet(() => mapMock.XPosition).To(expectedX).MustHaveHappened();
-            A.CallToSet(() => mapMock.YPosition).To(expectedY).MustHaveHappened();
+            Assert.AreEqual(mapMock.Area.X, (int) expectedX);
+            Assert.AreEqual(mapMock.Area.Y, (int) expectedY);
         }
 
         [TestCase(100, 100, 10, 20, 10, 45.0f, 45.0f)]
@@ -52,8 +52,8 @@ namespace MainModuleTest.Graphics
             mapController.CenterField(0, 0);
             mapController.Draw();
 
-            A.CallToSet(() => mapMock.XPosition).To(expectedX).MustHaveHappened();
-            A.CallToSet(() => mapMock.YPosition).To(expectedY).MustHaveHappened();
+            Assert.AreEqual(mapMock.XPosition(), (int) expectedX);
+            Assert.AreEqual(mapMock.YPosition(), (int) expectedY);
         }
 
         [TestCase(10, 32, 9, 8)]

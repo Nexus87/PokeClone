@@ -1,8 +1,8 @@
-﻿using GameEngine.Utils;
+﻿using System;
+using GameEngine.Utils;
 using Microsoft.Xna.Framework;
-using System;
 
-namespace GameEngine.Graphics
+namespace GameEngine.GUI.Graphics
 {
     public class ResizeAnimation : IAnimation
     {
@@ -26,8 +26,8 @@ namespace GameEngine.Graphics
         {
             component.CheckNull("component");
 
-            StartWidth = component.Width;
-            StartHeight = component.Height;
+            StartWidth = component.Area.Width;
+            StartHeight = component.Area.Height;
         }
 
 
@@ -54,8 +54,7 @@ namespace GameEngine.Graphics
             else
                 currentHeight = Math.Max(currentWidth + SpeedY, EndHeight);
 
-            component.Width = currentWidth;
-            component.Height = currentHeight;
+            component.SetCoordinates(component.Area.X, component.Area.Y, currentWidth, currentHeight);
         }
 
         private void Finished()

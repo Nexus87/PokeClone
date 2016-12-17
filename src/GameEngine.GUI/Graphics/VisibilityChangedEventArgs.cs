@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GameEngine.Graphics
+namespace GameEngine.GUI.Graphics
 {
     /// <summary>
     /// Argument for IWidgets OnVisibleChanged event.

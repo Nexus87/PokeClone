@@ -1,20 +1,20 @@
 ﻿
-namespace GameEngine.Graphics
+using Microsoft.Xna.Framework;
+
+namespace GameEngine.GUI.Graphics
 {
     public static class Extensions
     {
 
         public static void SetCoordinates(this IGraphicComponent component, IGraphicComponent constraints)
         {
-            component.SetCoordinates(constraints.XPosition, constraints.YPosition, constraints.Width, constraints.Height);
+            component.Area = constraints.Area;
         }
 
-        public static void SetCoordinates(this IGraphicComponent component, float X, float Y, float width, float height)
+        public static void SetCoordinates(this IGraphicComponent component, float x, float y, float width, float height)
         {
-            component.XPosition = X;
-            component.YPosition = Y;
-            component.Width = width;
-            component.Height = height;
+            var area = new Rectangle((int) x, (int) y, (int) width, (int) height);
+            component.Area = area;
         }
     }
 }

@@ -4,6 +4,7 @@ using GameEngineTest.TestUtils;
 using NUnit.Framework;
 using System.Collections.Generic;
 using FakeItEasy;
+using GameEngine.GUI.Graphics;
 
 namespace GameEngineTest.Graphics
 {

@@ -1,11 +1,10 @@
 ﻿using GameEngine.Graphics;
+using GameEngine.GUI.Graphics;
 
 namespace GameEngineTest.TestUtils
 {
     public class SelectableGraphicComponentMock : GraphicComponentMock, ISelectableGraphicComponent
     {
-        public bool IsSelected { get; set; }
-
         public void Select()
         {
             IsSelected = true;

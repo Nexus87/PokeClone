@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Xna.Framework;
 
-namespace GameEngine.Graphics.Layouts
+namespace GameEngine.GUI.Graphics.Layouts
 {
     /// <summary>
     /// A layout that orders the components in a grid.
@@ -72,8 +73,7 @@ namespace GameEngine.Graphics.Layouts
             var currentX = XPosition;
             foreach (var c in rowComponents)
             {
-                c.XPosition = currentX;
-                c.YPosition = currentY;
+                c.Area = new Rectangle((int) currentX, (int) currentY, c.Area.Width, c.Area.Height);
 
                 SetComponentSize(c, cellWidth, cellHeight);
 
@@ -83,25 +83,32 @@ namespace GameEngine.Graphics.Layouts
 
         private static void SetComponentSize(IGraphicComponent c, float cellWidth, float cellHeight)
         {
+            var location = c.Area.Location;
+            var width = c.Area.Width;
+            var height = c.Area.Height;
+
             switch (c.HorizontalPolicy)
             {
                 case ResizePolicy.Preferred:
-                    c.Width = Math.Min(cellWidth, c.PreferredWidth);
+                    width = (int) Math.Min(cellWidth, c.PreferredWidth);
                     break;
                 case ResizePolicy.Extending:
-                    c.Width = cellWidth;
+                    width = (int) cellWidth;
                     break;
             }
 
             switch (c.VerticalPolicy)
             {
                 case ResizePolicy.Preferred:
-                    c.Height = Math.Min(cellHeight, c.PreferredHeight);
+                    height = (int) Math.Min(cellHeight, c.PreferredHeight);
                     break;
                 case ResizePolicy.Extending:
-                    c.Height = cellHeight;
+                    height = (int) cellHeight;
                     break;
             }
+            var size = new Point(width, height);
+
+            c.Area = new Rectangle(location, size);
         }
     }
 }

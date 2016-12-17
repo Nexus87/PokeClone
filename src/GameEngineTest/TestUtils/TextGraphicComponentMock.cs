@@ -1,6 +1,6 @@
-﻿using GameEngine.Graphics;
-using System;
-using GameEngine.Graphics.General;
+﻿using System;
+using GameEngine.GUI.Graphics;
+using GameEngine.GUI.Graphics.General;
 
 namespace GameEngineTest.TestUtils
 {
@@ -9,17 +9,12 @@ namespace GameEngineTest.TestUtils
         public Func<int> DisplayableCharsFunc = null;
         public int DisplayableChars()
         {
-            if (DisplayableCharsFunc == null)
-                return 0;
-            return DisplayableCharsFunc();
+            return DisplayableCharsFunc?.Invoke() ?? 0;
         }
 
         public float PreferredTextHeight { get;set;  }
 
-        public float RealTextHeight
-        {
-            get { return Math.Min(Height, PreferredTextHeight); }
-        }
+        public float RealTextHeight => Math.Min(Area.Height, PreferredTextHeight);
 
         public string Text { get; set; }
 

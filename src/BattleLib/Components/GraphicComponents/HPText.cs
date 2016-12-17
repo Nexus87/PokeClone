@@ -1,8 +1,9 @@
 ﻿using Base;
 using GameEngine.Graphics;
+using GameEngine.GUI.Graphics;
+using GameEngine.GUI.Graphics.General;
 using GameEngine.Registry;
 using Microsoft.Xna.Framework;
-using GameEngine.Graphics.General;
 
 namespace BattleLib.Components.GraphicComponents
 {

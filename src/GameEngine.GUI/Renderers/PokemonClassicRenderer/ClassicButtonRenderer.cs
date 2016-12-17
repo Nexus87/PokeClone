@@ -1,5 +1,5 @@
-﻿using GameEngine.Graphics.General;
-using GameEngine.GUI.Controlls;
+﻿using GameEngine.GUI.Controlls;
+using GameEngine.GUI.Graphics.General;
 using Microsoft.Xna.Framework;
 
 namespace GameEngine.GUI.Renderers.PokemonClassicRenderer

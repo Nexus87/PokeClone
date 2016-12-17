@@ -1,6 +1,6 @@
 ﻿using System;
 using GameEngine.Globals;
-using GameEngine.Graphics;
+using GameEngine.GUI.Graphics;
 
 namespace GameEngine.GUI.Controlls
 {

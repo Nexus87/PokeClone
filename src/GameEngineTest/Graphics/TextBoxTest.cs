@@ -5,7 +5,8 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using FakeItEasy;
-using GameEngine.Graphics.General;
+using GameEngine.GUI.Graphics;
+using GameEngine.GUI.Graphics.General;
 
 namespace GameEngineTest.Graphics
 {
@@ -126,8 +127,7 @@ namespace GameEngineTest.Graphics
         {
             var box = new TextBox(stub)
             {
-                Width = width,
-                Height = height
+                Area = new Rectangle(0, 0, (int) width, (int) height)
             };
 
             return box;
@@ -139,8 +139,7 @@ namespace GameEngineTest.Graphics
                 .ReturnsLazily((string s) => new Vector2(charSize * s.Length, charSize));
             var textBox = new TextBox(FontMock)
             {
-                Height = height,
-                Width = width
+                Area = new Rectangle(0, 0, (int) width, (int) height)
             };
 
             return textBox;

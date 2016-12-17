@@ -1,10 +1,10 @@
-﻿using Microsoft.Xna.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using GameEngine.Globals;
-using GameEngine.Graphics.General;
+using GameEngine.GUI.Graphics.General;
+using Microsoft.Xna.Framework;
 
-namespace GameEngine.Graphics
+namespace GameEngine.GUI.Graphics
 {
     /// <summary>
     /// Interface for all drawable 2D components
@@ -44,24 +44,6 @@ namespace GameEngine.Graphics
         event EventHandler<GraphicComponentSizeChangedEventArgs> SizeChanged;
 
         event EventHandler<GraphicComponentSizeChangedEventArgs> PreferredSizeChanged;
-
-        /// <summary>
-        /// Current X position
-        /// </summary>
-        float XPosition { get; set; }
-        /// <summary>
-        /// Current Y position
-        /// </summary>
-        float YPosition { get; set; }
-
-        /// <summary>
-        /// Current Width
-        /// </summary>
-        float Width { get; set; }
-        /// <summary>
-        /// Current Height
-        /// </summary>
-        float Height { get; set; }
 
         /// <summary>
         /// Called when the component needs to be drawn

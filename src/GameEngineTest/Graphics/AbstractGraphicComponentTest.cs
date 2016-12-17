@@ -1,5 +1,5 @@
 ﻿using FakeItEasy;
-using GameEngine.Graphics;
+using GameEngine.GUI.Graphics;
 using GameEngineTest.TestUtils;
 using Microsoft.Xna.Framework;
 using NUnit.Framework;
@@ -31,7 +31,7 @@ namespace GameEngineTest.Graphics
 
         private static Rectangle Position(IGraphicComponent componentMock)
         {
-            return new Rectangle((int)componentMock.XPosition, (int)componentMock.YPosition, (int)componentMock.Width, (int)componentMock.Height);
+            return componentMock.Area;
         }
 
         [TestCase]
@@ -50,7 +50,7 @@ namespace GameEngineTest.Graphics
         public void Draw_SetXPosition_TriggerUpdateMethod()
         {
             var componentMock = CreateComponentMockWithoutInvalidation();
-            componentMock.XPosition += 10.0f;
+            componentMock.XPosition(componentMock.XPosition() + 10.0f);
 
             componentMock.Draw();
 
@@ -63,7 +63,7 @@ namespace GameEngineTest.Graphics
         public void Draw_SetYPosition_TriggerUpdateMethod()
         {
             var componentMock = CreateComponentMockWithoutInvalidation();
-            componentMock.YPosition += 10.0f;
+            componentMock.YPosition(componentMock.YPosition() + 10.0f);
 
             componentMock.Draw();
 
@@ -76,7 +76,7 @@ namespace GameEngineTest.Graphics
         public void Draw_SetWidth_TriggerUpdateMethod()
         {
             var componentMock = CreateComponentMockWithoutInvalidation();
-            componentMock.Width += 10.0f;
+            componentMock.Width(componentMock.Width() + 10.0f);
 
             componentMock.Draw();
 
@@ -89,7 +89,7 @@ namespace GameEngineTest.Graphics
         public void Draw_SetHeight_TriggerUpdateMethod()
         {
             var componentMock = CreateComponentMockWithoutInvalidation();
-            componentMock.Height += 10.0f;
+            componentMock.Height(componentMock.Height() + 10.0f);
 
             componentMock.Draw();
 
@@ -99,53 +99,11 @@ namespace GameEngineTest.Graphics
         }
 
         [TestCase]
-        public void Draw_SetSameXPostion_NoUpdateCall()
+        public void Draw_SetArea_NoUpdateCall()
         {
             var componentMock = CreateComponentMockWithoutInvalidation();
-            var sameXPosition = componentMock.XPosition;
-            componentMock.XPosition = sameXPosition;
-
-            componentMock.Draw();
-
-            A.CallTo(componentMock)
-                .Where(x => x.Method.Name == "Update")
-                .MustHaveHappened(Repeated.Exactly.Times(IntialCallTimes));
-        }
-
-        [TestCase]
-        public void Draw_SetSameYPostion_NoUpdateCall()
-        {
-            var componentMock = CreateComponentMockWithoutInvalidation();
-            var sameYPosition = componentMock.YPosition;
-            componentMock.YPosition = sameYPosition;
-
-            componentMock.Draw();
-
-            A.CallTo(componentMock)
-                .Where(x => x.Method.Name == "Update")
-                .MustHaveHappened(Repeated.Exactly.Times(IntialCallTimes));
-        }
-
-        [TestCase]
-        public void Draw_SetSameWidth_NoUpdateCall()
-        {
-            var componentMock = CreateComponentMockWithoutInvalidation();
-            var sameWidth = componentMock.Width;
-            componentMock.Width = sameWidth;
-
-            componentMock.Draw();
-
-            A.CallTo(componentMock)
-                .Where(x => x.Method.Name == "Update")
-                .MustHaveHappened(Repeated.Exactly.Times(IntialCallTimes));
-        }
-
-        [TestCase]
-        public void Draw_SetSameHeight_NoUpdateCall()
-        {
-            var componentMock = CreateComponentMockWithoutInvalidation();
-            var sameHeight = componentMock.Height;
-            componentMock.Height = sameHeight;
+            var sameArea = new Rectangle(componentMock.Area.Location, componentMock.Area.Size);
+            componentMock.Area = sameArea;
 
             componentMock.Draw();
 

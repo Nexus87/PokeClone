@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using GameEngine.Graphics;
-using GameEngine.Graphics.Layouts;
+using GameEngine.GUI.Graphics;
+using GameEngine.GUI.Graphics.Layouts;
 using GameEngineTest.TestUtils;
 using NUnit.Framework;
 
@@ -44,7 +44,7 @@ namespace GameEngineTest.Graphics.Layouts
             new TestCaseData(5, 1, 10, 1, 5)
         };
 
-        [TestCaseSource("PositionData")]
+        [TestCaseSource(nameof(PositionData))]
         public void LayoutContainer_SetRowsColumnsInConstructor_ExpectedNumberOfRowsAndColumns(int componentCnt, int gridRows, int gridColumns, int realRows, int realColumns)
         {
             var container = CreateDefaultContainer();
@@ -60,7 +60,7 @@ namespace GameEngineTest.Graphics.Layouts
             Assert.AreEqual(realColumns, columns);
         }
 
-        [TestCaseSource("PositionData")]
+        [TestCaseSource(nameof(PositionData))]
         public void LayoutContainer_SetRowsColumnsProperty_ExpectedNumberOfRowsAndColumns(int componentCnt, int gridRows, int gridColumns, int realRows, int realColumns)
         {
             var container = CreateDefaultContainer();
@@ -79,27 +79,27 @@ namespace GameEngineTest.Graphics.Layouts
 
         }
 
-        private int DistinctXPositions(List<GraphicComponentMock> components)
+        private static int DistinctXPositions(IEnumerable<GraphicComponentMock> components)
         {
-            return (from obj in components select obj.XPosition).Distinct().Count();
+            return (from obj in components select obj.XPosition()).Distinct().Count();
         }
 
-        private int DistinctYPositions(List<GraphicComponentMock> components)
+        private static int DistinctYPositions(IEnumerable<GraphicComponentMock> components)
         {
-            return (from obj in components select obj.YPosition).Distinct().Count();
+            return (from obj in components select obj.YPosition()).Distinct().Count();
         }
         
 
-        [TestCaseSource("PositionData")]
+        [TestCaseSource(nameof(PositionData))]
         public void LayoutContainer_NormalSetup_ComponentsAreCorrectOrdered(int componentCnt, int gridRows, int gridColumns, int realRows, int realColumns)
         {
             var container = CreateDefaultContainer();
             var layout = new GridLayout(gridRows, gridColumns);
 
-            var x = container.XPosition;
-            var y = container.YPosition;
-            var width = container.Width / realColumns;
-            var height = container.Height / realRows;
+            var x = container.XPosition();
+            var y = container.YPosition();
+            var width = (int) (container.Width() / realColumns);
+            var height = (int) (container.Height() / realRows);
 
             container.SetupContainer(componentCnt);
             container.Layout = layout;
@@ -109,22 +109,22 @@ namespace GameEngineTest.Graphics.Layouts
             var components = container.Components;
             for (var i = 0; i < components.Count; i++)
             {
-                var row = ToRow(i, realRows, realColumns);
-                var column = ToColumn(i, realRows, realColumns);
+                var row = ToRow(i, realColumns);
+                var column = ToColumn(i, realColumns);
 
-                Assert.AreEqual(x + column * width, components[i].XPosition);
-                Assert.AreEqual(y + row * height, components[i].YPosition);
-                Assert.AreEqual(width, components[i].Width);
-                Assert.AreEqual(height, components[i].Height);
+                Assert.AreEqual(x + column * width, components[i].XPosition());
+                Assert.AreEqual(y + row * height, components[i].YPosition());
+                Assert.AreEqual(width, components[i].Width());
+                Assert.AreEqual(height, components[i].Height());
             }
         }
 
-        private static int ToRow(int index, int rows, int columns)
+        private static int ToRow(int index, int columns)
         {
             return (int)Math.Floor((double) index / columns);
         }
 
-        private static int ToColumn(int index, int rows, int columns)
+        private static int ToColumn(int index, int columns)
         {
             return index % columns;
         }
@@ -151,13 +151,13 @@ namespace GameEngineTest.Graphics.Layouts
 
             foreach(var c in components)
             {
-                Assert.LessOrEqual(c.Width, cellWidth);
-                Assert.LessOrEqual(c.Height, cellHeight);
+                Assert.LessOrEqual(c.Width(), cellWidth);
+                Assert.LessOrEqual(c.Height(), cellHeight);
             }
         }
         private Container CreateDefaultContainer()
         {
-            return CreateContainer(5.0f, 5.0f, 500.0f, 500.0f);
+            return CreateContainer(5.0f, 5.0f, 600.0f, 600.0f);
         }
     }
 }

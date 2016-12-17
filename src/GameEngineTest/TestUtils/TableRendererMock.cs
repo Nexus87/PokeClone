@@ -1,7 +1,8 @@
 ﻿using GameEngine.Utils;
 using System;
 using GameEngine.Graphics;
-using GameEngine.Graphics.TableView;
+using GameEngine.GUI.Graphics;
+using GameEngine.GUI.Graphics.TableView;
 
 namespace GameEngineTest.TestUtils
 {

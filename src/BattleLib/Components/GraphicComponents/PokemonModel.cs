@@ -4,7 +4,7 @@ using GameEngine.Registry;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using GameEngine.Graphics.TableView;
+using GameEngine.GUI.Graphics.TableView;
 
 namespace BattleLib.Components.GraphicComponents
 {

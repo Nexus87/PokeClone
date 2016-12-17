@@ -1,4 +1,5 @@
 using GameEngine.Graphics;
+using GameEngine.GUI.Graphics;
 
 namespace MainModule.Graphics {
     public interface ICharacterSprite : IGraphicComponent

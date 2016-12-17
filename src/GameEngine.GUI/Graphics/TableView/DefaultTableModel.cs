@@ -1,7 +1,7 @@
 ﻿using System;
 using GameEngine.Utils;
 
-namespace GameEngine.Graphics.TableView
+namespace GameEngine.GUI.Graphics.TableView
 {
     public class DefaultTableModel<T> : ITableModel<T>
     {

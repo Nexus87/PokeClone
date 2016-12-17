@@ -1,10 +1,10 @@
-﻿using GameEngine.Graphics.General;
-using GameEngine.Graphics.Layouts;
+﻿using GameEngine.GUI.Graphics.General;
+using GameEngine.GUI.Graphics.Layouts;
 using GameEngine.Registry;
 using GameEngine.Utils;
 using Microsoft.Xna.Framework;
 
-namespace GameEngine.Graphics
+namespace GameEngine.GUI.Graphics
 {
     [GameType]
     public class MultlineTextBox : AbstractGraphicComponent, ITextGraphicContainer

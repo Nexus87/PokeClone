@@ -1,4 +1,4 @@
-﻿namespace GameEngine.Graphics.Layouts
+﻿namespace GameEngine.GUI.Graphics.Layouts
 {
     public class HBoxLayout : BoxLayout
     {
@@ -6,7 +6,7 @@
         {
             SetComponents(container.Components);
             HeightModifier = c => 0;
-            WidthModifier = c => c.Width;
+            WidthModifier = c => c.Area.Width;
             HeightForExtendingComponents = Height;
             WidthForExtendingComponents = CalculateWidthForExtendingComponents();
 

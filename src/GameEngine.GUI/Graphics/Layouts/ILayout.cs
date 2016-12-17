@@ -1,5 +1,5 @@
 ﻿
-namespace GameEngine.Graphics.Layouts
+namespace GameEngine.GUI.Graphics.Layouts
 {
     /// <summary>
     /// A class which is responsible for ordering the components of a container

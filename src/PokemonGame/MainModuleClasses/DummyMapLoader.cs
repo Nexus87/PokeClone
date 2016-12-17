@@ -1,5 +1,6 @@
 ﻿using GameEngine;
 using GameEngine.Graphics;
+using GameEngine.GUI.Graphics;
 using GameEngine.Registry;
 using GameEngine.Utils;
 using MainModule;

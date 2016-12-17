@@ -1,7 +1,8 @@
 ﻿using System;
 using GameEngine;
 using GameEngine.Graphics;
-using GameEngine.Graphics.General;
+using GameEngine.GUI.Graphics;
+using GameEngine.GUI.Graphics.General;
 using GameEngine.Registry;
 using Microsoft.Xna.Framework;
 
@@ -41,9 +42,10 @@ namespace MainModule.Graphics
                 CalculateScreenCenter();
                 mapChanged = false;
             }
-            mapGraphic.XPosition = screenCenterX - mapGraphic.GetXPositionOfColumn(CenteredFieldX);
-            mapGraphic.YPosition = screenCenterY - mapGraphic.GetYPositionOfRow(CenteredFieldY);
+            var x = screenCenterX - mapGraphic.GetXPositionOfColumn(CenteredFieldX);
+            var y = screenCenterY - mapGraphic.GetYPositionOfRow(CenteredFieldY);
 
+            mapGraphic.Area = new Rectangle((int) x, (int) y, mapGraphic.Area.Width, mapGraphic.Area.Height);
         }
 
         private void CalculateScreenCenter()

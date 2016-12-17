@@ -1,7 +1,8 @@
 ﻿using System;
 using GameEngine;
 using GameEngine.Graphics;
-using GameEngine.Graphics.General;
+using GameEngine.GUI.Graphics;
+using GameEngine.GUI.Graphics.General;
 using GameEngine.Registry;
 using Microsoft.Xna.Framework;
 
@@ -49,11 +50,7 @@ namespace BattleLib.Components.GraphicComponents
         protected override void Update()
         {
             base.Update();
-            
-            box.XPosition = XPosition;
-            box.YPosition = YPosition;
-            box.Width = Width;
-            box.Height = Height;
+            box.SetCoordinates(this);
 
             box.Image = isPlayer ? provider.GetTextureBack(id) : provider.GetTexturesFront(id);
         }

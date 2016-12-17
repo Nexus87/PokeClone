@@ -1,4 +1,4 @@
-﻿using GameEngine.Graphics;
+﻿using GameEngine.GUI.Graphics;
 using GameEngineTest.TestUtils;
 using NUnit.Framework;
 
@@ -15,14 +15,13 @@ namespace GameEngineTest.Graphics
         [TestCase(0.0f, 0.0f, 50.0f, 150.0f)]
         public void Draw_UnselectedDraw_ArrowNotDrawn(float x, float y, float width, float height)
         {
-            SpriteBatchMock spriteBatch = new SpriteBatchMock();
             var arrow = new GraphicComponentMock();
             var textBox = new TextGraphicComponentMock();
 
             var item = CreateItemBox(arrow, textBox);
             item.SetCoordinates(x, y, width, height);
 
-            item.Draw(spriteBatch);
+            item.Draw();
 
             Assert.False(arrow.WasDrawn);
         }
@@ -44,7 +43,7 @@ namespace GameEngineTest.Graphics
 
             item.Draw(spriteBatch);
 
-            Assert.LessOrEqual(arrow.XPosition, textBox.XPosition);
+            Assert.LessOrEqual(arrow.XPosition(), textBox.XPosition());
         }
 
         private ItemBox CreateItemBox(IGraphicComponent arrow = null, ITextGraphicComponent text = null)

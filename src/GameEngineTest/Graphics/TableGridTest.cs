@@ -4,19 +4,19 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using GameEngine.Graphics.TableView;
+using GameEngine.GUI.Graphics.TableView;
 
 namespace GameEngineTest.Graphics
 {
     [TestFixture]
     public class TableGridTest
     {
-        private const int ROWS = 5;
-        private const int COLUMNS = 5;
+        private const int Rows = 5;
+        private const int Columns = 5;
         private const float X = 10.0f;
         private const float Y = 5.0f;
-        private const float WIDTH = 200.0f;
-        private const float HEIGHT = 200.0f;
+        private const float Width = 200.0f;
+        private const float Height = 200.0f;
 
         [TestCase]
         public void Draw_BasicSetup_IsInContraints()
@@ -27,7 +27,7 @@ namespace GameEngineTest.Graphics
             grid.Draw();
 
             foreach (var component in components)
-                component.IsInConstraints(X, Y, WIDTH, HEIGHT);
+                component.IsInConstraints(X, Y, Width, Height);
 
         }
 
@@ -39,14 +39,14 @@ namespace GameEngineTest.Graphics
 
             grid.Draw();
 
-            for (int row = 0; row < grid.Rows; row++ )
+            for (var row = 0; row < grid.Rows; row++ )
                 ColumnsXAscending(components, row);
         }
 
         private void ColumnsXAscending(Table<SelectableGraphicComponentMock> components, int row)
         {
-            for (int column = 0; column < components.Columns - 1; column++)
-                Assert.LessOrEqual(components[row, column].XPosition, components[row, column + 1].XPosition);
+            for (var column = 0; column < components.Columns - 1; column++)
+                Assert.LessOrEqual(components[row, column].XPosition(), components[row, column + 1].XPosition());
         }
 
         [TestCase]
@@ -57,14 +57,14 @@ namespace GameEngineTest.Graphics
 
             grid.Draw();
 
-            for (int column = 0; column < grid.Columns; column++)
+            for (var column = 0; column < grid.Columns; column++)
                 RowsYAscending(components, column);
         }
 
         private void RowsYAscending(Table<SelectableGraphicComponentMock> components, int column)
         {
-            for (int row = 0; row < components.Rows - 1; row++)
-                Assert.LessOrEqual(components[row, column].YPosition, components[row + 1, column].YPosition);
+            for (var row = 0; row < components.Rows - 1; row++)
+                Assert.LessOrEqual(components[row, column].YPosition(), components[row + 1, column].YPosition());
         }
 
         [TestCase]
@@ -108,16 +108,11 @@ namespace GameEngineTest.Graphics
             grid.StartIndex = startIndex;
         }
 
-        private void ValidateComponentsDrawn(Table<SelectableGraphicComponentMock> components, TableIndex startIndex, TableIndex endIndex)
+        private static void ValidateComponentsDrawn(Table<SelectableGraphicComponentMock> components, TableIndex startIndex, TableIndex endIndex)
         {
             var drawnArea = components.CreateSubtable(startIndex, endIndex);
             foreach (var c in components)
                 Assert.AreEqual(drawnArea.Contains(c), c.WasDrawn);
-        }
-
-        private bool IsBetween(int test, int lowerLimit, int upperLimit)
-        {
-            return lowerLimit <= test && test < upperLimit;
         }
 
         public static List<TestCaseData> StartIndexTestData = new List<TestCaseData>
@@ -127,7 +122,7 @@ namespace GameEngineTest.Graphics
             new TestCaseData(new TableIndex(4, 1), 4, 4, new TableIndex(3, 1))
         };
 
-        [TestCaseSource("StartIndexTestData")]
+        [TestCaseSource(nameof(StartIndexTestData))]
         public void StartIndex_RowColumnResize_ShrinksIfNeeded(TableIndex startIndex, int newRows, int newColumns, TableIndex expectedStartIndex)
         {
             var grid = CreateDefaultGrid();
@@ -147,7 +142,7 @@ namespace GameEngineTest.Graphics
             new TestCaseData(new TableIndex(5, 1), 4, 4, new TableIndex(4, 1))
         };
 
-        [TestCaseSource("EndIndexTestData")]
+        [TestCaseSource(nameof(EndIndexTestData))]
         public void EndIndexIndex_RowColumnResize_ShrinksIfNeeded(TableIndex endIndex, int newRows, int newColumns, TableIndex expectedEndIndex)
         {
             var grid = CreateDefaultGrid();
@@ -163,8 +158,8 @@ namespace GameEngineTest.Graphics
         [TestCase]
         public void StartIndex_Default_0_0()
         {
-            TableIndex defaultStartIndex = new TableIndex(0, 0);
-            var grid = new TableGrid(ROWS, COLUMNS);
+            var defaultStartIndex = new TableIndex(0, 0);
+            var grid = new TableGrid(Rows, Columns);
 
             Assert.IsTrue(grid.StartIndex.HasValue);
             AssertIndicesAreEqual(defaultStartIndex, grid.StartIndex.Value);
@@ -173,8 +168,8 @@ namespace GameEngineTest.Graphics
         [TestCase]
         public void EndIndex_Default_0_0()
         {
-            TableIndex defaultEndIndex = new TableIndex(0, 0);
-            var grid = new TableGrid(ROWS, COLUMNS);
+            var defaultEndIndex = new TableIndex(0, 0);
+            var grid = new TableGrid(Rows, Columns);
 
             Assert.IsTrue(grid.EndIndex.HasValue);
             AssertIndicesAreEqual(defaultEndIndex, grid.EndIndex.Value);
@@ -183,7 +178,7 @@ namespace GameEngineTest.Graphics
         [TestCase]
         public void Draw_EndIndexNull_DrawAll()
         {
-            var grid = new TableGrid(ROWS, COLUMNS);
+            var grid = new TableGrid(Rows, Columns);
             var components = FillGrid(grid);
 
             grid.EndIndex = null;
@@ -200,7 +195,7 @@ namespace GameEngineTest.Graphics
             var grid = CreateDefaultGrid();
             var components = FillGrid(grid);
 
-            grid.StartIndex = new TableIndex(ROWS - 1, COLUMNS - 1);
+            grid.StartIndex = new TableIndex(Rows - 1, Columns - 1);
             grid.StartIndex = null;
 
             grid.Draw();
@@ -212,7 +207,7 @@ namespace GameEngineTest.Graphics
         [TestCase]
         public void Draw_ResetEndToNotNull_DrawNothing()
         {
-            var grid = new TableGrid(ROWS, COLUMNS);
+            var grid = new TableGrid(Rows, Columns);
             var components = FillGrid(grid);
 
             grid.EndIndex = null;
@@ -232,8 +227,8 @@ namespace GameEngineTest.Graphics
 
             grid.Draw();
 
-            for (int i = 0; i < grid.Columns; i++)
-                Assert.AreEqual(HEIGHT, components.EnumerateRows(i).Sum(o => o.Height));
+            for (var i = 0; i < grid.Columns; i++)
+                Assert.AreEqual(Height, components.EnumerateRows(i).Sum(o => o.Height()));
             
         }
 
@@ -245,8 +240,8 @@ namespace GameEngineTest.Graphics
 
             grid.Draw();
 
-            for (int i = 0; i < grid.Rows; i++)
-                Assert.AreEqual(WIDTH, components.EnumerateColumns(i).Sum(o => o.Width));
+            for (var i = 0; i < grid.Rows; i++)
+                Assert.AreEqual(Width, components.EnumerateColumns(i).Sum(o => o.Width()));
 
         }
 
@@ -257,7 +252,7 @@ namespace GameEngineTest.Graphics
             new TestCaseData(new TableIndex(4, 4), new TableIndex(3, 3))
         };
 
-        [TestCaseSource("InvalidIndexes")]
+        [TestCaseSource(nameof(InvalidIndexes))]
         public void SetIndexes_InvalidData_ThrowsException(TableIndex? startIndex, TableIndex? endIndex)
         {
             var grid = CreateDefaultGrid();
@@ -277,7 +272,7 @@ namespace GameEngineTest.Graphics
         private TableGrid CreateDefaultGrid()
         {
             var grid = CreateGrid();
-            grid.SetCoordinates(X, Y, WIDTH, HEIGHT);
+            grid.SetCoordinates(X, Y, Width, Height);
             return grid;
         }
 
@@ -285,9 +280,9 @@ namespace GameEngineTest.Graphics
         {
             var components = new Table<SelectableGraphicComponentMock>();
 
-            for (int row = 0; row < grid.Rows; row++)
+            for (var row = 0; row < grid.Rows; row++)
             {
-                for (int column = 0; column < grid.Columns; column++)
+                for (var column = 0; column < grid.Columns; column++)
                 {
                     var component = new SelectableGraphicComponentMock();
                     components[row, column] = component;
@@ -298,19 +293,16 @@ namespace GameEngineTest.Graphics
             return components;
         }
 
-        private TableGrid CreateGrid()
+        private static TableGrid CreateGrid(int rows = Rows, int columns = Columns)
         {
-            return CreateGrid(ROWS, COLUMNS);
-        }
+            var grid = new TableGrid
+            {
+                Rows = rows,
+                Columns = columns,
+                StartIndex = new TableIndex(0, 0),
+                EndIndex = new TableIndex(rows, columns)
+            };
 
-        private TableGrid CreateGrid(int rows, int columns)
-        {
-            var grid = new TableGrid();
-            grid.Rows = rows;
-            grid.Columns = columns;
-
-            grid.StartIndex = new TableIndex(0, 0);
-            grid.EndIndex = new TableIndex(rows, columns);
 
             return grid;
         }

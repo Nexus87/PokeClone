@@ -1,9 +1,9 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using GameEngine.GUI.Graphics.General;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using GameEngine.Graphics.General;
 
-namespace GameEngine.Graphics
+namespace GameEngine.GUI.Graphics
 {
     public class TextGraphic : IGraphicalText
     {

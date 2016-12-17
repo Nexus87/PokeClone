@@ -1,11 +1,11 @@
-﻿using GameEngine.Registry;
+﻿using System.Collections.Generic;
+using GameEngine.GUI.Graphics.General;
+using GameEngine.GUI.Graphics.Layouts;
+using GameEngine.Registry;
 using GameEngine.Utils;
 using Microsoft.Xna.Framework;
-using System.Collections.Generic;
-using GameEngine.Graphics.General;
-using GameEngine.Graphics.Layouts;
 
-namespace GameEngine.Graphics
+namespace GameEngine.GUI.Graphics
 {
     [GameType]
     public class Container : AbstractGraphicComponent

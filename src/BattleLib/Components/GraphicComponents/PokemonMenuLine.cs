@@ -1,10 +1,11 @@
 ﻿using Base;
 using GameEngine;
 using GameEngine.Graphics;
+using GameEngine.GUI.Graphics;
+using GameEngine.GUI.Graphics.General;
+using GameEngine.GUI.Graphics.Layouts;
 using GameEngine.Registry;
 using Microsoft.Xna.Framework;
-using GameEngine.Graphics.General;
-using GameEngine.Graphics.Layouts;
 
 namespace BattleLib.Components.GraphicComponents
 {
@@ -70,7 +71,7 @@ namespace BattleLib.Components.GraphicComponents
 
 
             hpLine.VerticalPolicy = ResizePolicy.Fixed;
-            hpLine.Height = 24;
+            hpLine.SetCoordinates(0, 0, 0, 24);
 
             hpLineContainer.AddComponent(hpLabel);
             hpLineContainer.AddComponent(hpLine);
@@ -98,7 +99,7 @@ namespace BattleLib.Components.GraphicComponents
         protected override void Update()
         {
             mainContainer.SetCoordinates(this);
-            icon.Width = icon.Height = mainContainer.Height;
+            icon.SetCoordinates(icon.Area.X, icon.Area.Y, mainContainer.Area.Height, mainContainer.Area.Height);
         }
     }
 }
