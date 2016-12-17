@@ -7,7 +7,7 @@ namespace GameEngineTest.Graphics
 {
     public abstract class ITableRendererTest
     {
-        private TestType data = new TestType("test");
+        private TestType _data = new TestType("test");
         protected abstract ITableRenderer<TestType> CreateRenderer();
 
         [TestCase]
@@ -16,9 +16,9 @@ namespace GameEngineTest.Graphics
             // Table renderer need to handle null as data
             var testRenderer = CreateRenderer();
 
-            data = null;
-            Assert.DoesNotThrow(delegate { testRenderer.GetComponent(0, 0, data, true); });
-            Assert.DoesNotThrow(delegate { testRenderer.GetComponent(0, 0, data, false); });
+            _data = null;
+            Assert.DoesNotThrow(delegate { testRenderer.GetComponent(0, 0, _data); });
+            Assert.DoesNotThrow(delegate { testRenderer.GetComponent(0, 0, _data); });
 
         }
         [TestCase]
@@ -26,30 +26,11 @@ namespace GameEngineTest.Graphics
         {
             var testRenderer = CreateRenderer();
 
-            data = null;
-            Assert.NotNull(testRenderer.GetComponent(0, 0, data, true));
-            Assert.NotNull(testRenderer.GetComponent(0, 0, data, false));
+            _data = null;
+            Assert.NotNull(testRenderer.GetComponent(0, 0, _data));
+            Assert.NotNull(testRenderer.GetComponent(0, 0, _data));
         }
 
-        [TestCase]
-        public void GetComponent_SelectionIsTrue_IsSelected()
-        {
-            var testRenderer = CreateRenderer();
-
-            var component = testRenderer.GetComponent(0, 0, data, true);
-
-            Assert.IsTrue(component.IsSelected);
-        }
-
-        [TestCase]
-        public void GetComponent_SelectionIsFalse_IsNotSelected()
-        {
-            var testRenderer = CreateRenderer();
-
-            var component = testRenderer.GetComponent(0, 0, data, false);
-
-            Assert.IsFalse(component.IsSelected);
-        }
 
         public static List<TestCaseData> InvalidIndexes = new List<TestCaseData>
         {
@@ -67,8 +48,8 @@ namespace GameEngineTest.Graphics
         {
             var testRenderer = CreateRenderer();
 
-            Assert.Throws(typeof(ArgumentOutOfRangeException), delegate { testRenderer.GetComponent(row, column, data, true); });
-            Assert.Throws(typeof(ArgumentOutOfRangeException), delegate { testRenderer.GetComponent(row, column, data, false); });
+            Assert.Throws(typeof(ArgumentOutOfRangeException), delegate { testRenderer.GetComponent(row, column, _data); });
+            Assert.Throws(typeof(ArgumentOutOfRangeException), delegate { testRenderer.GetComponent(row, column, _data); });
         }
     }
 }

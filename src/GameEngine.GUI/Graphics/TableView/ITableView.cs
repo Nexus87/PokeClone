@@ -59,5 +59,7 @@ namespace GameEngine.GUI.Graphics.TableView
         bool SetCellSelection(int row, int column, bool isSelected);
 
         ITableModel<T> Model { get; }
+
+        TableCellFactory<T> Factory { get; set; }
     }
 }

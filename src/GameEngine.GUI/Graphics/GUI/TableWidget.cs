@@ -3,6 +3,7 @@ using System.Diagnostics;
 using GameEngine.Globals;
 using GameEngine.GUI.Graphics.General;
 using GameEngine.GUI.Graphics.TableView;
+using GameEngine.Registry;
 using Microsoft.Xna.Framework;
 
 namespace GameEngine.GUI.Graphics.GUI
@@ -21,8 +22,17 @@ namespace GameEngine.GUI.Graphics.GUI
 
         private readonly ITableView<T> _tableView;
 
-        public TableWidget(int? visibleRows, int? visibleColumns, ITableModel<T> model, ITableRenderer<T> renderer, ITableSelectionModel selection) :
-            this(visibleRows, visibleColumns, new TableView<T>(model, renderer, selection)) { }
+        public TableCellFactory<T> TableCellFactory
+        {
+            get { return _tableView.Factory; }
+            set { _tableView.Factory = value; }
+        }
+
+        public TableWidget(int? visibleRows, int? visibleColumns, ITableModel<T> model, ITableSelectionModel selection,
+            IGameTypeRegistry registry) :
+            this(visibleRows, visibleColumns, new TableView<T>(model, selection, registry))
+        {
+        }
 
         public TableWidget(int? visibleRows, int? visibleColumns, ITableView<T> view)
         {
@@ -96,11 +106,14 @@ namespace GameEngine.GUI.Graphics.GUI
         /// <remarks>
         /// This property expects the StartIndex to be not null
         /// </remarks>
-        private TableIndex StartIndex { get
+        private TableIndex StartIndex
         {
-            Debug.Assert(_tableView.StartIndex != null, "_tableView.StartIndex != null");
-            return _tableView.StartIndex.Value;
-        } }
+            get
+            {
+                Debug.Assert(_tableView.StartIndex != null, "_tableView.StartIndex != null");
+                return _tableView.StartIndex.Value;
+            }
+        }
 
         /// <summary>
         /// This Method handles the Input. Pressing Select or Back key will

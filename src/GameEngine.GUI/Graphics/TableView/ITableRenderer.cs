@@ -20,8 +20,7 @@ namespace GameEngine.GUI.Graphics.TableView
         /// <param name="row">Row of the cell</param>
         /// <param name="column">Column of the cell</param>
         /// <param name="data">Data from the model</param>
-        /// <param name="isSelected">Cell selection</param>
         /// <returns></returns>
-        IGraphicComponent GetComponent(int row, int column, T data, bool isSelected);
+        IGraphicComponent GetComponent(int row, int column, T data);
     }
 }

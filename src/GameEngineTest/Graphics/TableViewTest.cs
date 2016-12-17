@@ -4,6 +4,7 @@ using System;
 using FakeItEasy;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Graphics.TableView;
+using GameEngine.Registry;
 
 namespace GameEngineTest.Graphics
 {
@@ -262,8 +263,11 @@ namespace GameEngineTest.Graphics
         {
             if (grid == null)
                 grid = new TableGrid();
-
-            var table = new TableView<object>(modelMock, renderer, selectionModelMock, grid);
+            var gameTypeRegistry = A.Fake<IGameTypeRegistry>();
+            var table = new TableView<object>(modelMock, selectionModelMock, gameTypeRegistry, grid)
+            {
+                Factory = renderer.GetComponent
+            };
             table.SetCoordinates(0, 0, 500, 500);
             return table;
         }
@@ -279,7 +283,8 @@ namespace GameEngineTest.Graphics
             var modelMock = A.Fake<ITableModel<object>>();
             var selectionModelMock = A.Fake<ITableSelectionModel>();
             var renderer = new TableRendererMock<object>();
-            var table = new TableView<object>(modelMock, renderer, selectionModelMock);
+            var gameTypeRegistry = A.Fake<IGameTypeRegistry>();
+            var table = new TableView<object>(modelMock, selectionModelMock, gameTypeRegistry){Factory = renderer.GetComponent};
             table.Setup();
             return table;
         }

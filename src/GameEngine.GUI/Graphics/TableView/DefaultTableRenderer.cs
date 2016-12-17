@@ -6,7 +6,7 @@ namespace GameEngine.GUI.Graphics.TableView
     [GameType]
     public class DefaultTableRenderer<T> : ITableRenderer<T>
     {
-        private readonly Table<ISelectableTextComponent> boxes = new Table<ISelectableTextComponent>();
+        private readonly Table<ISelectableTextComponent> _boxes = new Table<ISelectableTextComponent>();
 
         public string DefaultString { get; set; }
 
@@ -17,30 +17,25 @@ namespace GameEngine.GUI.Graphics.TableView
             DefaultString = "";
         }
 
-        public IGraphicComponent GetComponent(int row, int column, T data, bool isSelected)
+        public IGraphicComponent GetComponent(int row, int column, T data)
         {
             CreateComponent(row, column);
 
-            var ret = boxes[row, column];
+            var ret = _boxes[row, column];
             ret.Text = data == null ? DefaultString : data.ToString();
             
-            if (isSelected)
-                ret.Select();
-            else
-                ret.Unselect();
-
             return ret;
         }
 
 
         private void CreateComponent(int row, int column)
         {
-            if (boxes[row, column] != null)
+            if (_boxes[row, column] != null)
                 return;
 
             var box = CreateComponent();
             box.Setup();
-            boxes[row, column] = box;
+            _boxes[row, column] = box;
         }
 
         protected virtual ISelectableTextComponent CreateComponent()

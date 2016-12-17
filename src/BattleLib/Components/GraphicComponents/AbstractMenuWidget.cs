@@ -1,9 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using GameEngine.Globals;
+using GameEngine.GUI.Controlls;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Graphics.General;
 using GameEngine.GUI.Graphics.GUI;
+using GameEngine.Registry;
 
 namespace BattleLib.Components.GraphicComponents
 {
@@ -24,14 +26,26 @@ namespace BattleLib.Components.GraphicComponents
             remove { TableWidget.ItemSelected -= value; }
         }
 
-        public AbstractMenuWidget(TableWidget<T> widget)
+        public AbstractMenuWidget(TableWidget<T> widget, IGameTypeRegistry registry)
         {
             SetComponents(widget, widget);
+            widget.TableCellFactory = (i, j, data) =>
+            {
+                var button = registry.ResolveType<Button>();
+                button.Text = data?.ToString() ?? "--------";
+                return button;
+            };
         }
-        public AbstractMenuWidget(TableWidget<T> widget, Dialog border)
+        public AbstractMenuWidget(TableWidget<T> widget, Dialog border, IGameTypeRegistry registry)
         {
             border.AddWidget(widget);
             SetComponents(widget, border);
+            widget.TableCellFactory = (i, j, data) =>
+            {
+                var button = registry.ResolveType<Button>();
+                button.Text = data?.ToString() ?? "--------";
+                return button;
+            };
         }
 
         private void SetComponents(TableWidget<T> widget, IWidget border)

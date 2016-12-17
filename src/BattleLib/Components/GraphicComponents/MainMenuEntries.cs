@@ -3,7 +3,7 @@
     public enum MainMenuEntries
     {
         Attack,
-        PKMN,
+        Pkmn,
         Item,
         Run
     }

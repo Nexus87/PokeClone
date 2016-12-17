@@ -8,24 +8,20 @@ namespace GameEngineTest.TestUtils
     public class TableRendererMock<T> : ITableRenderer<T>
     {
         public T[,] Entries = new T[0, 0];
-        public bool[,] Selections = new bool[0,0];
         public TableComponentMock<T>[,] Components = new TableComponentMock<T>[0,0];
 
-        public IGraphicComponent GetComponent(int row, int column, T data, bool isSelected)
+        public IGraphicComponent GetComponent(int row, int column, T data)
         {
             Entries = Resize(row, column, Entries);
-            Selections = Resize(row, column, Selections);
             Components = Resize(row, column, Components);
 
             Entries[row, column] = data;
-            Selections[row, column] = isSelected;
 
             if (Components[row, column] == null)
                 Components[row, column] = new TableComponentMock<T> { Row = row, Column = column, WasDrawn = false };
 
             var component = Components[row, column];
             component.Data = data;
-            component.IsSelected = isSelected;
 
             return component;
         }
@@ -58,7 +54,6 @@ namespace GameEngineTest.TestUtils
         public void Reset()
         {
             Entries = new T[0, 0];
-            Selections = new bool[0, 0];
             Components = new TableComponentMock<T>[0, 0];
         }
     }

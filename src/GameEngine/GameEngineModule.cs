@@ -4,6 +4,8 @@ using GameEngine.GameEngineComponents;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Graphics.GUI;
 using GameEngine.GUI.Graphics.TableView;
+using GameEngine.GUI.Renderers;
+using GameEngine.GUI.Renderers.PokemonClassicRenderer;
 using GameEngine.Registry;
 using GameEngine.Utils;
 using Microsoft.Xna.Framework.Content;
@@ -39,6 +41,7 @@ namespace GameEngine
             registry.ScanAssembly(Assembly.GetExecutingAssembly());
             registry.ScanAssembly(Assembly.GetAssembly(typeof(Line)));
             registry.ScanAssembly(Assembly.GetAssembly(typeof(IGameTypeRegistry)));
+            registry.RegisterAsService<ClassicButtonRenderer, IButtonRenderer>(r => new ClassicButtonRenderer(_resources.DefaultArrowTexture, _resources.DefaultFont));
         }
 
         public string ModuleName => "GameEngine";

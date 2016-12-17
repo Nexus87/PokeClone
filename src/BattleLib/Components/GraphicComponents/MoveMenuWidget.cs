@@ -8,8 +8,10 @@ namespace BattleLib.Components.GraphicComponents
     public class MoveMenuWidget : AbstractMenuWidget<Move>
     {
 
-        public MoveMenuWidget(MoveModel model, AttackTableRenderer renderer, MoveTableSelectionModel selectionModel, Dialog dialog) :
-            base(new TableWidget<Move>(null, null, model, renderer, selectionModel), dialog)
-        { }
+        public MoveMenuWidget(MoveModel model, MoveTableSelectionModel selectionModel,
+            Dialog dialog, IGameTypeRegistry registry) :
+            base(new TableWidget<Move>(null, null, model, selectionModel, registry), dialog, registry)
+        {
+        }
     }
 }

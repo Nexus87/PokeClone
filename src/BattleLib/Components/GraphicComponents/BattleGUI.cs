@@ -191,7 +191,7 @@ namespace BattleLib.Components.GraphicComponents
                     _moveWidget.IsVisible = true;
                     break;
 
-                case MainMenuEntries.PKMN:
+                case MainMenuEntries.Pkmn:
                     MainWidget.IsVisible = false;
                     _pokemonWidget.IsVisible = true;
                     break;

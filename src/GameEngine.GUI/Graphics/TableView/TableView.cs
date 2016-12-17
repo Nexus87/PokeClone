@@ -7,33 +7,52 @@ using Microsoft.Xna.Framework;
 
 namespace GameEngine.GUI.Graphics.TableView
 {
+    public delegate IGraphicComponent TableCellFactory<in T>(int row, int column, T value);
+
     [GameType]
     public class TableView<T> : AbstractGraphicComponent, ITableView<T>
     {
-        private readonly ITableModel<T> model;
-        private readonly ITableRenderer<T> renderer;
-        private readonly ITableSelectionModel selectionModel;
-        private readonly ITableGrid tableGrid;
+        public TableCellFactory<T> Factory
+        {
+            get { return _factory; }
+            set
+            {
+                if (_factory == value)
+                    return;
+                _factory = value;
+                Invalidate();
+            }
+        }
 
-        public TableView(ITableModel<T> model, ITableRenderer<T> renderer, ITableSelectionModel selectionModel)
-            : this(model, renderer, selectionModel, new TableGrid())
-        {}
+        private readonly ITableSelectionModel _selectionModel;
+        private readonly ITableGrid _tableGrid;
+        private TableCellFactory<T> _factory;
+
+        public TableView(ITableModel<T> model, ITableSelectionModel selectionModel, IGameTypeRegistry registry)
+            : this(model, selectionModel, registry, new TableGrid())
+        {
+        }
 
         //grid argument is for testing purpose
-        public TableView(ITableModel<T> model, ITableRenderer<T> renderer, ITableSelectionModel selectionModel, ITableGrid grid)
+        public TableView(ITableModel<T> model, ITableSelectionModel selectionModel, IGameTypeRegistry registry, ITableGrid grid)
         {
-            renderer.CheckNull("renderer");
-            model.CheckNull("model");
-            selectionModel.CheckNull("selectionModel");
+            model.CheckNull(nameof(model));
+            selectionModel.CheckNull(nameof(selectionModel));
 
-            tableGrid = grid;
-            tableGrid.StartIndex = null;
-            tableGrid.EndIndex = null;
+            _tableGrid = grid;
+            _tableGrid.StartIndex = null;
+            _tableGrid.EndIndex = null;
 
-            this.renderer = renderer;
-            this.model = model;
-            this.selectionModel = selectionModel;
-            
+            Factory = (row, column, data) =>
+            {
+                var component = registry.ResolveType<TextBox>();
+                component.Text = data.ToString();
+                return component;
+            };
+
+            Model = model;
+            _selectionModel = selectionModel;
+
             // We need to handle the SizeChanged event right from the start so that
             // we can keep tableGrid's Rows and Columns properties up to date.
             // Otherwise it can't do the validity checks for Start- and EndIndex.
@@ -47,38 +66,39 @@ namespace GameEngine.GUI.Graphics.TableView
 
         public event EventHandler<SelectionChangedEventArgs> SelectionChanged
         {
-            add { selectionModel.SelectionChanged += value; }
-            remove { selectionModel.SelectionChanged -= value; }
+            add { _selectionModel.SelectionChanged += value; }
+            remove { _selectionModel.SelectionChanged -= value; }
         }
 
-        public int Columns { get { return model.Columns; } }
-        public int Rows { get { return model.Rows; } }
+        public int Columns => Model.Columns;
+        public int Rows => Model.Rows;
 
-        public ITableModel<T> Model { get { return model; } }
+        public ITableModel<T> Model { get; }
+
         public TableIndex? EndIndex
         {
-            get { return tableGrid.EndIndex; }
-            set { tableGrid.EndIndex = value; }
+            get { return _tableGrid.EndIndex; }
+            set { _tableGrid.EndIndex = value; }
         }
 
         public TableIndex? StartIndex
         {
-            get { return tableGrid.StartIndex; }
-            set { tableGrid.StartIndex = value; }
+            get { return _tableGrid.StartIndex; }
+            set { _tableGrid.StartIndex = value; }
         }
 
         private void CellIsInBound(int row, int column)
         {
             if (row < 0 || row >= Rows)
-                throw new ArgumentOutOfRangeException("row", "value is: " + row);
+                throw new ArgumentOutOfRangeException(nameof(row), "value is: " + row);
             if (column < 0 || column >= Columns)
-                throw new ArgumentOutOfRangeException("column", "value is: " + column);
+                throw new ArgumentOutOfRangeException(nameof(column), "value is: " + column);
         }
 
         private void ModelSizeChanged()
         {
-            tableGrid.Rows = model.Rows;
-            tableGrid.Columns = model.Columns;
+            _tableGrid.Rows = Model.Rows;
+            _tableGrid.Columns = Model.Columns;
             Invalidate();
         }
 
@@ -87,9 +107,9 @@ namespace GameEngine.GUI.Graphics.TableView
             CellIsInBound(row, column);
 
             if (isSelected)
-                return selectionModel.SelectIndex(row, column);
+                return _selectionModel.SelectIndex(row, column);
             else
-                return selectionModel.UnselectIndex(row, column);
+                return _selectionModel.UnselectIndex(row, column);
         }
 
         public override void Setup()
@@ -97,33 +117,33 @@ namespace GameEngine.GUI.Graphics.TableView
             ModelSizeChanged();
             FillTableGrid();
 
-            model.DataChanged += DataChangedHandler;
-            selectionModel.SelectionChanged += SelectionChangedHandler;
+            Model.DataChanged += DataChangedHandler;
+            _selectionModel.SelectionChanged += SelectionChangedHandler;
         }
 
         private void FillTableGrid()
         {
-            for (int i = 0; i < Rows; i++)
+            for (var i = 0; i < Rows; i++)
             {
-                for (int j = 0; j < Columns; j++)
-                    tableGrid.SetComponentAt(i, j, GetComponent(i, j));
+                for (var j = 0; j < Columns; j++)
+                    _tableGrid.SetComponentAt(i, j, GetComponent(i, j));
             }
         }
 
         protected override void Update()
         {
-            tableGrid.SetCoordinates(Area.X, Area.Y, Area.Width, Area.Height);
+            _tableGrid.SetCoordinates(Area.X, Area.Y, Area.Width, Area.Height);
             FillTableGrid();
         }
 
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)
         {
-            tableGrid.Draw(time, batch);
+            _tableGrid.Draw(time, batch);
         }
 
         private void SelectionChangedHandler(object sender, SelectionChangedEventArgs e)
         {
-            var component = tableGrid.GetComponentAt(e.Row, e.Column);
+            var component = _tableGrid.GetComponentAt(e.Row, e.Column);
             Debug.Assert(component != null);
             SetComponentSelection(component, e.IsSelected);
         }
@@ -135,7 +155,7 @@ namespace GameEngine.GUI.Graphics.TableView
 
         private void DataChangedHandler(object sender, DataChangedEventArgs<T> e)
         {
-            tableGrid.SetComponentAt(e.Row, e.Column, GetComponent(e.Row, e.Column, e.NewData));
+            _tableGrid.SetComponentAt(e.Row, e.Column, GetComponent(e.Row, e.Column, e.NewData));
         }
 
         private void SizeChangedHandler(object sender, TableResizeEventArgs e)
@@ -146,14 +166,16 @@ namespace GameEngine.GUI.Graphics.TableView
 
         private IGraphicComponent GetComponent(int row, int column)
         {
-            var data = model.DataAt(row, column);
+            var data = Model.DataAt(row, column);
             return GetComponent(row, column, data);
         }
 
         private IGraphicComponent GetComponent(int row, int column, T data)
         {
-            var isSelected = selectionModel.IsSelected(row, column);
-            return renderer.GetComponent(row, column, data, isSelected);
+            var isSelected = _selectionModel.IsSelected(row, column);
+            var component = Factory(row, column, data);
+            component.IsSelected = isSelected;
+            return component;
         }
     }
 }

@@ -3,11 +3,13 @@ using GameEngine.Globals;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Graphics.General;
 using GameEngine.GUI.Renderers;
+using GameEngine.Registry;
 using GameEngine.Utils;
 using Microsoft.Xna.Framework;
 
 namespace GameEngine.GUI.Controlls
 {
+    [GameType]
     public sealed class Button : AbstractGraphicComponent
     {
         private readonly IButtonRenderer _buttonRenderer;
@@ -22,7 +24,7 @@ namespace GameEngine.GUI.Controlls
                 if (value == null) throw new ArgumentNullException(nameof(value));
                 if(_text == value) return;
                 _text = value;
-                UpdatePreferredSize();
+                Invalidate();
             }
         }
 
@@ -33,12 +35,13 @@ namespace GameEngine.GUI.Controlls
             {
                 if(value.AlmostEqual(_textHeight)) return;
                 _textHeight = value;
-                UpdatePreferredSize();
+                Invalidate();
             }
         }
 
         public Button(IButtonRenderer buttonRenderer)
         {
+            TextHeight = 32;
             _buttonRenderer = buttonRenderer;
         }
 
@@ -61,9 +64,9 @@ namespace GameEngine.GUI.Controlls
             _buttonRenderer.Render(batch, this);
         }
 
-        public override void Setup()
+        protected override void Update()
         {
-            base.Setup();
+            base.Update();
             UpdatePreferredSize();
         }
 

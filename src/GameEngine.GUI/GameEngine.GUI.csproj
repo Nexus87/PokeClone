@@ -77,7 +77,6 @@
     <Compile Include="Graphics\GraphicComponentSizeChangedEventArgs.cs" />
     <Compile Include="Graphics\GraphicResources.cs" />
     <Compile Include="Graphics\GUI\AbstractWidget.cs" />
-    <Compile Include="Graphics\GUI\Button.cs" />
     <Compile Include="Graphics\GUI\Dialog.cs" />
     <Compile Include="Graphics\GUI\IWidget.cs" />
     <Compile Include="Graphics\GUI\MessageBox.cs" />

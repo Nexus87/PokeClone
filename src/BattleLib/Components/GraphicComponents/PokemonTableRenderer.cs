@@ -17,7 +17,7 @@ namespace BattleLib.Components.GraphicComponents
             _registry = registry;
         }
 
-        public IGraphicComponent GetComponent(int row, int column, Pokemon data, bool isSelected)
+        public IGraphicComponent GetComponent(int row, int column, Pokemon data)
         {
             var component = _components[row, column];
             if (component == null)
@@ -29,11 +29,6 @@ namespace BattleLib.Components.GraphicComponents
             }
 
             component.Content.SetPokemon(data);
-
-            if (isSelected)
-                component.Select();
-            else
-                component.Unselect();
 
             return component;
         }

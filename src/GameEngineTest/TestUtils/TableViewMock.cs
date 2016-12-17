@@ -114,6 +114,7 @@ namespace GameEngineTest.TestUtils
         }
 
         public virtual ITableModel<TestType> Model { get; set; }
+        public TableCellFactory<TestType> Factory { get; set; }
 
         public IEngineInterface Game
         {

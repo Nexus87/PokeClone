@@ -9,9 +9,9 @@ namespace GameEngine.GUI.Graphics
     [GameType]
     public class TextBox : AbstractGraphicComponent, ITextGraphicComponent
     {
-        private string text = "";
-        private readonly IGraphicalText textGraphic;
-        private float preferredTextSize;
+        private string _text = "";
+        private readonly IGraphicalText _textGraphic;
+        private float _preferredTextSize;
 
         public TextBox(ISpriteFont font)
             : this(new TextGraphic(font))
@@ -19,22 +19,22 @@ namespace GameEngine.GUI.Graphics
 
         public TextBox(IGraphicalText textGraphic)
         {
-            this.textGraphic = textGraphic;
+            _textGraphic = textGraphic;
             PreferredTextHeight = textGraphic.CharHeight;
         }
 
         public float PreferredTextHeight
         { 
-            get { return preferredTextSize; } 
+            get { return _preferredTextSize; }
             set 
             {
                 if (value < 0)
                     throw new ArgumentException("PreferredTextSize must be >= 0");
 
-                if (preferredTextSize.AlmostEqual(value))
+                if (_preferredTextSize.AlmostEqual(value))
                     return;
 
-                preferredTextSize = value;
+                _preferredTextSize = value;
                 Invalidate();
             } 
         }
@@ -42,25 +42,25 @@ namespace GameEngine.GUI.Graphics
         private void SetPreferredSize()
         {
             PreferredHeight = PreferredTextHeight;
-            PreferredWidth = textGraphic.GetSingleCharWidth(PreferredTextHeight) * text.Length;
+            PreferredWidth = _textGraphic.GetSingleCharWidth(PreferredTextHeight) * _text.Length;
         }
 
         public string Text { 
             get
             {
-                return text;
+                return _text;
             }
             set {
-                text = value;
+                _text = value;
                 Invalidate();
             }
         }
-        public float RealTextHeight { get { return preferredTextSize <= Area.Height ? preferredTextSize : Area.Height; } }
-        
+        public float RealTextHeight => _preferredTextSize <= Area.Height ? _preferredTextSize : Area.Height;
+
         public int DisplayableChars()
         {
-            textGraphic.CharHeight = RealTextHeight;
-            var charWidth = textGraphic.GetSingleCharWidth();
+            _textGraphic.CharHeight = RealTextHeight;
+            var charWidth = _textGraphic.GetSingleCharWidth();
             if (charWidth.CompareTo(0) == 0)
                 return 0;
 
@@ -70,33 +70,33 @@ namespace GameEngine.GUI.Graphics
 
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)
         {
-            textGraphic.Draw(batch);
+            _textGraphic.Draw(batch);
         }
 
         public override void Setup()
         {
-            textGraphic.Setup();
+            _textGraphic.Setup();
         }
 
         protected override void Update()
         {
             SetPreferredSize();
-            textGraphic.XPosition = Area.X;
-            textGraphic.YPosition = Area.Y;
-            textGraphic.CharHeight = RealTextHeight;
+            _textGraphic.XPosition = Area.X;
+            _textGraphic.YPosition = Area.Y;
+            _textGraphic.CharHeight = RealTextHeight;
 
-            var length = textGraphic.CalculateTextLength(" ");
+            var length = _textGraphic.CalculateTextLength(" ");
             if (length.CompareTo(0) == 0)
             {
-                textGraphic.Text = "";
+                _textGraphic.Text = "";
                 return;
             }
 
             var cnt = (int)Math.Floor(Area.Width / length);
-            textGraphic.Text = text.Substring(0, Math.Min(text.Length, cnt));
+            _textGraphic.Text = _text.Substring(0, Math.Min(_text.Length, cnt));
         }
 
 
-        public ISpriteFont SpriteFont { get { return textGraphic.SpriteFont; } set { textGraphic.SpriteFont = value; } }
+        public ISpriteFont SpriteFont { get { return _textGraphic.SpriteFont; } set { _textGraphic.SpriteFont = value; } }
     }
 }

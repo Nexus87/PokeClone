@@ -8,12 +8,12 @@ namespace BattleLib.Components.GraphicComponents
     [GameType]
     public class ItemMenuWidget : AbstractMenuWidget<Item>
     {
-        public ItemMenuWidget(TableView<Item> tableView, Dialog dialog) :
-            base(new TableWidget<Item>(8, null, tableView), dialog)
+        public ItemMenuWidget(TableView<Item> tableView, Dialog dialog, IGameTypeRegistry registry) :
+            base(new TableWidget<Item>(8, null, tableView), dialog, registry)
         {
             //TODO use ItemModel instead
             var model = TableWidget.Model;
-            for (int i = 0; i < 20; i++)
+            for (var i = 0; i < 20; i++)
                 model.SetDataAt(new Item { Name = "Item" + i }, i, 0);
         }
     }

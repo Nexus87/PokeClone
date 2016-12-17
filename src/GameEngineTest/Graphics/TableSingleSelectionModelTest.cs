@@ -30,7 +30,7 @@ namespace GameEngineTest.Graphics
         public void GetComponent_WithSpecificData_StringIsGivenToComponent(TestType data, string expectedString)
         {
             var renderer = CreateTestRenderer();
-            var component = renderer.GetComponent(0, 0, data, false);
+            var component = renderer.GetComponent(0, 0, data);
 
             Assert.IsInstanceOf<ISelectableTextComponent>(component);
 
@@ -50,7 +50,7 @@ namespace GameEngineTest.Graphics
             var renderer = CreateTestRenderer();
             var data = new TestType("test");
 
-            var component = renderer.GetComponent(row, column, data, false);
+            var component = renderer.GetComponent(row, column, data);
 
             Assert.NotNull(component);
         }
