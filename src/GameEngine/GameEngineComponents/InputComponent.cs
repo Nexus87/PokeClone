@@ -26,7 +26,7 @@ namespace GameEngine.GameEngineComponents
             foreach (var entry in keyMap)
             {
                 if (HasKeyChangedToDown(entry.Key))
-                    Handler.HandleInput(entry.Value);
+                    Handler.HandleKeyInput(entry.Value);
             }
 
         }

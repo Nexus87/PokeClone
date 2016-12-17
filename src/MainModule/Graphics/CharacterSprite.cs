@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using GameEngine.Graphics;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Graphics.General;
 using Microsoft.Xna.Framework;
@@ -9,39 +8,39 @@ namespace MainModule.Graphics
 {
     public class CharacterSprite : AbstractGraphicComponent, ICharacterSprite
     {
-        private IGraphicComponent currentDirection;
-        private readonly Dictionary<Direction, IGraphicComponent> directionDictionary = new Dictionary<Direction, IGraphicComponent>();
+        private IGraphicComponent _currentDirection;
+        private readonly Dictionary<Direction, IGraphicComponent> _directionDictionary = new Dictionary<Direction, IGraphicComponent>();
 
         public CharacterSprite(IGraphicComponent lookingLeft, IGraphicComponent lookingRight, IGraphicComponent lookingUp, IGraphicComponent lookingDown)
         {
-            if (lookingLeft == null) throw new ArgumentNullException("lookingLeft");
-            if (lookingRight == null) throw new ArgumentNullException("lookingRight");
-            if (lookingUp == null) throw new ArgumentNullException("lookingUp");
-            if (lookingDown == null) throw new ArgumentNullException("lookingDown");
+            if (lookingLeft == null) throw new ArgumentNullException(nameof(lookingLeft));
+            if (lookingRight == null) throw new ArgumentNullException(nameof(lookingRight));
+            if (lookingUp == null) throw new ArgumentNullException(nameof(lookingUp));
+            if (lookingDown == null) throw new ArgumentNullException(nameof(lookingDown));
 
-            directionDictionary[Direction.Down] = lookingDown;
-            directionDictionary[Direction.Left] = lookingLeft;
-            directionDictionary[Direction.Right] = lookingRight;
-            directionDictionary[Direction.Up] = lookingUp;
+            _directionDictionary[Direction.Down] = lookingDown;
+            _directionDictionary[Direction.Left] = lookingLeft;
+            _directionDictionary[Direction.Right] = lookingRight;
+            _directionDictionary[Direction.Up] = lookingUp;
 
-            currentDirection = lookingDown;
+            _currentDirection = lookingDown;
         }
 
         protected override void Update()
         {
             base.Update();
-            foreach (var component in directionDictionary.Values)
+            foreach (var component in _directionDictionary.Values)
                 component.SetCoordinates(this);
         }
 
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)
         {
-            currentDirection.Draw(time, batch);
+            _currentDirection.Draw(time, batch);
         }
 
         public override void Setup()
         {
-            foreach (var component in directionDictionary.Values)
+            foreach (var component in _directionDictionary.Values)
             {
                 component.Setup();
             }
@@ -49,7 +48,7 @@ namespace MainModule.Graphics
 
         public void TurnToDirection(Direction direction)
         {
-            currentDirection = directionDictionary[direction];
+            _currentDirection = _directionDictionary[direction];
         }
     }
 }

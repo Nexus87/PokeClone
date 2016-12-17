@@ -1,5 +1,4 @@
-﻿using GameEngine.Graphics;
-using GameEngine.GUI.Graphics;
+﻿using GameEngine.GUI.Graphics;
 using GameEngineTest.TestUtils;
 using NUnit.Framework;
 
@@ -92,18 +91,9 @@ namespace GameEngineTest.Graphics
             
         }
 
-        private SelectableContainer<GraphicComponentMock> CreateContainer(GraphicComponentMock arrowMock) 
+        private static SelectableContainer<GraphicComponentMock> CreateContainer(IGraphicComponent arrowMock, GraphicComponentMock contentMock = null)
         {
-            return CreateContainer(arrowMock, null);
-        }
-        private SelectableContainer<GraphicComponentMock> CreateContainer(GraphicComponentMock arrowMock, GraphicComponentMock contentMock)
-        {
-            SelectableContainer<GraphicComponentMock> container;
-            if (contentMock != null)
-                container = new SelectableContainer<GraphicComponentMock>(arrowMock, contentMock);
-            else
-                container = new SelectableContainer<GraphicComponentMock>(arrowMock);
-
+            var container = new SelectableContainer<GraphicComponentMock>(arrowMock, contentMock);
             container.SetCoordinates(10, 10, 100, 100);
             container.Setup();
             return container;

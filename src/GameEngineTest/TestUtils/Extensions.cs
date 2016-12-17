@@ -1,7 +1,7 @@
-﻿using GameEngine.Graphics.GUI;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using NUnit.Framework;
 using System;
+using GameEngine;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Graphics.General;
 
@@ -9,7 +9,7 @@ namespace GameEngineTest.TestUtils
 {
     public static class Extensions
     {
-        public static void Draw(this GUIManager manager)
+        public static void Draw(this GuiManager manager)
         {
             manager.Draw(new GameTime(), new SpriteBatchMock());
         }

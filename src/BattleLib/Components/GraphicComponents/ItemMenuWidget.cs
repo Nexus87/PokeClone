@@ -12,7 +12,7 @@ namespace BattleLib.Components.GraphicComponents
             base(new TableWidget<Item>(8, null, tableView), dialog)
         {
             //TODO use ItemModel instead
-            var model = tableWidget.Model;
+            var model = TableWidget.Model;
             for (int i = 0; i < 20; i++)
                 model.SetDataAt(new Item { Name = "Item" + i }, i, 0);
         }

@@ -1,7 +1,4 @@
-﻿using GameEngine;
-using GameEngine.Graphics;
-using GameEngine.Graphics.GUI;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using System;
 using GameEngine.Globals;
 using GameEngine.GUI.Graphics;
@@ -12,19 +9,19 @@ namespace BattleLib.Components.GraphicComponents
 {
     public class AbstractMenuWidget<T> : AbstractGraphicComponent, IMenuWidget<T>
     {
-        protected TableWidget<T> tableWidget;
-        protected IWidget borderWidget;
+        protected TableWidget<T> TableWidget;
+        protected IWidget BorderWidget;
 
         public event EventHandler ExitRequested
         {
-            add { tableWidget.ExitRequested += value; }
-            remove { tableWidget.ExitRequested -= value; }
+            add { TableWidget.ExitRequested += value; }
+            remove { TableWidget.ExitRequested -= value; }
         }
 
         public event EventHandler<SelectionEventArgs<T>> ItemSelected
         {
-            add { tableWidget.ItemSelected += value; }
-            remove { tableWidget.ItemSelected -= value; }
+            add { TableWidget.ItemSelected += value; }
+            remove { TableWidget.ItemSelected -= value; }
         }
 
         public AbstractMenuWidget(TableWidget<T> widget)
@@ -39,33 +36,33 @@ namespace BattleLib.Components.GraphicComponents
 
         private void SetComponents(TableWidget<T> widget, IWidget border)
         {
-            tableWidget = widget;
-            borderWidget = border;
+            TableWidget = widget;
+            BorderWidget = border;
         }
 
         public void ResetSelection()
         {
-            tableWidget.SelectCell(0, 0);
+            TableWidget.SelectCell(0, 0);
         }
 
-        public bool HandleInput(CommandKeys key)
+        public override void HandleKeyInput(CommandKeys key)
         {
-            return tableWidget.HandleInput(key);
+            TableWidget.HandleKeyInput(key);
         }
 
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)
         {
-            borderWidget.Draw(time, batch);
+            BorderWidget.Draw(time, batch);
         }
 
         public override void Setup()
         {
-            borderWidget.Setup();
+            BorderWidget.Setup();
         }
 
         protected override void Update()
         {
-            borderWidget.SetCoordinates(this);
+            BorderWidget.SetCoordinates(this);
         }
     }
 }

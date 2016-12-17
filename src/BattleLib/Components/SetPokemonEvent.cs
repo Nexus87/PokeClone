@@ -22,13 +22,13 @@ namespace BattleLib.Components
 
         private void PokemonSetHandler(object sender, EventArgs e)
         {
-            graphic.OnPokemonSet -= PokemonSetHandler;
+            graphic.PokemonSet -= PokemonSetHandler;
             EventProcessed(this, null);
         }
 
         public void Dispatch()
         {
-            graphic.OnPokemonSet += PokemonSetHandler;
+            graphic.PokemonSet += PokemonSetHandler;
             graphic.SetPokemon(id, pokemon);
         }
     }

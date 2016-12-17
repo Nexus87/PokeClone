@@ -32,10 +32,9 @@ namespace GameEngine.GUI.Graphics.GUI
             _widget.Setup();
         }
 
-        public bool HandleInput(CommandKeys key)
+        public override void HandleKeyInput(CommandKeys key)
         {
             _widget.HandleKeyInput(key);
-            return true;
         }
 
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)

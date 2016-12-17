@@ -18,7 +18,7 @@ namespace BattleLib.Components.GraphicComponents
         {
         }
 
-        public PokemonDataView(HpLine line, TextBox nameBox, TextBox levelBox, TextBox hpBox, HPText hpTextBox)
+        public PokemonDataView(HpLine line, TextBox nameBox, TextBox levelBox, TextBox hpBox, HpText hpTextBox)
             : base(new Grid())
         {
             var container = InnerComponent;
@@ -88,7 +88,7 @@ namespace BattleLib.Components.GraphicComponents
         }
 
         private readonly HpLine _hpLine;
-        private readonly HPText _hpText;
+        private readonly HpText _hpText;
         private readonly TextBox _name;
         private readonly TextBox _lvl;
 
@@ -119,14 +119,14 @@ namespace BattleLib.Components.GraphicComponents
         {
             private readonly int _targetHp;
             private readonly HpLine _line;
-            private readonly HPText _text;
+            private readonly HpText _text;
 
             private int _currentHp;
             private readonly Func<int, int> _nextInt;
 
             public event EventHandler AnimationFinished;
 
-            public SetHpAnimation(int targetHp, HpLine line, HPText text)
+            public SetHpAnimation(int targetHp, HpLine line, HpText text)
             {
                 _targetHp = targetHp;
                 _line = line;
@@ -148,7 +148,7 @@ namespace BattleLib.Components.GraphicComponents
                 }
                 _currentHp = _nextInt(_currentHp);
                 _line.Current = _currentHp;
-                _text?.SetHP(_line.Current);
+                _text?.SetHp(_line.Current);
             }
         }
     }

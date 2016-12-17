@@ -1,5 +1,4 @@
-﻿using GameEngine.Graphics;
-using GameEngineTest.TestUtils;
+﻿using GameEngineTest.TestUtils;
 using NUnit.Framework;
 using System;
 using FakeItEasy;
@@ -151,7 +150,7 @@ namespace GameEngineTest.Graphics
             modelStub.DataChanged += Raise.With(modelStub, eventArgs);
             table.Draw();
 
-            var changedComponent = tableRendererMock.components[row, column];
+            var changedComponent = tableRendererMock.Components[row, column];
             Assert.AreEqual(newData, changedComponent.Data);
         }
 
@@ -173,7 +172,7 @@ namespace GameEngineTest.Graphics
             selectionModelStub.SelectionChanged += Raise.With(selectionModelStub, eventArgs);
             table.Draw();
 
-            var changedComponent = tableRendererMock.components[row, column];
+            var changedComponent = tableRendererMock.Components[row, column];
             Assert.True(changedComponent.IsSelected);
         }
 
@@ -196,7 +195,7 @@ namespace GameEngineTest.Graphics
             modelStub.DataChanged += Raise.With(modelStub, eventArgs);
             table.Draw();
 
-            var changedComponent = tableRendererMock.components[row, column];
+            var changedComponent = tableRendererMock.Components[row, column];
             Assert.AreEqual(newData, changedComponent.Data);
         }
 
@@ -219,7 +218,7 @@ namespace GameEngineTest.Graphics
             selectionModelStub.SelectionChanged += Raise.With(selectionModelStub, eventArgs);
             table.Draw(new SpriteBatchMock());
 
-            var changedComponent = tableRendererMock.components[row, column];
+            var changedComponent = tableRendererMock.Components[row, column];
             Assert.True(changedComponent.IsSelected);
         }
 
@@ -242,24 +241,24 @@ namespace GameEngineTest.Graphics
             Assert.AreEqual(expectedStartIndex.Row, testIndex.Value.Row);
         }
 
-        private TableView<object> CreateTable(int rows, int columns, ITableGrid grid = null)
+        private static TableView<object> CreateTable(int rows, int columns, ITableGrid grid = null)
         {
             var selectionModelStub = A.Fake<ITableSelectionModel>();
             return CreateTable(rows, columns, selectionModelStub, grid);
         }
-        private TableView<object> CreateTable(int rows, int columns, ITableSelectionModel selectionModel, ITableGrid grid = null)
+        private static TableView<object> CreateTable(int rows, int columns, ITableSelectionModel selectionModel, ITableGrid grid = null)
         {
             var modelStub = A.Fake<ITableModel<object>>();
             SetDimension(modelStub, rows, columns);
             return CreateTable(modelStub, new TableRendererMock<object>(), selectionModel, grid);
         }
 
-        private TableView<object> CreateTable(ITableModel<object> modelMock, ITableGrid grid = null)
+        private static TableView<object> CreateTable(ITableModel<object> modelMock, ITableGrid grid = null)
         {
             return CreateTable(modelMock, new TableRendererMock<object>(), A.Fake<ITableSelectionModel>(), grid);
         }
 
-        private TableView<object> CreateTable(ITableModel<object> modelMock, TableRendererMock<object> renderer, ITableSelectionModel selectionModelMock, ITableGrid grid = null)
+        private static TableView<object> CreateTable(ITableModel<object> modelMock, ITableRenderer<object> renderer, ITableSelectionModel selectionModelMock, ITableGrid grid = null)
         {
             if (grid == null)
                 grid = new TableGrid();

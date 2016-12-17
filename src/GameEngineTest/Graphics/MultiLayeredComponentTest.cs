@@ -1,5 +1,4 @@
-﻿using GameEngine.Graphics;
-using GameEngineTest.TestUtils;
+﻿using GameEngineTest.TestUtils;
 using NUnit.Framework;
 using System;
 using GameEngine.GUI.Graphics;
@@ -14,7 +13,7 @@ namespace GameEngineTest.Graphics
         public void Draw_NoBackground_NoBackgroundDrawn()
         {
             var backgroundComponent = new GraphicComponentMock();
-            var testComponent = CreateComponent(background: backgroundComponent);
+            var testComponent = CreateMultilayerComponent(background: backgroundComponent);
             var batch = new SpriteBatchMock();
             testComponent.SetCoordinates(100, 100, 500, 500);
 
@@ -28,7 +27,7 @@ namespace GameEngineTest.Graphics
         public void Draw_NoForeground_NoForegroundDrawn()
         {
             var foregroundComponent = new GraphicComponentMock();
-            var testComponent = CreateComponent(foreground: foregroundComponent);
+            var testComponent = CreateMultilayerComponent(foreground: foregroundComponent);
             var batch = new SpriteBatchMock();
             testComponent.SetCoordinates(100, 100, 500, 500);
 
@@ -50,7 +49,7 @@ namespace GameEngineTest.Graphics
             var mainComponent = new GraphicComponentMock();
             var backgroundComponent = new GraphicComponentMock();
 
-            var testComponent = CreateComponent(mainComponent, backgroundComponent, foregroundComponent);
+            var testComponent = CreateMultilayerComponent(mainComponent, backgroundComponent, foregroundComponent);
             foregroundComponent.DrawCallback = () => { drawCounter++; foregroundNumber = drawCounter; };
             mainComponent.DrawCallback = () => { drawCounter++; mainComponentNumber = drawCounter; };
             backgroundComponent.DrawCallback = () => { drawCounter++; backgroundNumber = drawCounter; };
@@ -65,7 +64,7 @@ namespace GameEngineTest.Graphics
         [TestCase]
         public void MainComponent_SetNull_ThrowsException()
         {
-            var testComponent = CreateComponent();
+            var testComponent = CreateMultilayerComponent();
 
             Assert.Throws<ArgumentNullException>(() => testComponent.MainComponent = null);
         }
@@ -81,7 +80,7 @@ namespace GameEngineTest.Graphics
             var backgroundComponent = new GraphicComponentMock();
             var mainComponent = new GraphicComponentMock();
 
-            var testComponent = CreateComponent(mainComponent, backgroundComponent, foregroundComponent);
+            var testComponent = CreateMultilayerComponent(mainComponent, backgroundComponent, foregroundComponent);
 
             testComponent.SetCoordinates(x, y, width, height);
 
@@ -93,7 +92,7 @@ namespace GameEngineTest.Graphics
         }
 
 
-        private void AssertCoordinatesEqual(IGraphicComponent firstComponent, IGraphicComponent secondComponent)
+        private static void AssertCoordinatesEqual(IGraphicComponent firstComponent, IGraphicComponent secondComponent)
         {
             Assert.AreEqual(firstComponent.XPosition(), secondComponent.XPosition());
             Assert.AreEqual(firstComponent.YPosition(), secondComponent.YPosition());
@@ -101,13 +100,15 @@ namespace GameEngineTest.Graphics
             Assert.AreEqual(firstComponent.Height(), secondComponent.Height());
         }
 
-        private MultiLayeredComponent CreateComponent(IGraphicComponent mainComponent = null, IGraphicComponent background = null, IGraphicComponent foreground = null)
+        private static MultiLayeredComponent CreateMultilayerComponent(IGraphicComponent mainComponent = null, IGraphicComponent background = null, IGraphicComponent foreground = null)
         {
             if (mainComponent == null)
                 mainComponent = new GraphicComponentMock();
-            var testComponent = new MultiLayeredComponent(mainComponent);
-            testComponent.Background = background;
-            testComponent.Foreground = foreground;
+            var testComponent = new MultiLayeredComponent(mainComponent)
+            {
+                Background = background,
+                Foreground = foreground
+            };
 
             return testComponent;
         }
@@ -118,7 +119,7 @@ namespace GameEngineTest.Graphics
             var backgroundComponent = new GraphicComponentMock();
             var foregroundComponent = new GraphicComponentMock();
 
-            return CreateComponent(mainComponent, backgroundComponent, foregroundComponent);
+            return CreateMultilayerComponent(mainComponent, backgroundComponent, foregroundComponent);
         }
     }
 }

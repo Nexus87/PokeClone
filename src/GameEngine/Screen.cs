@@ -1,6 +1,4 @@
-﻿using GameEngine.Graphics;
-using GameEngine.Graphics.GUI;
-using GameEngine.GUI.Graphics;
+﻿using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Graphics.General;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -9,15 +7,15 @@ namespace GameEngine
 {
     internal class Screen
     {
-        private ScreenConstants screenConstants;
-        private GraphicsDevice device;
-        private RenderTarget2D target;
-        private Rectangle display = new Rectangle();
+        private readonly ScreenConstants _screenConstants;
+        private readonly GraphicsDevice _device;
+        private readonly RenderTarget2D _target;
+        private Rectangle _display;
 
         public void WindowsResizeHandler(float windowWidth, float windowHeight)
         {
-            var bufferX = (float)device.PresentationParameters.BackBufferWidth;
-            var bufferY = (float)device.PresentationParameters.BackBufferHeight;
+            var bufferX = (float)_device.PresentationParameters.BackBufferWidth;
+            var bufferY = (float)_device.PresentationParameters.BackBufferHeight;
 
             var windowX = windowWidth;
             var windowY = windowHeight;
@@ -25,33 +23,33 @@ namespace GameEngine
             var displayRatio = windowX / windowY;
             var invBufferRatio = bufferY / bufferX;
 
-            var scaleX = bufferX / screenConstants.ScreenWidth;
+            var scaleX = bufferX / _screenConstants.ScreenWidth;
             var scaleY = displayRatio * invBufferRatio * scaleX;
 
-            if (scaleY * screenConstants.ScreenHeight > device.PresentationParameters.BackBufferHeight)
+            if (scaleY * _screenConstants.ScreenHeight > _device.PresentationParameters.BackBufferHeight)
             {
-                scaleY = bufferY / screenConstants.ScreenHeight;
+                scaleY = bufferY / _screenConstants.ScreenHeight;
                 scaleX = scaleY / (displayRatio * invBufferRatio);
             }
 
-            display.Width = (int)(scaleX * screenConstants.ScreenWidth);
-            display.Height = (int)(scaleY * screenConstants.ScreenHeight);
-            display.X = (int)((bufferX - display.Width) / 2.0f);
-            display.Y = (int)((bufferY - display.Height) / 2.0f);
+            _display.Width = (int)(scaleX * _screenConstants.ScreenWidth);
+            _display.Height = (int)(scaleY * _screenConstants.ScreenHeight);
+            _display.X = (int)((bufferX - _display.Width) / 2.0f);
+            _display.Y = (int)((bufferY - _display.Height) / 2.0f);
         }
 
         public Screen(ScreenConstants screenConstants, GraphicsDevice device)
         {
-            this.screenConstants = screenConstants;
-            this.device = device;
-            target = new RenderTarget2D(device, (int)screenConstants.ScreenWidth, (int)screenConstants.ScreenHeight);
+            _screenConstants = screenConstants;
+            _device = device;
+            _target = new RenderTarget2D(device, (int)screenConstants.ScreenWidth, (int)screenConstants.ScreenHeight);
 
         }
 
         public void Begin(ISpriteBatch batch)
         {
-            device.SetRenderTarget(target);
-            device.Clear(screenConstants.BackgroundColor);
+            _device.SetRenderTarget(_target);
+            _device.Clear(_screenConstants.BackgroundColor);
 
             batch.Begin();
         }
@@ -64,16 +62,16 @@ namespace GameEngine
         {
             batch.End();
 
-            device.SetRenderTarget(null);
+            _device.SetRenderTarget(null);
             
             batch.Begin();
-            batch.Draw(target, destinationRectangle: display);
+            batch.Draw(_target, destinationRectangle: _display);
             batch.End();
         }
 
-        public void Draw(GUIManager GUIManager, ISpriteBatch batch, GameTime gameTime)
+        public void Draw(GuiManager guiManager, ISpriteBatch batch, GameTime gameTime)
         {
-            GUIManager.Draw(gameTime, batch);
+            guiManager.Draw(gameTime, batch);
         }
     }
 }

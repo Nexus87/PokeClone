@@ -12,14 +12,14 @@ namespace GameEngine.GUI.Graphics.GUI
         /// <summary>
         /// The current column of the selected cell
         /// </summary>
-        public int cursorColumn;
+        public int CursorColumn;
 
         /// <summary>
         /// The current row of the selected cell
         /// </summary>
-        public int cursorRow;
+        public int CursorRow;
 
-        private readonly ITableView<T> tableView;
+        private readonly ITableView<T> _tableView;
 
         public TableWidget(int? visibleRows, int? visibleColumns, ITableModel<T> model, ITableRenderer<T> renderer, ITableSelectionModel selection) :
             this(visibleRows, visibleColumns, new TableView<T>(model, renderer, selection)) { }
@@ -28,7 +28,7 @@ namespace GameEngine.GUI.Graphics.GUI
         {
             VisibleRows = visibleRows;
             VisibleColumns = visibleColumns;
-            tableView = view;
+            _tableView = view;
 
             view.TableResized += TableResizeHandler;
             SetStartCell(0, 0);
@@ -44,47 +44,51 @@ namespace GameEngine.GUI.Graphics.GUI
         /// </summary>
         public event EventHandler ExitRequested = delegate { };
 
-        public ITableModel<T> Model
-        {
-            get { return tableView.Model; }
-        }
+        public ITableModel<T> Model => _tableView.Model;
 
         /// <summary>
         /// Number of total columns in the table
         /// </summary>
-        private int Columns { get { return tableView.Columns; } }
+        private int Columns => _tableView.Columns;
 
-        private int Rows { get { return tableView.Rows; } }
+        private int Rows => _tableView.Rows;
 
         /// <summary>
         /// The maximum number of columns that are displayed. null is equivalent
         /// to Columns
         /// </summary>
-        private int? VisibleColumns { get; set; }
+        private int? VisibleColumns { get; }
 
         /// <summary>
         /// The maximum number of rows that are displayed. null is equivalent to
         /// Rows
         /// </summary>
-        private int? VisibleRows { get; set; }
+        private int? VisibleRows { get; }
 
         /// <summary>
         /// Property to easily access TableView's EndIndex property.
         /// </summary>
         /// <remarks>This property expects the EndIndex to be not null</remarks>
-        private TableIndex EndIndex { get { return tableView.EndIndex.Value; } }
+        private TableIndex EndIndex
+        {
+            get
+            {
+                Debug.Assert(_tableView.EndIndex != null, "_tableView.EndIndex != null");
+                return _tableView.EndIndex.Value;
+            }
+        }
 
         /// <summary>
         /// Holds the number of visible columns, even if the VisibleColumns
         /// property is null.
         /// </summary>
-        private int realVisibleColumns { get { return VisibleColumns.HasValue ? VisibleColumns.Value : tableView.Columns; } }
+        private int RealVisibleColumns => VisibleColumns ?? _tableView.Columns;
 
         /// <summary>
         /// Holds the number of visible rows, even if the VisibleRows property
         /// is null.
         /// </summary>
-        private int realVisibleRows { get { return VisibleRows.HasValue ? VisibleRows.Value : tableView.Rows; } }
+        private int RealVisibleRows => VisibleRows ?? _tableView.Rows;
 
         /// <summary>
         /// Property to easily access TableView's StartIndex property.
@@ -92,7 +96,11 @@ namespace GameEngine.GUI.Graphics.GUI
         /// <remarks>
         /// This property expects the StartIndex to be not null
         /// </remarks>
-        private TableIndex StartIndex { get { return tableView.StartIndex.Value; } }
+        private TableIndex StartIndex { get
+        {
+            Debug.Assert(_tableView.StartIndex != null, "_tableView.StartIndex != null");
+            return _tableView.StartIndex.Value;
+        } }
 
         /// <summary>
         /// This Method handles the Input. Pressing Select or Back key will
@@ -108,12 +116,12 @@ namespace GameEngine.GUI.Graphics.GUI
         /// </summary>
         /// <param name="key">Input key</param>
         /// <returns>True if the key was handled</returns>
-        public bool HandleInput(CommandKeys key)
+        public override void HandleKeyInput(CommandKeys key)
         {
             switch (key)
             {
                 case CommandKeys.Select:
-                    ItemSelected(this, new SelectionEventArgs<T>(Model.DataAt(cursorRow, cursorColumn)));
+                    ItemSelected(this, new SelectionEventArgs<T>(Model.DataAt(CursorRow, CursorColumn)));
                     break;
 
                 case CommandKeys.Back:
@@ -121,25 +129,21 @@ namespace GameEngine.GUI.Graphics.GUI
                     break;
 
                 case CommandKeys.Right:
-                    SetCursorColumn(cursorColumn + 1);
+                    SetCursorColumn(CursorColumn + 1);
                     break;
 
                 case CommandKeys.Left:
-                    SetCursorColumn(cursorColumn - 1);
+                    SetCursorColumn(CursorColumn - 1);
                     break;
 
                 case CommandKeys.Up:
-                    SetCursorRow(cursorRow - 1);
+                    SetCursorRow(CursorRow - 1);
                     break;
 
                 case CommandKeys.Down:
-                    SetCursorRow(cursorRow + 1);
+                    SetCursorRow(CursorRow + 1);
                     break;
-
-                default:
-                    return false;
             }
-            return true;
         }
 
         /// <summary>
@@ -158,30 +162,30 @@ namespace GameEngine.GUI.Graphics.GUI
         public void SelectCell(int row, int column)
         {
             if (row >= Rows || column >= Columns || row < 0 || column < 0)
-                throw new ArgumentOutOfRangeException("row/column out of bound");
+                throw new ArgumentOutOfRangeException(nameof(row));
 
-            if (!tableView.SetCellSelection(row, column, true))
+            if (!_tableView.SetCellSelection(row, column, true))
                 return;
 
-            cursorRow = row;
-            cursorColumn = column;
+            CursorRow = row;
+            CursorColumn = column;
 
             FixViewport();
         }
 
         public override void Setup()
         {
-            tableView.Setup();
+            _tableView.Setup();
         }
 
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)
         {
-            tableView.Draw(time, batch);
+            _tableView.Draw(time, batch);
         }
 
         protected override void Update()
         {
-            tableView.SetCoordinates(this);
+            _tableView.SetCoordinates(this);
         }
 
         private void TableResizeHandler(object sender, TableResizeEventArgs e)
@@ -191,12 +195,12 @@ namespace GameEngine.GUI.Graphics.GUI
             // If there is nothing to display, reset everything
             if (e.Rows == 0 || e.Columns == 0)
             {
-                tableView.StartIndex = tableView.EndIndex = new TableIndex(0, 0);
+                _tableView.StartIndex = _tableView.EndIndex = new TableIndex(0, 0);
                 return;
             }
 
             // If the cursor has changed, we also should change the selection
-            tableView.SetCellSelection(cursorRow, cursorColumn, true);
+            _tableView.SetCellSelection(CursorRow, CursorColumn, true);
             ResizeViewport();
         }
 
@@ -206,9 +210,9 @@ namespace GameEngine.GUI.Graphics.GUI
             int newStartColumn = StartIndex.Column;
 
             if (RowOutOfBound(newStartRow))
-                newStartRow = ZeroIfNegative(Rows - realVisibleRows);
+                newStartRow = ZeroIfNegative(Rows - RealVisibleRows);
             if (ColumnOutOfBound(newStartColumn))
-                newStartColumn = ZeroIfNegative(Columns - realVisibleColumns);
+                newStartColumn = ZeroIfNegative(Columns - RealVisibleColumns);
 
             SetStartCell(newStartRow, newStartColumn);
         }
@@ -230,38 +234,38 @@ namespace GameEngine.GUI.Graphics.GUI
 
         private void FixCursor()
         {
-            if (RowOutOfBound(cursorRow))
-                cursorRow = ZeroIfNegative(Rows - 1);
+            if (RowOutOfBound(CursorRow))
+                CursorRow = ZeroIfNegative(Rows - 1);
 
-            if (ColumnOutOfBound(cursorColumn))
-                cursorColumn = ZeroIfNegative(Columns - 1);
+            if (ColumnOutOfBound(CursorColumn))
+                CursorColumn = ZeroIfNegative(Columns - 1);
         }
 
         private void FixViewport()
         {
             // These indexes should already be set in TableWidget's constructor
-            Debug.Assert(tableView.EndIndex.HasValue);
-            Debug.Assert(tableView.StartIndex.HasValue);
+            Debug.Assert(_tableView.EndIndex.HasValue);
+            Debug.Assert(_tableView.StartIndex.HasValue);
 
-            if (cursorRow >= EndIndex.Row || cursorColumn >= EndIndex.Column)
-                SetEndCell(cursorRow, cursorColumn);
-            else if (cursorRow < StartIndex.Row || cursorColumn < StartIndex.Column)
-                SetStartCell(cursorRow, cursorColumn);
+            if (CursorRow >= EndIndex.Row || CursorColumn >= EndIndex.Column)
+                SetEndCell(CursorRow, CursorColumn);
+            else if (CursorRow < StartIndex.Row || CursorColumn < StartIndex.Column)
+                SetStartCell(CursorRow, CursorColumn);
         }
 
         private void SetCursorRow(int row)
         {
-            SetCursor(row, cursorColumn);
+            SetCursor(row, CursorColumn);
         }
 
         private void SetCursorColumn(int column)
         {
-            SetCursor(cursorRow, column);
+            SetCursor(CursorRow, column);
         }
 
         private void SetCursor(int row, int column)
         {
-            // Only called from HandleInput. No reason to throw an exception
+            // Only called from HandleKeyInput. No reason to throw an exception
             if (column >= Columns || column < 0)
                 return;
             if (row >= Rows || row < 0)
@@ -275,11 +279,11 @@ namespace GameEngine.GUI.Graphics.GUI
             var endRow = row + 1;
             var endColumn = column + 1;
 
-            var startRow = Math.Max(0, endRow - realVisibleRows);
-            var startColumn = Math.Max(0, endColumn - realVisibleColumns);
+            var startRow = Math.Max(0, endRow - RealVisibleRows);
+            var startColumn = Math.Max(0, endColumn - RealVisibleColumns);
 
-            tableView.StartIndex = new TableIndex(startRow, startColumn);
-            tableView.EndIndex = new TableIndex(endRow, endColumn);
+            _tableView.StartIndex = new TableIndex(startRow, startColumn);
+            _tableView.EndIndex = new TableIndex(endRow, endColumn);
         }
 
         private void SetStartCell(int row, int column)
@@ -287,11 +291,11 @@ namespace GameEngine.GUI.Graphics.GUI
             var startRow = row;
             var startColumn = column;
 
-            var endRow = Math.Min(Rows, startRow + realVisibleRows);
-            var endColumn = Math.Min(Columns, startColumn + realVisibleColumns);
+            var endRow = Math.Min(Rows, startRow + RealVisibleRows);
+            var endColumn = Math.Min(Columns, startColumn + RealVisibleColumns);
 
-            tableView.StartIndex = new TableIndex(startRow, startColumn);
-            tableView.EndIndex = new TableIndex(endRow, endColumn);
+            _tableView.StartIndex = new TableIndex(startRow, startColumn);
+            _tableView.EndIndex = new TableIndex(endRow, endColumn);
         }
     }
 }

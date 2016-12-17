@@ -1,5 +1,4 @@
-﻿using GameEngine.Graphics;
-using GameEngineTest.TestUtils;
+﻿using GameEngineTest.TestUtils;
 using NUnit.Framework;
 using System.Collections.Generic;
 using GameEngine.GUI.Graphics;
@@ -27,7 +26,7 @@ namespace GameEngineTest.Graphics
             new TestCaseData(new TestType(""), "")
         };
 
-        [TestCaseSource("TestData")]
+        [TestCaseSource(nameof(TestData))]
         public void GetComponent_WithSpecificData_StringIsGivenToComponent(TestType data, string expectedString)
         {
             var renderer = CreateTestRenderer();
@@ -45,7 +44,7 @@ namespace GameEngineTest.Graphics
             new TestCaseData(20, 0)
         };
 
-        [TestCaseSource("ValidIndices")]
+        [TestCaseSource(nameof(ValidIndices))]
         public void GetComponent_SomeIndex_NeverNull(int row, int column)
         {
             var renderer = CreateTestRenderer();
@@ -56,7 +55,7 @@ namespace GameEngineTest.Graphics
             Assert.NotNull(component);
         }
 
-        private DefaultTableRenderer<TestType> CreateTestRenderer()
+        private static DefaultTableRenderer<TestType> CreateTestRenderer()
         {
             return new TestTableRenderer();
         }

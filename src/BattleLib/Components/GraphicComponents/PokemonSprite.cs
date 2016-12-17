@@ -1,6 +1,5 @@
 ﻿using System;
 using GameEngine;
-using GameEngine.Graphics;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Graphics.General;
 using GameEngine.Registry;
@@ -14,16 +13,16 @@ namespace BattleLib.Components.GraphicComponents
         public event EventHandler OnPokemonAppeared = delegate { };
         public event EventHandler OnAttackAnimationPlayed = delegate { };
 
-        private readonly TextureProvider provider;
-        private readonly TextureBox box;
-        private bool isPlayer;
+        private readonly TextureProvider _provider;
+        private readonly TextureBox _box;
+        private bool _isPlayer;
 
-        public bool IsPlayer { get { return isPlayer; } set { isPlayer = value; Invalidate(); } }
-        private int id = -1;
+        public bool IsPlayer { get { return _isPlayer; } set { _isPlayer = value; Invalidate(); } }
+        private int _id = -1;
 
         public void SetPokemon(int id)
         {
-            this.id = id;
+            _id = id;
             Invalidate();
             OnPokemonAppeared(this, null);
         }
@@ -35,8 +34,8 @@ namespace BattleLib.Components.GraphicComponents
 
         public PokemonSprite(TextureBox box, TextureProvider provider)
         {
-            this.box = box;
-            this.provider = provider;
+            _box = box;
+            _provider = provider;
         }
         public override void Setup()
         {
@@ -44,15 +43,15 @@ namespace BattleLib.Components.GraphicComponents
 
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)
         {
-            box.Draw(time, batch);
+            _box.Draw(time, batch);
         }
 
         protected override void Update()
         {
             base.Update();
-            box.SetCoordinates(this);
+            _box.SetCoordinates(this);
 
-            box.Image = isPlayer ? provider.GetTextureBack(id) : provider.GetTexturesFront(id);
+            _box.Image = _isPlayer ? _provider.GetTextureBack(_id) : _provider.GetTexturesFront(_id);
         }
     }
 }

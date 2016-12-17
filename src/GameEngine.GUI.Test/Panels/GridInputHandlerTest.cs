@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using FakeItEasy;
 using GameEngine.Globals;
-using GameEngine.Graphics;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Panels;
 using GameEngine.Utils;
@@ -90,7 +89,7 @@ namespace GameEngine.GUI.Test.Panels
         };
 
         [TestCaseSource(nameof(InputHandlerData))]
-        public void HandleInput_DirectionKey_ExpectedComponentIsSelected(
+        public void HandleKeyInput_DirectionKey_ExpectedComponentIsSelected(
             bool[,] selectableComponents, CommandKeys key, int expectedRow, int expectedColumn)
         {
             var componentTable = CreateComponentTable(selectableComponents);

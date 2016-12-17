@@ -12,19 +12,19 @@ namespace GameEngineTest.Graphics.GUI
     {
 
         [TestCase]
-        public void HandleInput_SelectionKeyWithLinesToDisplay_CallsNextLine()
+        public void HandleKeyInput_SelectionKeyWithLinesToDisplay_CallsNextLine()
         {
             var textContainerMock = A.Fake<ITextGraphicContainer>();
             A.CallTo(() => textContainerMock.HasNext()).Returns(true);
             var messageBox = CreateMessageBox(textContainerMock);
 
-            messageBox.HandleInput(CommandKeys.Select);
+            messageBox.HandleKeyInput(CommandKeys.Select);
 
             A.CallTo(() => textContainerMock.NextLine()).MustHaveHappened(Repeated.AtLeast.Once);
         }
 
         [TestCase]
-        public void HandleInput_SelectionKeyWihtNoLinesToDisplay_RaisesEevent()
+        public void HandleKeyInput_SelectionKeyWihtNoLinesToDisplay_RaisesEevent()
         {
             var textContainerMock = A.Fake<ITextGraphicContainer>();
             A.CallTo(() => textContainerMock.HasNext()).Returns(false);
@@ -32,7 +32,7 @@ namespace GameEngineTest.Graphics.GUI
             var eventRaised = false;
             messageBox.OnAllLineShowed += delegate { eventRaised = true; };
 
-            messageBox.HandleInput(CommandKeys.Select);
+            messageBox.HandleKeyInput(CommandKeys.Select);
 
             Assert.True(eventRaised);
         }            
@@ -60,19 +60,7 @@ namespace GameEngineTest.Graphics.GUI
             A.CallToSet(() => textContainerMock.Text).To("TestString").MustHaveHappened(Repeated.AtLeast.Once);
         }
 
-        [TestCase(CommandKeys.Back)]
-        [TestCase(CommandKeys.Down)]
-        [TestCase(CommandKeys.Left)]
-        [TestCase(CommandKeys.Right)]
-        [TestCase(CommandKeys.Up)]
-        public void HandleInput_OtherKeysThanSelect_DoesNotHandle(CommandKeys key)
-        {
-            var messageBox = CreateMessageBox();
-
-            Assert.False(messageBox.HandleInput(key));
-        }
-
-        private MessageBox CreateMessageBox(ITextGraphicContainer container = null)
+        private static MessageBox CreateMessageBox(ITextGraphicContainer container = null)
         {
             if (container == null)
                 container = new TextGraphicContainerFake();

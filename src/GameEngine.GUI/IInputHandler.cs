@@ -7,7 +7,7 @@ namespace GameEngine
     /// Interface for classes, that can process user input
     /// </summary>
     /// <remarks>
-    /// The HandleInput method is only called, when a key is pressed.
+    /// The HandleKeyInput method is only called, when a key is pressed.
     /// It can be called multiple times if multiple keys are pressed.
     /// Releasing a key will not trigger this function.
     /// </remarks>
@@ -23,7 +23,6 @@ namespace GameEngine
         /// that will handle the input.
         /// </remarks>
         /// <param name="key">Pressed key.</param>
-        /// <returns>True if the input was consumed.</returns>
-        bool HandleInput(CommandKeys key);
+        void HandleKeyInput(CommandKeys key);
     }
 }

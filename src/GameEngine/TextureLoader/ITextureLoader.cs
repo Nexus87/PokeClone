@@ -1,5 +1,4 @@
 ﻿using GameEngine.Configuration;
-using GameEngine.Graphics;
 using GameEngine.GUI.Graphics;
 
 namespace GameEngine.TextureLoader

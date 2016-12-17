@@ -8,42 +8,40 @@ namespace MainModule
     [GameType]
     public class GameInputHandler : IInputHandler
     {
-        private SpriteState spriteState;
-        readonly IEngineInterface engineInterface;
+        private readonly SpriteState _spriteState;
+        readonly IEngineInterface _engineInterface;
 
         public GameInputHandler(SpriteState spriteState, IEngineInterface engineInterface)
         {
-            this.engineInterface = engineInterface;
-            this.spriteState = spriteState;
+            _engineInterface = engineInterface;
+            _spriteState = spriteState;
             spriteState.SpriteId = 0;
         }
 
-        public bool HandleInput(CommandKeys key)
+        public void HandleKeyInput(CommandKeys key)
         {
             switch (key)
             {
                 case CommandKeys.Down:
-                    spriteState.MoveDirection(Direction.Down);
+                    _spriteState.MoveDirection(Direction.Down);
                     break;
                 case CommandKeys.Left:
-                    spriteState.MoveDirection(Direction.Left);
+                    _spriteState.MoveDirection(Direction.Left);
                     break;
                 case CommandKeys.Right:
-                    spriteState.MoveDirection(Direction.Right);
+                    _spriteState.MoveDirection(Direction.Right);
                     break;
                 case CommandKeys.Up:
-                    spriteState.MoveDirection(Direction.Up);
+                    _spriteState.MoveDirection(Direction.Up);
                     break;
                 case CommandKeys.Select:
                     break;
                 case CommandKeys.Back:
-                    engineInterface.Exit();
+                    _engineInterface.Exit();
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException("key", key, null);
+                    throw new ArgumentOutOfRangeException(nameof(key), key, null);
             }
-
-            return true;
         }
 
     }

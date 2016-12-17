@@ -1,6 +1,4 @@
-﻿using GameEngine.Graphics;
-using GameEngine.Graphics.GUI;
-using GameEngine.Registry;
+﻿using GameEngine.Registry;
 using GameEngine.Utils;
 using Microsoft.Xna.Framework;
 using System;
@@ -14,20 +12,20 @@ namespace GameEngine
     public class PokeEngine : Game, IEngineInterface, IGameComponentManager
     {
         public IModuleRegistry Registry;
-        private readonly GraphicResources factory;
-        private GUIManager GuiManager { get; set; }
+        private readonly GraphicResources _factory;
+        private GuiManager GuiManager { get; set; }
 
-        private XnaSpriteBatch batch;
-        private InputComponent input;
-        private Screen screen;
+        private XnaSpriteBatch _batch;
+        private InputComponent _input;
+        private Screen _screen;
 
-        private string startModule;
-        private IInputHandler inputHandler;
+        private string _startModule;
+        private IInputHandler _inputHandler;
 
         public PokeEngine(Configuration.Configuration config)         {
             config.CheckNull("config");
             Registry = new AutofacModuleRegistry();
-            factory = new GraphicResources(config, Content);
+            _factory = new GraphicResources(config, Content);
 
             new GraphicsDeviceManager(this);
 
@@ -36,7 +34,7 @@ namespace GameEngine
             var runningOnMono = Type.GetType ("Mono.Runtime") != null;
             Content.RootDirectory = runningOnMono ? @"Content\Linux" : @"Content\Windows";
 
-            Registry.RegisterModule(new GameEngineModule(factory, this));
+            Registry.RegisterModule(new GameEngineModule(_factory, this));
         }
 
         public IGraphicComponent Graphic { get; set; }
@@ -68,48 +66,48 @@ namespace GameEngine
         {
             set
             {
-                inputHandler = value;
-                if (input.Handler == null)
-                    input.Handler = inputHandler;
+                _inputHandler = value;
+                if (_input.Handler == null)
+                    _input.Handler = _inputHandler;
             }
             get
             {
-                return inputHandler;
+                return _inputHandler;
             }
         }
 
         public void ShowGUI()
         {
             GuiManager.Show();
-            input.Handler = GuiManager;
+            _input.Handler = GuiManager;
         }
 
         public void CloseGUI()
         {
             GuiManager.Close();
-            input.Handler = inputHandler;
+            _input.Handler = _inputHandler;
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            screen.Begin(batch);
-            screen.Draw(Graphic, batch, gameTime);
-            screen.Draw(GuiManager, batch, gameTime);
-            screen.End(batch);
+            _screen.Begin(_batch);
+            _screen.Draw(Graphic, _batch, gameTime);
+            _screen.Draw(GuiManager, _batch, gameTime);
+            _screen.End(_batch);
         }
 
         protected override void Initialize()
         {
             base.Initialize();
-            screen = new Screen(Registry.TypeRegistry.ResolveType<ScreenConstants>(), GraphicsDevice);
-            GuiManager = Registry.TypeRegistry.ResolveType<GUIManager>();
-            input = Registry.TypeRegistry.ResolveType<InputComponent>();
+            _screen = new Screen(Registry.TypeRegistry.ResolveType<ScreenConstants>(), GraphicsDevice);
+            GuiManager = Registry.TypeRegistry.ResolveType<GuiManager>();
+            _input = Registry.TypeRegistry.ResolveType<InputComponent>();
 
-            Window.ClientSizeChanged += delegate { screen.WindowsResizeHandler(Window.ClientBounds.Width, Window.ClientBounds.Height); };
-            screen.WindowsResizeHandler(Window.ClientBounds.Width, Window.ClientBounds.Height); 
+            Window.ClientSizeChanged += delegate { _screen.WindowsResizeHandler(Window.ClientBounds.Width, Window.ClientBounds.Height); };
+            _screen.WindowsResizeHandler(Window.ClientBounds.Width, Window.ClientBounds.Height);
 
             Registry.StartModule("GameEngine", this);
-            Registry.StartModule(startModule, this);
+            Registry.StartModule(_startModule, this);
 
             if (Graphic == null)
                 throw new InvalidOperationException("Graphic component is not set");
@@ -121,13 +119,13 @@ namespace GameEngine
         protected override void LoadContent()
         {
             base.LoadContent();
-            batch = new XnaSpriteBatch(GraphicsDevice);
-            factory.Setup(this);
+            _batch = new XnaSpriteBatch(GraphicsDevice);
+            _factory.Setup(this);
         }
 
         public void SetStartModule(string name)
         {
-            startModule = name;
+            _startModule = name;
         }
 
     }

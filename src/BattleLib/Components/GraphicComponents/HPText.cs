@@ -1,5 +1,4 @@
 ﻿using Base;
-using GameEngine.Graphics;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Graphics.General;
 using GameEngine.Registry;
@@ -8,14 +7,14 @@ using Microsoft.Xna.Framework;
 namespace BattleLib.Components.GraphicComponents
 {
     [GameType]
-    public class HPText : AbstractGraphicComponent
+    public class HpText : AbstractGraphicComponent
     {
-        private TextBox text;
-        private string maxHP;
+        private readonly TextBox _text;
+        private string _maxHp;
 
-        public HPText(TextBox text)
+        public HpText(TextBox text)
         {
-            this.text = text;
+            _text = text;
             text.PreferredSizeChanged += (obj, ev) => SetPreferredSize(ev);
         }
 
@@ -29,37 +28,37 @@ namespace BattleLib.Components.GraphicComponents
         {
             get
             {
-                return text.PreferredTextHeight;
+                return _text.PreferredTextHeight;
             }
 
             set{
-                text.PreferredTextHeight = value;
+                _text.PreferredTextHeight = value;
             }
         }
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)
         {
-            text.Draw(time, batch);
+            _text.Draw(time, batch);
         }
 
 
         public void SetPokemon(Pokemon pokemon)
         {
-            maxHP = "/" + pokemon.MaxHP.ToString().PadLeft(3, ' ');
-            SetHP(pokemon.HP);
+            _maxHp = "/" + pokemon.MaxHP.ToString().PadLeft(3, ' ');
+            SetHp(pokemon.HP);
             
         }
 
         protected override void Update()
         {
-            text.SetCoordinates(this);
+            _text.SetCoordinates(this);
         }
-        public void SetHP(int hp)
+        public void SetHp(int hp)
         {
-            text.Text = hp.ToString().PadLeft(3, ' ') + maxHP;
+            _text.Text = hp.ToString().PadLeft(3, ' ') + _maxHp;
         }
         public override void Setup()
         {
-            text.Setup();
+            _text.Setup();
         }
     }
 }

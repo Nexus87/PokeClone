@@ -1,5 +1,4 @@
-﻿using GameEngine.Graphics;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -12,7 +11,7 @@ namespace GameEngineTest.Graphics
     [TestFixture]
     public class TextGraphicTest
     {
-        private TextGraphic CreateTextGraphic(float charHeight = 16.0f)
+        private static TextGraphic CreateTextGraphic(float charHeight = 16.0f)
         {
             var spriteFontMock = A.Fake<ISpriteFont>();
             var testObj = new TextGraphic(spriteFontMock);
@@ -35,7 +34,7 @@ namespace GameEngineTest.Graphics
             new TestCaseData("TestText", 0.0f, 0.0f, 0.0f)
         };
 
-        [TestCaseSource("InvalidData")]
+        [TestCaseSource(nameof(InvalidData))]
         public void SetCharHeight_InvalidData_ThrowsArgumentException(float textHeight)
         {
             var testObj = CreateTextGraphic();

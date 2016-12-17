@@ -1,5 +1,4 @@
-﻿using GameEngine.Graphics;
-using GameEngine.Utils;
+﻿using GameEngine.Utils;
 using GameEngineTest.TestUtils;
 using NUnit.Framework;
 using System.Collections.Generic;
@@ -11,7 +10,8 @@ namespace GameEngineTest.Graphics
     [TestFixture]
     public class MultilineTextboxTest : IGraphicComponentTest
     {
-        private readonly string SAMPLE_STRING = "SomeText";
+        private const string SampleString = "SomeText";
+
         [TestCase]
         public void HasNext_NoLine_ReturnsFalse()
         {
@@ -29,11 +29,11 @@ namespace GameEngineTest.Graphics
 
             // Return 0 so we don't have to provide the splitted text
             A.CallTo(() => splitterMock.Count).Returns(0);
-            textBox.Text = SAMPLE_STRING;
+            textBox.Text = SampleString;
 
             textBox.Draw(new SpriteBatchMock());
 
-            A.CallTo(() => splitterMock.SplitText(A<int>.Ignored, SAMPLE_STRING))
+            A.CallTo(() => splitterMock.SplitText(A<int>.Ignored, SampleString))
                 .MustHaveHappened(Repeated.AtLeast.Once);
         }
 
@@ -45,7 +45,7 @@ namespace GameEngineTest.Graphics
             splitterStub.SplitTextCallback = () => splitterStub.Strings = splittedText;
             var textBox = CreateTextBox(splitterStub);
             
-            textBox.Text = SAMPLE_STRING;
+            textBox.Text = SampleString;
 
             Assert.IsTrue(textBox.HasNext());
         }
@@ -59,7 +59,7 @@ namespace GameEngineTest.Graphics
             var splitterStub = CreateSplitterStub(initialLines);
             var textBox = CreateTextBox(splitterStub);
 
-            textBox.Text = SAMPLE_STRING;
+            textBox.Text = SampleString;
 
             Assert.IsFalse(textBox.HasNext());
 
@@ -78,7 +78,7 @@ namespace GameEngineTest.Graphics
             var splitterStub = CreateSplitterStub(new List<string> { firstLine, secondLine });
             var textBox = CreateTextBox(splitterStub);
 
-            textBox.Text = SAMPLE_STRING;
+            textBox.Text = SampleString;
             textBox.Draw(new SpriteBatchMock());
 
             Assert.Contains(firstLine, textBox.ComponentStrings());
@@ -94,7 +94,7 @@ namespace GameEngineTest.Graphics
             var splitterStub = CreateSplitterStub(new List<string> { firstLine, secondLine });
             var textBox = CreateTextBox(splitterStub);
 
-            textBox.Text = SAMPLE_STRING;
+            textBox.Text = SampleString;
             textBox.NextLine();
             textBox.Draw(new SpriteBatchMock());
 
@@ -111,7 +111,7 @@ namespace GameEngineTest.Graphics
             var splitterStub = CreateSplitterStub(new List<string> { firstLine, secondLine });
             var textBox = CreateTextBox(splitterStub);
 
-            textBox.Text = SAMPLE_STRING;
+            textBox.Text = SampleString;
             textBox.NextLine();
             textBox.NextLine();
             textBox.Draw(new SpriteBatchMock());
@@ -123,14 +123,14 @@ namespace GameEngineTest.Graphics
         [TestCase]
         public void NextLine_OnlyOneLineLeft_AllButFirstLineEmpty()
         {
-            var firstLine = "String1";
-            var secondLine = "String2";
-            var thirdLine = "String3";
+            const string firstLine = "String1";
+            const string secondLine = "String2";
+            const string thirdLine = "String3";
 
             var splitterStub = CreateSplitterStub(new List<string> { firstLine, secondLine, thirdLine });
             var textBox = CreateTextBox(splitterStub);
 
-            textBox.Text = SAMPLE_STRING;
+            textBox.Text = SampleString;
             textBox.NextLine();
             textBox.Draw(new SpriteBatchMock());
 
@@ -141,15 +141,15 @@ namespace GameEngineTest.Graphics
         [TestCase]
         public void NextLine_EnoughLines_NextLinesAreDrawn()
         {
-            var firstLine = "String1";
-            var secondLine = "String2";
-            var thirdLine = "String3";
-            var fourthLine = "String4";
+            const string firstLine = "String1";
+            const string secondLine = "String2";
+            const string thirdLine = "String3";
+            const string fourthLine = "String4";
 
             var splitterStub = CreateSplitterStub(new List<string> { firstLine, secondLine, thirdLine, fourthLine });
             var textBox = CreateTextBox(splitterStub);
 
-            textBox.Text = SAMPLE_STRING;
+            textBox.Text = SampleString;
             textBox.NextLine();
             textBox.Draw(new SpriteBatchMock());
 
@@ -157,7 +157,7 @@ namespace GameEngineTest.Graphics
             Assert.Contains(fourthLine, textBox.ComponentStrings());
         }
 
-        private SplitterStub CreateSplitterStub(List<string> initialLines = null)
+        private static SplitterStub CreateSplitterStub(List<string> initialLines = null)
         {
             var splitter = new SplitterStub();
             if (initialLines != null)
@@ -165,7 +165,7 @@ namespace GameEngineTest.Graphics
 
             return splitter;
         }
-        private TestableMultilineTextBox CreateTextBox(ITextSplitter splitter, int numberOfLines = 2)
+        private static TestableMultilineTextBox CreateTextBox(ITextSplitter splitter, int numberOfLines = 2)
         {
             var box = new TestableMultilineTextBox(numberOfLines, splitter);
             box.SetCoordinates(10, 10, 300, 400);

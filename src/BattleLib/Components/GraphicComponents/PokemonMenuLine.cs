@@ -15,13 +15,13 @@ namespace BattleLib.Components.GraphicComponents
 
         private readonly TextureBox _icon;
         private readonly HpLine _hpLine;
-        private readonly HPText _hpText;
+        private readonly HpText _hpText;
         private readonly TextBox _nameBox;
         private readonly TextBox _hpLabel;
         private readonly TextBox _level;
         private readonly TextureProvider _textureProvider;
 
-        public PokemonMenuLine(TextureBox icon, HpLine hpLine, TextBox nameBox, HPText hpText, TextBox level,
+        public PokemonMenuLine(TextureBox icon, HpLine hpLine, TextBox nameBox, HpText hpText, TextBox level,
             TextBox hpLabel, TextureProvider textureProvider)
         {
             _mainContainer = new Grid();

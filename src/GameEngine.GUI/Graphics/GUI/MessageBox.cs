@@ -9,7 +9,7 @@ namespace GameEngine.GUI.Graphics.GUI
     [GameType]
     public class MessageBox : ForwardingGraphicComponent<ITextGraphicContainer>, IWidget
     {
-        private readonly ITextGraphicContainer textBox;
+        private readonly ITextGraphicContainer _textBox;
 
         public MessageBox(ISpriteFont font, ITextSplitter splitter, int lineNumber = 2)
             : this(new MultlineTextBox(font, splitter, lineNumber))
@@ -19,37 +19,31 @@ namespace GameEngine.GUI.Graphics.GUI
         public MessageBox(ITextGraphicContainer textBox) :
             base(textBox)
         {
-            this.textBox = InnerComponent;
+            _textBox = InnerComponent;
         }
 
         public event EventHandler OnAllLineShowed = delegate { };
 
         public void DisplayText(string text)
         {
-            textBox.Text = text;
-        }
-
-        public bool HandleInput(CommandKeys key)
-        {
-            if (key != CommandKeys.Select)
-                return false;
-
-            if (textBox.HasNext())
-                textBox.NextLine();
-            else
-                OnAllLineShowed(this, null);
-
-            return true;
+            _textBox.Text = text;
         }
 
         public override void HandleKeyInput(CommandKeys key)
         {
-            HandleInput(key);
+            if (key != CommandKeys.Select)
+                return;
+
+            if (_textBox.HasNext())
+                _textBox.NextLine();
+            else
+                OnAllLineShowed(this, null);
+
         }
 
         public void ResetText()
         {
-            textBox.Text = "";
+            _textBox.Text = "";
         }
 
         protected override void Update()

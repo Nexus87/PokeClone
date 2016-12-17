@@ -1,5 +1,4 @@
 ﻿using FakeItEasy;
-using GameEngine.Graphics;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Graphics.General;
 using GameEngineTest.TestUtils;
@@ -23,7 +22,7 @@ namespace GameEngineTest.Graphics
             Assert.IsEmpty(spriteBatch.DrawnObjects);
         }
 
-        private TextureBox CreateEmptyBox()
+        private static TextureBox CreateEmptyBox()
         {
             return new TextureBox();
         }

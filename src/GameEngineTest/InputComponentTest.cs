@@ -36,7 +36,7 @@ namespace GameEngineTest
 
             // Assert the that only the first key is detected
             component.Update();
-            A.CallTo(() => handlerMock.HandleInput(A<CommandKeys>.Ignored)).MustHaveHappened(Repeated.Exactly.Once);
+            A.CallTo(() => handlerMock.HandleKeyInput(A<CommandKeys>.Ignored)).MustHaveHappened(Repeated.Exactly.Once);
         }
 
         [TestCase]
@@ -49,7 +49,7 @@ namespace GameEngineTest
             // Assert the that only the first key is detected
             component.Update();
             component.Update();
-            A.CallTo(() => handlerMock.HandleInput(A<CommandKeys>.Ignored)).MustHaveHappened(Repeated.Exactly.Once);
+            A.CallTo(() => handlerMock.HandleKeyInput(A<CommandKeys>.Ignored)).MustHaveHappened(Repeated.Exactly.Once);
         }
 
         [TestCase]
@@ -62,7 +62,7 @@ namespace GameEngineTest
             // Assert that every test key is detected once
             component.Update();
             foreach (var key in _keys)
-                A.CallTo(() => handlerMock.HandleInput(_map[key])).MustHaveHappened(Repeated.Exactly.Once);
+                A.CallTo(() => handlerMock.HandleKeyInput(_map[key])).MustHaveHappened(Repeated.Exactly.Once);
         }
 
         [TestCase]
@@ -78,7 +78,7 @@ namespace GameEngineTest
             component.Update();
             component.Update();
             foreach (var key in _keys)
-                A.CallTo(() => handlerMock.HandleInput(_map[key])).MustHaveHappened(Repeated.Exactly.Once);
+                A.CallTo(() => handlerMock.HandleKeyInput(_map[key])).MustHaveHappened(Repeated.Exactly.Once);
         }
 
         [TestCase]
@@ -91,7 +91,7 @@ namespace GameEngineTest
 
             // Make sure, that no test key was detected
             component.Update();
-            A.CallTo(() => handlerMock.HandleInput(A<CommandKeys>.Ignored)).MustNotHaveHappened();
+            A.CallTo(() => handlerMock.HandleKeyInput(A<CommandKeys>.Ignored)).MustNotHaveHappened();
         }
 
         [TestCase]
@@ -103,8 +103,8 @@ namespace GameEngineTest
             var component = new InputComponent(managerMock, _map) {Handler = handlerMock};
             component.Update();
 
-            A.CallTo(() => handlerMock.HandleInput(A<CommandKeys>.Ignored)).MustHaveHappened(Repeated.Exactly.Once);
-            A.CallTo(() => handlerMock.HandleInput(_map[Keys.Down])).MustHaveHappened(Repeated.Exactly.Once);
+            A.CallTo(() => handlerMock.HandleKeyInput(A<CommandKeys>.Ignored)).MustHaveHappened(Repeated.Exactly.Once);
+            A.CallTo(() => handlerMock.HandleKeyInput(_map[Keys.Down])).MustHaveHappened(Repeated.Exactly.Once);
         }
 
         private static KeyboardState CreateKeyboardState(params Keys[] keys)

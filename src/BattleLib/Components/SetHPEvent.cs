@@ -8,8 +8,8 @@ namespace BattleLib.Components
     {
         public event EventHandler EventProcessed
         {
-            add { graphic.OnHPSet += value; }
-            remove { graphic.OnHPSet -= value; }
+            add { graphic.HpSet += value; }
+            remove { graphic.HpSet -= value; }
         }
 
         private readonly IBattleGraphicController graphic;
@@ -25,7 +25,7 @@ namespace BattleLib.Components
 
         public void Dispatch()
         {
-            graphic.SetHP(id, hp);
+            graphic.SetHp(id, hp);
         }
     }
 }

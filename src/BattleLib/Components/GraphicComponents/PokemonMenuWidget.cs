@@ -1,7 +1,5 @@
 ﻿using Base;
 using GameEngine;
-using GameEngine.Graphics;
-using GameEngine.Graphics.GUI;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Graphics.GUI;
 using GameEngine.GUI.Graphics.TableView;

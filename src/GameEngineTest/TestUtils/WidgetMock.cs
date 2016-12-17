@@ -1,21 +1,17 @@
-﻿using GameEngine;
-using GameEngine.Globals;
-using GameEngine.Graphics.GUI;
+﻿using GameEngine.Globals;
 using GameEngine.GUI.Graphics.GUI;
 
 namespace GameEngineTest.TestUtils
 {
     public class WidgetMock : GraphicComponentMock, IWidget
     {
-        public bool WasHandleInputCalled = false;
-        public CommandKeys HandleInputArgument;
+        public bool WasHandleKeyInputCalled;
+        public CommandKeys HandleKeyInputArgument;
 
-        public bool HandleInput(CommandKeys key)
+        public override void HandleKeyInput(CommandKeys key)
         {
-            WasHandleInputCalled = true;
-            HandleInputArgument = key;
-
-            return true;
+            WasHandleKeyInputCalled = true;
+            HandleKeyInputArgument = key;
         }
     }
 }

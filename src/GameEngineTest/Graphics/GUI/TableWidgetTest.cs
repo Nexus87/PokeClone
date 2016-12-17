@@ -133,20 +133,20 @@ namespace GameEngineTest.Graphics.GUI
             var tableViewMock = new TableViewMock { SelectionReturnValue = false };
             var table = CreateTableWidget(tableViewMock, rows, columns);
 
-            int startCursorRow = table.cursorRow;
-            int startCursorColumn = table.cursorColumn;
+            var startCursorRow = table.CursorRow;
+            var startCursorColumn = table.CursorColumn;
 
             table.SelectCell(selectedRow, selectedColumn);
 
-            Assert.AreEqual(startCursorRow, table.cursorRow);
-            Assert.AreEqual(startCursorColumn, table.cursorColumn);
+            Assert.AreEqual(startCursorRow, table.CursorRow);
+            Assert.AreEqual(startCursorColumn, table.CursorColumn);
         }
 
         [TestCase(10, 6, 3, 4, CommandKeys.Left)]
         [TestCase(10, 6, 3, 4, CommandKeys.Right)]
         [TestCase(10, 6, 3, 4, CommandKeys.Up)]
         [TestCase(10, 6, 3, 4, CommandKeys.Down)]
-        public void HandleInput_TableViewSelectionFails_CursorNotChanged(int rows, int columns, int initialSelectedRow, int initialSelectedColumn,
+        public void HandleKeyInput_TableViewSelectionFails_CursorNotChanged(int rows, int columns, int initialSelectedRow, int initialSelectedColumn,
             CommandKeys key)
         {
             var tableViewMock = new TableViewMock();
@@ -155,10 +155,10 @@ namespace GameEngineTest.Graphics.GUI
             table.SelectCell(initialSelectedRow, initialSelectedColumn);
             tableViewMock.SelectionReturnValue = false;
 
-            table.HandleInput(key);
+            table.HandleKeyInput(key);
 
-            Assert.AreEqual(initialSelectedRow, table.cursorRow);
-            Assert.AreEqual(initialSelectedColumn, table.cursorColumn);
+            Assert.AreEqual(initialSelectedRow, table.CursorRow);
+            Assert.AreEqual(initialSelectedColumn, table.CursorColumn);
         }
 
         [TestCase(2, 2, 1, 0)]
@@ -179,7 +179,7 @@ namespace GameEngineTest.Graphics.GUI
         [TestCase(3, 2, 0, 0, CommandKeys.Down, 1, 0)]
         [TestCase(10, 10, 9, 9, CommandKeys.Up, 8, 9)]
         [TestCase(10, 10, 9, 9, CommandKeys.Left, 9, 8)]
-        public void HandleInput_StartingFromSomeCell_TableViewSelectCellIsCalled(int rows, int columns, int selectedRow, int selectedColumn, 
+        public void HandleKeyInput_StartingFromSomeCell_TableViewSelectCellIsCalled(int rows, int columns, int selectedRow, int selectedColumn,
                                           CommandKeys key, int newRow, int newColumns)
         {
             var tableViewMock = A.Fake<TableViewMock>(option => option.CallsBaseMethods());
@@ -187,7 +187,7 @@ namespace GameEngineTest.Graphics.GUI
             table.SelectCell(selectedRow, selectedColumn);
 
 
-            table.HandleInput(key);
+            table.HandleKeyInput(key);
 
             A.CallTo(() => tableViewMock.SetCellSelection(newRow, newColumns, true)).MustHaveHappened();
         }
@@ -253,7 +253,7 @@ namespace GameEngineTest.Graphics.GUI
         }
 
         [TestCase(20, 32, 5, 3, 10, 21, CommandKeys.Right, 11, 23)]
-        public void HandleInput_WithVisibleRowsColumnsSet_EndIndexAdjusts(int rows, int columns, int visibleRows, int visibleColumns,
+        public void HandleKeyInput_WithVisibleRowsColumnsSet_EndIndexAdjusts(int rows, int columns, int visibleRows, int visibleColumns,
             int selectedRow, int selectedColumn,
             CommandKeys key,
             int endRow, int endColumn)
@@ -263,14 +263,14 @@ namespace GameEngineTest.Graphics.GUI
             var endIndex = new TableIndex(endRow, endColumn);
 
             table.SelectCell(selectedRow, selectedColumn);
-            table.HandleInput(key);
+            table.HandleKeyInput(key);
 
             AssertIndex(endIndex, tableViewMock.EndIndex.Value);
 
         }
 
         [TestCase(20, 32, 5, 3, 10, 21, CommandKeys.Right, 6, 20)]
-        public void HandleInput_WithVisibleRowsColumnsSet_StartIndexAdjusts(int rows, int columns, int visibleRows, int visibleColumns,
+        public void HandleKeyInput_WithVisibleRowsColumnsSet_StartIndexAdjusts(int rows, int columns, int visibleRows, int visibleColumns,
             int selectedRow, int selectedColumn,
             CommandKeys key,
             int startRow, int startColumn)
@@ -280,7 +280,7 @@ namespace GameEngineTest.Graphics.GUI
             var startIndex = new TableIndex(startRow, startColumn);
 
             table.SelectCell(selectedRow, selectedColumn);
-            table.HandleInput(key);
+            table.HandleKeyInput(key);
 
             AssertIndex(startIndex, tableViewMock.StartIndex.Value);
 
@@ -299,8 +299,8 @@ namespace GameEngineTest.Graphics.GUI
 
             tableViewMock.RaiseTableResizeEvent(newRows, newColumns);
 
-            Assert.AreEqual(expectedRow, table.cursorRow);
-            Assert.AreEqual(expectedColumn, table.cursorColumn);
+            Assert.AreEqual(expectedRow, table.CursorRow);
+            Assert.AreEqual(expectedColumn, table.CursorColumn);
         }
 
         private static void AssertIndex(TableIndex idx, TableIndex idx2)

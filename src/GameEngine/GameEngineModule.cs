@@ -1,53 +1,47 @@
-﻿using GameEngine.Graphics;
+﻿using System;
+using System.Reflection;
+using GameEngine.GameEngineComponents;
+using GameEngine.GUI.Graphics;
+using GameEngine.GUI.Graphics.GUI;
+using GameEngine.GUI.Graphics.TableView;
 using GameEngine.Registry;
 using GameEngine.Utils;
 using Microsoft.Xna.Framework.Content;
-using System;
-using System.Reflection;
-using GameEngine.GameEngineComponents;
-using GameEngine.Graphics.GUI;
-using GameEngine.GUI.Graphics;
-using GameEngine.GUI.Graphics.General;
-using GameEngine.GUI.Graphics.GUI;
-using GameEngine.GUI.Graphics.TableView;
 
 namespace GameEngine
 {
     internal class GameEngineModule : IModule
     {
-        private GraphicResources resources;
-        readonly PokeEngine engine;
+        private readonly GraphicResources _resources;
+        private readonly PokeEngine _engine;
 
         public GameEngineModule(GraphicResources resources, PokeEngine engine)
         {
-            this.engine = engine;
-            this.resources = resources;
+            _engine = engine;
+            _resources = resources;
         }
 
         public void RegisterTypes(IGameTypeRegistry registry)
         {
-            registry.RegisterType<ISpriteFont>(r => resources.DefaultFont);
-            registry.RegisterType<ItemBox>(reg => new ItemBox(resources.DefaultArrowTexture, resources.DefaultFont));
-            registry.RegisterType<GraphicResources>(r => resources);
-            registry.RegisterType<Dialog>(reg => new Dialog(resources.DefaultBorderTexture));
-            registry.RegisterType<Line>(reg => new Line(resources.Pixel, resources.Cup));
+            registry.RegisterType(r => _resources.DefaultFont);
+            registry.RegisterType(reg => new ItemBox(_resources.DefaultArrowTexture, _resources.DefaultFont));
+            registry.RegisterType(r => _resources);
+            registry.RegisterType(reg => new Dialog(_resources.DefaultBorderTexture));
+            registry.RegisterType(reg => new Line(_resources.Pixel, _resources.Cup));
             registry.RegisterTypeAs(typeof(DefaultTableRenderer<>), typeof(ITableRenderer<>));
             registry.RegisterTypeAs(typeof(DefaultTableModel<>), typeof(ITableModel<>));
             registry.RegisterTypeAs<DefaultTextSplitter, ITextSplitter>();
             registry.RegisterTypeAs<TableSingleSelectionModel, ITableSelectionModel>();
-            registry.RegisterAsService<InputComponent, InputComponent>(reg => new InputComponent(resources.Configuration));
-            registry.RegisterAsService<ContentManager, ContentManager>(reg => resources.ContentManager);
-            registry.RegisterType<Pixel>(r => new Pixel(resources.Pixel));
-            registry.RegisterType<IEngineInterface>(r => engine);
+            registry.RegisterAsService<InputComponent, InputComponent>(reg => new InputComponent(_resources.Configuration));
+            registry.RegisterAsService<ContentManager, ContentManager>(reg => _resources.ContentManager);
+            registry.RegisterType(r => new Pixel(_resources.Pixel));
+            registry.RegisterType<IEngineInterface>(r => _engine);
             registry.ScanAssembly(Assembly.GetExecutingAssembly());
             registry.ScanAssembly(Assembly.GetAssembly(typeof(Line)));
             registry.ScanAssembly(Assembly.GetAssembly(typeof(IGameTypeRegistry)));
         }
 
-        public string ModuleName
-        {
-            get { return "GameEngine"; }
-        }
+        public string ModuleName => "GameEngine";
 
         public void Start(IGameComponentManager componentManager, IGameTypeRegistry registry)
         {

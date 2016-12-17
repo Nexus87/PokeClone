@@ -1,7 +1,6 @@
 ﻿using System;
 using Base.Data;
 using BattleLib.Components.BattleState;
-using GameEngine.Graphics;
 using GameEngine.GUI.Graphics;
 
 namespace BattleLib.Components.GraphicComponents
@@ -9,10 +8,10 @@ namespace BattleLib.Components.GraphicComponents
     public interface IBattleGraphicController : IGraphicComponent
     {
         event EventHandler ConditionSet;
-        event EventHandler OnHPSet;
-        event EventHandler OnPokemonSet;
+        event EventHandler HpSet;
+        event EventHandler PokemonSet;
 
-        void SetHP(ClientIdentifier id, int hp);
+        void SetHp(ClientIdentifier id, int hp);
         void SetPokemon(ClientIdentifier id, PokemonWrapper pokemon);
         void SetPokemonStatus(ClientIdentifier id, StatusCondition condition);
     }

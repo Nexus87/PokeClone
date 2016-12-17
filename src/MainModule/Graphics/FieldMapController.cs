@@ -1,6 +1,5 @@
 ﻿using System;
 using GameEngine;
-using GameEngine.Graphics;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Graphics.General;
 using GameEngine.Registry;
@@ -11,22 +10,22 @@ namespace MainModule.Graphics
     [GameService(typeof(IMapController))]
     public class FieldMapController : AbstractGraphicComponent, IMapController
     {
-        private float screenCenterX;
-        private float screenCenterY;
-        private readonly IMapLoader mapLoader;
-        private readonly ScreenConstants screenConstants;
-        private IMapGraphic mapGraphic;
-        private bool mapChanged;
+        private float _screenCenterX;
+        private float _screenCenterY;
+        private readonly IMapLoader _mapLoader;
+        private readonly ScreenConstants _screenConstants;
+        private IMapGraphic _mapGraphic;
+        private bool _mapChanged;
 
         public FieldMapController(IMapLoader mapLoader, ScreenConstants screenConstants)
         {
-            this.mapLoader = mapLoader;
-            this.screenConstants = screenConstants;
+            _mapLoader = mapLoader;
+            _screenConstants = screenConstants;
         }
 
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)
         {
-            mapGraphic.Draw(time, batch);
+            _mapGraphic.Draw(time, batch);
         }
 
         public override void Setup()
@@ -36,25 +35,25 @@ namespace MainModule.Graphics
         protected override void Update()
         {
             base.Update();
-            if(mapChanged)
+            if(_mapChanged)
             {
-                mapGraphic.Setup();
+                _mapGraphic.Setup();
                 CalculateScreenCenter();
-                mapChanged = false;
+                _mapChanged = false;
             }
-            var x = screenCenterX - mapGraphic.GetXPositionOfColumn(CenteredFieldX);
-            var y = screenCenterY - mapGraphic.GetYPositionOfRow(CenteredFieldY);
+            var x = _screenCenterX - _mapGraphic.GetXPositionOfColumn(CenteredFieldX);
+            var y = _screenCenterY - _mapGraphic.GetYPositionOfRow(CenteredFieldY);
 
-            mapGraphic.Area = new Rectangle((int) x, (int) y, mapGraphic.Area.Width, mapGraphic.Area.Height);
+            _mapGraphic.Area = new Rectangle((int) x, (int) y, _mapGraphic.Area.Width, _mapGraphic.Area.Height);
         }
 
         private void CalculateScreenCenter()
         {
-            var centerX = screenConstants.ScreenWidth / 2.0f;
-            var centerY = screenConstants.ScreenHeight / 2.0f;
+            var centerX = _screenConstants.ScreenWidth / 2.0f;
+            var centerY = _screenConstants.ScreenHeight / 2.0f;
 
-            screenCenterX = centerX - (mapGraphic.TextureSize / 2.0f);
-            screenCenterY = centerY - (mapGraphic.TextureSize / 2.0f);
+            _screenCenterX = centerX - (_mapGraphic.TextureSize / 2.0f);
+            _screenCenterY = centerY - (_mapGraphic.TextureSize / 2.0f);
         }
 
         internal int CenteredFieldX { get; private set; }
@@ -84,15 +83,15 @@ namespace MainModule.Graphics
                     CenterField(CenteredFieldX - 1, CenteredFieldY);
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException("moveDirection", moveDirection, null);
+                    throw new ArgumentOutOfRangeException(nameof(moveDirection), moveDirection, null);
             }
         }
 
         public void LoadMap(Map map)
         {
-            mapGraphic = mapLoader.LoadMap(map);
+            _mapGraphic = _mapLoader.LoadMap(map);
             Invalidate();
-            mapChanged = true;
+            _mapChanged = true;
         }
     }
 }

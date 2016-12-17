@@ -1,20 +1,20 @@
-﻿using GameEngine.Registry;
-using GameEngine.Utils;
-using Microsoft.Xna.Framework;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using GameEngine.Globals;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Graphics.General;
 using GameEngine.GUI.Graphics.GUI;
+using GameEngine.Registry;
+using GameEngine.Utils;
+using Microsoft.Xna.Framework;
 
-namespace GameEngine.Graphics.GUI
+namespace GameEngine
 {
-    [GameService(typeof(GUIManager))]
-    public class GUIManager : IInputHandler
+    [GameService(typeof(GuiManager))]
+    public class GuiManager : IInputHandler
     {
-        private IWidget FocusedWidget { get { return widgets.Count == 0 ? null : widgets.Last.Value; } }
-        private readonly LinkedList<IWidget> widgets = new LinkedList<IWidget>();
-        private readonly LinkedList<IWidget> notVisibleWidgets = new LinkedList<IWidget>();
+        private IWidget FocusedWidget => _widgets.Count == 0 ? null : _widgets.Last.Value;
+        private readonly LinkedList<IWidget> _widgets = new LinkedList<IWidget>();
+        private readonly LinkedList<IWidget> _notVisibleWidgets = new LinkedList<IWidget>();
 
         public void AddWidget(IWidget widget)
         {
@@ -23,9 +23,9 @@ namespace GameEngine.Graphics.GUI
             widget.VisibilityChanged += VisibilityChangedHandler;
 
             if (widget.IsVisible)
-                widgets.AddLast(widget);
+                _widgets.AddLast(widget);
             else
-                notVisibleWidgets.AddLast(widget);
+                _notVisibleWidgets.AddLast(widget);
         }
 
         private void VisibilityChangedHandler(object sender, VisibilityChangedEventArgs e)
@@ -33,13 +33,13 @@ namespace GameEngine.Graphics.GUI
             var widget = (IWidget)sender;
             if (e.Visible == false)
             {
-                widgets.Remove(widget);
-                notVisibleWidgets.AddLast(widget);
+                _widgets.Remove(widget);
+                _notVisibleWidgets.AddLast(widget);
             }
             else
             {
-                notVisibleWidgets.Remove(widget);
-                widgets.AddLast(widget);
+                _notVisibleWidgets.Remove(widget);
+                _widgets.AddLast(widget);
             }
         }
 
@@ -57,30 +57,28 @@ namespace GameEngine.Graphics.GUI
             if (widget == null)
                 return false;
 
-            return widgets.Contains(widget) || notVisibleWidgets.Contains(widget);
+            return _widgets.Contains(widget) || _notVisibleWidgets.Contains(widget);
         }
 
         private void RemoveWidgetFromList(IWidget widget)
         {
             if (widget.IsVisible)
-                widgets.Remove(widget);
+                _widgets.Remove(widget);
             else
-                notVisibleWidgets.Remove(widget);
+                _notVisibleWidgets.Remove(widget);
         }
 
-        public GUIManager()
+        public GuiManager()
         {
             IsActive = false;
         }
 
         private bool IsActive { get; set; }
 
-        public bool HandleInput(CommandKeys key)
+        public void HandleKeyInput(CommandKeys key)
         {
-            if (FocusedWidget == null)
-                return false;
 
-            return FocusedWidget.HandleInput(key);
+            FocusedWidget?.HandleKeyInput(key);
         }
 
         public void Close()
@@ -92,7 +90,7 @@ namespace GameEngine.Graphics.GUI
         {
             if (!IsActive)
                 return;
-            foreach (var w in widgets)
+            foreach (var w in _widgets)
                 w.Draw(time, batch);
         }
 
@@ -103,9 +101,9 @@ namespace GameEngine.Graphics.GUI
 
         public void Setup()
         {
-            foreach (var w in widgets)
+            foreach (var w in _widgets)
                 w.Setup();
-            foreach (var w in notVisibleWidgets)
+            foreach (var w in _notVisibleWidgets)
                 w.Setup();
         }
     }

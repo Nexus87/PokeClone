@@ -1,5 +1,4 @@
 ﻿using FakeItEasy;
-using GameEngine.Graphics;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Graphics.General;
 using Microsoft.Xna.Framework;

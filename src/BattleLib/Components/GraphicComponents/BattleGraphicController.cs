@@ -18,7 +18,7 @@ namespace BattleLib.Components.GraphicComponents
         private readonly Dictionary<ClientIdentifier, PokemonSprite> _sprites = new Dictionary<ClientIdentifier, PokemonSprite>();
 
         public BattleGraphicController(ScreenConstants screen, 
-            PlayerPokemonDataView playerView, AIPokemonDataView aiView, 
+            PlayerPokemonDataView playerView, AiPokemonDataView aiView, 
             PokemonSprite playerSprite, PokemonSprite aiSprite,
             BattleData data)
         {
@@ -35,10 +35,10 @@ namespace BattleLib.Components.GraphicComponents
             _sprites[ai] = aiSprite;
 
             foreach (var view in _dataViews.Values)
-                view.HpUpdated += delegate { OnHPSet?.Invoke(this, null); };
+                view.HpUpdated += delegate { HpSet?.Invoke(this, null); };
 
             foreach (var sprite in _sprites.Values)
-                sprite.OnPokemonAppeared += delegate { OnPokemonSet?.Invoke(this, null); };
+                sprite.OnPokemonAppeared += delegate { PokemonSet?.Invoke(this, null); };
 
             initAIGraphic(aiView, aiSprite, screen);
             initPlayerGraphic(playerView, playerSprite, screen);
@@ -50,15 +50,15 @@ namespace BattleLib.Components.GraphicComponents
             remove { throw new NotImplementedException(); }
         }
 
-        public event EventHandler OnHPSet;
-        public event EventHandler OnPokemonSet;
+        public event EventHandler HpSet;
+        public event EventHandler PokemonSet;
 
         public void PlayAttackAnimation(ClientIdentifier id)
         {
             _sprites[id].PlayAttackAnimation();
         }
 
-        public void SetHP(ClientIdentifier id, int value)
+        public void SetHp(ClientIdentifier id, int value)
         {
             _dataViews[id].SetHp(value);
         }

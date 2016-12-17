@@ -1,6 +1,5 @@
 ﻿using GameEngine.Utils;
 using System;
-using GameEngine.Graphics;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Graphics.TableView;
 
@@ -8,23 +7,23 @@ namespace GameEngineTest.TestUtils
 {
     public class TableRendererMock<T> : ITableRenderer<T>
     {
-        public T[,] entries = new T[0, 0];
-        public bool[,] selections = new bool[0,0];
-        public TableComponentMock<T>[,] components = new TableComponentMock<T>[0,0];
+        public T[,] Entries = new T[0, 0];
+        public bool[,] Selections = new bool[0,0];
+        public TableComponentMock<T>[,] Components = new TableComponentMock<T>[0,0];
 
         public IGraphicComponent GetComponent(int row, int column, T data, bool isSelected)
         {
-            entries = Resize(row, column, entries);
-            selections = Resize(row, column, selections);
-            components = Resize(row, column, components);
+            Entries = Resize(row, column, Entries);
+            Selections = Resize(row, column, Selections);
+            Components = Resize(row, column, Components);
 
-            entries[row, column] = data;
-            selections[row, column] = isSelected;
+            Entries[row, column] = data;
+            Selections[row, column] = isSelected;
 
-            if (components[row, column] == null)
-                components[row, column] = new TableComponentMock<T> { Row = row, Column = column, WasDrawn = false };
+            if (Components[row, column] == null)
+                Components[row, column] = new TableComponentMock<T> { Row = row, Column = column, WasDrawn = false };
 
-            var component = components[row, column];
+            var component = Components[row, column];
             component.Data = data;
             component.IsSelected = isSelected;
 
@@ -33,22 +32,22 @@ namespace GameEngineTest.TestUtils
 
         public void ClearDrawnComponents()
         {
-            foreach (var c in components)
+            foreach (var c in Components)
             {
                 if (c != null)
                     c.WasDrawn = false;
             }
         }
 
-        private S[,] Resize<S>(int row, int column, S[,] source)
+        private static TS[,] Resize<TS>(int row, int column, TS[,] source)
         {
             if (row >= source.Rows() || column >= source.Columns())
             {
                 // Always grow
-                int newRows = Math.Max(source.Rows(), row + 1);
-                int newColumns = Math.Max(source.Columns(), column + 1);
+                var newRows = Math.Max(source.Rows(), row + 1);
+                var newColumns = Math.Max(source.Columns(), column + 1);
 
-                var tmp = new S[newRows, newColumns];
+                var tmp = new TS[newRows, newColumns];
                 source.Copy(tmp);
                 return tmp;
             }
@@ -58,9 +57,9 @@ namespace GameEngineTest.TestUtils
 
         public void Reset()
         {
-            entries = new T[0, 0];
-            selections = new bool[0, 0];
-            components = new TableComponentMock<T>[0, 0];
+            Entries = new T[0, 0];
+            Selections = new bool[0, 0];
+            Components = new TableComponentMock<T>[0, 0];
         }
     }
 }

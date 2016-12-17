@@ -1,5 +1,4 @@
 ﻿using System;
-using GameEngine.Graphics;
 using GameEngine.GUI.Graphics;
 using GameEngine.Utils;
 using Microsoft.Xna.Framework;
@@ -13,22 +12,22 @@ namespace GameEngineTest.TestUtils
         public Vector2 Size;
 
         public Color Color;
-        public void IsInConstraints(float X, float Y, float Width, float Height)
+        public void IsInConstraints(float x, float y, float width, float height)
         {
-            float realWidth = Math.Max(0, Width);
-            float realHeight = Math.Max(0, Height);
+            var realWidth = Math.Max(0, width);
+            var realHeight = Math.Max(0, height);
 
             if (Size.X.AlmostEqual(0) || Size.Y.AlmostEqual(0))
                 return;
 
-            Assert.GreaterOrEqual(Position.X, X);
-            Assert.GreaterOrEqual(Position.Y, Y);
+            Assert.GreaterOrEqual(Position.X, x);
+            Assert.GreaterOrEqual(Position.Y, y);
 
-            Assert.LessOrEqual(Position.X, X + realWidth);
-            Assert.LessOrEqual(Position.Y, Y + realHeight);
+            Assert.LessOrEqual(Position.X, x + realWidth);
+            Assert.LessOrEqual(Position.Y, y + realHeight);
 
-            Assert.LessOrEqual(Position.X + Size.X, X + realWidth);
-            Assert.LessOrEqual(Position.Y + Size.Y, Y + realHeight);
+            Assert.LessOrEqual(Position.X + Size.X, x + realWidth);
+            Assert.LessOrEqual(Position.Y + Size.Y, y + realHeight);
         }
 
         public void IsInConstraints(IGraphicComponent component)

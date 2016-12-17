@@ -1,5 +1,4 @@
 ﻿using System;
-using GameEngine.Graphics;
 using GameEngine.GUI.Graphics;
 using GameEngine.Utils;
 using Microsoft.Xna.Framework;
@@ -8,18 +7,18 @@ namespace BattleLib.Components.GraphicComponents
 {
     public class HpResizeAnimation : IAnimation
     {
-        private int currentHP;
-        private readonly HpLine line;
-        private readonly bool lower;
-        private readonly int targetHP;
+        private int _currentHp;
+        private readonly HpLine _line;
+        private readonly bool _lower;
+        private readonly int _targetHp;
 
         public HpResizeAnimation(int startHp, int targetHp, HpLine line)
         {
-            this.targetHP = targetHp;
-            this.line = line;
-            currentHP = startHp;
+            _targetHp = targetHp;
+            _line = line;
+            _currentHp = startHp;
 
-            lower = startHp > targetHp;
+            _lower = startHp > targetHp;
         }
 
         public HpResizeAnimation(int targetHp, HpLine line)
@@ -31,22 +30,22 @@ namespace BattleLib.Components.GraphicComponents
 
         public void Update(GameTime time, IGraphicComponent component)
         {
-            if (targetHP == currentHP)
+            if (_targetHp == _currentHp)
             {
-                if (AnimationFinished != null) AnimationFinished(this, null);
-                currentHP = 0;
+                AnimationFinished?.Invoke(this, null);
+                _currentHp = 0;
                 return;
             }
 
             if (!time.ElapsedGameTime.TotalMilliseconds.AlmostEqual(0))
                 return;
 
-            if (lower)
-                currentHP = Math.Max(currentHP - 1, targetHP);
+            if (_lower)
+                _currentHp = Math.Max(_currentHp - 1, _targetHp);
             else
-                currentHP = Math.Min(currentHP + 1, targetHP);
+                _currentHp = Math.Min(_currentHp + 1, _targetHp);
 
-            line.Current = currentHP;
+            _line.Current = _currentHp;
         }
     }
 }

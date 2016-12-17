@@ -79,7 +79,7 @@ namespace GameEngineTest.TestUtils
         public IEnumerable<IGraphicComponent> Children { get; } = new List<IGraphicComponent>();
         public bool IsSelected { get; set; }
         public bool IsSelectable { get; set; }
-        public void HandleKeyInput(CommandKeys key)
+        public virtual void HandleKeyInput(CommandKeys key)
         {
             throw new NotImplementedException();
         }

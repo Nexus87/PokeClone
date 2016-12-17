@@ -20,7 +20,7 @@ namespace GameEngine.GUI.Graphics
     /// Changed of the position or size is signaled by the corresponding event
     /// SizeChanged and PositionChanged.
     /// </remarks>
-    public interface IGraphicComponent
+    public interface IGraphicComponent : IInputHandler
     {
         /// <summary>
         /// Event is triggered, when IsVisible changes
@@ -77,6 +77,5 @@ namespace GameEngine.GUI.Graphics
         IEnumerable<IGraphicComponent> Children { get; }
         bool IsSelected { get; set; }
         bool IsSelectable { get; set; }
-        void HandleKeyInput(CommandKeys key);
     }
 }

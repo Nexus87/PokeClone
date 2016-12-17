@@ -1,5 +1,4 @@
-﻿using GameEngine.Graphics;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +24,7 @@ namespace GameEngineTest.Graphics
             Assert.IsTrue(model.IsSelected(0, 0));
         }
 
-        [TestCaseSource("ValidIndices")]
+        [TestCaseSource(nameof(ValidIndices))]
         public void SelectionChanged_SelectIndex_IsCalledTwice(int row, int column)
         {
             var model = new TableSingleSelectionModel();
@@ -37,7 +36,7 @@ namespace GameEngineTest.Graphics
             Assert.AreEqual(2, args.Count);
         }
 
-        [TestCaseSource("ValidIndices")]
+        [TestCaseSource(nameof(ValidIndices))]
         public void SelectionChanged_SelectIndex_DefaultIndexIsUnselected(int row, int column)
         {
             var model = new TableSingleSelectionModel();
@@ -50,7 +49,7 @@ namespace GameEngineTest.Graphics
             AssertContainsEvent(expectedEvent, args);
         }
 
-        [TestCaseSource("ValidIndices")]
+        [TestCaseSource(nameof(ValidIndices))]
         public void SelectionChanged_SelectIndex_NewIndexIsSelected(int row, int column)
         {
             var model = new TableSingleSelectionModel();
@@ -82,7 +81,7 @@ namespace GameEngineTest.Graphics
             AssertContainsEvent(expectedArgument, args);
         }
 
-        [TestCaseSource("ValidIndices")]
+        [TestCaseSource(nameof(ValidIndices))]
         public void SelectionChanged_SelectSameIndexTwice_NoEventRaised(int row, int column)
         {
             var model = new TableSingleSelectionModel();
@@ -119,19 +118,19 @@ namespace GameEngineTest.Graphics
             new TestCaseData(-10, -10)
         };
 
-        [TestCaseSource("InvalidIndices")]
+        [TestCaseSource(nameof(InvalidIndices))]
         public void SelectIndex_InvalidIndexes_ThrowsException(int row, int column)
         {
             var model = new TableSingleSelectionModel();
             Assert.Throws(typeof(ArgumentOutOfRangeException), delegate { model.SelectIndex(row, column); });
         }
-        [TestCaseSource("InvalidIndices")]
+        [TestCaseSource(nameof(InvalidIndices))]
         public void UnselectIndex_InvalidIndexes_ThrowsException(int row, int column)
         {
             var model = new TableSingleSelectionModel();
             Assert.Throws(typeof(ArgumentOutOfRangeException), delegate { model.UnselectIndex(row, column); });
         }
-        [TestCaseSource("InvalidIndices")]
+        [TestCaseSource(nameof(InvalidIndices))]
         public void IsSelected_InvalidIndexes_ThrowsException(int row, int column)
         {
             var model = new TableSingleSelectionModel();

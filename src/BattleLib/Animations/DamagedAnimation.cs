@@ -1,5 +1,4 @@
-﻿using GameEngine.Graphics;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using System;
 using GameEngine.GUI.Graphics;
 
@@ -8,25 +7,25 @@ namespace BattleLib.Animations
     public class DamagedAnimation  : IAnimation
     {
         public event EventHandler AnimationFinished = delegate { };
-        private readonly long blinkTime;
-        private bool firstRun = true;
-        private GameTime lastTime;
-        private readonly int numberOfBlinks;
-        private int currentNumberOfBlinks;
+        private readonly long _blinkTime;
+        private bool _firstRun = true;
+        private GameTime _lastTime;
+        private readonly int _numberOfBlinks;
+        private int _currentNumberOfBlinks;
 
         public DamagedAnimation(long blinkTime, int numberOfBlinks)
         {
-            this.blinkTime = blinkTime;
-            this.numberOfBlinks = numberOfBlinks;
+            _blinkTime = blinkTime;
+            _numberOfBlinks = numberOfBlinks;
         }
         public void Update(GameTime time, IGraphicComponent component)
         {
-            if (!IsTimeIntervalOver(time, lastTime))
+            if (!IsTimeIntervalOver(time, _lastTime))
                 return;
 
-            lastTime = time;
+            _lastTime = time;
             component.IsVisible = !component.IsVisible;
-            currentNumberOfBlinks++;
+            _currentNumberOfBlinks++;
 
             if (AnimationDone())
                 AnimationFinished(this, EventArgs.Empty);
@@ -34,19 +33,19 @@ namespace BattleLib.Animations
 
         private bool AnimationDone()
         {
-            return currentNumberOfBlinks == 2 * numberOfBlinks;
+            return _currentNumberOfBlinks == 2 * _numberOfBlinks;
         }
 
         private bool IsTimeIntervalOver(GameTime time, GameTime previousTime)
         {
-            if (firstRun)
+            if (_firstRun)
             {
-                firstRun = false;
+                _firstRun = false;
                 return true;
             }
 
             var diff = time.TotalGameTime - previousTime.TotalGameTime;
-            return diff.Milliseconds >= blinkTime;
+            return diff.Milliseconds >= _blinkTime;
         }
     }
 }

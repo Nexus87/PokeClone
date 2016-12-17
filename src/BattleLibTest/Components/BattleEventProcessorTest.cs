@@ -79,7 +79,7 @@ namespace BattleLibTest.Components
             _eventMock.RaiseHPChangedEvent();
             _eventQueue.DispatchAllEvents();
 
-            A.CallTo(() => _graphicMock.SetHP(A<ClientIdentifier>.Ignored, 10)).MustHaveHappened(Repeated.Exactly.Once);
+            A.CallTo(() => _graphicMock.SetHp(A<ClientIdentifier>.Ignored, 10)).MustHaveHappened(Repeated.Exactly.Once);
         }
 
         [TestCase]
