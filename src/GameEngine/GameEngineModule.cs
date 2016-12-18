@@ -26,11 +26,9 @@ namespace GameEngine
         public void RegisterTypes(IGameTypeRegistry registry)
         {
             registry.RegisterType(r => _resources.DefaultFont);
-            registry.RegisterType(reg => new ItemBox(_resources.DefaultArrowTexture, _resources.DefaultFont));
             registry.RegisterType(r => _resources);
             registry.RegisterType(reg => new Dialog(_resources.DefaultBorderTexture));
             registry.RegisterType(reg => new Line(_resources.Pixel, _resources.Cup));
-            registry.RegisterTypeAs(typeof(DefaultTableRenderer<>), typeof(ITableRenderer<>));
             registry.RegisterTypeAs(typeof(DefaultTableModel<>), typeof(ITableModel<>));
             registry.RegisterTypeAs<DefaultTextSplitter, ITextSplitter>();
             registry.RegisterTypeAs<TableSingleSelectionModel, ITableSelectionModel>();

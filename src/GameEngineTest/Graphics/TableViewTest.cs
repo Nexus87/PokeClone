@@ -208,8 +208,8 @@ namespace GameEngineTest.Graphics
             var selectionModelStub = A.Fake<ITableSelectionModel>();
             SetDimension(modelStub, 10, 20);
             var table = CreateTable(modelStub, tableRendererMock, selectionModelStub);
-            var row = 4;
-            var column = 5;
+            const int row = 4;
+            const int column = 5;
             var eventArgs = new SelectionChangedEventArgs(row, column, true);
 
             table.Setup();
@@ -259,7 +259,7 @@ namespace GameEngineTest.Graphics
             return CreateTable(modelMock, new TableRendererMock<object>(), A.Fake<ITableSelectionModel>(), grid);
         }
 
-        private static TableView<object> CreateTable(ITableModel<object> modelMock, ITableRenderer<object> renderer, ITableSelectionModel selectionModelMock, ITableGrid grid = null)
+        private static TableView<object> CreateTable(ITableModel<object> modelMock, TableRendererMock<object> renderer, ITableSelectionModel selectionModelMock, ITableGrid grid = null)
         {
             if (grid == null)
                 grid = new TableGrid();

@@ -7,7 +7,7 @@ using GameEngine.Utils;
 namespace BattleLib.Components.GraphicComponents
 {
     [GameType]
-    public class PokemonTableRenderer : ITableRenderer<Pokemon>
+    public class PokemonTableRenderer
     {
         private readonly IGameTypeRegistry _registry;
         private readonly Table<SelectableContainer<PokemonMenuLine>> _components = new Table<SelectableContainer<PokemonMenuLine>>();

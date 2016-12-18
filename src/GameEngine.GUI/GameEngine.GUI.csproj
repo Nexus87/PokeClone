@@ -88,7 +88,6 @@
     <Compile Include="Graphics\ISelectable.cs" />
     <Compile Include="Graphics\ISelectableGraphicComponent.cs" />
     <Compile Include="Graphics\ISelectableTextComponent.cs" />
-    <Compile Include="Graphics\ItemBox.cs" />
     <Compile Include="Graphics\ITextGraphicComponent.cs" />
     <Compile Include="Graphics\ITextGraphicContainer.cs" />
     <Compile Include="Graphics\Line.cs" />
@@ -104,11 +103,9 @@
     <Compile Include="Graphics\SpriteSheetTexture.cs" />
     <Compile Include="Graphics\TableView\DataChangedEventArgs.cs" />
     <Compile Include="Graphics\TableView\DefaultTableModel.cs" />
-    <Compile Include="Graphics\TableView\DefaultTableRenderer.cs" />
     <Compile Include="Graphics\TableView\IndexValidator.cs" />
     <Compile Include="Graphics\TableView\ITableGrid.cs" />
     <Compile Include="Graphics\TableView\ITableModel.cs" />
-    <Compile Include="Graphics\TableView\ITableRenderer.cs" />
     <Compile Include="Graphics\TableView\ITableSelectionModel.cs" />
     <Compile Include="Graphics\TableView\ITableView.cs" />
     <Compile Include="Graphics\TableView\TableGrid.cs" />
@@ -158,6 +155,7 @@
   <ItemGroup>
     <Folder Include="Graphics" />
     <Folder Include="Graphics\GUI" />
+    <Folder Include="Graphics\TableView" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup />

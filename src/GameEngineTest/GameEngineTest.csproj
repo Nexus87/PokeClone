@@ -77,8 +77,6 @@
     <Compile Include="Graphics\GUI\TableWidgetTest.cs" />
     <Compile Include="Graphics\IGraphicComponentTest.cs" />
     <Compile Include="Graphics\IItemModelTest.cs" />
-    <Compile Include="Graphics\ITableRendererTest.cs" />
-    <Compile Include="Graphics\ItemBoxTest.cs" />
     <Compile Include="Graphics\LineTest.cs" />
     <Compile Include="Graphics\MultiLayeredComponentTest.cs" />
     <Compile Include="Graphics\MultilineTextboxTest.cs" />
@@ -87,7 +85,6 @@
     <Compile Include="Graphics\SplitterStub.cs" />
     <Compile Include="Graphics\SpriteSheetTextureTest.cs" />
     <Compile Include="Graphics\TableGridTest.cs" />
-    <Compile Include="Graphics\TableSingleSelectionModelTest.cs" />
     <Compile Include="Graphics\TableViewTest.cs" />
     <Compile Include="Graphics\TestableMultilineTextBox.cs" />
     <Compile Include="Graphics\TestType.cs" />

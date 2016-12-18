@@ -5,7 +5,7 @@ using GameEngine.GUI.Graphics.TableView;
 
 namespace GameEngineTest.TestUtils
 {
-    public class TableRendererMock<T> : ITableRenderer<T>
+    public class TableRendererMock<T>
     {
         public T[,] Entries = new T[0, 0];
         public TableComponentMock<T>[,] Components = new TableComponentMock<T>[0,0];
