@@ -78,7 +78,6 @@
     <Compile Include="Graphics\IGraphicComponentTest.cs" />
     <Compile Include="Graphics\IItemModelTest.cs" />
     <Compile Include="Graphics\LineTest.cs" />
-    <Compile Include="Graphics\MultiLayeredComponentTest.cs" />
     <Compile Include="Graphics\MultilineTextboxTest.cs" />
     <Compile Include="Graphics\NullGraphicObjectTest.cs" />
     <Compile Include="Graphics\SelectableContainerTest.cs" />
@@ -105,7 +104,6 @@
     <Compile Include="TestUtils\Extensions.cs" />
     <Compile Include="TestUtils\GraphicComponentMock.cs" />
     <Compile Include="TestUtils\KeyboardManagerStub.cs" />
-    <Compile Include="TestUtils\SelectableGraphicComponentMock.cs" />
     <Compile Include="TestUtils\SpriteBatchMock.cs" />
     <Compile Include="TestUtils\TableComponentMock.cs" />
     <Compile Include="TestUtils\TableModelStub.cs" />

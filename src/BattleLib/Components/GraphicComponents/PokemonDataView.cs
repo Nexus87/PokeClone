@@ -1,6 +1,7 @@
 ﻿using System;
 using BattleLib.Components.BattleState;
 using GameEngine.GUI.Graphics;
+using GameEngine.GUI.Graphics.General;
 using GameEngine.GUI.Panels;
 using Microsoft.Xna.Framework;
 using ValueType = GameEngine.GUI.Panels.ValueType;
@@ -9,7 +10,7 @@ namespace BattleLib.Components.GraphicComponents
 {
     // TODO come up with a better solution for this
 
-    public class PokemonDataView : ForwardingGraphicComponent<Grid>
+    public class PokemonDataView : AbstractGraphicComponent
     {
         public event EventHandler HpUpdated;
 
@@ -19,9 +20,8 @@ namespace BattleLib.Components.GraphicComponents
         }
 
         public PokemonDataView(HpLine line, TextBox nameBox, TextBox levelBox, TextBox hpBox, HpText hpTextBox)
-            : base(new Grid())
         {
-            var container = InnerComponent;
+            _container = new Grid();
 
             _hpLine = line;
             _lvl = levelBox;
@@ -54,18 +54,18 @@ namespace BattleLib.Components.GraphicComponents
             hpLineContainer.SetComponent(_hpLine, 0, 1);
 
 
-            container.AddPercentColumn();
-            container.AddPercentRow();
-            container.AddAbsoluteRow(10f);
-            container.AddAbsoluteRow(_lvl.PreferredTextHeight);
-            container.AddAbsoluteRow(10f);
-            container.AddAbsoluteRow(hpBox.PreferredTextHeight);
+            _container.AddPercentColumn();
+            _container.AddPercentRow();
+            _container.AddAbsoluteRow(10f);
+            _container.AddAbsoluteRow(_lvl.PreferredTextHeight);
+            _container.AddAbsoluteRow(10f);
+            _container.AddAbsoluteRow(hpBox.PreferredTextHeight);
 
-            container.SetComponent(_name, 0, 0);
-            container.SetComponent(new NullGraphicObject(), 1, 0);
-            container.SetComponent(lvlContainer, 2, 0);
-            container.SetComponent(new NullGraphicObject(), 3, 0);
-            container.SetComponent(hpLineContainer, 4, 0);
+            _container.SetComponent(_name, 0, 0);
+            _container.SetComponent(new NullGraphicObject(), 1, 0);
+            _container.SetComponent(lvlContainer, 2, 0);
+            _container.SetComponent(new NullGraphicObject(), 3, 0);
+            _container.SetComponent(hpLineContainer, 4, 0);
 
             if (hpTextBox != null)
             {
@@ -80,10 +80,10 @@ namespace BattleLib.Components.GraphicComponents
                 hpTextContainer.SetComponent(new NullGraphicObject(), 0, 0);
                 hpTextContainer.SetComponent(_hpText, 0, 1);
 
-                container.AddRow(new RowProperty{Type = ValueType.Absolute, Height = 10f});
-                container.AddRow(new RowProperty{Type = ValueType.Absolute, Height = _hpText.PreferredTextHeight});
-                container.SetComponent(new NullGraphicObject(), 5, 0);
-                container.SetComponent(hpTextContainer, 6, 0);
+                _container.AddRow(new RowProperty{Type = ValueType.Absolute, Height = 10f});
+                _container.AddRow(new RowProperty{Type = ValueType.Absolute, Height = _hpText.PreferredTextHeight});
+                _container.SetComponent(new NullGraphicObject(), 5, 0);
+                _container.SetComponent(hpTextContainer, 6, 0);
             }
         }
 
@@ -91,6 +91,7 @@ namespace BattleLib.Components.GraphicComponents
         private readonly HpText _hpText;
         private readonly TextBox _name;
         private readonly TextBox _lvl;
+        private readonly Grid _container;
 
 
         public void SetHp(int newHp)
@@ -113,6 +114,12 @@ namespace BattleLib.Components.GraphicComponents
 
         protected override void Update()
         {
+            _container.SetCoordinates(this);
+        }
+
+        protected override void DrawComponent(GameTime time, ISpriteBatch batch)
+        {
+            _container.Draw(time, batch);
         }
 
         private class SetHpAnimation : IAnimation

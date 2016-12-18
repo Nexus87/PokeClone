@@ -2,13 +2,9 @@
 
 namespace GameEngineTest.TestUtils
 {
-    public class TableComponentMock<T> : TextGraphicComponentMock, ISelectableTextComponent
+    public class TableComponentMock<T> : TextGraphicComponentMock
     {
         public T Data { get; set; }
-
-
-        public void Select() { IsSelected = true; }
-        public void Unselect() { IsSelected = false; }
 
     }
 }

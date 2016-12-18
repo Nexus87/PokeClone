@@ -90,9 +90,9 @@ namespace BattleLib.Components.GraphicComponents
 
             _icon.VerticalPolicy = _icon.HorizontalPolicy = ResizePolicy.Fixed;
 
-            dataContainer.AddPercentRow();
-            dataContainer.AddAutoColumn();
-            dataContainer.AddPercentColumn();
+            iconDataContainer.AddPercentRow();
+            iconDataContainer.AddAutoColumn();
+            iconDataContainer.AddPercentColumn();
             iconDataContainer.SetComponent(_icon, 0, 0);
             iconDataContainer.SetComponent(dataContainer, 0, 1);
 
@@ -104,7 +104,8 @@ namespace BattleLib.Components.GraphicComponents
         protected override void Update()
         {
             _mainContainer.SetCoordinates(this);
-            _icon.SetCoordinates(_icon.Area.X, _icon.Area.Y, _mainContainer.Area.Height, _mainContainer.Area.Height);
+            _icon.PreferredHeight = _mainContainer.Area.Height;
+            _icon.PreferredWidth = _mainContainer.Area.Height;
         }
     }
 }

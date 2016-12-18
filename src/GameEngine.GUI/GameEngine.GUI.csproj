@@ -65,9 +65,7 @@
     <Compile Include="Controlls\ListCell.cs" />
     <Compile Include="Controlls\ListView.cs" />
     <Compile Include="Graphics\AbstractGraphicComponent.cs" />
-    <Compile Include="Graphics\AnimatedTextureBox.cs" />
     <Compile Include="Graphics\Extensions.cs" />
-    <Compile Include="Graphics\ForwardingGraphicComponent.cs" />
     <Compile Include="Graphics\General\ISpriteBatch.cs" />
     <Compile Include="Graphics\General\ISpriteFont.cs" />
     <Compile Include="Graphics\General\ITexture2D.cs" />
@@ -85,17 +83,12 @@
     <Compile Include="Graphics\IGraphicalText.cs" />
     <Compile Include="Graphics\IGraphicComponent.cs" />
     <Compile Include="Graphics\IImageBox.cs" />
-    <Compile Include="Graphics\ISelectable.cs" />
-    <Compile Include="Graphics\ISelectableGraphicComponent.cs" />
-    <Compile Include="Graphics\ISelectableTextComponent.cs" />
     <Compile Include="Graphics\ITextGraphicComponent.cs" />
     <Compile Include="Graphics\ITextGraphicContainer.cs" />
     <Compile Include="Graphics\Line.cs" />
-    <Compile Include="Graphics\MultiLayeredComponent.cs" />
     <Compile Include="Graphics\MultlineTextBox.cs" />
     <Compile Include="Graphics\NullGraphicObject.cs" />
     <Compile Include="Graphics\Pixel.cs" />
-    <Compile Include="Graphics\ResizeAnimation.cs" />
     <Compile Include="Graphics\ResizePolicy.cs" />
     <Compile Include="Graphics\SelectableContainer.cs" />
     <Compile Include="Graphics\SelectionChangedEventArgs.cs" />
@@ -124,6 +117,7 @@
     <Compile Include="Panels\GridCell.cs" />
     <Compile Include="Panels\GridExtensions.cs" />
     <Compile Include="Panels\GridInputHandler.cs" />
+    <Compile Include="Panels\ScrollArea.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Renderers\AbstractRenderer.cs" />
     <Compile Include="Renderers\IButtonRenderer.cs" />

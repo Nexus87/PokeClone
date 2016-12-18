@@ -1,15 +1,13 @@
-﻿using System;
-using GameEngine.GUI.Graphics.General;
+﻿using GameEngine.GUI.Graphics.General;
 using GameEngine.GUI.Panels;
 using GameEngine.Registry;
 using Microsoft.Xna.Framework;
-using NVorbis;
 using ValueType = GameEngine.GUI.Panels.ValueType;
 
 namespace GameEngine.GUI.Graphics
 {
     [GameType]
-    public class SelectableContainer<T> : AbstractGraphicComponent, ISelectableGraphicComponent where T : IGraphicComponent
+    public class SelectableContainer<T> : AbstractGraphicComponent where T : IGraphicComponent
     {
         private readonly ArrowDecorator _arrowBox;
 
@@ -74,6 +72,7 @@ namespace GameEngine.GUI.Graphics
         public override void Setup()
         {
             _grid.SetComponent(_arrowBox, 0, 0);
+            _grid.Setup();
         }
 
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)

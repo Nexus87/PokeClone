@@ -43,7 +43,7 @@ namespace GameEngineTest.Graphics
                 ColumnsXAscending(components, row);
         }
 
-        private void ColumnsXAscending(Table<SelectableGraphicComponentMock> components, int row)
+        private static void ColumnsXAscending(ITable<GraphicComponentMock> components, int row)
         {
             for (var column = 0; column < components.Columns - 1; column++)
                 Assert.LessOrEqual(components[row, column].XPosition(), components[row, column + 1].XPosition());
@@ -61,7 +61,7 @@ namespace GameEngineTest.Graphics
                 RowsYAscending(components, column);
         }
 
-        private void RowsYAscending(Table<SelectableGraphicComponentMock> components, int column)
+        private static void RowsYAscending(ITable<GraphicComponentMock> components, int column)
         {
             for (var row = 0; row < components.Rows - 1; row++)
                 Assert.LessOrEqual(components[row, column].YPosition(), components[row + 1, column].YPosition());
@@ -108,7 +108,7 @@ namespace GameEngineTest.Graphics
             grid.StartIndex = startIndex;
         }
 
-        private static void ValidateComponentsDrawn(Table<SelectableGraphicComponentMock> components, TableIndex startIndex, TableIndex endIndex)
+        private static void ValidateComponentsDrawn(Table<GraphicComponentMock> components, TableIndex startIndex, TableIndex endIndex)
         {
             var drawnArea = components.CreateSubtable(startIndex, endIndex);
             foreach (var c in components)
@@ -263,28 +263,28 @@ namespace GameEngineTest.Graphics
             });
         }
 
-        private void AssertIndicesAreEqual(TableIndex expectedIndex, TableIndex tableIndex)
+        private static void AssertIndicesAreEqual(TableIndex expectedIndex, TableIndex tableIndex)
         {
             Assert.AreEqual(expectedIndex.Row, tableIndex.Row);
             Assert.AreEqual(expectedIndex.Column, tableIndex.Column);
         }
 
-        private TableGrid CreateDefaultGrid()
+        private static TableGrid CreateDefaultGrid()
         {
             var grid = CreateGrid();
             grid.SetCoordinates(X, Y, Width, Height);
             return grid;
         }
 
-        private Table<SelectableGraphicComponentMock> FillGrid(TableGrid grid)
+        private static Table<GraphicComponentMock> FillGrid(ITableGrid grid)
         {
-            var components = new Table<SelectableGraphicComponentMock>();
+            var components = new Table<GraphicComponentMock>();
 
             for (var row = 0; row < grid.Rows; row++)
             {
                 for (var column = 0; column < grid.Columns; column++)
                 {
-                    var component = new SelectableGraphicComponentMock();
+                    var component = new GraphicComponentMock();
                     components[row, column] = component;
                     grid.SetComponentAt(row, column, component);
                 }

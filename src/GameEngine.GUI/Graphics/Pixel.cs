@@ -1,16 +1,30 @@
 ﻿using GameEngine.GUI.Graphics.General;
+using Microsoft.Xna.Framework;
 
 namespace GameEngine.GUI.Graphics
 {
-    public class Pixel : ForwardingGraphicComponent<TextureBox>
+    public class Pixel : AbstractGraphicComponent
     {
-        public Pixel(ITexture2D pixelTexture) :
-            base(new TextureBox(pixelTexture))
+        private readonly TextureBox _textureBox;
+
+        public Pixel(ITexture2D pixelTexture)
         {
+            _textureBox = new TextureBox(pixelTexture);
         }
 
         protected override void Update()
         {
+            _textureBox.SetCoordinates(this);
+        }
+
+        protected override void DrawComponent(GameTime time, ISpriteBatch batch)
+        {
+            _textureBox.Draw(time, batch);
+        }
+
+        public override void Setup()
+        {
+            _textureBox.Setup();
         }
     }
 }

@@ -3,11 +3,12 @@ using GameEngine.Globals;
 using GameEngine.GUI.Graphics.General;
 using GameEngine.Registry;
 using GameEngine.Utils;
+using Microsoft.Xna.Framework;
 
 namespace GameEngine.GUI.Graphics.GUI
 {
     [GameType]
-    public class MessageBox : ForwardingGraphicComponent<ITextGraphicContainer>, IWidget
+    public class MessageBox : AbstractGraphicComponent, IWidget
     {
         private readonly ITextGraphicContainer _textBox;
 
@@ -16,10 +17,9 @@ namespace GameEngine.GUI.Graphics.GUI
         {
         }
 
-        public MessageBox(ITextGraphicContainer textBox) :
-            base(textBox)
+        public MessageBox(ITextGraphicContainer textBox)
         {
-            _textBox = InnerComponent;
+            _textBox = textBox;
         }
 
         public event EventHandler OnAllLineShowed = delegate { };
@@ -41,6 +41,11 @@ namespace GameEngine.GUI.Graphics.GUI
 
         }
 
+        protected override void DrawComponent(GameTime time, ISpriteBatch batch)
+        {
+            _textBox.Draw(time, batch);
+        }
+
         public void ResetText()
         {
             _textBox.Text = "";
@@ -48,6 +53,12 @@ namespace GameEngine.GUI.Graphics.GUI
 
         protected override void Update()
         {
+            _textBox.SetCoordinates(this);
+        }
+
+        public override void Setup()
+        {
+            _textBox.Setup();
         }
     }
 }
