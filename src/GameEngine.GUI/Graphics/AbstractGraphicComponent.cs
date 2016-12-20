@@ -12,6 +12,7 @@ namespace GameEngine.GUI.Graphics
         private bool _isVisible = true;
 
         public event EventHandler<VisibilityChangedEventArgs> VisibilityChanged = delegate { };
+        public event EventHandler<ComponentSelectedEventArgs> ComponentSelected;
 
         public bool IsVisible
         {
@@ -156,6 +157,32 @@ namespace GameEngine.GUI.Graphics
 
         public virtual void HandleKeyInput(CommandKeys key)
         {
+        }
+
+        protected virtual void OnComponentSelected(ComponentSelectedEventArgs e)
+        {
+            ComponentSelected?.Invoke(this, e);
+        }
+    }
+
+    public class AbstractPanel : AbstractGraphicComponent
+    {
+        protected void AddChild(IGraphicComponent child)
+        {
+            children.Add(child);
+            child.Parent = this;
+            child.ComponentSelected += ComponentSelectedHandler;
+        }
+
+        protected void RemoveChild(IGraphicComponent child)
+        {
+            children.Remove(child);
+            child.Parent = null;
+            child.ComponentSelected -= ComponentSelectedHandler;
+        }
+        protected void ComponentSelectedHandler(object obj, ComponentSelectedEventArgs args)
+        {
+            OnComponentSelected(args);
         }
     }
 }

@@ -32,7 +32,7 @@ namespace GameEngine.GUI.Panels
         public float Width { get; set; }
     }
 
-    public class Grid : AbstractGraphicComponent
+    public class Grid : AbstractPanel
     {
         private readonly Table<GridCell> _cells = new Table<GridCell>();
         private readonly List<RowProperty> _rowProperties = new List<RowProperty>();
@@ -101,8 +101,10 @@ namespace GameEngine.GUI.Panels
             if (row < 0 || row >= Rows)
                 throw new ArgumentOutOfRangeException(nameof(row), "Was " + row);
 
-            children.Add(component);
-            component.Parent = this;
+            if (_cells[row, column].GuiComponent != null)
+                RemoveChild(_cells[row, column].GuiComponent);
+
+            AddChild(component);
             _cells[row, column].GuiComponent = component;
             Invalidate();
         }
@@ -278,6 +280,7 @@ namespace GameEngine.GUI.Panels
             foreach (var cell in _cells.EnumerateRows(columnToBeRemoved))
             {
                 cell.PreferredSizeChanged -= PreferredSizeChangedHandler;
+                RemoveChild(cell.GuiComponent);
             }
             _cells.RemoveColumn(columnToBeRemoved);
             _columnPoperties.RemoveAt(columnToBeRemoved);
@@ -295,6 +298,7 @@ namespace GameEngine.GUI.Panels
             foreach (var cell in _cells.EnumerateColumns(rowToBeRemoved))
             {
                 cell.PreferredSizeChanged -= PreferredSizeChangedHandler;
+                RemoveChild(cell.GuiComponent);
             }
             _cells.RemoveRow(rowToBeRemoved);
             _rowProperties.RemoveAt(rowToBeRemoved);

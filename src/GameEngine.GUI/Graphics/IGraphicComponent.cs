@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using GameEngine.Globals;
 using GameEngine.GUI.Graphics.General;
 using Microsoft.Xna.Framework;
 
@@ -27,6 +26,7 @@ namespace GameEngine.GUI.Graphics
         /// </summary>
         event EventHandler<VisibilityChangedEventArgs> VisibilityChanged;
 
+        event EventHandler<ComponentSelectedEventArgs> ComponentSelected;
         /// <summary>
         /// This property shows, if the component is visible.
         /// </summary>
@@ -77,5 +77,10 @@ namespace GameEngine.GUI.Graphics
         IEnumerable<IGraphicComponent> Children { get; }
         bool IsSelected { get; set; }
         bool IsSelectable { get; set; }
+    }
+
+    public class ComponentSelectedEventArgs : EventArgs
+    {
+        public IGraphicComponent Source { get; set; }
     }
 }

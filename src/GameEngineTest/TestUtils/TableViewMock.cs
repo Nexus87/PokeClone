@@ -222,5 +222,7 @@ namespace GameEngineTest.TestUtils
                 throw new NotImplementedException();
             }
         }
+
+        public event EventHandler<ComponentSelectedEventArgs> ComponentSelected;
     }
 }

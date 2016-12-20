@@ -114,5 +114,7 @@ namespace GameEngineTest.TestUtils
                 VisibilityChanged(this, new VisibilityChangedEventArgs(value));
             }
         }
+
+        public event EventHandler<ComponentSelectedEventArgs> ComponentSelected;
     }
 }
