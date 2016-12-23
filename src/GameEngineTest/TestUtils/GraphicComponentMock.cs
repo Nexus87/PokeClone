@@ -60,7 +60,6 @@ namespace GameEngineTest.TestUtils
 
         public ResizePolicy VerticalPolicy { get; set; }
         public Rectangle ScissorArea { get; set; }
-        Rectangle IGraphicComponent.Area { get; set; }
 
         public Rectangle Area
         {
@@ -116,5 +115,10 @@ namespace GameEngineTest.TestUtils
         }
 
         public event EventHandler<ComponentSelectedEventArgs> ComponentSelected;
+
+        public virtual void OnComponentSelected(ComponentSelectedEventArgs e)
+        {
+            ComponentSelected?.Invoke(this, e);
+        }
     }
 }

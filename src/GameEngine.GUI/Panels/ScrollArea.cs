@@ -35,7 +35,7 @@ namespace GameEngine.GUI.Panels
 
             if (selectedArea.Top < Area.Top)
                 newY = MoveDown(selectedArea);
-            else if (selectedArea.Bottom < Area.Bottom)
+            else if (selectedArea.Bottom > Area.Bottom)
                 newY = MoveUp(selectedArea);
             else
                 newY = _content.Area.Y;
@@ -56,14 +56,14 @@ namespace GameEngine.GUI.Panels
 
         private int MoveDown(Rectangle selectedArea)
         {
-            var diff = Area.Top - selectedArea.Top;
+            var diff = selectedArea.Top - Area.Top;
             return _content.Area.Y - diff;
         }
 
         private int MoveRight(Rectangle selectedArea)
         {
             var diff = Area.Left - selectedArea.Left;
-            return _content.Area.X - diff;
+            return _content.Area.X + diff;
         }
 
         private int MoveLeft(Rectangle selectedArea)
