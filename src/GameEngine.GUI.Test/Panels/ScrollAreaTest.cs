@@ -43,9 +43,9 @@ namespace GameEngine.GUI.Test.Panels
             var focusedArea = new Rectangle(focusedX, focusedY, focusedWidth, focusedHeight);
             var expectedArea = new Rectangle(expectedX, expectedY, 0, 0);
 
-
             var scrollArea = CreateScrollArea(initalArea);
             scrollArea.SetContent(_content);
+            _content.SetCoordinates(0, 0, 1000, 1000);
             _focusedComponent.Area = focusedArea;
 
             _content.ComponentSelected += Raise.With(new ComponentSelectedEventArgs {Source = _focusedComponent});
@@ -58,7 +58,6 @@ namespace GameEngine.GUI.Test.Panels
         {
             var scrollArea = new ScrollArea {Area = initalArea};
             _content = A.Fake<IGraphicComponent>();
-            _content.SetCoordinates(0, 0, 1000, 1000);
             return scrollArea;
         }
     }

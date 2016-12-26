@@ -19,6 +19,7 @@ namespace GameEngine.GUI.Panels
             _content = component;
             AddChild(component);
             component.ComponentSelected += ComponentOnComponentSelected;
+            _content.SetPosition(this);
         }
 
         private void ComponentOnComponentSelected(object sender, ComponentSelectedEventArgs componentSelectedEventArgs)
