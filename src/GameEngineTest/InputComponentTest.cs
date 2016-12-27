@@ -1,12 +1,12 @@
-﻿using GameEngine;
-using GameEngineTest.TestUtils;
+﻿using GameEngineTest.TestUtils;
 using Microsoft.Xna.Framework.Input;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
 using FakeItEasy;
-using GameEngine.GameEngineComponents;
+using GameEngine.Core.GameEngineComponents;
 using GameEngine.Globals;
+using GameEngine.GUI;
 
 namespace GameEngineTest
 {

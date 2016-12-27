@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using GameEngine.Utils;
+using GameEngine.GUI.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -8,8 +8,8 @@ namespace GameEngine.GUI.Graphics.General
 {
     public class XnaTexture2D : ITexture2D
     {
-        private readonly string textureName;
-        private readonly ContentManager content;
+        private readonly string _textureName;
+        private readonly ContentManager _content;
         public Texture2D Texture { get; set; }
 
         public XnaTexture2D(){}
@@ -24,14 +24,13 @@ namespace GameEngine.GUI.Graphics.General
             textureName.CheckNull("textureName");
             content.CheckNull("content");
 
-            this.textureName = textureName;
-            this.content = content;
+            _textureName = textureName;
+            _content = content;
         }
 
-        public Rectangle Source { get; private set; }
-        public Rectangle Bounds { get { return Texture.Bounds; } }
-        public int Height { get { return Texture.Height; } } 
-        public int Width { get { return Texture.Width; } }
+        public Rectangle Bounds => Texture.Bounds;
+        public int Height => Texture.Height;
+        public int Width => Texture.Width;
 
         public void GetData<T>(T[] data) where T : struct
         {
@@ -63,7 +62,7 @@ namespace GameEngine.GUI.Graphics.General
             Texture.SaveAsJpeg(stream, width, height);
         }
 
-        public void SaveAsPng(System.IO.Stream stream, int width, int height)
+        public void SaveAsPng(Stream stream, int width, int height)
         {
             Texture.SaveAsPng(stream, width, height);
         }
@@ -92,7 +91,7 @@ namespace GameEngine.GUI.Graphics.General
         public void LoadContent()
         {
             if(Texture == null)
-                Texture = content.Load<Texture2D>(textureName);
+                Texture = _content.Load<Texture2D>(_textureName);
         }
     }
 }

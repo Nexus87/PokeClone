@@ -1,8 +1,8 @@
 ﻿using System;
 using Base;
 using Base.Data;
-using BattleMode.Core;
-using BattleMode.Core.Components.BattleState;
+using BattleMode.Components.BattleState;
+using BattleMode.Shared;
 using BattleModeTest.Utils;
 using FakeItEasy;
 using NUnit.Framework;

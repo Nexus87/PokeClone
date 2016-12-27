@@ -3,9 +3,8 @@ using FakeItEasy;
 using GameEngine.Globals;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Panels;
-using GameEngine.Utils;
+using GameEngine.GUI.Utils;
 using NUnit.Framework;
-using Extensions = GameEngine.Utils.Extensions;
 
 namespace GameEngine.GUI.Test.Panels
 {
@@ -108,7 +107,7 @@ namespace GameEngine.GUI.Test.Panels
         private static Table<GridCell> CreateComponentTable(bool[,] selectableComponents)
         {
             var table = new Table<GridCell>();
-            Extensions.LoopOverTable(selectableComponents.Rows(), selectableComponents.Columns(), (row, column) =>
+            Utils.Extensions.LoopOverTable(selectableComponents.Rows(), selectableComponents.Columns(), (row, column) =>
             {
                 var component = A.Fake<IGraphicComponent>();
                 A.CallTo(() => component.IsSelectable).Returns(selectableComponents[row, column]);

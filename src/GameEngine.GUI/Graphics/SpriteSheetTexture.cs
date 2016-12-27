@@ -1,6 +1,6 @@
 ﻿using System;
 using GameEngine.GUI.Graphics.General;
-using GameEngine.Registry;
+using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -19,8 +19,8 @@ namespace GameEngine.GUI.Graphics
             if (spriteSheet == null) throw new ArgumentNullException(nameof(spriteSheet));
 
             SpriteEffects = SpriteEffects.None;
-            this._sourceRectangle = sourceRectangle;
-            this._spriteSheet = spriteSheet;
+            _sourceRectangle = sourceRectangle;
+            _spriteSheet = spriteSheet;
             Color = Color.White;
         }
 

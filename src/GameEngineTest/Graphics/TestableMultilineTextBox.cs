@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Graphics.General;
-using GameEngine.Utils;
+using GameEngine.GUI.Utils;
 using GameEngineTest.TestUtils;
 
 namespace GameEngineTest.Graphics

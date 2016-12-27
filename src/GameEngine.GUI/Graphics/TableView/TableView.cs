@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using GameEngine.GUI.Graphics.General;
-using GameEngine.Registry;
-using GameEngine.Utils;
+using GameEngine.GUI.Utils;
+using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
 
 namespace GameEngine.GUI.Graphics.TableView

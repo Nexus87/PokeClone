@@ -1,6 +1,7 @@
 ﻿using System;
 using Base.Data;
-using BattleMode.Core.Components.BattleState;
+using BattleMode.Components.BattleState;
+using BattleMode.Shared;
 using GameEngine.GUI.Graphics;
 
 namespace BattleMode.Core.Components.GraphicComponents

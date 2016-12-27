@@ -4,7 +4,7 @@ using System;
 using FakeItEasy;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Graphics.TableView;
-using GameEngine.Registry;
+using GameEngine.TypeRegistry;
 
 namespace GameEngineTest.Graphics
 {

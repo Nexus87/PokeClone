@@ -3,7 +3,7 @@ using System.Diagnostics;
 using GameEngine.Globals;
 using GameEngine.GUI.Graphics.General;
 using GameEngine.GUI.Graphics.TableView;
-using GameEngine.Registry;
+using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
 
 namespace GameEngine.GUI.Graphics.GUI

@@ -1,8 +1,6 @@
-﻿using GameEngine.Registry;
-using NUnit.Framework;
-using System;
-using System.Linq;
+﻿using NUnit.Framework;
 using System.Reflection;
+using GameEngine.TypeRegistry;
 
 namespace GameEngineTest.Registry
 {
@@ -13,8 +11,8 @@ namespace GameEngineTest.Registry
         [SetUp]
         public void Setup()
         {
-            GameComponentClass.instances = 0;
-            GameService.instances = 0;
+            GameComponentClass.Instances = 0;
+            GameService.Instances = 0;
         }
 
         [GameType]
@@ -25,7 +23,7 @@ namespace GameEngineTest.Registry
             var registry = CreateRegistry();
             registry.ScanAssembly(Assembly.GetExecutingAssembly());
 
-            GameType type = registry.ResolveType<GameType>();
+            var type = registry.ResolveType<GameType>();
 
             Assert.NotNull(type);
         }
@@ -39,7 +37,7 @@ namespace GameEngineTest.Registry
             var registry = CreateRegistry();
             registry.ScanAssembly(Assembly.GetExecutingAssembly());
 
-            GenericType<Object> type = registry.ResolveType<GenericType<Object>>();
+            var type = registry.ResolveType<GenericType<object>>();
 
             Assert.NotNull(type);
         }
@@ -50,7 +48,7 @@ namespace GameEngineTest.Registry
             var registry = CreateRegistry();
             registry.ScanAssembly(Assembly.GetExecutingAssembly());
 
-            IGameService service = registry.ResolveType<IGameService>();
+            var service = registry.ResolveType<IGameService>();
 
             Assert.NotNull(service);
         }
@@ -64,15 +62,15 @@ namespace GameEngineTest.Registry
             registry.ResolveType<IGameService>();
             registry.ResolveType<IGameService>();
 
-            Assert.AreEqual(1, GameService.instances);
+            Assert.AreEqual(1, GameService.Instances);
         }
 
         public class ClassWithArgument
         {
-            public String argument;
-            public ClassWithArgument(String argument)
+            public string Argument;
+            public ClassWithArgument(string argument)
             {
-                this.argument = argument;
+                Argument = argument;
             }
         }
     }

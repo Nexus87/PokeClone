@@ -1,4 +1,5 @@
-﻿using GameEngine.GUI.Graphics;
+﻿using BattleMode.Shared;
+using GameEngine.GUI.Graphics;
 using GameEngine.TypeRegistry;
 
 namespace BattleMode.Core.Components.GraphicComponents

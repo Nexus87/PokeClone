@@ -1,10 +1,9 @@
-﻿using GameEngine.Utils;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 using GameEngine.GUI.Graphics.TableView;
+using GameEngine.GUI.Utils;
 
 namespace GameEngineTest.Utils
 {

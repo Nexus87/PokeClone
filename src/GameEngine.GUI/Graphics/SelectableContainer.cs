@@ -1,6 +1,6 @@
 ﻿using GameEngine.GUI.Graphics.General;
 using GameEngine.GUI.Panels;
-using GameEngine.Registry;
+using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
 using ValueType = GameEngine.GUI.Panels.ValueType;
 

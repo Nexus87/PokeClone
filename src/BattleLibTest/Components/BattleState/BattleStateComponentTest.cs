@@ -1,4 +1,4 @@
-﻿using BattleMode.Core.Components.BattleState;
+﻿using BattleMode.Components.BattleState;
 using FakeItEasy;
 using GameEngineTest.TestUtils;
 using NUnit.Framework;

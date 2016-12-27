@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{0194EA5F-B7C8-4087-9680-21E19334F1E7}</ProjectGuid>
+    <ProjectTypeGuids>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BattleMode.Gui</RootNamespace>
+    <AssemblyName>BattleMode.Gui</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MonoGame.Framework, Version=3.5.1.1679, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\MonoGame.Framework.DesktopGL.3.5.1.1679\lib\net40\MonoGame.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="NVorbis, Version=0.8.4.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\MonoGame.Framework.DesktopGL.3.5.1.1679\lib\net40\NVorbis.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenTK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4">
+      <HintPath>..\packages\MonoGame.Framework.DesktopGL.3.5.1.1679\lib\net40\OpenTK.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AbstractMenuWidget.cs" />
+    <Compile Include="BattleGUI.cs" />
+    <Compile Include="IGUIService.cs" />
+    <Compile Include="IMenuWidget.cs" />
+    <Compile Include="ItemMenuWidget.cs" />
+    <Compile Include="ItemModel.cs" />
+    <Compile Include="MainMenuEntries.cs" />
+    <Compile Include="MainMenuWidget.cs" />
+    <Compile Include="MoveMenuWidget.cs" />
+    <Compile Include="MoveModel.cs" />
+    <Compile Include="MoveTableSelectionModel.cs" />
+    <Compile Include="PokemonMenuLine.cs" />
+    <Compile Include="PokemonMenuWidget.cs" />
+    <Compile Include="PokemonModel.cs" />
+    <Compile Include="PokemonTableRenderer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SingleDimensionTableModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Base\Base.csproj">
+      <Project>{65736142-4C2E-6E69-7578-426173652E4C}</Project>
+      <Name>Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BattleMode.Components\BattleMode.Components.csproj">
+      <Project>{7C124625-9566-46E9-BF6B-D045F90B35A1}</Project>
+      <Name>BattleMode.Components</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BattleMode.Shared\BattleMode.Shared.csproj">
+      <Project>{627954FA-93D0-4524-B2AD-E7D301DAC6AE}</Project>
+      <Name>BattleMode.Shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GameEngine.Globals\GameEngine.Globals.csproj">
+      <Project>{B19BD4B3-DCAE-E1DC-6E65-2E476C6F6261}</Project>
+      <Name>GameEngine.Globals</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GameEngine.GUI\GameEngine.GUI.csproj">
+      <Project>{DDE2CFB0-6E45-6967-6E65-2E4755492E4C}</Project>
+      <Name>GameEngine.GUI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GameEngine\GameEngine.Core.csproj">
+      <Project>{656D6147-6E45-6967-6E65-2E4C696E7578}</Project>
+      <Name>GameEngine.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GameEngine\GameEngine.TypeRegistry\GameEngine.TypeRegistry.csproj">
+      <Project>{73200884-85C6-4A3D-A3C2-A53D9C632613}</Project>
+      <Name>GameEngine.TypeRegistry</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

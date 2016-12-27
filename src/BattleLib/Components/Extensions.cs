@@ -1,15 +1,17 @@
 ﻿using Base.Data;
-using BattleMode.Core.Components.BattleState;
+using BattleMode.Components.BattleState;
 using BattleMode.Core.Components.GraphicComponents;
+using BattleMode.Gui;
+using BattleMode.Shared;
 using GameEngine.Core.GameEngineComponents;
 
 namespace BattleMode.Core.Components
 {
     public static class Extensions
     {
-        public static void AddHPEvent(this IEventQueue queue, IBattleGraphicController graphic, ClientIdentifier id, int hp)
+        public static void AddHpEvent(this IEventQueue queue, IBattleGraphicController graphic, ClientIdentifier id, int hp)
         {
-            queue.AddEvent(new SetHPEvent(graphic, id, hp));
+            queue.AddEvent(new SetHpEvent(graphic, id, hp));
         }
 
         public static void AddSetPokemonEvent(this IEventQueue queue, IBattleGraphicController service, ClientIdentifier id, PokemonWrapper pokemon)

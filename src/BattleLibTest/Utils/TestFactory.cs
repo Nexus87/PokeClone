@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using Base;
 using Base.Data;
+using BattleMode.Components.BattleState;
 using BattleMode.Core;
-using BattleMode.Core.Components.BattleState;
+using BattleMode.Shared;
 
 namespace BattleModeTest.Utils
 {

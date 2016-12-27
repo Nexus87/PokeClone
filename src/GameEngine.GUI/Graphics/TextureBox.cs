@@ -1,5 +1,5 @@
 ﻿using GameEngine.GUI.Graphics.General;
-using GameEngine.Registry;
+using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
 
 namespace GameEngine.GUI.Graphics

@@ -1,7 +1,8 @@
 ﻿using GameEngine.Globals;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Graphics.General;
-using GameEngine.Registry;
+using GameEngine.GUI.Renderers;
+using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
 
 namespace GameEngine.GUI.Panels

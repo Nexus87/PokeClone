@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using BattleMode.Core.Components.BattleState;
-using BattleMode.Core.Components.BattleState.Commands;
+using BattleMode.Components.BattleState;
+using BattleMode.Components.BattleState.Commands;
 using GameEngine.TypeRegistry;
 
 namespace PokemonGame.Rules
@@ -8,27 +8,27 @@ namespace PokemonGame.Rules
     [GameService(typeof(ICommandScheduler))]
     public class DummyScheduler : ICommandScheduler
     {
-        private List<ICommand> commands = new List<ICommand>();
+        private readonly List<ICommand> _commands = new List<ICommand>();
 
         public void AppendCommand(ICommand command)
         {
-            commands.Add(command);
+            _commands.Add(command);
         }
 
         public void ClearCommands()
         {
-            commands.Clear();
+            _commands.Clear();
         }
 
         public IEnumerable<ICommand> ScheduleCommands()
         {
-            return commands;
+            return _commands;
         }
 
 
-        public void AppendCommands(IEnumerable<ICommand> commands)
+        public void AppendCommands(IEnumerable<ICommand> commandList)
         {
-            this.commands.AddRange(commands);
+            _commands.AddRange(commandList);
         }
     }
 }

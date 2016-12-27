@@ -1,4 +1,5 @@
 ﻿using GameEngine;
+using GameEngine.Core;
 using GameEngine.Globals;
 using GameEngineTest.TestUtils;
 using NUnit.Framework;

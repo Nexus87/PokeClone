@@ -1,7 +1,8 @@
 ﻿using System.Linq;
-using BattleMode.Core;
-using BattleMode.Core.Components.BattleState;
+using BattleMode.Components.BattleState;
 using BattleMode.Core.Components.GraphicComponents;
+using BattleMode.Gui;
+using BattleMode.Shared;
 using BattleModeTest.Utils;
 using NUnit.Framework;
 

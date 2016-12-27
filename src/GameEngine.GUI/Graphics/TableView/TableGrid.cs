@@ -1,7 +1,7 @@
 ﻿using System;
 using GameEngine.GUI.Graphics.General;
 using GameEngine.GUI.Panels;
-using GameEngine.Utils;
+using GameEngine.GUI.Utils;
 using Microsoft.Xna.Framework;
 using ValueType = GameEngine.GUI.Panels.ValueType;
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using BattleMode.Core.Components.GraphicComponents;
+using BattleMode.Shared;
 using FakeItEasy;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Utils;

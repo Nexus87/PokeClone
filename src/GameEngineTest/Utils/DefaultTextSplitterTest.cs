@@ -1,4 +1,4 @@
-﻿using GameEngine.Utils;
+﻿using GameEngine.GUI.Utils;
 using NUnit.Framework;
 
 namespace GameEngineTest.Utils
@@ -12,9 +12,9 @@ namespace GameEngineTest.Utils
         [TestCase("  ")]
         public void SplitText_SimpleTextWithSeparator_GetStringReturnsStrings(string seperator)
         {
-            int charsPerLine = 5;
-            string firstString = new string('a', charsPerLine);
-            string secondString = new string('b', charsPerLine);
+            const int charsPerLine = 5;
+            var firstString = new string('a', charsPerLine);
+            var secondString = new string('b', charsPerLine);
             var splitter = CreateSplitter();
 
             splitter.SplitText(charsPerLine, firstString + seperator + secondString);
@@ -29,9 +29,9 @@ namespace GameEngineTest.Utils
         [TestCase("  ")]
         public void SplitText_SimpleTextWithSeparator_LineCount(string separator)
         {
-            int charsPerLine = 5;
-            string testString = new string('a', charsPerLine);
-            string compoundString = testString + separator + testString;
+            var charsPerLine = 5;
+            var testString = new string('a', charsPerLine);
+            var compoundString = testString + separator + testString;
             var splitter = CreateSplitter();
 
             splitter.SplitText(charsPerLine, compoundString);
@@ -45,8 +45,8 @@ namespace GameEngineTest.Utils
         [TestCase("  ")]
         public void SplitText_SeparatorAtTheEnd_IgnoreSeparator(string separator)
         {
-            int charsPerLine = 5;
-            string testString = new string('a', charsPerLine);
+            var charsPerLine = 5;
+            var testString = new string('a', charsPerLine);
 
             var splitter = CreateSplitter();
 
@@ -59,8 +59,8 @@ namespace GameEngineTest.Utils
         [TestCase]
         public void SplitText_TextFitInLine_NoSplitting()
         {
-            int charsPerLine = 5;
-            string testString = new string('a', charsPerLine);
+            var charsPerLine = 5;
+            var testString = new string('a', charsPerLine);
             var splitter = CreateSplitter();
 
             splitter.SplitText(charsPerLine, testString);
@@ -72,9 +72,9 @@ namespace GameEngineTest.Utils
         [TestCase]
         public void SplitText_LineWithoutSeparator_Split()
         {
-            int charsPerLine = 5;
-            string firstLine = new string('a', charsPerLine);
-            string secondLine = new string('b', charsPerLine);
+            var charsPerLine = 5;
+            var firstLine = new string('a', charsPerLine);
+            var secondLine = new string('b', charsPerLine);
             var splitter = CreateSplitter();
 
             splitter.SplitText(charsPerLine, firstLine + secondLine);
@@ -88,9 +88,9 @@ namespace GameEngineTest.Utils
         [TestCase]
         public void SplitText_SameStingAndCharsPerLineTwice_Split()
         {
-            int charsPerLine = 5;
-            string firstLine = new string('a', charsPerLine);
-            string secondLine = new string('b', charsPerLine);
+            var charsPerLine = 5;
+            var firstLine = new string('a', charsPerLine);
+            var secondLine = new string('b', charsPerLine);
             var stringToSplit = firstLine + secondLine;
             var splitter = CreateSplitter();
 
@@ -106,9 +106,9 @@ namespace GameEngineTest.Utils
         [TestCase]
         public void SplitText_SameStingDiffrentCharsPerLineTwice_Split()
         {
-            int charsPerLine = 5;
-            string firstLine = new string('a', charsPerLine);
-            string secondLine = new string('b', charsPerLine);
+            var charsPerLine = 5;
+            var firstLine = new string('a', charsPerLine);
+            var secondLine = new string('b', charsPerLine);
             var stringToSplit = firstLine + secondLine;
             var splitter = CreateSplitter();
 
@@ -120,7 +120,7 @@ namespace GameEngineTest.Utils
         [TestCase]
         public void SplitText_NullString_NoLines()
         {
-            int charsPerLine = 5;
+            var charsPerLine = 5;
             var splitter = CreateSplitter();
 
             splitter.SplitText(charsPerLine, null);
@@ -131,7 +131,7 @@ namespace GameEngineTest.Utils
         [TestCase]
         public void SplitText_NoCharsPerLine_NoLines()
         {
-            string testString = "test";
+            var testString = "test";
             var splitter = CreateSplitter();
 
             splitter.SplitText(0, testString);
@@ -143,7 +143,7 @@ namespace GameEngineTest.Utils
         [TestCase]
         public void GetString_IndexMoreThanLines_ReturnDefaultString()
         {
-            string defaultString = "";
+            var defaultString = "";
             var splitter = CreateSplitter();
 
             Assert.AreEqual(defaultString, splitter.GetString(0));

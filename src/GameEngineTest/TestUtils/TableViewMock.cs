@@ -1,8 +1,8 @@
-﻿using GameEngine;
-using GameEngineTest.Graphics;
+﻿using GameEngineTest.Graphics;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using GameEngine.Core;
 using GameEngine.Globals;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Graphics.General;

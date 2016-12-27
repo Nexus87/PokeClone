@@ -1,20 +1,21 @@
 ﻿using System;
 using Base;
 using Base.Data;
+using BattleMode.Components.BattleState;
 using BattleMode.Core;
-using BattleMode.Core.Components.BattleState;
+using BattleMode.Shared;
 
 namespace BattleModeTest.Components
 {
     public class BattleEventFake : IEventCreator
     {
-        private ClientIdentifier id = new ClientIdentifier();
-        private PokemonWrapper pokemon;
+        private readonly ClientIdentifier _id = new ClientIdentifier();
+        private readonly PokemonWrapper _pokemon;
 
         public event EventHandler CriticalDamage;
         public event EventHandler<MoveEffectiveEventArgs> MoveEffective;
         public event EventHandler NewTurn;
-        public event EventHandler<HPChangedEventArgs> HPChanged;
+        public event EventHandler<HpChangedEventArgs> HPChanged;
         public event EventHandler<ClientPokemonChangedEventArgs> PokemonChanged;
         public event EventHandler<ClientStatusChangedEventArgs> StatusChanged;
         public event EventHandler<MoveUsedEventArgs> MoveUsed;
@@ -22,42 +23,42 @@ namespace BattleModeTest.Components
         public BattleEventFake()
         {
             var pkmn = new Pokemon(new PokemonData { Name = "name" }, new Stats());
-            pokemon = new PokemonWrapper(id) { Pokemon = pkmn };
+            _pokemon = new PokemonWrapper(_id) { Pokemon = pkmn };
         }
         public void RaiseCritcalDamageEvent()
         {
-            CriticalDamage(this, EventArgs.Empty);
+            CriticalDamage?.Invoke(this, EventArgs.Empty);
         }
 
         public void RaiseMoveEffectiveEvent(MoveEfficiency effect)
         {
-            MoveEffective(this, new MoveEffectiveEventArgs(effect, pokemon));
+            MoveEffective?.Invoke(this, new MoveEffectiveEventArgs(effect, _pokemon));
         }
 
         public void RaiseNewTurnEvent()
         {
-            NewTurn(this, EventArgs.Empty);
+            NewTurn?.Invoke(this, EventArgs.Empty);
         }
 
-        public void RaiseHPChangedEvent(int hp = 10)
+        public void RaiseHpChangedEvent(int hp = 10)
         {
-            HPChanged(this, new HPChangedEventArgs(id, hp));
+            HPChanged?.Invoke(this, new HpChangedEventArgs(_id, hp));
         }
 
         public void RaisePokemonChangedEvent()
         {
-            PokemonChanged(this, new ClientPokemonChangedEventArgs(id, pokemon));
+            PokemonChanged?.Invoke(this, new ClientPokemonChangedEventArgs(_id, _pokemon));
         }
 
         public void RaiseStatusChanged(StatusCondition condition)
         {
-            StatusChanged(this, new ClientStatusChangedEventArgs(id, condition));
+            StatusChanged?.Invoke(this, new ClientStatusChangedEventArgs(_id, condition));
         }
 
         public void RaiseMoveUsed()
         {
             var move = new Move(new MoveData(){Name = "Name"});
-            MoveUsed(this, new MoveUsedEventArgs(move, pokemon));
+            MoveUsed?.Invoke(this, new MoveUsedEventArgs(move, _pokemon));
         }
 
 
@@ -77,7 +78,7 @@ namespace BattleModeTest.Components
             throw new NotImplementedException();
         }
 
-        public void SetHP(ClientIdentifier id, int hp)
+        public void SetHp(ClientIdentifier id, int hp)
         {
             throw new NotImplementedException();
         }

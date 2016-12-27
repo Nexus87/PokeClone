@@ -1,7 +1,7 @@
-﻿using GameEngine.Registry;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using System.Linq;
 using System.Reflection;
+using GameEngine.Core.Registry;
 
 namespace GameEngineTest.Registry
 {

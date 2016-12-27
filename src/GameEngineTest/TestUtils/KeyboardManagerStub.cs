@@ -1,33 +1,33 @@
-﻿using GameEngine.GameEngineComponents;
+﻿using GameEngine.Core.GameEngineComponents;
 using Microsoft.Xna.Framework.Input;
 
 namespace GameEngineTest.TestUtils
 {
     internal class KeyboardManagerStub : IKeyboardManager
     {
-        private KeyboardState oldState;
-        private KeyboardState newState;
+        private KeyboardState _oldState;
+        private KeyboardState _newState;
 
-        private KeyboardState targetState;
+        private readonly KeyboardState _targetState;
 
         public KeyboardManagerStub(KeyboardState state)
         {
-            targetState = state;
+            _targetState = state;
         }
         public bool IsKeyDown(Keys key)
         {
-            return newState.IsKeyDown(key);
+            return _newState.IsKeyDown(key);
         }
 
         public void Update()
         {
-            oldState = newState;
-            newState = targetState;
+            _oldState = _newState;
+            _newState = _targetState;
         }
 
         public bool WasKeyDown(Keys key)
         {
-            return oldState.IsKeyDown(key);
+            return _oldState.IsKeyDown(key);
         }
     }
 }

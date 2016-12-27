@@ -1,10 +1,11 @@
-﻿using GameEngine;
-using System.Linq;
+﻿using System.Linq;
 using System.Reflection;
+using BattleMode.Components.AI;
+using BattleMode.Components.BattleState;
 using BattleMode.Core.Components;
-using BattleMode.Core.Components.AI;
-using BattleMode.Core.Components.BattleState;
 using BattleMode.Core.Components.GraphicComponents;
+using BattleMode.Gui;
+using BattleMode.Shared;
 using GameEngine.Core;
 using GameEngine.Core.Registry;
 using GameEngine.TypeRegistry;
@@ -15,7 +16,7 @@ namespace BattleMode.Core
     {
         private IBattleGraphicController _graphic;
         private IBattleStateService _battleState;
-        private AIComponent _aiComponent;
+        private AiComponent _aiComponent;
         private readonly IEngineInterface _engine;
         private Client _player;
 
@@ -29,6 +30,9 @@ namespace BattleMode.Core
         public void RegisterTypes(IGameTypeRegistry registry)
         {
             registry.ScanAssembly(Assembly.GetExecutingAssembly());
+            registry.ScanAssembly(Assembly.GetAssembly(typeof(ClientIdentifier)));
+            registry.ScanAssembly(Assembly.GetAssembly(typeof(IBattleStateService)));
+            registry.ScanAssembly(Assembly.GetAssembly(typeof(IGUIService)));
             registry.RegisterType(a => _player);
 
         }
@@ -43,7 +47,7 @@ namespace BattleMode.Core
 
             _battleState = registry.ResolveType<IBattleStateService>();
             _graphic = registry.ResolveType<IBattleGraphicController>();
-            _aiComponent = new AIComponent(_battleState, ai, playerId);
+            _aiComponent = new AiComponent(_battleState, ai, playerId);
             // Needs to be created since no other class depend on it.
             registry.ResolveType<BattleEventProcessor>();
 

@@ -1,6 +1,8 @@
 ﻿using System;
-using BattleMode.Core.Components.BattleState;
+using BattleMode.Components.BattleState;
 using BattleMode.Core.Components.GraphicComponents;
+using BattleMode.Gui;
+using BattleMode.Shared;
 using GameEngine.Core.GameEngineComponents;
 using GameEngine.TypeRegistry;
 
@@ -9,15 +11,15 @@ namespace BattleMode.Core.Components
     [GameService(typeof(BattleEventProcessor))]
     public class BattleEventProcessor
     {
-        private readonly IGUIService guiService;
-        private readonly IBattleGraphicController graphicService;
-        private readonly IEventQueue queue;
+        private readonly IGUIService _guiService;
+        private readonly IBattleGraphicController _graphicService;
+        private readonly IEventQueue _queue;
 
         public BattleEventProcessor(IGUIService guiService, IBattleGraphicController graphicService, IEventQueue queue, IEventCreator events)
         {
-            this.guiService = guiService;
-            this.graphicService = graphicService;
-            this.queue = queue;
+            _guiService = guiService;
+            _graphicService = graphicService;
+            _queue = queue;
 
             events.CriticalDamage += CriticalDamageHandler;
             events.HPChanged += HPChangedHandler;
@@ -30,23 +32,23 @@ namespace BattleMode.Core.Components
 
         private void StatusChangedHandler(object sender, ClientStatusChangedEventArgs e)
         {
-            queue.AddStatusEvent(graphicService, e.ID, e.Status);
-            queue.AddShowMessageEvent(guiService, "Status changed to: " + e.Status);
+            _queue.AddStatusEvent(_graphicService, e.Id, e.Status);
+            _queue.AddShowMessageEvent(_guiService, "Status changed to: " + e.Status);
         }
 
         private void PokemonChangedHandler(object sender, ClientPokemonChangedEventArgs e)
         {
-            queue.AddSetPokemonEvent(graphicService, e.ID, e.Pokemon);
+            _queue.AddSetPokemonEvent(_graphicService, e.Id, e.Pokemon);
         }
 
         private void NewTurnHandler(object sender, EventArgs e)
         {
-            queue.AddShowMenuEvent(guiService);
+            _queue.AddShowMenuEvent(_guiService);
         }
 
         private void MoveUsedHandler(object sender, MoveUsedEventArgs e)
         {
-            queue.AddShowMessageEvent(guiService, e.Source.Name + " uses " + e.Move.Name);
+            _queue.AddShowMessageEvent(_guiService, e.Source.Name + " uses " + e.Move.Name);
         }
 
         private void MoveEffectiveHandler(object sender, MoveEffectiveEventArgs e)
@@ -54,25 +56,25 @@ namespace BattleMode.Core.Components
             switch (e.Effect)
             {
                 case MoveEfficiency.NoEffect:
-                    queue.AddShowMessageEvent(guiService, "It doesn't affect " + e.Target.Name + "...");
+                    _queue.AddShowMessageEvent(_guiService, "It doesn't affect " + e.Target.Name + "...");
                     break;
                 case MoveEfficiency.NotEffective:
-                    queue.AddShowMessageEvent(guiService, "It's not very effective...");
+                    _queue.AddShowMessageEvent(_guiService, "It's not very effective...");
                     break;
                 case MoveEfficiency.VeryEffective:
-                    queue.AddShowMessageEvent(guiService, "It's super effective!");
+                    _queue.AddShowMessageEvent(_guiService, "It's super effective!");
                     break;
             }
         }
 
-        private void HPChangedHandler(object sender, HPChangedEventArgs e)
+        private void HPChangedHandler(object sender, HpChangedEventArgs e)
         {
-            queue.AddHPEvent(graphicService, e.ID, e.HP);
+            _queue.AddHpEvent(_graphicService, e.Id, e.Hp);
         }
 
         private void CriticalDamageHandler(object sender, EventArgs e)
         {
-            queue.AddShowMessageEvent(guiService, "Critical hit!");
+            _queue.AddShowMessageEvent(_guiService, "Critical hit!");
         }
     }
 }

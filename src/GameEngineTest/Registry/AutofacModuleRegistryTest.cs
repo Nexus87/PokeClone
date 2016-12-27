@@ -1,4 +1,4 @@
-﻿using GameEngine.Registry;
+﻿using GameEngine.Core.Registry;
 using NUnit.Framework;
 
 namespace GameEngineTest.Registry

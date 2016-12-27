@@ -9,23 +9,23 @@ namespace GameEngine.Core.GameEngineComponents
 {
     internal class InputComponent : IGameComponent
     {
-        private readonly IReadOnlyDictionary<Keys, CommandKeys> keyMap;
+        private readonly IReadOnlyDictionary<Keys, CommandKeys> _keyMap;
         internal IInputHandler Handler;
-        private readonly IKeyboardManager manager;
+        private readonly IKeyboardManager _manager;
 
         internal InputComponent(IKeyboardManager manager, IReadOnlyDictionary<Keys, CommandKeys> keyMap)
         {
-            this.manager = manager;
-            this.keyMap = keyMap;
+            _manager = manager;
+            _keyMap = keyMap;
         }
 
         public InputComponent(Configuration config) : this(new KeyboardManager(), config.KeyMap) { }
 
         public void Update(GameTime gameTime)
         {
-            manager.Update();
+            _manager.Update();
 
-            foreach (var entry in keyMap)
+            foreach (var entry in _keyMap)
             {
                 if (HasKeyChangedToDown(entry.Key))
                     Handler.HandleKeyInput(entry.Value);
@@ -35,7 +35,7 @@ namespace GameEngine.Core.GameEngineComponents
 
         private bool HasKeyChangedToDown(Keys keys)
         {
-            return manager.IsKeyDown(keys) && !manager.WasKeyDown(keys);
+            return _manager.IsKeyDown(keys) && !_manager.WasKeyDown(keys);
         }
 
         public void Initialize()

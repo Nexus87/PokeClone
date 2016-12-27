@@ -1,7 +1,9 @@
 ﻿using Base.Data;
+using BattleMode.Components;
+using BattleMode.Components.BattleState;
+using BattleMode.Components.BattleState.Commands;
 using BattleMode.Core;
-using BattleMode.Core.Components.BattleState;
-using BattleMode.Core.Components.BattleState.Commands;
+using BattleMode.Shared;
 using BattleModeTest.Utils;
 using FakeItEasy;
 using NUnit.Framework;
@@ -42,7 +44,7 @@ namespace BattleModeTest
 
             ExecuteMoveCommand(executer, _factory.PlayerID, damage);
 
-            A.CallTo(() => _creatorMock.SetHP(_factory.PlayerID, result)).MustHaveHappened(Repeated.Exactly.Once);
+            A.CallTo(() => _creatorMock.SetHp(_factory.PlayerID, result)).MustHaveHappened(Repeated.Exactly.Once);
         }
 
         [Test]

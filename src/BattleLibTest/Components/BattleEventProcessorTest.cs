@@ -1,8 +1,10 @@
 ﻿using Base.Data;
+using BattleMode.Components.BattleState;
 using BattleMode.Core;
 using BattleMode.Core.Components;
-using BattleMode.Core.Components.BattleState;
 using BattleMode.Core.Components.GraphicComponents;
+using BattleMode.Gui;
+using BattleMode.Shared;
 using FakeItEasy;
 using NUnit.Framework;
 
@@ -76,7 +78,7 @@ namespace BattleModeTest.Components
         {
             CreateEventProcessor();
 
-            _eventMock.RaiseHPChangedEvent();
+            _eventMock.RaiseHpChangedEvent();
             _eventQueue.DispatchAllEvents();
 
             A.CallTo(() => _graphicMock.SetHp(A<ClientIdentifier>.Ignored, 10)).MustHaveHappened(Repeated.Exactly.Once);

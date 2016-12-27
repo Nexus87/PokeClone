@@ -1,8 +1,9 @@
 ﻿using Base;
 using Base.Data;
-using BattleMode.Core;
-using BattleMode.Core.Components.BattleState;
+using BattleMode.Components.BattleState;
 using BattleMode.Core.Components.GraphicComponents;
+using BattleMode.Gui;
+using BattleMode.Shared;
 
 namespace BattleModeTest.Components.GraphicComponents
 {

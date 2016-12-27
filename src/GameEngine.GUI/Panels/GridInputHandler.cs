@@ -1,6 +1,6 @@
 using System;
 using GameEngine.Globals;
-using GameEngine.Utils;
+using GameEngine.GUI.Utils;
 
 namespace GameEngine.GUI.Panels
 {

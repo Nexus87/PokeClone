@@ -1,31 +1,32 @@
 ﻿using System;
 using BattleMode.Core.Components.GraphicComponents;
+using BattleMode.Shared;
 using GameEngine.Core.GameEngineComponents;
 
 namespace BattleMode.Core.Components
 {
-    internal class SetHPEvent : IEvent
+    internal class SetHpEvent : IEvent
     {
         public event EventHandler EventProcessed
         {
-            add { graphic.HpSet += value; }
-            remove { graphic.HpSet -= value; }
+            add { _graphic.HpSet += value; }
+            remove { _graphic.HpSet -= value; }
         }
 
-        private readonly IBattleGraphicController graphic;
-        private readonly int hp;
-        private readonly ClientIdentifier id;
+        private readonly IBattleGraphicController _graphic;
+        private readonly int _hp;
+        private readonly ClientIdentifier _id;
 
-        public SetHPEvent(IBattleGraphicController graphic, ClientIdentifier id, int hp)
+        public SetHpEvent(IBattleGraphicController graphic, ClientIdentifier id, int hp)
         {
-            this.graphic = graphic;
-            this.id = id;
-            this.hp = hp;
+            _graphic = graphic;
+            _id = id;
+            _hp = hp;
         }
 
         public void Dispatch()
         {
-            graphic.SetHp(id, hp);
+            _graphic.SetHp(_id, _hp);
         }
     }
 }

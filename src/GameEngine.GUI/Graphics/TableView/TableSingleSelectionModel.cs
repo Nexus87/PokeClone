@@ -1,25 +1,25 @@
 ﻿using System;
-using GameEngine.Registry;
-using GameEngine.Utils;
+using GameEngine.GUI.Utils;
+using GameEngine.TypeRegistry;
 
 namespace GameEngine.GUI.Graphics.TableView
 {
     [GameType]
     public class TableSingleSelectionModel : ITableSelectionModel
     {
-        private Tuple<int, int> currentSelection = new Tuple<int, int>(0, 0);
-        private int CurrentRow { get { return currentSelection.Item1; } }
-        private int CurrentColumn { get { return currentSelection.Item2; } }
+        private Tuple<int, int> _currentSelection = new Tuple<int, int>(0, 0);
+        private int CurrentRow => _currentSelection.Item1;
+        private int CurrentColumn => _currentSelection.Item2;
 
         public event EventHandler<SelectionChangedEventArgs> SelectionChanged = delegate { };
-        private readonly IndexValidator indexValidator;
+        private readonly IndexValidator _indexValidator;
 
         public TableSingleSelectionModel() : this(delegate { return true; }) { }
 
         public TableSingleSelectionModel(IndexValidator indexValidator)
         {
             indexValidator.CheckNull("indexValidator");
-            this.indexValidator = indexValidator;
+            _indexValidator = indexValidator;
         }
 
         public bool SelectIndex(int row, int column)
@@ -29,7 +29,7 @@ namespace GameEngine.GUI.Graphics.TableView
             if (IsSelected(row, column))
                 return true;
 
-            if (!indexValidator(row, column))
+            if (!_indexValidator(row, column))
                 return false;
 
             UnselectIndex(CurrentRow, CurrentColumn);
@@ -40,7 +40,7 @@ namespace GameEngine.GUI.Graphics.TableView
 
         private void SetSelection(int row, int column)
         {
-            currentSelection = new Tuple<int, int>(row, column);
+            _currentSelection = new Tuple<int, int>(row, column);
             SelectionChanged(this, new SelectionChangedEventArgs(row, column, true));
         }
 
@@ -57,21 +57,21 @@ namespace GameEngine.GUI.Graphics.TableView
 
         private void UnselectIndexImpl(int row, int column)
         {
-            currentSelection = null;
+            _currentSelection = null;
             SelectionChanged(this, new SelectionChangedEventArgs(row, column, false));
         }
 
         private static void AssertIndexIsPositive(int row, int column)
         {
-            if (row < 0 || column < 0)
-                throw new ArgumentOutOfRangeException("row and column must be positive");
+            if (column < 0) throw new ArgumentOutOfRangeException(nameof(column));
+            if (row < 0) throw new ArgumentOutOfRangeException(nameof(row));
         }
 
         public bool IsSelected(int row, int column)
         {
             AssertIndexIsPositive(row, column);
 
-            if (currentSelection == null)
+            if (_currentSelection == null)
                 return false;
 
             return row == CurrentRow && column == CurrentColumn;

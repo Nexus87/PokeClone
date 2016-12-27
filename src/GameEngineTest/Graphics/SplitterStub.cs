@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using GameEngine.Utils;
+using GameEngine.GUI.Utils;
 
 namespace GameEngineTest.Graphics
 {
@@ -13,15 +13,11 @@ namespace GameEngineTest.Graphics
             return index < Strings.Count ? Strings[index] : "";
         }
 
-        public int Count
-        {
-            get { return Strings.Count; }
-        }
+        public int Count => Strings.Count;
 
         public void SplitText(int charsPerLine, string text)
         {
-            if (SplitTextCallback != null)
-                SplitTextCallback();
+            SplitTextCallback?.Invoke();
         }
     }
 }

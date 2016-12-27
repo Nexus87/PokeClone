@@ -1,5 +1,6 @@
 ﻿using System;
-using BattleMode.Core.Components.BattleState;
+using BattleMode.Components.BattleState;
+using BattleMode.Shared;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Graphics.General;
 using GameEngine.GUI.Panels;

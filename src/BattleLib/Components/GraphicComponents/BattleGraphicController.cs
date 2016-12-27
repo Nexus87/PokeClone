@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Base.Data;
-using BattleMode.Core.Components.BattleState;
-using GameEngine;
+using BattleMode.Components.BattleState;
+using BattleMode.Shared;
 using GameEngine.Core;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Graphics.General;

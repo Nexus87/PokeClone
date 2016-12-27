@@ -1,6 +1,7 @@
 ﻿using System;
-using GameEngine;
-using GameEngine.Registry;
+using GameEngine.Core;
+using GameEngine.Core.Registry;
+using GameEngine.TypeRegistry;
 
 namespace GameEngineTest.Registry
 {
@@ -8,7 +9,8 @@ namespace GameEngineTest.Registry
     {
         public static bool WasCreated;
         public static bool WasCalled ;
-        public string ModuleName { get { return "TestModule"; } }
+        public string ModuleName => "TestModule";
+
         public TestModule()
         {
             WasCreated = true;

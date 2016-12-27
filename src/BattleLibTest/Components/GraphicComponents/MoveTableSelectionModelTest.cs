@@ -1,6 +1,7 @@
 ﻿using Base;
 using Base.Data;
 using BattleMode.Core.Components.GraphicComponents;
+using BattleMode.Gui;
 using GameEngineTest.TestUtils;
 using NUnit.Framework;
 

@@ -5,8 +5,8 @@ namespace GameEngine.GUI.Utils
 {
     public static class Extensions
     {
-        public delegate T Creator<T>();
-        public delegate T CellCreator<T>(int row, int column);
+        public delegate T Creator<out T>();
+        public delegate T CellCreator<out T>(int row, int column);
 
         public static bool AlmostEqual(this float f1, float f2)
         {

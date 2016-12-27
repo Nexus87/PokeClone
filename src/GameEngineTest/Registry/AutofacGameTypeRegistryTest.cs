@@ -1,4 +1,4 @@
-﻿using GameEngine.Registry;
+﻿using GameEngine.TypeRegistry;
 
 namespace GameEngineTest.Registry
 {

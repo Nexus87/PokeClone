@@ -1,9 +1,10 @@
-﻿using Microsoft.Xna.Framework;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using System;
-using GameEngine;
+using GameEngine.Core;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Graphics.General;
+using Microsoft.Xna.Framework;
+using IGameComponent = GameEngine.Core.IGameComponent;
 
 namespace GameEngineTest.TestUtils
 {
@@ -23,7 +24,7 @@ namespace GameEngineTest.TestUtils
             component.Draw(new GameTime(), new SpriteBatchMock());
         }
 
-        public static void Update(this GameEngine.IGameComponent component)
+        public static void Update(this IGameComponent component)
         {
             component.Update(new GameTime());
         }

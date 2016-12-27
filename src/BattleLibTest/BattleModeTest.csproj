@@ -40,17 +40,17 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="MonoGame.Framework">
+    <Reference Include="MonoGame.Framework, Version=3.5.1.1679, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\packages\MonoGame.Framework.DesktopGL.3.5.1.1679\lib\net40\MonoGame.Framework.dll</HintPath>
     </Reference>
-    <Reference Include="NVorbis">
+    <Reference Include="NVorbis, Version=0.8.4.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\packages\MonoGame.Framework.DesktopGL.3.5.1.1679\lib\net40\NVorbis.dll</HintPath>
     </Reference>
-    <Reference Include="OpenTK">
+    <Reference Include="OpenTK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4">
       <HintPath>..\packages\MonoGame.Framework.DesktopGL.3.5.1.1679\lib\net40\OpenTK.dll</HintPath>
     </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
     <Reference Include="Castle.Core">
       <HintPath>..\packages\Castle.Core.3.3.3\lib\net45\Castle.Core.dll</HintPath>
     </Reference>
@@ -112,6 +112,18 @@
     <ProjectReference Include="..\BattleLib\BattleMode.Core.csproj">
       <Project>{74746142-656C-694C-622E-4C696E757842}</Project>
       <Name>BattleMode.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BattleMode.Components\BattleMode.Components.csproj">
+      <Project>{7C124625-9566-46E9-BF6B-D045F90B35A1}</Project>
+      <Name>BattleMode.Components</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BattleMode.Gui\BattleMode.Gui.csproj">
+      <Project>{0194EA5F-B7C8-4087-9680-21E19334F1E7}</Project>
+      <Name>BattleMode.Gui</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BattleMode.Shared\BattleMode.Shared.csproj">
+      <Project>{627954FA-93D0-4524-B2AD-E7D301DAC6AE}</Project>
+      <Name>BattleMode.Shared</Name>
     </ProjectReference>
     <ProjectReference Include="..\GameEngine.GUI\GameEngine.GUI.csproj">
       <Project>{DDE2CFB0-6E45-6967-6E65-2E4755492E4C}</Project>
