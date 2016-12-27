@@ -2,7 +2,6 @@
 using Base;
 using Base.Data;
 using BattleMode.Components.BattleState;
-using BattleMode.Core;
 using BattleMode.Shared;
 
 namespace BattleModeTest.Components

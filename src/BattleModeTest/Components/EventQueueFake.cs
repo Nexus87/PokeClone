@@ -6,17 +6,17 @@ namespace BattleModeTest.Components
 {
     public class EventQueueFake : IEventQueue
     {
-        private List<IEvent> events = new List<IEvent>();
+        private readonly List<IEvent> _events = new List<IEvent>();
         public void DispatchAllEvents()
         {
-            foreach (var ev in events)
+            foreach (var ev in _events)
                 ev.Dispatch();
 
-            events.Clear();
+            _events.Clear();
         }
         public void AddEvent(IEvent newEvent)
         {
-            events.Add(newEvent);
+            _events.Add(newEvent);
         }
 
         public void Initialize()

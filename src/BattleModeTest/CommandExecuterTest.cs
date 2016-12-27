@@ -2,7 +2,6 @@
 using BattleMode.Components;
 using BattleMode.Components.BattleState;
 using BattleMode.Components.BattleState.Commands;
-using BattleMode.Core;
 using BattleMode.Shared;
 using BattleModeTest.Utils;
 using FakeItEasy;

@@ -79,6 +79,10 @@
       <Project>{627954FA-93D0-4524-B2AD-E7D301DAC6AE}</Project>
       <Name>BattleMode.Shared</Name>
     </ProjectReference>
+    <ProjectReference Include="..\GameEngine.Core\GameEngine.Core.csproj">
+      <Project>{656D6147-6E45-6967-6E65-2E4C696E7578}</Project>
+      <Name>GameEngine.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GameEngine.Globals\GameEngine.Globals.csproj">
       <Project>{B19BD4B3-DCAE-E1DC-6E65-2E476C6F6261}</Project>
       <Name>GameEngine.Globals</Name>
@@ -87,11 +91,7 @@
       <Project>{DDE2CFB0-6E45-6967-6E65-2E4755492E4C}</Project>
       <Name>GameEngine.GUI</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GameEngine\GameEngine.Core.csproj">
-      <Project>{656D6147-6E45-6967-6E65-2E4C696E7578}</Project>
-      <Name>GameEngine.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GameEngine\GameEngine.TypeRegistry\GameEngine.TypeRegistry.csproj">
+    <ProjectReference Include="..\GameEngine.TypeRegistry\GameEngine.TypeRegistry.csproj">
       <Project>{73200884-85C6-4A3D-A3C2-A53D9C632613}</Project>
       <Name>GameEngine.TypeRegistry</Name>
     </ProjectReference>

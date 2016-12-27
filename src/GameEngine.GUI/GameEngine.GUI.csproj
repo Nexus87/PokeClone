@@ -145,7 +145,7 @@
       <Project>{B19BD4B3-DCAE-E1DC-6E65-2E476C6F6261}</Project>
       <Name>GameEngine.Globals</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GameEngine\GameEngine.TypeRegistry\GameEngine.TypeRegistry.csproj">
+    <ProjectReference Include="..\GameEngine.TypeRegistry\GameEngine.TypeRegistry.csproj">
       <Project>{73200884-85C6-4A3D-A3C2-A53D9C632613}</Project>
       <Name>GameEngine.TypeRegistry</Name>
     </ProjectReference>
