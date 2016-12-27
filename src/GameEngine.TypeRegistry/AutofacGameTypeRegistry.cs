@@ -8,27 +8,27 @@ namespace GameEngine.TypeRegistry
 {
     public class AutofacGameTypeRegistry : IGameTypeRegistry
     {
-        private IContainer container;
-        private readonly ContainerBuilder builder = new ContainerBuilder();
+        private IContainer _container;
+        private readonly ContainerBuilder _builder = new ContainerBuilder();
 
         public AutofacGameTypeRegistry()
         {
-            builder.Register<IGameTypeRegistry>(p => this);
+            _builder.Register<IGameTypeRegistry>(p => this);
         }
-        public void RegisterTypeAs<T, S>()
+        public void RegisterTypeAs<T, TS>()
         {
-            builder.RegisterType<T>().As<S>();
-            container = null;
+            _builder.RegisterType<T>().As<TS>();
+            _container = null;
         }
 
         public T ResolveType<T>()
         {
-            if (container == null)
-                container = builder.Build();
+            if (_container == null)
+                _container = _builder.Build();
 
             try
             {
-                return container.Resolve<T>();
+                return _container.Resolve<T>();
             }
             catch (ComponentNotRegisteredException e)
             {
@@ -46,10 +46,10 @@ namespace GameEngine.TypeRegistry
             RegisterTypeAs<T, T>();
         }
 
-        public void RegisterGenericTypeAs(Type T, Type S)
+        public void RegisterGenericTypeAs(Type T, Type s)
         {
-            builder.RegisterGeneric(T).As(S);
-            container = null;
+            _builder.RegisterGeneric(T).As(s);
+            _container = null;
         }
 
         public void RegisterGenericType(Type T)
@@ -57,37 +57,37 @@ namespace GameEngine.TypeRegistry
             RegisterGenericTypeAs(T, T);
         }
 
-        public void RegisterTypeAs<T, S>(Func<IGameTypeRegistry, T> creatorFunc)
+        public void RegisterTypeAs<T, TS>(Func<IGameTypeRegistry, T> creatorFunc)
         {
-            builder.Register(c => creatorFunc(this)).As<S>();
+            _builder.Register(c => creatorFunc(this)).As<TS>();
         }
 
-        public void RegisterAsService<T, S>()
+        public void RegisterAsService<T, TS>()
         {
-            builder.RegisterType<T>().As<S>().SingleInstance();
-            container = null;
+            _builder.RegisterType<T>().As<TS>().SingleInstance();
+            _container = null;
         }
 
         public void RegisterType(Type t)
         {
             if (t.IsGenericType)
-                builder.RegisterGeneric(t);
+                _builder.RegisterGeneric(t);
             else
-                builder.RegisterType(t);
+                _builder.RegisterType(t);
         }
 
         public void RegisterTypeAs(Type t, Type s)
         {
             if (t.IsGenericType)
-                builder.RegisterGeneric(t).As(s);
+                _builder.RegisterGeneric(t).As(s);
             else
-                builder.RegisterType(t).As(s);
+                _builder.RegisterType(t).As(s);
         }
 
 
-        public void RegisterAsService<T, S>(Func<IGameTypeRegistry, T> creatorFunc)
+        public void RegisterAsService<T, TS>(Func<IGameTypeRegistry, T> creatorFunc)
         {
-            builder.Register<T>(c => creatorFunc(this)).As<S>().SingleInstance();
+            _builder.Register(c => creatorFunc(this)).As<TS>().SingleInstance();
         }
 
         public void ScanAssembly(Assembly assembly)
@@ -104,9 +104,9 @@ namespace GameEngine.TypeRegistry
             foreach (var type in typesToRegister)
             {
                 if (type.IsGenericType)
-                    builder.RegisterGeneric(type);
+                    _builder.RegisterGeneric(type);
                 else
-                    builder.RegisterType(type);
+                    _builder.RegisterType(type);
             }
 
         }
@@ -119,11 +119,11 @@ namespace GameEngine.TypeRegistry
 
             foreach (var type in typesToRegister)
                 if(type.IsGenericType)
-                    builder.RegisterGeneric(type)
+                    _builder.RegisterGeneric(type)
                         .As(type.GetCustomAttribute<GameServiceAttribute>().ServiceType)
                         .SingleInstance();
                 else
-                    builder.RegisterType(type)
+                    _builder.RegisterType(type)
                         .As(type.GetCustomAttribute<GameServiceAttribute>().ServiceType)
                         .SingleInstance();
         }
