@@ -65,6 +65,7 @@
     <Compile Include="Controlls\ListCell.cs" />
     <Compile Include="Controlls\ListView.cs" />
     <Compile Include="Graphics\AbstractGraphicComponent.cs" />
+    <Compile Include="Graphics\AbstractPanel.cs" />
     <Compile Include="Graphics\Extensions.cs" />
     <Compile Include="Graphics\General\ISpriteBatch.cs" />
     <Compile Include="Graphics\General\ISpriteFont.cs" />
@@ -118,12 +119,15 @@
     <Compile Include="Panels\GridExtensions.cs" />
     <Compile Include="Panels\GridInputHandler.cs" />
     <Compile Include="Panels\ScrollArea.cs" />
+    <Compile Include="Panels\Window.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Renderers\AbstractRenderer.cs" />
     <Compile Include="Renderers\IButtonRenderer.cs" />
     <Compile Include="Renderers\IRenderer.cs" />
+    <Compile Include="Renderers\IWindowRenderer.cs" />
     <Compile Include="Renderers\NullRenderer.cs" />
     <Compile Include="Renderers\PokemonClassicRenderer\ClassicButtonRenderer.cs" />
+    <Compile Include="Renderers\PokemonClassicRenderer\ClassicWindowRenderer.cs" />
     <Compile Include="Scene.cs" />
     <Compile Include="Utils\DefaultTextSplitter.cs" />
     <Compile Include="Utils\Extensions.cs" />
@@ -147,7 +151,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Graphics" />
     <Folder Include="Graphics\GUI" />
     <Folder Include="Graphics\TableView" />
   </ItemGroup>

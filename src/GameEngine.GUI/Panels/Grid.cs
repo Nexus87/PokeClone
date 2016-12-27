@@ -4,6 +4,7 @@ using System.Linq;
 using GameEngine.Globals;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Graphics.General;
+using GameEngine.Registry;
 using GameEngine.Utils;
 using Microsoft.Xna.Framework;
 using Extensions = GameEngine.Utils.Extensions;
@@ -32,6 +33,7 @@ namespace GameEngine.GUI.Panels
         public float Width { get; set; }
     }
 
+    [GameType]
     public class Grid : AbstractPanel
     {
         private readonly Table<GridCell> _cells = new Table<GridCell>();
@@ -39,6 +41,14 @@ namespace GameEngine.GUI.Panels
         private readonly List<ColumnProperty> _columnPoperties = new List<ColumnProperty>();
         private readonly GridInputHandler _gridInputHandler;
 
+        public void SelectComponent(int row, int column)
+        {
+            if (row < 0 || row >= Rows)
+                throw new ArgumentOutOfRangeException(nameof(row), row, "Number of rows: " + Rows);
+            if(column < 0 ||  column >= Columns)
+                throw new ArgumentOutOfRangeException(nameof(column), column, "Number of columns: " + Columns);
+            _gridInputHandler.SetSelection(row, column);
+        }
         public Grid()
         {
             _gridInputHandler = new GridInputHandler(_cells);
@@ -48,7 +58,7 @@ namespace GameEngine.GUI.Panels
 
         internal int Columns => _columnPoperties.Count;
 
-        public bool HandleDirectionInput { get; set; }
+        public bool HandleDirectionInput { get; set; } = true;
         
         public void AddRow(RowProperty property)
         {

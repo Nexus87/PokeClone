@@ -43,6 +43,7 @@ namespace GameEngine.GUI.Controlls
         {
             TextHeight = 32;
             _buttonRenderer = buttonRenderer;
+            IsSelectable = true;
         }
 
         public event EventHandler ButtonPressed;
@@ -51,7 +52,8 @@ namespace GameEngine.GUI.Controlls
 
         public override void HandleKeyInput(CommandKeys key)
         {
-            OnButtonPressed();
+            if(key == CommandKeys.Select)
+                OnButtonPressed();
         }
 
         internal void OnButtonPressed()

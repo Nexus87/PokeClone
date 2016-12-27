@@ -8,7 +8,7 @@ namespace GameEngine.GUI.Panels
     {
         private int _selectedRow;
         private int _selectedColumn;
-        private Table<GridCell> _cells;
+        private readonly Table<GridCell> _cells;
 
         public GridInputHandler(Table<GridCell> cells)
         {
@@ -19,7 +19,10 @@ namespace GameEngine.GUI.Panels
         public void HandleKeyInput(CommandKeys key)
         {
             if(key == CommandKeys.Back || key == CommandKeys.Select)
+            {
+                _cells[_selectedRow, _selectedColumn].GuiComponent?.HandleKeyInput(key);
                 return;
+            }
 
             if (SelectedCellOutOfBounds())
             {
@@ -113,6 +116,14 @@ namespace GameEngine.GUI.Panels
         private bool SelectedCellOutOfBounds()
         {
             return _selectedColumn >= _cells.Columns || _selectedRow >= _cells.Rows;
+        }
+
+        public void SetSelection(int row, int column)
+        {
+            UnselectComponent();
+            _selectedColumn = column;
+            _selectedRow = row;
+            SelectComponent();
         }
     }
 }
