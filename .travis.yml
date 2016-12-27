@@ -9,8 +9,8 @@ mono:
 - latest
 script:
 - xbuild /p:Configuration=Release /p:DefineConstants=TRAVIS PokeClone.sln
-- mono ./testrunner/NUnit.ConsoleRunner.3.4.1/tools/nunit3-console.exe ./BattleLibTest/bin/AnyCPU/Release/BattleLibTest.dll
-  ./GameEngineTest/bin/AnyCPU/Release/GameEngineTest.dll ./MainModuleTest/bin/AnyCPU/Release/MainModuleTest.dll
+- mono ./testrunner/NUnit.ConsoleRunner.3.4.1/tools/nunit3-console.exe ./BattleModeTest/bin/AnyCPU/Release/BattleModeTest.dll
+  ./GameEngineTest/bin/AnyCPU/Release/GameEngineTest.dll ./MainModeTest/bin/AnyCPU/Release/MainMode.dll
 - 7z a PokeClone-Linux.zip ./PokemonGame/bin/AnyCPU/Release/*.dll ./PokemonGame/bin/AnyCPU/Release/*.exe ./PokemonGame/bin/AnyCPU/Release/Content
 addons:
   apt:
