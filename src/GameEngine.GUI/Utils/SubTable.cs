@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using GameEngine.GUI.Graphics.TableView;
 
-namespace GameEngine.Utils
+namespace GameEngine.GUI.Utils
 {
     internal class SubTable<T> : ITable<T>
     {

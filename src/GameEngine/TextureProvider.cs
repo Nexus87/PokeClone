@@ -1,8 +1,8 @@
 ﻿using GameEngine.GUI.Graphics.General;
-using GameEngine.Registry;
+using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework.Content;
 
-namespace GameEngine
+namespace GameEngine.Core
 {
     [GameService(typeof(TextureProvider))]
     public class TextureProvider

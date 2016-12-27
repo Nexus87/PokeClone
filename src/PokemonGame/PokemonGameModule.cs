@@ -1,7 +1,9 @@
 ﻿using GameEngine;
-using GameEngine.Registry;
 using System;
 using System.Reflection;
+using GameEngine.Core;
+using GameEngine.Core.Registry;
+using GameEngine.TypeRegistry;
 
 namespace PokemonGame
 {

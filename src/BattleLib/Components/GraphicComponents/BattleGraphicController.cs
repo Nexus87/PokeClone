@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using Base.Data;
-using BattleLib.Components.BattleState;
+using BattleMode.Core.Components.BattleState;
 using GameEngine;
+using GameEngine.Core;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Graphics.General;
-using GameEngine.Registry;
+using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
 
-namespace BattleLib.Components.GraphicComponents
+namespace BattleMode.Core.Components.GraphicComponents
 {
     [GameService(typeof(IBattleGraphicController))]
     public class BattleGraphicController : AbstractGraphicComponent, IBattleGraphicController

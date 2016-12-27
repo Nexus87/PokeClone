@@ -1,9 +1,9 @@
 ﻿using Base;
 using Base.Data;
 using Base.Rules;
-using GameEngine.Utils;
 using System;
-using GameEngine.Registry;
+using GameEngine.GUI.Utils;
+using GameEngine.TypeRegistry;
 
 namespace PokemonGame.Rules
 {

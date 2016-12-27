@@ -1,11 +1,11 @@
-﻿using Base;
-using Base.Data;
-using NUnit.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Base;
+using Base.Data;
 using GameEngine.GUI.Graphics.TableView;
+using NUnit.Framework;
 
-namespace BattleLibTest.GUI
+namespace BattleModeTest.Components.GraphicComponents
 {
     [TestFixture]
     public class MoveModelTest

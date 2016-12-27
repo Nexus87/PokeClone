@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using BattleLib.Components.GraphicComponents;
+using BattleMode.Core.Components.GraphicComponents;
 using FakeItEasy;
 using GameEngine.GUI.Graphics;
-using GameEngine.Utils;
+using GameEngine.GUI.Utils;
 using GameEngineTest.Graphics;
 using GameEngineTest.TestUtils;
 using Microsoft.Xna.Framework;
 using NUnit.Framework;
 
-namespace BattleLibTest.Components.GraphicComponents
+namespace BattleModeTest.Components.GraphicComponents
 {
     [TestFixture]
     public class HpLineTest : IGraphicComponentTest

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using GameEngine.GUI.Graphics;
 
-namespace GameEngine.TextureLoader
+namespace GameEngine.Core.TextureLoader
 {
     public interface ITextureProvider
     {

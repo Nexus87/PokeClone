@@ -1,11 +1,12 @@
 ﻿using Base;
 using GameEngine;
+using GameEngine.Core;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Graphics.GUI;
 using GameEngine.GUI.Graphics.TableView;
-using GameEngine.Registry;
+using GameEngine.TypeRegistry;
 
-namespace BattleLib.Components.GraphicComponents
+namespace BattleMode.Core.Components.GraphicComponents
 {
     [GameType]
     public class PokemonMenuWidget : AbstractMenuWidget<Pokemon>

@@ -1,7 +1,7 @@
 ﻿using System;
 using Base.Data;
 
-namespace BattleLib.Components.BattleState
+namespace BattleMode.Core.Components.BattleState
 {
     public class ClientStatusChangedEventArgs : EventArgs
     {

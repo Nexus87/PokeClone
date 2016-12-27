@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 using GameEngine.Globals;
+using GameEngine.GUI;
+using GameEngine.GUI.Configuration;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-namespace GameEngine.GameEngineComponents
+namespace GameEngine.Core.GameEngineComponents
 {
     internal class InputComponent : IGameComponent
     {
@@ -17,7 +19,7 @@ namespace GameEngine.GameEngineComponents
             this.keyMap = keyMap;
         }
 
-        public InputComponent(Configuration.Configuration config) : this(new KeyboardManager(), config.KeyMap) { }
+        public InputComponent(Configuration config) : this(new KeyboardManager(), config.KeyMap) { }
 
         public void Update(GameTime gameTime)
         {

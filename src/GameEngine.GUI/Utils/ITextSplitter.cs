@@ -1,4 +1,4 @@
-﻿namespace GameEngine.Utils
+﻿namespace GameEngine.GUI.Utils
 {
     public interface ITextSplitter
     {

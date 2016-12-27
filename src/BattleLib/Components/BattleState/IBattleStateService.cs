@@ -1,17 +1,18 @@
 ﻿using System;
+using GameEngine.Core;
 
-namespace BattleLib.Components.BattleState
+namespace BattleMode.Core.Components.BattleState
 {
-    public interface IBattleStateService : GameEngine.IGameComponent
+    public interface IBattleStateService : IGameComponent
     {
         event EventHandler<StateChangedEventArgs> StateChanged;
 
-        PokemonWrapper GetPokemon(BattleLib.ClientIdentifier id);
+        PokemonWrapper GetPokemon(ClientIdentifier id);
 
-        void SetCharacter(BattleLib.ClientIdentifier id, Base.Pokemon pkmn);
+        void SetCharacter(ClientIdentifier id, Base.Pokemon pkmn);
 
-        void SetItem(BattleLib.ClientIdentifier id, BattleLib.ClientIdentifier target, Base.Item item);
+        void SetItem(ClientIdentifier id, ClientIdentifier target, Base.Item item);
 
-        void SetMove(BattleLib.ClientIdentifier id, BattleLib.ClientIdentifier target, Base.Move move);
+        void SetMove(ClientIdentifier id, ClientIdentifier target, Base.Move move);
     }
 }

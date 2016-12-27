@@ -1,6 +1,6 @@
 ﻿using Base;
 
-namespace BattleLib.Components.BattleState
+namespace BattleMode.Core.Components.BattleState
 {
     public interface IBattleState
     {

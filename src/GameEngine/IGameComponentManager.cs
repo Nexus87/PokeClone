@@ -1,6 +1,7 @@
-﻿using GameEngine.GUI.Graphics;
+﻿using GameEngine.GUI;
+using GameEngine.GUI.Graphics;
 
-namespace GameEngine
+namespace GameEngine.Core
 {
     public interface IGameComponentManager
     {

@@ -1,9 +1,9 @@
 ﻿using System;
 using Base.Data;
-using BattleLib.Components.BattleState;
+using BattleMode.Core.Components.BattleState;
 using GameEngine.GUI.Graphics;
 
-namespace BattleLib.Components.GraphicComponents
+namespace BattleMode.Core.Components.GraphicComponents
 {
     public interface IBattleGraphicController : IGraphicComponent
     {

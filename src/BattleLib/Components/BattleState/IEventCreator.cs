@@ -1,6 +1,6 @@
 ﻿using Base.Data;
 
-namespace BattleLib.Components.BattleState
+namespace BattleMode.Core.Components.BattleState
 {
     public interface IEventCreator : IBattleEvents
     {

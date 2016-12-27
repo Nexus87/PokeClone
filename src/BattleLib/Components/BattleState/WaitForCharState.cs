@@ -1,11 +1,11 @@
-﻿using Base;
-using Base.Data;
-using GameEngine.Registry;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Base;
+using Base.Data;
+using GameEngine.TypeRegistry;
 
-namespace BattleLib.Components.BattleState
+namespace BattleMode.Core.Components.BattleState
 {
     [GameType]
     public class WaitForCharState : AbstractState

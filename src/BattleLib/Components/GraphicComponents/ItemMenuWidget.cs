@@ -1,9 +1,9 @@
 ﻿using Base;
 using GameEngine.GUI.Graphics.GUI;
 using GameEngine.GUI.Graphics.TableView;
-using GameEngine.Registry;
+using GameEngine.TypeRegistry;
 
-namespace BattleLib.Components.GraphicComponents
+namespace BattleMode.Core.Components.GraphicComponents
 {
     [GameType]
     public class ItemMenuWidget : AbstractMenuWidget<Item>

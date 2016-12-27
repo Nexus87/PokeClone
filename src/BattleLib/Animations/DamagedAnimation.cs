@@ -1,8 +1,8 @@
-﻿using Microsoft.Xna.Framework;
-using System;
+﻿using System;
 using GameEngine.GUI.Graphics;
+using Microsoft.Xna.Framework;
 
-namespace BattleLib.Animations
+namespace BattleMode.Core.Animations
 {
     public class DamagedAnimation  : IAnimation
     {

@@ -1,6 +1,6 @@
-﻿using MainModule.Graphics;
+﻿using MainMode.Core.Graphics;
 
-namespace MainModule
+namespace MainMode.Core
 {
     public interface IMapLoader
     {

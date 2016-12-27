@@ -1,39 +1,33 @@
 ﻿using System;
 
-namespace BattleLib
+namespace BattleMode.Core
 {
     public class ClientIdentifier
     {
-        private readonly Guid Guid;
+        private readonly Guid _guid;
 
         public ClientIdentifier()
         {
-            Guid = Guid.NewGuid();
+            _guid = Guid.NewGuid();
         }
 
         public bool IsPlayer { get; set; }
-        public String Name { get; set; }
+        public string Name { get; set; }
 
         public override bool Equals(object obj)
         {
-            if (obj == null)
-                return false;
-
             var id = obj as ClientIdentifier;
-            if (id == null)
-                return false;
-
-            return Equals(id);
+            return id != null && Equals(id);
         }
 
         public bool Equals(ClientIdentifier id)
         {
-            return Guid.Equals(id.Guid);
+            return _guid.Equals(id._guid);
         }
 
         public override int GetHashCode()
         {
-            return Guid.GetHashCode();
+            return _guid.GetHashCode();
         }
     }
 }

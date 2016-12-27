@@ -2,7 +2,7 @@
 using GameEngine.GUI.Graphics.General;
 using Microsoft.Xna.Framework;
 
-namespace GameEngine
+namespace GameEngine.Core
 {
     public interface ISpriteSheetProvider
     {

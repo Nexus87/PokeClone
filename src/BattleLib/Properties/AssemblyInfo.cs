@@ -26,7 +26,7 @@ using System.Runtime.CompilerServices;
 // Information about this assembly is defined by the following attributes.
 // Change them to the values specific to your project.
 
-[assembly: AssemblyTitle("BattleLib")]
+[assembly: AssemblyTitle("BattleMode.Core")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
@@ -34,7 +34,7 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyCopyright("kevin")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
-[assembly: InternalsVisibleTo("BattleLibTest")]
+[assembly: InternalsVisibleTo("BattleModeTest")]
 [assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
 
 // The assembly version has the format "{Major}.{Minor}.{Build}.{Revision}".

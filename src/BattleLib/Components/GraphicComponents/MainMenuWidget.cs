@@ -5,10 +5,10 @@ using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Graphics.General;
 using GameEngine.GUI.Graphics.GUI;
 using GameEngine.GUI.Panels;
-using GameEngine.Registry;
+using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
 
-namespace BattleLib.Components.GraphicComponents
+namespace BattleMode.Core.Components.GraphicComponents
 {
     [GameType]
     public class MainMenuWidget : AbstractWidget, IMenuWidget<MainMenuEntries>

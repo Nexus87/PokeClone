@@ -1,9 +1,9 @@
 ﻿using Base.Data;
-using BattleLib.Components.BattleState;
-using BattleLib.Components.GraphicComponents;
-using GameEngine.GameEngineComponents;
+using BattleMode.Core.Components.BattleState;
+using BattleMode.Core.Components.GraphicComponents;
+using GameEngine.Core.GameEngineComponents;
 
-namespace BattleLib.Components
+namespace BattleMode.Core.Components
 {
     public static class Extensions
     {

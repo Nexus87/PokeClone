@@ -3,7 +3,7 @@ using GameEngine.GUI.Graphics.General;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace GameEngine
+namespace GameEngine.Core
 {
     internal class Screen
     {

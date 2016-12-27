@@ -1,13 +1,14 @@
-﻿using Base;
-using BattleLib.Components.BattleState;
-using Microsoft.Xna.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Base;
+using BattleMode.Core.Components.BattleState;
+using Microsoft.Xna.Framework;
+using IGameComponent = GameEngine.Core.IGameComponent;
 
-namespace BattleLib.Components.AI
+namespace BattleMode.Core.Components.AI
 {
-    internal class AIComponent : GameEngine.IGameComponent
+    internal class AIComponent : IGameComponent
     {
         private IBattleStateService state;
         private Action nextAction;

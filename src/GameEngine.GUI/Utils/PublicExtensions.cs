@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GameEngine.Utils
+namespace GameEngine.GUI.Utils
 {
     public static class PublicExtensions
     {

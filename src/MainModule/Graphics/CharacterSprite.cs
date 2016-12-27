@@ -4,7 +4,7 @@ using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Graphics.General;
 using Microsoft.Xna.Framework;
 
-namespace MainModule.Graphics
+namespace MainMode.Core.Graphics
 {
     public class CharacterSprite : AbstractGraphicComponent, ICharacterSprite
     {

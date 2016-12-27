@@ -1,9 +1,9 @@
-﻿using Base;
-using Base.Data;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Base;
+using Base.Data;
 
-namespace BattleLib
+namespace BattleMode.Core
 {
     public class Client
     {

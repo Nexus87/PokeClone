@@ -1,12 +1,12 @@
 ﻿using Base.Data;
-using BattleLib;
-using BattleLib.Components.BattleState;
-using BattleLib.Components.BattleState.Commands;
-using BattleLibTest.Utils;
+using BattleMode.Core;
+using BattleMode.Core.Components.BattleState;
+using BattleMode.Core.Components.BattleState.Commands;
+using BattleModeTest.Utils;
 using FakeItEasy;
 using NUnit.Framework;
 
-namespace BattleLibTest
+namespace BattleModeTest
 {
     [TestFixture]
     public class CommandExecuterTest

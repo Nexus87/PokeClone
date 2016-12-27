@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using GameEngine.TypeRegistry;
 
-namespace GameEngine.Registry
+namespace GameEngine.Core.Registry
 {
     public class AutofacModuleRegistry : IModuleRegistry
     {

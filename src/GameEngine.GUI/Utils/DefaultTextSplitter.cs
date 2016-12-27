@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace GameEngine.Utils
+namespace GameEngine.GUI.Utils
 {
     public class DefaultTextSplitter : ITextSplitter
     {

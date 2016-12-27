@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Reflection;
-using GameEngine.GameEngineComponents;
+using GameEngine.Core.GameEngineComponents;
+using GameEngine.Core.Registry;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Graphics.GUI;
 using GameEngine.GUI.Graphics.TableView;
 using GameEngine.GUI.Panels;
 using GameEngine.GUI.Renderers;
 using GameEngine.GUI.Renderers.PokemonClassicRenderer;
-using GameEngine.Registry;
-using GameEngine.Utils;
+using GameEngine.GUI.Utils;
+using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework.Content;
 
-namespace GameEngine
+namespace GameEngine.Core
 {
     internal class GameEngineModule : IModule
     {

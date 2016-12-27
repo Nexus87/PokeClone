@@ -1,10 +1,11 @@
 ﻿using System.Reflection;
-using GameEngine;
-using GameEngine.Registry;
-using MainModule.Graphics;
+using GameEngine.Core;
+using GameEngine.Core.Registry;
+using GameEngine.TypeRegistry;
+using MainMode.Core.Graphics;
 using Microsoft.Xna.Framework.Content;
 
-namespace MainModule
+namespace MainMode.Core
 {
     public class MainModule : IModule
     {

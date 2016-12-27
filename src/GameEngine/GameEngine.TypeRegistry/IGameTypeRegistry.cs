@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
-namespace GameEngine.Registry
+namespace GameEngine.TypeRegistry
 {
     public interface IGameTypeRegistry
     {

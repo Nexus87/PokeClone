@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 using GameEngine.Globals;
+using GameEngine.GUI;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Graphics.General;
 using GameEngine.GUI.Graphics.GUI;
-using GameEngine.Registry;
-using GameEngine.Utils;
+using GameEngine.GUI.Utils;
+using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
 
-namespace GameEngine
+namespace GameEngine.Core
 {
     [GameService(typeof(GuiManager))]
     public class GuiManager : IInputHandler

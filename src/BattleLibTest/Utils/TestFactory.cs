@@ -1,10 +1,10 @@
-﻿using Base;
+﻿using System.Collections.Generic;
+using Base;
 using Base.Data;
-using BattleLib;
-using BattleLib.Components.BattleState;
-using System.Collections.Generic;
+using BattleMode.Core;
+using BattleMode.Core.Components.BattleState;
 
-namespace BattleLibTest.Utils
+namespace BattleModeTest.Utils
 {
     public class TestFactory
     {

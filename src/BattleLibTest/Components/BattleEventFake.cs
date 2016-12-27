@@ -1,10 +1,10 @@
 ﻿using System;
 using Base;
 using Base.Data;
-using BattleLib;
-using BattleLib.Components.BattleState;
+using BattleMode.Core;
+using BattleMode.Core.Components.BattleState;
 
-namespace BattleLibTest.Components
+namespace BattleModeTest.Components
 {
     public class BattleEventFake : IEventCreator
     {

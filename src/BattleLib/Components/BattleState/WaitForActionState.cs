@@ -1,11 +1,11 @@
-﻿using Base;
-using BattleLib.Components.BattleState.Commands;
-using GameEngine.Registry;
-using GameEngine.Utils;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Base;
+using BattleMode.Core.Components.BattleState.Commands;
+using GameEngine.GUI.Utils;
+using GameEngine.TypeRegistry;
 
-namespace BattleLib.Components.BattleState
+namespace BattleMode.Core.Components.BattleState
 {
     [GameType]
     public class WaitForActionState : IBattleState

@@ -1,7 +1,7 @@
 ﻿
 using GameEngine.Globals;
 
-namespace GameEngine
+namespace GameEngine.GUI
 {
     /// <summary>
     /// Interface for classes, that can process user input

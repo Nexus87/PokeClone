@@ -1,6 +1,6 @@
 ﻿using Base.Data;
 
-namespace PokemonRulesTest
+namespace PokemonRulesTest.TestData
 {
     public class CharFactoryTestData
     {

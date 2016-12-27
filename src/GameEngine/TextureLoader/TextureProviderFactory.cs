@@ -1,7 +1,7 @@
-﻿using GameEngine.Configuration;
+﻿using GameEngine.GUI.Configuration;
 using Microsoft.Xna.Framework.Content;
 
-namespace GameEngine.TextureLoader
+namespace GameEngine.Core.TextureLoader
 {
     public static class TextureProviderFactory
     {

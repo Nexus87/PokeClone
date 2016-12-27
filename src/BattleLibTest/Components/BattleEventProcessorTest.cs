@@ -1,12 +1,12 @@
 ﻿using Base.Data;
-using BattleLib;
-using BattleLib.Components;
-using BattleLib.Components.BattleState;
-using NUnit.Framework;
-using BattleLib.Components.GraphicComponents;
+using BattleMode.Core;
+using BattleMode.Core.Components;
+using BattleMode.Core.Components.BattleState;
+using BattleMode.Core.Components.GraphicComponents;
 using FakeItEasy;
+using NUnit.Framework;
 
-namespace BattleLibTest.Components
+namespace BattleModeTest.Components
 {
     [TestFixture]
     public class BattleEventProcessorTest

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GameEngine.Registry
+namespace GameEngine.TypeRegistry
 {
     [AttributeUsage(AttributeTargets.Class)]
     public class GameServiceAttribute : Attribute

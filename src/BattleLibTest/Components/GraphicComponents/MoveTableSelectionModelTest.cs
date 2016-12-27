@@ -1,10 +1,10 @@
 ﻿using Base;
 using Base.Data;
+using BattleMode.Core.Components.GraphicComponents;
 using GameEngineTest.TestUtils;
 using NUnit.Framework;
-using BattleLib.Components.GraphicComponents;
 
-namespace BattleLibTest.Components.GraphicComponents
+namespace BattleModeTest.Components.GraphicComponents
 {
     [TestFixture]
     internal class MoveTableSelectionModelTest

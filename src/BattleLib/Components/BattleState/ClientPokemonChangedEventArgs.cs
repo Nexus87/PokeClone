@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BattleLib.Components.BattleState
+namespace BattleMode.Core.Components.BattleState
 {
     public class ClientPokemonChangedEventArgs : EventArgs
     {

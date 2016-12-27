@@ -1,10 +1,10 @@
-﻿using NUnit.Framework;
-using System;
-using BattleLib.Animations;
+﻿using System;
+using BattleMode.Core.Animations;
 using GameEngineTest.TestUtils;
 using Microsoft.Xna.Framework;
+using NUnit.Framework;
 
-namespace BattleLibTest.Animations
+namespace BattleModeTest.Animations
 {
     [TestFixture]
     public class DamagedAnimationTest

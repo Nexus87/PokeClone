@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using GameEngine.Registry;
+using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
 
-namespace GameEngine.GameEngineComponents
+namespace GameEngine.Core.GameEngineComponents
 {
     [GameService(typeof(IEventQueue))]
     internal class EventQueue : IEventQueue

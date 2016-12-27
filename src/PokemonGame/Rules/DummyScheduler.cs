@@ -1,7 +1,7 @@
-﻿using BattleLib.Components.BattleState;
-using BattleLib.Components.BattleState.Commands;
-using System.Collections.Generic;
-using GameEngine.Registry;
+﻿using System.Collections.Generic;
+using BattleMode.Core.Components.BattleState;
+using BattleMode.Core.Components.BattleState.Commands;
+using GameEngine.TypeRegistry;
 
 namespace PokemonGame.Rules
 {

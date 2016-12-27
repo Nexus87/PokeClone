@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
-namespace GameEngine.Utils
+
+namespace GameEngine.GUI.Utils
 {
     public interface ITable<out T> : IEnumerable<T>
     {

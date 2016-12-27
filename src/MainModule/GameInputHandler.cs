@@ -1,9 +1,10 @@
 ﻿using System;
-using GameEngine;
+using GameEngine.Core;
 using GameEngine.Globals;
-using GameEngine.Registry;
+using GameEngine.GUI;
+using GameEngine.TypeRegistry;
 
-namespace MainModule
+namespace MainMode.Core
 {
     [GameType]
     public class GameInputHandler : IInputHandler

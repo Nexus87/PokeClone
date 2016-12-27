@@ -93,9 +93,9 @@
       <Project>{DDE2CFB0-6E45-6967-6E65-546573742E4C}</Project>
       <Name>GameEngineTest</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GameEngine\GameEngine.csproj">
+    <ProjectReference Include="..\GameEngine\GameEngine.Core.csproj">
       <Project>{656D6147-6E45-6967-6E65-2E4C696E7578}</Project>
-      <Name>GameEngine</Name>
+      <Name>GameEngine.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

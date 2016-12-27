@@ -1,4 +1,4 @@
-﻿namespace BattleLib.Components.GraphicComponents
+﻿namespace BattleMode.Core.Components.GraphicComponents
 {
     public enum MainMenuEntries
     {

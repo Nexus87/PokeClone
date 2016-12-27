@@ -1,10 +1,10 @@
-﻿using Autofac;
-using Autofac.Core.Registration;
-using System;
+﻿using System;
 using System.Linq;
 using System.Reflection;
+using Autofac;
+using Autofac.Core.Registration;
 
-namespace GameEngine.Registry
+namespace GameEngine.TypeRegistry
 {
     public class AutofacGameTypeRegistry : IGameTypeRegistry
     {

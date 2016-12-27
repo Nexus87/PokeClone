@@ -2,7 +2,7 @@
 using GameEngine.Globals;
 using Microsoft.Xna.Framework.Input;
 
-namespace GameEngine.Configuration
+namespace GameEngine.GUI.Configuration
 {
     public class Configuration
     {

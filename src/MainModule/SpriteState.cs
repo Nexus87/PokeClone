@@ -1,6 +1,6 @@
-﻿using GameEngine.Registry;
+﻿using GameEngine.TypeRegistry;
 
-namespace MainModule
+namespace MainMode.Core
 {
     [GameType]
     public class SpriteState

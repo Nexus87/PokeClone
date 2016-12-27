@@ -1,11 +1,12 @@
 ﻿using System;
 using GameEngine;
+using GameEngine.Core;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Graphics.General;
-using GameEngine.Registry;
+using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
 
-namespace BattleLib.Components.GraphicComponents
+namespace BattleMode.Core.Components.GraphicComponents
 {
     [GameType]
     public class HpLine : AbstractGraphicComponent

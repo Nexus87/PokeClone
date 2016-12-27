@@ -74,25 +74,25 @@
       <Project>{65736142-4C2E-6E69-7578-426173652E4C}</Project>
       <Name>Base</Name>
     </ProjectReference>
-    <ProjectReference Include="..\BattleLib\BattleLib.csproj">
+    <ProjectReference Include="..\BattleLib\BattleMode.Core.csproj">
       <Project>{74746142-656C-694C-622E-4C696E757842}</Project>
-      <Name>BattleLib</Name>
+      <Name>BattleMode.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\GameEngine.GUI\GameEngine.GUI.csproj">
       <Project>{DDE2CFB0-6E45-6967-6E65-2E4755492E4C}</Project>
       <Name>GameEngine.GUI</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GameEngine\GameEngine.csproj">
+    <ProjectReference Include="..\GameEngine\GameEngine.Core.csproj">
       <Project>{656D6147-6E45-6967-6E65-2E4C696E7578}</Project>
-      <Name>GameEngine</Name>
+      <Name>GameEngine.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\GameEngine\GameEngine.TypeRegistry\GameEngine.TypeRegistry.csproj">
       <Project>{73200884-85C6-4A3D-A3C2-A53D9C632613}</Project>
       <Name>GameEngine.TypeRegistry</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MainModule\MainModule.csproj">
+    <ProjectReference Include="..\MainModule\MainMode.Core.csproj">
       <Project>{6E69614D-6F4D-7564-6C65-2E4C696E7578}</Project>
-      <Name>MainModule</Name>
+      <Name>MainMode.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

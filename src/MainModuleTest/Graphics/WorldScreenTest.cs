@@ -1,12 +1,12 @@
 ﻿using FakeItEasy;
-using GameEngine;
+using GameEngine.Core;
 using GameEngineTest.TestUtils;
-using MainModule;
-using MainModule.Graphics;
-using MainModuleTest.Utils;
+using MainMode.Core;
+using MainMode.Core.Graphics;
+using MainModeTest.Utils;
 using NUnit.Framework;
 
-namespace MainModuleTest.Graphics
+namespace MainModeTest.Graphics
 {
     [TestFixture]
     public class WorldScreenTest

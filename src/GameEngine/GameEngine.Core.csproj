@@ -7,8 +7,8 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{656D6147-6E45-6967-6E65-2E4C696E7578}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>GameEngine</RootNamespace>
-    <AssemblyName>GameEngine</AssemblyName>
+    <RootNamespace>GameEngine.Core</RootNamespace>
+    <AssemblyName>GameEngine.Core</AssemblyName>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <NoWarn>1591</NoWarn>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>

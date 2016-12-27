@@ -1,12 +1,12 @@
 ﻿using System;
-using BattleLib.Components.BattleState;
+using BattleMode.Core.Components.BattleState;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Graphics.General;
 using GameEngine.GUI.Panels;
 using Microsoft.Xna.Framework;
 using ValueType = GameEngine.GUI.Panels.ValueType;
 
-namespace BattleLib.Components.GraphicComponents
+namespace BattleMode.Core.Components.GraphicComponents
 {
     // TODO come up with a better solution for this
 

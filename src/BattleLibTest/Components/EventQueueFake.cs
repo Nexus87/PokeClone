@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using GameEngine.GameEngineComponents;
+using GameEngine.Core.GameEngineComponents;
 using Microsoft.Xna.Framework;
 
-namespace BattleLibTest.Components
+namespace BattleModeTest.Components
 {
     public class EventQueueFake : IEventQueue
     {

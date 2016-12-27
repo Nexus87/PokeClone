@@ -1,11 +1,11 @@
 ﻿using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Graphics.General;
 using GameEngine.GUI.Panels;
-using GameEngine.Registry;
-using GameEngine.Utils;
+using GameEngine.GUI.Utils;
+using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
 
-namespace MainModule.Graphics
+namespace MainMode.Core.Graphics
 {
     [GameType]
     public class MapGraphic : AbstractGraphicComponent, IMapGraphic

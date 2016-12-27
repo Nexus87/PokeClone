@@ -2,7 +2,7 @@
 using Base.Data;
 using Base.Rules;
 
-namespace BattleLibTest
+namespace BattleModeTest
 {
     public class MoveEffectCalculatorStub : IMoveEffectCalculator
     {

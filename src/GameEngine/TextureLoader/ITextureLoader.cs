@@ -1,7 +1,7 @@
-﻿using GameEngine.Configuration;
+﻿using GameEngine.GUI.Configuration;
 using GameEngine.GUI.Graphics;
 
-namespace GameEngine.TextureLoader
+namespace GameEngine.Core.TextureLoader
 {
     public interface ITextureLoader
     {

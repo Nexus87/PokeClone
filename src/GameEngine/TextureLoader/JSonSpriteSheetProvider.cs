@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace GameEngine.TextureLoader
+namespace GameEngine.Core.TextureLoader
 {
     public class JsonSpriteSheetProvider : ISpriteSheetProvider
     {

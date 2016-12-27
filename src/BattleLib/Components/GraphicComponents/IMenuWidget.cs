@@ -2,7 +2,7 @@
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Graphics.GUI;
 
-namespace BattleLib.Components.GraphicComponents
+namespace BattleMode.Core.Components.GraphicComponents
 {
     public interface IMenuWidget<T> : IWidget
     {

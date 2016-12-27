@@ -1,10 +1,10 @@
-﻿using Base;
+﻿using System.Collections.Generic;
+using Base;
 using Base.Data;
 using Base.Rules;
-using System.Collections.Generic;
-using GameEngine.Registry;
+using GameEngine.TypeRegistry;
 
-namespace Game.Rules
+namespace PokemonGame.Rules
 {
     [GameService(typeof(IPokemonRules))]
     public class DummyPokemonRules : IPokemonRules

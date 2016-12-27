@@ -1,12 +1,12 @@
-﻿using Base;
-using BattleLib.Components.BattleState;
-using GameEngine.Registry;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Base;
+using BattleMode.Core.Components.BattleState;
 using GameEngine.GUI.Graphics.TableView;
+using GameEngine.TypeRegistry;
 
-namespace BattleLib.Components.GraphicComponents
+namespace BattleMode.Core.Components.GraphicComponents
 {
     [GameType]
     public class PokemonModel : ITableModel<Pokemon>

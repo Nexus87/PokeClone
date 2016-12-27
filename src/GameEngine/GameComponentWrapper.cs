@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace GameEngine
+namespace GameEngine.Core
 {
     internal class GameComponentWrapper : GameComponent
     {

@@ -1,6 +1,6 @@
 ﻿using GameEngine.GUI.Graphics;
 
-namespace MainModule.Graphics
+namespace MainMode.Core.Graphics
 {
     public interface IMapGraphic : IGraphicComponent
     {

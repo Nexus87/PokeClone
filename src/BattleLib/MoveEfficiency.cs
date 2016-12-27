@@ -1,4 +1,4 @@
-﻿namespace BattleLib
+﻿namespace BattleMode.Core
 {
     public enum MoveEfficiency
     {

@@ -1,8 +1,8 @@
 ﻿using GameEngineTest.TestUtils;
-using MainModule;
-using MainModule.Graphics;
+using MainMode.Core;
+using MainMode.Core.Graphics;
 
-namespace MainModuleTest.Utils
+namespace MainModeTest.Utils
 {
     public class MapControllerMock : GraphicComponentMock, IMapController
     {

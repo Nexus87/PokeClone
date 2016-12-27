@@ -1,9 +1,9 @@
 ﻿using Base;
 using GameEngine.GUI.Graphics.TableView;
-using GameEngine.Registry;
-using GameEngine.Utils;
+using GameEngine.GUI.Utils;
+using GameEngine.TypeRegistry;
 
-namespace BattleLib.Components.GraphicComponents
+namespace BattleMode.Core.Components.GraphicComponents
 {
     [GameType]
     public class MoveTableSelectionModel : TableSingleSelectionModel

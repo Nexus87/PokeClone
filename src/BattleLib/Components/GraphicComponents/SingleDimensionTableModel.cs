@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using GameEngine.GUI.Graphics.TableView;
 
-namespace BattleLib.Components.GraphicComponents
+namespace BattleMode.Core.Components.GraphicComponents
 {
     public abstract class SingleDimensionTableModel<T> : ITableModel<T>
     {

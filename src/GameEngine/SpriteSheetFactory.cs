@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Graphics.General;
-using GameEngine.Registry;
+using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
 
-namespace GameEngine
+namespace GameEngine.Core
 {
     [GameType]
     public class SpriteSheetFactory

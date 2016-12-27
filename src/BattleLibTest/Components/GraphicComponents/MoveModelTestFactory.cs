@@ -1,10 +1,10 @@
 ﻿using Base;
 using Base.Data;
-using BattleLib;
-using BattleLib.Components.BattleState;
-using BattleLib.Components.GraphicComponents;
+using BattleMode.Core;
+using BattleMode.Core.Components.BattleState;
+using BattleMode.Core.Components.GraphicComponents;
 
-namespace BattleLibTest.GUI
+namespace BattleModeTest.Components.GraphicComponents
 {
     internal class MoveModelTestFactory
     {

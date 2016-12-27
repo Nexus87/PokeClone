@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GameEngine.Registry
+namespace GameEngine.TypeRegistry
 {
     public class TypeNotRegisteredException : Exception {
         public TypeNotRegisteredException(string message, Exception innerException) :

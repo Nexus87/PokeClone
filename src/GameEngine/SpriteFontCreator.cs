@@ -1,6 +1,6 @@
 ﻿using GameEngine.GUI.Graphics.General;
 
-namespace GameEngine
+namespace GameEngine.Core
 {
     public delegate ISpriteFont SpriteFontCreator();
 }

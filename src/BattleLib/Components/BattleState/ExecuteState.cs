@@ -1,9 +1,9 @@
-﻿using BattleLib.Components.BattleState.Commands;
-using GameEngine.Registry;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using BattleMode.Core.Components.BattleState.Commands;
+using GameEngine.TypeRegistry;
 
-namespace BattleLib.Components.BattleState
+namespace BattleMode.Core.Components.BattleState
 {
     [GameType]
     public class ExecuteState : AbstractState

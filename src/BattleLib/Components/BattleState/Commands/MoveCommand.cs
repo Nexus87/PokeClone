@@ -1,6 +1,6 @@
 ﻿using Base;
 
-namespace BattleLib.Components.BattleState.Commands
+namespace BattleMode.Core.Components.BattleState.Commands
 {
     public class MoveCommand : ICommand
     {

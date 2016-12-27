@@ -1,11 +1,11 @@
 ﻿using System;
-using GameEngine;
+using GameEngine.Core;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Graphics.General;
-using GameEngine.Registry;
+using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
 
-namespace MainModule.Graphics
+namespace MainMode.Core.Graphics
 {
     [GameService(typeof(IWorldScreenController))]
     public class WorldScreen : AbstractGraphicComponent, IWorldScreenController

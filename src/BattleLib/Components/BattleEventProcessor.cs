@@ -1,10 +1,10 @@
-﻿using BattleLib.Components.BattleState;
-using GameEngine.Registry;
-using System;
-using BattleLib.Components.GraphicComponents;
-using GameEngine.GameEngineComponents;
+﻿using System;
+using BattleMode.Core.Components.BattleState;
+using BattleMode.Core.Components.GraphicComponents;
+using GameEngine.Core.GameEngineComponents;
+using GameEngine.TypeRegistry;
 
-namespace BattleLib.Components
+namespace BattleMode.Core.Components
 {
     [GameService(typeof(BattleEventProcessor))]
     public class BattleEventProcessor

@@ -1,4 +1,4 @@
-﻿namespace GameEngine
+﻿namespace GameEngine.Core
 {
     public interface IEngineInterface
     {

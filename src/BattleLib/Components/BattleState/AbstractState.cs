@@ -1,7 +1,7 @@
-﻿using Base;
-using System;
+﻿using System;
+using Base;
 
-namespace BattleLib.Components.BattleState
+namespace BattleMode.Core.Components.BattleState
 {
     public abstract class AbstractState : IBattleState
     {

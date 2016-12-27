@@ -1,9 +1,9 @@
-﻿using BattleLib.Components.BattleState;
+﻿using BattleMode.Core.Components.BattleState;
 using FakeItEasy;
 using GameEngineTest.TestUtils;
 using NUnit.Framework;
 
-namespace BattleLibTest.Components.BattleState
+namespace BattleModeTest.Components.BattleState
 {
     [TestFixture]
     public class BattleStateComponentTest

@@ -1,9 +1,9 @@
 ﻿using GameEngineTest.TestUtils;
-using MainModule;
-using MainModule.Graphics;
+using MainMode.Core;
+using MainMode.Core.Graphics;
 using NUnit.Framework;
 
-namespace MainModuleTest.Graphics
+namespace MainModeTest.Graphics
 {
     [TestFixture]
     public class CharacterSpriteTest

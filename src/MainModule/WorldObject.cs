@@ -1,4 +1,4 @@
-﻿namespace MainModule
+﻿namespace MainMode.Core
 {
     public class WorldObject
     {

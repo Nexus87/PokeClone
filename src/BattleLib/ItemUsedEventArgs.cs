@@ -1,7 +1,7 @@
 ﻿using System;
 using Base;
 
-namespace BattleLib
+namespace BattleMode.Core
 {
     public class ItemUsedEventArgs : EventArgs
     {

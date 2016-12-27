@@ -1,10 +1,10 @@
 ﻿using FakeItEasy;
-using GameEngine.Utils;
-using MainModule;
-using MainModule.Graphics;
+using GameEngine.GUI.Utils;
+using MainMode.Core;
+using MainMode.Core.Graphics;
 using NUnit.Framework;
 
-namespace MainModuleTest.Graphics
+namespace MainModeTest.Graphics
 {
     [TestFixture]
     public class GameStateComponentTest

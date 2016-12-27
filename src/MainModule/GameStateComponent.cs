@@ -1,13 +1,12 @@
-﻿using GameEngine.Registry;
-using MainModule.Graphics;
+﻿using System.Collections.Generic;
+using GameEngine.TypeRegistry;
+using MainMode.Core.Graphics;
 using Microsoft.Xna.Framework;
-using IGameComponent = GameEngine.IGameComponent;
-using System.Collections.Generic;
 
-namespace MainModule
+namespace MainMode.Core
 {
     [GameService(typeof(IGameStateComponent))]
-    public class GameStateComponent : IGameComponent, IGameStateComponent
+    public class GameStateComponent : GameEngine.Core.IGameComponent, IGameStateComponent
     {
         private readonly IWorldScreenController controller;
         private Map map;

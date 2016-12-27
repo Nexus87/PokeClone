@@ -1,7 +1,7 @@
 ﻿using System;
 using GameEngine.GUI.Graphics.TableView;
 
-namespace GameEngine.Utils
+namespace GameEngine.GUI.Utils
 {
     public static class Extensions
     {

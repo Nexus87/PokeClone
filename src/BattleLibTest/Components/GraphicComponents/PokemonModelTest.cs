@@ -1,11 +1,11 @@
-﻿using BattleLib;
-using BattleLib.Components.BattleState;
-using BattleLib.Components.GraphicComponents;
-using BattleLibTest.Utils;
+﻿using System.Linq;
+using BattleMode.Core;
+using BattleMode.Core.Components.BattleState;
+using BattleMode.Core.Components.GraphicComponents;
+using BattleModeTest.Utils;
 using NUnit.Framework;
-using System.Linq;
 
-namespace BattleLibTest.Components.GraphicComponents
+namespace BattleModeTest.Components.GraphicComponents
 {
     [TestFixture]
     public class PokemonModelTest

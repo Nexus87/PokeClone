@@ -1,11 +1,11 @@
-﻿using Base;
+﻿using System;
+using Base;
 using Base.Rules;
-using BattleLib.Components.BattleState;
-using BattleLib.Components.BattleState.Commands;
-using GameEngine.Registry;
-using System;
+using BattleMode.Core.Components.BattleState;
+using BattleMode.Core.Components.BattleState.Commands;
+using GameEngine.TypeRegistry;
 
-namespace BattleLib
+namespace BattleMode.Core
 {
     [GameType]
     public class CommandExecuter

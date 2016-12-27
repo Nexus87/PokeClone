@@ -1,7 +1,7 @@
 ﻿using Base.Data;
 using Base.Rules;
 using System;
-using GameEngine.Registry;
+using GameEngine.TypeRegistry;
 
 namespace PokemonGame.Rules
 {

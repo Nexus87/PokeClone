@@ -1,6 +1,7 @@
-﻿using Base.Data;
-using System.Collections.Generic;
-namespace Base
+﻿using System.Collections.Generic;
+using Base.Data;
+
+namespace Base.Factory
 {
     public interface IMoveRepository
     {

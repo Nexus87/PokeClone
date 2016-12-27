@@ -1,9 +1,9 @@
-﻿using Base;
+﻿using System;
+using Base;
 using Base.Data;
-using GameEngine.Registry;
-using System;
+using GameEngine.TypeRegistry;
 
-namespace BattleLib.Components.BattleState
+namespace BattleMode.Core.Components.BattleState
 {
     [GameService(typeof(IEventCreator))]
     public class EventCreator : IEventCreator

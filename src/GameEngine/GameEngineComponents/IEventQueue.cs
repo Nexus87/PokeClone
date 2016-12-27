@@ -1,5 +1,5 @@
 ﻿
-namespace GameEngine.GameEngineComponents
+namespace GameEngine.Core.GameEngineComponents
 {
     /// <summary>
     /// Event queue service.

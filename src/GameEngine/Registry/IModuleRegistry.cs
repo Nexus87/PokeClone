@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
+using GameEngine.TypeRegistry;
 
-namespace GameEngine.Registry
+namespace GameEngine.Core.Registry
 {
     public interface IModuleRegistry
     {

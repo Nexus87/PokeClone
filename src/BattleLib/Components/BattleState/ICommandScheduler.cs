@@ -1,8 +1,7 @@
-﻿
-using BattleLib.Components.BattleState.Commands;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using BattleMode.Core.Components.BattleState.Commands;
 
-namespace BattleLib.Components.BattleState
+namespace BattleMode.Core.Components.BattleState
 {
     public interface ICommandScheduler
 	{

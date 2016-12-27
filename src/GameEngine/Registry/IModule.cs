@@ -1,4 +1,6 @@
-﻿namespace GameEngine.Registry
+﻿using GameEngine.TypeRegistry;
+
+namespace GameEngine.Core.Registry
 {
     public interface IModule
     {

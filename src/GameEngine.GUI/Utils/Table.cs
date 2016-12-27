@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using GameEngine.GUI.Graphics.TableView;
 
-namespace GameEngine.Utils
+namespace GameEngine.GUI.Utils
 {
     public class Table<T> : ITable<T>
     {

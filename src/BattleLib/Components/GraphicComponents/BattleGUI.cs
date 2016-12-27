@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Linq;
 using Base;
-using BattleLib.Components.BattleState;
+using BattleMode.Core.Components.BattleState;
 using GameEngine;
+using GameEngine.Core;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Graphics.GUI;
-using GameEngine.Registry;
+using GameEngine.TypeRegistry;
 
-namespace BattleLib.Components.GraphicComponents
+namespace BattleMode.Core.Components.GraphicComponents
 {
     [GameService(typeof(IGUIService))]
     public class BattleGui : IGUIService

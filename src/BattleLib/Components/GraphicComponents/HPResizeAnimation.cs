@@ -1,9 +1,9 @@
 ﻿using System;
 using GameEngine.GUI.Graphics;
-using GameEngine.Utils;
+using GameEngine.GUI.Utils;
 using Microsoft.Xna.Framework;
 
-namespace BattleLib.Components.GraphicComponents
+namespace BattleMode.Core.Components.GraphicComponents
 {
     public class HpResizeAnimation : IAnimation
     {

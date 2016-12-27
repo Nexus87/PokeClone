@@ -1,9 +1,9 @@
-﻿using BattleLib.Components.BattleState.Commands;
-using GameEngine.Registry;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using BattleMode.Core.Components.BattleState.Commands;
+using GameEngine.TypeRegistry;
 
-namespace BattleLib.Components.BattleState
+namespace BattleMode.Core.Components.BattleState
 {
     [GameService(typeof(BattleData))]
     public class BattleData

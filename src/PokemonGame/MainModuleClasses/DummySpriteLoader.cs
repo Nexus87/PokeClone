@@ -1,8 +1,9 @@
 ﻿using GameEngine;
-using GameEngine.Registry;
-using GameEngine.TextureLoader;
-using MainModule;
-using MainModule.Graphics;
+using GameEngine.Core;
+using GameEngine.Core.TextureLoader;
+using GameEngine.TypeRegistry;
+using MainMode.Core;
+using MainMode.Core.Graphics;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 

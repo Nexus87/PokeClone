@@ -1,7 +1,7 @@
 ﻿using System;
 using Base;
 
-namespace BattleLib.Components.BattleState
+namespace BattleMode.Core.Components.BattleState
 {
     public class MoveUsedEventArgs : EventArgs
     {

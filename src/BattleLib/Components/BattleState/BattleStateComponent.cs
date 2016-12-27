@@ -1,13 +1,14 @@
-﻿using Base;
-using GameEngine.Registry;
-using GameEngine.Utils;
+﻿using System;
+using Base;
+using GameEngine.GUI.Utils;
+using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
-using System;
+using IGameComponent = GameEngine.Core.IGameComponent;
 
-namespace BattleLib.Components.BattleState
+namespace BattleMode.Core.Components.BattleState
 {
     [GameService(typeof(IBattleStateService))]
-    public class BattleStateComponent : GameEngine.IGameComponent, IBattleStateService
+    public class BattleStateComponent : IGameComponent, IBattleStateService
     {
         private IBattleState currentState;
 

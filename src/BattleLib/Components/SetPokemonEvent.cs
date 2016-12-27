@@ -1,9 +1,9 @@
-﻿using BattleLib.Components.BattleState;
-using System;
-using BattleLib.Components.GraphicComponents;
-using GameEngine.GameEngineComponents;
+﻿using System;
+using BattleMode.Core.Components.BattleState;
+using BattleMode.Core.Components.GraphicComponents;
+using GameEngine.Core.GameEngineComponents;
 
-namespace BattleLib.Components
+namespace BattleMode.Core.Components
 {
     internal class SetPokemonEvent : IEvent
     {

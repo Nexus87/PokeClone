@@ -1,13 +1,13 @@
-﻿using Base;
+﻿using System;
+using Base;
 using Base.Data;
-using BattleLib;
-using BattleLib.Components.BattleState;
-using BattleLibTest.Utils;
-using NUnit.Framework;
-using System;
+using BattleMode.Core;
+using BattleMode.Core.Components.BattleState;
+using BattleModeTest.Utils;
 using FakeItEasy;
+using NUnit.Framework;
 
-namespace BattleLibTest.Components.BattleState
+namespace BattleModeTest.Components.BattleState
 {
     [TestFixture]
     public class WaitForCharStateTest

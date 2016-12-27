@@ -4,7 +4,7 @@ using System.Linq;
 using Base;
 using GameEngine.GUI.Graphics.TableView;
 
-namespace BattleLib.Components.GraphicComponents
+namespace BattleMode.Core.Components.GraphicComponents
 {
     public class ItemModel : ITableModel<Item>
     {

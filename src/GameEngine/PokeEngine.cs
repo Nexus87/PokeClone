@@ -1,13 +1,15 @@
-﻿using GameEngine.Registry;
-using GameEngine.Utils;
-using Microsoft.Xna.Framework;
-using System;
+﻿using System;
 using System.Linq;
-using GameEngine.GameEngineComponents;
+using GameEngine.Core.GameEngineComponents;
+using GameEngine.Core.Registry;
+using GameEngine.GUI;
+using GameEngine.GUI.Configuration;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Graphics.General;
+using GameEngine.GUI.Utils;
+using Microsoft.Xna.Framework;
 
-namespace GameEngine
+namespace GameEngine.Core
 {
     public class PokeEngine : Game, IEngineInterface, IGameComponentManager
     {
@@ -22,7 +24,7 @@ namespace GameEngine
         private string _startModule;
         private IInputHandler _inputHandler;
 
-        public PokeEngine(Configuration.Configuration config)         {
+        public PokeEngine(Configuration config)         {
             config.CheckNull("config");
             Registry = new AutofacModuleRegistry();
             _factory = new GraphicResources(config, Content);

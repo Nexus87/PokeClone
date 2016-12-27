@@ -1,7 +1,7 @@
 ﻿
-using GameEngine.Utils;
+using GameEngine.GUI.Utils;
 
-namespace MainModule
+namespace MainMode.Core
 {
     public class Map
     {

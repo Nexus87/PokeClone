@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BattleLib.Components.GraphicComponents
+namespace BattleMode.Core.Components.GraphicComponents
 {
     public interface IGUIService
     {

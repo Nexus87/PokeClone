@@ -1,10 +1,10 @@
-﻿using Base;
+﻿using System;
+using System.Collections.Generic;
+using Base;
 using Base.Data;
 using Base.Rules;
-using System;
-using System.Collections.Generic;
 
-namespace BattleLib.Components.BattleState
+namespace BattleMode.Core.Components.BattleState
 {
     public class PokemonWrapper : IBattlePokemon
     {

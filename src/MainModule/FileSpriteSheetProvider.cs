@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using GameEngine;
+using GameEngine.Core;
 using GameEngine.GUI.Graphics.General;
 using GameEngine.GUI.Graphics.TableView;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 
-namespace MainModule
+namespace MainMode.Core
 {
     public class FileSpriteSheetProvider : ISpriteSheetProvider
     {
