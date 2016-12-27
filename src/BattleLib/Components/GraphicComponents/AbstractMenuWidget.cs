@@ -1,13 +1,13 @@
-﻿using Microsoft.Xna.Framework;
-using System;
+﻿using System;
 using GameEngine.Globals;
 using GameEngine.GUI.Controlls;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Graphics.General;
 using GameEngine.GUI.Graphics.GUI;
-using GameEngine.Registry;
+using GameEngine.TypeRegistry;
+using Microsoft.Xna.Framework;
 
-namespace BattleLib.Components.GraphicComponents
+namespace BattleMode.Core.Components.GraphicComponents
 {
     public class AbstractMenuWidget<T> : AbstractGraphicComponent, IMenuWidget<T>
     {
