@@ -72,7 +72,6 @@
     <Compile Include="Graphics\GraphicalTextStub.cs" />
     <Compile Include="Graphics\GridExtension.cs" />
     <Compile Include="Graphics\GUI\GUIManagerTest.cs" />
-    <Compile Include="Graphics\GUI\IWidgetTest.cs" />
     <Compile Include="Graphics\GUI\MessageBoxTest.cs" />
     <Compile Include="Graphics\GUI\TableWidgetTest.cs" />
     <Compile Include="Graphics\IGraphicComponentTest.cs" />

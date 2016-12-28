@@ -130,9 +130,5 @@
       <Project>{73200884-85C6-4A3D-A3C2-A53D9C632613}</Project>
       <Name>GameEngine.TypeRegistry</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GameEngine\GameEngine.Core.csproj">
-      <Project>{656D6147-6E45-6967-6E65-2E4C696E7578}</Project>
-      <Name>GameEngine.Core</Name>
-    </ProjectReference>
   </ItemGroup>
 </Project>

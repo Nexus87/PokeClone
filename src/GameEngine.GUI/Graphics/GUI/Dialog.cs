@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework;
 
 namespace GameEngine.GUI.Graphics.GUI
 {
-    public class Dialog : AbstractGraphicComponent, IWidget
+    public class Dialog : AbstractGraphicComponent, IInputHandler, IGraphicComponent
     {
         private readonly IGraphicComponent _border;
         private IGraphicComponent _widget;
@@ -20,7 +20,7 @@ namespace GameEngine.GUI.Graphics.GUI
         }
 
 
-        public void AddWidget(IWidget widget)
+        public void AddWidget(IGraphicComponent widget)
         {
             widget.CheckNull("widget");
             _widget = widget;

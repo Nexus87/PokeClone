@@ -70,12 +70,20 @@ namespace BattleMode.Gui
 
         public override void HandleKeyInput(CommandKeys key)
         {
-            _window.HandleKeyInput(key);
+            if(key == CommandKeys.Back)
+                OnExitRequested();
+            else
+                _window.HandleKeyInput(key);
         }
 
         protected virtual void OnItemSelected(MainMenuEntries e)
         {
             ItemSelected?.Invoke(this, new SelectionEventArgs<MainMenuEntries>(e));
+        }
+
+        protected virtual void OnExitRequested()
+        {
+            ExitRequested?.Invoke(this, EventArgs.Empty);
         }
     }
 }

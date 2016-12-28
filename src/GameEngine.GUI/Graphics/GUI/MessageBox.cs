@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework;
 namespace GameEngine.GUI.Graphics.GUI
 {
     [GameType]
-    public class MessageBox : AbstractGraphicComponent, IWidget
+    public class MessageBox : AbstractGraphicComponent, IInputHandler, IGraphicComponent
     {
         private readonly ITextGraphicContainer _textBox;
 

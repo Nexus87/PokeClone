@@ -1,12 +1,35 @@
-﻿using GameEngine.GUI.Graphics;
+﻿using GameEngine.Globals;
+using GameEngine.GUI.Graphics;
+using GameEngine.GUI.Graphics.General;
+using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
 
 namespace GameEngine.GUI.Panels
 {
+    [GameType]
     public class ScrollArea : AbstractPanel
     {
         private IGraphicComponent _content;
         public bool Autoscrolling { get; set; }
+
+        public override Rectangle Area {
+            get { return base.Area; }
+            set
+            {
+                MoveContent(value.Location - Area.Location);
+                base.Area = value;
+            }
+        }
+
+        public override void HandleKeyInput(CommandKeys key)
+        {
+            _content?.HandleKeyInput(key);
+        }
+
+        private void MoveContent(Point point)
+        {
+            _content.SetPosition(_content.Area.Location + point);
+        }
 
         public void SetContent(IGraphicComponent component)
         {
@@ -14,12 +37,20 @@ namespace GameEngine.GUI.Panels
             {
                 RemoveChild(_content);
                 _content.ComponentSelected -= ComponentOnComponentSelected;
+                _content.PreferredSizeChanged -= PreferredSizeChangedHandler;
             }
 
             _content = component;
             AddChild(component);
             component.ComponentSelected += ComponentOnComponentSelected;
+            component.PreferredSizeChanged += PreferredSizeChangedHandler;
             _content.SetPosition(this);
+            _content.SetSize((int) _content.PreferredWidth, (int) _content.PreferredHeight);
+        }
+
+        protected override void DrawComponent(GameTime time, ISpriteBatch batch)
+        {
+            _content.Draw(time, batch);
         }
 
         private void ComponentOnComponentSelected(object sender, ComponentSelectedEventArgs componentSelectedEventArgs)
@@ -41,12 +72,12 @@ namespace GameEngine.GUI.Panels
             else
                 newY = _content.Area.Y;
 
-            SetPosition(newX, newY);
+            _content.SetPosition(newX, newY);
         }
 
-        private void SetPosition(int newX, int newY)
+        private void PreferredSizeChangedHandler(object sender, GraphicComponentSizeChangedEventArgs graphicComponentSizeChangedEventArgs)
         {
-            _content.Area = new Rectangle(new Point(newX, newY), _content.Area.Size);
+            _content.SetSize((int)_content.PreferredWidth, (int)_content.PreferredHeight);
         }
 
         private int MoveUp(Rectangle selectedArea)

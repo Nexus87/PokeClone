@@ -3,7 +3,6 @@ using GameEngine.Globals;
 using GameEngine.GUI;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Graphics.General;
-using GameEngine.GUI.Graphics.GUI;
 using GameEngine.GUI.Utils;
 using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
@@ -13,11 +12,11 @@ namespace GameEngine.Core
     [GameService(typeof(GuiManager))]
     public class GuiManager : IInputHandler
     {
-        private IWidget FocusedWidget => _widgets.Count == 0 ? null : _widgets.Last.Value;
-        private readonly LinkedList<IWidget> _widgets = new LinkedList<IWidget>();
-        private readonly LinkedList<IWidget> _notVisibleWidgets = new LinkedList<IWidget>();
+        private IGraphicComponent FocusedWidget => _widgets.Count == 0 ? null : _widgets.Last.Value;
+        private readonly LinkedList<IGraphicComponent> _widgets = new LinkedList<IGraphicComponent>();
+        private readonly LinkedList<IGraphicComponent> _notVisibleWidgets = new LinkedList<IGraphicComponent>();
 
-        public void AddWidget(IWidget widget)
+        public void AddWidget(IGraphicComponent widget)
         {
             widget.CheckNull("widget");
 
@@ -31,7 +30,7 @@ namespace GameEngine.Core
 
         private void VisibilityChangedHandler(object sender, VisibilityChangedEventArgs e)
         {
-            var widget = (IWidget)sender;
+            var widget = (IGraphicComponent)sender;
             if (e.Visible == false)
             {
                 _widgets.Remove(widget);
@@ -44,7 +43,7 @@ namespace GameEngine.Core
             }
         }
 
-        public void RemoveWidget(IWidget widget)
+        public void RemoveWidget(IGraphicComponent widget)
         {
             if (!Contains(widget))
                 return;
@@ -53,7 +52,7 @@ namespace GameEngine.Core
             widget.VisibilityChanged -= VisibilityChangedHandler;
         }
 
-        private bool Contains(IWidget widget)
+        private bool Contains(IGraphicComponent widget)
         {
             if (widget == null)
                 return false;
@@ -61,7 +60,7 @@ namespace GameEngine.Core
             return _widgets.Contains(widget) || _notVisibleWidgets.Contains(widget);
         }
 
-        private void RemoveWidgetFromList(IWidget widget)
+        private void RemoveWidgetFromList(IGraphicComponent widget)
         {
             if (widget.IsVisible)
                 _widgets.Remove(widget);

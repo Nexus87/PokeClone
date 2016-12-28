@@ -49,5 +49,11 @@ namespace GameEngine.GUI.Panels
         {
             grid.AddRow(new RowProperty{Type = ValueType.Percent, Share = share});
         }
+
+        public static void RemoveAllRows(this Grid grid)
+        {
+            while (grid.Rows > 0)
+                grid.RemoveRow(0);
+        }
     }
 }

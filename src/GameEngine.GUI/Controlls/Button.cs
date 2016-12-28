@@ -48,8 +48,6 @@ namespace GameEngine.GUI.Controlls
 
         public event EventHandler ButtonPressed;
 
-        public override bool IsSelected { get; set; }
-
         public override void HandleKeyInput(CommandKeys key)
         {
             if(key == CommandKeys.Select)

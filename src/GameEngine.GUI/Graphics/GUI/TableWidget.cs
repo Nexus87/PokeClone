@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework;
 
 namespace GameEngine.GUI.Graphics.GUI
 {
-    public class TableWidget<T> : AbstractGraphicComponent, IWidget
+    public class TableWidget<T> : AbstractGraphicComponent, IInputHandler, IGraphicComponent
     {
         /// <summary>
         /// The current column of the selected cell

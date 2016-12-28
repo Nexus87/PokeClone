@@ -12,7 +12,7 @@ namespace BattleMode.Gui
     public class AbstractMenuWidget<T> : AbstractGraphicComponent, IMenuWidget<T>
     {
         protected TableWidget<T> TableWidget;
-        protected IWidget BorderWidget;
+        protected IGraphicComponent BorderWidget;
 
         public event EventHandler ExitRequested
         {
@@ -48,7 +48,7 @@ namespace BattleMode.Gui
             };
         }
 
-        private void SetComponents(TableWidget<T> widget, IWidget border)
+        private void SetComponents(TableWidget<T> widget, IGraphicComponent border)
         {
             TableWidget = widget;
             BorderWidget = border;

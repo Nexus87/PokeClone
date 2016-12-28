@@ -129,6 +129,25 @@ namespace GameEngine.GUI.Panels
             grid = LayoutPercent(grid);
             grid = SetPosition(grid);
             ApplyGridToComponents(grid);
+
+            CalculatePreferredSize();
+        }
+
+        private void CalculatePreferredSize()
+        {
+            var fixedRowSize = _rowProperties.Where(x => x.Type == ValueType.Absolute).Sum(x => x.Height);
+            var autoRowSize = _rowProperties.Where(x => x.Type == ValueType.Auto)
+                .Select((y, row) => row)
+                .Sum(row => _cells[row, 0].PreferedHeight);
+
+            PreferredHeight = autoRowSize + fixedRowSize;
+
+            var fixedColumnSize = _columnPoperties.Where(x => x.Type == ValueType.Absolute).Sum(x => x.Width);
+            var autoColumnSize = _columnPoperties.Where(x => x.Type == ValueType.Auto)
+                .Select((y, column) => column)
+                .Sum(column => _cells[0, column].PreferedWidth);
+
+            PreferredWidth = autoColumnSize + fixedColumnSize;
         }
 
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)

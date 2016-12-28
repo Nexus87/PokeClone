@@ -8,7 +8,7 @@ using NUnit.Framework;
 namespace GameEngineTest.Graphics.GUI
 {
     [TestFixture]
-    public class MessageBoxTest : IWidgetTest
+    public class MessageBoxTest : IGraphicComponentTest
     {
 
         [TestCase]
@@ -68,7 +68,8 @@ namespace GameEngineTest.Graphics.GUI
             return new MessageBox(container);
 
         }
-        protected override IWidget CreateWidget()
+
+        protected override IGraphicComponent CreateComponent()
         {
             return CreateMessageBox();
         }

@@ -39,9 +39,18 @@ namespace GameEngine.GUI.Graphics
         private Rectangle _area;
         private bool _isSelected;
 
-        public event EventHandler<GraphicComponentSizeChangedEventArgs> SizeChanged = (a, b) => { };
-        public event EventHandler<GraphicComponentSizeChangedEventArgs> PreferredSizeChanged = (a, b) => { };
+        public event EventHandler<GraphicComponentSizeChangedEventArgs> SizeChanged;
+        public event EventHandler<GraphicComponentSizeChangedEventArgs> PreferredSizeChanged;
 
+        protected void OnSizeChanged(GraphicComponentSizeChangedEventArgs eventArgs)
+        {
+            SizeChanged?.Invoke(this, eventArgs);
+        }
+
+        protected void OnPreferredSizeChanged(GraphicComponentSizeChangedEventArgs eventArgs)
+        {
+            PreferredSizeChanged?.Invoke(this, eventArgs);
+        }
         public void Draw(GameTime time, ISpriteBatch batch)
         {
             Animation?.Update(time, this);
@@ -89,7 +98,7 @@ namespace GameEngine.GUI.Graphics
 
         public Color Color { get; set; }
 
-        public float PreferredHeight {
+        public virtual float PreferredHeight {
             get
             {
                 return _preferredHeight;
@@ -99,10 +108,11 @@ namespace GameEngine.GUI.Graphics
                 if (value.AlmostEqual(_preferredHeight))
                     return;
                 _preferredHeight = value;
-                PreferredSizeChanged(this, new GraphicComponentSizeChangedEventArgs(this, PreferredWidth, PreferredHeight));
+                OnPreferredSizeChanged(new GraphicComponentSizeChangedEventArgs(this, PreferredWidth, PreferredHeight));
             }
         }
-        public float PreferredWidth
+
+        public virtual float PreferredWidth
         {
             get
             {
@@ -113,14 +123,15 @@ namespace GameEngine.GUI.Graphics
                 if (value.AlmostEqual(_preferredWidth))
                     return;
                 _preferredWidth = value;
-                PreferredSizeChanged(this, new GraphicComponentSizeChangedEventArgs(this, PreferredWidth, PreferredHeight));
+                OnPreferredSizeChanged(new GraphicComponentSizeChangedEventArgs(this, PreferredWidth, PreferredHeight));
             }
         }
+
         public ResizePolicy HorizontalPolicy { get; set; }
         public ResizePolicy VerticalPolicy { get; set; }
         public Rectangle ScissorArea { get; set; }
 
-        public Rectangle Area
+        public virtual Rectangle Area
         {
             get { return _area; }
             set
@@ -133,7 +144,7 @@ namespace GameEngine.GUI.Graphics
                 _area = value;
                 Invalidate();
                 if(sizeChanged)
-                    SizeChanged(this, new GraphicComponentSizeChangedEventArgs(this, _area.Width, _area.Height));
+                    OnSizeChanged(new GraphicComponentSizeChangedEventArgs(this, _area.Width, _area.Height));
             }
         }
 
@@ -150,6 +161,8 @@ namespace GameEngine.GUI.Graphics
                     return;
                 _isSelected = value;
                 Invalidate();
+                if(_isSelected)
+                    OnComponentSelected(new ComponentSelectedEventArgs{Source = this});
             }
         }
 

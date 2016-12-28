@@ -6,6 +6,7 @@ using BattleMode.Shared;
 using GameEngine.Core;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Graphics.GUI;
+using GameEngine.GUI.Panels;
 using GameEngine.TypeRegistry;
 
 namespace BattleMode.Gui
@@ -14,20 +15,20 @@ namespace BattleMode.Gui
     public class BattleGui : IGUIService
     {
         private readonly MessageBox _messageBox;
-        private readonly Dialog _messageFrame;
+        private readonly Window _messageWindow;
 
         public BattleGui(ScreenConstants screen, GuiManager manager, 
-            Dialog messageFrame, MessageBox messageBox, 
+            Window messageWindow, MessageBox messageBox, IEngineInterface engineInterface,
             MainMenuWidget mainWidget,
             MoveMenuWidget moveWidget, PokemonMenuWidget pokemonWidget,
             ItemMenuWidget itemWidget, IBattleStateService battleState,
             BattleData data) :
-            this(screen, manager, messageFrame, messageBox, (IMenuWidget<MainMenuEntries>)mainWidget, moveWidget, pokemonWidget, itemWidget, battleState, data)
+            this(screen, manager, messageWindow, messageBox, engineInterface, (IMenuWidget<MainMenuEntries>)mainWidget, moveWidget, pokemonWidget, itemWidget, battleState, data)
         {}
         
             internal BattleGui(ScreenConstants screen, GuiManager manager, 
-            Dialog messageFrame, MessageBox messageBox, 
-            IMenuWidget<MainMenuEntries> mainWidget, 
+            Window messageWindow, MessageBox messageBox, IEngineInterface engineInterface,
+            IMenuWidget<MainMenuEntries> mainWidget,
             IMenuWidget<Move> moveWidget, IMenuWidget<Pokemon> pokemonWidget, 
             IMenuWidget<Item> itemWidget, IBattleStateService battleState, 
             BattleData data)
@@ -41,11 +42,11 @@ namespace BattleMode.Gui
             _pokemonWidget = pokemonWidget;
 
             _messageBox = messageBox;
-            _messageFrame = messageFrame;
+            _messageWindow = messageWindow;
 
             InitMessageBox(screen, manager);
 
-            InitMainMenu(screen, manager);
+            InitMainMenu(screen, manager, engineInterface);
             InitAttackMenu(screen, manager);
             InitItemMenu(screen, manager);
             InitPkmnMenu(screen, manager);
@@ -125,7 +126,7 @@ namespace BattleMode.Gui
             manager.AddWidget(_itemWidget);
         }
 
-        private void InitMainMenu(ScreenConstants screen, GuiManager manager)
+        private void InitMainMenu(ScreenConstants screen, GuiManager manager, IEngineInterface engineInterface)
         {
             var xPosition = 0.5f * screen.ScreenWidth;
             var yPosition = 2.0f * screen.ScreenHeight / 3.0f;
@@ -134,7 +135,7 @@ namespace BattleMode.Gui
 
             MainWidget.SetCoordinates(xPosition, yPosition, width, height);
             MainWidget.ItemSelected += MainMenu_ItemSelected;
-            //mainWidget.ExitRequested += delegate { manager.Exit(); };
+            MainWidget.ExitRequested += delegate { engineInterface.Exit(); };
 
             MainWidget.IsVisible = true;
             manager.AddWidget(MainWidget);
@@ -142,15 +143,15 @@ namespace BattleMode.Gui
 
         private void InitMessageBox(ScreenConstants screen, GuiManager manager)
         {
-            _messageFrame.AddWidget(_messageBox);
+            _messageWindow.SetContent(_messageBox);
             const int xPosition = 0;
             var yPosition = 2.0f * screen.ScreenHeight / 3.0f;
             var width = screen.ScreenWidth;
             var height = screen.ScreenHeight - yPosition;
 
-            _messageFrame.SetCoordinates(xPosition, yPosition, width, height);
-            _messageFrame.IsVisible = true;
-            manager.AddWidget(_messageFrame);
+            _messageWindow.SetCoordinates(xPosition, yPosition, width, height);
+            _messageWindow.IsVisible = true;
+            manager.AddWidget(_messageWindow);
 
             _messageBox.OnAllLineShowed += AllLineShowedHandler;
         }

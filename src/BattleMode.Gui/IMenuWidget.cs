@@ -1,10 +1,10 @@
 ﻿using System;
+using GameEngine.GUI;
 using GameEngine.GUI.Graphics;
-using GameEngine.GUI.Graphics.GUI;
 
 namespace BattleMode.Gui
 {
-    public interface IMenuWidget<T> : IWidget
+    public interface IMenuWidget<T> : IInputHandler, IGraphicComponent
     {
         event EventHandler ExitRequested;
         event EventHandler<SelectionEventArgs<T>> ItemSelected;

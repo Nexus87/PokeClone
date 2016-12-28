@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using FakeItEasy;
 using GameEngine.GUI.Controlls;
+using GameEngine.GUI.Panels;
 using NUnit.Framework;
 
 namespace GameEngine.GUI.Test.Controls
@@ -54,16 +55,16 @@ namespace GameEngine.GUI.Test.Controls
             listView.Model = model;
             listView.Draw();
 
-            model.Add((rows + 1) + "");
+            model.Add(rows + 1);
             listView.Draw();
 
             A.CallToSet(() => components.Last().Area).MustHaveHappened(Repeated.AtLeast.Once);
 
         }
 
-        private static ListView<string> CreateListViewWithCellFactory(ListCellFactory factory)
+        private static ListView<int> CreateListViewWithCellFactory(ListCellFactory<int> factory)
         {
-            return new ListView<string> {ListCellFactory = factory};
+            return new ListView<int>(new Grid()) {ListCellFactory = factory};
         }
 
         private static List<IListCell>  CreateComponentMockList(int rows)
@@ -74,14 +75,9 @@ namespace GameEngine.GUI.Test.Controls
                 .ToList();
         }
 
-        private static ObservableCollection<string> CreateModel(int rows)
+        private static ObservableCollection<int> CreateModel(int rows)
         {
-
-            return new ObservableCollection<string>(
-                    Enumerable
-                        .Range(0, rows)
-                        .Select(i => i+"")
-            );
+            return new ObservableCollection<int>(Enumerable.Range(0, rows));
         }
     }
 }

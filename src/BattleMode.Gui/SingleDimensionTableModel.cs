@@ -20,12 +20,9 @@ namespace BattleMode.Gui
             SizeChanged += delegate { };
         }
 
-        public virtual int Rows { get { return Items.Count; } }
+        public virtual int Rows => Items.Count;
 
-        public int Columns
-        {
-            get { return 1; }
-        }
+        public int Columns => 1;
 
         public virtual T DataAt(int row, int column)
         {

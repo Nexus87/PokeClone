@@ -1,9 +1,10 @@
 ﻿using GameEngine.Globals;
-using GameEngine.GUI.Graphics.GUI;
+using GameEngine.GUI;
+using GameEngine.GUI.Graphics;
 
 namespace GameEngineTest.TestUtils
 {
-    public class WidgetMock : GraphicComponentMock, IWidget
+    public class WidgetMock : GraphicComponentMock, IInputHandler, IGraphicComponent
     {
         public bool WasHandleKeyInputCalled;
         public CommandKeys HandleKeyInputArgument;

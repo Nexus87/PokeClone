@@ -5,19 +5,28 @@ using GameEngine.Globals;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Graphics.General;
 using GameEngine.GUI.Panels;
+using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
 using ValueType = GameEngine.GUI.Panels.ValueType;
 
 namespace GameEngine.GUI.Controlls
 {
-    public delegate IListCell ListCellFactory(int row);
+    public delegate IGraphicComponent ListCellFactory<in T>(T value);
 
+    [GameType]
     public class ListView<T> : AbstractGraphicComponent
     {
-        private ListCellFactory _listCellFactory = row => new ListCell();
-        private Grid _grid;
+        private ListCellFactory<T> _listCellFactory = value => new ListCell();
+        private readonly Grid _grid;
         private ObservableCollection<T> _model;
 
+        public ListView(Grid grid)
+        {
+            _grid = grid;
+            _grid.AddColumn(new ColumnProperty{Type = ValueType.Absolute, Width = 300});
+            _grid.PreferredSizeChanged += (sender, args) => OnPreferredSizeChanged(args);
+            _grid.ComponentSelected += (sender, args) => OnComponentSelected(args);
+        }
         public ObservableCollection<T> Model
         {
             get { return _model; }
@@ -38,7 +47,7 @@ namespace GameEngine.GUI.Controlls
             Invalidate();
         }
 
-        public ListCellFactory ListCellFactory
+        public ListCellFactory<T> ListCellFactory
         {
             get { return _listCellFactory; }
             set
@@ -50,17 +59,17 @@ namespace GameEngine.GUI.Controlls
 
         public override void HandleKeyInput(CommandKeys key)
         {
-
+            _grid.HandleKeyInput(key);
         }
 
         protected override void Update()
         {
-            _grid = new Grid {Area = Area};
-            _grid.AddColumn(new ColumnProperty{Type = ValueType.Percent, Share = 1});
-            for(var i = 0; i < Model.Count; i++)
+            _grid.SetCoordinates(this);
+            _grid.RemoveAllRows();
+            foreach(var value in Model)
             {
                 _grid.AddRow(new RowProperty{Type = ValueType.Absolute, Height = 100});
-                _grid.SetComponent(ListCellFactory(i), i, 0);
+                _grid.SetComponent(ListCellFactory(value), _grid.Rows-1, 0);
             }
         }
 
@@ -68,5 +77,13 @@ namespace GameEngine.GUI.Controlls
         {
             _grid.Draw(time, spriteBatch);
         }
+
+        public void SelectComponent(int row)
+        {
+            _grid.SelectComponent(row, 0);
+        }
+
+        public override float PreferredHeight => _grid.PreferredHeight;
+        public override float PreferredWidth => _grid.PreferredWidth;
     }
 }
