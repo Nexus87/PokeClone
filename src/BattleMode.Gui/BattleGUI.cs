@@ -88,6 +88,7 @@ namespace BattleMode.Gui
             _pokemonWidget.IsVisible = false;
 
             MainWidget.IsVisible = true;
+            MainWidget.ResetSelection();
         }
 
         private void InitAttackMenu(ScreenConstants screen, GuiManager manager)
@@ -191,16 +192,19 @@ namespace BattleMode.Gui
                 case MainMenuEntries.Attack:
                     MainWidget.IsVisible = false;
                     _moveWidget.IsVisible = true;
+                    _moveWidget.ResetSelection();
                     break;
 
                 case MainMenuEntries.Pkmn:
                     MainWidget.IsVisible = false;
                     _pokemonWidget.IsVisible = true;
+                    _pokemonWidget.ResetSelection();
                     break;
 
                 case MainMenuEntries.Item:
                     MainWidget.IsVisible = false;
                     _itemWidget.IsVisible = true;
+                    _itemWidget.ResetSelection();
                     break;
             }
         }

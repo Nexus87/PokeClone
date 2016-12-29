@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using FakeItEasy;
 using GameEngine.GUI.Controlls;
-using GameEngine.GUI.Panels;
+using GameEngine.GUI.Graphics;
 using NUnit.Framework;
 
 namespace GameEngine.GUI.Test.Controls
@@ -11,7 +11,7 @@ namespace GameEngine.GUI.Test.Controls
     [TestFixture]
     public class ListViewTest
     {
-        private const int InitialCallTimes = 1;
+        private const int InitialCallTimes = 2;
 
         [TestCase(10)]
         public void Update_WithModel_AllItemsWereUpdated(int rows)
@@ -55,7 +55,7 @@ namespace GameEngine.GUI.Test.Controls
             listView.Model = model;
             listView.Draw();
 
-            model.Add(rows + 1);
+            model.Add(rows);
             listView.Draw();
 
             A.CallToSet(() => components.Last().Area).MustHaveHappened(Repeated.AtLeast.Once);
@@ -64,14 +64,14 @@ namespace GameEngine.GUI.Test.Controls
 
         private static ListView<int> CreateListViewWithCellFactory(ListCellFactory<int> factory)
         {
-            return new ListView<int>(new Grid()) {ListCellFactory = factory};
+            return new ListView<int>() {ListCellFactory = factory};
         }
 
-        private static List<IListCell>  CreateComponentMockList(int rows)
+        private static List<IGraphicComponent>  CreateComponentMockList(int rows)
         {
             return Enumerable
                 .Range(0, rows)
-                .Select(i => A.Fake<IListCell>())
+                .Select(i => A.Fake<IGraphicComponent>())
                 .ToList();
         }
 

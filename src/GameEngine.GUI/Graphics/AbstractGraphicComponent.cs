@@ -152,7 +152,7 @@ namespace GameEngine.GUI.Graphics
 
         public IEnumerable<IGraphicComponent> Children => children;
 
-        public virtual bool IsSelected
+        public bool IsSelected
         {
             get { return _isSelected; }
             set

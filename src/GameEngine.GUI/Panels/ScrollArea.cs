@@ -28,7 +28,7 @@ namespace GameEngine.GUI.Panels
 
         private void MoveContent(Point point)
         {
-            _content.SetPosition(_content.Area.Location + point);
+            _content?.SetPosition(_content.Area.Location + point);
         }
 
         public void SetContent(IGraphicComponent component)
@@ -50,7 +50,7 @@ namespace GameEngine.GUI.Panels
 
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)
         {
-            _content.Draw(time, batch);
+            _content?.Draw(time, batch);
         }
 
         private void ComponentOnComponentSelected(object sender, ComponentSelectedEventArgs componentSelectedEventArgs)

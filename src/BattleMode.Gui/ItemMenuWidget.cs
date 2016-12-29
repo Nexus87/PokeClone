@@ -63,7 +63,7 @@ namespace BattleMode.Gui
 
         public void ResetSelection()
         {
-            _listView.SelectComponent(0);
+            _listView.SelectCell(0);
         }
     }
 }

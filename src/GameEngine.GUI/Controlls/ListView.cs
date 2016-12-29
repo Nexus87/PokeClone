@@ -1,50 +1,89 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Linq;
 using GameEngine.Globals;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Graphics.General;
-using GameEngine.GUI.Panels;
 using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
-using ValueType = GameEngine.GUI.Panels.ValueType;
 
 namespace GameEngine.GUI.Controlls
 {
     public delegate IGraphicComponent ListCellFactory<in T>(T value);
 
     [GameType]
-    public class ListView<T> : AbstractGraphicComponent
+    public sealed class ListView<T> : AbstractGraphicComponent
     {
-        private ListCellFactory<T> _listCellFactory = value => new ListCell();
-        private readonly Grid _grid;
-        private ObservableCollection<T> _model;
+        private ListCellFactory<T> _listCellFactory = delegate { return null; };
+        private readonly List<ListCell> _listItems = new List<ListCell>();
+        private ObservableCollection<T> _model = new ObservableCollection<T>(new List<T>());
+        private int _lastSelectedIndex;
 
-        public ListView(Grid grid)
+        public int CellHeight { get; set; } = 100;
+        public int DefaultListWidth { get; set; } = 300;
+
+        public ListView()
         {
-            _grid = grid;
-            _grid.AddColumn(new ColumnProperty{Type = ValueType.Absolute, Width = 300});
-            _grid.PreferredSizeChanged += (sender, args) => OnPreferredSizeChanged(args);
-            _grid.ComponentSelected += (sender, args) => OnComponentSelected(args);
+            Area = new Rectangle(0, 0, DefaultListWidth, 0);
         }
+
         public ObservableCollection<T> Model
         {
             get { return _model; }
             set
             {
-                if(value == null)
+                if (value == null)
                     throw new ArgumentNullException(nameof(value));
 
                 if (_model != null)
                     _model.CollectionChanged -= ModelOnCollectionChanged;
                 _model = value;
                 _model.CollectionChanged += ModelOnCollectionChanged;
+                ReCreateItems();
             }
         }
 
-        private void ModelOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
+        private void ModelOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs args)
         {
-            Invalidate();
+            switch (args.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    AddItems(args.NewStartingIndex, args.NewItems.Cast<T>().ToList());
+                    break;
+                case NotifyCollectionChangedAction.Remove:
+                    RemoveItems(args.OldStartingIndex, args.OldItems.Count);
+                    break;
+                case NotifyCollectionChangedAction.Replace:
+                    for (var i = args.NewStartingIndex; i < args.NewItems.Count; i++)
+                    {
+                        _listItems[i].Component = ListCellFactory(args.NewItems.Cast<T>().ToList()[i]);
+                    }
+                    break;
+                case NotifyCollectionChangedAction.Move:
+                    RemoveItems(args.OldStartingIndex, args.OldItems.Count);
+                    AddItems(args.NewStartingIndex, args.NewItems.Cast<T>());
+                    break;
+                case NotifyCollectionChangedAction.Reset:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        private void RemoveItems(int startingIndex, int itemCount)
+        {
+            _listItems.RemoveRange(startingIndex, itemCount);
+        }
+
+        private void AddItems(int argsNewStartingIndex, IEnumerable<T> newItems)
+        {
+            var newCells = newItems.Select(CreateCell);
+            if(argsNewStartingIndex == _listItems.Count)
+                _listItems.AddRange(newCells);
+            else
+                _listItems.InsertRange(argsNewStartingIndex, newCells);
         }
 
         public ListCellFactory<T> ListCellFactory
@@ -53,37 +92,84 @@ namespace GameEngine.GUI.Controlls
             set
             {
                 _listCellFactory = value;
-                Invalidate();
+                ReCreateItems();
             }
         }
 
         public override void HandleKeyInput(CommandKeys key)
         {
-            _grid.HandleKeyInput(key);
+            if(_listItems.Count == 0)
+                return;
+
+            switch (key)
+            {
+                case CommandKeys.Down:
+                {
+                    UnselectLastIndex();
+                    var newSelectedIndex = Math.Min(_lastSelectedIndex + 1, _listItems.Count - 1);
+                    _listItems[newSelectedIndex].IsSelected = true;
+                }
+                    break;
+                case CommandKeys.Up:
+                {
+                    UnselectLastIndex();
+                    var newSelectedIndex = Math.Max(0, _lastSelectedIndex - 1);
+                    _listItems[newSelectedIndex].IsSelected = true;
+                }
+                    break;
+                default:
+                    if (_lastSelectedIndex < _listItems.Count)
+                        _listItems[_lastSelectedIndex].HandleKeyInput(key);
+                    break;
+            }
+        }
+
+        private void UnselectLastIndex()
+        {
+            if (_lastSelectedIndex < _listItems.Count)
+                _listItems[_lastSelectedIndex].IsSelected = false;
         }
 
         protected override void Update()
         {
-            _grid.SetCoordinates(this);
-            _grid.RemoveAllRows();
-            foreach(var value in Model)
+            for (var i = 0; i < _listItems.Count; i++)
             {
-                _grid.AddRow(new RowProperty{Type = ValueType.Absolute, Height = 100});
-                _grid.SetComponent(ListCellFactory(value), _grid.Rows-1, 0);
+                _listItems[i].Area = new Rectangle(Area.X, Area.Y + i * CellHeight, Area.Width, CellHeight);
             }
+
+            PreferredHeight = _listItems.Count * CellHeight;
         }
 
         protected override void DrawComponent(GameTime time, ISpriteBatch spriteBatch)
         {
-            _grid.Draw(time, spriteBatch);
+            foreach (var listItem in _listItems)
+            {
+                listItem.Draw(time, spriteBatch);
+            }
         }
 
-        public void SelectComponent(int row)
+        private void ReCreateItems()
         {
-            _grid.SelectComponent(row, 0);
+            _listItems.Clear();
+            foreach (var item in Model)
+            {
+                var cell = CreateCell(item);
+                _listItems.Add(cell);
+            }
         }
 
-        public override float PreferredHeight => _grid.PreferredHeight;
-        public override float PreferredWidth => _grid.PreferredWidth;
+        private ListCell CreateCell(T item)
+        {
+            var cell = new ListCell {Component = ListCellFactory(item)};
+            cell.CellSelected += (sender, args) => OnComponentSelected(args);
+            cell.CellSelected += (sender, args) => _lastSelectedIndex = _listItems.IndexOf(sender as ListCell);
+            return cell;
+        }
+
+        public void SelectCell(int i)
+        {
+            UnselectLastIndex();
+            _listItems[i].IsSelected = true;
+        }
     }
 }
