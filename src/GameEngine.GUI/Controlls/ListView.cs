@@ -56,9 +56,11 @@ namespace GameEngine.GUI.Controlls
                     RemoveItems(args.OldStartingIndex, args.OldItems.Count);
                     break;
                 case NotifyCollectionChangedAction.Replace:
-                    for (var i = args.NewStartingIndex; i < args.NewItems.Count; i++)
+                    var i = args.NewStartingIndex;
+                    foreach (var item in args.NewItems.Cast<T>())
                     {
-                        _listItems[i].Component = ListCellFactory(args.NewItems.Cast<T>().ToList()[i]);
+                        _listItems[i].Component = ListCellFactory(item);
+                        i++;
                     }
                     break;
                 case NotifyCollectionChangedAction.Move:

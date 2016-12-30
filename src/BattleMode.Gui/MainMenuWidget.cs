@@ -3,7 +3,6 @@ using GameEngine.Globals;
 using GameEngine.GUI.Controlls;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Graphics.General;
-using GameEngine.GUI.Graphics.GUI;
 using GameEngine.GUI.Panels;
 using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
@@ -11,7 +10,7 @@ using Microsoft.Xna.Framework;
 namespace BattleMode.Gui
 {
     [GameType]
-    public class MainMenuWidget : AbstractWidget, IMenuWidget<MainMenuEntries>
+    public class MainMenuWidget : AbstractGraphicComponent, IMenuWidget<MainMenuEntries>
     {
         private readonly Grid _grid;
         private readonly Window _window;

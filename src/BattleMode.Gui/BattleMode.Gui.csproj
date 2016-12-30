@@ -48,7 +48,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AbstractMenuWidget.cs" />
     <Compile Include="BattleGUI.cs" />
     <Compile Include="IGUIService.cs" />
     <Compile Include="IMenuWidget.cs" />

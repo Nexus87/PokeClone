@@ -6,8 +6,6 @@ using GameEngine.Globals;
 using GameEngine.GUI.Controlls;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Graphics.General;
-using GameEngine.GUI.Graphics.GUI;
-using GameEngine.GUI.Graphics.TableView;
 using GameEngine.GUI.Panels;
 using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
@@ -15,7 +13,7 @@ using Microsoft.Xna.Framework;
 namespace BattleMode.Gui
 {
     [GameType]
-    public class ItemMenuWidget : AbstractWidget, IMenuWidget<Item>
+    public class ItemMenuWidget : AbstractGraphicComponent, IMenuWidget<Item>
     {
         private readonly Window _window;
         private readonly ListView<Item> _listView;

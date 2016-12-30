@@ -1,20 +1,73 @@
-﻿using Base;
+﻿using System;
+using System.Collections.ObjectModel;
+using Base;
+using BattleMode.Shared;
 using GameEngine.Core;
+using GameEngine.Globals;
+using GameEngine.GUI.Controlls;
 using GameEngine.GUI.Graphics;
+using GameEngine.GUI.Graphics.General;
 using GameEngine.GUI.Graphics.GUI;
-using GameEngine.GUI.Graphics.TableView;
 using GameEngine.TypeRegistry;
+using Microsoft.Xna.Framework;
 
 namespace BattleMode.Gui
 {
     [GameType]
-    public class PokemonMenuWidget : AbstractMenuWidget<Pokemon>
+    public class PokemonMenuWidget : AbstractGraphicComponent, IMenuWidget<Pokemon>
     {
-        public PokemonMenuWidget(PokemonModel model, PokemonTableRenderer renderer, TableSingleSelectionModel selection, Pixel pixel, ScreenConstants constants, IGameTypeRegistry registry) :
-            base(new TableWidget<Pokemon>(null, null, model, selection, registry), new Dialog(pixel), registry)
+        private readonly Dialog _dialog;
+        private readonly ListView<Pokemon> _listView;
+
+        public PokemonMenuWidget(Client client, ListView<Pokemon> listView, Pixel pixel, ScreenConstants constants, IGameTypeRegistry registry)
         {
             pixel.Color = constants.BackgroundColor;
-            TableWidget.TableCellFactory = renderer.GetComponent;
+            _dialog = new Dialog(pixel);
+            _listView = listView;
+
+            _listView.Model = new ObservableCollection<Pokemon>(client.Pokemons);
+            _listView.ListCellFactory = value =>
+            {
+                var component = registry.ResolveType<SelectableContainer<PokemonMenuLine>>();
+                component.Content = registry.ResolveType<PokemonMenuLine>();
+                component.Setup();
+                component.Content.SetPokemon(value);
+                component.IsSelectable = true;
+                return component;
+            };
+
+            _dialog.AddWidget(_listView);
+        }
+
+        public event EventHandler ExitRequested;
+        public event EventHandler<SelectionEventArgs<Pokemon>> ItemSelected;
+
+        protected override void DrawComponent(GameTime time, ISpriteBatch batch)
+        {
+            _dialog.Draw(time, batch);
+        }
+
+        protected override void Update()
+        {
+            _dialog.SetCoordinates(this);
+        }
+
+        public override void HandleKeyInput(CommandKeys key)
+        {
+            if(key == CommandKeys.Back)
+                OnExitRequested();
+            else
+                _listView.HandleKeyInput(key);
+        }
+
+        public void ResetSelection()
+        {
+            _listView.SelectCell(0);
+        }
+
+        protected virtual void OnExitRequested()
+        {
+            ExitRequested?.Invoke(this, EventArgs.Empty);
         }
     }
 }

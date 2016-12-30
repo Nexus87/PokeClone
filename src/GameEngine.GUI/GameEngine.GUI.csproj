@@ -75,7 +75,6 @@
     <Compile Include="Graphics\General\XnaTexture2D.cs" />
     <Compile Include="Graphics\GraphicComponentSizeChangedEventArgs.cs" />
     <Compile Include="Graphics\GraphicResources.cs" />
-    <Compile Include="Graphics\GUI\AbstractWidget.cs" />
     <Compile Include="Graphics\GUI\Dialog.cs" />
     <Compile Include="Graphics\GUI\MessageBox.cs" />
     <Compile Include="Graphics\GUI\TableWidget.cs" />

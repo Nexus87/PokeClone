@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using Base;
 using Base.Data;
 using Base.Rules;
@@ -16,6 +18,7 @@ namespace BattleMode.Components.BattleState
         {
             Identifier = id;
             ResetModifier();
+            Moves = new ObservableCollection<Move>(Enumerable.Range(0, 4).Select(x => (Move) null).ToList());
         }
 
         public event EventHandler<PokemonChangedEventArgs> PokemonChanged = delegate { };
@@ -24,6 +27,7 @@ namespace BattleMode.Components.BattleState
         public float Accuracy => _modifier[ModifyableState.Accuracy];
         public int Atk => (int)(Pokemon.Atk * _modifier[ModifyableState.Atk]);
 
+        public ObservableCollection<Move> Moves;
         public StatusCondition Condition
         {
             get { return Pokemon.Condition; }
@@ -64,7 +68,10 @@ namespace BattleMode.Components.BattleState
 
                 ResetModifier();
                 _pokemon = value;
-
+                for (var i = 0; i < Moves.Count; i++)
+                {
+                    Moves[i] = i < _pokemon.Moves.Count ? _pokemon.Moves[i] : null;
+                }
                 PokemonChanged(this, value);
             }
         }
