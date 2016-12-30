@@ -67,23 +67,16 @@
   <ItemGroup>
     <Compile Include="EventComponent\EventComponentTest.cs" />
     <Compile Include="Graphics\AbstractGraphicComponentTest.cs" />
-    <Compile Include="Graphics\DefaultTableModelTest.cs" />
-    <Compile Include="Graphics\DefaultTableSelectionModelTest.cs" />
     <Compile Include="Graphics\GraphicalTextStub.cs" />
-    <Compile Include="Graphics\GridExtension.cs" />
     <Compile Include="Graphics\GUI\GUIManagerTest.cs" />
     <Compile Include="Graphics\GUI\MessageBoxTest.cs" />
-    <Compile Include="Graphics\GUI\TableWidgetTest.cs" />
     <Compile Include="Graphics\IGraphicComponentTest.cs" />
-    <Compile Include="Graphics\IItemModelTest.cs" />
     <Compile Include="Graphics\LineTest.cs" />
     <Compile Include="Graphics\MultilineTextboxTest.cs" />
     <Compile Include="Graphics\NullGraphicObjectTest.cs" />
     <Compile Include="Graphics\SelectableContainerTest.cs" />
     <Compile Include="Graphics\SplitterStub.cs" />
     <Compile Include="Graphics\SpriteSheetTextureTest.cs" />
-    <Compile Include="Graphics\TableGridTest.cs" />
-    <Compile Include="Graphics\TableViewTest.cs" />
     <Compile Include="Graphics\TestableMultilineTextBox.cs" />
     <Compile Include="Graphics\TestType.cs" />
     <Compile Include="Graphics\TextBoxTest.cs" />
@@ -105,9 +98,7 @@
     <Compile Include="TestUtils\KeyboardManagerStub.cs" />
     <Compile Include="TestUtils\SpriteBatchMock.cs" />
     <Compile Include="TestUtils\TableComponentMock.cs" />
-    <Compile Include="TestUtils\TableModelStub.cs" />
     <Compile Include="TestUtils\TableRendererMock.cs" />
-    <Compile Include="TestUtils\TableViewMock.cs" />
     <Compile Include="TestUtils\TextGraphicComponentMock.cs" />
     <Compile Include="TestUtils\TextGraphicContainerFake.cs" />
     <Compile Include="TestUtils\WidgetMock.cs" />

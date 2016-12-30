@@ -31,9 +31,7 @@ namespace GameEngine.Core
             registry.RegisterType(r => _resources);
             registry.RegisterType(reg => new Dialog(_resources.DefaultBorderTexture));
             registry.RegisterType(reg => new Line(_resources.Pixel, _resources.Cup));
-            registry.RegisterTypeAs(typeof(DefaultTableModel<>), typeof(ITableModel<>));
             registry.RegisterTypeAs<DefaultTextSplitter, ITextSplitter>();
-            registry.RegisterTypeAs<TableSingleSelectionModel, ITableSelectionModel>();
             registry.RegisterAsService<InputComponent, InputComponent>(reg => new InputComponent(_resources.Configuration));
             registry.RegisterAsService<ContentManager, ContentManager>(reg => _resources.ContentManager);
             registry.RegisterType(r => new Pixel(_resources.Pixel));

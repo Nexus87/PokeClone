@@ -77,7 +77,6 @@
     <Compile Include="Graphics\GraphicResources.cs" />
     <Compile Include="Graphics\GUI\Dialog.cs" />
     <Compile Include="Graphics\GUI\MessageBox.cs" />
-    <Compile Include="Graphics\GUI\TableWidget.cs" />
     <Compile Include="Graphics\IAnimation.cs" />
     <Compile Include="Graphics\IGraphicalText.cs" />
     <Compile Include="Graphics\IGraphicComponent.cs" />
@@ -93,18 +92,7 @@
     <Compile Include="Graphics\SelectionChangedEventArgs.cs" />
     <Compile Include="Graphics\SelectionEventArgs.cs" />
     <Compile Include="Graphics\SpriteSheetTexture.cs" />
-    <Compile Include="Graphics\TableView\DataChangedEventArgs.cs" />
-    <Compile Include="Graphics\TableView\DefaultTableModel.cs" />
-    <Compile Include="Graphics\TableView\IndexValidator.cs" />
-    <Compile Include="Graphics\TableView\ITableGrid.cs" />
-    <Compile Include="Graphics\TableView\ITableModel.cs" />
-    <Compile Include="Graphics\TableView\ITableSelectionModel.cs" />
-    <Compile Include="Graphics\TableView\ITableView.cs" />
-    <Compile Include="Graphics\TableView\TableGrid.cs" />
     <Compile Include="Graphics\TableView\TableIndex.cs" />
-    <Compile Include="Graphics\TableView\TableResizeEventArgs.cs" />
-    <Compile Include="Graphics\TableView\TableSingleSelectionModel.cs" />
-    <Compile Include="Graphics\TableView\TableView.cs" />
     <Compile Include="Graphics\TextBox.cs" />
     <Compile Include="Graphics\TextGraphic.cs" />
     <Compile Include="Graphics\TextureBox.cs" />

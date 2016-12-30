@@ -70,10 +70,6 @@
     <Compile Include="Components\BattleState\WaitForCharStateTest.cs" />
     <Compile Include="Components\EventQueueFake.cs" />
     <Compile Include="Components\GraphicComponents\HPLineTest.cs" />
-    <Compile Include="Components\GraphicComponents\MoveModelTest.cs" />
-    <Compile Include="Components\GraphicComponents\MoveModelTestFactory.cs" />
-    <Compile Include="Components\GraphicComponents\MoveTableSelectionModelTest.cs" />
-    <Compile Include="Components\GraphicComponents\PokemonModelTest.cs" />
     <Compile Include="MoveEffectCalculatorStub.cs" />
     <Compile Include="Utils\TestFactory.cs" />
   </ItemGroup>

@@ -52,18 +52,12 @@
     <Compile Include="IGUIService.cs" />
     <Compile Include="IMenuWidget.cs" />
     <Compile Include="ItemMenuWidget.cs" />
-    <Compile Include="ItemModel.cs" />
     <Compile Include="MainMenuEntries.cs" />
     <Compile Include="MainMenuWidget.cs" />
     <Compile Include="MoveMenuWidget.cs" />
-    <Compile Include="MoveModel.cs" />
-    <Compile Include="MoveTableSelectionModel.cs" />
     <Compile Include="PokemonMenuLine.cs" />
     <Compile Include="PokemonMenuWidget.cs" />
-    <Compile Include="PokemonModel.cs" />
-    <Compile Include="PokemonTableRenderer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SingleDimensionTableModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Base\Base.csproj">
