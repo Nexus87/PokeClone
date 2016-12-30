@@ -29,14 +29,13 @@ namespace GameEngine.Core
             registry.RegisterType(r => _resources.DefaultFont);
             registry.RegisterType(r => _resources);
             registry.RegisterType(reg => new Dialog(_resources.DefaultBorderTexture));
-            registry.RegisterType(reg => new Line(_resources.Pixel, _resources.Cup));
             registry.RegisterTypeAs<DefaultTextSplitter, ITextSplitter>();
             registry.RegisterAsService<InputComponent, InputComponent>(reg => new InputComponent(_resources.Configuration));
             registry.RegisterAsService<ContentManager, ContentManager>(reg => _resources.ContentManager);
             registry.RegisterType(r => new Pixel(_resources.Pixel));
             registry.RegisterType<IEngineInterface>(r => _engine);
             registry.ScanAssembly(Assembly.GetExecutingAssembly());
-            registry.ScanAssembly(Assembly.GetAssembly(typeof(Line)));
+            registry.ScanAssembly(Assembly.GetAssembly(typeof(IGraphicComponent)));
             registry.ScanAssembly(Assembly.GetAssembly(typeof(IGameTypeRegistry)));
             registry.RegisterAsService<ClassicButtonRenderer, IButtonRenderer>(r => new ClassicButtonRenderer(_resources.DefaultArrowTexture, _resources.DefaultFont));
             registry.RegisterAsService<ClassicWindowRenderer, IWindowRenderer>(r => new ClassicWindowRenderer(_resources.DefaultBorderTexture));

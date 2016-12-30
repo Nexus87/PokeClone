@@ -70,7 +70,6 @@
     <Compile Include="Graphics\GraphicalTextStub.cs" />
     <Compile Include="Graphics\GUI\GUIManagerTest.cs" />
     <Compile Include="Graphics\IGraphicComponentTest.cs" />
-    <Compile Include="Graphics\LineTest.cs" />
     <Compile Include="Graphics\NullGraphicObjectTest.cs" />
     <Compile Include="Graphics\SelectableContainerTest.cs" />
     <Compile Include="Graphics\SplitterStub.cs" />
