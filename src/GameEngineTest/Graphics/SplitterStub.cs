@@ -8,16 +8,11 @@ namespace GameEngineTest.Graphics
     {
         public List<string> Strings = new List<string>();
         public Action SplitTextCallback = null;
-        public string GetString(int index)
-        {
-            return index < Strings.Count ? Strings[index] : "";
-        }
 
-        public int Count => Strings.Count;
-
-        public void SplitText(int charsPerLine, string text)
+        public IEnumerable<string> SplitText(int charsPerLine, string text)
         {
             SplitTextCallback?.Invoke();
+            return Strings;
         }
     }
 }

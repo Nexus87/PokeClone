@@ -72,12 +72,10 @@
     <Compile Include="Graphics\GUI\MessageBoxTest.cs" />
     <Compile Include="Graphics\IGraphicComponentTest.cs" />
     <Compile Include="Graphics\LineTest.cs" />
-    <Compile Include="Graphics\MultilineTextboxTest.cs" />
     <Compile Include="Graphics\NullGraphicObjectTest.cs" />
     <Compile Include="Graphics\SelectableContainerTest.cs" />
     <Compile Include="Graphics\SplitterStub.cs" />
     <Compile Include="Graphics\SpriteSheetTextureTest.cs" />
-    <Compile Include="Graphics\TestableMultilineTextBox.cs" />
     <Compile Include="Graphics\TestType.cs" />
     <Compile Include="Graphics\TextBoxTest.cs" />
     <Compile Include="Graphics\TextGraphicTest.cs" />

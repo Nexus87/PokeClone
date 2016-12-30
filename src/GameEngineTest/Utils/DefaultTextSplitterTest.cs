@@ -1,4 +1,5 @@
-﻿using GameEngine.GUI.Utils;
+﻿using System.Linq;
+using GameEngine.GUI.Utils;
 using NUnit.Framework;
 
 namespace GameEngineTest.Utils
@@ -17,10 +18,10 @@ namespace GameEngineTest.Utils
             var secondString = new string('b', charsPerLine);
             var splitter = CreateSplitter();
 
-            splitter.SplitText(charsPerLine, firstString + seperator + secondString);
+            var lines = splitter.SplitText(charsPerLine, firstString + seperator + secondString).ToList();
 
-            Assert.AreEqual(firstString, splitter.GetString(0));
-            Assert.AreEqual(secondString, splitter.GetString(1));
+            Assert.AreEqual(firstString, lines[0]);
+            Assert.AreEqual(secondString, lines[1]);
         }
 
         [TestCase(" ")]
@@ -29,14 +30,14 @@ namespace GameEngineTest.Utils
         [TestCase("  ")]
         public void SplitText_SimpleTextWithSeparator_LineCount(string separator)
         {
-            var charsPerLine = 5;
+            const int charsPerLine = 5;
             var testString = new string('a', charsPerLine);
             var compoundString = testString + separator + testString;
             var splitter = CreateSplitter();
 
-            splitter.SplitText(charsPerLine, compoundString);
+            var lines = splitter.SplitText(charsPerLine, compoundString);
 
-            Assert.AreEqual(2, splitter.Count);
+            Assert.AreEqual(2, lines.Count());
         }
 
         [TestCase(" ")]
@@ -45,111 +46,70 @@ namespace GameEngineTest.Utils
         [TestCase("  ")]
         public void SplitText_SeparatorAtTheEnd_IgnoreSeparator(string separator)
         {
-            var charsPerLine = 5;
+            const int charsPerLine = 5;
             var testString = new string('a', charsPerLine);
 
             var splitter = CreateSplitter();
 
-            splitter.SplitText(charsPerLine, testString + separator);
+            var lines = splitter.SplitText(charsPerLine, testString + separator).ToList();
 
-            Assert.AreEqual(1, splitter.Count);
-            Assert.AreEqual(testString, splitter.GetString(0));
+            Assert.AreEqual(1, lines.Count);
+            Assert.AreEqual(testString, lines[0]);
         }
 
         [TestCase]
         public void SplitText_TextFitInLine_NoSplitting()
         {
-            var charsPerLine = 5;
+            const int charsPerLine = 5;
             var testString = new string('a', charsPerLine);
             var splitter = CreateSplitter();
 
-            splitter.SplitText(charsPerLine, testString);
+            var lines = splitter.SplitText(charsPerLine, testString).ToList();
 
-            Assert.AreEqual(1, splitter.Count);
-            Assert.AreEqual(testString, splitter.GetString(0));
+            Assert.AreEqual(1, lines.Count);
+            Assert.AreEqual(testString, lines[0]);
         }
 
         [TestCase]
         public void SplitText_LineWithoutSeparator_Split()
         {
-            var charsPerLine = 5;
+            const int charsPerLine = 5;
             var firstLine = new string('a', charsPerLine);
             var secondLine = new string('b', charsPerLine);
             var splitter = CreateSplitter();
 
-            splitter.SplitText(charsPerLine, firstLine + secondLine);
+            var lines = splitter.SplitText(charsPerLine, firstLine + secondLine).ToList();
 
-            Assert.AreEqual(2, splitter.Count);
-            Assert.AreEqual(firstLine, splitter.GetString(0));
-            Assert.AreEqual(secondLine, splitter.GetString(1));
+            Assert.AreEqual(2, lines.Count);
+            Assert.AreEqual(firstLine, lines[0]);
+            Assert.AreEqual(secondLine, lines[1]);
 
         }
 
-        [TestCase]
-        public void SplitText_SameStingAndCharsPerLineTwice_Split()
-        {
-            var charsPerLine = 5;
-            var firstLine = new string('a', charsPerLine);
-            var secondLine = new string('b', charsPerLine);
-            var stringToSplit = firstLine + secondLine;
-            var splitter = CreateSplitter();
-
-            splitter.SplitText(charsPerLine, stringToSplit);
-            splitter.SplitText(charsPerLine, stringToSplit);
-
-            Assert.AreEqual(2, splitter.Count);
-            Assert.AreEqual(firstLine, splitter.GetString(0));
-            Assert.AreEqual(secondLine, splitter.GetString(1));
-        }
-
-
-        [TestCase]
-        public void SplitText_SameStingDiffrentCharsPerLineTwice_Split()
-        {
-            var charsPerLine = 5;
-            var firstLine = new string('a', charsPerLine);
-            var secondLine = new string('b', charsPerLine);
-            var stringToSplit = firstLine + secondLine;
-            var splitter = CreateSplitter();
-
-            splitter.SplitText(charsPerLine, stringToSplit);
-            splitter.SplitText(1, stringToSplit);
-
-            Assert.Less(2, splitter.Count);
-        }
         [TestCase]
         public void SplitText_NullString_NoLines()
         {
-            var charsPerLine = 5;
+            const int charsPerLine = 5;
             var splitter = CreateSplitter();
 
-            splitter.SplitText(charsPerLine, null);
+            var lines = splitter.SplitText(charsPerLine, null);
 
-            Assert.AreEqual(0, splitter.Count);
+            Assert.AreEqual(0, lines.Count());
         }
 
         [TestCase]
         public void SplitText_NoCharsPerLine_NoLines()
         {
-            var testString = "test";
+            const string testString = "test";
             var splitter = CreateSplitter();
 
-            splitter.SplitText(0, testString);
+            var lines = splitter.SplitText(0, testString);
 
-            Assert.AreEqual(0, splitter.Count);
+            Assert.AreEqual(0, lines.Count());
 
         }
 
-        [TestCase]
-        public void GetString_IndexMoreThanLines_ReturnDefaultString()
-        {
-            var defaultString = "";
-            var splitter = CreateSplitter();
-
-            Assert.AreEqual(defaultString, splitter.GetString(0));
-        }
-
-        private DefaultTextSplitter CreateSplitter()
+        private static DefaultTextSplitter CreateSplitter()
         {
             return new DefaultTextSplitter();
         }

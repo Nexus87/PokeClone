@@ -1,6 +1,8 @@
 ﻿using System;
 using GameEngine.Globals;
+using GameEngine.GUI.Controlls;
 using GameEngine.GUI.Graphics.General;
+using GameEngine.GUI.Renderers;
 using GameEngine.GUI.Utils;
 using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
@@ -8,16 +10,16 @@ using Microsoft.Xna.Framework;
 namespace GameEngine.GUI.Graphics.GUI
 {
     [GameType]
-    public class MessageBox : AbstractGraphicComponent, IInputHandler, IGraphicComponent
+    public class MessageBox : AbstractGraphicComponent
     {
         private readonly ITextGraphicContainer _textBox;
 
-        public MessageBox(ISpriteFont font, ITextSplitter splitter, int lineNumber = 2)
-            : this(new MultlineTextBox(font, splitter, lineNumber))
+        public MessageBox(ITextAreaRenderer renderer, ITextSplitter splitter)
+            : this(new TextArea(renderer, splitter))
         {
         }
 
-        public MessageBox(ITextGraphicContainer textBox)
+        internal MessageBox(ITextGraphicContainer textBox)
         {
             _textBox = textBox;
         }

@@ -68,6 +68,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controls\ListViewTest.cs" />
+    <Compile Include="Controls\TextAreaTest.cs" />
     <Compile Include="Panels\GridInputHandlerTest.cs" />
     <Compile Include="Panels\GridTest.cs" />
     <Compile Include="Panels\ScrollAreaTest.cs" />

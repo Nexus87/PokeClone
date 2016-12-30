@@ -5,8 +5,6 @@ using GameEngine.Core.Registry;
 using GameEngine.GUI.Controlls;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Graphics.GUI;
-using GameEngine.GUI.Graphics.TableView;
-using GameEngine.GUI.Panels;
 using GameEngine.GUI.Renderers;
 using GameEngine.GUI.Renderers.PokemonClassicRenderer;
 using GameEngine.GUI.Utils;
@@ -43,6 +41,7 @@ namespace GameEngine.Core
             registry.RegisterAsService<ClassicButtonRenderer, IButtonRenderer>(r => new ClassicButtonRenderer(_resources.DefaultArrowTexture, _resources.DefaultFont));
             registry.RegisterAsService<ClassicWindowRenderer, IWindowRenderer>(r => new ClassicWindowRenderer(_resources.DefaultBorderTexture));
             registry.RegisterAsService<ClassicLabelRenderer, ILabelRenderer>(r => new ClassicLabelRenderer(_resources.DefaultFont));
+            registry.RegisterAsService<ClassicTextAreaRenderer, ITextAreaRenderer>(r => new ClassicTextAreaRenderer(_resources.DefaultFont));
         }
 
         public string ModuleName => "GameEngine";
