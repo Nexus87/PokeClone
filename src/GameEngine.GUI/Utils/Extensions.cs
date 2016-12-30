@@ -18,10 +18,6 @@ namespace GameEngine.GUI.Utils
             return AlmostEqual(f1, f2, 0.0001d);
         }
 
-        public static bool IndexInRange<T>(this ITableModel<T> model, int row, int column){
-            return (row >= 0 && row < model.Rows) &&
-                (column >= 0 && column < model.Columns);
-        }
         public static bool AlmostEqual(this float f1, float f2, float epsilon)
         {
             return Math.Abs(f1 - f2) < epsilon;
