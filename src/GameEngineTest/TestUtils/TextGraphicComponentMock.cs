@@ -4,7 +4,7 @@ using GameEngine.GUI.Graphics.General;
 
 namespace GameEngineTest.TestUtils
 {
-    public class TextGraphicComponentMock : GraphicComponentMock, ITextGraphicComponent
+    public class TextGraphicComponentMock : GraphicComponentMock, IGraphicComponent
     {
         public Func<int> DisplayableCharsFunc = null;
         public int DisplayableChars()

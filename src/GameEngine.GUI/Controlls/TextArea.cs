@@ -19,7 +19,7 @@ namespace GameEngine.GUI.Controlls
     }
 
     [GameType]
-    public class TextArea : AbstractGraphicComponent, ITextGraphicContainer
+    public class TextArea : AbstractGraphicComponent
     {
         public int NumberOfLines { get; }
         private string _text;

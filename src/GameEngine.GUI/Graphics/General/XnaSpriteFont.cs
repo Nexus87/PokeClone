@@ -11,21 +11,23 @@ namespace GameEngine.GUI.Graphics.General
     /// </summary>
     public sealed class XnaSpriteFont : ISpriteFont
     {
-        private readonly string fontName;
-        private readonly ContentManager content;
+        private readonly string _fontName;
+        private readonly ContentManager _content;
 
         public XnaSpriteFont(string fontName, ContentManager content)
         {
-            this.fontName = fontName;
-            this.content = content;
+            _fontName = fontName;
+            _content = content;
         }
 
         /// <see cref="ISpriteFont.SpriteFont"/>
-        public SpriteFont SpriteFont { get { return Font; } }
+        public SpriteFont SpriteFont => Font;
+
         /// <see cref="Microsoft.Xna.Framework.Graphics.SpriteFont.Characters"/>
         public SpriteFont Font { get; set; }
         /// <see cref="Microsoft.Xna.Framework.Graphics.SpriteFont.Characters"/>
-        public ReadOnlyCollection<char> Characters { get { return Font.Characters; } }
+        public ReadOnlyCollection<char> Characters => Font.Characters;
+
         /// <see cref="Microsoft.Xna.Framework.Graphics.SpriteFont.DefaultCharacter"/>
         public char? DefaultCharacter { get { return Font.DefaultCharacter; }  set { Font.DefaultCharacter = value; } }
         /// <see cref="Microsoft.Xna.Framework.Graphics.SpriteFont.LineSpacing"/>
@@ -33,7 +35,8 @@ namespace GameEngine.GUI.Graphics.General
         /// <see cref="Microsoft.Xna.Framework.Graphics.SpriteFont.Spacing"/>
         public float Spacing { get { return Font.Spacing; }  set { Font.Spacing = value; } }
         /// <see cref="Microsoft.Xna.Framework.Graphics.SpriteFont.Texture"/>
-        public Texture2D Texture { get { return Font.Texture; } }
+        public Texture2D Texture => Font.Texture;
+
         /// <see cref="Microsoft.Xna.Framework.Graphics.SpriteFont.MeasureString(string)"/>
         public Vector2 MeasureString(string text) { return Font.MeasureString(text); }
         /// <see cref="Microsoft.Xna.Framework.Graphics.SpriteFont.MeasureString(StringBuilder)"/>
@@ -42,7 +45,7 @@ namespace GameEngine.GUI.Graphics.General
         /// <see cref="ISpriteFont.LoadContent"/>
         public void LoadContent()
         {
-            Font = content.Load<SpriteFont>(fontName);
+            Font = _content.Load<SpriteFont>(_fontName);
         }
     }
 }

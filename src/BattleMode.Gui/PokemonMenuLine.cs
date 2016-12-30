@@ -1,6 +1,7 @@
 ﻿using Base;
 using BattleMode.Shared;
 using GameEngine.Core;
+using GameEngine.GUI.Controlls;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Graphics.General;
 using GameEngine.GUI.Panels;
@@ -17,13 +18,13 @@ namespace BattleMode.Gui
         private readonly TextureBox _icon;
         private readonly HpLine _hpLine;
         private readonly HpText _hpText;
-        private readonly TextBox _nameBox;
-        private readonly TextBox _hpLabel;
-        private readonly TextBox _level;
+        private readonly Label _nameBox;
+        private readonly Label _hpLabel;
+        private readonly Label _level;
         private readonly TextureProvider _textureProvider;
 
-        public PokemonMenuLine(TextureBox icon, HpLine hpLine, TextBox nameBox, HpText hpText, TextBox level,
-            TextBox hpLabel, TextureProvider textureProvider)
+        public PokemonMenuLine(TextureBox icon, HpLine hpLine, Label nameBox, HpText hpText, Label level,
+            Label hpLabel, TextureProvider textureProvider)
         {
             _mainContainer = new Grid();
             _icon = icon;
@@ -63,7 +64,7 @@ namespace BattleMode.Gui
             var dataContainer = new Grid();
 
             _hpLabel.Text = "HP:";
-            _hpLabel.PreferredTextHeight = 24;
+            _hpLabel.TextSize = 24;
 
             hpLineContainer.AddPercentRow();
             hpLineContainer.AddAutoColumn();

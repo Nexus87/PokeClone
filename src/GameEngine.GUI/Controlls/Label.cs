@@ -1,5 +1,6 @@
 ﻿using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Graphics.General;
+using GameEngine.GUI.Renderers;
 using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
 
@@ -16,6 +17,7 @@ namespace GameEngine.GUI.Controlls
         {
             IsSelectable = false;
             _renderer = renderer;
+            Text = null;
         }
 
         public string Text
@@ -23,7 +25,7 @@ namespace GameEngine.GUI.Controlls
             get { return _text; }
             set
             {
-                _text = value;
+                _text = value ?? "";
                 Invalidate();
             }
         }

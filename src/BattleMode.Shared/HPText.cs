@@ -1,4 +1,5 @@
 ﻿using Base;
+using GameEngine.GUI.Controlls;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Graphics.General;
 using GameEngine.TypeRegistry;
@@ -9,10 +10,10 @@ namespace BattleMode.Shared
     [GameType]
     public class HpText : AbstractGraphicComponent
     {
-        private readonly TextBox _text;
+        private readonly Label _text;
         private string _maxHp;
 
-        public HpText(TextBox text)
+        public HpText(Label text)
         {
             _text = text;
             text.PreferredSizeChanged += (obj, ev) => SetPreferredSize(ev);
@@ -28,11 +29,11 @@ namespace BattleMode.Shared
         {
             get
             {
-                return _text.PreferredTextHeight;
+                return _text.TextSize;
             }
 
             set{
-                _text.PreferredTextHeight = value;
+                _text.TextSize = value;
             }
         }
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)

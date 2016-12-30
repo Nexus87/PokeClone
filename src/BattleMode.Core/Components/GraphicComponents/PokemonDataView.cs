@@ -1,6 +1,7 @@
 ﻿using System;
 using BattleMode.Components.BattleState;
 using BattleMode.Shared;
+using GameEngine.GUI.Controlls;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Graphics.General;
 using GameEngine.GUI.Panels;
@@ -15,12 +16,12 @@ namespace BattleMode.Core.Components.GraphicComponents
     {
         public event EventHandler HpUpdated;
 
-        public PokemonDataView(HpLine line, TextBox nameBox, TextBox levelBox, TextBox hpBox) :
+        public PokemonDataView(HpLine line, Label nameBox, Label levelBox, Label hpBox) :
             this(line, nameBox, levelBox, hpBox, null)
         {
         }
 
-        public PokemonDataView(HpLine line, TextBox nameBox, TextBox levelBox, TextBox hpBox, HpText hpTextBox)
+        public PokemonDataView(HpLine line, Label nameBox, Label levelBox, Label hpBox, HpText hpTextBox)
         {
             _container = new Grid();
 
@@ -34,12 +35,12 @@ namespace BattleMode.Core.Components.GraphicComponents
             lvlContainer.AddColumn(new ColumnProperty {Type = ValueType.Auto,});
             lvlContainer.AddColumn(new ColumnProperty {Type = ValueType.Percent, Share = 1});
 
-            _lvl.PreferredTextHeight = 24.0f;
+            _lvl.TextSize = 24.0f;
 
             lvlContainer.SetComponent(new NullGraphicObject(), 0, 0);
             lvlContainer.SetComponent(_lvl, 0, 1);
             lvlContainer.SetComponent(new NullGraphicObject(), 0, 2);
-            lvlContainer.SetCoordinates(0, 0, 0, _lvl.PreferredTextHeight);
+            lvlContainer.SetCoordinates(0, 0, 0, _lvl.TextSize);
 
 
 
@@ -49,7 +50,7 @@ namespace BattleMode.Core.Components.GraphicComponents
             hpLineContainer.AddColumn(new ColumnProperty{Type = ValueType.Percent, Share = 1});
 
             hpBox.Text = "hp:";
-            hpBox.PreferredTextHeight = 24.0f;
+            hpBox.TextSize = 24.0f;
 
             hpLineContainer.SetComponent(hpBox, 0, 0);
             hpLineContainer.SetComponent(_hpLine, 0, 1);
@@ -58,9 +59,9 @@ namespace BattleMode.Core.Components.GraphicComponents
             _container.AddPercentColumn();
             _container.AddPercentRow();
             _container.AddAbsoluteRow(10f);
-            _container.AddAbsoluteRow(_lvl.PreferredTextHeight);
+            _container.AddAbsoluteRow(_lvl.TextSize);
             _container.AddAbsoluteRow(10f);
-            _container.AddAbsoluteRow(hpBox.PreferredTextHeight);
+            _container.AddAbsoluteRow(hpBox.TextSize);
 
             _container.SetComponent(_name, 0, 0);
             _container.SetComponent(new NullGraphicObject(), 1, 0);
@@ -90,8 +91,8 @@ namespace BattleMode.Core.Components.GraphicComponents
 
         private readonly HpLine _hpLine;
         private readonly HpText _hpText;
-        private readonly TextBox _name;
-        private readonly TextBox _lvl;
+        private readonly Label _name;
+        private readonly Label _lvl;
         private readonly Grid _container;
 
 

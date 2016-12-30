@@ -4,7 +4,7 @@ using GameEngine.GUI.Graphics.General;
 
 namespace GameEngineTest.Graphics
 {
-    public class GraphicalTextStub : IGraphicalText
+    public class GraphicalTextStub
     {
         public float SingleCharWidth { get; set; }
 

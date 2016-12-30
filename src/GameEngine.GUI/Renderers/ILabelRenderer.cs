@@ -1,7 +1,7 @@
-﻿using GameEngine.GUI.Graphics.General;
-using GameEngine.GUI.Renderers;
+﻿using GameEngine.GUI.Controlls;
+using GameEngine.GUI.Graphics.General;
 
-namespace GameEngine.GUI.Controlls
+namespace GameEngine.GUI.Renderers
 {
     public interface ILabelRenderer : IRenderer<Label>
     {
@@ -25,7 +25,8 @@ namespace GameEngine.GUI.Controlls
 
         public float GetPreferedWidth(Label label)
         {
-            return _font.MeasureString(label.Text).Y;
+            var scale = label.TextSize / _font.MeasureString(" ").Y;
+            return scale * _font.MeasureString(label.Text).X;
         }
 
         public float GetPreferedHeight(Label label)

@@ -2,7 +2,7 @@
 
 namespace GameEngineTest.TestUtils
 {
-    public class TextGraphicContainerFake : GraphicComponentMock, ITextGraphicContainer
+    public class TextGraphicContainerFake : GraphicComponentMock, IGraphicComponent
     {
         public bool HasNext()
         {
