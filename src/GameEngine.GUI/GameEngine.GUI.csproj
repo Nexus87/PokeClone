@@ -81,7 +81,6 @@
     <Compile Include="Graphics\General\XnaTexture2D.cs" />
     <Compile Include="Graphics\GraphicComponentSizeChangedEventArgs.cs" />
     <Compile Include="Graphics\GraphicResources.cs" />
-    <Compile Include="Graphics\GUI\Dialog.cs" />
     <Compile Include="Graphics\IAnimation.cs" />
     <Compile Include="Graphics\IGraphicComponent.cs" />
     <Compile Include="Graphics\IImageBox.cs" />
@@ -142,7 +141,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Graphics\GUI" />
     <Folder Include="Graphics\TableView" />
   </ItemGroup>
   <ItemGroup />

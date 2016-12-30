@@ -3,7 +3,6 @@ using System.Reflection;
 using GameEngine.Core.GameEngineComponents;
 using GameEngine.Core.Registry;
 using GameEngine.GUI.Graphics;
-using GameEngine.GUI.Graphics.GUI;
 using GameEngine.GUI.Panels;
 using GameEngine.GUI.Renderers;
 using GameEngine.GUI.Renderers.PokemonClassicRenderer;
@@ -28,7 +27,6 @@ namespace GameEngine.Core
         {
             registry.RegisterType(r => _resources.DefaultFont);
             registry.RegisterType(r => _resources);
-            registry.RegisterType(reg => new Dialog(reg.ResolveType<IImageBoxRenderer>(), _resources.DefaultBorderTexture));
             registry.RegisterTypeAs<DefaultTextSplitter, ITextSplitter>();
             registry.RegisterAsService<InputComponent, InputComponent>(reg => new InputComponent(_resources.Configuration));
             registry.RegisterAsService<ContentManager, ContentManager>(reg => _resources.ContentManager);
