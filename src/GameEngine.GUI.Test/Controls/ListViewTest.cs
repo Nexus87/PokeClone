@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using FakeItEasy;
+using GameEngine.Globals;
 using GameEngine.GUI.Controlls;
 using GameEngine.GUI.Graphics;
 using NUnit.Framework;
@@ -12,6 +13,11 @@ namespace GameEngine.GUI.Test.Controls
     public class ListViewTest
     {
         private const int InitialCallTimes = 2;
+
+        private class FakeComponent : AbstractGraphicComponent
+        {
+            public int Value { get; set; }
+        }
 
         [TestCase(10)]
         public void Update_WithModel_AllItemsWereUpdated(int rows)
@@ -46,6 +52,23 @@ namespace GameEngine.GUI.Test.Controls
         }
 
         [TestCase(10)]
+        public void Update_AfterInsertData_NewRowIsResized(int rows)
+        {
+            var model = CreateModel(rows);
+            var listView = CreateListViewWithCellFactory(r => new FakeComponent{Value = r});
+
+            model.Remove(5);
+            listView.Model = model;
+            listView.Draw();
+
+            model.Insert(5, 5);
+            listView.Draw();
+
+            var newComponent = listView.GetComponent(5) as FakeComponent;
+            Assert.AreEqual(5, newComponent.Value);
+        }
+
+        [TestCase(10)]
         public void Update_AddComponentToModel_NewComponentIsResized(int rows)
         {
             var model = CreateModel(rows);
@@ -62,6 +85,46 @@ namespace GameEngine.GUI.Test.Controls
 
         }
 
+        [TestCase]
+        public void HandleKeyInput_WithNotSelectableComponent_ComponentIsNotSelected()
+        {
+            var model = CreateModel(2);
+            var components = CreateComponentMockList(2);
+            components[1].IsSelectable = false;
+            components[0].IsSelectable = true;
+            var listView = CreateListViewWithCellFactory(r => components[r]);
+            listView.Model = model;
+            listView.SelectCell(0);
+
+            listView.HandleKeyInput(CommandKeys.Down);
+
+            Assert.True(components[0].IsSelected);
+            Assert.False(components[1].IsSelected);
+        }
+
+        [TestCase(0, CommandKeys.Down, 1, 0)]
+        [TestCase(0, CommandKeys.Up, 0, 1)]
+        [TestCase(1, CommandKeys.Up, 0, 1)]
+        [TestCase(1, CommandKeys.Down, 1, 0)]
+        public void HandleKeyInput_WithBothComponentSelected_ComponentIsNotSelected(
+            int startIndex, CommandKeys key, int expectedSelectedIndex, int expectedNotSelectedIndex)
+        {
+            var model = CreateModel(2);
+            var components = CreateComponentMockList(2);
+            components[1].IsSelectable = true;
+            components[0].IsSelectable = true;
+            var listView = CreateListViewWithCellFactory(r => components[r]);
+
+            listView.Model = model;
+            listView.SelectCell(startIndex);
+            components[startIndex].ComponentSelected +=
+                Raise.With(new ComponentSelectedEventArgs {Source = components[startIndex]});
+
+            listView.HandleKeyInput(key);
+
+            Assert.True(components[expectedSelectedIndex].IsSelected);
+            Assert.False(components[expectedNotSelectedIndex].IsSelected);
+        }
         private static ListView<int> CreateListViewWithCellFactory(ListCellFactory<int> factory)
         {
             return new ListView<int>() {ListCellFactory = factory};

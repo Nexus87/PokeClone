@@ -105,16 +105,12 @@ namespace GameEngine.GUI.Controlls
             {
                 case CommandKeys.Down:
                 {
-                    UnselectLastIndex();
-                    var newSelectedIndex = Math.Min(_lastSelectedIndex + 1, _listItems.Count - 1);
-                    _listItems[newSelectedIndex].IsSelected = true;
+                    SelectNextComponent();
                 }
                     break;
                 case CommandKeys.Up:
                 {
-                    UnselectLastIndex();
-                    var newSelectedIndex = Math.Max(0, _lastSelectedIndex - 1);
-                    _listItems[newSelectedIndex].IsSelected = true;
+                    SelectPreviousComponent();
                 }
                     break;
                 default:
@@ -122,6 +118,38 @@ namespace GameEngine.GUI.Controlls
                         _listItems[_lastSelectedIndex].HandleKeyInput(key);
                     break;
             }
+        }
+
+        private void SelectPreviousComponent()
+        {
+            var upperLimit = Math.Min(_listItems.Count, _lastSelectedIndex);
+            var nextComponent = _listItems
+                .Take(upperLimit)
+                .Select(x => x.Component)
+                .Reverse()
+                .FirstOrDefault(x => x != null && x.IsSelectable);
+
+            if (nextComponent == null)
+                return;
+
+            UnselectLastIndex();
+            nextComponent.IsSelected = true;
+        }
+
+        private void SelectNextComponent()
+        {
+            var lowerLimit = Math.Min(_listItems.Count, _lastSelectedIndex + 1);
+
+            var nextComponent = _listItems
+                .Skip(lowerLimit)
+                .Select(x => x.Component)
+                .FirstOrDefault(x => x != null && x.IsSelectable);
+
+            if (nextComponent == null)
+                return;
+
+            UnselectLastIndex();
+            nextComponent.IsSelected = true;
         }
 
         private void UnselectLastIndex()
@@ -170,6 +198,11 @@ namespace GameEngine.GUI.Controlls
         {
             UnselectLastIndex();
             _listItems[i].IsSelected = true;
+        }
+
+        public IGraphicComponent GetComponent(int i)
+        {
+            return _listItems[i].Component;
         }
     }
 }
