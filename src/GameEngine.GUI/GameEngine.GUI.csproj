@@ -59,6 +59,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Components\HPLine.cs" />
+    <Compile Include="Components\HPResizeAnimation.cs" />
     <Compile Include="Components\MessageBox.cs" />
     <Compile Include="Configuration\Configuration.cs" />
     <Compile Include="Configuration\TextureConfiguration.cs" />
@@ -104,6 +106,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Renderers\AbstractRenderer.cs" />
     <Compile Include="Renderers\IButtonRenderer.cs" />
+    <Compile Include="Renderers\IHpLineRenderer.cs" />
     <Compile Include="Renderers\ILabelRenderer.cs" />
     <Compile Include="Renderers\IRenderer.cs" />
     <Compile Include="Renderers\ITextAreaRenderer.cs" />
@@ -112,6 +115,7 @@
     <Compile Include="Renderers\PokemonClassicRenderer\ClassicButtonRenderer.cs" />
     <Compile Include="Renderers\PokemonClassicRenderer\ClassicTextAreaRenderer.cs" />
     <Compile Include="Renderers\PokemonClassicRenderer\ClassicWindowRenderer.cs" />
+    <Compile Include="Renderers\PokemonClassicRenderer\ClassicHpLineRenderer.cs" />
     <Compile Include="Scene.cs" />
     <Compile Include="Utils\DefaultTextSplitter.cs" />
     <Compile Include="Utils\Extensions.cs" />

@@ -3,7 +3,7 @@ using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Utils;
 using Microsoft.Xna.Framework;
 
-namespace BattleMode.Shared
+namespace GameEngine.GUI.Components
 {
     public class HpResizeAnimation : IAnimation
     {

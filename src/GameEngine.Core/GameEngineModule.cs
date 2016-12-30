@@ -2,7 +2,7 @@
 using System.Reflection;
 using GameEngine.Core.GameEngineComponents;
 using GameEngine.Core.Registry;
-using GameEngine.GUI.Controlls;
+using GameEngine.GUI.Components;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Graphics.GUI;
 using GameEngine.GUI.Renderers;
@@ -42,6 +42,7 @@ namespace GameEngine.Core
             registry.RegisterAsService<ClassicWindowRenderer, IWindowRenderer>(r => new ClassicWindowRenderer(_resources.DefaultBorderTexture));
             registry.RegisterAsService<ClassicLabelRenderer, ILabelRenderer>(r => new ClassicLabelRenderer(_resources.DefaultFont));
             registry.RegisterAsService<ClassicTextAreaRenderer, ITextAreaRenderer>(r => new ClassicTextAreaRenderer(_resources.DefaultFont));
+            registry.RegisterAsService<ClassicLineRenderer, IHpLineRenderer>(r => new ClassicLineRenderer(_resources.Cup, _resources.Pixel, r.ResolveType<ScreenConstants>().BackgroundColor));
         }
 
         public string ModuleName => "GameEngine";

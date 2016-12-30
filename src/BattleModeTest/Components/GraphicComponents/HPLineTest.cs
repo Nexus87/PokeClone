@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using BattleMode.Shared;
 using FakeItEasy;
+using GameEngine.GUI.Components;
 using GameEngine.GUI.Graphics;
+using GameEngine.GUI.Graphics.General;
+using GameEngine.GUI.Renderers.PokemonClassicRenderer;
 using GameEngine.GUI.Utils;
 using GameEngineTest.Graphics;
 using GameEngineTest.TestUtils;
@@ -15,18 +17,10 @@ namespace BattleModeTest.Components.GraphicComponents
     public class HpLineTest : IGraphicComponentTest
     {
 
+
         private static HpLine CreateLine()
         {
-            var hpLineStub = A.Fake<ILine>();
-
-            return CreateLine(hpLineStub);
-        }
-
-        private static HpLine CreateLine(ILine hpLine)
-        {
-            var outerLine = A.Fake<ILine>();
-            var innerLine = A.Fake<ILine>();
-            var line = new HpLine(outerLine, innerLine, hpLine, Color.White) {MaxHp = 100};
+            var line = new HpLine(new ClassicLineRenderer(A.Fake<ITexture2D>(), A.Fake<ITexture2D>(), Color.White)) {MaxHp = 100};
             line.Setup();
 
             return line;
@@ -77,14 +71,13 @@ namespace BattleModeTest.Components.GraphicComponents
         [TestCaseSource(nameof(HpColorTestData))]
         public void Draw_SetNumberOfHp_HPLineHasExpectedColor(int hp, Color color)
         {
-            var hpLineStub = A.Fake<ILine>();
-            var line = CreateLine(hpLineStub);
+            var line = CreateLine();
             line.SetCoordinates(0, 0, 500, 500);
 
             line.Current = hp;
             line.Draw();
 
-            A.CallToSet(() => hpLineStub.Color).To(color).MustHaveHappened(Repeated.Exactly.Once);
+            Assert.AreEqual(color, line.Color);
         }
 
         [TestCase]
@@ -97,25 +90,6 @@ namespace BattleModeTest.Components.GraphicComponents
             line.Current = 0;
 
             Assert.DoesNotThrow(()=> line.Draw());
-        }
-
-        [TestCase]
-        public void Draw_ZeroMaxHP_HPLineHasZeroSize()
-        {
-            var hpLine = A.Fake<ILine>();
-            hpLine.Height(-1.0f);
-            hpLine.Width(1.0f);
-            var line = CreateLine(hpLine);
-            
-            line.SetCoordinates(0, 0, 500, 500);
-
-            line.MaxHp = 0;
-            line.Current = 0;
-
-            line.Draw();
-
-            Assert.IsTrue(hpLine.Width().AlmostEqual(0) || hpLine.Height().AlmostEqual(0));
-            
         }
 
         [TestCase(110)]

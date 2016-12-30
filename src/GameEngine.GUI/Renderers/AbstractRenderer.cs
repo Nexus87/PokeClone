@@ -20,7 +20,12 @@ namespace GameEngine.GUI.Renderers
 
         protected void RenderImage(ISpriteBatch spriteBatch, ITexture2D texture, Rectangle position)
         {
-            spriteBatch.Draw(texture: texture, destinationRectangle: position, color: Color.White);
+            RenderImage(spriteBatch, texture, position, Color.White);
+        }
+
+        protected void RenderImage(ISpriteBatch spriteBatch, ITexture2D texture, Rectangle position, Color color)
+        {
+            spriteBatch.Draw(texture: texture, destinationRectangle: position, color: color);
         }
 
         public abstract void Render(ISpriteBatch spriteBatch, T component);
