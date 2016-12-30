@@ -74,8 +74,6 @@ namespace BattleMode.Gui
             hpLineContainer.SetComponent(_hpText, 0, 2);
 
 
-            _level.HorizontalPolicy = ResizePolicy.Preferred;
-
             nameLevelContainer.AddPercentRow();
             nameLevelContainer.AddPercentColumn();
             nameLevelContainer.AddAutoColumn();
@@ -88,8 +86,6 @@ namespace BattleMode.Gui
             dataContainer.AddPercentRow();
             dataContainer.SetComponent(nameLevelContainer, 0, 0);
             dataContainer.SetComponent(hpLineContainer, 1, 0);
-
-            _icon.VerticalPolicy = _icon.HorizontalPolicy = ResizePolicy.Fixed;
 
             iconDataContainer.AddPercentRow();
             iconDataContainer.AddAutoColumn();

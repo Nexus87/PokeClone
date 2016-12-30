@@ -38,11 +38,6 @@ namespace GameEngine.GUI.Graphics
         /// <param name="animation">Animation to play</param>
         void PlayAnimation(IAnimation animation);
 
-        /// <summary>
-        /// This event signals that either Width or Height has changed
-        /// </summary>
-        event EventHandler<GraphicComponentSizeChangedEventArgs> SizeChanged;
-
         event EventHandler<GraphicComponentSizeChangedEventArgs> PreferredSizeChanged;
 
         /// <summary>
@@ -62,19 +57,15 @@ namespace GameEngine.GUI.Graphics
         /// </remarks>
         void Setup();
 
-        Color Color { get; set; }
-
         float PreferredHeight { get; }
         float PreferredWidth { get; }
-       
-        ResizePolicy HorizontalPolicy { get; set; }
-        ResizePolicy VerticalPolicy { get; set; }
 
         Rectangle ScissorArea { get; set; }
         Rectangle Area { get; set; }
 
         IGraphicComponent Parent { get; set; }
         IEnumerable<IGraphicComponent> Children { get; }
+
         bool IsSelected { get; set; }
         bool IsSelectable { get; }
     }

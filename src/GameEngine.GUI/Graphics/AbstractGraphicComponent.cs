@@ -39,13 +39,8 @@ namespace GameEngine.GUI.Graphics
         private Rectangle _area;
         private bool _isSelected;
 
-        public event EventHandler<GraphicComponentSizeChangedEventArgs> SizeChanged;
         public event EventHandler<GraphicComponentSizeChangedEventArgs> PreferredSizeChanged;
 
-        protected void OnSizeChanged(GraphicComponentSizeChangedEventArgs eventArgs)
-        {
-            SizeChanged?.Invoke(this, eventArgs);
-        }
 
         protected void OnPreferredSizeChanged(GraphicComponentSizeChangedEventArgs eventArgs)
         {
@@ -95,9 +90,6 @@ namespace GameEngine.GUI.Graphics
 
         public virtual void Setup(){}
 
-
-        public Color Color { get; set; }
-
         public virtual float PreferredHeight {
             get
             {
@@ -127,8 +119,6 @@ namespace GameEngine.GUI.Graphics
             }
         }
 
-        public ResizePolicy HorizontalPolicy { get; set; }
-        public ResizePolicy VerticalPolicy { get; set; }
         public Rectangle ScissorArea { get; set; }
 
         public virtual Rectangle Area
@@ -139,12 +129,8 @@ namespace GameEngine.GUI.Graphics
                 if(_area == value)
                     return;
 
-                var sizeChanged = _area.Width != value.Width || _area.Height != value.Height;
-
                 _area = value;
                 Invalidate();
-                if(sizeChanged)
-                    OnSizeChanged(new GraphicComponentSizeChangedEventArgs(this, _area.Width, _area.Height));
             }
         }
 

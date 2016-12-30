@@ -21,12 +21,11 @@ namespace GameEngine.GUI.Graphics
             SpriteEffects = SpriteEffects.None;
             _sourceRectangle = sourceRectangle;
             _spriteSheet = spriteSheet;
-            Color = Color.White;
         }
 
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)
         {
-            batch.Draw(_spriteSheet, destinationRectangle:_destinationRectangle, sourceRectangle: _sourceRectangle, color: Color, effects: SpriteEffects);
+            batch.Draw(_spriteSheet, destinationRectangle:_destinationRectangle, sourceRectangle: _sourceRectangle, color: Color.White, effects: SpriteEffects);
         }
 
         protected override void Update()

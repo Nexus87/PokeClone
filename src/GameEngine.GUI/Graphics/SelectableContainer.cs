@@ -132,7 +132,6 @@ namespace GameEngine.GUI.Graphics
             public ArrowDecorator(IGraphicComponent arrow)
             {
                 _arrow = arrow;
-                HorizontalPolicy = VerticalPolicy = ResizePolicy.Fixed;
             }
 
             public bool ShouldDraw { private get; set; }

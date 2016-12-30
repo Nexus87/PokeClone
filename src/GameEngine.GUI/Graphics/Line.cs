@@ -14,7 +14,7 @@ namespace GameEngine.GUI.Graphics
     /// If the width is under this limit, the cups will still be round
     /// but no half circles any more.
     /// </remarks>
-    public class Line : AbstractGraphicComponent
+    public class Line : AbstractGraphicComponent, ILine
     {
         public Line(ITexture2D pixel, ITexture2D cupTexture)
         {
@@ -25,6 +25,8 @@ namespace GameEngine.GUI.Graphics
             _cupTexture = cupTexture;
             Color = Color.Black;
         }
+
+        public Color Color { get; set; }
 
         private float _circleTextureScale;
         private readonly ITexture2D _cupTexture;

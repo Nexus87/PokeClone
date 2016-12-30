@@ -82,6 +82,7 @@
     <Compile Include="Graphics\IGraphicalText.cs" />
     <Compile Include="Graphics\IGraphicComponent.cs" />
     <Compile Include="Graphics\IImageBox.cs" />
+    <Compile Include="Graphics\ILine.cs" />
     <Compile Include="Graphics\ITextGraphicComponent.cs" />
     <Compile Include="Graphics\ITextGraphicContainer.cs" />
     <Compile Include="Graphics\Line.cs" />

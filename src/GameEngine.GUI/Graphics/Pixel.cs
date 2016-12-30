@@ -12,6 +12,8 @@ namespace GameEngine.GUI.Graphics
             _textureBox = new TextureBox(pixelTexture);
         }
 
+        public Color Color { get; set; }
+
         protected override void Update()
         {
             _textureBox.SetCoordinates(this);

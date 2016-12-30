@@ -13,16 +13,16 @@ namespace BattleMode.Shared
         private const float RelativeBorderSize = 0.2f;
         private float BorderSize => RelativeBorderSize * Area.Height;
         private int _currentHp;
-        private readonly IGraphicComponent _hpLine;
-        private readonly IGraphicComponent _innerLine;
+        private readonly ILine _hpLine;
+        private readonly ILine _innerLine;
         private int _maxHp;
-        private readonly IGraphicComponent _outerLine;
+        private readonly ILine _outerLine;
 
 
         public HpLine(Line outerLine, Line innerLine, Line hpLine, ScreenConstants screen) :
             this(outerLine, innerLine, hpLine, screen.BackgroundColor)
         {}
-        internal HpLine(IGraphicComponent outerLine, IGraphicComponent innerLine, IGraphicComponent hpLine, Color backgroundColor)
+        internal HpLine(ILine outerLine, ILine innerLine, ILine hpLine, Color backgroundColor)
         {
             _outerLine = outerLine;
             _innerLine = innerLine;

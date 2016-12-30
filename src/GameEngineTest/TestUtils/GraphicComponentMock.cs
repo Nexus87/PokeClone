@@ -21,7 +21,6 @@ namespace GameEngineTest.TestUtils
             throw new NotImplementedException();
         }
 
-        public event EventHandler<GraphicComponentSizeChangedEventArgs> SizeChanged;
         public event EventHandler<GraphicComponentSizeChangedEventArgs> PreferredSizeChanged;
 
         public void RaisePreferredSizeChanged()
@@ -56,23 +55,9 @@ namespace GameEngineTest.TestUtils
 
         public float PreferredWidth { get; set; }
 
-        public ResizePolicy HorizontalPolicy { get; set; }
-
-        public ResizePolicy VerticalPolicy { get; set; }
         public Rectangle ScissorArea { get; set; }
 
-        public Rectangle Area
-        {
-            get { return _area; }
-            set
-            {
-                var sizeChanged = _area.Width != value.Width || _area.Height != value.Height;
-                _area = value;
-
-                if(sizeChanged)
-                    OnSizeChanged();
-            }
-        }
+        public Rectangle Area { get; set; }
 
         public IGraphicComponent Parent { get; set; }
         public IEnumerable<IGraphicComponent> Children { get; } = new List<IGraphicComponent>();
@@ -83,20 +68,14 @@ namespace GameEngineTest.TestUtils
             throw new NotImplementedException();
         }
 
-        protected void OnSizeChanged()
-        {
-            SizeChanged?.Invoke(this, new GraphicComponentSizeChangedEventArgs(this, Area.Width, Area.Height));
-        }
 
 
         public void RaiseSizeChanged()
         {
-            OnSizeChanged();
         }
 
         public event EventHandler<VisibilityChangedEventArgs> VisibilityChanged = delegate { };
         private bool _isVisible = true;
-        private Rectangle _area;
 
         public bool IsVisible
         {

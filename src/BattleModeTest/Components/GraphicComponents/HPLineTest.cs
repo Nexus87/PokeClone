@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using BattleMode.Core.Components.GraphicComponents;
 using BattleMode.Shared;
 using FakeItEasy;
 using GameEngine.GUI.Graphics;
@@ -18,15 +17,15 @@ namespace BattleModeTest.Components.GraphicComponents
 
         private static HpLine CreateLine()
         {
-            var hpLineStub = A.Fake<IGraphicComponent>();
+            var hpLineStub = A.Fake<ILine>();
 
             return CreateLine(hpLineStub);
         }
 
-        private static HpLine CreateLine(IGraphicComponent hpLine)
+        private static HpLine CreateLine(ILine hpLine)
         {
-            var outerLine = A.Fake<IGraphicComponent>();
-            var innerLine = A.Fake<IGraphicComponent>();
+            var outerLine = A.Fake<ILine>();
+            var innerLine = A.Fake<ILine>();
             var line = new HpLine(outerLine, innerLine, hpLine, Color.White) {MaxHp = 100};
             line.Setup();
 
@@ -78,7 +77,7 @@ namespace BattleModeTest.Components.GraphicComponents
         [TestCaseSource(nameof(HpColorTestData))]
         public void Draw_SetNumberOfHp_HPLineHasExpectedColor(int hp, Color color)
         {
-            var hpLineStub = A.Fake<IGraphicComponent>();
+            var hpLineStub = A.Fake<ILine>();
             var line = CreateLine(hpLineStub);
             line.SetCoordinates(0, 0, 500, 500);
 
@@ -103,7 +102,7 @@ namespace BattleModeTest.Components.GraphicComponents
         [TestCase]
         public void Draw_ZeroMaxHP_HPLineHasZeroSize()
         {
-            var hpLine = A.Fake<IGraphicComponent>();
+            var hpLine = A.Fake<ILine>();
             hpLine.Height(-1.0f);
             hpLine.Width(1.0f);
             var line = CreateLine(hpLine);
