@@ -20,8 +20,18 @@ namespace GameEngine.GUI.Controlls
         private readonly List<ListCell> _listItems = new List<ListCell>();
         private ObservableCollection<T> _model = new ObservableCollection<T>(new List<T>());
         private int _lastSelectedIndex;
+        private int _cellHeight = 100;
 
-        public int CellHeight { get; set; } = 100;
+        public int CellHeight
+        {
+            get { return _cellHeight; }
+            set
+            {
+                _cellHeight = value;
+                Invalidate();
+            }
+        }
+
         public int DefaultListWidth { get; set; } = 300;
 
         public ListView()
@@ -82,7 +92,7 @@ namespace GameEngine.GUI.Controlls
         private void AddItems(int argsNewStartingIndex, IEnumerable<T> newItems)
         {
             var newCells = newItems.Select(CreateCell);
-            if(argsNewStartingIndex == _listItems.Count)
+            if (argsNewStartingIndex == _listItems.Count)
                 _listItems.AddRange(newCells);
             else
                 _listItems.InsertRange(argsNewStartingIndex, newCells);
@@ -100,7 +110,7 @@ namespace GameEngine.GUI.Controlls
 
         public override void HandleKeyInput(CommandKeys key)
         {
-            if(_listItems.Count == 0)
+            if (_listItems.Count == 0)
                 return;
 
             switch (key)

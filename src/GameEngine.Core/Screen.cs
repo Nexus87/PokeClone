@@ -11,6 +11,7 @@ namespace GameEngine.Core
         private readonly GraphicsDevice _device;
         private readonly RenderTarget2D _target;
         private Rectangle _display;
+        private readonly RasterizerState _rasterization = new RasterizerState {ScissorTestEnable = true};
 
         public void WindowsResizeHandler(float windowWidth, float windowHeight)
         {
@@ -51,6 +52,7 @@ namespace GameEngine.Core
             _device.SetRenderTarget(_target);
             _device.Clear(_screenConstants.BackgroundColor);
 
+//            batch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, rasterizerState: _rasterization);
             batch.Begin();
         }
 

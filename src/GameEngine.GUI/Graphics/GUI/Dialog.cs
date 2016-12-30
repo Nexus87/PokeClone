@@ -1,5 +1,7 @@
 ﻿using GameEngine.Globals;
+using GameEngine.GUI.Controlls;
 using GameEngine.GUI.Graphics.General;
+using GameEngine.GUI.Renderers;
 using GameEngine.GUI.Utils;
 using Microsoft.Xna.Framework;
 
@@ -10,8 +12,8 @@ namespace GameEngine.GUI.Graphics.GUI
         private readonly IGraphicComponent _border;
         private IGraphicComponent _widget;
 
-        public Dialog(ITexture2D borderTexture = null) :
-            this(new TextureBox(borderTexture))
+        public Dialog(IImageBoxRenderer renderer, ITexture2D borderTexture = null) :
+            this(new ImageBox(renderer){ Image = borderTexture})
         {}
         public Dialog(IGraphicComponent border)
         {

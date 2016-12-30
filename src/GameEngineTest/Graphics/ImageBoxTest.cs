@@ -1,6 +1,8 @@
 ﻿using FakeItEasy;
+using GameEngine.GUI.Controlls;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Graphics.General;
+using GameEngine.GUI.Renderers.PokemonClassicRenderer;
 using GameEngineTest.TestUtils;
 using Microsoft.Xna.Framework;
 using NUnit.Framework;
@@ -8,7 +10,7 @@ using NUnit.Framework;
 namespace GameEngineTest.Graphics
 {
     [TestFixture]
-    public class TextureBoxTest : IGraphicComponentTest
+    public class ImageBoxTest : IGraphicComponentTest
     {
 
         [TestCase]
@@ -22,9 +24,9 @@ namespace GameEngineTest.Graphics
             Assert.IsEmpty(spriteBatch.DrawnObjects);
         }
 
-        private static TextureBox CreateEmptyBox()
+        private static ImageBox CreateEmptyBox()
         {
-            return new TextureBox();
+            return new ImageBox(new ClassicImageBoxRenderer());
         }
 
         protected override IGraphicComponent CreateComponent()

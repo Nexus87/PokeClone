@@ -16,7 +16,7 @@ namespace BattleMode.Gui
     {
         private Grid _mainContainer;
 
-        private readonly TextureBox _icon;
+        private readonly ImageBox _icon;
         private readonly HpLine _hpLine;
         private readonly HpText _hpText;
         private readonly Label _nameBox;
@@ -24,7 +24,7 @@ namespace BattleMode.Gui
         private readonly Label _level;
         private readonly TextureProvider _textureProvider;
 
-        public PokemonMenuLine(TextureBox icon, HpLine hpLine, Label nameBox, HpText hpText, Label level,
+        public PokemonMenuLine(ImageBox icon, HpLine hpLine, Label nameBox, HpText hpText, Label level,
             Label hpLabel, TextureProvider textureProvider)
         {
             _mainContainer = new Grid();

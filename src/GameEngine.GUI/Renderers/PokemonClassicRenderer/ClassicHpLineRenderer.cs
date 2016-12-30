@@ -57,8 +57,8 @@ namespace GameEngine.GUI.Renderers.PokemonClassicRenderer
             var lineArea = new Rectangle(area.Left + cupWidth / 2, area.Top, area.Width - cupWidth, area.Height);
 
             RenderImage(batch, _pixel, lineArea, color);
-            RenderImage(batch, _cup, new Rectangle(leftCupPosition, cupSize));
-            RenderImage(batch, _cup, new Rectangle(rightCupPosition, cupSize));
+            RenderImage(batch, _cup, new Rectangle(leftCupPosition, cupSize), color);
+            RenderImage(batch, _cup, new Rectangle(rightCupPosition, cupSize), color);
         }
     }
 }

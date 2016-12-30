@@ -28,7 +28,6 @@ namespace GameEngine.Core
             config.CheckNull("config");
             Registry = new AutofacModuleRegistry();
             _factory = new GraphicResources(config, Content);
-
             new GraphicsDeviceManager(this);
 
             Window.AllowUserResizing = true;

@@ -75,7 +75,7 @@
     <Compile Include="Graphics\SplitterStub.cs" />
     <Compile Include="Graphics\SpriteSheetTextureTest.cs" />
     <Compile Include="Graphics\TestType.cs" />
-    <Compile Include="Graphics\TextureBoxTest.cs" />
+    <Compile Include="Graphics\ImageBoxTest.cs" />
     <Compile Include="InputComponentTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registry\AutofacGameTypeRegistryTest.cs" />

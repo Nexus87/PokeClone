@@ -1,6 +1,7 @@
 ﻿using System;
 using GameEngine;
 using GameEngine.Core;
+using GameEngine.GUI.Controlls;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Graphics.General;
 using GameEngine.TypeRegistry;
@@ -15,7 +16,7 @@ namespace BattleMode.Core.Components.GraphicComponents
         public event EventHandler OnAttackAnimationPlayed = delegate { };
 
         private readonly TextureProvider _provider;
-        private readonly TextureBox _box;
+        private readonly ImageBox _box;
         private bool _isPlayer;
 
         public bool IsPlayer { get { return _isPlayer; } set { _isPlayer = value; Invalidate(); } }
@@ -33,7 +34,7 @@ namespace BattleMode.Core.Components.GraphicComponents
             OnAttackAnimationPlayed(this, null);
         }
 
-        public PokemonSprite(TextureBox box, TextureProvider provider)
+        public PokemonSprite(ImageBox box, TextureProvider provider)
         {
             _box = box;
             _provider = provider;

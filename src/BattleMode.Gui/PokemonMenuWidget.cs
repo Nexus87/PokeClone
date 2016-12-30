@@ -2,12 +2,11 @@
 using System.Collections.ObjectModel;
 using Base;
 using BattleMode.Shared;
-using GameEngine.Core;
 using GameEngine.Globals;
 using GameEngine.GUI.Controlls;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Graphics.General;
-using GameEngine.GUI.Graphics.GUI;
+using GameEngine.GUI.Panels;
 using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
 
@@ -16,16 +15,18 @@ namespace BattleMode.Gui
     [GameType]
     public class PokemonMenuWidget : AbstractGraphicComponent, IMenuWidget<Pokemon>
     {
-        private readonly Dialog _dialog;
         private readonly ListView<Pokemon> _listView;
+        private readonly Panel _panel;
 
-        public PokemonMenuWidget(Client client, ListView<Pokemon> listView, Pixel pixel, ScreenConstants constants, IGameTypeRegistry registry)
+        public PokemonMenuWidget(Client client, ListView<Pokemon> listView, Panel panel, IGameTypeRegistry registry)
         {
-            pixel.Color = constants.BackgroundColor;
-            _dialog = new Dialog(pixel);
+            _panel = panel;
             _listView = listView;
 
+            _panel.SetContent(_listView);
+
             _listView.Model = new ObservableCollection<Pokemon>(client.Pokemons);
+            _listView.CellHeight = 75;
             _listView.ListCellFactory = value =>
             {
                 var component = registry.ResolveType<SelectableContainer<PokemonMenuLine>>();
@@ -35,7 +36,6 @@ namespace BattleMode.Gui
                 return component;
             };
 
-            _dialog.AddWidget(_listView);
         }
 
         public event EventHandler ExitRequested;
@@ -43,12 +43,12 @@ namespace BattleMode.Gui
 
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)
         {
-            _dialog.Draw(time, batch);
+            _panel.Draw(time, batch);
         }
 
         protected override void Update()
         {
-            _dialog.SetCoordinates(this);
+            _panel.SetCoordinates(this);
         }
 
         public override void HandleKeyInput(CommandKeys key)

@@ -1,5 +1,7 @@
-﻿using GameEngine.GUI.Graphics.General;
+﻿using GameEngine.GUI.Controlls;
+using GameEngine.GUI.Graphics.General;
 using GameEngine.GUI.Panels;
+using GameEngine.GUI.Renderers;
 using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
 using ValueType = GameEngine.GUI.Panels.ValueType;
@@ -14,9 +16,10 @@ namespace GameEngine.GUI.Graphics
         private T _content;
         private readonly Grid _grid;
 
-        public SelectableContainer(GraphicResources resources) : 
-            this(new TextureBox(resources.DefaultArrowTexture))
-        {}
+        public SelectableContainer(GraphicResources resources, IImageBoxRenderer renderer) :
+            this(new ImageBox(renderer) {Image = resources.DefaultArrowTexture})
+        {
+        }
 
 
         public SelectableContainer(IGraphicComponent arrowTextureBox, T component)
@@ -24,8 +27,8 @@ namespace GameEngine.GUI.Graphics
             _arrowBox = new ArrowDecorator(arrowTextureBox);
             _grid = new Grid();
             _grid.AddPercentRow();
-            _grid.AddColumn(new ColumnProperty{Type = ValueType.Auto});
-            _grid.AddColumn(new ColumnProperty{Type = ValueType.Percent, Share = 1});
+            _grid.AddColumn(new ColumnProperty {Type = ValueType.Auto});
+            _grid.AddColumn(new ColumnProperty {Type = ValueType.Percent, Share = 1});
             Content = component;
             IsSelectable = true;
         }
@@ -37,10 +40,7 @@ namespace GameEngine.GUI.Graphics
 
         public T Content
         {
-            get
-            {
-                return _content;
-            }
+            get { return _content; }
             set
             {
                 UnregisterHandler();
@@ -58,7 +58,11 @@ namespace GameEngine.GUI.Graphics
             }
         }
 
-        public bool Enabled { get { return IsSelectable; } set { IsSelectable = value; } }
+        public bool Enabled
+        {
+            get { return IsSelectable; }
+            set { IsSelectable = value; }
+        }
 
         public void Select()
         {

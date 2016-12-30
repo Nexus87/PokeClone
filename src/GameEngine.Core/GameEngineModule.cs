@@ -2,9 +2,9 @@
 using System.Reflection;
 using GameEngine.Core.GameEngineComponents;
 using GameEngine.Core.Registry;
-using GameEngine.GUI.Components;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Graphics.GUI;
+using GameEngine.GUI.Panels;
 using GameEngine.GUI.Renderers;
 using GameEngine.GUI.Renderers.PokemonClassicRenderer;
 using GameEngine.GUI.Utils;
@@ -28,11 +28,11 @@ namespace GameEngine.Core
         {
             registry.RegisterType(r => _resources.DefaultFont);
             registry.RegisterType(r => _resources);
-            registry.RegisterType(reg => new Dialog(_resources.DefaultBorderTexture));
+            registry.RegisterType(reg => new Dialog(reg.ResolveType<IImageBoxRenderer>(), _resources.DefaultBorderTexture));
             registry.RegisterTypeAs<DefaultTextSplitter, ITextSplitter>();
             registry.RegisterAsService<InputComponent, InputComponent>(reg => new InputComponent(_resources.Configuration));
             registry.RegisterAsService<ContentManager, ContentManager>(reg => _resources.ContentManager);
-            registry.RegisterType(r => new Pixel(_resources.Pixel));
+            registry.RegisterType(r => new Pixel(_resources.Pixel, r.ResolveType<IImageBoxRenderer>()));
             registry.RegisterType<IEngineInterface>(r => _engine);
             registry.ScanAssembly(Assembly.GetExecutingAssembly());
             registry.ScanAssembly(Assembly.GetAssembly(typeof(IGraphicComponent)));
@@ -42,6 +42,9 @@ namespace GameEngine.Core
             registry.RegisterAsService<ClassicLabelRenderer, ILabelRenderer>(r => new ClassicLabelRenderer(_resources.DefaultFont));
             registry.RegisterAsService<ClassicTextAreaRenderer, ITextAreaRenderer>(r => new ClassicTextAreaRenderer(_resources.DefaultFont));
             registry.RegisterAsService<ClassicLineRenderer, IHpLineRenderer>(r => new ClassicLineRenderer(_resources.Cup, _resources.Pixel, r.ResolveType<ScreenConstants>().BackgroundColor));
+            registry.RegisterAsService<ClassicImageBoxRenderer, IImageBoxRenderer>();
+            registry.RegisterAsService<ClassPanelRenderer, IPanelRenderer>(r => new ClassPanelRenderer(_resources.Pixel));
+            registry.RegisterType<Panel>(r => new Panel(r.ResolveType<IPanelRenderer>()) { BackgroundColor = r.ResolveType<ScreenConstants>().BackgroundColor});
         }
 
         public string ModuleName => "GameEngine";
