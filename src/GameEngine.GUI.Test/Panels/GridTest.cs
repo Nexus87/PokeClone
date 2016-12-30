@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using FakeItEasy;
+using GameEngine.Globals;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Panels;
 using GameEngine.GUI.Utils;
@@ -282,6 +283,64 @@ namespace GameEngine.GUI.Test.Panels
                 A.CallToSet(() => component.Area).MustNotHaveHappened();
             }
         }
+
+        [TestCase(0, 0, CommandKeys.Up, 0, 0)]
+        [TestCase(1, 0, CommandKeys.Up, 0, 0)]
+        [TestCase(0, 0, CommandKeys.Down, 1, 0)]
+        [TestCase(1, 0, CommandKeys.Down, 1, 0)]
+        [TestCase(0, 0, CommandKeys.Right, 0, 1)]
+        [TestCase(0, 1, CommandKeys.Right, 0, 1)]
+        [TestCase(0, 1, CommandKeys.Left, 0, 0)]
+        [TestCase(0, 0, CommandKeys.Left, 0, 0)]
+        public void HandleKeyInput_AllComponentsSelectable_ExpectedComponentIsSelected(
+            int startRow, int startColumn, CommandKeys key, int expectedRow, int expectedColumn)
+        {
+            var grid = CreateGrid(2, 2);
+            var components = FillGrid(grid, 2, 2);
+            components.LoopOverTable((i, j) => components[i, j].IsSelectable = true );
+
+            grid.SelectComponent(startRow, startColumn);
+
+            grid.HandleKeyInput(key);
+
+            components.LoopOverTable((row, column) =>
+            {
+                var isSelected = row == expectedRow && column == expectedColumn;
+                Assert.AreEqual(isSelected, components[row, column].IsSelected);
+            });
+        }
+
+        [TestCase(1, 0, CommandKeys.Up)]
+        [TestCase(0, 0, CommandKeys.Down)]
+        [TestCase(0, 0, CommandKeys.Right)]
+        [TestCase(0, 1, CommandKeys.Left)]
+        public void HandleKeyInput_NoComponentIsSelectable_SelectionIsNotChanged(
+            int startRow, int startColumn, CommandKeys key)
+        {
+            var grid = CreateGrid(2, 2);
+            var components = FillGrid(grid, 2, 2);
+            components.LoopOverTable((i, j) =>
+            {
+                var isSelectable = i == startRow && j == startColumn;
+                components[i, j].IsSelectable = isSelectable;
+            } );
+
+            grid.SelectComponent(startRow, startColumn);
+
+            grid.HandleKeyInput(key);
+
+            components.LoopOverTable((row, column) =>
+            {
+                var isSelected = row == startRow && column == startColumn;
+                Assert.AreEqual(isSelected, components[row, column].IsSelected);
+            });
+        }
+
+        private static Grid CreateGrid(int rows, int columns)
+        {
+            return CreateGrid(new Rectangle(100, 100, 200, 200), rows, columns);
+        }
+
         private static void VerifyComponentsHaveExpectedPosition(ITable<IGraphicComponent> components, ITable<Rectangle> expectedPositions)
         {
             Utils.Extensions.LoopOverTable(components.Rows, components.Columns, (i, j) =>

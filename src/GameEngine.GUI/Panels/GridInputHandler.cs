@@ -1,4 +1,6 @@
 using System;
+using System.Linq;
+using System.Collections.Generic;
 using GameEngine.Globals;
 using GameEngine.GUI.Utils;
 
@@ -34,16 +36,16 @@ namespace GameEngine.GUI.Panels
             switch (key)
             {
                 case CommandKeys.Up:
-                    _selectedRow = NextValidRow(r => r - 1);
+                    _selectedRow = PreviousValidComponent(_selectedRow, _cells.EnumerateRows(_selectedColumn), _cells.Rows);
                     break;
                 case CommandKeys.Down:
-                    _selectedRow = NextValidRow(r => r + 1);
+                    _selectedRow = NextValidComponent(_selectedRow, _cells.EnumerateRows(_selectedColumn), _cells.Rows);
                     break;
                 case CommandKeys.Left:
-                    _selectedColumn = NextValidColumn(r => r - 1);
+                    _selectedColumn = PreviousValidComponent(_selectedColumn, _cells.EnumerateColumns(_selectedRow), _cells.Rows);
                     break;
                 case CommandKeys.Right:
-                    _selectedColumn = NextValidColumn(r => r + 1);
+                    _selectedColumn = NextValidComponent(_selectedColumn, _cells.EnumerateColumns(_selectedRow), _cells.Rows);
                     break;
                 case CommandKeys.Select:
                 case CommandKeys.Back:
@@ -53,43 +55,27 @@ namespace GameEngine.GUI.Panels
             SelectComponent();
         }
 
-        private int NextValidRow(Func<int, int> func)
+        private int NextValidComponent(int lowerBound, IEnumerable<GridCell> cells, int listCount)
         {
-            var validRow = _selectedRow;
-            var nextRow = func(validRow);
-            while (IsRowInBound(nextRow) && !_cells[nextRow, _selectedColumn].IsSelectable)
-            {
-                nextRow = func(nextRow);
-            }
+            var firstIndex = Math.Min(lowerBound + 1, listCount);
+            var nextCell = cells
+                .Select((x, i) => new {Cell = x, Index = i})
+                .Skip(firstIndex)
+                .FirstOrDefault(x => x.Cell.IsSelectable);
 
-            if (IsRowInBound(nextRow))
-                validRow = nextRow;
-            return validRow;
+            return nextCell?.Index ?? lowerBound;
         }
 
-        private bool IsRowInBound(int nextRow)
+        private int PreviousValidComponent(int upperBound, IEnumerable<GridCell> cells, int listCount)
         {
-            return  0 <= nextRow && nextRow < _cells.Rows;
-        }
+            var lastIndex = Math.Min(upperBound, listCount);
+            var nextCell = cells
+                .Select((x, i) => new {Cell = x, Index = i})
+                .Take(lastIndex)
+                .Reverse()
+                .FirstOrDefault(x => x.Cell.IsSelectable);
 
-        private int NextValidColumn(Func<int, int> iterator)
-        {
-            var validColumn = _selectedColumn;
-            var nextColumn = iterator(validColumn);
-
-            while (IsColumnInBound(nextColumn) && !_cells[_selectedRow, nextColumn].IsSelectable)
-            {
-                nextColumn = iterator(nextColumn);
-            }
-            if (IsColumnInBound(nextColumn))
-                validColumn = nextColumn;
-
-            return validColumn;
-        }
-
-        private bool IsColumnInBound(int nextColumn)
-        {
-            return 0 <= nextColumn && nextColumn < _cells.Columns;
+            return nextCell?.Index ?? upperBound;
         }
 
         private void SelectComponent()

@@ -60,5 +60,10 @@ namespace GameEngine.GUI.Utils
             }
         }
 
+        public static void LoopOverTable<T>(this ITable<T> table, Action<int, int> action)
+        {
+            LoopOverTable(table.Rows, table.Columns, action);
+        }
+
     }
 }
