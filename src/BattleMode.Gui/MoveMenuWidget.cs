@@ -5,7 +5,6 @@ using GameEngine.Globals;
 using GameEngine.GUI.Controlls;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Graphics.General;
-using GameEngine.GUI.Graphics.GUI;
 using GameEngine.GUI.Panels;
 using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
@@ -27,10 +26,19 @@ namespace BattleMode.Gui
             _listView.Model = data.GetPokemon(data.PlayerId).Moves;
             _listView.ListCellFactory = value =>
             {
-                var button = registry.ResolveType<Button>();
-                button.IsSelectable = value != null;
-                button.Text = value?.Name ?? "--------";
-                return button;
+                if (value == null)
+                {
+                    var label = registry.ResolveType<Label>();
+                    label.Text = " --------";
+                    return label;
+                }
+                else
+                {
+                    var button = registry.ResolveType<Button>();
+                    button.Text = value.Name;
+                    return button;
+                }
+
             };
 
             _window.SetContent(_listView);

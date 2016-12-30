@@ -2,6 +2,7 @@
 using System.Reflection;
 using GameEngine.Core.GameEngineComponents;
 using GameEngine.Core.Registry;
+using GameEngine.GUI.Controlls;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Graphics.GUI;
 using GameEngine.GUI.Graphics.TableView;
@@ -41,6 +42,7 @@ namespace GameEngine.Core
             registry.ScanAssembly(Assembly.GetAssembly(typeof(IGameTypeRegistry)));
             registry.RegisterAsService<ClassicButtonRenderer, IButtonRenderer>(r => new ClassicButtonRenderer(_resources.DefaultArrowTexture, _resources.DefaultFont));
             registry.RegisterAsService<ClassicWindowRenderer, IWindowRenderer>(r => new ClassicWindowRenderer(_resources.DefaultBorderTexture));
+            registry.RegisterAsService<ClassicLabelRenderer, ILabelRenderer>(r => new ClassicLabelRenderer(_resources.DefaultFont));
         }
 
         public string ModuleName => "GameEngine";

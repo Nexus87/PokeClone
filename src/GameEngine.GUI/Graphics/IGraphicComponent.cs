@@ -76,7 +76,7 @@ namespace GameEngine.GUI.Graphics
         IGraphicComponent Parent { get; set; }
         IEnumerable<IGraphicComponent> Children { get; }
         bool IsSelected { get; set; }
-        bool IsSelectable { get; set; }
+        bool IsSelectable { get; }
     }
 
     public class ComponentSelectedEventArgs : EventArgs

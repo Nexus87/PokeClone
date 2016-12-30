@@ -27,6 +27,7 @@ namespace GameEngine.GUI.Graphics
             _grid.AddColumn(new ColumnProperty{Type = ValueType.Auto});
             _grid.AddColumn(new ColumnProperty{Type = ValueType.Percent, Share = 1});
             Content = component;
+            IsSelectable = true;
         }
 
         public SelectableContainer(IGraphicComponent arrowTextureBox) :
@@ -56,6 +57,8 @@ namespace GameEngine.GUI.Graphics
                 }
             }
         }
+
+        public bool Enabled { get { return IsSelectable; } set { IsSelectable = value; } }
 
         public void Select()
         {

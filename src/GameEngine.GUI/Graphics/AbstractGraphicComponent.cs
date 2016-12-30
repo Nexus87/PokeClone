@@ -166,7 +166,7 @@ namespace GameEngine.GUI.Graphics
             }
         }
 
-        public bool IsSelectable { get; set; }
+        public bool IsSelectable { get; protected set; }
 
         public virtual void HandleKeyInput(CommandKeys key)
         {

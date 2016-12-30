@@ -297,7 +297,7 @@ namespace GameEngine.GUI.Test.Panels
         {
             var grid = CreateGrid(2, 2);
             var components = FillGrid(grid, 2, 2);
-            components.LoopOverTable((i, j) => components[i, j].IsSelectable = true );
+            components.LoopOverTable((i, j) => A.CallTo(() => components[i, j].IsSelectable).Returns(true) );
 
             grid.SelectComponent(startRow, startColumn);
 
@@ -322,7 +322,7 @@ namespace GameEngine.GUI.Test.Panels
             components.LoopOverTable((i, j) =>
             {
                 var isSelectable = i == startRow && j == startColumn;
-                components[i, j].IsSelectable = isSelectable;
+                A.CallTo(() => components[i, j].IsSelectable).Returns(isSelectable);
             } );
 
             grid.SelectComponent(startRow, startColumn);

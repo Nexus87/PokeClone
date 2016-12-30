@@ -32,7 +32,6 @@ namespace BattleMode.Gui
                 component.Content = registry.ResolveType<PokemonMenuLine>();
                 component.Setup();
                 component.Content.SetPokemon(value);
-                component.IsSelectable = true;
                 return component;
             };
 

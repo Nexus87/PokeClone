@@ -16,6 +16,7 @@ namespace GameEngine.GUI.Controlls
         private string _text;
         private float _textHeight;
 
+        public bool Enabled{get { return IsSelectable; } set { IsSelectable = value; }}
         public string Text
         {
             get { return _text; }

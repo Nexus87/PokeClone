@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using FakeItEasy;
 using GameEngine.Globals;
@@ -65,6 +66,7 @@ namespace GameEngine.GUI.Test.Controls
             listView.Draw();
 
             var newComponent = listView.GetComponent(5) as FakeComponent;
+            Debug.Assert(newComponent != null, "newComponent != null");
             Assert.AreEqual(5, newComponent.Value);
         }
 
@@ -90,8 +92,8 @@ namespace GameEngine.GUI.Test.Controls
         {
             var model = CreateModel(2);
             var components = CreateComponentMockList(2);
-            components[1].IsSelectable = false;
-            components[0].IsSelectable = true;
+            A.CallTo(() => components[1].IsSelectable).Returns(false);
+            A.CallTo(() => components[0].IsSelectable).Returns(true);
             var listView = CreateListViewWithCellFactory(r => components[r]);
             listView.Model = model;
             listView.SelectCell(0);
@@ -111,8 +113,8 @@ namespace GameEngine.GUI.Test.Controls
         {
             var model = CreateModel(2);
             var components = CreateComponentMockList(2);
-            components[1].IsSelectable = true;
-            components[0].IsSelectable = true;
+            A.CallTo(() => components[0].IsSelectable).Returns(true);
+            A.CallTo(() => components[1].IsSelectable).Returns(true);
             var listView = CreateListViewWithCellFactory(r => components[r]);
 
             listView.Model = model;
