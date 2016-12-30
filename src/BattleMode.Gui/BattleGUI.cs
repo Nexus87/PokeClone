@@ -4,9 +4,8 @@ using Base;
 using BattleMode.Components.BattleState;
 using BattleMode.Shared;
 using GameEngine.Core;
+using GameEngine.GUI.Components;
 using GameEngine.GUI.Graphics;
-using GameEngine.GUI.Graphics.GUI;
-using GameEngine.GUI.Panels;
 using GameEngine.TypeRegistry;
 
 namespace BattleMode.Gui
@@ -15,19 +14,18 @@ namespace BattleMode.Gui
     public class BattleGui : IGUIService
     {
         private readonly MessageBox _messageBox;
-        private readonly Window _messageWindow;
 
         public BattleGui(ScreenConstants screen, GuiManager manager, 
-            Window messageWindow, MessageBox messageBox, IEngineInterface engineInterface,
+            MessageBox messageBox, IEngineInterface engineInterface,
             MainMenuWidget mainWidget,
             MoveMenuWidget moveWidget, PokemonMenuWidget pokemonWidget,
             ItemMenuWidget itemWidget, IBattleStateService battleState,
             BattleData data) :
-            this(screen, manager, messageWindow, messageBox, engineInterface, (IMenuWidget<MainMenuEntries>)mainWidget, moveWidget, pokemonWidget, itemWidget, battleState, data)
+            this(screen, manager, messageBox, engineInterface, (IMenuWidget<MainMenuEntries>)mainWidget, moveWidget, pokemonWidget, itemWidget, battleState, data)
         {}
         
             internal BattleGui(ScreenConstants screen, GuiManager manager, 
-            Window messageWindow, MessageBox messageBox, IEngineInterface engineInterface,
+            MessageBox messageBox, IEngineInterface engineInterface,
             IMenuWidget<MainMenuEntries> mainWidget,
             IMenuWidget<Move> moveWidget, IMenuWidget<Pokemon> pokemonWidget, 
             IMenuWidget<Item> itemWidget, IBattleStateService battleState, 
@@ -42,7 +40,6 @@ namespace BattleMode.Gui
             _pokemonWidget = pokemonWidget;
 
             _messageBox = messageBox;
-            _messageWindow = messageWindow;
 
             InitMessageBox(screen, manager);
 
@@ -144,15 +141,14 @@ namespace BattleMode.Gui
 
         private void InitMessageBox(ScreenConstants screen, GuiManager manager)
         {
-            _messageWindow.SetContent(_messageBox);
             const int xPosition = 0;
             var yPosition = 2.0f * screen.ScreenHeight / 3.0f;
             var width = screen.ScreenWidth;
             var height = screen.ScreenHeight - yPosition;
 
-            _messageWindow.SetCoordinates(xPosition, yPosition, width, height);
-            _messageWindow.IsVisible = true;
-            manager.AddWidget(_messageWindow);
+            _messageBox.SetCoordinates(xPosition, yPosition, width, height);
+            _messageBox.IsVisible = true;
+            manager.AddWidget(_messageBox);
 
             _messageBox.OnAllLineShowed += AllLineShowedHandler;
         }

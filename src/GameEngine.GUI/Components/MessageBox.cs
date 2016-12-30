@@ -1,34 +1,33 @@
 ﻿using System;
 using GameEngine.Globals;
 using GameEngine.GUI.Controlls;
+using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Graphics.General;
-using GameEngine.GUI.Renderers;
-using GameEngine.GUI.Utils;
+using GameEngine.GUI.Panels;
 using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
 
-namespace GameEngine.GUI.Graphics.GUI
+namespace GameEngine.GUI.Components
 {
     [GameType]
     public class MessageBox : AbstractGraphicComponent
     {
-        private readonly ITextGraphicContainer _textBox;
+        private readonly Window _window;
+        private readonly TextArea _textArea;
 
-        public MessageBox(ITextAreaRenderer renderer, ITextSplitter splitter)
-            : this(new TextArea(renderer, splitter))
+        public MessageBox(Window window, TextArea textArea)
         {
-        }
+            _window = window;
+            _textArea = textArea;
 
-        internal MessageBox(ITextGraphicContainer textBox)
-        {
-            _textBox = textBox;
+            _window.SetContent(_textArea);
         }
 
         public event EventHandler OnAllLineShowed = delegate { };
 
         public void DisplayText(string text)
         {
-            _textBox.Text = text;
+            _textArea.Text = text;
         }
 
         public override void HandleKeyInput(CommandKeys key)
@@ -36,8 +35,8 @@ namespace GameEngine.GUI.Graphics.GUI
             if (key != CommandKeys.Select)
                 return;
 
-            if (_textBox.HasNext())
-                _textBox.NextLine();
+            if (_textArea.HasNext())
+                _textArea.HandleKeyInput(key);
             else
                 OnAllLineShowed(this, null);
 
@@ -45,22 +44,22 @@ namespace GameEngine.GUI.Graphics.GUI
 
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)
         {
-            _textBox.Draw(time, batch);
+            _window.Draw(time, batch);
         }
 
         public void ResetText()
         {
-            _textBox.Text = "";
+            _textArea.Text = "";
         }
 
         protected override void Update()
         {
-            _textBox.SetCoordinates(this);
+            _window.SetCoordinates(this);
         }
 
         public override void Setup()
         {
-            _textBox.Setup();
+            _window.Setup();
         }
     }
 }

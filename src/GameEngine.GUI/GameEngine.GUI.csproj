@@ -59,6 +59,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Components\MessageBox.cs" />
     <Compile Include="Configuration\Configuration.cs" />
     <Compile Include="Configuration\TextureConfiguration.cs" />
     <Compile Include="Controlls\Button.cs" />
@@ -78,7 +79,6 @@
     <Compile Include="Graphics\GraphicComponentSizeChangedEventArgs.cs" />
     <Compile Include="Graphics\GraphicResources.cs" />
     <Compile Include="Graphics\GUI\Dialog.cs" />
-    <Compile Include="Graphics\GUI\MessageBox.cs" />
     <Compile Include="Graphics\IAnimation.cs" />
     <Compile Include="Graphics\IGraphicalText.cs" />
     <Compile Include="Graphics\IGraphicComponent.cs" />

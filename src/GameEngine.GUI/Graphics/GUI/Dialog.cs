@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework;
 
 namespace GameEngine.GUI.Graphics.GUI
 {
-    public class Dialog : AbstractGraphicComponent, IInputHandler, IGraphicComponent
+    public class Dialog : AbstractGraphicComponent
     {
         private readonly IGraphicComponent _border;
         private IGraphicComponent _widget;

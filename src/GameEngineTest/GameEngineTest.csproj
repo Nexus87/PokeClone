@@ -69,7 +69,6 @@
     <Compile Include="Graphics\AbstractGraphicComponentTest.cs" />
     <Compile Include="Graphics\GraphicalTextStub.cs" />
     <Compile Include="Graphics\GUI\GUIManagerTest.cs" />
-    <Compile Include="Graphics\GUI\MessageBoxTest.cs" />
     <Compile Include="Graphics\IGraphicComponentTest.cs" />
     <Compile Include="Graphics\LineTest.cs" />
     <Compile Include="Graphics\NullGraphicObjectTest.cs" />
