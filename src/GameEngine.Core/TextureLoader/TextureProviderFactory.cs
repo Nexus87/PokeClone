@@ -14,7 +14,7 @@ namespace GameEngine.Core.TextureLoader
 
         public static ITextureProvider GetProviderFromConfiguration(Texture texture, ContentManager contentManager, IGameTypeRegistry registry)
         {
-            return new SingleTextureProvider(texture, registry.ResolveType<IImageBoxRenderer>(), contentManager);
+            return new SingleTextureProvider(texture, registry.ResolveType<ImageBoxRenderer>(), contentManager);
         }
     }
 }

@@ -33,19 +33,20 @@
     <OutputPath>bin\AnyCPU\Release</OutputPath>
     <IntermediateOutputPath>obj\AnyCPU\Release</IntermediateOutputPath>
     <DocumentationFile>bin\AnyCPU\Release\PokemonRulesTest.xml</DocumentationFile>
-    <DefineConstants></DefineConstants>
+    <DefineConstants>
+    </DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FakeItEasy, Version=2.3.2.0, Culture=neutral, PublicKeyToken=eff28e2146d5fd2c">
+      <HintPath>..\packages\FakeItEasy.2.3.2\lib\net40\FakeItEasy.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Castle.Core">
       <HintPath>..\packages\Castle.Core.3.3.3\lib\net45\Castle.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="FakeItEasy">
-      <HintPath>..\packages\FakeItEasy.2.3.1\lib\net40\FakeItEasy.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.3.5.0\lib\net45\nunit.framework.dll</HintPath>

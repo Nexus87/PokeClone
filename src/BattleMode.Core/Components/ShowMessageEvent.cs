@@ -1,5 +1,4 @@
 ﻿using System;
-using BattleMode.Core.Components.GraphicComponents;
 using BattleMode.Gui;
 using GameEngine.Core.GameEngineComponents;
 

@@ -3,9 +3,9 @@ using GameEngine.GUI.General;
 
 namespace GameEngine.GUI.Renderers.PokemonClassicRenderer
 {
-    public class ClassicImageBoxRenderer : AbstractRenderer<ImageBox>, IImageBoxRenderer
+    public class ClassicImageBoxRenderer : ImageBoxRenderer
     {
-        public override void Render(ISpriteBatch spriteBatch, ImageBox component)
+        protected override void RenderComponent(ISpriteBatch spriteBatch, ImageBox component)
         {
             if (component.Image == null)
                 return;

@@ -12,12 +12,12 @@ namespace GameEngine.Core.TextureLoader
     public class SingleTextureProvider : ITextureProvider
     {
         private readonly Texture _texture;
-        private readonly IImageBoxRenderer _renderer;
+        private readonly ImageBoxRenderer _renderer;
         private readonly ContentManager _contentManager;
         private ITexture2D _texture2D;
         private readonly List<string> _providedNames = new List<string>();
 
-        public SingleTextureProvider(Texture texture, IImageBoxRenderer renderer, ContentManager contentManager)
+        public SingleTextureProvider(Texture texture, ImageBoxRenderer renderer, ContentManager contentManager)
         {
             _texture = texture;
             _renderer = renderer;

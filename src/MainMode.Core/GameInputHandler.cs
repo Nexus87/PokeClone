@@ -1,7 +1,6 @@
 ﻿using System;
 using GameEngine.Core;
 using GameEngine.Globals;
-using GameEngine.GUI;
 using GameEngine.TypeRegistry;
 
 namespace MainMode.Core

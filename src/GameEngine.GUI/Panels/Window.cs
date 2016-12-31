@@ -1,6 +1,5 @@
 ﻿using GameEngine.Globals;
 using GameEngine.GUI.General;
-using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Renderers;
 using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
@@ -10,10 +9,10 @@ namespace GameEngine.GUI.Panels
     [GameType]
     public class Window : AbstractPanel
     {
-        private readonly IWindowRenderer _renderer;
+        private readonly WindowRenderer _renderer;
         private IGraphicComponent _content;
 
-        public Window(IWindowRenderer renderer)
+        public Window(WindowRenderer renderer)
         {
             _renderer = renderer;
         }

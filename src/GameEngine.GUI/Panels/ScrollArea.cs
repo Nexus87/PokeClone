@@ -9,11 +9,11 @@ namespace GameEngine.GUI.Panels
     [GameType]
     public class ScrollArea : AbstractPanel
     {
-        private readonly IScrollAreaRenderer _renderer;
+        private readonly ScrollAreaRenderer _renderer;
         private IGraphicComponent _content;
         public bool Autoscrolling { get; set; }
 
-        public ScrollArea(IScrollAreaRenderer renderer)
+        public ScrollArea(ScrollAreaRenderer renderer)
         {
             _renderer = renderer;
         }

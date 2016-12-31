@@ -1,7 +1,6 @@
 ﻿using System;
 using GameEngine.Globals;
 using GameEngine.GUI;
-using GameEngine.GUI.Graphics;
 using Microsoft.Xna.Framework;
 using NUnit.Framework;
 

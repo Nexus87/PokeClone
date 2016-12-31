@@ -1,10 +1,8 @@
 ﻿using System;
-using GameEngine;
 using GameEngine.Core;
 using GameEngine.GUI;
 using GameEngine.GUI.Controlls;
 using GameEngine.GUI.General;
-using GameEngine.GUI.Graphics;
 using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
 

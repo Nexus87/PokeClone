@@ -1,6 +1,5 @@
 ﻿using Base.Data;
 using BattleMode.Components.BattleState;
-using BattleMode.Core;
 using BattleMode.Core.Components;
 using BattleMode.Core.Components.GraphicComponents;
 using BattleMode.Gui;

@@ -3,7 +3,6 @@ using Base.Data;
 using BattleMode.Components.BattleState;
 using BattleMode.Shared;
 using GameEngine.GUI;
-using GameEngine.GUI.Graphics;
 
 namespace BattleMode.Core.Components.GraphicComponents
 {

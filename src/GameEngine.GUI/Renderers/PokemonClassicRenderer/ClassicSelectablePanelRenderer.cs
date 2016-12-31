@@ -1,12 +1,11 @@
 ﻿using System;
 using GameEngine.GUI.General;
-using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Panels;
 using Microsoft.Xna.Framework;
 
 namespace GameEngine.GUI.Renderers.PokemonClassicRenderer
 {
-    public class ClassicSelectablePanelRenderer : AbstractRenderer<SelectablePanel>, ISelectablePanelRenderer
+    public class ClassicSelectablePanelRenderer : SelectablePanelRenderer
     {
         private readonly ITexture2D _arrow;
         private const int DefaultArrowSize = 32;
@@ -15,7 +14,7 @@ namespace GameEngine.GUI.Renderers.PokemonClassicRenderer
             _arrow = arrow;
         }
 
-        public override void Render(ISpriteBatch spriteBatch, SelectablePanel component)
+        protected override void RenderComponent(ISpriteBatch spriteBatch, SelectablePanel component)
         {
             if(!component.IsSelected)
                 return;
@@ -31,7 +30,7 @@ namespace GameEngine.GUI.Renderers.PokemonClassicRenderer
             return new Point(componentArea.X, componentArea.Y + (remainingHeight / 2));
         }
 
-        public Rectangle GetContentArea(SelectablePanel selectablePanel)
+        public override Rectangle GetContentArea(SelectablePanel selectablePanel)
         {
             var panelArea = selectablePanel.Area;
             var arrowWidth = ArrowSize(panelArea);

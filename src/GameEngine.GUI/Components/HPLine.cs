@@ -10,14 +10,14 @@ namespace GameEngine.GUI.Components
     [GameType]
     public class HpLine : AbstractGraphicComponent
     {
-        private readonly IHpLineRenderer _renderer;
+        private readonly HpLineRenderer _renderer;
 
 
         private int _currentHp;
         private int _maxHp;
 
 
-        public HpLine(IHpLineRenderer renderer)
+        public HpLine(HpLineRenderer renderer)
         {
             _renderer = renderer;
         }

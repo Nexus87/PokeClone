@@ -9,7 +9,7 @@ namespace GameEngine.GUI.Controlls
     [GameType]
     public class ImageBox : AbstractGraphicComponent, IImageBox
     {
-        private readonly IImageBoxRenderer _renderer;
+        private readonly ImageBoxRenderer _renderer;
         private ITexture2D _image;
 
         public ITexture2D Image
@@ -23,7 +23,7 @@ namespace GameEngine.GUI.Controlls
         }
 
 
-        public ImageBox(IImageBoxRenderer renderer)
+        public ImageBox(ImageBoxRenderer renderer)
         {
             _renderer = renderer;
         }

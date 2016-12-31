@@ -1,5 +1,4 @@
-﻿using GameEngine.GUI.Graphics;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 
 namespace GameEngine.GUI
 {

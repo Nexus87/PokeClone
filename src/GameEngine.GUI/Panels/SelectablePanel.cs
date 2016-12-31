@@ -1,6 +1,5 @@
 ﻿using GameEngine.Globals;
 using GameEngine.GUI.General;
-using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Renderers;
 using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
@@ -10,11 +9,11 @@ namespace GameEngine.GUI.Panels
     [GameType]
     public class SelectablePanel : AbstractPanel
     {
-        private readonly ISelectablePanelRenderer _renderer;
+        private readonly SelectablePanelRenderer _renderer;
         private IGraphicComponent _content;
 
 
-        public SelectablePanel(ISelectablePanelRenderer renderer)
+        public SelectablePanel(SelectablePanelRenderer renderer)
         {
             _renderer = renderer;
             IsSelectable = true;

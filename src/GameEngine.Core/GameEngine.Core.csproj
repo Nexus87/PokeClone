@@ -109,9 +109,7 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Registry" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup />
   <ItemGroup />
   <ItemGroup />

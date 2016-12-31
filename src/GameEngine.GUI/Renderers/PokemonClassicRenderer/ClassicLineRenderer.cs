@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 
 namespace GameEngine.GUI.Renderers.PokemonClassicRenderer
 {
-    public class ClassicLineRenderer : AbstractRenderer<HpLine>, IHpLineRenderer
+    public class ClassicLineRenderer : HpLineRenderer
     {
         private readonly ITexture2D _cup;
         private readonly ITexture2D _pixel;
@@ -18,7 +18,7 @@ namespace GameEngine.GUI.Renderers.PokemonClassicRenderer
             _backgroundColor = backgroundColor;
         }
 
-        public override void Render(ISpriteBatch spriteBatch, HpLine component)
+        protected override void RenderComponent(ISpriteBatch spriteBatch, HpLine component)
         {
             var scale = component.MaxHp == 0 ? 0 : component.Current / ((float)component.MaxHp);
 

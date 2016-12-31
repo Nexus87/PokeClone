@@ -1,5 +1,4 @@
-﻿using GameEngine;
-using GameEngine.Core;
+﻿using GameEngine.Core;
 using GameEngine.Core.TextureLoader;
 using GameEngine.TypeRegistry;
 using MainMode.Core;

@@ -3,7 +3,7 @@ using GameEngine.GUI.General;
 
 namespace GameEngine.GUI.Renderers
 {
-    public class ClassicLabelRenderer : AbstractRenderer<Label>, ILabelRenderer
+    public class ClassicLabelRenderer : LabelRenderer
     {
         private readonly ISpriteFont _font;
 
@@ -12,18 +12,18 @@ namespace GameEngine.GUI.Renderers
             _font = font;
         }
 
-        public override void Render(ISpriteBatch spriteBatch, Label label)
+        protected override void RenderComponent(ISpriteBatch spriteBatch, Label label)
         {
             RenderText(spriteBatch, _font, label.Text, label.Area, label.TextSize);
         }
 
-        public float GetPreferedWidth(Label label)
+        public override float GetPreferedWidth(Label label)
         {
             var scale = label.TextSize / _font.MeasureString(" ").Y;
             return scale * _font.MeasureString(label.Text).X;
         }
 
-        public float GetPreferedHeight(Label label)
+        public override float GetPreferedHeight(Label label)
         {
             return label.TextSize;
         }

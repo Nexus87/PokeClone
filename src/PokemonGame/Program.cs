@@ -2,6 +2,7 @@
 using BattleMode.Core;
 using GameEngine.Core;
 using GameEngine.Globals;
+using GameEngine.GUI;
 using GameEngine.GUI.Configuration;
 using MainMode.Core;
 
@@ -28,6 +29,7 @@ namespace PokemonGame
             engine.Registry.RegisterModule(new PokemonGameModule());
             engine.Registry.RegisterModule(new BattleModule(engine));
             engine.Registry.RegisterModule(new MainModule(CreateDummyMap()));
+            engine.SetSkin(new ClassicSkin());
             engine.SetStartModule(startModule);
             engine.Run();
         }

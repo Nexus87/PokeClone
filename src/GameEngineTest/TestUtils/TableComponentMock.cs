@@ -1,6 +1,4 @@
-﻿using GameEngine.GUI.Graphics;
-
-namespace GameEngineTest.TestUtils
+﻿namespace GameEngineTest.TestUtils
 {
     public class TableComponentMock<T> : TextGraphicComponentMock
     {

@@ -1,7 +1,6 @@
 ﻿using System;
 using GameEngine.Globals;
 using GameEngine.GUI.General;
-using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Renderers;
 using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
@@ -11,7 +10,7 @@ namespace GameEngine.GUI.Controlls
     [GameType]
     public sealed class Button : AbstractGraphicComponent
     {
-        private readonly IButtonRenderer _buttonRenderer;
+        private readonly ButtonRenderer _buttonRenderer;
         private string _text;
         private float _textHeight;
 
@@ -39,7 +38,7 @@ namespace GameEngine.GUI.Controlls
             }
         }
 
-        public Button(IButtonRenderer buttonRenderer)
+        public Button(ButtonRenderer buttonRenderer)
         {
             TextHeight = 32;
             _buttonRenderer = buttonRenderer;

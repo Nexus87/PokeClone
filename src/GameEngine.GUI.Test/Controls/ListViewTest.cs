@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
 using FakeItEasy;
 using GameEngine.Globals;
 using GameEngine.GUI.Controlls;
-using GameEngine.GUI.Graphics;
 using NUnit.Framework;
 
 namespace GameEngine.GUI.Test.Controls
@@ -66,7 +64,6 @@ namespace GameEngine.GUI.Test.Controls
             listView.Draw();
 
             var newComponent = listView.GetComponent(5) as FakeComponent;
-            Debug.Assert(newComponent != null, "newComponent != null");
             Assert.AreEqual(5, newComponent.Value);
         }
 

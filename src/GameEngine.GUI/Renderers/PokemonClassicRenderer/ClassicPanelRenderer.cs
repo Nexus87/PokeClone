@@ -3,16 +3,16 @@ using GameEngine.GUI.Panels;
 
 namespace GameEngine.GUI.Renderers.PokemonClassicRenderer
 {
-    public class ClassPanelRenderer : AbstractRenderer<Panel>, IPanelRenderer
+    public class ClassicPanelRenderer : PanelRenderer
     {
         private readonly ITexture2D _pixel;
 
-        public ClassPanelRenderer(ITexture2D pixel)
+        public ClassicPanelRenderer(ITexture2D pixel)
         {
             _pixel = pixel;
         }
 
-        public override void Render(ISpriteBatch spriteBatch, Panel component)
+        protected override void RenderComponent(ISpriteBatch spriteBatch, Panel component)
         {
             RenderImage(spriteBatch, _pixel, component.Area, component.BackgroundColor);
         }

@@ -7,7 +7,6 @@ using GameEngine.GUI.Components;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Panels;
 using GameEngine.GUI.Renderers;
-using GameEngine.GUI.Renderers.PokemonClassicRenderer;
 using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework.Content;
 
@@ -35,16 +34,9 @@ namespace GameEngine.Core
             registry.ScanAssembly(Assembly.GetExecutingAssembly());
             registry.ScanAssembly(Assembly.GetAssembly(typeof(IGraphicComponent)));
             registry.ScanAssembly(Assembly.GetAssembly(typeof(IGameTypeRegistry)));
-            registry.RegisterAsService<ClassicButtonRenderer, IButtonRenderer>(r => new ClassicButtonRenderer(_resources.DefaultArrowTexture, _resources.DefaultFont));
-            registry.RegisterAsService<ClassicWindowRenderer, IWindowRenderer>(r => new ClassicWindowRenderer(_resources.DefaultBorderTexture));
-            registry.RegisterAsService<ClassicLabelRenderer, ILabelRenderer>(r => new ClassicLabelRenderer(_resources.DefaultFont));
-            registry.RegisterAsService<ClassicTextAreaRenderer, ITextAreaRenderer>(r => new ClassicTextAreaRenderer(_resources.DefaultFont));
-            registry.RegisterAsService<ClassicLineRenderer, IHpLineRenderer>(r => new ClassicLineRenderer(_resources.Cup, _resources.Pixel, r.ResolveType<ScreenConstants>().BackgroundColor));
-            registry.RegisterAsService<ClassicImageBoxRenderer, IImageBoxRenderer>();
-            registry.RegisterAsService<ClassPanelRenderer, IPanelRenderer>(r => new ClassPanelRenderer(_resources.Pixel));
-            registry.RegisterAsService<ClassicSelectablePanelRenderer, ISelectablePanelRenderer>(r => new ClassicSelectablePanelRenderer(_resources.DefaultArrowTexture));
-            registry.RegisterType<Panel>(r => new Panel(r.ResolveType<IPanelRenderer>()) { BackgroundColor = r.ResolveType<ScreenConstants>().BackgroundColor});
-            registry.RegisterAsService<ClassicScrollAreaRenderer, IScrollAreaRenderer>();
+
+      
+            registry.RegisterType<Panel>(r => new Panel(r.ResolveType<PanelRenderer>()) { BackgroundColor = r.ResolveType<ScreenConstants>().BackgroundColor});
 
         }
 

@@ -1,19 +1,19 @@
 using GameEngine.GUI.Controlls;
 using GameEngine.GUI.General;
-using GameEngine.GUI.Graphics;
 
 namespace GameEngine.GUI.Renderers.PokemonClassicRenderer
 {
-    public class ClassicTextAreaRenderer : AbstractRenderer<TextArea>, ITextAreaRenderer
+    public class ClassicTextAreaRenderer : TextAreaRenderer
     {
         private readonly ISpriteFont _font;
 
         public ClassicTextAreaRenderer(ISpriteFont font)
         {
             _font = font;
+            LineSpacing = 10;
         }
 
-        public override void Render(ISpriteBatch spriteBatch, TextArea component)
+        protected override void RenderComponent(ISpriteBatch spriteBatch, TextArea component)
         {
             foreach (var line in component.Lines)
             {
@@ -21,14 +21,12 @@ namespace GameEngine.GUI.Renderers.PokemonClassicRenderer
             }
         }
 
-        public int CharsPerLine(TextArea textArea)
+        public override int CharsPerLine(TextArea textArea)
         {
             return textArea.Area.Width / textArea.TextHeight;
         }
 
-        public int LineSpacing { get; } = 10;
-
-        public int GetLineHeight(TextArea textArea)
+        public override int GetLineHeight(TextArea textArea)
         {
             return textArea.TextHeight + LineSpacing;
         }

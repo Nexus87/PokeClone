@@ -3,7 +3,6 @@ using System.Linq;
 using FakeItEasy;
 using GameEngine.GUI.Components;
 using GameEngine.GUI.Controlls;
-using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Renderers.PokemonClassicRenderer;
 using GameEngineTest.Graphics;
 using GameEngineTest.TestUtils;

@@ -3,23 +3,22 @@ using GameEngine.GUI.Panels;
 
 namespace GameEngine.GUI.Renderers.PokemonClassicRenderer
 {
-    public class ClassicWindowRenderer : AbstractRenderer<Window>, IWindowRenderer
+    public class ClassicWindowRenderer : WindowRenderer
     {
         private readonly ITexture2D _borderTexture;
 
         public ClassicWindowRenderer(ITexture2D borderTexture)
         {
             _borderTexture = borderTexture;
+            LeftMargin = 50;
+            RightMargin = 10;
+            TopMargin = 100;
+            BottomMargin = 75;
         }
 
-        public override void Render(ISpriteBatch spriteBatch, Window component)
+        protected override void RenderComponent(ISpriteBatch spriteBatch, Window component)
         {
             RenderImage(spriteBatch, _borderTexture, component.Area);
         }
-
-        public int LeftMargin { get; } = 50;
-        public int RightMargin { get; } = 10;
-        public int TopMargin { get; } = 100;
-        public int BottomMargin { get; } = 75;
     }
 }

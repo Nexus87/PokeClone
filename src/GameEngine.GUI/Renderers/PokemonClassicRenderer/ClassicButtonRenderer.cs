@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 
 namespace GameEngine.GUI.Renderers.PokemonClassicRenderer
 {
-    public class ClassicButtonRenderer : AbstractRenderer<Button>, IButtonRenderer
+    public class ClassicButtonRenderer : ButtonRenderer
     {
         private readonly ITexture2D _arrow;
         private readonly ISpriteFont _font;
@@ -15,7 +15,7 @@ namespace GameEngine.GUI.Renderers.PokemonClassicRenderer
             _font = font;
         }
 
-        public override void Render(ISpriteBatch spriteBatch, Button component)
+        protected override void RenderComponent(ISpriteBatch spriteBatch, Button component)
         {
             if (component.IsSelected)
                 DrawArrow(spriteBatch, component.Area, component);
@@ -38,14 +38,14 @@ namespace GameEngine.GUI.Renderers.PokemonClassicRenderer
             RenderImage(spriteBatch, _arrow, position);
         }
 
-        public float GetPreferedWidth(Button button)
+        public override float GetPreferedWidth(Button button)
         {
             var scale = button.TextHeight / _font.MeasureString(" ").Y;
             // Text + Arrow
             return scale * _font.MeasureString(button.Text).X + button.TextHeight;
         }
 
-        public float GetPreferedHeight(Button button)
+        public override float GetPreferedHeight(Button button)
         {
             return button.TextHeight;
         }

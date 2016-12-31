@@ -60,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbstractGraphicComponent.cs" />
+    <Compile Include="ClassicSkin.cs" />
     <Compile Include="ComponentSelectedEventArgs.cs" />
     <Compile Include="Components\DefaultTextSplitter.cs" />
     <Compile Include="Components\HPLine.cs" />
@@ -79,6 +80,7 @@
     <Compile Include="Controlls\ListView.cs" />
     <Compile Include="Controlls\TextArea.cs" />
     <Compile Include="Controlls\TextAreaLine.cs" />
+    <Compile Include="Debug\DebugRectangle.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="General\ISpriteBatch.cs" />
     <Compile Include="General\ISpriteFont.cs" />
@@ -109,25 +111,25 @@
     <Compile Include="Panels\Window.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Renderers\AbstractRenderer.cs" />
-    <Compile Include="Renderers\ClassicLabelRenderer.cs" />
-    <Compile Include="Renderers\IButtonRenderer.cs" />
-    <Compile Include="Renderers\IHpLineRenderer.cs" />
-    <Compile Include="Renderers\IImageBoxRenderer.cs" />
-    <Compile Include="Renderers\ILabelRenderer.cs" />
-    <Compile Include="Renderers\IPanelRenderer.cs" />
-    <Compile Include="Renderers\IRenderer.cs" />
-    <Compile Include="Renderers\IScrollAreaRenderer.cs" />
-    <Compile Include="Renderers\ISelectablePanelRenderer.cs" />
-    <Compile Include="Renderers\ITextAreaRenderer.cs" />
-    <Compile Include="Renderers\IWindowRenderer.cs" />
+    <Compile Include="Renderers\ButtonRenderer.cs" />
+    <Compile Include="Renderers\HpLineRenderer.cs" />
+    <Compile Include="Renderers\ImageBoxRenderer.cs" />
+    <Compile Include="Renderers\LabelRenderer.cs" />
+    <Compile Include="Renderers\PanelRenderer.cs" />
+    <Compile Include="Renderers\ScrollAreaRenderer.cs" />
+    <Compile Include="Renderers\SelectablePanelRenderer.cs" />
+    <Compile Include="Renderers\TextAreaRenderer.cs" />
+    <Compile Include="Renderers\WindowRenderer.cs" />
     <Compile Include="Renderers\NullRenderer.cs" />
     <Compile Include="Renderers\PokemonClassicRenderer\ClassicButtonRenderer.cs" />
     <Compile Include="Renderers\PokemonClassicRenderer\ClassicImageBoxRenderer.cs" />
+    <Compile Include="Renderers\PokemonClassicRenderer\ClassicLabelRenderer.cs" />
+    <Compile Include="Renderers\PokemonClassicRenderer\ClassicScrollAreaRenderer.cs" />
     <Compile Include="Renderers\PokemonClassicRenderer\ClassicSelectablePanelRenderer.cs" />
     <Compile Include="Renderers\PokemonClassicRenderer\ClassicTextAreaRenderer.cs" />
     <Compile Include="Renderers\PokemonClassicRenderer\ClassicWindowRenderer.cs" />
     <Compile Include="Renderers\PokemonClassicRenderer\ClassicLineRenderer.cs" />
-    <Compile Include="Renderers\PokemonClassicRenderer\ClassPanelRenderer.cs" />
+    <Compile Include="Renderers\PokemonClassicRenderer\ClassicPanelRenderer.cs" />
     <Compile Include="ResizeBehavoir.cs" />
     <Compile Include="Scene.cs" />
     <Compile Include="VisibilityChangedEventArgs.cs" />
@@ -145,7 +147,6 @@
       <Name>GameEngine.TypeRegistry</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup />
   <ItemGroup />
   <ItemGroup />

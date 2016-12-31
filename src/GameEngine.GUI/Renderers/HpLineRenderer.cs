@@ -2,7 +2,7 @@
 
 namespace GameEngine.GUI.Renderers
 {
-    public interface IHpLineRenderer : IRenderer<HpLine>
+    public abstract class HpLineRenderer : AbstractRenderer<HpLine>
     {
 
     }

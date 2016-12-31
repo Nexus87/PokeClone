@@ -13,6 +13,7 @@ namespace GameEngine.Core
 {
     public class PokeEngine : Game, IEngineInterface, IGameComponentManager
     {
+        private readonly Configuration _config;
         public IModuleRegistry Registry;
         private readonly GraphicResources _factory;
         private GuiManager GuiManager { get; set; }
@@ -23,8 +24,10 @@ namespace GameEngine.Core
 
         private string _startModule;
         private IInputHandler _inputHandler;
+        private ISkin _skin;
 
         public PokeEngine(Configuration config)         {
+            _config = config;
             config.CheckNull("config");
             Registry = new AutofacModuleRegistry();
             _factory = new GraphicResources(config, Content);
@@ -100,12 +103,14 @@ namespace GameEngine.Core
         protected override void Initialize()
         {
             base.Initialize();
+            _skin.RegisterRenderers(Registry.TypeRegistry);
             _screen = new Screen(Registry.TypeRegistry.ResolveType<ScreenConstants>(), GraphicsDevice);
             GuiManager = Registry.TypeRegistry.ResolveType<GuiManager>();
             _input = Registry.TypeRegistry.ResolveType<InputComponent>();
 
             Window.ClientSizeChanged += delegate { _screen.WindowsResizeHandler(Window.ClientBounds.Width, Window.ClientBounds.Height); };
             _screen.WindowsResizeHandler(Window.ClientBounds.Width, Window.ClientBounds.Height);
+            _skin.LoadContent(Content, this, _config);
 
             Registry.StartModule("GameEngine", this);
             Registry.StartModule(_startModule, this);
@@ -129,5 +134,9 @@ namespace GameEngine.Core
             _startModule = name;
         }
 
+        public void SetSkin(ISkin skin)
+        {
+            _skin = skin;
+        }
     }
 }

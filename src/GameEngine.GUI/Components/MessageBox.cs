@@ -2,7 +2,6 @@
 using GameEngine.Globals;
 using GameEngine.GUI.Controlls;
 using GameEngine.GUI.General;
-using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Panels;
 using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;

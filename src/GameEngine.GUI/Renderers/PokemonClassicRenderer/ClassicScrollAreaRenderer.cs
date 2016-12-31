@@ -4,18 +4,13 @@ using Microsoft.Xna.Framework;
 
 namespace GameEngine.GUI.Renderers
 {
-    public interface IScrollAreaRenderer : IRenderer<ScrollArea>
+    public class ClassicScrollAreaRenderer : ScrollAreaRenderer
     {
-        void RenderContent(ISpriteBatch batch, GameTime time, ScrollArea scrollArea);
-    }
-
-    public class ClassicScrollAreaRenderer : IScrollAreaRenderer
-    {
-        public void Render(ISpriteBatch spriteBatch, ScrollArea component)
+        protected override void RenderComponent(ISpriteBatch spriteBatch, ScrollArea component)
         {
         }
 
-        public void RenderContent(ISpriteBatch batch, GameTime time, ScrollArea scrollArea)
+        public override void RenderContent(ISpriteBatch batch, GameTime time, ScrollArea scrollArea)
         {
             var tmp = batch.GraphicsDevice.ScissorRectangle;
             batch.GraphicsDevice.ScissorRectangle = Rectangle.Intersect(tmp, scrollArea.Area);

@@ -2,7 +2,7 @@
 
 namespace GameEngine.GUI.Renderers
 {
-    public interface IPanelRenderer : IRenderer<Panel>
+    public abstract class PanelRenderer : AbstractRenderer<Panel>
     {
     }
 }

@@ -4,7 +4,6 @@ using System.Linq;
 using GameEngine.Globals;
 using GameEngine.GUI.Components;
 using GameEngine.GUI.General;
-using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Renderers;
 using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
@@ -17,7 +16,7 @@ namespace GameEngine.GUI.Controlls
         public int NumberOfLines { get; }
         private string _text;
         private readonly ITextSplitter _splitter;
-        private readonly ITextAreaRenderer _renderer;
+        private readonly TextAreaRenderer _renderer;
 
         public IEnumerable<TextAreaLine> Lines => _allLines.Skip(CurrentLineIndex).Take(NumberOfLines);
 
@@ -26,7 +25,7 @@ namespace GameEngine.GUI.Controlls
 
         public int TextHeight { get; set; } = 32;
 
-        public TextArea(ITextAreaRenderer renderer, ITextSplitter splitter, int numberOfLines = 2)
+        public TextArea(TextAreaRenderer renderer, ITextSplitter splitter, int numberOfLines = 2)
         {
             NumberOfLines = numberOfLines;
             _splitter = splitter;

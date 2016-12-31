@@ -1,5 +1,4 @@
 ﻿using GameEngine.GUI.General;
-using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Renderers;
 using Microsoft.Xna.Framework;
 
@@ -8,10 +7,10 @@ namespace GameEngine.GUI.Panels
     public class Panel : AbstractPanel
     {
         public Color BackgroundColor { get; set; }
-        private readonly IPanelRenderer _renderer;
+        private readonly PanelRenderer _renderer;
         private IGraphicComponent _component;
 
-        public Panel(IPanelRenderer renderer)
+        public Panel(PanelRenderer renderer)
         {
             _renderer = renderer;
         }

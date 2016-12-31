@@ -1,5 +1,4 @@
 ﻿using GameEngine.GUI.General;
-using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Renderers;
 using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
@@ -9,11 +8,11 @@ namespace GameEngine.GUI.Controlls
     [GameType]
     public class Label : AbstractGraphicComponent
     {
-        private readonly ILabelRenderer _renderer;
+        private readonly LabelRenderer _renderer;
         private string _text;
         private float _textSize = 32;
 
-        public Label(ILabelRenderer renderer)
+        public Label(LabelRenderer renderer)
         {
             IsSelectable = false;
             _renderer = renderer;
