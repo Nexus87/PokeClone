@@ -29,10 +29,11 @@ namespace BattleMode.Gui
             _listView.CellHeight = 75;
             _listView.ListCellFactory = value =>
             {
-                var component = registry.ResolveType<SelectableContainer<PokemonMenuLine>>();
-                component.Content = registry.ResolveType<PokemonMenuLine>();
+                var component = registry.ResolveType<SelectablePanel>();
+                var line = registry.ResolveType<PokemonMenuLine>();
+                component.Content = line;
                 component.Setup();
-                component.Content.SetPokemon(value);
+                line.SetPokemon(value);
                 return component;
             };
 

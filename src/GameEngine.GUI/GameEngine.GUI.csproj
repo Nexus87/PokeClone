@@ -86,7 +86,6 @@
     <Compile Include="Graphics\IImageBox.cs" />
     <Compile Include="Graphics\NullGraphicObject.cs" />
     <Compile Include="Graphics\Pixel.cs" />
-    <Compile Include="Graphics\SelectableContainer.cs" />
     <Compile Include="Graphics\SelectionEventArgs.cs" />
     <Compile Include="Graphics\SpriteSheetTexture.cs" />
     <Compile Include="Graphics\TableView\TableIndex.cs" />
@@ -100,6 +99,7 @@
     <Compile Include="Panels\GridInputHandler.cs" />
     <Compile Include="Panels\Panel.cs" />
     <Compile Include="Panels\ScrollArea.cs" />
+    <Compile Include="Panels\SelectablePanel.cs" />
     <Compile Include="Panels\Window.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Renderers\AbstractRenderer.cs" />
@@ -109,11 +109,13 @@
     <Compile Include="Renderers\ILabelRenderer.cs" />
     <Compile Include="Renderers\IPanelRenderer.cs" />
     <Compile Include="Renderers\IRenderer.cs" />
+    <Compile Include="Renderers\ISelectablePanelRenderer.cs" />
     <Compile Include="Renderers\ITextAreaRenderer.cs" />
     <Compile Include="Renderers\IWindowRenderer.cs" />
     <Compile Include="Renderers\NullRenderer.cs" />
     <Compile Include="Renderers\PokemonClassicRenderer\ClassicButtonRenderer.cs" />
     <Compile Include="Renderers\PokemonClassicRenderer\ClassicImageBoxRenderer.cs" />
+    <Compile Include="Renderers\PokemonClassicRenderer\ClassicSelectablePanelRenderer.cs" />
     <Compile Include="Renderers\PokemonClassicRenderer\ClassicTextAreaRenderer.cs" />
     <Compile Include="Renderers\PokemonClassicRenderer\ClassicWindowRenderer.cs" />
     <Compile Include="Renderers\PokemonClassicRenderer\ClassicHpLineRenderer.cs" />

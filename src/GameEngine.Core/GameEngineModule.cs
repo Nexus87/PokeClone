@@ -42,7 +42,9 @@ namespace GameEngine.Core
             registry.RegisterAsService<ClassicLineRenderer, IHpLineRenderer>(r => new ClassicLineRenderer(_resources.Cup, _resources.Pixel, r.ResolveType<ScreenConstants>().BackgroundColor));
             registry.RegisterAsService<ClassicImageBoxRenderer, IImageBoxRenderer>();
             registry.RegisterAsService<ClassPanelRenderer, IPanelRenderer>(r => new ClassPanelRenderer(_resources.Pixel));
+            registry.RegisterAsService<ClassicSelectablePanelRenderer, ISelectablePanelRenderer>(r => new ClassicSelectablePanelRenderer(_resources.DefaultArrowTexture));
             registry.RegisterType<Panel>(r => new Panel(r.ResolveType<IPanelRenderer>()) { BackgroundColor = r.ResolveType<ScreenConstants>().BackgroundColor});
+
         }
 
         public string ModuleName => "GameEngine";
