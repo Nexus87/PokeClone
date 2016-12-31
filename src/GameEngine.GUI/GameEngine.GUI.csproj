@@ -67,11 +67,6 @@
     <Compile Include="Components\HPResizeAnimation.cs" />
     <Compile Include="Components\ITextSplitter.cs" />
     <Compile Include="Components\MessageBox.cs" />
-    <Compile Include="Configuration\Configuration.cs" />
-    <Compile Include="Configuration\FileFormat.cs" />
-    <Compile Include="Configuration\SpriteSheet.cs" />
-    <Compile Include="Configuration\TextureConfig.cs" />
-    <Compile Include="Configuration\Texture.cs" />
     <Compile Include="Controlls\Button.cs" />
     <Compile Include="Controlls\IListCell.cs" />
     <Compile Include="Controlls\ImageBox.cs" />
@@ -82,12 +77,6 @@
     <Compile Include="Controlls\TextAreaLine.cs" />
     <Compile Include="Diagnostic\DebugRectangle.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="General\ISpriteBatch.cs" />
-    <Compile Include="General\ISpriteFont.cs" />
-    <Compile Include="General\ITexture2D.cs" />
-    <Compile Include="General\XnaSpriteBatch.cs" />
-    <Compile Include="General\XnaSpriteFont.cs" />
-    <Compile Include="General\XnaTexture2D.cs" />
     <Compile Include="GraphicComponentSizeChangedEventArgs.cs" />
     <Compile Include="Graphics\GraphicResources.cs" />
     <Compile Include="Graphics\IAnimation.cs" />
@@ -135,6 +124,14 @@
     <Compile Include="VisibilityChangedEventArgs.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\GuiSkins\ClassicSkin\Linux\arrow.xnb" />
+    <Content Include="Content\GuiSkins\ClassicSkin\Linux\border.xnb" />
+    <Content Include="Content\GuiSkins\ClassicSkin\Linux\circle.xnb" />
+    <Content Include="Content\GuiSkins\ClassicSkin\Linux\MenuFont.xnb" />
+    <Content Include="Content\GuiSkins\ClassicSkin\Windows\arrow.xnb" />
+    <Content Include="Content\GuiSkins\ClassicSkin\Windows\border.xnb" />
+    <Content Include="Content\GuiSkins\ClassicSkin\Windows\circle.xnb" />
+    <Content Include="Content\GuiSkins\ClassicSkin\Windows\MenuFont.xnb" />
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -142,13 +139,15 @@
       <Project>{B19BD4B3-DCAE-E1DC-6E65-2E476C6F6261}</Project>
       <Name>GameEngine.Globals</Name>
     </ProjectReference>
+    <ProjectReference Include="..\GameEngine.Graphics\GameEngine.Graphics.csproj">
+      <Project>{0205d32e-be54-4b98-a66e-85d4a0c02b6a}</Project>
+      <Name>GameEngine.Graphics</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GameEngine.TypeRegistry\GameEngine.TypeRegistry.csproj">
       <Project>{73200884-85C6-4A3D-A3C2-A53D9C632613}</Project>
       <Name>GameEngine.TypeRegistry</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
-  <ItemGroup />
   <ItemGroup />
   <ItemGroup />
   <ItemGroup />

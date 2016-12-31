@@ -7,11 +7,11 @@ namespace GameEngine.GUI.Graphics
 {
     public class GraphicResources
     {
-        private readonly XnaTexture2D _pixel;
+        private static XnaTexture2D _pixel;
         public ISpriteFont DefaultFont { get; set; }
         public ITexture2D DefaultArrowTexture { get; set; }
         public ITexture2D DefaultBorderTexture { get; set; }
-        public ITexture2D Pixel => _pixel;
+        public static ITexture2D Pixel => _pixel;
         public ITexture2D Cup { get; set; }
         public ContentManager ContentManager { get; set; }
         public Configuration.Configuration Configuration { get; set; }

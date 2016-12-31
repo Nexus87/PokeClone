@@ -1,4 +1,5 @@
-﻿using GameEngine.GUI.General;
+﻿using GameEngine.GUI.Diagnostic;
+using GameEngine.GUI.General;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -6,6 +7,8 @@ namespace GameEngine.GUI.Renderers
 {
     public abstract class AbstractRenderer<T> where T : IGraphicComponent
     {
+        private DebugRectangle _rectangle = new DebugRectangle();
+
         protected static void RenderText(ISpriteBatch spriteBatch, ISpriteFont font, string text, Vector2 position, float textHeight)
         {
             var scale = textHeight / font.MeasureString(" ").Y;
@@ -30,6 +33,7 @@ namespace GameEngine.GUI.Renderers
         public void Render(ISpriteBatch spriteBatch, T component)
         {
             RenderComponent(spriteBatch, component);
+//            _rectangle.Draw(spriteBatch, component.Area, Color.Black);
         }
 
         protected abstract void RenderComponent(ISpriteBatch spriteBatch, T component);

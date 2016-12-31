@@ -1,4 +1,5 @@
 using GameEngine.GUI.General;
+using GameEngine.GUI.Graphics;
 using Microsoft.Xna.Framework;
 
 namespace GameEngine.GUI.Diagnostic
@@ -7,17 +8,17 @@ namespace GameEngine.GUI.Diagnostic
     {
         private readonly ITexture2D _pixel;
 
-        public DebugRectangle(ITexture2D pixel)
+        public DebugRectangle()
         {
-            _pixel = pixel;
+            _pixel = GraphicResources.Pixel;
         }
 
         public void Draw(ISpriteBatch spriteBatch, Rectangle rectangle, Color color)
         {
-            var upperLine = new Rectangle(rectangle.Location, new Point(rectangle.Width, 1));
-            var leftLine = new Rectangle(rectangle.Location, new Point(1, rectangle.Height));
-            var lowerLine = new Rectangle(rectangle.Left, rectangle.Bottom, rectangle.Width, 1);
-            var rightLine = new Rectangle(rectangle.Right - 1, rectangle.Top, 1, rectangle.Height);
+            var upperLine = new Rectangle(rectangle.Location, new Point(rectangle.Width, 5));
+            var leftLine = new Rectangle(rectangle.Location, new Point(5, rectangle.Height));
+            var lowerLine = new Rectangle(rectangle.Left, rectangle.Bottom - 5, rectangle.Width, 5);
+            var rightLine = new Rectangle(rectangle.Right - 5, rectangle.Top, 5, rectangle.Height);
             spriteBatch.Draw(_pixel, upperLine, color);
             spriteBatch.Draw(_pixel, leftLine, color);
             spriteBatch.Draw(_pixel, lowerLine, color);

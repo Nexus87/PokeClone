@@ -122,6 +122,10 @@
       <Project>{B19BD4B3-DCAE-E1DC-6E65-2E476C6F6261}</Project>
       <Name>GameEngine.Globals</Name>
     </ProjectReference>
+    <ProjectReference Include="..\GameEngine.Graphics\GameEngine.Graphics.csproj">
+      <Project>{0205d32e-be54-4b98-a66e-85d4a0c02b6a}</Project>
+      <Name>GameEngine.Graphics</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GameEngine.GUI\GameEngine.GUI.csproj">
       <Project>{DDE2CFB0-6E45-6967-6E65-2E4755492E4C}</Project>
       <Name>GameEngine.GUI</Name>
