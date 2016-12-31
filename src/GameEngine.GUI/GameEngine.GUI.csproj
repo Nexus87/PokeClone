@@ -80,7 +80,7 @@
     <Compile Include="Controlls\ListView.cs" />
     <Compile Include="Controlls\TextArea.cs" />
     <Compile Include="Controlls\TextAreaLine.cs" />
-    <Compile Include="Debug\DebugRectangle.cs" />
+    <Compile Include="Diagnostic\DebugRectangle.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="General\ISpriteBatch.cs" />
     <Compile Include="General\ISpriteFont.cs" />
