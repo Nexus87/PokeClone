@@ -1,6 +1,5 @@
 ﻿using GameEngine.GUI;
 using GameEngine.GUI.General;
-using GameEngine.GUI.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -53,8 +52,8 @@ namespace GameEngine.Core
             _device.SetRenderTarget(_target);
             _device.Clear(_screenConstants.BackgroundColor);
 
-//            batch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, rasterizerState: _rasterization);
-            batch.Begin();
+            batch.Begin(SpriteSortMode.Immediate, rasterizerState: _rasterization);
+//            batch.Begin();
         }
 
         public void Draw(IGraphicComponent component, ISpriteBatch batch, GameTime gameTime)

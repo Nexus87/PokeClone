@@ -6,7 +6,6 @@ using GameEngine.Globals;
 using GameEngine.GUI;
 using GameEngine.GUI.Controlls;
 using GameEngine.GUI.General;
-using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Panels;
 using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
@@ -23,7 +22,7 @@ namespace BattleMode.Gui
         {
             _window = window;
             _listView = listView;
-            scrollArea.SetContent(listView);
+            scrollArea.Content = listView;
             _window.SetContent(scrollArea);
 
             var model = Enumerable

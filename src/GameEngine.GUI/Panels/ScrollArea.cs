@@ -1,6 +1,6 @@
 ﻿using GameEngine.Globals;
 using GameEngine.GUI.General;
-using GameEngine.GUI.Graphics;
+using GameEngine.GUI.Renderers;
 using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
 
@@ -9,10 +9,17 @@ namespace GameEngine.GUI.Panels
     [GameType]
     public class ScrollArea : AbstractPanel
     {
+        private readonly IScrollAreaRenderer _renderer;
         private IGraphicComponent _content;
         public bool Autoscrolling { get; set; }
 
-        public override Rectangle Area {
+        public ScrollArea(IScrollAreaRenderer renderer)
+        {
+            _renderer = renderer;
+        }
+
+        public override Rectangle Area
+        {
             get { return base.Area; }
             set
             {
@@ -31,26 +38,31 @@ namespace GameEngine.GUI.Panels
             _content?.SetPosition(_content.Area.Location + point);
         }
 
-        public void SetContent(IGraphicComponent component)
+        public IGraphicComponent Content
         {
-            if (_content != null)
+            get { return _content; }
+            set
             {
-                RemoveChild(_content);
-                _content.ComponentSelected -= ComponentOnComponentSelected;
-                _content.PreferredSizeChanged -= PreferredSizeChangedHandler;
-            }
+                if (_content != null)
+                {
+                    RemoveChild(_content);
+                    _content.ComponentSelected -= ComponentOnComponentSelected;
+                    _content.PreferredSizeChanged -= PreferredSizeChangedHandler;
+                }
 
-            _content = component;
-            AddChild(component);
-            component.ComponentSelected += ComponentOnComponentSelected;
-            component.PreferredSizeChanged += PreferredSizeChangedHandler;
-            _content.SetPosition(this);
-            _content.SetSize((int) _content.PreferredWidth, (int) _content.PreferredHeight);
+                _content = value;
+                AddChild(_content);
+                _content.ComponentSelected += ComponentOnComponentSelected;
+                _content.PreferredSizeChanged += PreferredSizeChangedHandler;
+                _content.SetPosition(this);
+                _content.SetSize((int) _content.PreferredWidth, (int) _content.PreferredHeight);
+            }
         }
 
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)
         {
-            _content?.Draw(time, batch);
+            _renderer.Render(batch, this);
+            _renderer.RenderContent(batch, time, this);
         }
 
         private void ComponentOnComponentSelected(object sender, ComponentSelectedEventArgs componentSelectedEventArgs)
@@ -75,9 +87,10 @@ namespace GameEngine.GUI.Panels
             _content.SetPosition(newX, newY);
         }
 
-        private void PreferredSizeChangedHandler(object sender, GraphicComponentSizeChangedEventArgs graphicComponentSizeChangedEventArgs)
+        private void PreferredSizeChangedHandler(object sender,
+            GraphicComponentSizeChangedEventArgs graphicComponentSizeChangedEventArgs)
         {
-            _content.SetSize((int)_content.PreferredWidth, (int)_content.PreferredHeight);
+            _content.SetSize((int) _content.PreferredWidth, (int) _content.PreferredHeight);
         }
 
         private int MoveUp(Rectangle selectedArea)

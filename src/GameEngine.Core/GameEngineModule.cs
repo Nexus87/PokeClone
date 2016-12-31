@@ -44,6 +44,7 @@ namespace GameEngine.Core
             registry.RegisterAsService<ClassPanelRenderer, IPanelRenderer>(r => new ClassPanelRenderer(_resources.Pixel));
             registry.RegisterAsService<ClassicSelectablePanelRenderer, ISelectablePanelRenderer>(r => new ClassicSelectablePanelRenderer(_resources.DefaultArrowTexture));
             registry.RegisterType<Panel>(r => new Panel(r.ResolveType<IPanelRenderer>()) { BackgroundColor = r.ResolveType<ScreenConstants>().BackgroundColor});
+            registry.RegisterAsService<ClassicScrollAreaRenderer, IScrollAreaRenderer>();
 
         }
 

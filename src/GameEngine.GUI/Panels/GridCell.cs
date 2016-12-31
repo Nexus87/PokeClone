@@ -33,7 +33,7 @@ namespace GameEngine.GUI.Panels
             if (GuiComponent == null)
                 return;
             GuiComponent.Area = constraints;
-            GuiComponent.ScissorArea = GuiComponent.ScissorArea = Rectangle.Intersect(constraints, gridConstraints);
+            GuiComponent.ScissorArea = Rectangle.Intersect(constraints, gridConstraints);
         }
 
         public float PreferedWidth => GuiComponent?.PreferredWidth ?? 0;

@@ -116,6 +116,7 @@
     <Compile Include="Renderers\ILabelRenderer.cs" />
     <Compile Include="Renderers\IPanelRenderer.cs" />
     <Compile Include="Renderers\IRenderer.cs" />
+    <Compile Include="Renderers\IScrollAreaRenderer.cs" />
     <Compile Include="Renderers\ISelectablePanelRenderer.cs" />
     <Compile Include="Renderers\ITextAreaRenderer.cs" />
     <Compile Include="Renderers\IWindowRenderer.cs" />

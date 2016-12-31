@@ -1,6 +1,6 @@
 ﻿using FakeItEasy;
-using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Panels;
+using GameEngine.GUI.Renderers;
 using Microsoft.Xna.Framework;
 using NUnit.Framework;
 
@@ -44,7 +44,7 @@ namespace GameEngine.GUI.Test.Panels
             var expectedArea = new Rectangle(expectedX, expectedY, 0, 0);
 
             var scrollArea = CreateScrollArea(initalArea);
-            scrollArea.SetContent(_content);
+            scrollArea.Content =_content;
             _content.SetCoordinates(0, 0, 1000, 1000);
             _focusedComponent.Area = focusedArea;
 
@@ -56,7 +56,7 @@ namespace GameEngine.GUI.Test.Panels
 
         private ScrollArea CreateScrollArea(Rectangle initalArea)
         {
-            var scrollArea = new ScrollArea {Area = initalArea};
+            var scrollArea = new ScrollArea(new ClassicScrollAreaRenderer()) {Area = initalArea};
             _content = A.Fake<IGraphicComponent>();
             return scrollArea;
         }

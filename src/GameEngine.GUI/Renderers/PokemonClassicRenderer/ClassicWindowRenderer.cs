@@ -17,9 +17,9 @@ namespace GameEngine.GUI.Renderers.PokemonClassicRenderer
             RenderImage(spriteBatch, _borderTexture, component.Area);
         }
 
-        public int LeftMargin { get; } = 100;
-        public int RightMargin { get; } = 100;
+        public int LeftMargin { get; } = 50;
+        public int RightMargin { get; } = 10;
         public int TopMargin { get; } = 100;
-        public int BottomMargin { get; } = 100;
+        public int BottomMargin { get; } = 75;
     }
 }
