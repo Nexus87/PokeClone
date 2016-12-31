@@ -40,9 +40,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="GameEngine.Globals, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\BattleMode.Gui\bin\Debug\GameEngine.Globals.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="MonoGame.Framework">
@@ -103,6 +100,10 @@
     <ProjectReference Include="..\GameEngine.Core\GameEngine.Core.csproj">
       <Project>{656D6147-6E45-6967-6E65-2E4C696E7578}</Project>
       <Name>GameEngine.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GameEngine.Globals\GameEngine.Globals.csproj">
+      <Project>{b19bd4b3-dcae-e1dc-6e65-2e476c6f6261}</Project>
+      <Name>GameEngine.Globals</Name>
     </ProjectReference>
     <ProjectReference Include="..\GameEngine.GUI\GameEngine.GUI.csproj">
       <Project>{DDE2CFB0-6E45-6967-6E65-2E4755492E4C}</Project>
