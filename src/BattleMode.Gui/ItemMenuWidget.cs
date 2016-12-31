@@ -34,6 +34,7 @@ namespace BattleMode.Gui
             {
                 var button = registry.ResolveType<Button>();
                 button.Text = value.Name;
+                button.ButtonPressed += delegate { OnItemSelected(value); };
                 return button;
             };
         }
@@ -62,6 +63,11 @@ namespace BattleMode.Gui
         public void ResetSelection()
         {
             _listView.SelectCell(0);
+        }
+
+        protected virtual void OnItemSelected(Item i)
+        {
+            ItemSelected?.Invoke(this, new SelectionEventArgs<Item>(i));
         }
     }
 }

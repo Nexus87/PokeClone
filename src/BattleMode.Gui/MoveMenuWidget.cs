@@ -36,6 +36,7 @@ namespace BattleMode.Gui
                 {
                     var button = registry.ResolveType<Button>();
                     button.Text = value.Name;
+                    button.ButtonPressed += delegate { OnItemSelected(value); };
                     return button;
                 }
 
@@ -72,6 +73,11 @@ namespace BattleMode.Gui
         protected virtual void OnExitRequested()
         {
             ExitRequested?.Invoke(this, EventArgs.Empty);
+        }
+
+        protected virtual void OnItemSelected(Move m)
+        {
+            ItemSelected?.Invoke(this, new SelectionEventArgs<Move>(m));
         }
     }
 }
