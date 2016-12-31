@@ -4,8 +4,8 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using GameEngine.Globals;
+using GameEngine.GUI.General;
 using GameEngine.GUI.Graphics;
-using GameEngine.GUI.Graphics.General;
 using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
 

@@ -1,5 +1,5 @@
 ﻿using FakeItEasy;
-using GameEngine.GUI.Graphics;
+using GameEngine.GUI;
 using GameEngineTest.TestUtils;
 using Microsoft.Xna.Framework;
 using NUnit.Framework;

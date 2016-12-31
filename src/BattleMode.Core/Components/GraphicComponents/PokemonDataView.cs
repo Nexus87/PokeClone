@@ -1,10 +1,11 @@
 ﻿using System;
 using BattleMode.Components.BattleState;
 using BattleMode.Shared;
+using GameEngine.GUI;
 using GameEngine.GUI.Components;
 using GameEngine.GUI.Controlls;
+using GameEngine.GUI.General;
 using GameEngine.GUI.Graphics;
-using GameEngine.GUI.Graphics.General;
 using GameEngine.GUI.Panels;
 using Microsoft.Xna.Framework;
 using ValueType = GameEngine.GUI.Panels.ValueType;

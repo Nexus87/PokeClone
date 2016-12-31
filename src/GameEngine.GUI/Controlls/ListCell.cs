@@ -1,16 +1,11 @@
 ﻿using System;
 using GameEngine.Globals;
+using GameEngine.GUI.General;
 using GameEngine.GUI.Graphics;
-using GameEngine.GUI.Graphics.General;
 using Microsoft.Xna.Framework;
 
 namespace GameEngine.GUI.Controlls
 {
-    public interface IListCell
-    {
-        event EventHandler CellSelected;
-    }
-
     public class ListCell
     {
         private IGraphicComponent _component;

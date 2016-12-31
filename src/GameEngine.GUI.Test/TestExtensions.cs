@@ -1,6 +1,5 @@
 ﻿using FakeItEasy;
-using GameEngine.GUI.Graphics;
-using GameEngine.GUI.Graphics.General;
+using GameEngine.GUI.General;
 using Microsoft.Xna.Framework;
 
 namespace GameEngine.GUI.Test

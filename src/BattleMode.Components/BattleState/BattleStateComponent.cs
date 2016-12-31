@@ -1,7 +1,7 @@
 ﻿using System;
 using Base;
 using BattleMode.Shared;
-using GameEngine.GUI.Utils;
+using GameEngine.Globals;
 using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
 
@@ -21,10 +21,10 @@ namespace BattleMode.Components.BattleState
         
         internal BattleStateComponent(BattleData data, IBattleState actionState, IBattleState characterSetState, IBattleState executionState, IEventCreator eventCreator)
         {
-            actionState.CheckNull("actionState");
-            characterSetState.CheckNull("characterSetState");
-            executionState.CheckNull("executionState");
-            eventCreator.CheckNull("eventCreator");
+            actionState.CheckNull(nameof(actionState));
+            characterSetState.CheckNull(nameof(characterSetState));
+            executionState.CheckNull(nameof(executionState));
+            eventCreator.CheckNull(nameof(eventCreator));
 
             ActionState = actionState;
             CharacterSetState = characterSetState;

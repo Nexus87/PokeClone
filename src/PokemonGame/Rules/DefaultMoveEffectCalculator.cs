@@ -2,7 +2,7 @@
 using Base.Data;
 using Base.Rules;
 using System;
-using GameEngine.GUI.Utils;
+using GameEngine.Globals;
 using GameEngine.TypeRegistry;
 
 namespace PokemonGame.Rules

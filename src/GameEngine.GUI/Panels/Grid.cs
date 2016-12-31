@@ -2,36 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using GameEngine.Globals;
+using GameEngine.GUI.General;
 using GameEngine.GUI.Graphics;
-using GameEngine.GUI.Graphics.General;
-using GameEngine.GUI.Utils;
 using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
 
 namespace GameEngine.GUI.Panels
 
 {
-    public enum ValueType
-    {
-        Percent,
-        Absolute,
-        Auto
-    }
-
-    public class RowProperty
-    {
-        public ValueType Type { get; set; }
-        public int Share { get; set; }
-        public float Height { get; set; }
-    }
-
-    public class ColumnProperty
-    {
-        public ValueType Type { get; set; }
-        public int Share { get; set; }
-        public float Width { get; set; }
-    }
-
     [GameType]
     public class Grid : AbstractPanel
     {
@@ -166,13 +144,13 @@ namespace GameEngine.GUI.Panels
 
         private void ApplyGridToComponents(ITable<Rectangle> grid)
         {
-            Utils.Extensions.LoopOverTable(Rows, Columns,
+            Globals.Extensions.LoopOverTable(Rows, Columns,
                 (row, column) => { _cells[row, column].SetConstraints(grid[row, column], Area); });
         }
 
         private Table<Rectangle> SetPosition(Table<Rectangle> grid)
         {
-            Utils.Extensions.LoopOverTable(Rows, Columns, (row, column) =>
+            Globals.Extensions.LoopOverTable(Rows, Columns, (row, column) =>
             {
                 var leftRec = GetComponentConstaints(row, column - 1, grid);
                 var topRec = GetComponentConstaints(row - 1, column, grid);
@@ -188,7 +166,7 @@ namespace GameEngine.GUI.Panels
 
         private Table<Rectangle> SetAbsoluteWidths(Table<Rectangle> grid)
         {
-            Utils.Extensions.LoopOverTable(Rows, Columns, (row, column) =>
+            Globals.Extensions.LoopOverTable(Rows, Columns, (row, column) =>
             {
                 var width = GetColumnWidth(column);
                 var height = GetRowHeight(row);
@@ -254,7 +232,7 @@ namespace GameEngine.GUI.Panels
             var totalShareColumns = _columnPoperties.Sum(p => p.Type == ValueType.Percent ? p.Share : 0);
             var totalShareRows = _rowProperties.Sum(p => p.Type == ValueType.Percent ? p.Share : 0);
 
-            Utils.Extensions.LoopOverTable(Rows, Columns, (row, column) =>
+            Globals.Extensions.LoopOverTable(Rows, Columns, (row, column) =>
             {
                 var constraints = grid[row, column];
                 if (_rowProperties[row].Type == ValueType.Percent)

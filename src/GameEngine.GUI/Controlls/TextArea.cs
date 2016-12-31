@@ -2,22 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using GameEngine.Globals;
+using GameEngine.GUI.Components;
+using GameEngine.GUI.General;
 using GameEngine.GUI.Graphics;
-using GameEngine.GUI.Graphics.General;
 using GameEngine.GUI.Renderers;
-using GameEngine.GUI.Utils;
 using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
 
 namespace GameEngine.GUI.Controlls
 {
-
-    public class TextAreaLine
-    {
-        public string Text { get; set; }
-        public Vector2 Position { get; set; }
-    }
-
     [GameType]
     public class TextArea : AbstractGraphicComponent
     {

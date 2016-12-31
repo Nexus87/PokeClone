@@ -2,8 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using GameEngine.GUI.Graphics.TableView;
-using GameEngine.GUI.Utils;
+using GameEngine.Globals;
 
 namespace GameEngineTest.Utils
 {

@@ -1,8 +1,8 @@
 ﻿using System;
 using BattleMode.Core;
 using GameEngine.Core;
+using GameEngine.Globals;
 using GameEngine.GUI.Configuration;
-using GameEngine.GUI.Utils;
 using MainMode.Core;
 
 namespace PokemonGame

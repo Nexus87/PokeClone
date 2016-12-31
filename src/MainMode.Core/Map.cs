@@ -1,5 +1,5 @@
 ﻿
-using GameEngine.GUI.Utils;
+using GameEngine.Globals;
 
 namespace MainMode.Core
 {
@@ -13,17 +13,5 @@ namespace MainMode.Core
 
         public Table<Tile> Tiles { get; private set; }
         public TilePosition PlayerStart { get; private set; }
-    }
-
-    public class TilePosition
-    {
-        public int X { get; private set; }
-        public int Y { get; private set; }
-
-        public TilePosition(int x, int y)
-        {
-            X = x;
-            Y = y;
-        }
     }
 }

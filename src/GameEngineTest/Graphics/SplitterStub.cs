@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using GameEngine.GUI.Utils;
+using GameEngine.GUI.Components;
 
 namespace GameEngineTest.Graphics
 {

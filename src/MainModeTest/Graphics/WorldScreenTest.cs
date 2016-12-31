@@ -56,12 +56,4 @@ namespace MainModeTest.Graphics
             return new WorldScreen(mapController, loaderMock, screenConstants);
         }
     }
-
-    public class CharacterSpriteMock : GraphicComponentMock, ICharacterSprite
-    {
-        public void TurnToDirection(Direction direction)
-        {
-            throw new System.NotImplementedException();
-        }
-    }
 }

@@ -1,6 +1,6 @@
 using GameEngine.GUI.Controlls;
+using GameEngine.GUI.General;
 using GameEngine.GUI.Graphics;
-using GameEngine.GUI.Graphics.General;
 
 namespace GameEngine.GUI.Renderers.PokemonClassicRenderer
 {

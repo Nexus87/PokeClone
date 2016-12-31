@@ -2,7 +2,6 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using GameEngine.Globals;
-using GameEngine.GUI.Utils;
 
 namespace GameEngine.GUI.Panels
 {

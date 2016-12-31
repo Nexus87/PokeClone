@@ -2,11 +2,12 @@
 using System.Reflection;
 using GameEngine.Core.GameEngineComponents;
 using GameEngine.Core.Registry;
+using GameEngine.GUI;
+using GameEngine.GUI.Components;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Panels;
 using GameEngine.GUI.Renderers;
 using GameEngine.GUI.Renderers.PokemonClassicRenderer;
-using GameEngine.GUI.Utils;
 using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework.Content;
 
@@ -30,7 +31,6 @@ namespace GameEngine.Core
             registry.RegisterTypeAs<DefaultTextSplitter, ITextSplitter>();
             registry.RegisterAsService<InputComponent, InputComponent>(reg => new InputComponent(_resources.Configuration));
             registry.RegisterAsService<ContentManager, ContentManager>(reg => _resources.ContentManager);
-            registry.RegisterType(r => new Pixel(_resources.Pixel, r.ResolveType<IImageBoxRenderer>()));
             registry.RegisterType<IEngineInterface>(r => _engine);
             registry.ScanAssembly(Assembly.GetExecutingAssembly());
             registry.ScanAssembly(Assembly.GetAssembly(typeof(IGraphicComponent)));

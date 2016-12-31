@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using GameEngine.GUI.Utils;
+using GameEngine.GUI.Components;
 using NUnit.Framework;
 
 namespace GameEngineTest.Utils

@@ -5,8 +5,9 @@ using Base.Data;
 using BattleMode.Components.BattleState;
 using BattleMode.Shared;
 using GameEngine.Core;
+using GameEngine.GUI;
+using GameEngine.GUI.General;
 using GameEngine.GUI.Graphics;
-using GameEngine.GUI.Graphics.General;
 using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
 

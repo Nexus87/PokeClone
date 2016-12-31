@@ -59,50 +59,57 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AbstractGraphicComponent.cs" />
+    <Compile Include="ComponentSelectedEventArgs.cs" />
+    <Compile Include="Components\DefaultTextSplitter.cs" />
     <Compile Include="Components\HPLine.cs" />
     <Compile Include="Components\HPResizeAnimation.cs" />
+    <Compile Include="Components\ITextSplitter.cs" />
     <Compile Include="Components\MessageBox.cs" />
     <Compile Include="Configuration\Configuration.cs" />
-    <Compile Include="Configuration\TextureConfiguration.cs" />
+    <Compile Include="Configuration\FileFormat.cs" />
+    <Compile Include="Configuration\SpriteSheet.cs" />
+    <Compile Include="Configuration\TextureConfig.cs" />
+    <Compile Include="Configuration\Texture.cs" />
     <Compile Include="Controlls\Button.cs" />
+    <Compile Include="Controlls\IListCell.cs" />
     <Compile Include="Controlls\ImageBox.cs" />
     <Compile Include="Controlls\Label.cs" />
     <Compile Include="Controlls\ListCell.cs" />
     <Compile Include="Controlls\ListView.cs" />
     <Compile Include="Controlls\TextArea.cs" />
-    <Compile Include="Graphics\AbstractGraphicComponent.cs" />
-    <Compile Include="Graphics\AbstractPanel.cs" />
-    <Compile Include="Graphics\Extensions.cs" />
-    <Compile Include="Graphics\General\ISpriteBatch.cs" />
-    <Compile Include="Graphics\General\ISpriteFont.cs" />
-    <Compile Include="Graphics\General\ITexture2D.cs" />
-    <Compile Include="Graphics\General\XnaSpriteBatch.cs" />
-    <Compile Include="Graphics\General\XnaSpriteFont.cs" />
-    <Compile Include="Graphics\General\XnaTexture2D.cs" />
-    <Compile Include="Graphics\GraphicComponentSizeChangedEventArgs.cs" />
+    <Compile Include="Controlls\TextAreaLine.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="General\ISpriteBatch.cs" />
+    <Compile Include="General\ISpriteFont.cs" />
+    <Compile Include="General\ITexture2D.cs" />
+    <Compile Include="General\XnaSpriteBatch.cs" />
+    <Compile Include="General\XnaSpriteFont.cs" />
+    <Compile Include="General\XnaTexture2D.cs" />
+    <Compile Include="GraphicComponentSizeChangedEventArgs.cs" />
     <Compile Include="Graphics\GraphicResources.cs" />
     <Compile Include="Graphics\IAnimation.cs" />
-    <Compile Include="Graphics\IGraphicComponent.cs" />
     <Compile Include="Graphics\IImageBox.cs" />
     <Compile Include="Graphics\NullGraphicObject.cs" />
-    <Compile Include="Graphics\Pixel.cs" />
-    <Compile Include="Graphics\SelectionEventArgs.cs" />
     <Compile Include="Graphics\SpriteSheetTexture.cs" />
-    <Compile Include="Graphics\TableView\TableIndex.cs" />
-    <Compile Include="Graphics\VisibilityChangedEventArgs.cs" />
-    <Compile Include="IInputHandler.cs" />
+    <Compile Include="IGraphicComponent.cs" />
     <Compile Include="INode.cs" />
     <Compile Include="ISkin.cs" />
+    <Compile Include="Panels\AbstractPanel.cs" />
+    <Compile Include="Panels\ColumnProperty.cs" />
     <Compile Include="Panels\Grid.cs" />
     <Compile Include="Panels\GridCell.cs" />
     <Compile Include="Panels\GridExtensions.cs" />
     <Compile Include="Panels\GridInputHandler.cs" />
     <Compile Include="Panels\Panel.cs" />
+    <Compile Include="Panels\RowProperty.cs" />
     <Compile Include="Panels\ScrollArea.cs" />
     <Compile Include="Panels\SelectablePanel.cs" />
+    <Compile Include="Panels\ValueType.cs" />
     <Compile Include="Panels\Window.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Renderers\AbstractRenderer.cs" />
+    <Compile Include="Renderers\ClassicLabelRenderer.cs" />
     <Compile Include="Renderers\IButtonRenderer.cs" />
     <Compile Include="Renderers\IHpLineRenderer.cs" />
     <Compile Include="Renderers\IImageBoxRenderer.cs" />
@@ -118,16 +125,11 @@
     <Compile Include="Renderers\PokemonClassicRenderer\ClassicSelectablePanelRenderer.cs" />
     <Compile Include="Renderers\PokemonClassicRenderer\ClassicTextAreaRenderer.cs" />
     <Compile Include="Renderers\PokemonClassicRenderer\ClassicWindowRenderer.cs" />
-    <Compile Include="Renderers\PokemonClassicRenderer\ClassicHpLineRenderer.cs" />
+    <Compile Include="Renderers\PokemonClassicRenderer\ClassicLineRenderer.cs" />
     <Compile Include="Renderers\PokemonClassicRenderer\ClassPanelRenderer.cs" />
+    <Compile Include="ResizeBehavoir.cs" />
     <Compile Include="Scene.cs" />
-    <Compile Include="Utils\DefaultTextSplitter.cs" />
-    <Compile Include="Utils\Extensions.cs" />
-    <Compile Include="Utils\ITable.cs" />
-    <Compile Include="Utils\ITextSplitter.cs" />
-    <Compile Include="Utils\PublicExtensions.cs" />
-    <Compile Include="Utils\SubTable.cs" />
-    <Compile Include="Utils\Table.cs" />
+    <Compile Include="VisibilityChangedEventArgs.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -141,9 +143,6 @@
       <Project>{73200884-85C6-4A3D-A3C2-A53D9C632613}</Project>
       <Name>GameEngine.TypeRegistry</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Graphics\TableView" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup />

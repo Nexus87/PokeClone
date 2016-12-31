@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using GameEngine.Globals;
 using GameEngine.GUI;
+using GameEngine.GUI.General;
 using GameEngine.GUI.Graphics;
-using GameEngine.GUI.Graphics.General;
-using GameEngine.GUI.Utils;
 using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
 

@@ -1,8 +1,9 @@
 ﻿using NUnit.Framework;
 using System;
 using GameEngine.Core;
+using GameEngine.GUI;
+using GameEngine.GUI.General;
 using GameEngine.GUI.Graphics;
-using GameEngine.GUI.Graphics.General;
 using Microsoft.Xna.Framework;
 using IGameComponent = GameEngine.Core.IGameComponent;
 

@@ -1,5 +1,5 @@
 ﻿using System;
-using GameEngine.GUI.Graphics.General;
+using GameEngine.GUI.General;
 using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;

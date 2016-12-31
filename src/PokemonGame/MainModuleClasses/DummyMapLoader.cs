@@ -1,7 +1,8 @@
 ﻿using GameEngine;
 using GameEngine.Core;
+using GameEngine.Globals;
+using GameEngine.GUI;
 using GameEngine.GUI.Graphics;
-using GameEngine.GUI.Utils;
 using GameEngine.TypeRegistry;
 using MainMode.Core;
 using MainMode.Core.Graphics;

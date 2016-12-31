@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using FakeItEasy;
+using GameEngine.GUI;
 using GameEngine.GUI.Components;
+using GameEngine.GUI.General;
 using GameEngine.GUI.Graphics;
-using GameEngine.GUI.Graphics.General;
 using GameEngine.GUI.Renderers.PokemonClassicRenderer;
-using GameEngine.GUI.Utils;
 using GameEngineTest.Graphics;
 using GameEngineTest.TestUtils;
 using Microsoft.Xna.Framework;

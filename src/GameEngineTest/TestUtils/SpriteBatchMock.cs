@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using GameEngine.GUI.Graphics.General;
+using GameEngine.GUI.General;
 
 namespace GameEngineTest.TestUtils
 {

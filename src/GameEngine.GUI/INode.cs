@@ -3,12 +3,6 @@ using Microsoft.Xna.Framework;
 
 namespace GameEngine.GUI
 {
-    public enum ResizeBehavoir
-    {
-        Auto,
-        Preferred
-    }
-
     public interface INode
     {
         event EventHandler PreferedSizeChanged;

@@ -3,8 +3,9 @@ using System;
 using System.Collections.Generic;
 using GameEngine.Core;
 using GameEngine.Globals;
+using GameEngine.GUI;
+using GameEngine.GUI.General;
 using GameEngine.GUI.Graphics;
-using GameEngine.GUI.Graphics.General;
 
 namespace GameEngineTest.TestUtils
 {

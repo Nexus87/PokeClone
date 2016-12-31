@@ -1,5 +1,5 @@
 ﻿using GameEngine.GUI.Controlls;
-using GameEngine.GUI.Graphics.General;
+using GameEngine.GUI.General;
 
 namespace GameEngine.GUI.Renderers.PokemonClassicRenderer
 {

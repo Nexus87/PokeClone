@@ -1,4 +1,5 @@
-﻿using GameEngine.GUI.Graphics;
+﻿using GameEngine.GUI;
+using GameEngine.GUI.Graphics;
 
 namespace MainMode.Core.Graphics
 {

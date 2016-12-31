@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Base;
 using BattleMode.Components.BattleState.Commands;
 using BattleMode.Shared;
-using GameEngine.GUI.Utils;
+using GameEngine.Globals;
 using GameEngine.TypeRegistry;
 
 namespace BattleMode.Components.BattleState

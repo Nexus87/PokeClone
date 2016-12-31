@@ -4,7 +4,6 @@ using FakeItEasy;
 using GameEngine.Globals;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Panels;
-using GameEngine.GUI.Utils;
 using Microsoft.Xna.Framework;
 using NUnit.Framework;
 
@@ -207,7 +206,7 @@ namespace GameEngine.GUI.Test.Panels
             int rowsCount, int columnsCount)
         {
             var table = new Table<IGraphicComponent>(rowsCount, columnsCount);
-            Utils.Extensions.LoopOverTable(rowsCount, columnsCount, (i, j) =>
+            Globals.Extensions.LoopOverTable(rowsCount, columnsCount, (i, j) =>
             {
                 var componentMock = A.Fake<IGraphicComponent>();
                 A.CallTo(() => componentMock.PreferredHeight).Returns(preferredSizes[i, j].Height);
@@ -343,7 +342,7 @@ namespace GameEngine.GUI.Test.Panels
 
         private static void VerifyComponentsHaveExpectedPosition(ITable<IGraphicComponent> components, ITable<Rectangle> expectedPositions)
         {
-            Utils.Extensions.LoopOverTable(components.Rows, components.Columns, (i, j) =>
+            Globals.Extensions.LoopOverTable(components.Rows, components.Columns, (i, j) =>
             {
                 var expectedPosition = expectedPositions[i, j];
                 A.CallToSet(() => components[i, j].Area).To(expectedPosition).MustHaveHappened(Repeated.AtLeast.Once);
@@ -353,7 +352,7 @@ namespace GameEngine.GUI.Test.Panels
         private static Table<IGraphicComponent> FillGrid(Grid grid, int rows, int columns)
         {
             var table = new Table<IGraphicComponent>(rows, columns);
-            Utils.Extensions.LoopOverTable(rows, columns, (i, j) =>
+            Globals.Extensions.LoopOverTable(rows, columns, (i, j) =>
             {
                 var componentMock = A.Fake<IGraphicComponent>();
                 table[i, j] = componentMock;

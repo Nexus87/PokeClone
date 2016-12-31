@@ -1,4 +1,4 @@
-﻿using GameEngine.GUI.Graphics.General;
+﻿using GameEngine.GUI.General;
 using GameEngine.GUI.Panels;
 
 namespace GameEngine.GUI.Renderers.PokemonClassicRenderer

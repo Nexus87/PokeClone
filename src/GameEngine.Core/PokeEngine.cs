@@ -2,11 +2,11 @@
 using System.Linq;
 using GameEngine.Core.GameEngineComponents;
 using GameEngine.Core.Registry;
+using GameEngine.Globals;
 using GameEngine.GUI;
 using GameEngine.GUI.Configuration;
+using GameEngine.GUI.General;
 using GameEngine.GUI.Graphics;
-using GameEngine.GUI.Graphics.General;
-using GameEngine.GUI.Utils;
 using Microsoft.Xna.Framework;
 
 namespace GameEngine.Core
