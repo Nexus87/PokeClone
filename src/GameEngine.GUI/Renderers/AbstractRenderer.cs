@@ -5,29 +5,34 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace GameEngine.GUI.Renderers
 {
-    public abstract class AbstractRenderer<T> : IRenderer<T> where T : IGraphicComponent
+    public abstract class AbstractRenderer<T> where T : IGraphicComponent
     {
-        protected void RenderText(ISpriteBatch spriteBatch, ISpriteFont font, string text, Vector2 position, float textHeight)
+        protected static void RenderText(ISpriteBatch spriteBatch, ISpriteFont font, string text, Vector2 position, float textHeight)
         {
             var scale = textHeight / font.MeasureString(" ").Y;
             spriteBatch.DrawString(font, text, position, Color.Black, 0, Vector2.Zero, scale, SpriteEffects.None, 0);
         }
 
-        protected void RenderText(ISpriteBatch spriteBatch, ISpriteFont font, string text, Rectangle position, float textHeight)
+        protected static void RenderText(ISpriteBatch spriteBatch, ISpriteFont font, string text, Rectangle position, float textHeight)
         {
             RenderText(spriteBatch, font, text, position.Location.ToVector2(), textHeight);
         }
 
-        protected void RenderImage(ISpriteBatch spriteBatch, ITexture2D texture, Rectangle position)
+        protected static void RenderImage(ISpriteBatch spriteBatch, ITexture2D texture, Rectangle position)
         {
             RenderImage(spriteBatch, texture, position, Color.White);
         }
 
-        protected void RenderImage(ISpriteBatch spriteBatch, ITexture2D texture, Rectangle position, Color color)
+        protected static void RenderImage(ISpriteBatch spriteBatch, ITexture2D texture, Rectangle position, Color color)
         {
             spriteBatch.Draw(texture: texture, destinationRectangle: position, color: color);
         }
 
-        public abstract void Render(ISpriteBatch spriteBatch, T component);
+        public void Render(ISpriteBatch spriteBatch, T component)
+        {
+            RenderComponent(spriteBatch, component);
+        }
+
+        protected abstract void RenderComponent(ISpriteBatch spriteBatch, T component);
     }
 }
