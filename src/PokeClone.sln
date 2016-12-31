@@ -29,6 +29,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MainMode.Core", "MainMode.Core\MainMode.Core.csproj", "{6E69614D-6F4D-7564-6C65-2E4C696E7578}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MainModeTest", "MainModeTest\MainModeTest.csproj", "{E6DECFB6-6F4D-7564-6C65-546573742E4C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B19BD4B3-DCAE-E1DC-6E65-2E476C6F6261} = {B19BD4B3-DCAE-E1DC-6E65-2E476C6F6261}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokemonRulesTest", "PokemonRulesTest\PokemonRulesTest.csproj", "{D3D4BB7E-E7E2-526E-756C-657354657374}"
 EndProject
