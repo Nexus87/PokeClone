@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace GameEngine.Core.GameEngineComponents
 {
-    public class InputComponent : IGameComponent
+    public class InputComponent : IGameComponent, IInputHandlerManager
     {
         private readonly IReadOnlyDictionary<Keys, CommandKeys> _keyMap;
         private readonly IKeyboardManager _manager;
@@ -60,10 +60,6 @@ namespace GameEngine.Core.GameEngineComponents
         {
             _priorizedHandler = null;
             _handlers.Clear();
-        }
-
-        public void Initialize()
-        {
         }
     }
 }

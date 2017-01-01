@@ -8,15 +8,27 @@ namespace GameEngine.Core
     internal class Screen
     {
         private readonly ScreenConstants _screenConstants;
-        private readonly GraphicsDevice _device;
-        private readonly RenderTarget2D _target;
+
+        public GraphicsDevice Device
+        {
+            get { return _device; }
+            set
+            {
+                _device = value;
+                _target = new RenderTarget2D(_device, (int) _screenConstants.ScreenWidth,
+                    (int) _screenConstants.ScreenHeight);
+            }
+        }
+
+        private RenderTarget2D _target;
         private Rectangle _display;
         private readonly RasterizerState _rasterization = new RasterizerState {ScissorTestEnable = true};
+        private GraphicsDevice _device;
 
         public void WindowsResizeHandler(float windowWidth, float windowHeight)
         {
-            var bufferX = (float)_device.PresentationParameters.BackBufferWidth;
-            var bufferY = (float)_device.PresentationParameters.BackBufferHeight;
+            var bufferX = (float)Device.PresentationParameters.BackBufferWidth;
+            var bufferY = (float)Device.PresentationParameters.BackBufferHeight;
 
             var windowX = windowWidth;
             var windowY = windowHeight;
@@ -27,7 +39,7 @@ namespace GameEngine.Core
             var scaleX = bufferX / _screenConstants.ScreenWidth;
             var scaleY = displayRatio * invBufferRatio * scaleX;
 
-            if (scaleY * _screenConstants.ScreenHeight > _device.PresentationParameters.BackBufferHeight)
+            if (scaleY * _screenConstants.ScreenHeight > Device.PresentationParameters.BackBufferHeight)
             {
                 scaleY = bufferY / _screenConstants.ScreenHeight;
                 scaleX = scaleY / (displayRatio * invBufferRatio);
@@ -39,21 +51,17 @@ namespace GameEngine.Core
             _display.Y = (int)((bufferY - _display.Height) / 2.0f);
         }
 
-        public Screen(ScreenConstants screenConstants, GraphicsDevice device)
+        public Screen(ScreenConstants screenConstants)
         {
             _screenConstants = screenConstants;
-            _device = device;
-            _target = new RenderTarget2D(device, (int)screenConstants.ScreenWidth, (int)screenConstants.ScreenHeight);
-
         }
 
         public void Begin(ISpriteBatch batch)
         {
-            _device.SetRenderTarget(_target);
-            _device.Clear(_screenConstants.BackgroundColor);
+            Device.SetRenderTarget(_target);
+            Device.Clear(_screenConstants.BackgroundColor);
 
             batch.Begin(SpriteSortMode.Immediate, rasterizerState: _rasterization);
-//            batch.Begin();
         }
 
         public void Draw(IGraphicComponent component, ISpriteBatch batch, GameTime gameTime)
@@ -64,7 +72,7 @@ namespace GameEngine.Core
         {
             batch.End();
 
-            _device.SetRenderTarget(null);
+            Device.SetRenderTarget(null);
             
             batch.Begin();
             batch.Draw(_target, destinationRectangle: _display);

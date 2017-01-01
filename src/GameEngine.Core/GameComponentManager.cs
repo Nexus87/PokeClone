@@ -1,7 +1,6 @@
 ﻿using System.Linq;
-using GameEngine.Core.GameEngineComponents;
-using GameEngine.Globals;
 using GameEngine.GUI;
+using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
 
 namespace GameEngine.Core
@@ -9,29 +8,12 @@ namespace GameEngine.Core
     public class GameComponentManager : IGameComponentManager
     {
         private readonly GameComponentCollection _component;
-        private readonly InputComponent _inputComponent;
         private readonly GameRunner _game;
-        private IInputHandler _inputHandler;
 
-        public GameComponentManager(GameComponentCollection component, InputComponent inputComponent, GameRunner game)
+        public GameComponentManager(GameComponentCollection component, GameRunner game)
         {
             _component = component;
-            _inputComponent = inputComponent;
             _game = game;
-        }
-
-        public IInputHandler InputHandler
-        {
-            set
-            {
-                _inputComponent.RemoveHandler(_inputHandler);
-                _inputHandler = value;
-                _inputComponent.AddHandler(_inputHandler);
-            }
-            get
-            {
-                return _inputHandler;
-            }
         }
 
         public void RemoveGameComponent(IGameComponent component)
@@ -54,7 +36,6 @@ namespace GameEngine.Core
         public void AddGameComponent(IGameComponent component)
         {
             _component.Add(new GameComponentWrapper(component, _game));
-            component.Initialize();
         }
 
         public IGraphicComponent Graphic

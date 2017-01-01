@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using GameEngine.Core.GameEngineComponents;
+using GameEngine.Graphics;
 using GameEngine.TypeRegistry;
 
 namespace GameEngine.Core.ModuleManager
@@ -11,19 +13,36 @@ namespace GameEngine.Core.ModuleManager
         public void RegisterModule(IModule module)
         {
             _registeredModules.Add(module.ModuleName, module);
-            module.RegisterTypes(TypeRegistry);
         }
 
 
         public IGameTypeRegistry TypeRegistry { get; } = new AutofacGameTypeRegistry();
 
 
-        public void StartModule(string moduleName, IGameComponentManager componentManager)
+        public void AddTextureConfigurations(TextureConfigurationBuilder builder)
+        {
+            foreach (var modules in _registeredModules.Values)
+            {
+                modules.AddTextureConfigurations(builder);
+            }
+        }
+
+        public void RegisterTypes()
+        {
+            foreach (var modules in _registeredModules.Values)
+            {
+                modules.RegisterTypes(TypeRegistry);
+            }
+        }
+
+        public void StartModule(string moduleName)
         {
             if (!_registeredModules.ContainsKey(moduleName))
                 throw new InvalidOperationException("Unkown module name: " + moduleName);
 
-            _registeredModules[moduleName].Start(componentManager, TypeRegistry);
+            var componentManager = TypeRegistry.ResolveType<IGameComponentManager>();
+            var inputHandlerManager = TypeRegistry.ResolveType<IInputHandlerManager>();
+            _registeredModules[moduleName].Start(componentManager, inputHandlerManager, TypeRegistry);
         }
     }
 }

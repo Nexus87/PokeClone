@@ -14,7 +14,7 @@ namespace BattleMode.Core.Components.GraphicComponents
         public event EventHandler OnPokemonAppeared = delegate { };
         public event EventHandler OnAttackAnimationPlayed = delegate { };
 
-        private readonly TextureProvider _provider;
+        private readonly SpriteProvider _provider;
         private readonly ImageBox _box;
         private bool _isPlayer;
 
@@ -33,7 +33,7 @@ namespace BattleMode.Core.Components.GraphicComponents
             OnAttackAnimationPlayed(this, null);
         }
 
-        public PokemonSprite(ImageBox box, TextureProvider provider)
+        public PokemonSprite(ImageBox box, SpriteProvider provider)
         {
             _box = box;
             _provider = provider;

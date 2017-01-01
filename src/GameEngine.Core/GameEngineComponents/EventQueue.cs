@@ -37,9 +37,5 @@ namespace GameEngine.Core.GameEngineComponents
         {
             eventQueue.AddLast(ev);
         }
-
-        public void Initialize()
-        {
-        }
     }
 }

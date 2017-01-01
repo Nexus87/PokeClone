@@ -4,7 +4,6 @@ namespace GameEngine.Core
 {
     public interface IGameComponent
     {
-        void Initialize();
         void Update(GameTime time);
     }
 }

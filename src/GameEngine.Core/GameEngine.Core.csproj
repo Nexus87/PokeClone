@@ -63,6 +63,7 @@
     <Compile Include="GameEngineComponents\EventQueue.cs" />
     <Compile Include="GameEngineComponents\IEvent.cs" />
     <Compile Include="GameEngineComponents\IEventQueue.cs" />
+    <Compile Include="GameEngineComponents\IInputHandlerManager.cs" />
     <Compile Include="GameEngineComponents\IKeyboardManager.cs" />
     <Compile Include="GameEngineComponents\InputComponent.cs" />
     <Compile Include="GameEngineComponents\KeyboardManager.cs" />
@@ -74,6 +75,7 @@
     <Compile Include="IGameComponentManager.cs" />
     <Compile Include="ISpriteSheetProvider.cs" />
     <Compile Include="GameRunner.cs" />
+    <Compile Include="PokeEngine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ModuleManager\AutofacModuleManager.cs" />
     <Compile Include="ModuleManager\IModule.cs" />
@@ -89,7 +91,7 @@
     <Compile Include="TextureLoader\SpriteSheetTextureProvider.cs" />
     <Compile Include="TextureLoader\TextureLoader.cs" />
     <Compile Include="TextureLoader\TextureProviderFactory.cs" />
-    <Compile Include="TextureProvider.cs" />
+    <Compile Include="SpriteProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GameEngine.Globals\GameEngine.Globals.csproj">

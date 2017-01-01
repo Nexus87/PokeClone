@@ -7,7 +7,9 @@ using BattleMode.Core.Components.GraphicComponents;
 using BattleMode.Gui;
 using BattleMode.Shared;
 using GameEngine.Core;
+using GameEngine.Core.GameEngineComponents;
 using GameEngine.Core.ModuleManager;
+using GameEngine.Graphics;
 using GameEngine.TypeRegistry;
 
 namespace BattleMode.Core
@@ -17,13 +19,7 @@ namespace BattleMode.Core
         private IBattleGraphicController _graphic;
         private IBattleStateService _battleState;
         private AiComponent _aiComponent;
-        private readonly IEngineInterface _engine;
         private Client _player;
-
-        public BattleModule(IEngineInterface engine)
-        {
-            _engine = engine;
-        }
 
         public string ModuleName => "BattleModule";
 
@@ -34,10 +30,13 @@ namespace BattleMode.Core
             registry.ScanAssembly(Assembly.GetAssembly(typeof(IBattleStateService)));
             registry.ScanAssembly(Assembly.GetAssembly(typeof(IGUIService)));
             registry.RegisterType(a => _player);
-
         }
 
-        public void Start(IGameComponentManager componentManager, IGameTypeRegistry registry)
+        public void AddTextureConfigurations(TextureConfigurationBuilder builder)
+        {
+        }
+
+        public void Start(IGameComponentManager componentManager, IInputHandlerManager inputHandlerManager, IGameTypeRegistry registry)
         {
             var data = registry.ResolveType<BattleData>();
             var playerId = data.PlayerId;
@@ -56,11 +55,12 @@ namespace BattleMode.Core
             componentManager.AddGameComponent(_battleState);
             componentManager.Graphic = _graphic;
 
-            _engine.ShowGUI();
             _battleState.SetCharacter(_player.Id, _player.Pokemons.First());
+
+            registry.ResolveType<GuiManager>().Show();
         }
 
-        public void Stop(IGameComponentManager componentManager)
+        public void Stop(IGameComponentManager componentManager, IInputHandlerManager inputHandlerManager)
         {
             componentManager.RemoveGameComponent(_aiComponent);
             componentManager.RemoveGameComponent(_battleState);

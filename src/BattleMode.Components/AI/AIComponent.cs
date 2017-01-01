@@ -25,6 +25,7 @@ namespace BattleMode.Components.AI
             _player = player;
             _pokemons = ai.Pokemons;
             state.StateChanged += StateChangedHandler;
+            _nextAction = ChoosePokemon;
         }
 
         private void StateChangedHandler(object sender, StateChangedEventArgs e)
@@ -74,10 +75,6 @@ namespace BattleMode.Components.AI
 
             _nextAction();
             _nextAction = null;
-        }
-
-        public void Initialize()
-        {
         }
     }
 }

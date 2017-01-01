@@ -8,7 +8,7 @@ using GameEngine.TypeRegistry;
 
 namespace BattleMode.Components.BattleState
 {
-    [GameType]
+    [GameService(typeof(WaitForCharState))]
     public class WaitForCharState : AbstractState
     {
         private readonly IEventCreator _eventCreator;

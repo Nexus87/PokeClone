@@ -12,14 +12,21 @@ namespace GameEngine.Graphics
     {
         public ITexture2D Pixel => _pixel;
 
-        public TextureProvider(Dictionary<object, Tuple<IEnumerable<TextureItem>, IEnumerable<FontItem>>> configs, ContentManager contentManager)
+        internal void SetConfiguration(
+            Dictionary<object, Tuple<IEnumerable<TextureItem>, IEnumerable<FontItem>>> configs,
+            ContentManager contentManager
+        )
         {
             _subTextureProviders = configs
                 .ToDictionary(x => x.Key, x => new SubTextureProvider(x.Value, contentManager));
+        }
+
+        public TextureProvider()
+        {
             _pixel = new XnaTexture2D();
         }
 
-        private readonly Dictionary<object, SubTextureProvider> _subTextureProviders;
+        private Dictionary<object, SubTextureProvider> _subTextureProviders;
         private readonly XnaTexture2D _pixel;
 
         public ITexture2D GetTexture(object key, string textureIdentifier)

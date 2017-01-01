@@ -87,11 +87,6 @@ namespace MainMode.Core
                 controller.PlayerTurnDirection(direction);
         }
 
-        public void Initialize()
-        {
-            throw new System.NotImplementedException();
-        }
-
         public void Update(GameTime time)
         {
             throw new System.NotImplementedException();

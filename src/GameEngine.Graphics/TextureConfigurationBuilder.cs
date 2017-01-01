@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using GameEngine.Globals;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using OpenTK.Input;
 
 namespace GameEngine.Graphics
@@ -37,7 +36,7 @@ namespace GameEngine.Graphics
             }
         }
 
-        public TextureProvider BuildProvider(ContentManager contentManager)
+        public Dictionary<object, Tuple<IEnumerable<TextureItem>, IEnumerable<FontItem>>> BuildConfiguration()
         {
             var textureConfigs = _configs.Select(x => new { Key = x.Key, Value = Tuple.Create(x.Value, (IEnumerable<FontItem>) null)});
             var fontConfigs = _fontConfigs.Select(x => new { Key = x.Key, Value = Tuple.Create((IEnumerable<TextureItem>)null, x.Value)});
@@ -51,7 +50,7 @@ namespace GameEngine.Graphics
                         x.FirstOrDefault(y => y.Value.Item2 != null)?.Value.Item2)
                 );
 
-            return new TextureProvider(dictonary, contentManager);
+            return dictonary;
         }
     }
 

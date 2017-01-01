@@ -24,10 +24,10 @@ namespace PokemonGame
                 startModule = args[0];
 
             var config = new Configuration();
-            var engine = new GameRunner(config);
+            var engine = new PokeEngine(config);
 
             engine.RegisterModule(new PokemonGameModule());
-            engine.RegisterModule(new BattleModule(engine));
+            engine.RegisterModule(new BattleModule());
             engine.RegisterModule(new MainModule(CreateDummyMap()));
             engine.SetSkin(new ClassicSkin());
             engine.SetStartModule(startModule);

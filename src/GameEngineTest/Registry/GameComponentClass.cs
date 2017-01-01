@@ -8,7 +8,6 @@ namespace GameEngineTest.Registry
     {
         public static int Instances;
         public GameComponentClass() { Instances++; }
-        public void Initialize() { throw new NotImplementedException(); }
         public void Update(GameTime time) { throw new NotImplementedException(); }
     }
 }

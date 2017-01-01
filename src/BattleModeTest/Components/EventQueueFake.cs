@@ -19,10 +19,6 @@ namespace BattleModeTest.Components
             _events.Add(newEvent);
         }
 
-        public void Initialize()
-        {
-        }
-
         public void Update(GameTime time)
         {
         }

@@ -31,6 +31,8 @@ namespace BattleMode.Components.BattleState
             ExecutionState = executionState;
             _eventCreator = eventCreator;
             _data = data;
+            Initialize();
+
         }
 
         public event EventHandler<StateChangedEventArgs> StateChanged = delegate { };

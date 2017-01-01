@@ -12,12 +12,6 @@ namespace GameEngine.Core
             Component = component;
         }
 
-        public override void Initialize()
-        {
-            base.Initialize();
-            Component.Initialize();
-        }
-
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);

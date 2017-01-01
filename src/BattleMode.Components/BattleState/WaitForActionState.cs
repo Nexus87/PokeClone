@@ -8,7 +8,7 @@ using GameEngine.TypeRegistry;
 
 namespace BattleMode.Components.BattleState
 {
-    [GameType]
+    [GameService(typeof(WaitForActionState))]
     public class WaitForActionState : IBattleState
     {
         private int _clientCnt;

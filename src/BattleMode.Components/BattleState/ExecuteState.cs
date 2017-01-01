@@ -5,7 +5,7 @@ using GameEngine.TypeRegistry;
 
 namespace BattleMode.Components.BattleState
 {
-    [GameType]
+    [GameService(typeof(ExecuteState))]
     public class ExecuteState : AbstractState
     {
         private readonly ICommandScheduler scheduler;

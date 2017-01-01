@@ -1,4 +1,6 @@
-﻿using GameEngine.TypeRegistry;
+﻿using GameEngine.Core.GameEngineComponents;
+using GameEngine.Graphics;
+using GameEngine.TypeRegistry;
 
 namespace GameEngine.Core.ModuleManager
 {
@@ -6,7 +8,8 @@ namespace GameEngine.Core.ModuleManager
     {
         string ModuleName { get; }
         void RegisterTypes(IGameTypeRegistry registry);
-        void Start(IGameComponentManager manager, IGameTypeRegistry registry);
-        void Stop(IGameComponentManager engine);
+        void AddTextureConfigurations(TextureConfigurationBuilder builder);
+        void Start(IGameComponentManager manager, IInputHandlerManager inputHandlerManager, IGameTypeRegistry registry);
+        void Stop(IGameComponentManager engine, IInputHandlerManager inputHandlerManager);
     }
 }
