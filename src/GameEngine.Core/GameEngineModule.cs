@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using GameEngine.Core.GameEngineComponents;
-using GameEngine.Core.Registry;
+using GameEngine.Core.ModuleManager;
 using GameEngine.GUI;
 using GameEngine.GUI.Components;
+using GameEngine.GUI.Configuration;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Panels;
 using GameEngine.GUI.Renderers;
@@ -14,22 +16,20 @@ namespace GameEngine.Core
 {
     internal class GameEngineModule : IModule
     {
-        private readonly GraphicResources _resources;
         private readonly PokeEngine _engine;
+        private readonly Configuration _config;
 
-        public GameEngineModule(GraphicResources resources, PokeEngine engine)
+        public GameEngineModule(PokeEngine engine, Configuration config)
         {
             _engine = engine;
-            _resources = resources;
+            _config = config;
         }
 
         public void RegisterTypes(IGameTypeRegistry registry)
         {
-            registry.RegisterType(r => _resources.DefaultFont);
-            registry.RegisterType(r => _resources);
             registry.RegisterTypeAs<DefaultTextSplitter, ITextSplitter>();
-            registry.RegisterAsService<InputComponent, InputComponent>(reg => new InputComponent(_resources.Configuration));
-            registry.RegisterAsService<ContentManager, ContentManager>(reg => _resources.ContentManager);
+            registry.RegisterAsService<InputComponent, InputComponent>(reg => new InputComponent(_config));
+            registry.RegisterAsService<ContentManager, ContentManager>(reg => _engine.Content);
             registry.RegisterType<IEngineInterface>(r => _engine);
             registry.ScanAssembly(Assembly.GetExecutingAssembly());
             registry.ScanAssembly(Assembly.GetAssembly(typeof(IGraphicComponent)));

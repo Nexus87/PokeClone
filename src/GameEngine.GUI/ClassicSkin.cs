@@ -1,52 +1,57 @@
-using GameEngine.GUI.General;
+using System.Collections.Generic;
+using GameEngine.Graphics;
 using GameEngine.GUI.Renderers;
 using GameEngine.GUI.Renderers.PokemonClassicRenderer;
 using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace GameEngine.GUI
 {
     public class ClassicSkin : ISkin
     {
-        private ITexture2D ArrowTexture { get; set; }
-        private XnaTexture2D Pixel { get; set; }
-        private ITexture2D BorderTexture { get; set; }
-        private ITexture2D Cup { get; set; }
-        private ISpriteFont Font { get; set; }
+        private const string Arrow = "arrow";
+        private const string Border = "border";
+        private const string Circle = "circle";
+        private const string DefaultFont = "DefaultFont";
 
-        public void RegisterRenderers(IGameTypeRegistry registry)
+
+        public void RegisterRenderers(IGameTypeRegistry registry, TextureProvider provider)
         {
-            registry.RegisterAsService<ClassicButtonRenderer, ButtonRenderer>(r => new ClassicButtonRenderer(ArrowTexture, Font));
-            registry.RegisterAsService<ClassicWindowRenderer, WindowRenderer>(r => new ClassicWindowRenderer(BorderTexture));
-            registry.RegisterAsService<ClassicLabelRenderer, LabelRenderer>(r => new ClassicLabelRenderer(Font));
-            registry.RegisterAsService<ClassicTextAreaRenderer, TextAreaRenderer>(r => new ClassicTextAreaRenderer(Font));
-            registry.RegisterAsService<ClassicLineRenderer, HpLineRenderer>(r => new ClassicLineRenderer(Cup, Pixel, BackgroundColor));
+            var arrow = provider.GetTexture(this, Arrow);
+            var border = provider.GetTexture(this, Border);
+            var circle = provider.GetTexture(this, Circle);
+            var font = provider.GetFont(this, DefaultFont);
+            var pixel = provider.Pixel;
+
+            registry.RegisterAsService<ClassicButtonRenderer, ButtonRenderer>(r => new ClassicButtonRenderer(arrow, font));
+            registry.RegisterAsService<ClassicWindowRenderer, WindowRenderer>(r => new ClassicWindowRenderer(border));
+            registry.RegisterAsService<ClassicLabelRenderer, LabelRenderer>(r => new ClassicLabelRenderer(font));
+            registry.RegisterAsService<ClassicTextAreaRenderer, TextAreaRenderer>(r => new ClassicTextAreaRenderer(font));
+            registry.RegisterAsService<ClassicLineRenderer, HpLineRenderer>(r => new ClassicLineRenderer(circle, pixel, BackgroundColor));
             registry.RegisterAsService<ClassicImageBoxRenderer, ImageBoxRenderer>();
-            registry.RegisterAsService<ClassicPanelRenderer, PanelRenderer>(r => new ClassicPanelRenderer(Pixel));
-            registry.RegisterAsService<ClassicSelectablePanelRenderer, SelectablePanelRenderer>(r => new ClassicSelectablePanelRenderer(ArrowTexture));
+            registry.RegisterAsService<ClassicPanelRenderer, PanelRenderer>(r => new ClassicPanelRenderer(pixel));
+            registry.RegisterAsService<ClassicSelectablePanelRenderer, SelectablePanelRenderer>(r => new ClassicSelectablePanelRenderer(arrow));
             registry.RegisterAsService<ClassicScrollAreaRenderer, ScrollAreaRenderer>();
 
         }
 
-        public void LoadContent(ContentManager content, Game game, Configuration.Configuration config)
-        {
-            ArrowTexture = new XnaTexture2D(config.DefaultArrowTexture, content);
-            Font = new XnaSpriteFont(config.DefaultFont, content);
-            BorderTexture = new XnaTexture2D(config.DefaultBorderTexture, content);
-            Pixel = new XnaTexture2D();
-            Cup = new XnaTexture2D("circle", content);
-
-            Pixel.Texture = new Texture2D(game.GraphicsDevice, 1, 1, false, SurfaceFormat.Color, 1);
-            Pixel.SetData(new[] { Color.White });
-
-            ArrowTexture.LoadContent();
-            BorderTexture.LoadContent();
-            Cup.LoadContent();
-            Font.LoadContent();
-        }
-
         public Color BackgroundColor { get; } = new Color(248, 248, 248, 0);
+        public void AddTextureConfigurations(TextureConfigurationBuilder builder)
+        {
+            var textureItems = new List<TextureItem>
+            {
+                new TextureItem(@"GuiSkins\ClassicSkin\arrow", TextureType.SingleTexture, null, Arrow, true),
+                new TextureItem(@"GuiSkins\ClassicSkin\border", TextureType.SingleTexture, null, Border, true),
+                new TextureItem(@"GuiSkins\ClassicSkin\circle", TextureType.SingleTexture, null, Circle, true),
+            };
+
+            var fontItems = new List<FontItem>
+            {
+                new FontItem(@"GuiSkins\ClassicSkin\MenuFont", DefaultFont, true)
+            };
+
+            builder.AddTextureConfig(this, textureItems);
+            builder.AddFont(this, fontItems);
+        }
     }
 }

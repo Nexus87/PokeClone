@@ -78,7 +78,6 @@
     <Compile Include="Diagnostic\DebugRectangle.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="GraphicComponentSizeChangedEventArgs.cs" />
-    <Compile Include="Graphics\GraphicResources.cs" />
     <Compile Include="Graphics\IAnimation.cs" />
     <Compile Include="Graphics\IImageBox.cs" />
     <Compile Include="Graphics\NullGraphicObject.cs" />
@@ -124,14 +123,30 @@
     <Compile Include="VisibilityChangedEventArgs.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\GuiSkins\ClassicSkin\Linux\arrow.xnb" />
-    <Content Include="Content\GuiSkins\ClassicSkin\Linux\border.xnb" />
-    <Content Include="Content\GuiSkins\ClassicSkin\Linux\circle.xnb" />
-    <Content Include="Content\GuiSkins\ClassicSkin\Linux\MenuFont.xnb" />
-    <Content Include="Content\GuiSkins\ClassicSkin\Windows\arrow.xnb" />
-    <Content Include="Content\GuiSkins\ClassicSkin\Windows\border.xnb" />
-    <Content Include="Content\GuiSkins\ClassicSkin\Windows\circle.xnb" />
-    <Content Include="Content\GuiSkins\ClassicSkin\Windows\MenuFont.xnb" />
+    <Content Include="Content\Linux\GuiSkins\ClassicSkin\arrow.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Linux\GuiSkins\ClassicSkin\border.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Linux\GuiSkins\ClassicSkin\circle.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Linux\GuiSkins\ClassicSkin\MenuFont.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Windows\GuiSkins\ClassicSkin\arrow.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Windows\GuiSkins\ClassicSkin\border.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Windows\GuiSkins\ClassicSkin\circle.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Windows\GuiSkins\ClassicSkin\MenuFont.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -148,7 +163,6 @@
       <Name>GameEngine.TypeRegistry</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup />
   <ItemGroup />
   <ItemGroup />

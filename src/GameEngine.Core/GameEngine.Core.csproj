@@ -58,6 +58,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GameComponentManager.cs" />
     <Compile Include="GameComponentWrapper.cs" />
     <Compile Include="GameEngineComponents\EventQueue.cs" />
     <Compile Include="GameEngineComponents\IEvent.cs" />
@@ -74,9 +75,9 @@
     <Compile Include="ISpriteSheetProvider.cs" />
     <Compile Include="PokeEngine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Registry\AutofacModuleRegistry.cs" />
-    <Compile Include="Registry\IModule.cs" />
-    <Compile Include="Registry\IModuleRegistry.cs" />
+    <Compile Include="ModuleManager\AutofacModuleManager.cs" />
+    <Compile Include="ModuleManager\IModule.cs" />
+    <Compile Include="ModuleManager\IModuleManager.cs" />
     <Compile Include="Screen.cs" />
     <Compile Include="ScreenConstants.cs" />
     <Compile Include="SpriteFontCreator.cs" />

@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 using GameEngine.Core;
-using GameEngine.Core.Registry;
+using GameEngine.Core.ModuleManager;
 using GameEngine.TypeRegistry;
 using MainMode.Core.Graphics;
 using Microsoft.Xna.Framework.Content;

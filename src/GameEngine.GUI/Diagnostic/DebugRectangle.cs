@@ -1,3 +1,4 @@
+using GameEngine.Graphics;
 using GameEngine.GUI.General;
 using GameEngine.GUI.Graphics;
 using Microsoft.Xna.Framework;
@@ -8,9 +9,9 @@ namespace GameEngine.GUI.Diagnostic
     {
         private readonly ITexture2D _pixel;
 
-        public DebugRectangle()
+        public DebugRectangle(TextureProvider textureProvider)
         {
-            _pixel = GraphicResources.Pixel;
+            _pixel = textureProvider.Pixel;
         }
 
         public void Draw(ISpriteBatch spriteBatch, Rectangle rectangle, Color color)

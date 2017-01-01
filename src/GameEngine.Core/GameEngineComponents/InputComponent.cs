@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace GameEngine.Core.GameEngineComponents
 {
-    internal class InputComponent : IGameComponent
+    public class InputComponent : IGameComponent
     {
         private readonly IReadOnlyDictionary<Keys, CommandKeys> _keyMap;
         internal IInputHandler Handler;

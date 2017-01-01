@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Linq;
 using GameEngine.Core.GameEngineComponents;
-using GameEngine.Core.Registry;
+using GameEngine.Core.ModuleManager;
 using GameEngine.Globals;
+using GameEngine.Graphics;
 using GameEngine.GUI;
 using GameEngine.GUI.Configuration;
 using GameEngine.GUI.General;
@@ -11,11 +12,10 @@ using Microsoft.Xna.Framework;
 
 namespace GameEngine.Core
 {
-    public class PokeEngine : Game, IEngineInterface, IGameComponentManager
+    public class PokeEngine : Game, IEngineInterface
     {
         private readonly Configuration _config;
-        public IModuleRegistry Registry;
-        private readonly GraphicResources _factory;
+        private readonly IModuleManager _manager;
         private GuiManager GuiManager { get; set; }
 
         private XnaSpriteBatch _batch;
@@ -23,62 +23,27 @@ namespace GameEngine.Core
         private Screen _screen;
 
         private string _startModule;
-        private IInputHandler _inputHandler;
         private ISkin _skin;
+        private Graphics.TextureProvider _textureProvider;
+        private GraphicsDeviceManager _graphicsDeviceManager;
+        private GameComponentManager _gameComponentManager;
 
         public PokeEngine(Configuration config)         {
             _config = config;
             config.CheckNull("config");
-            Registry = new AutofacModuleRegistry();
-            _factory = new GraphicResources(config, Content);
-            new GraphicsDeviceManager(this);
+            _manager = new AutofacModuleManager();
+            _graphicsDeviceManager = new GraphicsDeviceManager(this);
 
             Window.AllowUserResizing = true;
             
-            var runningOnMono = Type.GetType ("Mono.Runtime") != null;
-            Content.RootDirectory = runningOnMono ? @"Content\Linux" : @"Content\Windows";
+            Content.RootDirectory = @"Content";
 
-            Registry.RegisterModule(new GameEngineModule(_factory, this));
+            _manager.RegisterModule(new GameEngineModule(this, config));
         }
 
         public IGraphicComponent Graphic { get; set; }
 
-        public void AddGameComponent(IGameComponent component)
-        {
-            Components.Add(new GameComponentWrapper(component, this));
-            component.Initialize();
-        }
 
-        public void RemoveGameComponent(IGameComponent component)
-        {
-            var res = Components.FirstOrDefault( c =>
-            {
-                var comp = c as GameComponentWrapper;
-                if (comp == null)
-                    return false;
-
-                return comp.Component == component;
-            });
-
-            if (res == null)
-                return;
-
-            Components.Remove(res);
-        }
-
-        public IInputHandler InputHandler
-        {
-            set
-            {
-                _inputHandler = value;
-                if (_input.Handler == null)
-                    _input.Handler = _inputHandler;
-            }
-            get
-            {
-                return _inputHandler;
-            }
-        }
 
         public void ShowGUI()
         {
@@ -89,7 +54,7 @@ namespace GameEngine.Core
         public void CloseGUI()
         {
             GuiManager.Close();
-            _input.Handler = _inputHandler;
+            _input.Handler = _gameComponentManager.InputHandler;
         }
 
         protected override void Draw(GameTime gameTime)
@@ -103,17 +68,20 @@ namespace GameEngine.Core
         protected override void Initialize()
         {
             base.Initialize();
-            _skin.RegisterRenderers(Registry.TypeRegistry);
-            _screen = new Screen(Registry.TypeRegistry.ResolveType<ScreenConstants>(), GraphicsDevice);
-            GuiManager = Registry.TypeRegistry.ResolveType<GuiManager>();
-            _input = Registry.TypeRegistry.ResolveType<InputComponent>();
-
+            var textureConfigBuilder = new TextureConfigurationBuilder();
+            _skin.AddTextureConfigurations(textureConfigBuilder);
+            _textureProvider = textureConfigBuilder.BuildProvider(Content);
+            _skin.RegisterRenderers(_manager.TypeRegistry, _textureProvider);
+            _screen = new Screen(_manager.TypeRegistry.ResolveType<ScreenConstants>(), GraphicsDevice);
+            GuiManager = _manager.TypeRegistry.ResolveType<GuiManager>();
+            _input = _manager.TypeRegistry.ResolveType<InputComponent>();
+            _gameComponentManager = new GameComponentManager(Components, _input, this);
             Window.ClientSizeChanged += delegate { _screen.WindowsResizeHandler(Window.ClientBounds.Width, Window.ClientBounds.Height); };
             _screen.WindowsResizeHandler(Window.ClientBounds.Width, Window.ClientBounds.Height);
-            _skin.LoadContent(Content, this, _config);
+            _textureProvider.Init(_graphicsDeviceManager.GraphicsDevice);
 
-            Registry.StartModule("GameEngine", this);
-            Registry.StartModule(_startModule, this);
+            _manager.StartModule("GameEngine", _gameComponentManager);
+            _manager.StartModule(_startModule, _gameComponentManager);
 
             if (Graphic == null)
                 throw new InvalidOperationException("Graphic component is not set");
@@ -126,7 +94,6 @@ namespace GameEngine.Core
         {
             base.LoadContent();
             _batch = new XnaSpriteBatch(GraphicsDevice);
-            _factory.Setup(this);
         }
 
         public void SetStartModule(string name)
@@ -137,6 +104,11 @@ namespace GameEngine.Core
         public void SetSkin(ISkin skin)
         {
             _skin = skin;
+        }
+
+        public void RegisterModule(IModule module)
+        {
+            _manager.RegisterModule(module);
         }
     }
 }

@@ -64,6 +64,7 @@
     <Compile Include="General\XnaTexture2D.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TextureConfigurationBuilder.cs" />
+    <Compile Include="TextureProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

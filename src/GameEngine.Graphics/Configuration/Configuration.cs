@@ -14,16 +14,9 @@ namespace GameEngine.GUI.Configuration
             keyMap.Add(Keys.Right, CommandKeys.Right);
             keyMap.Add(Keys.Enter, CommandKeys.Select);
             keyMap.Add(Keys.Escape, CommandKeys.Back);
-            DefaultFont = "MenuFont";
-            DefaultBorderTexture = "border";
-            DefaultArrowTexture = "arrow";
         }
 
-        protected Dictionary<Keys, CommandKeys> keyMap = new Dictionary<Keys, CommandKeys>();
-
-        public string DefaultBorderTexture { get; private set; }
-        public string DefaultFont { get; private set; }
-        public string DefaultArrowTexture { get; private set; }
+        public Dictionary<Keys, CommandKeys> keyMap = new Dictionary<Keys, CommandKeys>();
 
         public virtual T GetOption<T>(string optionString)
         {
@@ -52,6 +45,6 @@ namespace GameEngine.GUI.Configuration
             return (T) ret;
         }
 
-        public IReadOnlyDictionary<Keys, CommandKeys> KeyMap { get { return keyMap; } }
+        public IReadOnlyDictionary<Keys, CommandKeys> KeyMap => keyMap;
     }
 }

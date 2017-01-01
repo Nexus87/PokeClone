@@ -1,6 +1,6 @@
 ﻿using GameEngine.TypeRegistry;
 
-namespace GameEngine.Core.Registry
+namespace GameEngine.Core.ModuleManager
 {
     public interface IModule
     {

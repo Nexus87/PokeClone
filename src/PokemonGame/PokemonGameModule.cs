@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using GameEngine.Core;
-using GameEngine.Core.Registry;
+using GameEngine.Core.ModuleManager;
 using GameEngine.TypeRegistry;
 
 namespace PokemonGame

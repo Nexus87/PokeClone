@@ -7,7 +7,7 @@ using BattleMode.Core.Components.GraphicComponents;
 using BattleMode.Gui;
 using BattleMode.Shared;
 using GameEngine.Core;
-using GameEngine.Core.Registry;
+using GameEngine.Core.ModuleManager;
 using GameEngine.TypeRegistry;
 
 namespace BattleMode.Core

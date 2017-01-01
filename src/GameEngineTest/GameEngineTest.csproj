@@ -78,12 +78,10 @@
     <Compile Include="InputComponentTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registry\AutofacGameTypeRegistryTest.cs" />
-    <Compile Include="Registry\AutofacModuleRegistryTest.cs" />
     <Compile Include="Registry\GameComponentClass.cs" />
     <Compile Include="Registry\GameService.cs" />
     <Compile Include="Registry\IGameService.cs" />
     <Compile Include="Registry\IGameTypeRegistryTest.cs" />
-    <Compile Include="Registry\IModuleRegistryTest.cs" />
     <Compile Include="Registry\TestModule.cs" />
     <Compile Include="TestUtils\DrawnObject.cs" />
     <Compile Include="TestUtils\Extensions.cs" />
