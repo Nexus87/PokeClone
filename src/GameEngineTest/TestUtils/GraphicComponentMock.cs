@@ -32,8 +32,6 @@ namespace GameEngineTest.TestUtils
         public Action DrawCallback = null;
         public void Draw(GameTime time, ISpriteBatch batch)
         {
-            if (!_isVisible)
-                return;
             WasDrawn = true;
             DrawCallback?.Invoke();
 
@@ -75,24 +73,6 @@ namespace GameEngineTest.TestUtils
         {
         }
 
-        public event EventHandler<VisibilityChangedEventArgs> VisibilityChanged = delegate { };
-        private bool _isVisible = true;
-
-        public bool IsVisible
-        {
-            get
-            {
-                return _isVisible;
-            }
-            set
-            {
-                if (_isVisible == value)
-                    return;
-
-                _isVisible = value;
-                VisibilityChanged(this, new VisibilityChangedEventArgs(value));
-            }
-        }
 
         public event EventHandler<ComponentSelectedEventArgs> ComponentSelected;
 

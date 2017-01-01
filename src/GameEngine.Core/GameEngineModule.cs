@@ -16,10 +16,10 @@ namespace GameEngine.Core
 {
     internal class GameEngineModule : IModule
     {
-        private readonly PokeEngine _engine;
+        private readonly GameRunner _engine;
         private readonly Configuration _config;
 
-        public GameEngineModule(PokeEngine engine, Configuration config)
+        public GameEngineModule(GameRunner engine, Configuration config)
         {
             _engine = engine;
             _config = config;

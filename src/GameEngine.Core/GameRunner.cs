@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using GameEngine.Core.GameEngineComponents;
 using GameEngine.Core.ModuleManager;
 using GameEngine.Globals;
@@ -7,14 +6,12 @@ using GameEngine.Graphics;
 using GameEngine.GUI;
 using GameEngine.GUI.Configuration;
 using GameEngine.GUI.General;
-using GameEngine.GUI.Graphics;
 using Microsoft.Xna.Framework;
 
 namespace GameEngine.Core
 {
-    public class PokeEngine : Game, IEngineInterface
+    public class GameRunner : Game, IEngineInterface
     {
-        private readonly Configuration _config;
         private readonly IModuleManager _manager;
         private GuiManager GuiManager { get; set; }
 
@@ -24,11 +21,10 @@ namespace GameEngine.Core
         private string _startModule;
         private ISkin _skin;
         private Graphics.TextureProvider _textureProvider;
-        private GraphicsDeviceManager _graphicsDeviceManager;
+        private readonly GraphicsDeviceManager _graphicsDeviceManager;
         private GameComponentManager _gameComponentManager;
 
-        public PokeEngine(Configuration config)         {
-            _config = config;
+        public GameRunner(Configuration config)         {
             config.CheckNull("config");
             _manager = new AutofacModuleManager();
             _graphicsDeviceManager = new GraphicsDeviceManager(this);

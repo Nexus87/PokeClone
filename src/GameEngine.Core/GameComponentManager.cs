@@ -10,10 +10,10 @@ namespace GameEngine.Core
     {
         private readonly GameComponentCollection _component;
         private readonly InputComponent _inputComponent;
-        private readonly PokeEngine _game;
+        private readonly GameRunner _game;
         private IInputHandler _inputHandler;
 
-        public GameComponentManager(GameComponentCollection component, InputComponent inputComponent, PokeEngine game)
+        public GameComponentManager(GameComponentCollection component, InputComponent inputComponent, GameRunner game)
         {
             _component = component;
             _inputComponent = inputComponent;

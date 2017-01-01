@@ -72,11 +72,6 @@ namespace GameEngine.Core
                 _widgets2.Remove(w);
         }
 
-        public GuiManager()
-        {
-            IsActive = false;
-        }
-
         public bool IsActive { get; set; }
 
 

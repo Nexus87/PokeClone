@@ -39,7 +39,7 @@ namespace BattleMode.Gui
             _ai = data.Clients.First(id => !id.IsPlayer);
             _moveWidget = moveWidget;
             _itemWidget = itemWidget;
-            MainWidget = mainWidget;
+            _mainWidget = mainWidget;
             _pokemonWidget = pokemonWidget;
 
             _messageBox = messageBox;
@@ -52,7 +52,7 @@ namespace BattleMode.Gui
             InitPkmnMenu(screen);
 
             manager.ShowWidget(_messageBox);
-            manager.ShowWidget(MainWidget);
+            manager.ShowWidget(_mainWidget);
         }
 
         public event EventHandler MenuShowed = delegate { };
@@ -90,8 +90,8 @@ namespace BattleMode.Gui
             _manager.CloseWidget(_moveWidget);
             _manager.CloseWidget(_pokemonWidget);
 
-            _manager.ShowWidget(MainWidget);
-            MainWidget.ResetSelection();
+            _manager.ShowWidget(_mainWidget);
+            _mainWidget.ResetSelection();
         }
 
         private void InitAttackMenu(ScreenConstants screen)
@@ -130,9 +130,9 @@ namespace BattleMode.Gui
             var width = screen.ScreenWidth - xPosition;
             var height = screen.ScreenHeight - yPosition;
 
-            MainWidget.SetCoordinates(xPosition, yPosition, width, height);
-            MainWidget.ItemSelected += MainMenu_ItemSelected;
-            MainWidget.ExitRequested += delegate { engineInterface.Exit(); };
+            _mainWidget.SetCoordinates(xPosition, yPosition, width, height);
+            _mainWidget.ItemSelected += MainMenu_ItemSelected;
+            _mainWidget.ExitRequested += delegate { engineInterface.Exit(); };
         }
 
         private void InitMessageBox(ScreenConstants screen)
@@ -175,19 +175,19 @@ namespace BattleMode.Gui
             switch (e.SelectedData)
             {
                 case MainMenuEntries.Attack:
-                    _manager.CloseWidget(MainWidget);
+                    _manager.CloseWidget(_mainWidget);
                     _manager.ShowWidget(_moveWidget);
                     _moveWidget.ResetSelection();
                     break;
 
                 case MainMenuEntries.Pkmn:
-                    _manager.CloseWidget(MainWidget);
+                    _manager.CloseWidget(_mainWidget);
                     _manager.ShowWidget(_pokemonWidget);
                     _pokemonWidget.ResetSelection();
                     break;
 
                 case MainMenuEntries.Item:
-                    _manager.CloseWidget(MainWidget);
+                    _manager.CloseWidget(_mainWidget);
                     _manager.ShowWidget(_itemWidget);
                     _itemWidget.ResetSelection();
                     break;
@@ -200,6 +200,6 @@ namespace BattleMode.Gui
             _manager.CloseWidget(_pokemonWidget);
         }
 
-        public IMenuWidget<MainMenuEntries> MainWidget { get; set; }
+        private readonly IMenuWidget<MainMenuEntries> _mainWidget;
     }
 }
