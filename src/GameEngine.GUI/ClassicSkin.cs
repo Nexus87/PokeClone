@@ -36,6 +36,7 @@ namespace GameEngine.GUI
         }
 
         public Color BackgroundColor { get; } = new Color(248, 248, 248, 0);
+
         public void AddTextureConfigurations(TextureConfigurationBuilder builder)
         {
             var textureItems = new List<TextureItem>

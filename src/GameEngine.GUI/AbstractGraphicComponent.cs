@@ -9,23 +9,7 @@ namespace GameEngine.GUI
 {
     public abstract class AbstractGraphicComponent : IGraphicComponent
     {
-        private bool _isVisible = true;
-
-        public event EventHandler<VisibilityChangedEventArgs> VisibilityChanged = delegate { };
         public event EventHandler<ComponentSelectedEventArgs> ComponentSelected;
-
-        public bool IsVisible
-        {
-            get { return _isVisible; }
-            set
-            {
-                if (value == _isVisible)
-                    return;
-
-                _isVisible = value;
-                VisibilityChanged(this, new VisibilityChangedEventArgs(_isVisible));
-            }
-        }
 
         protected AbstractGraphicComponent()
         {
@@ -49,9 +33,6 @@ namespace GameEngine.GUI
         public void Draw(GameTime time, ISpriteBatch batch)
         {
             Animation?.Update(time, this);
-            if (!_isVisible)
-                return;
-
             if (NeedsUpdate)
             {
                 Update();

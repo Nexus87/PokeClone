@@ -15,8 +15,8 @@ namespace GameEngineTest.Graphics.GUI
             var widgetMock2 = new WidgetMock { IsVisible = true };
             var guiManager = CreateGuiManager();
 
-            guiManager.AddWidget(widgetMock1);
-            guiManager.AddWidget(widgetMock2);
+            guiManager.ShowWidget(widgetMock1);
+            guiManager.ShowWidget(widgetMock2);
 
             guiManager.Draw();
 
@@ -32,8 +32,8 @@ namespace GameEngineTest.Graphics.GUI
             var widgetMock2 = new WidgetMock { IsVisible = false };
             var guiManager = CreateGuiManager();
 
-            guiManager.AddWidget(widgetMock1);
-            guiManager.AddWidget(widgetMock2);
+            guiManager.ShowWidget(widgetMock1);
+            guiManager.ShowWidget(widgetMock2);
 
             guiManager.Draw();
 
@@ -48,9 +48,9 @@ namespace GameEngineTest.Graphics.GUI
             var widgetMock2 = new WidgetMock { IsVisible = true };
             var guiManager = CreateGuiManager();
 
-            guiManager.AddWidget(widgetMock1);
-            guiManager.AddWidget(widgetMock2);
-            guiManager.RemoveWidget(widgetMock2);
+            guiManager.ShowWidget(widgetMock1);
+            guiManager.ShowWidget(widgetMock2);
+            guiManager.CloseWidget(widgetMock2);
 
             guiManager.Draw();
 
@@ -65,8 +65,8 @@ namespace GameEngineTest.Graphics.GUI
             var widgetMock2 = new WidgetMock { IsVisible = true };
             var guiManager = CreateGuiManager();
 
-            guiManager.AddWidget(widgetMock1);
-            guiManager.AddWidget(widgetMock2);
+            guiManager.ShowWidget(widgetMock1);
+            guiManager.ShowWidget(widgetMock2);
             widgetMock2.IsVisible = false;
 
             guiManager.Draw();
@@ -82,8 +82,8 @@ namespace GameEngineTest.Graphics.GUI
             var widgetMock2 = new WidgetMock { IsVisible = false };
             var guiManager = CreateGuiManager();
 
-            guiManager.AddWidget(widgetMock1);
-            guiManager.AddWidget(widgetMock2);
+            guiManager.ShowWidget(widgetMock1);
+            guiManager.ShowWidget(widgetMock2);
             widgetMock2.IsVisible = true;
 
             guiManager.Draw();
@@ -106,8 +106,8 @@ namespace GameEngineTest.Graphics.GUI
             widgetMock1.DrawCallback = () => { widget1Order = counter++; };
             widgetMock2.DrawCallback = () => { widget2Order = counter++; };
 
-            guiManager.AddWidget(widgetMock1);
-            guiManager.AddWidget(widgetMock2);
+            guiManager.ShowWidget(widgetMock1);
+            guiManager.ShowWidget(widgetMock2);
 
             guiManager.Draw();
 
@@ -128,8 +128,8 @@ namespace GameEngineTest.Graphics.GUI
             widgetMock1.DrawCallback = () => { widget1Order = counter++; };
             widgetMock2.DrawCallback = () => { widget2Order = counter++; };
 
-            guiManager.AddWidget(widgetMock1);
-            guiManager.AddWidget(widgetMock2);
+            guiManager.ShowWidget(widgetMock1);
+            guiManager.ShowWidget(widgetMock2);
 
             widgetMock2.IsVisible = true;
             widgetMock1.IsVisible = true;
@@ -146,8 +146,8 @@ namespace GameEngineTest.Graphics.GUI
             var widgetMock2 = new WidgetMock { IsVisible = true };
             var guiManager = CreateGuiManager();
 
-            guiManager.AddWidget(widgetMock1);
-            guiManager.AddWidget(widgetMock2);
+            guiManager.ShowWidget(widgetMock1);
+            guiManager.ShowWidget(widgetMock2);
 
             guiManager.Close();
             guiManager.Draw();
@@ -163,8 +163,8 @@ namespace GameEngineTest.Graphics.GUI
             var widgetMock2 = new WidgetMock { IsVisible = true };
             var guiManager = CreateGuiManager();
 
-            guiManager.AddWidget(widgetMock1);
-            guiManager.AddWidget(widgetMock2);
+            guiManager.ShowWidget(widgetMock1);
+            guiManager.ShowWidget(widgetMock2);
 
             guiManager.HandleKeyInput(CommandKeys.Up);
 
@@ -180,8 +180,8 @@ namespace GameEngineTest.Graphics.GUI
             var widgetMock2 = new WidgetMock { IsVisible = false };
             var guiManager = CreateGuiManager();
 
-            guiManager.AddWidget(widgetMock1);
-            guiManager.AddWidget(widgetMock2);
+            guiManager.ShowWidget(widgetMock1);
+            guiManager.ShowWidget(widgetMock2);
 
             guiManager.HandleKeyInput(CommandKeys.Up);
 
@@ -197,8 +197,8 @@ namespace GameEngineTest.Graphics.GUI
             var widgetMock2 = new WidgetMock { IsVisible = true };
             var guiManager = CreateGuiManager();
 
-            guiManager.AddWidget(widgetMock1);
-            guiManager.AddWidget(widgetMock2);
+            guiManager.ShowWidget(widgetMock1);
+            guiManager.ShowWidget(widgetMock2);
             widgetMock1.IsVisible = true;
 
             guiManager.HandleKeyInput(CommandKeys.Up);
@@ -215,8 +215,8 @@ namespace GameEngineTest.Graphics.GUI
             var widgetMock2 = new WidgetMock { IsVisible = true };
             var guiManager = CreateGuiManager();
 
-            guiManager.AddWidget(widgetMock1);
-            guiManager.AddWidget(widgetMock2);
+            guiManager.ShowWidget(widgetMock1);
+            guiManager.ShowWidget(widgetMock2);
             widgetMock2.IsVisible = false;
 
             guiManager.HandleKeyInput(CommandKeys.Up);
@@ -240,9 +240,9 @@ namespace GameEngineTest.Graphics.GUI
             var widgetMock2 = new WidgetMock { IsVisible = false };
             var guiManager = CreateGuiManager();
 
-            guiManager.AddWidget(widgetMock1);
-            guiManager.AddWidget(widgetMock2);
-            guiManager.RemoveWidget(widgetMock2);
+            guiManager.ShowWidget(widgetMock1);
+            guiManager.ShowWidget(widgetMock2);
+            guiManager.CloseWidget(widgetMock2);
 
             widgetMock2.IsVisible = true;
 

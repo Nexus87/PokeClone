@@ -23,16 +23,7 @@ namespace GameEngine.GUI
     /// </remarks>
     public interface IGraphicComponent : IInputHandler
     {
-        /// <summary>
-        /// Event is triggered, when IsVisible changes
-        /// </summary>
-        event EventHandler<VisibilityChangedEventArgs> VisibilityChanged;
-
         event EventHandler<ComponentSelectedEventArgs> ComponentSelected;
-        /// <summary>
-        /// This property shows, if the component is visible.
-        /// </summary>
-        bool IsVisible { get; set; }
 
         /// <summary>
         /// Play the given animation

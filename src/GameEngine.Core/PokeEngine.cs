@@ -19,7 +19,6 @@ namespace GameEngine.Core
         private GuiManager GuiManager { get; set; }
 
         private XnaSpriteBatch _batch;
-        private InputComponent _input;
         private Screen _screen;
 
         private string _startModule;
@@ -48,13 +47,11 @@ namespace GameEngine.Core
         public void ShowGUI()
         {
             GuiManager.Show();
-            _input.Handler = GuiManager;
         }
 
         public void CloseGUI()
         {
             GuiManager.Close();
-            _input.Handler = _gameComponentManager.InputHandler;
         }
 
         protected override void Draw(GameTime gameTime)
@@ -74,8 +71,8 @@ namespace GameEngine.Core
             _skin.RegisterRenderers(_manager.TypeRegistry, _textureProvider);
             _screen = new Screen(_manager.TypeRegistry.ResolveType<ScreenConstants>(), GraphicsDevice);
             GuiManager = _manager.TypeRegistry.ResolveType<GuiManager>();
-            _input = _manager.TypeRegistry.ResolveType<InputComponent>();
-            _gameComponentManager = new GameComponentManager(Components, _input, this);
+            var input = _manager.TypeRegistry.ResolveType<InputComponent>();
+            _gameComponentManager = new GameComponentManager(Components, input, this);
             Window.ClientSizeChanged += delegate { _screen.WindowsResizeHandler(Window.ClientBounds.Width, Window.ClientBounds.Height); };
             _screen.WindowsResizeHandler(Window.ClientBounds.Width, Window.ClientBounds.Height);
             _textureProvider.Init(_graphicsDeviceManager.GraphicsDevice);
@@ -86,7 +83,6 @@ namespace GameEngine.Core
             if (Graphic == null)
                 throw new InvalidOperationException("Graphic component is not set");
             Graphic.Setup();
-            GuiManager.Setup();
 
         }
 

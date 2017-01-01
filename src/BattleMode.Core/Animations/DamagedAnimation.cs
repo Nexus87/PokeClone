@@ -25,7 +25,6 @@ namespace BattleMode.Core.Animations
                 return;
 
             _lastTime = time;
-            component.IsVisible = !component.IsVisible;
             _currentNumberOfBlinks++;
 
             if (AnimationDone())

@@ -31,11 +31,18 @@ namespace GameEngineTest
         {
             var handlerMock = A.Fake<IInputHandler>();
             var managerMock = CreateInputManagerFake(_keys.First());
-            var component = new InputComponent(managerMock, _map) {Handler = handlerMock};
+            var component = CreateInputComponent(managerMock, handlerMock);
 
             // Assert the that only the first key is detected
             component.Update();
             A.CallTo(() => handlerMock.HandleKeyInput(A<CommandKeys>.Ignored)).MustHaveHappened(Repeated.Exactly.Once);
+        }
+
+        private InputComponent CreateInputComponent(IKeyboardManager managerMock, IInputHandler handlerMock)
+        {
+            var component = new InputComponent(managerMock, _map);
+            component.AddHandler(handlerMock);
+            return component;
         }
 
         [TestCase]
@@ -43,7 +50,7 @@ namespace GameEngineTest
         {
             var handlerMock = A.Fake<IInputHandler>();
             var managerMock = CreateInputManagerFake(_keys.First());
-            var component = new InputComponent(managerMock, _map) {Handler = handlerMock};
+            var component = CreateInputComponent(managerMock, handlerMock);
 
             // Assert the that only the first key is detected
             component.Update();
@@ -56,7 +63,7 @@ namespace GameEngineTest
         {
             var handlerMock = A.Fake<IInputHandler>();
             var managerMock = CreateInputManagerFake(_keys.ToArray());
-            var component = new InputComponent(managerMock, _map) {Handler = handlerMock};
+            var component = CreateInputComponent(managerMock, handlerMock);
 
             // Assert that every test key is detected once
             component.Update();
@@ -69,8 +76,7 @@ namespace GameEngineTest
         {
             var handlerMock = A.Fake<IInputHandler>();
             var managerMock = CreateInputManagerFake(_keys.ToArray());
-            var component = new InputComponent(managerMock, _map) {Handler = handlerMock};
-
+            var component = CreateInputComponent(managerMock, handlerMock);
 
 
             // Assert that every test key is detected once
@@ -86,7 +92,7 @@ namespace GameEngineTest
             // The component should not watch out for D
             var handlerMock = A.Fake<IInputHandler>();
             var managerMock = CreateInputManagerFake(Keys.D);
-            var component = new InputComponent(managerMock, _map) {Handler = handlerMock};
+            var component = CreateInputComponent(managerMock, handlerMock);
 
             // Make sure, that no test key was detected
             component.Update();
@@ -99,7 +105,7 @@ namespace GameEngineTest
 
             var handlerMock = A.Fake<IInputHandler>();
             var managerMock = CreateInputManagerFake(Keys.D, Keys.Down);
-            var component = new InputComponent(managerMock, _map) {Handler = handlerMock};
+            var component = CreateInputComponent(managerMock, handlerMock);
             component.Update();
 
             A.CallTo(() => handlerMock.HandleKeyInput(A<CommandKeys>.Ignored)).MustHaveHappened(Repeated.Exactly.Once);

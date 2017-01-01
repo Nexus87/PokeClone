@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using GameEngine.Core.GameEngineComponents;
 using GameEngine.Globals;
 using GameEngine.GUI;
 using GameEngine.GUI.General;
@@ -10,60 +13,63 @@ namespace GameEngine.Core
     [GameService(typeof(GuiManager))]
     public class GuiManager : IInputHandler
     {
-        private IGraphicComponent FocusedWidget => _widgets.Count == 0 ? null : _widgets.Last.Value;
-        private readonly LinkedList<IGraphicComponent> _widgets = new LinkedList<IGraphicComponent>();
-        private readonly LinkedList<IGraphicComponent> _notVisibleWidgets = new LinkedList<IGraphicComponent>();
-
-        public void AddWidget(IGraphicComponent widget)
+        private class WidgetItem : IComparable<WidgetItem>
         {
-            widget.CheckNull("widget");
+            public readonly int Priority;
+            public readonly IGraphicComponent Component;
 
-            widget.VisibilityChanged += VisibilityChangedHandler;
+            public WidgetItem(int priority, IGraphicComponent component)
+            {
+                Priority = priority;
+                Component = component;
+            }
 
-            if (widget.IsVisible)
-                _widgets.AddLast(widget);
-            else
-                _notVisibleWidgets.AddLast(widget);
+            public int CompareTo(WidgetItem other)
+            {
+                return Priority.CompareTo(other.Priority);
+            }
+
+            public override bool Equals(object obj)
+            {
+                var other = obj as WidgetItem;
+                if (other == null)
+                    return false;
+
+                return Component == other.Component;
+            }
+
+            public override int GetHashCode()
+            {
+                return Component?.GetHashCode() ?? 0;
+            }
         }
 
-        private void VisibilityChangedHandler(object sender, VisibilityChangedEventArgs e)
+        private readonly InputComponent _inputComponent;
+        private readonly List<WidgetItem> _widgets2 = new List<WidgetItem>();
+
+        public GuiManager(InputComponent inputComponent)
         {
-            var widget = (IGraphicComponent)sender;
-            if (e.Visible == false)
-            {
-                _widgets.Remove(widget);
-                _notVisibleWidgets.AddLast(widget);
-            }
-            else
-            {
-                _notVisibleWidgets.Remove(widget);
-                _widgets.AddLast(widget);
-            }
+            _inputComponent = inputComponent;
         }
 
-        public void RemoveWidget(IGraphicComponent widget)
+        public void ShowWidget(IGraphicComponent widget, int? priority = null)
         {
-            if (!Contains(widget))
+            if(_widgets2.Any(x => x.Component == widget))
                 return;
 
-            RemoveWidgetFromList(widget);
-            widget.VisibilityChanged -= VisibilityChangedHandler;
+            if (!priority.HasValue)
+                priority = _widgets2.Count == 0 ? 0 : _widgets2.Max(x => x.Priority) + 1;
+
+            _widgets2.Add(new WidgetItem(priority.Value, widget));
+            _widgets2.Sort();
+
         }
 
-        private bool Contains(IGraphicComponent widget)
+        public void CloseWidget(IGraphicComponent widget)
         {
-            if (widget == null)
-                return false;
-
-            return _widgets.Contains(widget) || _notVisibleWidgets.Contains(widget);
-        }
-
-        private void RemoveWidgetFromList(IGraphicComponent widget)
-        {
-            if (widget.IsVisible)
-                _widgets.Remove(widget);
-            else
-                _notVisibleWidgets.Remove(widget);
+            var w = _widgets2.FirstOrDefault(x => x.Component == widget);
+            if (w != null)
+                _widgets2.Remove(w);
         }
 
         public GuiManager()
@@ -71,7 +77,8 @@ namespace GameEngine.Core
             IsActive = false;
         }
 
-        private bool IsActive { get; set; }
+        public bool IsActive { get; set; }
+
 
         public void HandleKeyInput(CommandKeys key)
         {
@@ -79,30 +86,25 @@ namespace GameEngine.Core
             FocusedWidget?.HandleKeyInput(key);
         }
 
+        public IGraphicComponent FocusedWidget => _widgets2.LastOrDefault()?.Component;
+
         public void Close()
         {
             IsActive = false;
+            _inputComponent.RemoveHandler(this);
         }
 
         public void Draw(GameTime time, ISpriteBatch batch)
         {
             if (!IsActive)
                 return;
-            foreach (var w in _widgets)
-                w.Draw(time, batch);
+            _widgets2.ForEach(x => x.Component.Draw(time, batch));
         }
 
         public void Show()
         {
             IsActive = true;
-        }
-
-        public void Setup()
-        {
-            foreach (var w in _widgets)
-                w.Setup();
-            foreach (var w in _notVisibleWidgets)
-                w.Setup();
+            _inputComponent.AddHandler(this, true);
         }
     }
 }

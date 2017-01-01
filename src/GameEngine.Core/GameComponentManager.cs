@@ -24,9 +24,9 @@ namespace GameEngine.Core
         {
             set
             {
+                _inputComponent.RemoveHandler(_inputHandler);
                 _inputHandler = value;
-                if (_inputComponent.Handler == null)
-                    _inputComponent.Handler = _inputHandler;
+                _inputComponent.AddHandler(_inputHandler);
             }
             get
             {
