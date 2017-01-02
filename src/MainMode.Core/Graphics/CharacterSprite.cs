@@ -38,14 +38,6 @@ namespace MainMode.Core.Graphics
             _currentDirection.Draw(time, batch);
         }
 
-        public override void Setup()
-        {
-            foreach (var component in _directionDictionary.Values)
-            {
-                component.Setup();
-            }
-        }
-
         public void TurnToDirection(Direction direction)
         {
             _currentDirection = _directionDictionary[direction];

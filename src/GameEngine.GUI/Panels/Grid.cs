@@ -314,14 +314,5 @@ namespace GameEngine.GUI.Panels
         {
             return _cells[row, column].GuiComponent;
         }
-
-        public override void Setup()
-        {
-            base.Setup();
-            foreach (var gridCell in _cells)
-            {
-                gridCell.Setup();
-            }
-        }
     }
 }

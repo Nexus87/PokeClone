@@ -57,9 +57,5 @@ namespace BattleMode.Shared
         {
             _text.Text = hp.ToString().PadLeft(3, ' ') + _maxHp;
         }
-        public override void Setup()
-        {
-            _text.Setup();
-        }
     }
 }

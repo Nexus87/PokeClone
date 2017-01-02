@@ -20,6 +20,8 @@ namespace MainMode.Core.Graphics
             InitContainer(fieldTextures);
             Rows = fieldTextures.Rows;
             Columns = fieldTextures.Columns;
+
+            Init();
         }
 
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)
@@ -33,7 +35,7 @@ namespace MainMode.Core.Graphics
             _container.SetCoordinates(this);
         }
 
-        public override void Setup()
+        public void Init()
         {
 
             var totalHeight = Rows * TextureSize;

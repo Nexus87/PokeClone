@@ -38,9 +38,6 @@ namespace BattleMode.Core.Components.GraphicComponents
             _box = box;
             _provider = provider;
         }
-        public override void Setup()
-        {
-        }
 
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)
         {

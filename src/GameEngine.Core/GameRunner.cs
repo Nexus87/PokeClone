@@ -19,6 +19,8 @@ namespace GameEngine.Core
             GraphicsDeviceManager = new GraphicsDeviceManager(this);
             Window.AllowUserResizing = true;
             Content.RootDirectory = @"Content";
+
+            GraphicsDeviceManager.ApplyChanges();
         }
 
         public IGraphicComponent Graphic { get; set; }
@@ -36,7 +38,6 @@ namespace GameEngine.Core
         {
             base.Initialize();
             Window.ClientSizeChanged += delegate { Screen.WindowsResizeHandler(Window.ClientBounds.Width, Window.ClientBounds.Height); };
-            Screen.Device = GraphicsDevice;
             Screen.WindowsResizeHandler(Window.ClientBounds.Width, Window.ClientBounds.Height);
 
             if (Graphic == null)

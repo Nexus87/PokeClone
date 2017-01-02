@@ -46,10 +46,5 @@ namespace GameEngine.GUI.Panels
         {
             _content?.HandleKeyInput(key);
         }
-
-        public override void Setup()
-        {
-            _content?.Setup();
-        }
     }
 }

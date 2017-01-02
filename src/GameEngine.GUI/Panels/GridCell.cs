@@ -51,10 +51,5 @@ namespace GameEngine.GUI.Panels
         {
             GuiComponent?.Draw(time, spriteBatch);
         }
-
-        public void Setup()
-        {
-            GuiComponent?.Setup();
-        }
     }
 }

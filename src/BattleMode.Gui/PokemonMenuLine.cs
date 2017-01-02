@@ -36,6 +36,8 @@ namespace BattleMode.Gui
             _level = level;
             _hpLabel = hpLabel;
             _spriteProvider = spriteProvider;
+
+            Init();
         }
 
         public void SetPokemon(Pokemon pokemon)
@@ -57,7 +59,7 @@ namespace BattleMode.Gui
             _mainContainer.Draw(time, batch);
         }
 
-        public override void Setup()
+        public void Init()
         {
             var iconDataContainer = new Grid();
             var hpLineContainer = new Grid();
@@ -96,8 +98,6 @@ namespace BattleMode.Gui
             iconDataContainer.SetComponent(dataContainer, 0, 1);
 
             _mainContainer = iconDataContainer;
-
-            _mainContainer.Setup();
         }
 
         protected override void Update()

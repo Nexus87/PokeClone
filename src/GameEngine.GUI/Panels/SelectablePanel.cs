@@ -49,11 +49,6 @@ namespace GameEngine.GUI.Panels
             _content.Draw(time, batch);
         }
 
-        public override void Setup()
-        {
-            _content.Setup();
-        }
-
         public override void HandleKeyInput(CommandKeys key)
         {
         }

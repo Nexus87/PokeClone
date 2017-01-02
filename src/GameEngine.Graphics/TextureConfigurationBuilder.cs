@@ -1,57 +1,73 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using GameEngine.Globals;
 using Microsoft.Xna.Framework;
-using OpenTK.Input;
 
 namespace GameEngine.Graphics
 {
     public class TextureConfigurationBuilder
     {
-        private readonly Dictionary<object, IEnumerable<TextureItem>> _configs = new Dictionary<object, IEnumerable<TextureItem>>();
-        private readonly Dictionary<object, IEnumerable<FontItem>> _fontConfigs = new Dictionary<object, IEnumerable<FontItem>>();
+        private readonly Dictionary<object, TempConfig> _configurations = new Dictionary<object, TempConfig>();
 
+        private class TempConfig
+        {
+            public readonly List<TextureItem> TextureConfigs = new List<TextureItem>();
+            public readonly List<FontItem> FontConfigs = new List<FontItem>();
+            public readonly List<SpriteSheetItem> SpriteSheetConfigs = new List<SpriteSheetItem>();
+        }
         public void AddTextureConfig(object key, IEnumerable<TextureItem> textureConfig)
         {
-            AddToDictionary(_configs, key, textureConfig);
+            var tempConfig = GetTempConfig(key);
+            tempConfig.TextureConfigs.AddRange(textureConfig);
+        }
+
+        private TempConfig GetTempConfig(object key)
+        {
+            TempConfig config;
+            if (!_configurations.TryGetValue(key, out config))
+                _configurations[key] = config = new TempConfig();
+
+            return config;
         }
 
         public void AddFont(object key, IEnumerable<FontItem> fontConfigs)
         {
-            AddToDictionary(_fontConfigs, key, fontConfigs);
+            var tempConfig = GetTempConfig(key);
+            tempConfig.FontConfigs.AddRange(fontConfigs);
         }
 
-        private static void AddToDictionary<T>(IDictionary<object, IEnumerable<T>> dictionary, object key, IEnumerable<T> config)
+        public void AddSpriteSheet(object key, IEnumerable<SpriteSheetItem> spriteSheetConfig)
         {
-            IEnumerable<T> currentConfig;
-            if (dictionary.TryGetValue(key, out currentConfig))
-            {
-                dictionary[key] = currentConfig.Union(config);
-            }
-            else
-            {
-                dictionary[key] = config;
-            }
+            var tempConfig = GetTempConfig(key);
+            tempConfig.SpriteSheetConfigs.AddRange(spriteSheetConfig);
         }
 
-        public Dictionary<object, Tuple<IEnumerable<TextureItem>, IEnumerable<FontItem>>> BuildConfiguration()
+        public IEnumerable<TextureProviderConfiguration> BuildConfiguration()
         {
-            var textureConfigs = _configs.Select(x => new { Key = x.Key, Value = Tuple.Create(x.Value, (IEnumerable<FontItem>) null)});
-            var fontConfigs = _fontConfigs.Select(x => new { Key = x.Key, Value = Tuple.Create((IEnumerable<TextureItem>)null, x.Value)});
-
-            var dictonary = textureConfigs.Union(fontConfigs)
-                .GroupBy(x => x.Key)
-                .ToDictionary(
-                    x => x.Key,
-                    x => Tuple.Create(
-                        x.FirstOrDefault(y => y.Value.Item1 != null)?.Value.Item1,
-                        x.FirstOrDefault(y => y.Value.Item2 != null)?.Value.Item2)
+            return _configurations
+                .Select(x =>
+                    new TextureProviderConfiguration(
+                        x.Key,
+                        x.Value.TextureConfigs,
+                        x.Value.FontConfigs,
+                        x.Value.SpriteSheetConfigs)
                 );
-
-            return dictonary;
         }
+    }
+
+    public class TextureProviderConfiguration
+    {
+        public TextureProviderConfiguration(object key, IEnumerable<TextureItem> textureConfigs, IEnumerable<FontItem> fontConfigs, IEnumerable<SpriteSheetItem> spriteSheetConfigs)
+        {
+            Key = key;
+            TextureConfigs = textureConfigs;
+            FontConfigs = fontConfigs;
+            SpriteSheetConfigs = spriteSheetConfigs;
+        }
+
+        public object Key { get; }
+        public IEnumerable<TextureItem> TextureConfigs { get; }
+        public IEnumerable<FontItem> FontConfigs { get; }
+        public IEnumerable<SpriteSheetItem> SpriteSheetConfigs { get; }
     }
 
     public class FontItem
@@ -70,22 +86,29 @@ namespace GameEngine.Graphics
 
     public class TextureItem
     {
-        public TextureItem(string path, TextureType type, Rectangle? source, string textureName, bool isPlatformSpecific)
+        public TextureItem(string path, string textureName, bool isPlatformSpecific)
         {
             Path = path;
-            Type = type;
-            Source = source;
             TextureName = textureName;
             IsPlatformSpecific = isPlatformSpecific;
         }
 
         public string Path { get; }
-        public TextureType Type { get; }
-        public Rectangle? Source { get; }
         public string TextureName { get; }
         public bool IsPlatformSpecific { get; }
     }
 
+    public class SpriteSheetItem
+    {
+        public string Path { get; }
+        public Dictionary<string, Rectangle> Map { get; }
+
+        public SpriteSheetItem(string path, Dictionary<string, Rectangle> map)
+        {
+            Path = path;
+            Map = map;
+        }
+    }
     public enum TextureType
     {
         SingleTexture,

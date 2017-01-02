@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using System.Runtime.InteropServices.WindowsRuntime;
 using GameEngine.Core.GameEngineComponents;
 using GameEngine.Core.ModuleManager;
 using GameEngine.Graphics;
@@ -18,13 +17,13 @@ namespace GameEngine.Core
     internal class GameEngineModule : IModule
     {
         private readonly GameRunner _engine;
-        private readonly Graphics.TextureProvider _textureProvider;
+        private readonly TextureProvider _textureProvider;
         private readonly InputComponent _inputComponent;
         private readonly ScreenConstants _screenConstants;
         private readonly GameComponentManager _gameComponentManager;
 
         public static object Key = new object();
-        public GameEngineModule(GameRunner engine, Graphics.TextureProvider textureProvider, Configuration config)
+        public GameEngineModule(GameRunner engine, TextureProvider textureProvider, Configuration config)
         {
             _engine = engine;
             _textureProvider = textureProvider;
@@ -39,12 +38,12 @@ namespace GameEngine.Core
             registry.RegisterAsService<InputComponent, InputComponent>(reg => _inputComponent);
             registry.RegisterAsService<InputComponent, IInputHandlerManager>(reg => _inputComponent);
             registry.RegisterAsService<ContentManager, ContentManager>(reg => _engine.Content);
-            registry.RegisterAsService<Graphics.TextureProvider, Graphics.TextureProvider>(r => _textureProvider);
+            registry.RegisterAsService<TextureProvider, TextureProvider>(r => _textureProvider);
             registry.RegisterAsService<GameComponentManager, IGameComponentManager>(r => _gameComponentManager);
             registry.RegisterAsService<Screen, Screen>();
             registry.RegisterType<IEngineInterface>(r => _engine);
             registry.RegisterType(r => _screenConstants);
-            registry.RegisterType(r => _engine.GraphicsDeviceManager.GraphicsDevice);
+            registry.RegisterType(r => _engine.GraphicsDeviceManager);
             registry.ScanAssembly(Assembly.GetExecutingAssembly());
             registry.ScanAssembly(Assembly.GetAssembly(typeof(IGraphicComponent)));
             registry.ScanAssembly(Assembly.GetAssembly(typeof(IGameTypeRegistry)));
@@ -57,8 +56,8 @@ namespace GameEngine.Core
         {
             var textures = new List<TextureItem>
             {
-                new TextureItem("charmander-front", TextureType.SingleTexture, null, "charmander-front", true),
-                new TextureItem("charmander-back", TextureType.SingleTexture, null, "charmander-back", true)
+                new TextureItem("charmander-front", "charmander-front", true),
+                new TextureItem("charmander-back", "charmander-back", true)
             };
 
             builder.AddTextureConfig(Key, textures);

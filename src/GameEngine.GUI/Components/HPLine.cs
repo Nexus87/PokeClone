@@ -60,10 +60,6 @@ namespace GameEngine.GUI.Components
             PlayAnimation(animation);
         }
 
-        public override void Setup()
-        {
-        }
-
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)
         {
             _renderer.Render(batch, this);

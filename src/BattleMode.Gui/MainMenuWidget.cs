@@ -52,11 +52,6 @@ namespace BattleMode.Gui
             _grid.SelectComponent(0, 0);
         }
 
-        public override void Setup()
-        {
-            _window.Setup();
-        }
-
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)
         {
             _window.Draw(time, batch);

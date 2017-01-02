@@ -12,13 +12,10 @@ namespace GameEngine.Graphics
     {
         public ITexture2D Pixel => _pixel;
 
-        internal void SetConfiguration(
-            Dictionary<object, Tuple<IEnumerable<TextureItem>, IEnumerable<FontItem>>> configs,
-            ContentManager contentManager
-        )
+        internal void SetConfiguration(IEnumerable<TextureProviderConfiguration> configurations, ContentManager contentManager)
         {
-            _subTextureProviders = configs
-                .ToDictionary(x => x.Key, x => new SubTextureProvider(x.Value, contentManager));
+            _subTextureProviders = configurations
+                .ToDictionary(x => x.Key, x => new SubTextureProvider(x, contentManager));
         }
 
         public TextureProvider()
@@ -56,16 +53,17 @@ namespace GameEngine.Graphics
 
         private readonly IEnumerable<TextureItem> _configs;
         private readonly IEnumerable<FontItem> _fontConfig;
+
         private readonly ContentManager _contentManager;
         private readonly Dictionary<string, ITexture2D> _textures = new Dictionary<string, ITexture2D>();
         private readonly Dictionary<string, ISpriteFont> _fonts = new Dictionary<string, ISpriteFont>();
         private bool _isInitialized;
 
-        public SubTextureProvider(Tuple<IEnumerable<TextureItem>, IEnumerable<FontItem>> configs, ContentManager contentManager)
+        public SubTextureProvider(TextureProviderConfiguration configuration, ContentManager contentManager)
         {
             _contentManager = contentManager;
-            _configs = configs.Item1;
-            _fontConfig = configs.Item2;
+            _configs = configuration.TextureConfigs;
+            _fontConfig = configuration.FontConfigs;
         }
 
         public ITexture2D GetTexture(string textureIdentifier)

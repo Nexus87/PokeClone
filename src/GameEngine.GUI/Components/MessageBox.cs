@@ -55,10 +55,5 @@ namespace GameEngine.GUI.Components
         {
             _window.SetCoordinates(this);
         }
-
-        public override void Setup()
-        {
-            _window.Setup();
-        }
     }
 }

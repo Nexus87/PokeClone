@@ -28,10 +28,6 @@ namespace MainMode.Core.Graphics
             _mapGraphic.Draw(time, batch);
         }
 
-        public override void Setup()
-        {
-        }
-
         protected override void Update()
         {
             base.Update();

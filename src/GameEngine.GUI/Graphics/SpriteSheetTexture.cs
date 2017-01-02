@@ -34,10 +34,5 @@ namespace GameEngine.GUI.Graphics
             _destinationRectangle.Size = Area.Size;
             _destinationRectangle.Location = Area.Location;
         }
-
-        public override void Setup()
-        {
-            _spriteSheet.LoadContent();
-        }
     }
 }

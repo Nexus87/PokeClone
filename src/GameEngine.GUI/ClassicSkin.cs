@@ -41,9 +41,9 @@ namespace GameEngine.GUI
         {
             var textureItems = new List<TextureItem>
             {
-                new TextureItem(@"GuiSkins\ClassicSkin\arrow", TextureType.SingleTexture, null, Arrow, true),
-                new TextureItem(@"GuiSkins\ClassicSkin\border", TextureType.SingleTexture, null, Border, true),
-                new TextureItem(@"GuiSkins\ClassicSkin\circle", TextureType.SingleTexture, null, Circle, true),
+                new TextureItem(@"GuiSkins\ClassicSkin\arrow", Arrow, true),
+                new TextureItem(@"GuiSkins\ClassicSkin\border", Border, true),
+                new TextureItem(@"GuiSkins\ClassicSkin\circle", Circle, true),
             };
 
             var fontItems = new List<FontItem>

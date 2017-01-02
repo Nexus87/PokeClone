@@ -1,4 +1,5 @@
-﻿using GameEngine.GUI;
+﻿using System.ComponentModel;
+using GameEngine.GUI;
 using GameEngine.GUI.General;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -8,22 +9,22 @@ namespace GameEngine.Core
     internal class Screen
     {
         private readonly ScreenConstants _screenConstants;
-
-        public GraphicsDevice Device
-        {
-            get { return _device; }
-            set
-            {
-                _device = value;
-                _target = new RenderTarget2D(_device, (int) _screenConstants.ScreenWidth,
-                    (int) _screenConstants.ScreenHeight);
-            }
-        }
+        private readonly GraphicsDeviceManager _graphicsDeviceManager;
 
         private RenderTarget2D _target;
         private Rectangle _display;
         private readonly RasterizerState _rasterization = new RasterizerState {ScissorTestEnable = true};
         private GraphicsDevice _device;
+
+        public GraphicsDevice Device
+        {
+            get
+            {
+                if (_device == null)
+                    Init();
+                return _device;
+            }
+        }
 
         public void WindowsResizeHandler(float windowWidth, float windowHeight)
         {
@@ -51,9 +52,10 @@ namespace GameEngine.Core
             _display.Y = (int)((bufferY - _display.Height) / 2.0f);
         }
 
-        public Screen(ScreenConstants screenConstants)
+        public Screen(ScreenConstants screenConstants, GraphicsDeviceManager graphicsDeviceManager)
         {
             _screenConstants = screenConstants;
+            _graphicsDeviceManager = graphicsDeviceManager;
         }
 
         public void Begin(ISpriteBatch batch)
@@ -62,6 +64,13 @@ namespace GameEngine.Core
             Device.Clear(_screenConstants.BackgroundColor);
 
             batch.Begin(SpriteSortMode.Immediate, rasterizerState: _rasterization);
+        }
+
+        private void Init()
+        {
+            _device = _graphicsDeviceManager.GraphicsDevice;
+            _target = new RenderTarget2D(Device, (int) _screenConstants.ScreenWidth,
+                (int) _screenConstants.ScreenHeight);
         }
 
         public void Draw(IGraphicComponent component, ISpriteBatch batch, GameTime gameTime)
