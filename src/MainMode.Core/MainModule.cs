@@ -28,15 +28,15 @@ namespace MainMode.Core
 
         public void AddTextureConfigurations(TextureConfigurationBuilder builder)
         {
-            var fileSpriteSheetProvider = new FileSpriteSheetProvider(@"Content\MainMode\TilesetMap.txt");
-            fileSpriteSheetProvider.Setup();
+            var tileMapping = new JsonSpriteSheetProvider(@"Content\MainMode\TilesetMapping.json");
+            tileMapping.Setup();
 
-            var provider = new JsonSpriteSheetProvider(@"Content\MainMode\CharactersMapping.json");
-            provider.Setup();
+            var characterMapping = new JsonSpriteSheetProvider(@"Content\MainMode\CharactersMapping.json");
+            characterMapping.Setup();
 
             var spriteSheetItems = new List<SpriteSheetItem>{
-                new SpriteSheetItem(@"MainMode\TileSet", fileSpriteSheetProvider.GetMapping(), true),
-                new SpriteSheetItem(@"MainMode\Characters Overworld", provider.GetMapping(), true)
+                new SpriteSheetItem(@"MainMode\TileSet", tileMapping.GetMapping(), true),
+                new SpriteSheetItem(@"MainMode\Characters Overworld", characterMapping.GetMapping(), true)
             };
             builder.AddSpriteSheet(Key, spriteSheetItems);
         }
