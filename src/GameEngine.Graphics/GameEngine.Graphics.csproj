@@ -61,6 +61,7 @@
     <Compile Include="General\ITexture2D.cs" />
     <Compile Include="General\XnaSpriteBatch.cs" />
     <Compile Include="General\XnaSpriteFont.cs" />
+    <Compile Include="General\XnaSpriteSheetTexture2D.cs" />
     <Compile Include="General\XnaTexture2D.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TextureConfigurationBuilder.cs" />

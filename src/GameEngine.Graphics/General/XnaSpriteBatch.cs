@@ -1,8 +1,9 @@
 ﻿using System.Text;
+using GameEngine.GUI.General;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace GameEngine.GUI.General
+namespace GameEngine.Graphics.General
 {
     /// <summary>
     /// XNA implementation of the ISpriteBatch interface
@@ -59,32 +60,32 @@ namespace GameEngine.GUI.General
 
         public void Draw(ITexture2D texture, Rectangle destinationRectangle, Rectangle? sourceRectangle, Color color)
         {
-            Draw(texture.Texture, destinationRectangle, sourceRectangle, color);
+            Draw(texture.Texture, destinationRectangle, texture.AbsoluteBound(sourceRectangle), color);
         }
 
         public void Draw(ITexture2D texture, Vector2 position, Rectangle? sourceRectangle, Color color)
         {
-            Draw(texture.Texture, position, sourceRectangle, color);
+            Draw(texture.Texture, position, texture.AbsoluteBound(sourceRectangle), color);
         }
 
         public void Draw(ITexture2D texture, Rectangle destinationRectangle, Rectangle? sourceRectangle, Color color, float rotation, Vector2 origin, SpriteEffects effects, float layerDepth)
         {
-            Draw(texture.Texture, destinationRectangle, sourceRectangle, color, rotation, origin, effects, layerDepth);
+            Draw(texture.Texture, destinationRectangle, texture.AbsoluteBound(sourceRectangle), color, rotation, origin, effects, layerDepth);
         }
 
         public void Draw(ITexture2D texture, Vector2 position, Rectangle? sourceRectangle, Color color, float rotation, Vector2 origin, float scale, SpriteEffects effects, float layerDepth)
         {
-            Draw(texture.Texture, position, sourceRectangle, color, rotation, origin, scale, effects, layerDepth);
+            Draw(texture.Texture, position, texture.AbsoluteBound(sourceRectangle), color, rotation, origin, scale, effects, layerDepth);
         }
 
         public void Draw(ITexture2D texture, Vector2 position, Rectangle? sourceRectangle, Color color, float rotation, Vector2 origin, Vector2 scale, SpriteEffects effects, float layerDepth)
         {
-            Draw(texture.Texture, position, sourceRectangle, color, rotation, origin, scale, effects, layerDepth);
+            Draw(texture.Texture, position, texture.AbsoluteBound(sourceRectangle), color, rotation, origin, scale, effects, layerDepth);
         }
 
         public void Draw(ITexture2D texture, Vector2? position = null, Rectangle? destinationRectangle = null, Rectangle? sourceRectangle = null, Vector2? origin = null, float rotation = 0f, Vector2? scale = null, Color? color = null, SpriteEffects effects = SpriteEffects.None, float layerDepth = 0f)
         {
-            Draw(texture.Texture, position, destinationRectangle, sourceRectangle, origin, rotation, scale, color, effects, layerDepth);
+            Draw(texture.Texture, position, destinationRectangle, texture.AbsoluteBound(sourceRectangle), origin, rotation, scale, color, effects, layerDepth);
         }
     }
 }

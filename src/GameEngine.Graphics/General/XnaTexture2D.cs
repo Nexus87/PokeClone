@@ -93,5 +93,10 @@ namespace GameEngine.GUI.General
             if(Texture == null)
                 Texture = _content.Load<Texture2D>(_textureName);
         }
+
+        public Rectangle? AbsoluteBound(Rectangle? relativeBounds)
+        {
+            return relativeBounds;
+        }
     }
 }
