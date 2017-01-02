@@ -9,36 +9,30 @@ using Microsoft.Xna.Framework.Content;
 
 namespace MainMode.Core
 {
-    public class FileSpriteSheetProvider : ISpriteSheetProvider
+    public class FileSpriteSheetProvider
     {
         private const int KeyIndex = 0;
         private const int RowIndex = 1;
         private const int ColumnIndex = 2;
 
-        private readonly string fileName;
-        private readonly ITexture2D texture;
-        private Dictionary<string, Rectangle> dictionary;
+        private readonly string _fileName;
+        private Dictionary<string, Rectangle> _dictionary;
 
-        public FileSpriteSheetProvider(string textureName, string fileName, ContentManager contentManager)
+        public FileSpriteSheetProvider(string fileName)
         {
-            this.fileName = fileName;
-            texture = new XnaTexture2D(textureName, contentManager);
+            this._fileName = fileName;
         }
 
-        public ITexture2D GetTexture()
-        {
-            return texture;
-        }
 
-        public IDictionary<string, Rectangle> GetMapping()
+        public Dictionary<string, Rectangle> GetMapping()
         {
-            return dictionary;
+            return _dictionary;
         }
 
         private IDictionary<string, TableIndex> ReadTableMapping()
         {
             var tmpList = new List<string>();
-            using (var stream = new StreamReader(fileName))
+            using (var stream = new StreamReader(_fileName))
             {
                 string line;
                 while ((line = stream.ReadLine()) != null)
@@ -59,14 +53,13 @@ namespace MainMode.Core
 
         public void Setup()
         {
-            texture.LoadContent();
             var table = ReadTableMapping();
             var tableRows = table.Values.Max(t => t.Row);
             var tableColumns = table.Values.Max(t => t.Column);
-            var iconWidth = texture.Width / (float) tableColumns;
-            var iconHeight = texture.Height / (float) tableRows;
+            var iconWidth = 608 / (float) tableColumns;
+            var iconHeight = 656 / (float) tableRows;
 
-            dictionary = table
+            _dictionary = table
                 .ToDictionary(v => v.Key, v => TableIndexToRectangle(v.Value, iconWidth, iconHeight));
 
         }

@@ -41,7 +41,6 @@ namespace MainMode.Core.Graphics
 
         public override void Setup()
         {
-            _spriteLoader.Setup();
             _player = _spriteLoader.GetSprite("player");
             _mapController.Setup();
         }

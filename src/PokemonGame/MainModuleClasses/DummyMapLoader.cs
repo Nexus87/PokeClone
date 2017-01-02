@@ -1,6 +1,7 @@
-﻿using GameEngine.Core;
-using GameEngine.Globals;
+﻿using GameEngine.Globals;
+using GameEngine.Graphics;
 using GameEngine.GUI;
+using GameEngine.GUI.Controlls;
 using GameEngine.TypeRegistry;
 using MainMode.Core;
 using MainMode.Core.Graphics;
@@ -10,16 +11,17 @@ namespace PokemonGame.MainModuleClasses
     [GameService(typeof(IMapLoader))]
     public class DummyMapLoader : IMapLoader
     {
-        private readonly SpriteSheetFactory _factory;
+        private readonly TextureProvider _textureProvider;
+        private readonly IGameTypeRegistry _registry;
         private Table<IGraphicComponent> _table;
 
-        public DummyMapLoader(SpriteSheetFactory factory)
+        public DummyMapLoader(TextureProvider textureProvider, IGameTypeRegistry registry)
         {
-            _factory = factory;
+            _textureProvider = textureProvider;
+            _registry = registry;
         }
         public IMapGraphic LoadMap(Map map)
         {
-            _factory.Setup();
             var tiles = map.Tiles;
             _table = new Table<IGraphicComponent>();
 
@@ -27,7 +29,9 @@ namespace PokemonGame.MainModuleClasses
             {
                 for (var j = 0; j < tiles.Columns; j++)
                 {
-                    _table[i, j] = _factory.CreateSpriteSheetTexture(tiles[i, j].TextureName);
+                    var image = _registry.ResolveType<ImageBox>();
+                    image.Image = _textureProvider.GetTexture(MainModule.Key, tiles[i, j].TextureName);
+                    _table[i, j] = image;
                 }
             }
             return new MapGraphic(_table);

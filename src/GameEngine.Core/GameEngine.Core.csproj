@@ -83,14 +83,7 @@
     <Compile Include="Screen.cs" />
     <Compile Include="ScreenConstants.cs" />
     <Compile Include="SpriteFontCreator.cs" />
-    <Compile Include="SpriteSheetFactory.cs" />
-    <Compile Include="TextureLoader\ITextureLoader.cs" />
-    <Compile Include="TextureLoader\ITextureProvider.cs" />
     <Compile Include="TextureLoader\JSonSpriteSheetProvider.cs" />
-    <Compile Include="TextureLoader\SingleTextureProvider.cs" />
-    <Compile Include="TextureLoader\SpriteSheetTextureProvider.cs" />
-    <Compile Include="TextureLoader\TextureLoader.cs" />
-    <Compile Include="TextureLoader\TextureProviderFactory.cs" />
     <Compile Include="SpriteProvider.cs" />
   </ItemGroup>
   <ItemGroup>

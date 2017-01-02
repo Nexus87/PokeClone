@@ -5,6 +5,5 @@ namespace MainMode.Core
     public interface ISpriteLoader
     {
         ICharacterSprite GetSprite(string spriteName);
-        void Setup();
     }
 }

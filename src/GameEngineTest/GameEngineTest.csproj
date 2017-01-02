@@ -72,7 +72,6 @@
     <Compile Include="Graphics\IGraphicComponentTest.cs" />
     <Compile Include="Graphics\NullGraphicObjectTest.cs" />
     <Compile Include="Graphics\SplitterStub.cs" />
-    <Compile Include="Graphics\SpriteSheetTextureTest.cs" />
     <Compile Include="Graphics\TestType.cs" />
     <Compile Include="Graphics\ImageBoxTest.cs" />
     <Compile Include="InputComponentTest.cs" />

@@ -102,11 +102,13 @@ namespace GameEngine.Graphics
     {
         public string Path { get; }
         public Dictionary<string, Rectangle> Map { get; }
+        public bool IsPlatformSpecific { get; }
 
-        public SpriteSheetItem(string path, Dictionary<string, Rectangle> map)
+        public SpriteSheetItem(string path, Dictionary<string, Rectangle> map, bool isPlatformSpecific)
         {
             Path = path;
             Map = map;
+            IsPlatformSpecific = isPlatformSpecific;
         }
     }
     public enum TextureType

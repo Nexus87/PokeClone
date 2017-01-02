@@ -95,19 +95,6 @@ namespace GameEngineTest.TestUtils
             SetData(position, texture, scale, color);
         }
 
-        public void Draw(ITexture2D texture, Vector2? position = null, Rectangle? destinationRectangle = null, Rectangle? sourceRectangle = null, Vector2? origin = null, float rotation = 0f, Vector2? scale = null, Color? color = null, SpriteEffects effects = SpriteEffects.None, float layerDepth = 0f)
-        {
-            var scaling = scale != null ? scale.Value : Vector2.One;
-            Color realColor = color.HasValue ? color.Value : Color.Black;
-            if (position == null && destinationRectangle != null)
-                SetData(destinationRectangle.Value.Location.ToVector2(), destinationRectangle.Value.Size.ToVector2(), scaling, realColor);
-            else if (destinationRectangle == null && position != null)
-                SetData(position.Value, texture, scaling, realColor);
-            else
-                throw new InvalidOperationException("Either position or destinationRectangle must be not null");
-
-        }
-
         public void DrawString(ISpriteFont spriteFont, string text, Vector2 position, Color color)
         {
             SetData(position, spriteFont, text, color);

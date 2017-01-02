@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using GameEngine.Graphics.General;
 using GameEngine.GUI.General;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -53,6 +54,7 @@ namespace GameEngine.Graphics
 
         private readonly IEnumerable<TextureItem> _configs;
         private readonly IEnumerable<FontItem> _fontConfig;
+        private readonly IEnumerable<SpriteSheetItem> _spriteSheetConfigs;
 
         private readonly ContentManager _contentManager;
         private readonly Dictionary<string, ITexture2D> _textures = new Dictionary<string, ITexture2D>();
@@ -64,6 +66,7 @@ namespace GameEngine.Graphics
             _contentManager = contentManager;
             _configs = configuration.TextureConfigs;
             _fontConfig = configuration.FontConfigs;
+            _spriteSheetConfigs = configuration.SpriteSheetConfigs;
         }
 
         public ITexture2D GetTexture(string textureIdentifier)
@@ -79,9 +82,23 @@ namespace GameEngine.Graphics
 
         private ITexture2D CreateTexture(string textureIdentifier)
         {
-            var textureConfig = _configs.Single(x => x.TextureName == textureIdentifier);
-            var pathPrefix = textureConfig.IsPlatformSpecific ? PlatformString : "";
-            var texture = new XnaTexture2D(pathPrefix + textureConfig.Path, _contentManager);
+            ITexture2D texture;
+
+            var textureConfig = _configs.SingleOrDefault(x => x.TextureName == textureIdentifier);
+            if(textureConfig != null)
+            {
+                var pathPrefix = textureConfig.IsPlatformSpecific ? PlatformString : "";
+                texture =  new XnaTexture2D(pathPrefix + textureConfig.Path, _contentManager);
+
+            }
+            else
+            {
+                var spriteSheetConfig = _spriteSheetConfigs.Single(x => x.Map.ContainsKey(textureIdentifier));
+                var source = spriteSheetConfig.Map[textureIdentifier];
+                var pathPrefix = spriteSheetConfig.IsPlatformSpecific ? PlatformString : "";
+                texture = new XnaSpriteSheetTexture2D(source,new XnaTexture2D(pathPrefix + spriteSheetConfig.Path, _contentManager));
+
+            }
             _textures[textureIdentifier] = texture;
 
             if(_isInitialized)

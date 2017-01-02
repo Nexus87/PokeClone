@@ -3,14 +3,11 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
-using GameEngine.GUI.General;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace GameEngine.Core.TextureLoader
 {
-    public class JsonSpriteSheetProvider : ISpriteSheetProvider
+    public class JsonSpriteSheetProvider
     {
         [DataContract]
         public class Area
@@ -25,34 +22,22 @@ namespace GameEngine.Core.TextureLoader
             public int Height { get; set; }
         }
 
-        private readonly string filename;
-        private readonly string mappingFileName;
-        private readonly ContentManager content;
-        private ITexture2D texture = null;
-        private Dictionary<string, Rectangle> mapping;
+        private readonly string _mappingFileName;
+        private Dictionary<string, Rectangle> _mapping;
 
-        public JsonSpriteSheetProvider(string filename, string mappingFileName, ContentManager content)
+        public JsonSpriteSheetProvider(string mappingFileName)
         {
-            this.filename = filename;
-            this.mappingFileName = mappingFileName;
-            this.content = content;
+            _mappingFileName = mappingFileName;
         }
 
-        public ITexture2D GetTexture()
+        public Dictionary<string, Rectangle> GetMapping()
         {
-            return texture;
-        }
-
-        public IDictionary<string, Rectangle> GetMapping()
-        {
-            return mapping;
+            return _mapping;
         }
 
         public void Setup()
         {
-            texture = new XnaTexture2D(content.Load<Texture2D>(filename));
-            mapping = ReadAreaMapping().ToDictionary(p => p.Key, p => AreaToRectangle(p.Value));
-
+            _mapping = ReadAreaMapping().ToDictionary(p => p.Key, p => AreaToRectangle(p.Value));
         }
 
         private static Rectangle AreaToRectangle(Area area)
@@ -63,7 +48,7 @@ namespace GameEngine.Core.TextureLoader
         private Dictionary<string, Area> ReadAreaMapping()
         {
             var deserializer = new DataContractJsonSerializer(typeof(Dictionary<string, Area>));
-            return (Dictionary<string, Area>) deserializer.ReadObject(new FileStream(mappingFileName, FileMode.Open, FileAccess.Read));
+            return (Dictionary<string, Area>) deserializer.ReadObject(new FileStream(_mappingFileName, FileMode.Open, FileAccess.Read));
 
         }
     }

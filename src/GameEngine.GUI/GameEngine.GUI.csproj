@@ -81,7 +81,6 @@
     <Compile Include="Graphics\IAnimation.cs" />
     <Compile Include="Graphics\IImageBox.cs" />
     <Compile Include="Graphics\NullGraphicObject.cs" />
-    <Compile Include="Graphics\SpriteSheetTexture.cs" />
     <Compile Include="IGraphicComponent.cs" />
     <Compile Include="INode.cs" />
     <Compile Include="ISkin.cs" />
