@@ -1,5 +1,4 @@
-﻿using GameEngine.Core.GameEngineComponents;
-using GameEngine.Graphics;
+﻿using GameEngine.Graphics;
 using GameEngine.TypeRegistry;
 
 namespace GameEngine.Core.ModuleManager

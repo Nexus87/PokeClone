@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using GameEngine.Globals;
-using GameEngine.GUI.Configuration;
+using GameEngine.Graphics.Configuration;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 

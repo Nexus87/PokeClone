@@ -1,5 +1,5 @@
 ﻿using GameEngine.Graphics;
-using GameEngine.GUI.General;
+using GameEngine.Graphics.General;
 using GameEngine.TypeRegistry;
 
 namespace GameEngine.Core

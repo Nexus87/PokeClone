@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using GameEngine.GUI;
-using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
 
 namespace GameEngine.Core

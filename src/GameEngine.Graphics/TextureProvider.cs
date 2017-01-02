@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using GameEngine.Graphics.General;
-using GameEngine.GUI.General;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;

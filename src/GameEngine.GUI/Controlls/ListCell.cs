@@ -1,6 +1,6 @@
 ﻿using System;
 using GameEngine.Globals;
-using GameEngine.GUI.General;
+using GameEngine.Graphics.General;
 using Microsoft.Xna.Framework;
 
 namespace GameEngine.GUI.Controlls

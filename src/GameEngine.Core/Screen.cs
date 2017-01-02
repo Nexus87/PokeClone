@@ -1,6 +1,5 @@
-﻿using System.ComponentModel;
+﻿using GameEngine.Graphics.General;
 using GameEngine.GUI;
-using GameEngine.GUI.General;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 

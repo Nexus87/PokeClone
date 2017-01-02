@@ -1,9 +1,7 @@
-﻿
-using GameEngine.Core.ModuleManager;
+﻿using GameEngine.Core.ModuleManager;
 using GameEngine.Graphics;
+using GameEngine.Graphics.Configuration;
 using GameEngine.GUI;
-using GameEngine.GUI.Configuration;
-using GameEngine.GUI.Diagnostic;
 
 namespace GameEngine.Core
 {

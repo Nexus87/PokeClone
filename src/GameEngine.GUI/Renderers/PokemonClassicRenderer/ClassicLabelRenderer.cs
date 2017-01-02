@@ -1,7 +1,7 @@
+using GameEngine.Graphics.General;
 using GameEngine.GUI.Controlls;
-using GameEngine.GUI.General;
 
-namespace GameEngine.GUI.Renderers
+namespace GameEngine.GUI.Renderers.PokemonClassicRenderer
 {
     public class ClassicLabelRenderer : LabelRenderer
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using GameEngine.Graphics.General;
 using GameEngine.GUI;
-using GameEngine.GUI.General;
 using Microsoft.Xna.Framework;
 
 namespace MainMode.Core.Graphics

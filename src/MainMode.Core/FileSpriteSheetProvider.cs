@@ -1,11 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using GameEngine.Core;
 using GameEngine.Globals;
-using GameEngine.GUI.General;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 
 namespace MainMode.Core
 {

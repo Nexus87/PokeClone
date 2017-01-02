@@ -1,12 +1,8 @@
-﻿using GameEngine.Core;
-using GameEngine.Core.TextureLoader;
-using GameEngine.Graphics;
+﻿using GameEngine.Graphics;
 using GameEngine.GUI.Controlls;
 using GameEngine.TypeRegistry;
 using MainMode.Core;
 using MainMode.Core.Graphics;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace PokemonGame.MainModuleClasses
 {

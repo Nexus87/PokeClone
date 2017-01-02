@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace GameEngine.GUI.General
+namespace GameEngine.Graphics.General
 {
     /// <summary>
     /// Wrapper for XNAs SpriteFont class

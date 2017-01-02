@@ -1,8 +1,8 @@
-﻿using GameEngine.GUI.General;
+﻿using GameEngine.Graphics.General;
 using GameEngine.GUI.Panels;
 using Microsoft.Xna.Framework;
 
-namespace GameEngine.GUI.Renderers
+namespace GameEngine.GUI.Renderers.PokemonClassicRenderer
 {
     public class ClassicScrollAreaRenderer : ScrollAreaRenderer
     {

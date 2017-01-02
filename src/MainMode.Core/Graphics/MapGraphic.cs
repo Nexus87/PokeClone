@@ -1,6 +1,6 @@
 ﻿using GameEngine.Globals;
+using GameEngine.Graphics.General;
 using GameEngine.GUI;
-using GameEngine.GUI.General;
 using GameEngine.GUI.Panels;
 using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;

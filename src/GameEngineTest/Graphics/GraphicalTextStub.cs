@@ -1,5 +1,5 @@
 ﻿using System;
-using GameEngine.GUI.General;
+using GameEngine.Graphics.General;
 
 namespace GameEngineTest.Graphics
 {

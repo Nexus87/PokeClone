@@ -1,4 +1,4 @@
-namespace GameEngine.GUI.Configuration
+namespace GameEngine.Graphics.Configuration
 {
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
