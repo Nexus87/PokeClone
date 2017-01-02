@@ -1,4 +1,5 @@
-﻿using GameEngine.Globals;
+﻿using System;
+using GameEngine.Globals;
 using GameEngine.Graphics.General;
 using GameEngine.GUI.Renderers;
 using GameEngine.TypeRegistry;
@@ -11,7 +12,7 @@ namespace GameEngine.GUI.Panels
     {
         private readonly SelectablePanelRenderer _renderer;
         private IGraphicComponent _content;
-
+        public bool ShouldHandleKeyInput { get; set; }
 
         public SelectablePanel(SelectablePanelRenderer renderer)
         {
@@ -51,6 +52,18 @@ namespace GameEngine.GUI.Panels
 
         public override void HandleKeyInput(CommandKeys key)
         {
+            if (ShouldHandleKeyInput && key == CommandKeys.Select)
+            {
+                OnPanelPressed();
+            }
+
+        }
+
+        public event EventHandler PanelPressed;
+
+        protected virtual void OnPanelPressed()
+        {
+            PanelPressed?.Invoke(this, EventArgs.Empty);
         }
     }
 }

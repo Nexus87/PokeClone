@@ -8,48 +8,48 @@ namespace MainMode.Core
     [GameService(typeof(IGameStateComponent))]
     public class GameStateComponent : GameEngine.Core.IGameComponent, IGameStateComponent
     {
-        private readonly IWorldScreenController controller;
-        private Map map;
-        private readonly Dictionary<int, FieldCoordinate> sprites = new Dictionary<int, FieldCoordinate>();
+        private readonly IWorldScreenController _controller;
+        private Map _map;
+        private readonly Dictionary<int, FieldCoordinate> _sprites = new Dictionary<int, FieldCoordinate>();
 
         public void SetMap(Map map)
         {
-            this.map = map;
-            controller.SetMap(map);
+            _map = map;
+            _controller.SetMap(map);
 
         }
 
         public void PlaceSprite(int spriteId, FieldCoordinate fieldCoordinate)
         {
-            sprites[spriteId] = fieldCoordinate;
+            _sprites[spriteId] = fieldCoordinate;
         }
 
         public FieldCoordinate GetPosition(int spriteId)
         {
-            return sprites[spriteId];
+            return _sprites[spriteId];
         }
 
         public GameStateComponent(IWorldScreenController controller)
         {
-            this.controller = controller;
+            _controller = controller;
         }
         public void Move(int spriteId, Direction direction)
         {
-            var newPosition = Move(direction, sprites[spriteId]);
+            var newPosition = Move(direction, _sprites[spriteId]);
             if(IsOutOfBound(newPosition))
                 return;
             if (IsBlocked(newPosition))
                 return;
             if (IsPlayer(spriteId))
-                controller.PlayerMoveDirection(direction);
-            sprites[spriteId] = newPosition;
+                _controller.PlayerMoveDirection(direction);
+            _sprites[spriteId] = newPosition;
         }
 
         private bool IsOutOfBound(FieldCoordinate newPosition)
         {
-            if (newPosition.X < 0 || newPosition.X > map.Tiles.Columns)
+            if (newPosition.X < 0 || newPosition.X > _map.Tiles.Columns)
                 return true;
-            if (newPosition.Y < 0 || newPosition.Y > map.Tiles.Rows)
+            if (newPosition.Y < 0 || newPosition.Y > _map.Tiles.Rows)
                 return true;
 
             return false;
@@ -57,10 +57,10 @@ namespace MainMode.Core
 
         private bool IsBlocked(FieldCoordinate newPosition)
         {
-            return !map.Tiles[newPosition.Y, newPosition.X].IsAccessable;
+            return !_map.Tiles[newPosition.Y, newPosition.X].IsAccessable;
         }
 
-        private FieldCoordinate Move(Direction direction, FieldCoordinate fieldCoordinate)
+        private static FieldCoordinate Move(Direction direction, FieldCoordinate fieldCoordinate)
         {
             switch (direction)
             {
@@ -84,7 +84,7 @@ namespace MainMode.Core
         public void Turn(int spriteId, Direction direction)
         {
             if (IsPlayer(spriteId))
-                controller.PlayerTurnDirection(direction);
+                _controller.PlayerTurnDirection(direction);
         }
 
         public void Update(GameTime time)

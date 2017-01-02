@@ -32,7 +32,9 @@ namespace BattleMode.Gui
                 var component = registry.ResolveType<SelectablePanel>();
                 var line = registry.ResolveType<PokemonMenuLine>();
                 component.Content = line;
+                component.ShouldHandleKeyInput = true;
                 component.Setup();
+                component.PanelPressed += delegate { OnItemSelected(value); };
                 line.SetPokemon(value);
                 return component;
             };
@@ -68,6 +70,11 @@ namespace BattleMode.Gui
         protected virtual void OnExitRequested()
         {
             ExitRequested?.Invoke(this, EventArgs.Empty);
+        }
+
+        protected virtual void OnItemSelected(Pokemon p)
+        {
+            ItemSelected?.Invoke(this, new SelectionEventArgs<Pokemon>(p));
         }
     }
 }
