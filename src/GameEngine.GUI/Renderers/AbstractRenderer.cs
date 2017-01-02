@@ -7,9 +7,6 @@ namespace GameEngine.GUI.Renderers
 {
     public abstract class AbstractRenderer<T> where T : IGraphicComponent
     {
-        internal static bool _isEnabled;
-        internal static DebugRectangle DebugRectangle;
-
         protected static void RenderText(ISpriteBatch spriteBatch, ISpriteFont font, string text, Vector2 position, float textHeight)
         {
             var scale = textHeight / font.MeasureString(" ").Y;
@@ -34,6 +31,9 @@ namespace GameEngine.GUI.Renderers
         public void Render(ISpriteBatch spriteBatch, T component)
         {
             RenderComponent(spriteBatch, component);
+#if DEBUG
+            DebugRectangle.Rectangle?.Draw(spriteBatch, component.Area, Color.Black);
+#endif
         }
 
         protected abstract void RenderComponent(ISpriteBatch spriteBatch, T component);

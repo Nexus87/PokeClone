@@ -3,6 +3,7 @@ using GameEngine.Core.ModuleManager;
 using GameEngine.Graphics;
 using GameEngine.GUI;
 using GameEngine.GUI.Configuration;
+using GameEngine.GUI.Diagnostic;
 
 namespace GameEngine.Core
 {
@@ -10,7 +11,7 @@ namespace GameEngine.Core
     {
         private readonly GameRunner _gameRunner;
         private readonly IModuleManager _moduleRegistry;
-        private readonly Graphics.TextureProvider _textureProvider;
+        private readonly TextureProvider _textureProvider;
         private string _startModule;
         private ISkin _skin;
 
@@ -18,7 +19,7 @@ namespace GameEngine.Core
         {
             _gameRunner = new GameRunner();
             _moduleRegistry = new AutofacModuleManager();
-            _textureProvider = new Graphics.TextureProvider();
+            _textureProvider = new TextureProvider();
             _moduleRegistry.RegisterModule(new GameEngineModule(_gameRunner, _textureProvider, config));
         }
 
@@ -35,9 +36,10 @@ namespace GameEngine.Core
         public void Run()
         {
             Init();
-            var typeRegistry = _moduleRegistry.TypeRegistry;
             _moduleRegistry.StartModule(GameEngineModule.Name);
             _moduleRegistry.StartModule(_startModule);
+
+//            DebugRectangle.Enable(_textureProvider.Pixel);
             _gameRunner.Run();
         }
 

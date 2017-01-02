@@ -37,7 +37,6 @@ namespace MainMode.Core.Graphics
 
         public void Init()
         {
-
             var totalHeight = Rows * TextureSize;
             var totalWidth = Columns * TextureSize;
 
@@ -49,13 +48,15 @@ namespace MainMode.Core.Graphics
 
         private void InitContainer(ITable<IGraphicComponent> fieldTextures)
         {
+            for (var i = 0; i < fieldTextures.Rows; i++)
+                _container.AddPercentRow();
+            for (var j = 0; j < fieldTextures.Columns; j++)
+                _container.AddPercentColumn();
 
             for (var i = 0; i < fieldTextures.Rows; i++)
             {
-                _container.AddPercentRow();
                 for (var j = 0; j < fieldTextures.Columns; j++)
                 {
-                    _container.AddPercentColumn();
                     _container.SetComponent(fieldTextures[i, j], i, j);
                 }
             }
@@ -70,6 +71,5 @@ namespace MainMode.Core.Graphics
         {
             return row * TextureSize;
         }
-
     }
 }

@@ -1,17 +1,20 @@
-using GameEngine.Graphics;
 using GameEngine.GUI.General;
-using GameEngine.GUI.Graphics;
 using Microsoft.Xna.Framework;
 
 namespace GameEngine.GUI.Diagnostic
 {
-    public class DebugRectangle
+    internal class DebugRectangle
     {
+        internal static DebugRectangle Rectangle;
+        internal static void Enable(ITexture2D pixel)
+        {
+            Rectangle = new DebugRectangle(pixel);
+        }
         private readonly ITexture2D _pixel;
 
-        public DebugRectangle(TextureProvider textureProvider)
+        public DebugRectangle(ITexture2D pixel)
         {
-            _pixel = textureProvider.Pixel;
+            _pixel = pixel;
         }
 
         public void Draw(ISpriteBatch spriteBatch, Rectangle rectangle, Color color)
