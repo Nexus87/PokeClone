@@ -75,16 +75,6 @@ namespace BattleMode.Core.Components.GraphicComponents
             throw new NotImplementedException();
         }
 
-        public override void Setup()
-        {
-            foreach (var view in _dataViews.Values)
-                view.Setup();
-
-            foreach (var sprite in _sprites.Values)
-                sprite.Setup();
-
-        }
-
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)
         {
             foreach (var view in _dataViews.Values)

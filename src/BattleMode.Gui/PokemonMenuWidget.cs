@@ -33,7 +33,6 @@ namespace BattleMode.Gui
                 var line = registry.ResolveType<PokemonMenuLine>();
                 component.Content = line;
                 component.ShouldHandleKeyInput = true;
-                component.Setup();
                 component.PanelPressed += delegate { OnItemSelected(value); };
                 line.SetPokemon(value);
                 return component;

@@ -18,7 +18,6 @@ namespace MainModeTest.Graphics
             var mapMock = CreateMap();
             var screen = CreateWorldScreen(player, mapMock);
 
-            screen.Setup();
             screen.Draw();
 
             Assert.True(player.WasDrawn);
@@ -35,7 +34,6 @@ namespace MainModeTest.Graphics
             var mapMock = A.Fake<IMapController>();
             var screen = CreateWorldScreen(player, mapMock);
 
-            screen.Setup();
             screen.PlayerMoveDirection(moveDirection);
 
             A.CallTo(() => mapMock.MoveMap(expectedMapMoveDirection)).MustHaveHappened(Repeated.Exactly.Once);

@@ -20,6 +20,8 @@ namespace MainMode.Core.Graphics
             _mapController = mapController;
             _spriteLoader = spriteLoader;
             _constants = constants;
+            _player = _spriteLoader.GetSprite("player");
+
         }
 
         protected override void Update()
@@ -37,12 +39,6 @@ namespace MainMode.Core.Graphics
         {
             _mapController.Draw(time, batch);
             _player.Draw(time, batch);
-        }
-
-        public override void Setup()
-        {
-            _player = _spriteLoader.GetSprite("player");
-            _mapController.Setup();
         }
 
         private static Direction ReverseDirection(Direction direction)

@@ -175,7 +175,6 @@ namespace GameEngine.GUI.Test.Controls
         {
             var box = new TextArea(new ClassicTextAreaRenderer(FontMock), splitter);
             box.SetCoordinates(10, 10, 300, 400);
-            box.Setup();
             return box;
         }
 

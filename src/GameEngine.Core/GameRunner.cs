@@ -42,9 +42,6 @@ namespace GameEngine.Core
 
             if (Graphic == null)
                 throw new InvalidOperationException("Graphic component is not set");
-
-            Graphic.Setup();
-
         }
 
         protected override void LoadContent()

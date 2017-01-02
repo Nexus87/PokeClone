@@ -76,10 +76,5 @@ namespace GameEngine.GUI.Controlls
         {
             _component?.Draw(time, batch);
         }
-
-        public void Setup()
-        {
-            _component?.Setup();
-        }
     }
 }

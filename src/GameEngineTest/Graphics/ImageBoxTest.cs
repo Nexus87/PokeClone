@@ -36,7 +36,6 @@ namespace GameEngineTest.Graphics
             A.CallTo(() => textureStub.Height).Returns(10);
             A.CallTo(() => textureStub.Width).Returns(10);
             A.CallTo(() => textureStub.Bounds).Returns(new Rectangle(0, 0, 10, 10));
-            box.Setup();
 
             box.Image = textureStub;
 

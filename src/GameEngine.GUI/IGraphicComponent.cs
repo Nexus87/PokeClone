@@ -40,16 +40,6 @@ namespace GameEngine.GUI
         /// <param name="batch">Current SpriteBatch</param>
         void Draw(GameTime time, ISpriteBatch batch);
 
-        /// <summary>
-        /// In this function, the component can load its resources
-        /// </summary>
-        /// <remarks>
-        /// This function needs to be called before the first call to Draw.
-        /// If the component is registered to the PokeEngine, the function will
-        /// be after Run().
-        /// </remarks>
-        void Setup();
-
         float PreferredHeight { get; }
         float PreferredWidth { get; }
 

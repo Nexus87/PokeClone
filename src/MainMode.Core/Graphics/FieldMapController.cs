@@ -33,7 +33,6 @@ namespace MainMode.Core.Graphics
             base.Update();
             if(_mapChanged)
             {
-                _mapGraphic.Setup();
                 CalculateScreenCenter();
                 _mapChanged = false;
             }

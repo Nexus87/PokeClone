@@ -69,8 +69,6 @@ namespace GameEngine.GUI
 
         protected IAnimation Animation { get; set; }
 
-        public virtual void Setup(){}
-
         public virtual float PreferredHeight {
             get
             {

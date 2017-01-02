@@ -108,7 +108,6 @@ namespace MainModeTest.Graphics
             var mapLoaderFake = A.Fake<IMapLoader>();
             A.CallTo(() => mapLoaderFake.LoadMap(A<Map>.Ignored)).Returns(mapGraphic);
             var mapController = new FieldMapController(mapLoaderFake, screenConstants);
-            mapController.Setup();
             mapController.LoadMap(null);
             return mapController;
         }

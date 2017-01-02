@@ -20,7 +20,6 @@ namespace BattleModeTest.Components.GraphicComponents
         private static HpLine CreateLine()
         {
             var line = new HpLine(new ClassicLineRenderer(A.Fake<ITexture2D>(), A.Fake<ITexture2D>(), Color.White)) {MaxHp = 100};
-            line.Setup();
 
             return line;
         }

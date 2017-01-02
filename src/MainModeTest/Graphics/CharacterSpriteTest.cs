@@ -46,7 +46,6 @@ namespace MainModeTest.Graphics
         private CharacterSprite CreateSprite()
         {
             var sprite = new CharacterSprite(lookingLeft, lookingRight, lookingUp, lookingDown);
-            sprite.Setup();
             return sprite;
         }
     }

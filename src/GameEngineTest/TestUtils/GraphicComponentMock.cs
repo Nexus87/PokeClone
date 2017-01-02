@@ -41,12 +41,6 @@ namespace GameEngineTest.TestUtils
             }
         }
 
-        public void Setup()
-        {
-
-        }
-
-
 
         public Color Color { get; set; }
 
