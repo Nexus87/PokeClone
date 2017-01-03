@@ -1,4 +1,6 @@
-﻿using GameEngine.Globals;
+﻿using System;
+using System.Collections.Generic;
+using GameEngine.Globals;
 using GameEngine.Graphics.General;
 using GameEngine.GUI.Renderers;
 using GameEngine.TypeRegistry;
@@ -11,6 +13,7 @@ namespace GameEngine.GUI.Panels
     {
         private readonly WindowRenderer _renderer;
         private IGuiComponent _content;
+        private readonly Dictionary<CommandKeys, Action> _inputListeners = new Dictionary<CommandKeys, Action>();
 
         public Window(WindowRenderer renderer)
         {
@@ -44,7 +47,15 @@ namespace GameEngine.GUI.Panels
 
         public override void HandleKeyInput(CommandKeys key)
         {
-            _content?.HandleKeyInput(key);
+            if (_inputListeners.ContainsKey(key))
+                _inputListeners[key]();
+            else
+                _content?.HandleKeyInput(key);
+        }
+
+        public void SetInputListener(CommandKeys key, Action action)
+        {
+            _inputListeners[key] = action;
         }
     }
 }

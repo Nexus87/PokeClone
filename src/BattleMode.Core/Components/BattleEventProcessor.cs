@@ -11,13 +11,13 @@ namespace BattleMode.Core.Components
     [GameService(typeof(BattleEventProcessor))]
     public class BattleEventProcessor
     {
-        private readonly IGUIService _guiService;
+        private readonly IGuiEntity _guiEntity;
         private readonly IBattleGraphicController _graphicService;
         private readonly IEventQueue _queue;
 
-        public BattleEventProcessor(IGUIService guiService, IBattleGraphicController graphicService, IEventQueue queue, IEventCreator events)
+        public BattleEventProcessor(IGuiEntity guiEntity, IBattleGraphicController graphicService, IEventQueue queue, IEventCreator events)
         {
-            _guiService = guiService;
+            _guiEntity = guiEntity;
             _graphicService = graphicService;
             _queue = queue;
 
@@ -33,7 +33,7 @@ namespace BattleMode.Core.Components
         private void StatusChangedHandler(object sender, ClientStatusChangedEventArgs e)
         {
             _queue.AddStatusEvent(_graphicService, e.Id, e.Status);
-            _queue.AddShowMessageEvent(_guiService, "Status changed to: " + e.Status);
+            _queue.AddShowMessageEvent(_guiEntity, "Status changed to: " + e.Status);
         }
 
         private void PokemonChangedHandler(object sender, ClientPokemonChangedEventArgs e)
@@ -43,12 +43,12 @@ namespace BattleMode.Core.Components
 
         private void NewTurnHandler(object sender, EventArgs e)
         {
-            _queue.AddShowMenuEvent(_guiService);
+            _queue.AddShowMenuEvent(_guiEntity);
         }
 
         private void MoveUsedHandler(object sender, MoveUsedEventArgs e)
         {
-            _queue.AddShowMessageEvent(_guiService, e.Source.Name + " uses " + e.Move.Name);
+            _queue.AddShowMessageEvent(_guiEntity, e.Source.Name + " uses " + e.Move.Name);
         }
 
         private void MoveEffectiveHandler(object sender, MoveEffectiveEventArgs e)
@@ -56,13 +56,13 @@ namespace BattleMode.Core.Components
             switch (e.Effect)
             {
                 case MoveEfficiency.NoEffect:
-                    _queue.AddShowMessageEvent(_guiService, "It doesn't affect " + e.Target.Name + "...");
+                    _queue.AddShowMessageEvent(_guiEntity, "It doesn't affect " + e.Target.Name + "...");
                     break;
                 case MoveEfficiency.NotEffective:
-                    _queue.AddShowMessageEvent(_guiService, "It's not very effective...");
+                    _queue.AddShowMessageEvent(_guiEntity, "It's not very effective...");
                     break;
                 case MoveEfficiency.VeryEffective:
-                    _queue.AddShowMessageEvent(_guiService, "It's super effective!");
+                    _queue.AddShowMessageEvent(_guiEntity, "It's super effective!");
                     break;
             }
         }
@@ -74,7 +74,7 @@ namespace BattleMode.Core.Components
 
         private void CriticalDamageHandler(object sender, EventArgs e)
         {
-            _queue.AddShowMessageEvent(_guiService, "Critical hit!");
+            _queue.AddShowMessageEvent(_guiEntity, "Critical hit!");
         }
     }
 }

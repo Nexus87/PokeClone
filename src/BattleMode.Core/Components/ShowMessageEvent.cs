@@ -7,23 +7,23 @@ namespace BattleMode.Core.Components
     public class ShowMessageEvent : IEvent
     {
         public event EventHandler EventProcessed = delegate { };
-        private readonly IGUIService _guiService;
+        private readonly IGuiEntity _guiEntity;
         private readonly string _text;
 
-        public ShowMessageEvent(IGUIService guiService, string text)
+        public ShowMessageEvent(IGuiEntity guiEntity, string text)
         {
-            _guiService = guiService;
+            _guiEntity = guiEntity;
             _text = text;
         }
         public void Dispatch()
         {
-            _guiService.TextDisplayed += TextDisplayedHandler;
-            _guiService.SetText(_text);
+            _guiEntity.TextDisplayed += TextDisplayedHandler;
+            _guiEntity.SetText(_text);
         }
 
         private void TextDisplayedHandler(object sender, EventArgs e)
         {
-            _guiService.TextDisplayed -= TextDisplayedHandler;
+            _guiEntity.TextDisplayed -= TextDisplayedHandler;
             EventProcessed(this, EventArgs.Empty);
         }
     }

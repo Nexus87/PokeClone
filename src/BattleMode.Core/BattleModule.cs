@@ -28,7 +28,7 @@ namespace BattleMode.Core
             registry.ScanAssembly(Assembly.GetExecutingAssembly());
             registry.ScanAssembly(Assembly.GetAssembly(typeof(ClientIdentifier)));
             registry.ScanAssembly(Assembly.GetAssembly(typeof(IBattleStateService)));
-            registry.ScanAssembly(Assembly.GetAssembly(typeof(IGUIService)));
+            registry.ScanAssembly(Assembly.GetAssembly(typeof(IGuiEntity)));
             registry.ScanAssembly(Assembly.GetAssembly(typeof(IBattleGraphicController)));
             registry.RegisterType(a => _player);
         }

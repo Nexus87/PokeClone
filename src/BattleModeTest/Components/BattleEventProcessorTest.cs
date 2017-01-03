@@ -13,7 +13,7 @@ namespace BattleModeTest.Components
     public class BattleEventProcessorTest
     {
         private EventQueueFake _eventQueue;
-        private IGUIService _guiMock;
+        private IGuiEntity _guiMock;
         private IBattleGraphicController _graphicMock;
         private BattleEventFake _eventMock;
 
@@ -21,7 +21,7 @@ namespace BattleModeTest.Components
         public void Setup()
         {
             _eventQueue = new EventQueueFake();
-            _guiMock = A.Fake<IGUIService>();
+            _guiMock = A.Fake<IGuiEntity>();
             _eventMock = new BattleEventFake();
             _graphicMock = A.Fake<IBattleGraphicController>();
         }

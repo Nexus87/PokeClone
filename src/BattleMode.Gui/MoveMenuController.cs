@@ -1,24 +1,25 @@
 ﻿using System;
 using Base;
 using BattleMode.Entities.BattleState;
+using GameEngine.Core;
 using GameEngine.Globals;
-using GameEngine.Graphics.General;
 using GameEngine.GUI;
 using GameEngine.GUI.Controlls;
 using GameEngine.GUI.Panels;
 using GameEngine.TypeRegistry;
-using Microsoft.Xna.Framework;
 
 namespace BattleMode.Gui
 {
     [GameType]
-    public class MoveMenuWidget : AbstractGuiComponent, IMenuWidget<Move>
+    public class MoveMenuController
     {
+        private readonly GuiManager _guiManager;
         private readonly Window _window;
         private readonly ListView<Move> _listView;
 
-        public MoveMenuWidget(BattleData data, Window window, ListView<Move> listView, IGameTypeRegistry registry)
+        public MoveMenuController(GuiManager guiManager, ScreenConstants screenConstants, BattleData data, Window window, ListView<Move> listView, IGameTypeRegistry registry)
         {
+            _guiManager = guiManager;
             _window = window;
             _listView = listView;
             _listView.CellHeight = 50;
@@ -43,33 +44,22 @@ namespace BattleMode.Gui
             };
 
             _window.SetContent(_listView);
-        }
-
-        protected override void DrawComponent(GameTime time, ISpriteBatch batch)
-        {
-            _window.Draw(time, batch);
-        }
-
-        protected override void Update()
-        {
-            _window.SetCoordinates(this);
-        }
-
-        public override void HandleKeyInput(CommandKeys key)
-        {
-            if (key == CommandKeys.Back)
-                OnExitRequested();
-            _window.HandleKeyInput(key);
+            InitWindow(screenConstants);
         }
 
         public event EventHandler ExitRequested;
         public event EventHandler<SelectionEventArgs<Move>> ItemSelected;
 
-        public void ResetSelection()
+        public void Show()
         {
+            _guiManager.ShowWidget(_window);
             _listView.SelectCell(0);
         }
 
+        public void Close()
+        {
+            _guiManager.CloseWidget(_window);
+        }
         protected virtual void OnExitRequested()
         {
             ExitRequested?.Invoke(this, EventArgs.Empty);
@@ -79,5 +69,19 @@ namespace BattleMode.Gui
         {
             ItemSelected?.Invoke(this, new SelectionEventArgs<Move>(m));
         }
+
+        private void InitWindow(ScreenConstants screen)
+        {
+            _window.SetCoordinates(
+                screen.ScreenWidth / 2.0f,
+                2.0f * screen.ScreenHeight / 3.0f,
+                width: screen.ScreenWidth - screen.ScreenWidth / 2.0f,
+                height: screen.ScreenHeight - 2.0f * screen.ScreenHeight / 3.0f
+            );
+
+            _window.SetInputListener(CommandKeys.Back, OnExitRequested);
+        }
+
+
     }
 }

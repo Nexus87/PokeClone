@@ -68,6 +68,10 @@
       <Project>{656D6147-6E45-6967-6E65-2E4C696E7578}</Project>
       <Name>GameEngine.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\GameEngine.Entities\GameEngine.Entities.csproj">
+      <Project>{C80E7E11-9184-46F3-B66E-236229E44614}</Project>
+      <Name>GameEngine.Entities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GameEngine.Globals\GameEngine.Globals.csproj">
       <Project>{b19bd4b3-dcae-e1dc-6e65-2e476c6f6261}</Project>
       <Name>GameEngine.Globals</Name>

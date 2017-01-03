@@ -2,24 +2,25 @@
 using System.Collections.ObjectModel;
 using Base;
 using BattleMode.Shared;
+using GameEngine.Core;
 using GameEngine.Globals;
-using GameEngine.Graphics.General;
 using GameEngine.GUI;
 using GameEngine.GUI.Controlls;
 using GameEngine.GUI.Panels;
 using GameEngine.TypeRegistry;
-using Microsoft.Xna.Framework;
 
 namespace BattleMode.Gui
 {
     [GameType]
-    public class PokemonMenuWidget : AbstractGuiComponent, IMenuWidget<Pokemon>
+    public class PokemonMenuController
     {
         private readonly ListView<Pokemon> _listView;
+        private readonly GuiManager _guiManager;
         private readonly Panel _panel;
 
-        public PokemonMenuWidget(Client client, ListView<Pokemon> listView, Panel panel, IGameTypeRegistry registry)
+        public PokemonMenuController(GuiManager guiManager, ScreenConstants screenConstants, Client client, ListView<Pokemon> listView, Panel panel, IGameTypeRegistry registry)
         {
+            _guiManager = guiManager;
             _panel = panel;
             _listView = listView;
 
@@ -38,22 +39,15 @@ namespace BattleMode.Gui
                 return component;
             };
 
+            InitPanel(screenConstants);
+
         }
 
         public event EventHandler ExitRequested;
         public event EventHandler<SelectionEventArgs<Pokemon>> ItemSelected;
 
-        protected override void DrawComponent(GameTime time, ISpriteBatch batch)
-        {
-            _panel.Draw(time, batch);
-        }
 
-        protected override void Update()
-        {
-            _panel.SetCoordinates(this);
-        }
-
-        public override void HandleKeyInput(CommandKeys key)
+        public void HandleKeyInput(CommandKeys key)
         {
             if(key == CommandKeys.Back)
                 OnExitRequested();
@@ -61,19 +55,35 @@ namespace BattleMode.Gui
                 _listView.HandleKeyInput(key);
         }
 
-        public void ResetSelection()
+        public void Show()
         {
             _listView.SelectCell(0);
+            _guiManager.ShowWidget(_panel);
         }
 
-        protected virtual void OnExitRequested()
+        public void Close()
+        {
+            _guiManager.CloseWidget(_panel);
+        }
+        protected void OnExitRequested()
         {
             ExitRequested?.Invoke(this, EventArgs.Empty);
         }
 
-        protected virtual void OnItemSelected(Pokemon p)
+        protected void OnItemSelected(Pokemon p)
         {
             ItemSelected?.Invoke(this, new SelectionEventArgs<Pokemon>(p));
+        }
+
+        private void InitPanel(ScreenConstants screen)
+        {
+            const int xPosition = 0;
+            const int yPosition = 0;
+            var width = screen.ScreenWidth;
+            var height = 2.0f * screen.ScreenHeight / 3.0f;
+
+            _panel.SetCoordinates(xPosition, yPosition, width, height);
+            _panel.AddInputListener(CommandKeys.Back, OnExitRequested);
         }
     }
 }

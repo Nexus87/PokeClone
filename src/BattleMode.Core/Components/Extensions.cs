@@ -18,13 +18,13 @@ namespace BattleMode.Core.Components
         {
             queue.AddEvent(new SetPokemonEvent(service, id, pokemon));
         }
-        public static void AddShowMenuEvent(this IEventQueue queue, IGUIService service)
+        public static void AddShowMenuEvent(this IEventQueue queue, IGuiEntity entity)
         {
-            queue.AddEvent(new ShowMenuEvent(service));
+            queue.AddEvent(new ShowMenuEvent(entity));
         }
-        public static void AddShowMessageEvent(this IEventQueue queue, IGUIService service, string message)
+        public static void AddShowMessageEvent(this IEventQueue queue, IGuiEntity entity, string message)
         {
-            queue.AddEvent(new ShowMessageEvent(service, message));
+            queue.AddEvent(new ShowMessageEvent(entity, message));
         }
         public static void AddStatusEvent(this IEventQueue queue, IBattleGraphicController graphic, ClientIdentifier id, StatusCondition condition)
         {

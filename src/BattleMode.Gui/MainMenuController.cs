@@ -1,22 +1,23 @@
 ﻿using System;
+using GameEngine.Core;
 using GameEngine.Globals;
-using GameEngine.Graphics.General;
 using GameEngine.GUI;
 using GameEngine.GUI.Controlls;
 using GameEngine.GUI.Panels;
 using GameEngine.TypeRegistry;
-using Microsoft.Xna.Framework;
 
 namespace BattleMode.Gui
 {
     [GameType]
-    public class MainMenuWidget : AbstractGuiComponent, IMenuWidget<MainMenuEntries>
+    public class MainMenuController
     {
         private readonly Grid _grid;
+        private readonly GuiManager _guiManager;
         private readonly Window _window;
 
-        public MainMenuWidget(Window window, Grid grid, Button attackButton, Button pkmnButton, Button itemButton, Button runButton)
+        public MainMenuController(GuiManager guiManager, ScreenConstants screenConstants, Window window, Grid grid, Button attackButton, Button pkmnButton, Button itemButton, Button runButton)
         {
+            _guiManager = guiManager;
             _window = window;
             _window.SetContent(grid);
 
@@ -42,32 +43,23 @@ namespace BattleMode.Gui
             _grid.SetComponent(pkmnButton, 0, 1);
             _grid.SetComponent(itemButton, 1, 0);
             _grid.SetComponent(runButton, 1, 1);
+
+            InitWindow(screenConstants);
         }
 
         public event EventHandler ExitRequested;
         public event EventHandler<SelectionEventArgs<MainMenuEntries>> ItemSelected;
 
-        public void ResetSelection()
+        public void Show()
         {
             _grid.SelectComponent(0, 0);
+            _guiManager.ShowWidget(_window);
         }
 
-        protected override void DrawComponent(GameTime time, ISpriteBatch batch)
-        {
-            _window.Draw(time, batch);
-        }
 
-        protected override void Update()
+        public void Close()
         {
-            _window.SetCoordinates(this);
-        }
-
-        public override void HandleKeyInput(CommandKeys key)
-        {
-            if(key == CommandKeys.Back)
-                OnExitRequested();
-            else
-                _window.HandleKeyInput(key);
+            _guiManager.CloseWidget(_window);
         }
 
         protected virtual void OnItemSelected(MainMenuEntries e)
@@ -78,6 +70,18 @@ namespace BattleMode.Gui
         protected virtual void OnExitRequested()
         {
             ExitRequested?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void InitWindow(ScreenConstants screen)
+        {
+            var xPosition = 0.5f * screen.ScreenWidth;
+            var yPosition = 2.0f * screen.ScreenHeight / 3.0f;
+            var width = screen.ScreenWidth - xPosition;
+            var height = screen.ScreenHeight - yPosition;
+
+            _window.SetCoordinates(xPosition, yPosition, width, height);
+            _window.SetInputListener(CommandKeys.Back, OnExitRequested);
+
         }
     }
 }
