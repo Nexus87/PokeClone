@@ -6,6 +6,7 @@ using GameEngine.Entities;
 using GameEngine.Graphics.Textures;
 using GameEngine.GUI;
 using GameEngine.GUI.Components;
+using GameEngine.GUI.Loader;
 using GameEngine.GUI.Panels;
 using GameEngine.GUI.Renderers;
 using GameEngine.TypeRegistry;
@@ -68,6 +69,8 @@ namespace GameEngine.Core
 
         public void Start(IGameComponentManager componentManager, IInputHandlerManager inputHandlerManager, IGameTypeRegistry registry)
         {
+            GuiLoader.InitLoaderResources(registry);
+
             componentManager.AddGameComponent(registry.ResolveType<InputEntity>());
             componentManager.AddGameComponent(registry.ResolveType<IEventQueue>());
 

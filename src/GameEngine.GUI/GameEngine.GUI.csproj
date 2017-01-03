@@ -84,6 +84,12 @@
     <Compile Include="IGuiComponent.cs" />
     <Compile Include="INode.cs" />
     <Compile Include="ISkin.cs" />
+    <Compile Include="Loader\GuiComponentBuilder.cs" />
+    <Compile Include="Loader\GuiLoader.cs" />
+    <Compile Include="Loader\GuiLoaderIdAttribute.cs" />
+    <Compile Include="Loader\IBuilder.cs" />
+    <Compile Include="Loader\PanelBuilder\GridBuilder.cs" />
+    <Compile Include="Loader\PanelBuilder\WindowBuilder.cs" />
     <Compile Include="Panels\AbstractPanel.cs" />
     <Compile Include="Panels\ColumnProperty.cs" />
     <Compile Include="Panels\Grid.cs" />
@@ -162,8 +168,6 @@
       <Name>GameEngine.TypeRegistry</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
-  <ItemGroup />
   <ItemGroup />
   <ItemGroup />
   <ItemGroup />

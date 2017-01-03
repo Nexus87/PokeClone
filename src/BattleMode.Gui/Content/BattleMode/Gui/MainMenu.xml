@@ -1,0 +1,12 @@
+<Window id="Window" X="0.5*" Y="0.66*" Width="0.5*" Height="0.33*">
+    <Grid id="Grid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+    </Grid>
+</Window>

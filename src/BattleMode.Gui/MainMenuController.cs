@@ -1,8 +1,8 @@
 ﻿using System;
 using GameEngine.Core;
 using GameEngine.Globals;
-using GameEngine.GUI;
 using GameEngine.GUI.Controlls;
+using GameEngine.GUI.Loader;
 using GameEngine.GUI.Panels;
 using GameEngine.TypeRegistry;
 
@@ -11,21 +11,23 @@ namespace BattleMode.Gui
     [GameType]
     public class MainMenuController
     {
-        private readonly Grid _grid;
         private readonly GuiManager _guiManager;
-        private readonly Window _window;
 
-        public MainMenuController(GuiManager guiManager, ScreenConstants screenConstants, Window window, Grid grid, Button attackButton, Button pkmnButton, Button itemButton, Button runButton)
+#pragma warning disable 649
+
+        [GuiLoaderId("Grid")]
+        private Grid _grid;
+        [GuiLoaderId("Window")]
+        private Window _window;
+
+#pragma warning restore 649
+
+        public MainMenuController(GuiManager guiManager, Button attackButton, Button pkmnButton, Button itemButton, Button runButton)
         {
             _guiManager = guiManager;
-            _window = window;
-            _window.SetContent(grid);
+            var loader = new GuiLoader(@"BattleMode\Gui\MainMenu.xml") {Controller = this};
 
-            _grid = grid;
-            _grid.AddPercentColumn();
-            _grid.AddPercentColumn();
-            _grid.AddPercentRow();
-            _grid.AddPercentRow();
+            loader.Load();
 
             attackButton.Text = MainMenuEntries.Attack.ToString();
             attackButton.ButtonPressed += delegate { OnItemSelected(MainMenuEntries.Attack); };
@@ -44,7 +46,8 @@ namespace BattleMode.Gui
             _grid.SetComponent(itemButton, 1, 0);
             _grid.SetComponent(runButton, 1, 1);
 
-            InitWindow(screenConstants);
+            _window.SetInputListener(CommandKeys.Back, OnExitRequested);
+
         }
 
         public event EventHandler ExitRequested;
@@ -70,18 +73,6 @@ namespace BattleMode.Gui
         protected virtual void OnExitRequested()
         {
             ExitRequested?.Invoke(this, EventArgs.Empty);
-        }
-
-        private void InitWindow(ScreenConstants screen)
-        {
-            var xPosition = 0.5f * screen.ScreenWidth;
-            var yPosition = 2.0f * screen.ScreenHeight / 3.0f;
-            var width = screen.ScreenWidth - xPosition;
-            var height = screen.ScreenHeight - yPosition;
-
-            _window.SetCoordinates(xPosition, yPosition, width, height);
-            _window.SetInputListener(CommandKeys.Back, OnExitRequested);
-
         }
     }
 }

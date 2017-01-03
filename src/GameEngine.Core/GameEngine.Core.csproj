@@ -73,7 +73,6 @@
     <Compile Include="ModuleManager\IModule.cs" />
     <Compile Include="ModuleManager\IModuleManager.cs" />
     <Compile Include="Screen.cs" />
-    <Compile Include="ScreenConstants.cs" />
     <Compile Include="SpriteProvider.cs" />
   </ItemGroup>
   <ItemGroup>

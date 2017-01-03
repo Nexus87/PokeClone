@@ -1,9 +1,7 @@
-﻿using GameEngine.TypeRegistry;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 
 namespace GameEngine.Core
 {
-    [GameService(typeof(ScreenConstants))]
     public class ScreenConstants
     {
         public ScreenConstants() :
