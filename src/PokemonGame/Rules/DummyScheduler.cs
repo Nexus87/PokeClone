@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using BattleMode.Components.BattleState;
-using BattleMode.Components.BattleState.Commands;
+using BattleMode.Entities.BattleState;
+using BattleMode.Entities.BattleState.Commands;
 using GameEngine.TypeRegistry;
 
 namespace PokemonGame.Rules

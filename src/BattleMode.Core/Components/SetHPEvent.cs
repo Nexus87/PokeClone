@@ -1,7 +1,7 @@
 ﻿using System;
 using BattleMode.Core.Components.GraphicComponents;
 using BattleMode.Shared;
-using GameEngine.Components;
+using GameEngine.Entities;
 
 namespace BattleMode.Core.Components
 {

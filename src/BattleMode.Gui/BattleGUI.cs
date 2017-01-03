@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Base;
-using BattleMode.Components.BattleState;
+using BattleMode.Entities.BattleState;
 using BattleMode.Shared;
 using GameEngine.Core;
 using GameEngine.GUI;

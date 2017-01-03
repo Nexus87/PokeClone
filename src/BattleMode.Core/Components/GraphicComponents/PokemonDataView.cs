@@ -1,5 +1,5 @@
 ﻿using System;
-using BattleMode.Components.BattleState;
+using BattleMode.Entities.BattleState;
 using BattleMode.Shared;
 using GameEngine.Graphics.General;
 using GameEngine.GUI;

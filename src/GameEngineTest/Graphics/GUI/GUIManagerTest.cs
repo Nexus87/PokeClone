@@ -1,6 +1,6 @@
 ﻿using FakeItEasy;
-using GameEngine.Components;
 using GameEngine.Core;
+using GameEngine.Entities;
 using GameEngine.Globals;
 using GameEngineTest.TestUtils;
 using NUnit.Framework;

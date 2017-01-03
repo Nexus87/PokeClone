@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using GameEngine.Components;
+using GameEngine.Entities;
 using GameEngine.Globals;
 using GameEngine.Graphics.General;
 using GameEngine.GUI;

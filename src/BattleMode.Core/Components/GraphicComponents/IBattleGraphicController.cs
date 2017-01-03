@@ -1,6 +1,6 @@
 ﻿using System;
 using Base.Data;
-using BattleMode.Components.BattleState;
+using BattleMode.Entities.BattleState;
 using BattleMode.Shared;
 using GameEngine.GUI;
 

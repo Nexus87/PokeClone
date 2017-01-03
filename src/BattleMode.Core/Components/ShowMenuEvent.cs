@@ -1,6 +1,6 @@
 ﻿using System;
 using BattleMode.Gui;
-using GameEngine.Components;
+using GameEngine.Entities;
 
 namespace BattleMode.Core.Components
 {

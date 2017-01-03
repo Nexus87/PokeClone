@@ -1,4 +1,5 @@
 ﻿using System;
+using GameEngine.Entities;
 using Microsoft.Xna.Framework;
 
 namespace GameEngine.Core
@@ -7,7 +8,7 @@ namespace GameEngine.Core
     {
         protected bool Equals(GameComponentWrapper other)
         {
-            return Component.Equals(other.Component);
+            return Entity.Equals(other.Entity);
         }
 
         public override bool Equals(object obj)
@@ -20,7 +21,7 @@ namespace GameEngine.Core
 
         public override int GetHashCode()
         {
-            return Component.GetHashCode();
+            return Entity.GetHashCode();
         }
 
         public static bool operator ==(GameComponentWrapper left, GameComponentWrapper right)
@@ -33,19 +34,19 @@ namespace GameEngine.Core
             return !Equals(left, right);
         }
 
-        public Components.IGameComponent Component { get; }
+        public IGameEntity Entity { get; }
 
-        public GameComponentWrapper(Components.IGameComponent component, Game game) :
+        public GameComponentWrapper(IGameEntity entity, Game game) :
             base(game)
         {
-            if (component == null) throw new ArgumentNullException(nameof(component));
-            Component = component;
+            if (entity == null) throw new ArgumentNullException(nameof(entity));
+            Entity = entity;
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            Component.Update(gameTime);
+            Entity.Update(gameTime);
         }
 
     }

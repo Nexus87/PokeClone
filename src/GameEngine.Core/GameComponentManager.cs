@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using GameEngine.Entities;
 using GameEngine.GUI;
 using Microsoft.Xna.Framework;
 
@@ -15,7 +16,7 @@ namespace GameEngine.Core
             _game = game;
         }
 
-        public void RemoveGameComponent(Components.IGameComponent component)
+        public void RemoveGameComponent(IGameEntity entity)
         {
             var res = _component.FirstOrDefault( c =>
             {
@@ -23,7 +24,7 @@ namespace GameEngine.Core
                 if (comp == null)
                     return false;
 
-                return comp.Component == component;
+                return comp.Entity == entity;
             });
 
             if (res == null)
@@ -32,9 +33,12 @@ namespace GameEngine.Core
             _component.Remove(res);
         }
 
-        public void AddGameComponent(Components.IGameComponent component)
+        public void AddGameComponent(IGameEntity entity)
         {
-            _component.Add(new GameComponentWrapper(component, _game));
+            using (var gameComponentWrapper = new GameComponentWrapper(entity, _game))
+            {
+                _component.Add(gameComponentWrapper);
+            }
         }
 
         public IGraphicComponent Graphic

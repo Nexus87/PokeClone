@@ -1,7 +1,7 @@
 ﻿using System;
 using Base;
 using Base.Data;
-using BattleMode.Components.BattleState;
+using BattleMode.Entities.BattleState;
 using BattleMode.Shared;
 
 namespace BattleModeTest.Components

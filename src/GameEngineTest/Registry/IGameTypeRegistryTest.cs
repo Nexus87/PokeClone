@@ -11,7 +11,7 @@ namespace GameEngineTest.Registry
         [SetUp]
         public void Setup()
         {
-            GameComponentClass.Instances = 0;
+            GameEntityClass.Instances = 0;
             GameService.Instances = 0;
         }
 

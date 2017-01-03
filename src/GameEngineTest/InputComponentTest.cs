@@ -4,7 +4,7 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
 using FakeItEasy;
-using GameEngine.Components;
+using GameEngine.Entities;
 using GameEngine.Globals;
 
 namespace GameEngineTest
@@ -38,9 +38,9 @@ namespace GameEngineTest
             A.CallTo(() => handlerMock.HandleKeyInput(A<CommandKeys>.Ignored)).MustHaveHappened(Repeated.Exactly.Once);
         }
 
-        private InputComponent CreateInputComponent(IKeyboardManager managerMock, IInputHandler handlerMock)
+        private InputEntity CreateInputComponent(IKeyboardManager managerMock, IInputHandler handlerMock)
         {
-            var component = new InputComponent(managerMock, _map);
+            var component = new InputEntity(managerMock, _map);
             component.AddHandler(handlerMock);
             return component;
         }

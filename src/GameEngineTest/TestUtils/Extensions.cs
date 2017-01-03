@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using System;
 using GameEngine.Core;
+using GameEngine.Entities;
 using GameEngine.Graphics.General;
 using GameEngine.GUI;
 using Microsoft.Xna.Framework;
@@ -23,9 +24,9 @@ namespace GameEngineTest.TestUtils
             component.Draw(new GameTime(), new SpriteBatchMock());
         }
 
-        public static void Update(this GameEngine.Components.IGameComponent component)
+        public static void Update(this IGameEntity entity)
         {
-            component.Update(new GameTime());
+            entity.Update(new GameTime());
         }
 
         public static void IsInConstraints(this IGraphicComponent component, float x, float y, float width, float height)

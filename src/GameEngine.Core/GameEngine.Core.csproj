@@ -77,9 +77,9 @@
     <Compile Include="SpriteProvider.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GameEngine.Components\GameEngine.Components.csproj">
-      <Project>{C80E7E11-9184-46F3-B66E-236229E44614}</Project>
-      <Name>GameEngine.Components</Name>
+    <ProjectReference Include="..\GameEngine.Entities\GameEngine.Entities.csproj">
+      <Project>{c80e7e11-9184-46f3-b66e-236229e44614}</Project>
+      <Name>GameEngine.Entities</Name>
     </ProjectReference>
     <ProjectReference Include="..\GameEngine.Globals\GameEngine.Globals.csproj">
       <Project>{B19BD4B3-DCAE-E1DC-6E65-2E476C6F6261}</Project>

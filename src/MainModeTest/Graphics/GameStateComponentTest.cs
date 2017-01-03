@@ -72,10 +72,10 @@ namespace MainModeTest.Graphics
             return new Map(table, new TilePosition(0, 0));
         }
 
-        private static GameStateComponent CreateGameStateComponent()
+        private static GameStateEntity CreateGameStateComponent()
         {
             var screenContollerMock = A.Fake<IWorldScreenController>();
-            return new GameStateComponent(screenContollerMock);
+            return new GameStateEntity(screenContollerMock);
         }
     }
 }

@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
-using GameEngine.Components;
 using GameEngine.Core;
 using GameEngine.Core.ModuleManager;
+using GameEngine.Entities;
 using GameEngine.Graphics.Textures;
 using GameEngine.TypeRegistry;
 using MainMode.Core.Graphics;

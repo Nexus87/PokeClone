@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using GameEngine.Components;
+using GameEngine.Entities;
 using Microsoft.Xna.Framework;
 
 namespace BattleModeTest.Components

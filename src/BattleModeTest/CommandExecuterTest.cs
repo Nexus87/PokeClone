@@ -1,7 +1,7 @@
 ﻿using Base.Data;
-using BattleMode.Components;
-using BattleMode.Components.BattleState;
-using BattleMode.Components.BattleState.Commands;
+using BattleMode.Entities;
+using BattleMode.Entities.BattleState;
+using BattleMode.Entities.BattleState.Commands;
 using BattleMode.Shared;
 using BattleModeTest.Utils;
 using FakeItEasy;

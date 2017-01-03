@@ -1,4 +1,4 @@
-﻿using GameEngine.Components;
+﻿using GameEngine.Entities;
 using GameEngine.Graphics.Textures;
 using GameEngine.TypeRegistry;
 

@@ -74,7 +74,7 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Animations" />
+    <Folder Include="Animations\" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup />
@@ -103,7 +103,7 @@
       <Project>{65736142-4C2E-6E69-7578-426173652E4C}</Project>
       <Name>Base</Name>
     </ProjectReference>
-    <ProjectReference Include="..\BattleMode.Components\BattleMode.Components.csproj">
+    <ProjectReference Include="..\BattleMode.Entities\BattleMode.Entities.csproj">
       <Project>{7C124625-9566-46E9-BF6B-D045F90B35A1}</Project>
       <Name>BattleMode.Components</Name>
     </ProjectReference>
@@ -115,9 +115,9 @@
       <Project>{627954FA-93D0-4524-B2AD-E7D301DAC6AE}</Project>
       <Name>BattleMode.Shared</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GameEngine.Components\GameEngine.Components.csproj">
+    <ProjectReference Include="..\GameEngine.Entities\GameEngine.Entities.csproj">
       <Project>{C80E7E11-9184-46F3-B66E-236229E44614}</Project>
-      <Name>GameEngine.Components</Name>
+      <Name>GameEngine.Entities</Name>
     </ProjectReference>
     <ProjectReference Include="..\GameEngine.Core\GameEngine.Core.csproj">
       <Project>{656D6147-6E45-6967-6E65-2E4C696E7578}</Project>

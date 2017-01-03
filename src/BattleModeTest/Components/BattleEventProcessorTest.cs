@@ -1,7 +1,7 @@
 ﻿using Base.Data;
-using BattleMode.Components.BattleState;
 using BattleMode.Core.Components;
 using BattleMode.Core.Components.GraphicComponents;
+using BattleMode.Entities.BattleState;
 using BattleMode.Gui;
 using BattleMode.Shared;
 using FakeItEasy;

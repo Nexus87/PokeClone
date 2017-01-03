@@ -1,14 +1,14 @@
 ﻿using System.Linq;
 using System.Reflection;
-using BattleMode.Components.AI;
-using BattleMode.Components.BattleState;
 using BattleMode.Core.Components;
 using BattleMode.Core.Components.GraphicComponents;
+using BattleMode.Entities.AI;
+using BattleMode.Entities.BattleState;
 using BattleMode.Gui;
 using BattleMode.Shared;
-using GameEngine.Components;
 using GameEngine.Core;
 using GameEngine.Core.ModuleManager;
+using GameEngine.Entities;
 using GameEngine.Graphics.Textures;
 using GameEngine.TypeRegistry;
 
@@ -18,7 +18,7 @@ namespace BattleMode.Core
     {
         private IBattleGraphicController _graphic;
         private IBattleStateService _battleState;
-        private AiComponent _aiComponent;
+        private AiEntity _aiEntity;
         private Client _player;
 
         public string ModuleName => "BattleModule";
@@ -46,12 +46,12 @@ namespace BattleMode.Core
 
             _battleState = registry.ResolveType<IBattleStateService>();
             _graphic = registry.ResolveType<IBattleGraphicController>();
-            _aiComponent = new AiComponent(_battleState, ai, playerId);
+            _aiEntity = new AiEntity(_battleState, ai, playerId);
             // Needs to be created since no other class depend on it.
             registry.ResolveType<BattleEventProcessor>();
 
 
-            componentManager.AddGameComponent(_aiComponent);
+            componentManager.AddGameComponent(_aiEntity);
             componentManager.AddGameComponent(_battleState);
             componentManager.Graphic = _graphic;
 
@@ -62,13 +62,13 @@ namespace BattleMode.Core
 
         public void Stop(IGameComponentManager componentManager, IInputHandlerManager inputHandlerManager)
         {
-            componentManager.RemoveGameComponent(_aiComponent);
+            componentManager.RemoveGameComponent(_aiEntity);
             componentManager.RemoveGameComponent(_battleState);
             componentManager.Graphic = null;
 
             _battleState = null;
             _graphic = null;
-            _aiComponent = null;
+            _aiEntity = null;
         }
     }
 }

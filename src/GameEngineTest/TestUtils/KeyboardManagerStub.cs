@@ -1,4 +1,4 @@
-﻿using GameEngine.Components;
+﻿using GameEngine.Entities;
 using Microsoft.Xna.Framework.Input;
 
 namespace GameEngineTest.TestUtils

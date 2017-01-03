@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using GameEngine.Components;
 using GameEngine.Core.ModuleManager;
+using GameEngine.Entities;
 using GameEngine.Graphics.Textures;
 using GameEngine.GUI;
 using GameEngine.GUI.Components;
@@ -17,7 +17,7 @@ namespace GameEngine.Core
     {
         private readonly GameRunner _engine;
         private readonly TextureProvider _textureProvider;
-        private readonly InputComponent _inputComponent;
+        private readonly InputEntity _inputEntity;
         private readonly ScreenConstants _screenConstants;
         private readonly GameComponentManager _gameComponentManager;
 
@@ -26,7 +26,7 @@ namespace GameEngine.Core
         {
             _engine = engine;
             _textureProvider = textureProvider;
-            _inputComponent = new InputComponent(config.KeyMap);
+            _inputEntity = new InputEntity(config.KeyMap);
             _screenConstants = new ScreenConstants();
             _gameComponentManager = new GameComponentManager(engine.Components, engine);
         }
@@ -34,8 +34,8 @@ namespace GameEngine.Core
         public void RegisterTypes(IGameTypeRegistry registry)
         {
             registry.RegisterTypeAs<DefaultTextSplitter, ITextSplitter>();
-            registry.RegisterAsService<InputComponent, InputComponent>(reg => _inputComponent);
-            registry.RegisterAsService<InputComponent, IInputHandlerManager>(reg => _inputComponent);
+            registry.RegisterAsService<InputEntity, InputEntity>(reg => _inputEntity);
+            registry.RegisterAsService<InputEntity, IInputHandlerManager>(reg => _inputEntity);
             registry.RegisterAsService<ContentManager, ContentManager>(reg => _engine.Content);
             registry.RegisterAsService<TextureProvider, TextureProvider>(r => _textureProvider);
             registry.RegisterAsService<GameComponentManager, IGameComponentManager>(r => _gameComponentManager);
@@ -46,7 +46,7 @@ namespace GameEngine.Core
             registry.ScanAssembly(Assembly.GetExecutingAssembly());
             registry.ScanAssembly(Assembly.GetAssembly(typeof(IGraphicComponent)));
             registry.ScanAssembly(Assembly.GetAssembly(typeof(IGameTypeRegistry)));
-            registry.ScanAssembly(Assembly.GetAssembly(typeof(IGameComponent)));
+            registry.ScanAssembly(Assembly.GetAssembly(typeof(IGameEntity)));
 
             registry.RegisterType(r => new Panel(r.ResolveType<PanelRenderer>()) { BackgroundColor = r.ResolveType<ScreenConstants>().BackgroundColor});
 
@@ -68,7 +68,7 @@ namespace GameEngine.Core
 
         public void Start(IGameComponentManager componentManager, IInputHandlerManager inputHandlerManager, IGameTypeRegistry registry)
         {
-            componentManager.AddGameComponent(registry.ResolveType<InputComponent>());
+            componentManager.AddGameComponent(registry.ResolveType<InputEntity>());
             componentManager.AddGameComponent(registry.ResolveType<IEventQueue>());
 
             _engine.GuiManager = registry.ResolveType<GuiManager>();
