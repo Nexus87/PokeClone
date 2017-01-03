@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
-using IGameComponent = GameEngine.Core.IGameComponent;
+using IGameComponent = GameEngine.Components.IGameComponent;
 
 namespace GameEngineTest.Registry
 {

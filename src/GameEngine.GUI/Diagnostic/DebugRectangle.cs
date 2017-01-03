@@ -1,4 +1,5 @@
 using GameEngine.Graphics.General;
+using GameEngine.Graphics.Textures;
 using Microsoft.Xna.Framework;
 
 namespace GameEngine.GUI.Diagnostic

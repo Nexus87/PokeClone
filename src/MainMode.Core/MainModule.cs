@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
+using GameEngine.Components;
 using GameEngine.Core;
-using GameEngine.Core.GameEngineComponents;
 using GameEngine.Core.ModuleManager;
-using GameEngine.Core.TextureLoader;
-using GameEngine.Graphics;
+using GameEngine.Graphics.Textures;
 using GameEngine.TypeRegistry;
 using MainMode.Core.Graphics;
 
@@ -28,15 +27,12 @@ namespace MainMode.Core
 
         public void AddTextureConfigurations(TextureConfigurationBuilder builder)
         {
-            var tileMapping = new JsonSpriteSheetProvider(@"Content\MainMode\TilesetMapping.json");
-            tileMapping.Setup();
-
-            var characterMapping = new JsonSpriteSheetProvider(@"Content\MainMode\CharactersMapping.json");
-            characterMapping.Setup();
+            var tileMapping = JsonSpriteSheetConfigLoader.Load(@"MainMode\TilesetMapping.json");
+            var characterMapping = JsonSpriteSheetConfigLoader.Load(@"MainMode\CharactersMapping.json");
 
             var spriteSheetItems = new List<SpriteSheetItem>{
-                new SpriteSheetItem(@"MainMode\TileSet", tileMapping.GetMapping(), true),
-                new SpriteSheetItem(@"MainMode\Characters Overworld", characterMapping.GetMapping(), true)
+                new SpriteSheetItem(@"MainMode\TileSet", tileMapping, true),
+                new SpriteSheetItem(@"MainMode\Characters Overworld", characterMapping, true)
             };
             builder.AddSpriteSheet(Key, spriteSheetItems);
         }

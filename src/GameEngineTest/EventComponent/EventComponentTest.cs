@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using System;
 using FakeItEasy;
-using GameEngine.Core.GameEngineComponents;
+using GameEngine.Components;
 
 namespace GameEngineTest.EventComponent
 {

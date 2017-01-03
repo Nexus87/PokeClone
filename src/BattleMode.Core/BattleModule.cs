@@ -6,10 +6,10 @@ using BattleMode.Core.Components;
 using BattleMode.Core.Components.GraphicComponents;
 using BattleMode.Gui;
 using BattleMode.Shared;
+using GameEngine.Components;
 using GameEngine.Core;
-using GameEngine.Core.GameEngineComponents;
 using GameEngine.Core.ModuleManager;
-using GameEngine.Graphics;
+using GameEngine.Graphics.Textures;
 using GameEngine.TypeRegistry;
 
 namespace BattleMode.Core

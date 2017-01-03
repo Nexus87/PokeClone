@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 namespace MainMode.Core
 {
     [GameService(typeof(IGameStateComponent))]
-    public class GameStateComponent : GameEngine.Core.IGameComponent, IGameStateComponent
+    public class GameStateComponent : GameEngine.Components.IGameComponent, IGameStateComponent
     {
         private readonly IWorldScreenController _controller;
         private Map _map;

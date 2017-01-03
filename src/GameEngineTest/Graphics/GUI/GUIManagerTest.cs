@@ -1,6 +1,6 @@
 ﻿using FakeItEasy;
+using GameEngine.Components;
 using GameEngine.Core;
-using GameEngine.Core.GameEngineComponents;
 using GameEngine.Globals;
 using GameEngineTest.TestUtils;
 using NUnit.Framework;
@@ -87,7 +87,7 @@ namespace GameEngineTest.Graphics.GUI
 
         private static GuiManager CreateGuiManager()
         {
-            var manager = new GuiManager(A.Fake<InputComponent>());
+            var manager = new GuiManager(A.Fake<IInputHandlerManager>());
             manager.Show();
             return manager;
         }

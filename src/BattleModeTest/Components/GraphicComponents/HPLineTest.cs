@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using FakeItEasy;
-using GameEngine.Graphics.General;
+using GameEngine.Graphics.Textures;
 using GameEngine.GUI;
 using GameEngine.GUI.Components;
 using GameEngine.GUI.Renderers.PokemonClassicRenderer;

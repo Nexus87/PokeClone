@@ -1,5 +1,6 @@
 ﻿using System;
 using GameEngine.Graphics.General;
+using GameEngine.Graphics.Textures;
 using GameEngine.GUI;
 using Microsoft.Xna.Framework;
 
@@ -12,7 +13,7 @@ namespace GameEngine.Core
         private XnaSpriteBatch _batch;
         internal Screen Screen { get; set; }
 
-        internal Graphics.TextureProvider TextureProvider;
+        internal TextureProvider TextureProvider;
         public readonly GraphicsDeviceManager GraphicsDeviceManager;
 
         public GameRunner()         {

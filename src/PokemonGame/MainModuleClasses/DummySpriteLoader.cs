@@ -1,4 +1,4 @@
-﻿using GameEngine.Graphics;
+﻿using GameEngine.Graphics.Textures;
 using GameEngine.GUI.Controlls;
 using GameEngine.TypeRegistry;
 using MainMode.Core;

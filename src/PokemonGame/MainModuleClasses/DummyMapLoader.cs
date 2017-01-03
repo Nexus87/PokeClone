@@ -1,5 +1,5 @@
 ﻿using GameEngine.Globals;
-using GameEngine.Graphics;
+using GameEngine.Graphics.Textures;
 using GameEngine.GUI;
 using GameEngine.GUI.Controlls;
 using GameEngine.TypeRegistry;

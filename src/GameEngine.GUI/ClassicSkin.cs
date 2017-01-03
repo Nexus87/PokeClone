@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using GameEngine.Graphics;
+using GameEngine.Graphics.Textures;
 using GameEngine.GUI.Renderers;
 using GameEngine.GUI.Renderers.PokemonClassicRenderer;
 using GameEngine.TypeRegistry;

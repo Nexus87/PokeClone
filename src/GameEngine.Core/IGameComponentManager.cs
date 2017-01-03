@@ -1,4 +1,5 @@
-﻿using GameEngine.GUI;
+﻿using GameEngine.Components;
+using GameEngine.GUI;
 
 namespace GameEngine.Core
 {

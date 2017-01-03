@@ -1,4 +1,5 @@
 using GameEngine.Graphics.General;
+using GameEngine.Graphics.Textures;
 using GameEngine.GUI.Components;
 using Microsoft.Xna.Framework;
 

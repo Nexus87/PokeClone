@@ -2,7 +2,6 @@
 using BattleMode.Core;
 using GameEngine.Core;
 using GameEngine.Globals;
-using GameEngine.Graphics.Configuration;
 using GameEngine.GUI;
 using MainMode.Core;
 

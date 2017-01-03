@@ -5,7 +5,7 @@ using Base;
 using BattleMode.Components.BattleState;
 using BattleMode.Shared;
 using Microsoft.Xna.Framework;
-using IGameComponent = GameEngine.Core.IGameComponent;
+using IGameComponent = GameEngine.Components.IGameComponent;
 
 namespace BattleMode.Components.AI
 {

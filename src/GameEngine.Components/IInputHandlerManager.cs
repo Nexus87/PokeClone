@@ -1,6 +1,6 @@
 ﻿using GameEngine.Globals;
 
-namespace GameEngine.Core.GameEngineComponents
+namespace GameEngine.Components
 {
     public interface IInputHandlerManager
     {

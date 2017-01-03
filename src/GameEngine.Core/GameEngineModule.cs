@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using GameEngine.Core.GameEngineComponents;
+using GameEngine.Components;
 using GameEngine.Core.ModuleManager;
-using GameEngine.Graphics;
-using GameEngine.Graphics.Configuration;
+using GameEngine.Graphics.Textures;
 using GameEngine.GUI;
 using GameEngine.GUI.Components;
 using GameEngine.GUI.Panels;
@@ -27,7 +26,7 @@ namespace GameEngine.Core
         {
             _engine = engine;
             _textureProvider = textureProvider;
-            _inputComponent = new InputComponent(config);
+            _inputComponent = new InputComponent(config.KeyMap);
             _screenConstants = new ScreenConstants();
             _gameComponentManager = new GameComponentManager(engine.Components, engine);
         }
@@ -47,6 +46,7 @@ namespace GameEngine.Core
             registry.ScanAssembly(Assembly.GetExecutingAssembly());
             registry.ScanAssembly(Assembly.GetAssembly(typeof(IGraphicComponent)));
             registry.ScanAssembly(Assembly.GetAssembly(typeof(IGameTypeRegistry)));
+            registry.ScanAssembly(Assembly.GetAssembly(typeof(IGameComponent)));
 
             registry.RegisterType(r => new Panel(r.ResolveType<PanelRenderer>()) { BackgroundColor = r.ResolveType<ScreenConstants>().BackgroundColor});
 

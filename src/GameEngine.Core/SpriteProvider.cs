@@ -1,5 +1,6 @@
 ﻿using GameEngine.Graphics;
 using GameEngine.Graphics.General;
+using GameEngine.Graphics.Textures;
 using GameEngine.TypeRegistry;
 
 namespace GameEngine.Core

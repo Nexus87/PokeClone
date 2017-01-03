@@ -82,6 +82,10 @@
       <Project>{74746142-656C-694C-622E-4C696E757842}</Project>
       <Name>BattleMode.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\GameEngine.Components\GameEngine.Components.csproj">
+      <Project>{C80E7E11-9184-46F3-B66E-236229E44614}</Project>
+      <Name>GameEngine.Components</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GameEngine.Core\GameEngine.Core.csproj">
       <Project>{656D6147-6E45-6967-6E65-2E4C696E7578}</Project>
       <Name>GameEngine.Core</Name>

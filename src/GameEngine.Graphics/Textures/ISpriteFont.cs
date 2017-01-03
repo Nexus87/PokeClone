@@ -3,7 +3,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace GameEngine.Graphics.General
+namespace GameEngine.Graphics.Textures
 {
     /// <summary>
     /// This interface represents a SpriteFont

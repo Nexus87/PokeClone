@@ -2,7 +2,7 @@
 using GameEngine.Globals;
 using Microsoft.Xna.Framework.Input;
 
-namespace GameEngine.Graphics.Configuration
+namespace GameEngine.Core
 {
     public class Configuration
     {
@@ -16,7 +16,7 @@ namespace GameEngine.Graphics.Configuration
             keyMap.Add(Keys.Escape, CommandKeys.Back);
         }
 
-        public Dictionary<Keys, CommandKeys> keyMap = new Dictionary<Keys, CommandKeys>();
+        private Dictionary<Keys, CommandKeys> keyMap = new Dictionary<Keys, CommandKeys>();
 
         public virtual T GetOption<T>(string optionString)
         {

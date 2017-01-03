@@ -15,7 +15,7 @@ namespace GameEngine.Core
             _game = game;
         }
 
-        public void RemoveGameComponent(IGameComponent component)
+        public void RemoveGameComponent(Components.IGameComponent component)
         {
             var res = _component.FirstOrDefault( c =>
             {
@@ -32,7 +32,7 @@ namespace GameEngine.Core
             _component.Remove(res);
         }
 
-        public void AddGameComponent(IGameComponent component)
+        public void AddGameComponent(Components.IGameComponent component)
         {
             _component.Add(new GameComponentWrapper(component, _game));
         }

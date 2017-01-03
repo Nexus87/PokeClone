@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using GameEngine.Core.GameEngineComponents;
+using GameEngine.Components;
 using GameEngine.Globals;
 using GameEngine.Graphics.General;
 using GameEngine.GUI;
@@ -44,32 +44,32 @@ namespace GameEngine.Core
             }
         }
 
-        private readonly InputComponent _inputComponent;
-        private readonly List<WidgetItem> _widgets2 = new List<WidgetItem>();
+        private readonly IInputHandlerManager _inputComponent;
+        private readonly List<WidgetItem> _widgets = new List<WidgetItem>();
 
-        public GuiManager(InputComponent inputComponent)
+        public GuiManager(IInputHandlerManager inputComponent)
         {
             _inputComponent = inputComponent;
         }
 
         public void ShowWidget(IGraphicComponent widget, int? priority = null)
         {
-            if(_widgets2.Any(x => x.Component == widget))
+            if(_widgets.Any(x => x.Component == widget))
                 return;
 
             if (!priority.HasValue)
-                priority = _widgets2.Count == 0 ? 0 : _widgets2.Max(x => x.Priority) + 1;
+                priority = _widgets.Count == 0 ? 0 : _widgets.Max(x => x.Priority) + 1;
 
-            _widgets2.Add(new WidgetItem(priority.Value, widget));
-            _widgets2.Sort();
+            _widgets.Add(new WidgetItem(priority.Value, widget));
+            _widgets.Sort();
 
         }
 
         public void CloseWidget(IGraphicComponent widget)
         {
-            var w = _widgets2.FirstOrDefault(x => x.Component == widget);
+            var w = _widgets.FirstOrDefault(x => x.Component == widget);
             if (w != null)
-                _widgets2.Remove(w);
+                _widgets.Remove(w);
         }
 
         public bool IsActive { get; set; }
@@ -81,7 +81,7 @@ namespace GameEngine.Core
             FocusedWidget?.HandleKeyInput(key);
         }
 
-        public IGraphicComponent FocusedWidget => _widgets2.LastOrDefault()?.Component;
+        public IGraphicComponent FocusedWidget => _widgets.LastOrDefault()?.Component;
 
         public void Close()
         {
@@ -93,7 +93,7 @@ namespace GameEngine.Core
         {
             if (!IsActive)
                 return;
-            _widgets2.ForEach(x => x.Component.Draw(time, batch));
+            _widgets.ForEach(x => x.Component.Draw(time, batch));
         }
 
         public void Show()

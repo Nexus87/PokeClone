@@ -58,22 +58,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration.cs" />
     <Compile Include="GameComponentManager.cs" />
     <Compile Include="GameComponentWrapper.cs" />
-    <Compile Include="GameEngineComponents\EventQueue.cs" />
-    <Compile Include="GameEngineComponents\IEvent.cs" />
-    <Compile Include="GameEngineComponents\IEventQueue.cs" />
-    <Compile Include="GameEngineComponents\IInputHandlerManager.cs" />
-    <Compile Include="GameEngineComponents\IKeyboardManager.cs" />
-    <Compile Include="GameEngineComponents\InputComponent.cs" />
-    <Compile Include="GameEngineComponents\KeyboardManager.cs" />
     <Compile Include="GameEngineModule.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="GUIManager.cs" />
     <Compile Include="IEngineInterface.cs" />
-    <Compile Include="IGameComponent.cs" />
     <Compile Include="IGameComponentManager.cs" />
-    <Compile Include="ISpriteSheetProvider.cs" />
     <Compile Include="GameRunner.cs" />
     <Compile Include="PokeEngine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -82,11 +74,13 @@
     <Compile Include="ModuleManager\IModuleManager.cs" />
     <Compile Include="Screen.cs" />
     <Compile Include="ScreenConstants.cs" />
-    <Compile Include="SpriteFontCreator.cs" />
-    <Compile Include="TextureLoader\JSonSpriteSheetProvider.cs" />
     <Compile Include="SpriteProvider.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\GameEngine.Components\GameEngine.Components.csproj">
+      <Project>{C80E7E11-9184-46F3-B66E-236229E44614}</Project>
+      <Name>GameEngine.Components</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GameEngine.Globals\GameEngine.Globals.csproj">
       <Project>{B19BD4B3-DCAE-E1DC-6E65-2E476C6F6261}</Project>
       <Name>GameEngine.Globals</Name>
@@ -109,8 +103,6 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
-  <ItemGroup />
-  <ItemGroup />
   <ItemGroup />
   <ItemGroup />
   <ItemGroup />

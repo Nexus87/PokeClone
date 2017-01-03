@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using GameEngine.Globals;
-using GameEngine.Graphics.Configuration;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-namespace GameEngine.Core.GameEngineComponents
+namespace GameEngine.Components
 {
-    public class InputComponent : IGameComponent, IInputHandlerManager
+    internal class InputComponent : IGameComponent, IInputHandlerManager
     {
         private readonly IReadOnlyDictionary<Keys, CommandKeys> _keyMap;
         private readonly IKeyboardManager _manager;
@@ -20,7 +19,7 @@ namespace GameEngine.Core.GameEngineComponents
             _keyMap = keyMap;
         }
 
-        public InputComponent(Configuration config) : this(new KeyboardManager(), config.KeyMap) { }
+        public InputComponent(IReadOnlyDictionary<Keys, CommandKeys> keyMap) : this(new KeyboardManager(), keyMap) { }
 
         public void Update(GameTime gameTime)
         {

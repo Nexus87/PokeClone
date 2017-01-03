@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using GameEngine.Core.GameEngineComponents;
-using GameEngine.Graphics;
+using GameEngine.Components;
+using GameEngine.Graphics.Textures;
 using GameEngine.TypeRegistry;
 
 namespace GameEngine.Core.ModuleManager

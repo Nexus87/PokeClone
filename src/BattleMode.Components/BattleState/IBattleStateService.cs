@@ -1,11 +1,10 @@
 ﻿using System;
 using Base;
 using BattleMode.Shared;
-using IGameComponent = GameEngine.Core.IGameComponent;
 
 namespace BattleMode.Components.BattleState
 {
-    public interface IBattleStateService : IGameComponent
+    public interface IBattleStateService : GameEngine.Components.IGameComponent
     {
         event EventHandler<StateChangedEventArgs> StateChanged;
 

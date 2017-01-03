@@ -1,6 +1,6 @@
 ﻿using GameEngine.Core.ModuleManager;
 using GameEngine.Graphics;
-using GameEngine.Graphics.Configuration;
+using GameEngine.Graphics.Textures;
 using GameEngine.GUI;
 
 namespace GameEngine.Core

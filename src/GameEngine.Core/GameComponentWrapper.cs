@@ -1,14 +1,44 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 
 namespace GameEngine.Core
 {
     internal class GameComponentWrapper : GameComponent
     {
-        public IGameComponent Component { get; private set; }
+        protected bool Equals(GameComponentWrapper other)
+        {
+            return Component.Equals(other.Component);
+        }
 
-        public GameComponentWrapper(IGameComponent component, Game game) :
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != GetType()) return false;
+            return Equals((GameComponentWrapper) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return Component.GetHashCode();
+        }
+
+        public static bool operator ==(GameComponentWrapper left, GameComponentWrapper right)
+        {
+            return Equals(left, right);
+        }
+
+        public static bool operator !=(GameComponentWrapper left, GameComponentWrapper right)
+        {
+            return !Equals(left, right);
+        }
+
+        public Components.IGameComponent Component { get; }
+
+        public GameComponentWrapper(Components.IGameComponent component, Game game) :
             base(game)
         {
+            if (component == null) throw new ArgumentNullException(nameof(component));
             Component = component;
         }
 
@@ -18,19 +48,5 @@ namespace GameEngine.Core
             Component.Update(gameTime);
         }
 
-        public override bool Equals(object obj)
-        {
-            if (base.Equals(obj))
-                return true;
-            if (!(obj is GameComponentWrapper))
-                return false;
-
-            return ((GameComponentWrapper)obj).Component.Equals(Component);
-        }
-
-        public override int GetHashCode()
-        {
-            return Component.GetHashCode();
-        }
     }
 }

@@ -2,7 +2,7 @@
 using Base.Data;
 using BattleMode.Core.Components.GraphicComponents;
 using BattleMode.Shared;
-using GameEngine.Core.GameEngineComponents;
+using GameEngine.Components;
 
 namespace BattleMode.Core.Components
 {

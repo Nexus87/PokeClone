@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using GameEngine.Graphics.General;
+using GameEngine.Graphics.Textures;
 
 namespace GameEngineTest.TestUtils
 {
