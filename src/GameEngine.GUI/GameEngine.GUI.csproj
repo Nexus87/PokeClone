@@ -89,6 +89,9 @@
     <Compile Include="Loader\GuiLoaderIdAttribute.cs" />
     <Compile Include="Loader\IBuilder.cs" />
     <Compile Include="Loader\PanelBuilder\GridBuilder.cs" />
+    <Compile Include="Loader\PanelBuilder\ListViewBuilder.cs" />
+    <Compile Include="Loader\PanelBuilder\PanelBuilder.cs" />
+    <Compile Include="Loader\PanelBuilder\ScrollAreaBuilder.cs" />
     <Compile Include="Loader\PanelBuilder\WindowBuilder.cs" />
     <Compile Include="Panels\AbstractPanel.cs" />
     <Compile Include="Panels\ColumnProperty.cs" />
@@ -168,7 +171,9 @@
       <Name>GameEngine.TypeRegistry</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Loader\ControllBuilder" />
+  </ItemGroup>
   <ItemGroup />
   <ItemGroup />
   <ItemGroup />

@@ -5,8 +5,8 @@ using Base;
 using BattleMode.Shared;
 using GameEngine.Core;
 using GameEngine.Globals;
-using GameEngine.GUI;
 using GameEngine.GUI.Controlls;
+using GameEngine.GUI.Loader;
 using GameEngine.GUI.Panels;
 using GameEngine.TypeRegistry;
 
@@ -15,16 +15,23 @@ namespace BattleMode.Gui
     [GameType]
     public class PokemonMenuController
     {
-        private readonly ListView<Pokemon> _listView;
         private readonly List<PokemonMenuLine> _pokemonMenuLines = new List<PokemonMenuLine>();
         private readonly GuiManager _guiManager;
+
+#pragma warning disable 649
+
+        [GuiLoaderId("ListView")]
+        private readonly ListView<Pokemon> _listView;
+        [GuiLoaderId("Panel")]
         private readonly Panel _panel;
 
-        public PokemonMenuController(GuiManager guiManager, ScreenConstants screenConstants, Client client, ListView<Pokemon> listView, Panel panel, IGameTypeRegistry registry)
+#pragma warning restore 649
+        public PokemonMenuController(GuiManager guiManager, Client client, IGameTypeRegistry registry)
         {
             _guiManager = guiManager;
-            _panel = panel;
-            _listView = listView;
+
+            var loader = new GuiLoader(@"BattleMode\Gui\PokemonMenu.xml") {Controller = this};
+            loader.Load();
 
             _panel.SetContent(_listView);
 
@@ -42,7 +49,7 @@ namespace BattleMode.Gui
                 return component;
             };
 
-            InitPanel(screenConstants);
+            _panel.AddInputListener(CommandKeys.Back, OnExitRequested);
 
         }
 
@@ -77,17 +84,6 @@ namespace BattleMode.Gui
         protected void OnItemSelected(Pokemon p)
         {
             ItemSelected?.Invoke(this, new SelectionEventArgs<Pokemon>(p));
-        }
-
-        private void InitPanel(ScreenConstants screen)
-        {
-            const int xPosition = 0;
-            const int yPosition = 0;
-            var width = screen.ScreenWidth;
-            var height = 2.0f * screen.ScreenHeight / 3.0f;
-
-            _panel.SetCoordinates(xPosition, yPosition, width, height);
-            _panel.AddInputListener(CommandKeys.Back, OnExitRequested);
         }
     }
 }

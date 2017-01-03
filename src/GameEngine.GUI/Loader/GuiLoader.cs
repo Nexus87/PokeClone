@@ -11,8 +11,12 @@ namespace GameEngine.GUI.Loader
     {
         internal static void InitLoaderResources(IGameTypeRegistry registry)
         {
-            Builders["Window"] = new WindowBuilder(registry, registry.ResolveType<ScreenConstants>());
-            Builders["Grid"] = new GridBuilder(registry, registry.ResolveType<ScreenConstants>());
+            var screenConstants = registry.ResolveType<ScreenConstants>();
+            Builders["Window"] = new WindowBuilder(registry, screenConstants);
+            Builders["Grid"] = new GridBuilder(registry, screenConstants);
+            Builders["ScrollArea"] = new ScrollAreaBuilder(registry, screenConstants);
+            Builders["ListView"] = new ListViewBuilder(registry, screenConstants);
+            Builders["Panel"] = new PanelBuilder.PanelBuilder(registry, screenConstants);
         }
 
         private readonly string _path;

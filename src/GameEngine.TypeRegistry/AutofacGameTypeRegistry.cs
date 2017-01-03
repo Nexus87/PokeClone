@@ -36,6 +36,15 @@ namespace GameEngine.TypeRegistry
             }
         }
 
+        public object ResolveGenericType(Type baseType, params Type[] genericTypes)
+        {
+            if (_container == null)
+                _container = _builder.Build();
+
+            var type = baseType.MakeGenericType(genericTypes);
+            return _container.Resolve(type);
+        }
+
         public void RegisterType<T>(Func<IGameTypeRegistry, T> creatorFunc)
         {
             RegisterTypeAs<T, T>(creatorFunc);

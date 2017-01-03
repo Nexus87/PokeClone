@@ -15,6 +15,7 @@ namespace GameEngine.TypeRegistry
         void RegisterAsService<T, S>(Func<IGameTypeRegistry, T> creatorFunc);
 
         T ResolveType<T>();
+        object ResolveGenericType(Type baseType, params Type[] genericTypes);
         void ScanAssembly(Assembly assembly);
     }
 }

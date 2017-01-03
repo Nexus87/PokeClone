@@ -3,8 +3,8 @@ using Base;
 using BattleMode.Entities.BattleState;
 using GameEngine.Core;
 using GameEngine.Globals;
-using GameEngine.GUI;
 using GameEngine.GUI.Controlls;
+using GameEngine.GUI.Loader;
 using GameEngine.GUI.Panels;
 using GameEngine.TypeRegistry;
 
@@ -14,15 +14,22 @@ namespace BattleMode.Gui
     public class MoveMenuController
     {
         private readonly GuiManager _guiManager;
+
+#pragma warning disable 649
+
+        [GuiLoaderId("Window")]
         private readonly Window _window;
+        [GuiLoaderId("ListView")]
         private readonly ListView<Move> _listView;
 
-        public MoveMenuController(GuiManager guiManager, ScreenConstants screenConstants, BattleData data, Window window, ListView<Move> listView, IGameTypeRegistry registry)
+#pragma warning restore 649
+
+        public MoveMenuController(GuiManager guiManager, BattleData data, IGameTypeRegistry registry)
         {
             _guiManager = guiManager;
-            _window = window;
-            _listView = listView;
-            _listView.CellHeight = 50;
+
+            var loader = new GuiLoader(@"BattleMode\Gui\MoveMenu.xml") {Controller = this};
+            loader.Load();
 
             _listView.Model = data.GetPokemon(data.PlayerId).Moves;
             _listView.ListCellFactory = value =>
@@ -44,7 +51,7 @@ namespace BattleMode.Gui
             };
 
             _window.SetContent(_listView);
-            InitWindow(screenConstants);
+            _window.SetInputListener(CommandKeys.Back, OnExitRequested);
         }
 
         public event EventHandler ExitRequested;
@@ -69,19 +76,6 @@ namespace BattleMode.Gui
         {
             ItemSelected?.Invoke(this, new SelectionEventArgs<Move>(m));
         }
-
-        private void InitWindow(ScreenConstants screen)
-        {
-            _window.SetCoordinates(
-                screen.ScreenWidth / 2.0f,
-                2.0f * screen.ScreenHeight / 3.0f,
-                width: screen.ScreenWidth - screen.ScreenWidth / 2.0f,
-                height: screen.ScreenHeight - 2.0f * screen.ScreenHeight / 3.0f
-            );
-
-            _window.SetInputListener(CommandKeys.Back, OnExitRequested);
-        }
-
 
     }
 }
