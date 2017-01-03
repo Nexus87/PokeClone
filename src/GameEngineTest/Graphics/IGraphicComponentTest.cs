@@ -13,7 +13,7 @@ namespace GameEngineTest.Graphics
     {
         public ISpriteFont FontMock;
 
-        protected abstract IGraphicComponent CreateComponent();
+        protected abstract IGuiComponent CreateComponent();
 
         protected IGraphicComponentTest()
         {

@@ -7,9 +7,9 @@ namespace GameEngine.GUI.Panels
     internal class GridCell
     {
         public EventHandler PreferredSizeChanged;
-        private IGraphicComponent _guiComponent;
+        private IGuiComponent _guiComponent;
 
-        public IGraphicComponent GuiComponent
+        public IGuiComponent GuiComponent
         {
             get { return _guiComponent; }
             set

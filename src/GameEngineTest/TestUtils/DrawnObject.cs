@@ -30,7 +30,7 @@ namespace GameEngineTest.TestUtils
             Assert.LessOrEqual(Position.Y + Size.Y, y + realHeight);
         }
 
-        public void IsInConstraints(IGraphicComponent component)
+        public void IsInConstraints(IGuiComponent component)
         {
             IsInConstraints(component.XPosition(), component.YPosition(), component.Width(), component.Height());
         }

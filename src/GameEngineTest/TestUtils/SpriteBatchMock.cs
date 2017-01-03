@@ -30,10 +30,12 @@ namespace GameEngineTest.TestUtils
 
         private void SetData(Vector2 position, Vector2 size, Vector2 scale, Color color)
         {
-            var obj = new DrawnObject();
-            obj.Position = position;
-            obj.Size = size * scale;
-            obj.Color = color;
+            var obj = new DrawnObject
+            {
+                Position = position,
+                Size = size * scale,
+                Color = color
+            };
             DrawnObjects.Add(obj);
         }
 
@@ -48,20 +50,14 @@ namespace GameEngineTest.TestUtils
             SetData(position, font, text, Vector2.One, color);
         }
 
-        public GraphicsDevice GraphicsDevice
-        {
-            get
-            {
-                return null;
-            }
-        }
+        public GraphicsDevice GraphicsDevice => null;
 
         public void Begin(SpriteSortMode sortMode = SpriteSortMode.Deferred, BlendState blendState = null, SamplerState samplerState = null, DepthStencilState depthStencilState = null, RasterizerState rasterizerState = null, Effect effect = null, Matrix? transformMatrix = null)
         {
             throw new NotImplementedException();
         }
 
-        public void Draw(ITexture2D texture, Rectangle destinationRectangle, Color color)
+        public void Draw(ITexture2D texture, Rectangle destinationRectangle, Color color, SpriteEffects spriteEffects = SpriteEffects.None)
         {
             SetData(destinationRectangle.Location.ToVector2(), destinationRectangle.Size.ToVector2(), color);
         }
@@ -76,7 +72,7 @@ namespace GameEngineTest.TestUtils
             Draw(texture, destinationRectangle, color);
         }
 
-        public void Draw(ITexture2D texture, Vector2 position, Rectangle? sourceRectangle, Color color)
+        public void Draw(ITexture2D texture, Vector2 position, Rectangle? sourceRectangle, Color color, SpriteEffects spriteEffects = SpriteEffects.None)
         {
             Draw(texture, position, color);   
         }
@@ -104,6 +100,12 @@ namespace GameEngineTest.TestUtils
         public void DrawString(ISpriteFont spriteFont, StringBuilder text, Vector2 position, Color color)
         {
             SetData(position, spriteFont, text.ToString(), color);
+        }
+
+        public void Draw(ITexture2D texture, Vector2 location, Vector2 scaling, Color color,
+            SpriteEffects spriteEffects = SpriteEffects.None)
+        {
+            throw new NotImplementedException();
         }
 
         public void DrawString(ISpriteFont spriteFont, string text, Vector2 position, Color color, float rotation, Vector2 origin, float scale, SpriteEffects effects, float layerDepth)

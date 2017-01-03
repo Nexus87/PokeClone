@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AIPokemonDataView.cs" />
     <Compile Include="BattleGUI.cs" />
     <Compile Include="IGUIService.cs" />
     <Compile Include="IMenuWidget.cs" />
@@ -55,6 +56,8 @@
     <Compile Include="MainMenuEntries.cs" />
     <Compile Include="MainMenuWidget.cs" />
     <Compile Include="MoveMenuWidget.cs" />
+    <Compile Include="PlayerPokemonDataView.cs" />
+    <Compile Include="PokemonDataView.cs" />
     <Compile Include="PokemonMenuLine.cs" />
     <Compile Include="PokemonMenuWidget.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

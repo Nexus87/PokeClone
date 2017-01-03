@@ -8,14 +8,14 @@ namespace GameEngine.GUI.Panels
     {
         public Color BackgroundColor { get; set; }
         private readonly PanelRenderer _renderer;
-        private IGraphicComponent _component;
+        private IGuiComponent _component;
 
         public Panel(PanelRenderer renderer)
         {
             _renderer = renderer;
         }
 
-        public void SetContent(IGraphicComponent component)
+        public void SetContent(IGuiComponent component)
         {
             if (_component != null)
                 RemoveChild(_component);

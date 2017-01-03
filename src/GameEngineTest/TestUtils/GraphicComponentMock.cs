@@ -9,7 +9,7 @@ using GameEngine.GUI.Graphics;
 
 namespace GameEngineTest.TestUtils
 {
-    public class GraphicComponentMock : IGraphicComponent
+    public class GraphicComponentMock : IGuiComponent
     {
         public bool WasDrawn { get; set; }
         public int Row { get; set; }
@@ -52,8 +52,8 @@ namespace GameEngineTest.TestUtils
 
         public Rectangle Area { get; set; }
 
-        public IGraphicComponent Parent { get; set; }
-        public IEnumerable<IGraphicComponent> Children { get; } = new List<IGraphicComponent>();
+        public IGuiComponent Parent { get; set; }
+        public IEnumerable<IGuiComponent> Children { get; } = new List<IGuiComponent>();
         public bool IsSelected { get; set; }
         public bool IsSelectable { get; set; }
         public virtual void HandleKeyInput(CommandKeys key)

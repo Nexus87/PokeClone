@@ -13,7 +13,7 @@ namespace GameEngine.GUI.Test.Controls
     {
         private const int InitialCallTimes = 2;
 
-        private class FakeComponent : AbstractGraphicComponent
+        private class FakeComponent : AbstractGuiComponent
         {
             public int Value { get; set; }
         }
@@ -129,11 +129,11 @@ namespace GameEngine.GUI.Test.Controls
             return new ListView<int>() {ListCellFactory = factory};
         }
 
-        private static List<IGraphicComponent>  CreateComponentMockList(int rows)
+        private static List<IGuiComponent>  CreateComponentMockList(int rows)
         {
             return Enumerable
                 .Range(0, rows)
-                .Select(i => A.Fake<IGraphicComponent>())
+                .Select(i => A.Fake<IGuiComponent>())
                 .ToList();
         }
 

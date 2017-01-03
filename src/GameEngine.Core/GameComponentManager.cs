@@ -41,10 +41,10 @@ namespace GameEngine.Core
             }
         }
 
-        public IGraphicComponent Graphic
+        public IGuiComponent Gui
         {
-            get { return _game.Graphic; }
-            set { _game.Graphic = value; }
+            get { return _game.Gui; }
+            set { _game.Gui = value; }
         }
     }
 }

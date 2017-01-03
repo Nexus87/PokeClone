@@ -9,7 +9,7 @@ namespace PokemonGame.Rules
     {
         public float CalculateBaseDamage(IBattlePokemon source, IBattlePokemon target, Move move)
         {
-            return 1.0f;
+            return 50.0f;
         }
 
         public bool CanChange()

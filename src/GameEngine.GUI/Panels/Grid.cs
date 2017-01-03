@@ -78,7 +78,7 @@ namespace GameEngine.GUI.Panels
             }
         }
 
-        public void SetComponent(IGraphicComponent component, int row, int column)
+        public void SetComponent(IGuiComponent component, int row, int column)
         {
             if (component == null)
                 throw new ArgumentNullException(nameof(component));
@@ -310,7 +310,7 @@ namespace GameEngine.GUI.Panels
             Invalidate();
         }
 
-        public IGraphicComponent GetComponent(int row, int column)
+        public IGuiComponent GetComponent(int row, int column)
         {
             return _cells[row, column].GuiComponent;
         }

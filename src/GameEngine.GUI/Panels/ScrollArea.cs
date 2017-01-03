@@ -10,7 +10,7 @@ namespace GameEngine.GUI.Panels
     public class ScrollArea : AbstractPanel
     {
         private readonly ScrollAreaRenderer _renderer;
-        private IGraphicComponent _content;
+        private IGuiComponent _content;
         public bool Autoscrolling { get; set; }
 
         public ScrollArea(ScrollAreaRenderer renderer)
@@ -38,7 +38,7 @@ namespace GameEngine.GUI.Panels
             _content?.SetPosition(_content.Area.Location + point);
         }
 
-        public IGraphicComponent Content
+        public IGuiComponent Content
         {
             get { return _content; }
             set

@@ -6,12 +6,12 @@ using Microsoft.Xna.Framework;
 
 namespace MainMode.Core.Graphics
 {
-    public class CharacterSprite : AbstractGraphicComponent, ICharacterSprite
+    public class CharacterSprite : AbstractGuiComponent, ICharacterSprite
     {
-        private IGraphicComponent _currentDirection;
-        private readonly Dictionary<Direction, IGraphicComponent> _directionDictionary = new Dictionary<Direction, IGraphicComponent>();
+        private IGuiComponent _currentDirection;
+        private readonly Dictionary<Direction, IGuiComponent> _directionDictionary = new Dictionary<Direction, IGuiComponent>();
 
-        public CharacterSprite(IGraphicComponent lookingLeft, IGraphicComponent lookingRight, IGraphicComponent lookingUp, IGraphicComponent lookingDown)
+        public CharacterSprite(IGuiComponent lookingLeft, IGuiComponent lookingRight, IGuiComponent lookingUp, IGuiComponent lookingDown)
         {
             if (lookingLeft == null) throw new ArgumentNullException(nameof(lookingLeft));
             if (lookingRight == null) throw new ArgumentNullException(nameof(lookingRight));

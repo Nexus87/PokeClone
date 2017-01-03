@@ -5,7 +5,7 @@ namespace GameEngine.GUI
 {
     public class Scene
     {
-        public IGraphicComponent Root { get; set; }
+        public IGuiComponent Root { get; set; }
 
         public void Draw(ISpriteBatch spriteBatch, GameTime gameTime)
         {
@@ -15,7 +15,7 @@ namespace GameEngine.GUI
         }
 
 
-        private static void DrawComponent(ISpriteBatch spriteBatch, GameTime gameTime, IGraphicComponent component)
+        private static void DrawComponent(ISpriteBatch spriteBatch, GameTime gameTime, IGuiComponent component)
         {
             foreach (var graphicComponent in component.Children)
             {

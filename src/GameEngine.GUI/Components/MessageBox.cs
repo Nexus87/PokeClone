@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework;
 namespace GameEngine.GUI.Components
 {
     [GameType]
-    public class MessageBox : AbstractGraphicComponent
+    public class MessageBox : AbstractGuiComponent
     {
         private readonly Window _window;
         private readonly TextArea _textArea;

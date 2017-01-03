@@ -60,6 +60,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameEngine.Graphics", "Game
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameEngine.Entities", "GameEngine.Entities\GameEngine.Entities.csproj", "{C80E7E11-9184-46F3-B66E-236229E44614}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BattleMode.Graphic", "BattleMode.Graphic\BattleMode.Graphic.csproj", "{D94B6FAF-A173-42B5-AC09-59200DA76024}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -138,6 +140,10 @@ Global
 		{C80E7E11-9184-46F3-B66E-236229E44614}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C80E7E11-9184-46F3-B66E-236229E44614}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C80E7E11-9184-46F3-B66E-236229E44614}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D94B6FAF-A173-42B5-AC09-59200DA76024}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D94B6FAF-A173-42B5-AC09-59200DA76024}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D94B6FAF-A173-42B5-AC09-59200DA76024}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D94B6FAF-A173-42B5-AC09-59200DA76024}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -158,5 +164,6 @@ Global
 		{627954FA-93D0-4524-B2AD-E7D301DAC6AE} = {0E1F184C-E964-4487-A287-0D4ED3037099}
 		{0205D32E-BE54-4B98-A66E-85D4A0C02B6A} = {36033961-4F42-4203-8274-40942A990CD5}
 		{C80E7E11-9184-46F3-B66E-236229E44614} = {36033961-4F42-4203-8274-40942A990CD5}
+		{D94B6FAF-A173-42B5-AC09-59200DA76024} = {0E1F184C-E964-4487-A287-0D4ED3037099}
 	EndGlobalSection
 EndGlobal

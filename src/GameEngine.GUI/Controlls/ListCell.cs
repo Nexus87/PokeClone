@@ -7,12 +7,12 @@ namespace GameEngine.GUI.Controlls
 {
     public class ListCell
     {
-        private IGraphicComponent _component;
+        private IGuiComponent _component;
         private bool _isSelected;
         private Rectangle _area;
         public event EventHandler<ComponentSelectedEventArgs> CellSelected;
 
-        public IGraphicComponent Component
+        public IGuiComponent Component
         {
             get { return _component; }
             set

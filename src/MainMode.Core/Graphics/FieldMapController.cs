@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework;
 namespace MainMode.Core.Graphics
 {
     [GameService(typeof(IMapController))]
-    public class FieldMapController : AbstractGraphicComponent, IMapController
+    public class FieldMapController : AbstractGuiComponent, IMapController
     {
         private float _screenCenterX;
         private float _screenCenterY;

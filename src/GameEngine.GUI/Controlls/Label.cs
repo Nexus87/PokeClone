@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 namespace GameEngine.GUI.Controlls
 {
     [GameType]
-    public class Label : AbstractGraphicComponent
+    public class Label : AbstractGuiComponent
     {
         private readonly LabelRenderer _renderer;
         private string _text;

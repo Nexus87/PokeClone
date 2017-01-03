@@ -119,7 +119,7 @@ namespace BattleModeTest.Components.GraphicComponents
             Assert.Throws<ArgumentOutOfRangeException>(() => line.MaxHp = hp);
         }
 
-        protected override IGraphicComponent CreateComponent()
+        protected override IGuiComponent CreateComponent()
         {
             return CreateLine();
         }

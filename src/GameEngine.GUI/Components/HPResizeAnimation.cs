@@ -28,7 +28,7 @@ namespace GameEngine.GUI.Components
 
         public event EventHandler AnimationFinished;
 
-        public void Update(GameTime time, IGraphicComponent component)
+        public void Update(GameTime time, IGuiComponent component)
         {
             if (_targetHp == _currentHp)
             {

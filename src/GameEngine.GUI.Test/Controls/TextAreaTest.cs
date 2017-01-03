@@ -178,7 +178,7 @@ namespace GameEngine.GUI.Test.Controls
             return box;
         }
 
-        protected override IGraphicComponent CreateComponent()
+        protected override IGuiComponent CreateComponent()
         {
             return CreateTextBox(new SplitterStub());
         }

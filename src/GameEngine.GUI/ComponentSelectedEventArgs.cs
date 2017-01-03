@@ -4,6 +4,6 @@ namespace GameEngine.GUI
 {
     public class ComponentSelectedEventArgs : EventArgs
     {
-        public IGraphicComponent Source { get; set; }
+        public IGuiComponent Source { get; set; }
     }
 }

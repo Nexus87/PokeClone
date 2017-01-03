@@ -11,9 +11,9 @@ namespace GameEngineTest.Graphics
     {
         private const int IntialCallTimes = 1;
 
-        private AbstractGraphicComponent CreateComponentMock()
+        private AbstractGuiComponent CreateComponentMock()
         {
-            var componentMock = A.Fake<AbstractGraphicComponent>(options => options.CallsBaseMethods());
+            var componentMock = A.Fake<AbstractGuiComponent>(options => options.CallsBaseMethods());
 
             A.CallTo(componentMock)
                 .Where(x => x.Method.Name == "DrawComponent")
@@ -22,14 +22,14 @@ namespace GameEngineTest.Graphics
             return componentMock;
         }
 
-        private AbstractGraphicComponent CreateComponentMockWithoutInvalidation()
+        private AbstractGuiComponent CreateComponentMockWithoutInvalidation()
         {
             var mock = CreateComponentMock();
             mock.Draw();
             return mock;
         }
 
-        private static Rectangle Position(IGraphicComponent componentMock)
+        private static Rectangle Position(IGuiComponent componentMock)
         {
             return componentMock.Area;
         }
@@ -125,7 +125,7 @@ namespace GameEngineTest.Graphics
         }
 
 
-        protected override IGraphicComponent CreateComponent()
+        protected override IGuiComponent CreateComponent()
         {
             return CreateComponentMock();
         }

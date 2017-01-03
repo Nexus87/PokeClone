@@ -3,7 +3,7 @@ using GameEngine.GUI;
 
 namespace GameEngineTest.TestUtils
 {
-    public class WidgetMock : GraphicComponentMock, IInputHandler, IGraphicComponent
+    public class WidgetMock : GraphicComponentMock, IInputHandler, IGuiComponent
     {
         public bool WasHandleKeyInputCalled;
         public CommandKeys HandleKeyInputArgument;

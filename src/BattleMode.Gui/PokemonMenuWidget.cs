@@ -13,7 +13,7 @@ using Microsoft.Xna.Framework;
 namespace BattleMode.Gui
 {
     [GameType]
-    public class PokemonMenuWidget : AbstractGraphicComponent, IMenuWidget<Pokemon>
+    public class PokemonMenuWidget : AbstractGuiComponent, IMenuWidget<Pokemon>
     {
         private readonly ListView<Pokemon> _listView;
         private readonly Panel _panel;

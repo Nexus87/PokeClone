@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework;
 namespace GameEngine.GUI.Controlls
 {
     [GameType]
-    public sealed class Button : AbstractGraphicComponent
+    public sealed class Button : AbstractGuiComponent
     {
         private readonly ButtonRenderer _buttonRenderer;
         private string _text;

@@ -38,8 +38,8 @@ namespace BattleMode.Shared
                 var pkmn = new Pokemon(data, stats) { Name = Id.Name + "_Pkmn" + i, Level = i + 20};
                 for (var j = 0; j < 2; j++)
                     pkmn.SetMove(j, new Move(moveData));
-                pkmn.Stats.HP = 30;
-                pkmn.HP = 30;
+                pkmn.Stats.HP = 900;
+                pkmn.HP = 900;
 
                 _pokemons.Add(pkmn);
             }

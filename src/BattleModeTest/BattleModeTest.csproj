@@ -114,6 +114,10 @@
       <Project>{74746142-656C-694C-622E-4C696E757842}</Project>
       <Name>BattleMode.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\BattleMode.Graphic\BattleMode.Graphic.csproj">
+      <Project>{d94b6faf-a173-42b5-ac09-59200da76024}</Project>
+      <Name>BattleMode.Graphic</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BattleMode.Gui\BattleMode.Gui.csproj">
       <Project>{0194EA5F-B7C8-4087-9680-21E19334F1E7}</Project>
       <Name>BattleMode.Gui</Name>

@@ -10,13 +10,13 @@ namespace GameEngine.GUI.Test.Panels
     [TestFixture]
     public class ScrollAreaTest
     {
-        private IGraphicComponent _content;
-        private readonly IGraphicComponent _focusedComponent;
+        private IGuiComponent _content;
+        private readonly IGuiComponent _focusedComponent;
 
         public ScrollAreaTest()
         {
 
-            _focusedComponent = A.Fake<IGraphicComponent>();
+            _focusedComponent = A.Fake<IGuiComponent>();
         }
 
         [TestCase(
@@ -58,7 +58,7 @@ namespace GameEngine.GUI.Test.Panels
         private ScrollArea CreateScrollArea(Rectangle initalArea)
         {
             var scrollArea = new ScrollArea(new ClassicScrollAreaRenderer()) {Area = initalArea};
-            _content = A.Fake<IGraphicComponent>();
+            _content = A.Fake<IGuiComponent>();
             return scrollArea;
         }
     }

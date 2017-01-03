@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework;
 namespace GameEngine.GUI.Controlls
 {
     [GameType]
-    public class TextArea : AbstractGraphicComponent
+    public class TextArea : AbstractGuiComponent
     {
         public int NumberOfLines { get; }
         private string _text;

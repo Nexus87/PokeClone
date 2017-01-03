@@ -201,13 +201,13 @@ namespace GameEngine.GUI.Test.Panels
             VerifyComponentsHaveExpectedPosition(components, expectedPositions);
 
         }
-        private static ITable<IGraphicComponent> FillGridWithPreferedSizes(Grid grid, ITable<Rectangle> preferredSizes,
+        private static ITable<IGuiComponent> FillGridWithPreferedSizes(Grid grid, ITable<Rectangle> preferredSizes,
             int rowsCount, int columnsCount)
         {
-            var table = new Table<IGraphicComponent>(rowsCount, columnsCount);
+            var table = new Table<IGuiComponent>(rowsCount, columnsCount);
             Globals.Extensions.LoopOverTable(rowsCount, columnsCount, (i, j) =>
             {
-                var componentMock = A.Fake<IGraphicComponent>();
+                var componentMock = A.Fake<IGuiComponent>();
                 A.CallTo(() => componentMock.PreferredHeight).Returns(preferredSizes[i, j].Height);
                 A.CallTo(() => componentMock.PreferredWidth).Returns(preferredSizes[i, j].Width);
                 table[i, j] = componentMock;
@@ -339,7 +339,7 @@ namespace GameEngine.GUI.Test.Panels
             return CreateGrid(new Rectangle(100, 100, 200, 200), rows, columns);
         }
 
-        private static void VerifyComponentsHaveExpectedPosition(ITable<IGraphicComponent> components, ITable<Rectangle> expectedPositions)
+        private static void VerifyComponentsHaveExpectedPosition(ITable<IGuiComponent> components, ITable<Rectangle> expectedPositions)
         {
             Globals.Extensions.LoopOverTable(components.Rows, components.Columns, (i, j) =>
             {
@@ -348,12 +348,12 @@ namespace GameEngine.GUI.Test.Panels
             });
         }
 
-        private static Table<IGraphicComponent> FillGrid(Grid grid, int rows, int columns)
+        private static Table<IGuiComponent> FillGrid(Grid grid, int rows, int columns)
         {
-            var table = new Table<IGraphicComponent>(rows, columns);
+            var table = new Table<IGuiComponent>(rows, columns);
             Globals.Extensions.LoopOverTable(rows, columns, (i, j) =>
             {
-                var componentMock = A.Fake<IGraphicComponent>();
+                var componentMock = A.Fake<IGuiComponent>();
                 table[i, j] = componentMock;
                 grid.SetComponent(componentMock, i, j);
             });

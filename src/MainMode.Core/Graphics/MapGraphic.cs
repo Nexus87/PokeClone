@@ -8,13 +8,13 @@ using Microsoft.Xna.Framework;
 namespace MainMode.Core.Graphics
 {
     [GameType]
-    public class MapGraphic : AbstractGraphicComponent, IMapGraphic
+    public class MapGraphic : AbstractGuiComponent, IMapGraphic
     {
         public float TextureSize { get; }
         private readonly Grid _container = new Grid();
 
 
-        public MapGraphic(ITable<IGraphicComponent> fieldTextures, float textureSize = 128.0f)
+        public MapGraphic(ITable<IGuiComponent> fieldTextures, float textureSize = 128.0f)
         {
             TextureSize = textureSize;
             InitContainer(fieldTextures);
@@ -46,7 +46,7 @@ namespace MainMode.Core.Graphics
         private float Rows { get; }
         private float Columns { get; }
 
-        private void InitContainer(ITable<IGraphicComponent> fieldTextures)
+        private void InitContainer(ITable<IGuiComponent> fieldTextures)
         {
             for (var i = 0; i < fieldTextures.Rows; i++)
                 _container.AddPercentRow();

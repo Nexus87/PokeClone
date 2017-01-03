@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework;
 namespace BattleMode.Shared
 {
     [GameType]
-    public class HpText : AbstractGraphicComponent
+    public class HpText : AbstractGuiComponent
     {
         private readonly Label _text;
         private string _maxHp;

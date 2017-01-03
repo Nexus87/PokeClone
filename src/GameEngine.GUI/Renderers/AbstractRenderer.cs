@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace GameEngine.GUI.Renderers
 {
-    public abstract class AbstractRenderer<T> where T : IGraphicComponent
+    public abstract class AbstractRenderer<T> where T : IGuiComponent
     {
         protected static void RenderText(ISpriteBatch spriteBatch, ISpriteFont font, string text, Vector2 position, float textHeight)
         {

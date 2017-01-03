@@ -1,6 +1,6 @@
 ﻿namespace GameEngine.GUI.Graphics
 {
-    public interface IImageBox : IGraphicComponent
+    public interface IImageBox : IGuiComponent
     {
 
     }

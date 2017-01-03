@@ -24,13 +24,13 @@ namespace GameEngine.Core
             GraphicsDeviceManager.ApplyChanges();
         }
 
-        public IGraphicComponent Graphic { get; set; }
+        public IGuiComponent Gui { get; set; }
 
 
         protected override void Draw(GameTime gameTime)
         {
             Screen.Begin(_batch);
-            Screen.Draw(Graphic, _batch, gameTime);
+            Screen.Draw(Gui, _batch, gameTime);
             Screen.Draw(GuiManager, _batch, gameTime);
             Screen.End(_batch);
         }
@@ -41,7 +41,7 @@ namespace GameEngine.Core
             Window.ClientSizeChanged += delegate { Screen.WindowsResizeHandler(Window.ClientBounds.Width, Window.ClientBounds.Height); };
             Screen.WindowsResizeHandler(Window.ClientBounds.Width, Window.ClientBounds.Height);
 
-            if (Graphic == null)
+            if (Gui == null)
                 throw new InvalidOperationException("Graphic component is not set");
         }
 

@@ -72,7 +72,7 @@ namespace GameEngine.Core
                 (int) _screenConstants.ScreenHeight);
         }
 
-        public void Draw(IGraphicComponent component, ISpriteBatch batch, GameTime gameTime)
+        public void Draw(IGuiComponent component, ISpriteBatch batch, GameTime gameTime)
         {
             component.Draw(gameTime, batch);
         }

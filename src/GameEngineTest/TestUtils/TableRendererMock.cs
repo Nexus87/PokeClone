@@ -9,7 +9,7 @@ namespace GameEngineTest.TestUtils
         public T[,] Entries = new T[0, 0];
         public TableComponentMock<T>[,] Components = new TableComponentMock<T>[0,0];
 
-        public IGraphicComponent GetComponent(int row, int column, T data)
+        public IGuiComponent GetComponent(int row, int column, T data)
         {
             Entries = Resize(row, column, Entries);
             Components = Resize(row, column, Components);

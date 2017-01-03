@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework;
 namespace GameEngine.GUI.Components
 {
     [GameType]
-    public class HpLine : AbstractGraphicComponent
+    public class HpLine : AbstractGuiComponent
     {
         private readonly HpLineRenderer _renderer;
 

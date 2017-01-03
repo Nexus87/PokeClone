@@ -9,9 +9,9 @@ namespace GameEngine.GUI.Graphics
     /// <remarks>
     /// An animation may take multiple Update calls, to finish.
     /// When its done, it should call the AnimationFinished event, so
-    /// that the IGraphicComponent can stop updating it.
+    /// that the IGuiComponent can stop updating it.
     /// </remarks>
-    /// <see cref="IGraphicComponent.PlayAnimation"/>
+    /// <see cref="IGuiComponent.PlayAnimation"/>
     public interface IAnimation
     {
         /// <summary>
@@ -27,6 +27,6 @@ namespace GameEngine.GUI.Graphics
         /// </remarks>
         /// <param name="time">Game time</param>
         /// <param name="component">Graphic component</param>
-        void Update(GameTime time, IGraphicComponent component);
+        void Update(GameTime time, IGuiComponent component);
     }
 }

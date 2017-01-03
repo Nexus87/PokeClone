@@ -30,7 +30,7 @@ namespace GameEngineTest.Graphics
             return new ImageBox(new ClassicImageBoxRenderer());
         }
 
-        protected override IGraphicComponent CreateComponent()
+        protected override IGuiComponent CreateComponent()
         {
             var box = CreateEmptyBox();
             var textureStub = A.Fake<ITexture2D>();

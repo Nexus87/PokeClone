@@ -59,7 +59,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AbstractGraphicComponent.cs" />
+    <Compile Include="AbstractGuiComponent.cs" />
     <Compile Include="ClassicSkin.cs" />
     <Compile Include="ComponentSelectedEventArgs.cs" />
     <Compile Include="Components\DefaultTextSplitter.cs" />
@@ -80,8 +80,8 @@
     <Compile Include="GraphicComponentSizeChangedEventArgs.cs" />
     <Compile Include="Graphics\IAnimation.cs" />
     <Compile Include="Graphics\IImageBox.cs" />
-    <Compile Include="Graphics\NullGraphicObject.cs" />
-    <Compile Include="IGraphicComponent.cs" />
+    <Compile Include="Graphics\NullGuiObject.cs" />
+    <Compile Include="IGuiComponent.cs" />
     <Compile Include="INode.cs" />
     <Compile Include="ISkin.cs" />
     <Compile Include="Panels\AbstractPanel.cs" />

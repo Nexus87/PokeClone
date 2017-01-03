@@ -13,7 +13,7 @@ namespace PokemonGame.MainModuleClasses
     {
         private readonly TextureProvider _textureProvider;
         private readonly IGameTypeRegistry _registry;
-        private Table<IGraphicComponent> _table;
+        private Table<IGuiComponent> _table;
 
         public DummyMapLoader(TextureProvider textureProvider, IGameTypeRegistry registry)
         {
@@ -23,7 +23,7 @@ namespace PokemonGame.MainModuleClasses
         public IMapGraphic LoadMap(Map map)
         {
             var tiles = map.Tiles;
-            _table = new Table<IGraphicComponent>();
+            _table = new Table<IGuiComponent>();
 
             for (var i = 0; i < tiles.Rows; i++)
             {
@@ -37,7 +37,7 @@ namespace PokemonGame.MainModuleClasses
             return new MapGraphic(_table);
         }
 
-        public ITable<IGraphicComponent> GetFieldTextures()
+        public ITable<IGuiComponent> GetFieldTextures()
         {
             return _table;
         }

@@ -5,7 +5,7 @@ using GameEngine.GUI;
 
 namespace GameEngineTest.TestUtils
 {
-    public class TextGraphicComponentMock : GraphicComponentMock, IGraphicComponent
+    public class TextGraphicComponentMock : GraphicComponentMock, IGuiComponent
     {
         public Func<int> DisplayableCharsFunc = null;
         public int DisplayableChars()

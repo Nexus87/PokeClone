@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework;
 namespace GameEngine.GUI.Controlls
 {
     [GameType]
-    public class ImageBox : AbstractGraphicComponent, IImageBox
+    public class ImageBox : AbstractGuiComponent, IImageBox
     {
         private readonly ImageBoxRenderer _renderer;
         private ITexture2D _image;

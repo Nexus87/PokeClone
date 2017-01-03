@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework;
 namespace BattleMode.Gui
 {
     [GameType]
-    public class MainMenuWidget : AbstractGraphicComponent, IMenuWidget<MainMenuEntries>
+    public class MainMenuWidget : AbstractGuiComponent, IMenuWidget<MainMenuEntries>
     {
         private readonly Grid _grid;
         private readonly Window _window;

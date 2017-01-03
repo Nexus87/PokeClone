@@ -6,7 +6,7 @@ using GameEngine.GUI;
 
 namespace BattleMode.Core.Components.GraphicComponents
 {
-    public interface IBattleGraphicController : IGraphicComponent
+    public interface IBattleGraphicController : IGuiComponent
     {
         event EventHandler ConditionSet;
         event EventHandler HpSet;

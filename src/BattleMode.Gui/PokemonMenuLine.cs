@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework;
 namespace BattleMode.Gui
 {
     [GameType]
-    public class PokemonMenuLine : AbstractGraphicComponent
+    public class PokemonMenuLine : AbstractGuiComponent
     {
         private Grid _mainContainer;
 

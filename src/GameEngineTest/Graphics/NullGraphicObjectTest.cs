@@ -7,9 +7,9 @@ namespace GameEngineTest.Graphics
     [TestFixture]
     public class NullGraphicObjectTest : IGraphicComponentTest
     {
-        protected override IGraphicComponent CreateComponent()
+        protected override IGuiComponent CreateComponent()
         {
-            return new NullGraphicObject();
+            return new NullGuiObject();
         }
     }
 }

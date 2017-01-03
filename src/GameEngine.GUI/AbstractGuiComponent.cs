@@ -7,11 +7,11 @@ using Microsoft.Xna.Framework;
 
 namespace GameEngine.GUI
 {
-    public abstract class AbstractGraphicComponent : IGraphicComponent
+    public abstract class AbstractGuiComponent : IGuiComponent
     {
         public event EventHandler<ComponentSelectedEventArgs> ComponentSelected;
 
-        protected AbstractGraphicComponent()
+        protected AbstractGuiComponent()
         {
             NeedsUpdate = true;
         }
@@ -19,7 +19,7 @@ namespace GameEngine.GUI
         protected bool NeedsUpdate { get; set; }
         private float _preferredHeight;
         private float _preferredWidth;
-        protected readonly List<IGraphicComponent> children = new List<IGraphicComponent>();
+        protected readonly List<IGuiComponent> children = new List<IGuiComponent>();
         private Rectangle _area;
         private bool _isSelected;
 
@@ -113,9 +113,9 @@ namespace GameEngine.GUI
             }
         }
 
-        public IGraphicComponent Parent { get; set; }
+        public IGuiComponent Parent { get; set; }
 
-        public IEnumerable<IGraphicComponent> Children => children;
+        public IEnumerable<IGuiComponent> Children => children;
 
         public bool IsSelected
         {

@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework;
 namespace MainMode.Core.Graphics
 {
     [GameService(typeof(IWorldScreenController))]
-    public class WorldScreen : AbstractGraphicComponent, IWorldScreenController
+    public class WorldScreen : AbstractGuiComponent, IWorldScreenController
     {
         private ICharacterSprite _player;
         private readonly IMapController _mapController;

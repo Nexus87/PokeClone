@@ -14,14 +14,14 @@ namespace GameEngine.GUI
     /// This interface is the equivalent of the GameComponent for drawable 2D objects,
     /// but instead of the Update method it has Draw, which also takes a SpriteBatch
     /// 
-    /// A IGraphicComponent is a rectangle, with measures Width/Height and position
+    /// A IGuiComponent is a rectangle, with measures Width/Height and position
     /// X/Y. 
     /// Every subtype is only allowed to draw inside this rectangle
     /// 
     /// Changed of the position or size is signaled by the corresponding event
     /// SizeChanged and PositionChanged.
     /// </remarks>
-    public interface IGraphicComponent : IInputHandler
+    public interface IGuiComponent : IInputHandler
     {
         event EventHandler<ComponentSelectedEventArgs> ComponentSelected;
 
@@ -46,8 +46,8 @@ namespace GameEngine.GUI
         Rectangle ScissorArea { get; set; }
         Rectangle Area { get; set; }
 
-        IGraphicComponent Parent { get; set; }
-        IEnumerable<IGraphicComponent> Children { get; }
+        IGuiComponent Parent { get; set; }
+        IEnumerable<IGuiComponent> Children { get; }
 
         bool IsSelected { get; set; }
         bool IsSelectable { get; }

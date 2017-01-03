@@ -1,8 +1,9 @@
-﻿using GameEngine.GUI.Components;
+﻿using BattleMode.Core.Components.GraphicComponents;
+using GameEngine.GUI.Components;
 using GameEngine.GUI.Controlls;
 using GameEngine.TypeRegistry;
 
-namespace BattleMode.Core.Components.GraphicComponents
+namespace BattleMode.Gui
 {
     [GameType]
     public class AiPokemonDataView : PokemonDataView

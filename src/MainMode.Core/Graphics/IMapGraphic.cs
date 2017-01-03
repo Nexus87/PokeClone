@@ -2,7 +2,7 @@
 
 namespace MainMode.Core.Graphics
 {
-    public interface IMapGraphic : IGraphicComponent
+    public interface IMapGraphic : IGuiComponent
     {
         float TextureSize { get; }
         float GetXPositionOfColumn(int column);

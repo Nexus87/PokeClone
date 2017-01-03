@@ -44,7 +44,7 @@ namespace GameEngine.Core
             registry.RegisterType(r => _screenConstants);
             registry.RegisterType(r => _engine.GraphicsDeviceManager);
             registry.ScanAssembly(Assembly.GetExecutingAssembly());
-            registry.ScanAssembly(Assembly.GetAssembly(typeof(IGraphicComponent)));
+            registry.ScanAssembly(Assembly.GetAssembly(typeof(IGuiComponent)));
             registry.ScanAssembly(Assembly.GetAssembly(typeof(IGameTypeRegistry)));
             registry.ScanAssembly(Assembly.GetAssembly(typeof(IGameEntity)));
 

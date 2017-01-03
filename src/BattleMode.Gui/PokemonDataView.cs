@@ -14,7 +14,7 @@ namespace BattleMode.Core.Components.GraphicComponents
 {
     // TODO come up with a better solution for this
 
-    public class PokemonDataView : AbstractGraphicComponent
+    public class PokemonDataView : AbstractGuiComponent
     {
         public event EventHandler HpUpdated;
 
@@ -39,9 +39,9 @@ namespace BattleMode.Core.Components.GraphicComponents
 
             _lvl.TextSize = 24.0f;
 
-            lvlContainer.SetComponent(new NullGraphicObject(), 0, 0);
+            lvlContainer.SetComponent(new NullGuiObject(), 0, 0);
             lvlContainer.SetComponent(_lvl, 0, 1);
-            lvlContainer.SetComponent(new NullGraphicObject(), 0, 2);
+            lvlContainer.SetComponent(new NullGuiObject(), 0, 2);
             lvlContainer.SetCoordinates(0, 0, 0, _lvl.TextSize);
 
 
@@ -66,9 +66,9 @@ namespace BattleMode.Core.Components.GraphicComponents
             _container.AddAbsoluteRow(hpBox.TextSize);
 
             _container.SetComponent(_name, 0, 0);
-            _container.SetComponent(new NullGraphicObject(), 1, 0);
+            _container.SetComponent(new NullGuiObject(), 1, 0);
             _container.SetComponent(lvlContainer, 2, 0);
-            _container.SetComponent(new NullGraphicObject(), 3, 0);
+            _container.SetComponent(new NullGuiObject(), 3, 0);
             _container.SetComponent(hpLineContainer, 4, 0);
 
             if (hpTextBox != null)
@@ -81,12 +81,12 @@ namespace BattleMode.Core.Components.GraphicComponents
                 hpTextContainer.AddRow(new RowProperty{Type = ValueType.Percent, Share = 1});
                 hpTextContainer.AddColumn(new ColumnProperty{Type = ValueType.Percent, Share = 1});
                 hpTextContainer.AddColumn(new ColumnProperty{Type = ValueType.Auto});
-                hpTextContainer.SetComponent(new NullGraphicObject(), 0, 0);
+                hpTextContainer.SetComponent(new NullGuiObject(), 0, 0);
                 hpTextContainer.SetComponent(_hpText, 0, 1);
 
                 _container.AddRow(new RowProperty{Type = ValueType.Absolute, Height = 10f});
                 _container.AddRow(new RowProperty{Type = ValueType.Absolute, Height = _hpText.PreferredTextHeight});
-                _container.SetComponent(new NullGraphicObject(), 5, 0);
+                _container.SetComponent(new NullGuiObject(), 5, 0);
                 _container.SetComponent(hpTextContainer, 6, 0);
             }
         }
@@ -150,7 +150,7 @@ namespace BattleMode.Core.Components.GraphicComponents
                     _nextInt = a => a - 1;
             }
 
-            public void Update(GameTime time, IGraphicComponent component)
+            public void Update(GameTime time, IGuiComponent component)
             {
                 if (_currentHp == _targetHp)
                 {

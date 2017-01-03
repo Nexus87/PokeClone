@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework;
 namespace BattleMode.Core.Components.GraphicComponents
 {
     [GameType]
-    public class PokemonSprite : AbstractGraphicComponent
+    public class PokemonSprite : AbstractGuiComponent
     {
         public event EventHandler OnPokemonAppeared = delegate { };
         public event EventHandler OnAttackAnimationPlayed = delegate { };

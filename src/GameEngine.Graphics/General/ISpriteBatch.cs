@@ -22,7 +22,8 @@ namespace GameEngine.Graphics.General
         /// <see cref="Microsoft.Xna.Framework.Graphics.SpriteBatch.Begin"/>
         void Begin(SpriteSortMode sortMode = SpriteSortMode.Deferred, BlendState blendState = null, SamplerState samplerState = null, DepthStencilState depthStencilState = null, RasterizerState rasterizerState = null, Effect effect = null, Matrix? transformMatrix = null);
         /// <see cref="Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw(Texture2D, Rectangle, Color)"/>
-        void Draw(ITexture2D texture, Rectangle destinationRectangle, Color color);
+        void Draw(ITexture2D texture, Rectangle destinationRectangle, Color color, SpriteEffects spriteEffects = SpriteEffects.None);
+        void Draw(ITexture2D texture, Vector2 location, Vector2 scaling, Color color, SpriteEffects spriteEffects = SpriteEffects.None);
         /// <see cref="Microsoft.Xna.Framework.Graphics.SpriteBatch.DrawString(SpriteFont, string, Vector2, Color, float, Vector2, float, SpriteEffects, float)"/>
         void DrawString(ISpriteFont spriteFont, string text, Vector2 position, Color color, float rotation, Vector2 origin, float scale, SpriteEffects effects, float layerDepth);
         /// <see cref="Microsoft.Xna.Framework.Graphics.SpriteBatch.End"/>

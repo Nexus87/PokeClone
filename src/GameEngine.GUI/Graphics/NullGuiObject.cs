@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 
 namespace GameEngine.GUI.Graphics
 {
-    public class NullGraphicObject : AbstractGraphicComponent
+    public class NullGuiObject : AbstractGuiComponent
     {
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)
         {

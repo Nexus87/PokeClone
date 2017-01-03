@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework;
 namespace BattleMode.Gui
 {
     [GameType]
-    public class MoveMenuWidget : AbstractGraphicComponent, IMenuWidget<Move>
+    public class MoveMenuWidget : AbstractGuiComponent, IMenuWidget<Move>
     {
         private readonly Window _window;
         private readonly ListView<Move> _listView;

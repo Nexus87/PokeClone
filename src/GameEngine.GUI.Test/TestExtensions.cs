@@ -6,7 +6,7 @@ namespace GameEngine.GUI.Test
 {
     public static class TestExtensions
     {
-        public static void Draw(this IGraphicComponent component)
+        public static void Draw(this IGuiComponent component)
         {
             var spriteBatch =  A.Fake<ISpriteBatch>();
             component.Draw(new GameTime(), spriteBatch);

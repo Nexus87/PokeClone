@@ -1,8 +1,8 @@
 namespace GameEngine.GUI.Panels
 {
-    public class AbstractPanel : AbstractGraphicComponent
+    public class AbstractPanel : AbstractGuiComponent
     {
-        protected void AddChild(IGraphicComponent child)
+        protected void AddChild(IGuiComponent child)
         {
             if(child == null)
                 return;
@@ -12,7 +12,7 @@ namespace GameEngine.GUI.Panels
             child.ComponentSelected += ComponentSelectedHandler;
         }
 
-        protected void RemoveChild(IGraphicComponent child)
+        protected void RemoveChild(IGuiComponent child)
         {
             if(child == null)
                 return;

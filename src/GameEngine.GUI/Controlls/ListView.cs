@@ -10,10 +10,10 @@ using Microsoft.Xna.Framework;
 
 namespace GameEngine.GUI.Controlls
 {
-    public delegate IGraphicComponent ListCellFactory<in T>(T value);
+    public delegate IGuiComponent ListCellFactory<in T>(T value);
 
     [GameType]
-    public sealed class ListView<T> : AbstractGraphicComponent
+    public sealed class ListView<T> : AbstractGuiComponent
     {
         private ListCellFactory<T> _listCellFactory = delegate { return null; };
         private readonly List<ListCell> _listItems = new List<ListCell>();
@@ -211,7 +211,7 @@ namespace GameEngine.GUI.Controlls
             _listItems[i].IsSelected = true;
         }
 
-        public IGraphicComponent GetComponent(int i)
+        public IGuiComponent GetComponent(int i)
         {
             return _listItems[i].Component;
         }

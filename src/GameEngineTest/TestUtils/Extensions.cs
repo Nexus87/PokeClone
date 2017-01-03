@@ -14,12 +14,12 @@ namespace GameEngineTest.TestUtils
         {
             manager.Draw(new GameTime(), new SpriteBatchMock());
         }
-        public static void Draw(this IGraphicComponent component, ISpriteBatch spriteBatch)
+        public static void Draw(this IGuiComponent component, ISpriteBatch spriteBatch)
         {
             component.Draw(new GameTime(), spriteBatch);
         }
 
-        public static void Draw(this IGraphicComponent component)
+        public static void Draw(this IGuiComponent component)
         {
             component.Draw(new GameTime(), new SpriteBatchMock());
         }
@@ -29,7 +29,7 @@ namespace GameEngineTest.TestUtils
             entity.Update(new GameTime());
         }
 
-        public static void IsInConstraints(this IGraphicComponent component, float x, float y, float width, float height)
+        public static void IsInConstraints(this IGuiComponent component, float x, float y, float width, float height)
         {
             var realWidth = Math.Max(0, width);
             var realHeight = Math.Max(0, height);
@@ -47,46 +47,46 @@ namespace GameEngineTest.TestUtils
             Assert.IsTrue(ret);
         }
 
-        public static void IsInConstraints(this IGraphicComponent component, IGraphicComponent other)
+        public static void IsInConstraints(this IGuiComponent component, IGuiComponent other)
         {
             component.IsInConstraints(other.XPosition(), other.YPosition(), other.Width(), other.Height());
         }
-        public static float YPosition(this IGraphicComponent component)
+        public static float YPosition(this IGuiComponent component)
         {
             return component.Area.Y;
         }
 
-        public static float XPosition(this IGraphicComponent component)
+        public static float XPosition(this IGuiComponent component)
         {
             return component.Area.X;
         }
 
-        public static float Width(this IGraphicComponent component)
+        public static float Width(this IGuiComponent component)
         {
             return component.Area.Width;
         }
 
-        public static float Height(this IGraphicComponent component)
+        public static float Height(this IGuiComponent component)
         {
             return component.Area.Height;
         }
 
-        public static void YPosition(this IGraphicComponent component, float value)
+        public static void YPosition(this IGuiComponent component, float value)
         {
             component.Area = new Rectangle(component.Area.X, (int) value, component.Area.Width, component.Area.Height);
         }
 
-        public static void XPosition(this IGraphicComponent component, float value)
+        public static void XPosition(this IGuiComponent component, float value)
         {
             component.Area = new Rectangle((int) value, component.Area.Y, component.Area.Width, component.Area.Height);
         }
 
-        public static void Width(this IGraphicComponent component, float value)
+        public static void Width(this IGuiComponent component, float value)
         {
             component.Area = new Rectangle(component.Area.X, component.Area.Y, (int) value, component.Area.Height);
         }
 
-        public static void Height(this IGraphicComponent component, float value)
+        public static void Height(this IGuiComponent component, float value)
         {
             component.Area = new Rectangle(component.Area.X, component.Area.Y, component.Area.Width, (int) value);
         }

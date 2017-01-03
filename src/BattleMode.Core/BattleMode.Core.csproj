@@ -56,12 +56,6 @@
     <Compile Include="BattleModule.cs" />
     <Compile Include="Components\BattleEventProcessor.cs" />
     <Compile Include="Components\Extensions.cs" />
-    <Compile Include="Components\GraphicComponents\AIPokemonDataView.cs" />
-    <Compile Include="Components\GraphicComponents\BattleGraphicController.cs" />
-    <Compile Include="Components\GraphicComponents\IBattleGraphicController.cs" />
-    <Compile Include="Components\GraphicComponents\PlayerPokemonDataView.cs" />
-    <Compile Include="Components\GraphicComponents\PokemonDataView.cs" />
-    <Compile Include="Components\GraphicComponents\PokemonSprite.cs" />
     <Compile Include="Components\SetHPEvent.cs" />
     <Compile Include="Components\SetPokemonEvent.cs" />
     <Compile Include="Components\SetStatusEvent.cs" />
@@ -72,9 +66,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Animations\" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup />
@@ -106,6 +97,10 @@
     <ProjectReference Include="..\BattleMode.Entities\BattleMode.Entities.csproj">
       <Project>{7C124625-9566-46E9-BF6B-D045F90B35A1}</Project>
       <Name>BattleMode.Components</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BattleMode.Graphic\BattleMode.Graphic.csproj">
+      <Project>{d94b6faf-a173-42b5-ac09-59200da76024}</Project>
+      <Name>BattleMode.Graphic</Name>
     </ProjectReference>
     <ProjectReference Include="..\BattleMode.Gui\BattleMode.Gui.csproj">
       <Project>{0194EA5F-B7C8-4087-9680-21E19334F1E7}</Project>

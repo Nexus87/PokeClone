@@ -16,9 +16,9 @@ namespace GameEngine.Core
         private class WidgetItem : IComparable<WidgetItem>
         {
             public readonly int Priority;
-            public readonly IGraphicComponent Component;
+            public readonly IGuiComponent Component;
 
-            public WidgetItem(int priority, IGraphicComponent component)
+            public WidgetItem(int priority, IGuiComponent component)
             {
                 Priority = priority;
                 Component = component;
@@ -52,7 +52,7 @@ namespace GameEngine.Core
             _inputComponent = inputComponent;
         }
 
-        public void ShowWidget(IGraphicComponent widget, int? priority = null)
+        public void ShowWidget(IGuiComponent widget, int? priority = null)
         {
             if(_widgets.Any(x => x.Component == widget))
                 return;
@@ -65,7 +65,7 @@ namespace GameEngine.Core
 
         }
 
-        public void CloseWidget(IGraphicComponent widget)
+        public void CloseWidget(IGuiComponent widget)
         {
             var w = _widgets.FirstOrDefault(x => x.Component == widget);
             if (w != null)
@@ -81,7 +81,7 @@ namespace GameEngine.Core
             FocusedWidget?.HandleKeyInput(key);
         }
 
-        public IGraphicComponent FocusedWidget => _widgets.LastOrDefault()?.Component;
+        public IGuiComponent FocusedWidget => _widgets.LastOrDefault()?.Component;
 
         public void Close()
         {

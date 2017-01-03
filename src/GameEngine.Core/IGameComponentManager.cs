@@ -7,6 +7,6 @@ namespace GameEngine.Core
     {
         void AddGameComponent(IGameEntity entity);
         void RemoveGameComponent(IGameEntity entity);
-        IGraphicComponent Graphic { get; set; }
+        IGuiComponent Gui { get; set; }
     }
 }

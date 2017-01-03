@@ -10,14 +10,14 @@ namespace GameEngine.GUI.Panels
     public class Window : AbstractPanel
     {
         private readonly WindowRenderer _renderer;
-        private IGraphicComponent _content;
+        private IGuiComponent _content;
 
         public Window(WindowRenderer renderer)
         {
             _renderer = renderer;
         }
 
-        public void SetContent(IGraphicComponent component)
+        public void SetContent(IGuiComponent component)
         {
             RemoveChild(_content);
             _content = component;

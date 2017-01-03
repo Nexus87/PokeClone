@@ -11,7 +11,7 @@ namespace GameEngine.GUI.Panels
     public class SelectablePanel : AbstractPanel
     {
         private readonly SelectablePanelRenderer _renderer;
-        private IGraphicComponent _content;
+        private IGuiComponent _content;
         public bool ShouldHandleKeyInput { get; set; }
 
         public SelectablePanel(SelectablePanelRenderer renderer)
@@ -20,7 +20,7 @@ namespace GameEngine.GUI.Panels
             IsSelectable = true;
         }
 
-        public IGraphicComponent Content
+        public IGuiComponent Content
         {
             get { return _content; }
             set

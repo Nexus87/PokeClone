@@ -15,13 +15,19 @@ namespace GameEngine.Graphics.General
     {
         public XnaSpriteBatch(GraphicsDevice device) : base(device){ }
 
+        public void Draw(ITexture2D texture, Vector2 location, Vector2 scaling, Color color,
+            SpriteEffects spriteEffects = SpriteEffects.None)
+        {
+            Draw(texture: texture.Texture, position: location, sourceRectangle: texture.Bounds, scale: scaling, color: color, effects: spriteEffects);
+        }
+
         /// <see cref="Microsoft.Xna.Framework.Graphics.SpriteBatch.DrawString(SpriteFont, string, Vector2, Color, float, Vector2, float, SpriteEffects, float)"/>
         public void DrawString(ISpriteFont spriteFont, string text, Vector2 position, Color color, float rotation, Vector2 origin, float scale, SpriteEffects effects, float layerDepth)
         {
             DrawString(spriteFont.SpriteFont, text, position, color, rotation, origin, scale, effects, layerDepth);
         }
 
-        public void Draw(ITexture2D texture, Rectangle destinationRectangle, Color color)
+        public void Draw(ITexture2D texture, Rectangle destinationRectangle, Color color, SpriteEffects spriteEffects = SpriteEffects.None)
         {
             Draw(texture.Texture, destinationRectangle, sourceRectangle: texture.Bounds, color: color);
         }

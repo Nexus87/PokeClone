@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Base.Data;
 using BattleMode.Entities.BattleState;
+using BattleMode.Gui;
 using BattleMode.Shared;
 using GameEngine.Core;
 using GameEngine.Graphics.General;
@@ -13,7 +14,7 @@ using Microsoft.Xna.Framework;
 namespace BattleMode.Core.Components.GraphicComponents
 {
     [GameService(typeof(IBattleGraphicController))]
-    public class BattleGraphicController : AbstractGraphicComponent, IBattleGraphicController
+    public class BattleGraphicController : AbstractGuiComponent, IBattleGraphicController
     {
         private readonly Dictionary<ClientIdentifier, PokemonDataView> _dataViews = new Dictionary<ClientIdentifier, PokemonDataView>();
         private readonly Dictionary<ClientIdentifier, PokemonSprite> _sprites = new Dictionary<ClientIdentifier, PokemonSprite>();
