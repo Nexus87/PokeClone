@@ -23,6 +23,7 @@ namespace BattleMode.Gui
         private readonly Label _hpLabel;
         private readonly Label _level;
         private readonly SpriteProvider _spriteProvider;
+        private Pokemon _pokemon;
 
         public PokemonMenuLine(ImageBox icon, HpLine hpLine, Label nameBox, HpText hpText, Label level,
             Label hpLabel, SpriteProvider spriteProvider)
@@ -42,18 +43,20 @@ namespace BattleMode.Gui
 
         public void SetPokemon(Pokemon pokemon)
         {
-            _hpText.SetPokemon(pokemon);
-
-            _hpLine.MaxHp = pokemon.MaxHP;
-            _hpLine.Current = pokemon.HP;
-
-            _nameBox.Text = pokemon.Name;
-
-            _level.Text = "L" + pokemon.Level;
-
-            _icon.Image = _spriteProvider.GetIcon(pokemon.Id);
+            _pokemon = pokemon;
+            _hpText.SetPokemon(_pokemon);
+            _hpLine.MaxHp = _pokemon.MaxHP;
+            _nameBox.Text = _pokemon.Name;
+            _icon.Image = _spriteProvider.GetIcon(_pokemon.Id);
+            UpdateData();
         }
 
+        public void UpdateData()
+        {
+            _hpLine.Current = _pokemon.HP;
+            _level.Text = "L" + _pokemon.Level;
+
+        }
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)
         {
             _mainContainer.Draw(time, batch);

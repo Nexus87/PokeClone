@@ -12,7 +12,7 @@ namespace GameEngine.GUI.Panels
         public Color BackgroundColor { get; set; }
         private readonly PanelRenderer _renderer;
         private IGuiComponent _component;
-        private Dictionary<CommandKeys, Action> _inputListeners = new Dictionary<CommandKeys, Action>();
+        private readonly Dictionary<CommandKeys, Action> _inputListeners = new Dictionary<CommandKeys, Action>();
 
         public Panel(PanelRenderer renderer)
         {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Base;
 using BattleMode.Shared;
@@ -15,6 +16,7 @@ namespace BattleMode.Gui
     public class PokemonMenuController
     {
         private readonly ListView<Pokemon> _listView;
+        private readonly List<PokemonMenuLine> _pokemonMenuLines = new List<PokemonMenuLine>();
         private readonly GuiManager _guiManager;
         private readonly Panel _panel;
 
@@ -36,6 +38,7 @@ namespace BattleMode.Gui
                 component.ShouldHandleKeyInput = true;
                 component.PanelPressed += delegate { OnItemSelected(value); };
                 line.SetPokemon(value);
+                _pokemonMenuLines.Add(line);
                 return component;
             };
 
@@ -58,6 +61,7 @@ namespace BattleMode.Gui
         public void Show()
         {
             _listView.SelectCell(0);
+            _pokemonMenuLines.ForEach(x => x.UpdateData());
             _guiManager.ShowWidget(_panel);
         }
 
