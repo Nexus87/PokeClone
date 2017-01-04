@@ -25,6 +25,7 @@ namespace GameEngine.GUI.Panels
                 throw new ArgumentOutOfRangeException(nameof(column), column, "Number of columns: " + Columns);
             _gridInputHandler.SetSelection(row, column);
         }
+
         public Grid()
         {
             _gridInputHandler = new GridInputHandler(_cells);
@@ -47,13 +48,13 @@ namespace GameEngine.GUI.Panels
         {
             for(var column = 0; column < _columnPoperties.Count; column++)
             {
-                _cells[row, column] = CreateGridCell();
+                _cells[row, column] = CreateGridCell(row, column);
             }
         }
 
-        private GridCell CreateGridCell()
+        private GridCell CreateGridCell(int row, int column)
         {
-            var cell = new GridCell();
+            var cell = new GridCell(row, column, _cells);
             cell.PreferredSizeChanged += PreferredSizeChangedHandler;
             return cell;
         }
@@ -74,11 +75,11 @@ namespace GameEngine.GUI.Panels
         {
             for (var row = 0; row < _rowProperties.Count; row++)
             {
-                _cells[row, column] = CreateGridCell();
+                _cells[row, column] = CreateGridCell(row, column);
             }
         }
 
-        public void SetComponent(IGuiComponent component, int row, int column)
+        public void SetComponent(IGuiComponent component, int row, int column, int rowSpan = 1, int columnSpan = 1)
         {
             if (component == null)
                 throw new ArgumentNullException(nameof(component));
@@ -91,7 +92,7 @@ namespace GameEngine.GUI.Panels
                 RemoveChild(_cells[row, column].GuiComponent);
 
             AddChild(component);
-            _cells[row, column].GuiComponent = component;
+            _cells[row, column].SetComponent(component, rowSpan, columnSpan);
             Invalidate();
         }
 
@@ -105,7 +106,9 @@ namespace GameEngine.GUI.Panels
             grid = SetAbsoluteWidths(grid);
             grid = LayoutPercent(grid);
             grid = SetPosition(grid);
-            ApplyGridToComponents(grid);
+            ApplyGridToCells(grid);
+            foreach (var cell in _cells)
+                cell.ApplySizeToComponent();
 
             CalculatePreferredSize();
         }
@@ -141,10 +144,11 @@ namespace GameEngine.GUI.Panels
                 _gridInputHandler.HandleKeyInput(key);
         }
 
-        private void ApplyGridToComponents(ITable<Rectangle> grid)
+        private void ApplyGridToCells(ITable<Rectangle> grid)
         {
-            Globals.Extensions.LoopOverTable(Rows, Columns,
-                (row, column) => { _cells[row, column].SetConstraints(grid[row, column], Area); });
+            _cells.LoopOverTable((row, column) =>
+                _cells[row, column].SetConstraints(grid[row, column], Area)
+            );
         }
 
         private Table<Rectangle> SetPosition(Table<Rectangle> grid)
@@ -279,12 +283,6 @@ namespace GameEngine.GUI.Panels
 
             foreach (var cell in _cells.EnumerateRows(columnToBeRemoved))
             {
-                children.Remove(cell.GuiComponent);
-            }
-
-            foreach (var cell in _cells.EnumerateRows(columnToBeRemoved))
-            {
-                cell.PreferredSizeChanged -= PreferredSizeChangedHandler;
                 RemoveChild(cell.GuiComponent);
             }
             _cells.RemoveColumn(columnToBeRemoved);
@@ -298,11 +296,6 @@ namespace GameEngine.GUI.Panels
 
             foreach (var cell in _cells.EnumerateColumns(rowToBeRemoved))
             {
-                children.Remove(cell.GuiComponent);
-            }
-            foreach (var cell in _cells.EnumerateColumns(rowToBeRemoved))
-            {
-                cell.PreferredSizeChanged -= PreferredSizeChangedHandler;
                 RemoveChild(cell.GuiComponent);
             }
             _cells.RemoveRow(rowToBeRemoved);

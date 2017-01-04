@@ -109,7 +109,7 @@ namespace GameEngine.GUI.Test.Panels
             {
                 var component = A.Fake<IGuiComponent>();
                 A.CallTo(() => component.IsSelectable).Returns(selectableComponents[row, column]);
-                var gridCell = new GridCell() {GuiComponent = component};
+                var gridCell = new GridCell(row, column, table) {GuiComponent = component};
                 table[row, column] = gridCell;
             });
 

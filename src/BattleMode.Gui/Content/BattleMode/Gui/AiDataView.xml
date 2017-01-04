@@ -1,0 +1,26 @@
+<Grid>
+    <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="1*"/>
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+        <ColumnDefinition/>
+    </Grid.ColumnDefinitions>
+
+    <Label TextHeight="48"/>
+    <Grid Grid.Row="1">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Column="1"/>
+        <Label Text="hp:" Grid.Column="0" Grid.Row="1"/>
+        <HpLine Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2"/>
+    </Grid>
+</Grid>
