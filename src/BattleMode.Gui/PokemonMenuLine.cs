@@ -6,6 +6,7 @@ using GameEngine.GUI;
 using GameEngine.GUI.Components;
 using GameEngine.GUI.Controlls;
 using GameEngine.GUI.Panels;
+using GameEngine.Pokemon.Gui;
 using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
 

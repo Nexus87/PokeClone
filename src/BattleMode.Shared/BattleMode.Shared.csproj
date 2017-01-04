@@ -44,7 +44,6 @@
   <ItemGroup>
     <Compile Include="Client.cs" />
     <Compile Include="ClientIdentifier.cs" />
-    <Compile Include="HPText.cs" />
     <Compile Include="ItemUsedEventArgs.cs" />
     <Compile Include="MoveEfficiency.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

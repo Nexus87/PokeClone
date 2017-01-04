@@ -1,12 +1,12 @@
 ﻿using System;
 using BattleMode.Entities.BattleState;
-using BattleMode.Shared;
 using GameEngine.Graphics.General;
 using GameEngine.GUI;
 using GameEngine.GUI.Components;
 using GameEngine.GUI.Controlls;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Panels;
+using GameEngine.Pokemon.Gui;
 using Microsoft.Xna.Framework;
 using ValueType = GameEngine.GUI.Panels.ValueType;
 
@@ -158,7 +158,8 @@ namespace BattleMode.Core.Components.GraphicComponents
                 }
                 _currentHp = _nextInt(_currentHp);
                 _line.Current = _currentHp;
-                _text?.SetHp(_line.Current);
+                if(_text != null)
+                    _text.CurrentHp = _line.Current;
             }
         }
     }
