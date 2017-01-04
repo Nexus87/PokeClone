@@ -34,23 +34,13 @@ namespace BattleMode.Gui
             _listView.Model = data.GetPokemon(data.PlayerId).Moves;
             _listView.ListCellFactory = value =>
             {
-                if (value == null)
-                {
-                    var label = registry.ResolveType<Label>();
-                    label.Text = " --------";
-                    return label;
-                }
-                else
-                {
-                    var button = registry.ResolveType<Button>();
-                    button.Text = value.Name;
-                    button.ButtonPressed += delegate { OnItemSelected(value); };
-                    return button;
-                }
-
+                var button = registry.ResolveType<Button>();
+                button.Text = value?.Name ?? "--------";
+                button.Enabled = value != null;
+                button.ButtonPressed += delegate { OnItemSelected(value); };
+                return button;
             };
 
-            _window.SetContent(_listView);
             _window.SetInputListener(CommandKeys.Back, OnExitRequested);
         }
 
