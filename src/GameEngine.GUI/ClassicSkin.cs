@@ -1,5 +1,5 @@
+using System;
 using System.Collections.Generic;
-using GameEngine.Graphics;
 using GameEngine.Graphics.Textures;
 using GameEngine.GUI.Renderers;
 using GameEngine.GUI.Renderers.PokemonClassicRenderer;
@@ -10,33 +10,44 @@ namespace GameEngine.GUI
 {
     public class ClassicSkin : ISkin
     {
-        private const string Arrow = "arrow";
-        private const string Border = "border";
-        private const string Circle = "circle";
-        private const string DefaultFont = "DefaultFont";
+        private static readonly List<Action<IGameTypeRegistry, TextureProvider>> AdditionalRenderers = new List<Action<IGameTypeRegistry, TextureProvider>>();
 
+        public static void AddAdditionalRenderer<T, TService>(Func<TextureProvider, T> factory)
+        {
+            AdditionalRenderers.Add((r, t) => { r.RegisterAsService<T, TService>(reg => factory(t)); });
+        }
+
+        public const string Arrow = "arrow";
+        public const string Border = "border";
+        public const string Circle = "circle";
+        public const string DefaultFont = "DefaultFont";
+        public static readonly object Key = new object();
 
         public void RegisterRenderers(IGameTypeRegistry registry, TextureProvider provider)
         {
-            var arrow = provider.GetTexture(this, Arrow);
-            var border = provider.GetTexture(this, Border);
-            var circle = provider.GetTexture(this, Circle);
-            var font = provider.GetFont(this, DefaultFont);
+            var arrow = provider.GetTexture(Key, Arrow);
+            var border = provider.GetTexture(Key, Border);
+            var circle = provider.GetTexture(Key, Circle);
+            var font = provider.GetFont(Key, DefaultFont);
             var pixel = provider.Pixel;
 
             registry.RegisterAsService<ClassicButtonRenderer, ButtonRenderer>(r => new ClassicButtonRenderer(arrow, font));
             registry.RegisterAsService<ClassicWindowRenderer, WindowRenderer>(r => new ClassicWindowRenderer(border));
             registry.RegisterAsService<ClassicLabelRenderer, LabelRenderer>(r => new ClassicLabelRenderer(font));
             registry.RegisterAsService<ClassicTextAreaRenderer, TextAreaRenderer>(r => new ClassicTextAreaRenderer(font));
-            registry.RegisterAsService<ClassicLineRenderer, HpLineRenderer>(r => new ClassicLineRenderer(circle, pixel, BackgroundColor));
             registry.RegisterAsService<ClassicImageBoxRenderer, ImageBoxRenderer>();
             registry.RegisterAsService<ClassicPanelRenderer, PanelRenderer>(r => new ClassicPanelRenderer(pixel));
             registry.RegisterAsService<ClassicSelectablePanelRenderer, SelectablePanelRenderer>(r => new ClassicSelectablePanelRenderer(arrow));
             registry.RegisterAsService<ClassicScrollAreaRenderer, ScrollAreaRenderer>();
 
+            foreach (var rendererFactory in AdditionalRenderers)
+            {
+                rendererFactory(registry, provider);
+            }
+
         }
 
-        public Color BackgroundColor { get; } = new Color(248, 248, 248, 0);
+        public static Color BackgroundColor { get; } = new Color(248, 248, 248, 0);
 
         public void AddTextureConfigurations(TextureConfigurationBuilder builder)
         {
@@ -52,8 +63,8 @@ namespace GameEngine.GUI
                 new FontItem(@"GuiSkins\ClassicSkin\MenuFont", DefaultFont, true)
             };
 
-            builder.AddTextureConfig(this, textureItems);
-            builder.AddFont(this, fontItems);
+            builder.AddTextureConfig(Key, textureItems);
+            builder.AddFont(Key, fontItems);
         }
     }
 }

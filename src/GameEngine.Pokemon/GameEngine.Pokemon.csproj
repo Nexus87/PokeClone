@@ -4,12 +4,12 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0194EA5F-B7C8-4087-9680-21E19334F1E7}</ProjectGuid>
+    <ProjectGuid>{6DB8A02E-92BD-4F9D-A091-8A6685AD64D7}</ProjectGuid>
     <ProjectTypeGuids>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BattleMode.Gui</RootNamespace>
-    <AssemblyName>BattleMode.Gui</AssemblyName>
+    <RootNamespace>GameEngine.Pokemon</RootNamespace>
+    <AssemblyName>GameEngine.Pokemon</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -33,14 +33,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MonoGame.Framework, Version=3.5.1.1679, Culture=neutral, PublicKeyToken=null">
+    <Reference Include="MonoGame.Framework, Version=3.5.1.1679, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MonoGame.Framework.DesktopGL.3.5.1.1679\lib\net40\MonoGame.Framework.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="NVorbis, Version=0.8.4.0, Culture=neutral, PublicKeyToken=null">
+    <Reference Include="NVorbis, Version=0.8.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MonoGame.Framework.DesktopGL.3.5.1.1679\lib\net40\NVorbis.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="OpenTK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4">
+    <Reference Include="OpenTK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
       <HintPath>..\packages\MonoGame.Framework.DesktopGL.3.5.1.1679\lib\net40\OpenTK.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -48,43 +51,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AIPokemonDataView.cs" />
-    <Compile Include="BattleGUI.cs" />
-    <Compile Include="IGuiEntity.cs" />
-    <Compile Include="ItemMenuController.cs" />
-    <Compile Include="MainMenuEntries.cs" />
-    <Compile Include="MainMenuController.cs" />
-    <Compile Include="MoveMenuController.cs" />
-    <Compile Include="PlayerPokemonDataView.cs" />
-    <Compile Include="PokemonDataView.cs" />
-    <Compile Include="PokemonMenuLine.cs" />
-    <Compile Include="PokemonMenuController.cs" />
+    <Compile Include="Gui\HPLine.cs" />
+    <Compile Include="Gui\HPResizeAnimation.cs" />
+    <Compile Include="Gui\Renderer\HpLineRenderer.cs" />
+    <Compile Include="Gui\Renderer\InitRenderers.cs" />
+    <Compile Include="Gui\Renderer\PokemonClassicRenderer\ClassicLineRenderer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SelectionEventArgs.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Base\Base.csproj">
-      <Project>{65736142-4C2E-6E69-7578-426173652E4C}</Project>
+      <Project>{65736142-4c2e-6e69-7578-426173652e4c}</Project>
       <Name>Base</Name>
     </ProjectReference>
-    <ProjectReference Include="..\BattleMode.Entities\BattleMode.Entities.csproj">
-      <Project>{7C124625-9566-46E9-BF6B-D045F90B35A1}</Project>
-      <Name>BattleMode.Components</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\BattleMode.Shared\BattleMode.Shared.csproj">
-      <Project>{627954FA-93D0-4524-B2AD-E7D301DAC6AE}</Project>
-      <Name>BattleMode.Shared</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GameEngine.Entities\GameEngine.Entities.csproj">
-      <Project>{C80E7E11-9184-46F3-B66E-236229E44614}</Project>
-      <Name>GameEngine.Entities</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GameEngine.Core\GameEngine.Core.csproj">
-      <Project>{656D6147-6E45-6967-6E65-2E4C696E7578}</Project>
-      <Name>GameEngine.Core</Name>
-    </ProjectReference>
     <ProjectReference Include="..\GameEngine.Globals\GameEngine.Globals.csproj">
-      <Project>{B19BD4B3-DCAE-E1DC-6E65-2E476C6F6261}</Project>
+      <Project>{b19bd4b3-dcae-e1dc-6e65-2e476c6f6261}</Project>
       <Name>GameEngine.Globals</Name>
     </ProjectReference>
     <ProjectReference Include="..\GameEngine.Graphics\GameEngine.Graphics.csproj">
@@ -92,32 +72,16 @@
       <Name>GameEngine.Graphics</Name>
     </ProjectReference>
     <ProjectReference Include="..\GameEngine.GUI\GameEngine.GUI.csproj">
-      <Project>{DDE2CFB0-6E45-6967-6E65-2E4755492E4C}</Project>
+      <Project>{dde2cfb0-6e45-6967-6e65-2e4755492e4c}</Project>
       <Name>GameEngine.GUI</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GameEngine.Pokemon\GameEngine.Pokemon.csproj">
-      <Project>{6db8a02e-92bd-4f9d-a091-8a6685ad64d7}</Project>
-      <Name>GameEngine.Pokemon</Name>
-    </ProjectReference>
     <ProjectReference Include="..\GameEngine.TypeRegistry\GameEngine.TypeRegistry.csproj">
-      <Project>{73200884-85C6-4A3D-A3C2-A53D9C632613}</Project>
+      <Project>{73200884-85c6-4a3d-a3c2-a53d9c632613}</Project>
       <Name>GameEngine.TypeRegistry</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\BattleMode\Gui\ItemMenu.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\BattleMode\Gui\MainMenu.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\BattleMode\Gui\MoveMenu.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\BattleMode\Gui\PokemonMenu.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="packages.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

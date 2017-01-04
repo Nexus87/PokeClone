@@ -146,6 +146,10 @@
       <Project>{DDE2CFB0-6E45-6967-6E65-2E4755492E4C}</Project>
       <Name>GameEngine.GUI</Name>
     </ProjectReference>
+    <ProjectReference Include="..\GameEngine.Pokemon\GameEngine.Pokemon.csproj">
+      <Project>{6db8a02e-92bd-4f9d-a091-8a6685ad64d7}</Project>
+      <Name>GameEngine.Pokemon</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GameEngineTest\GameEngineTest.csproj">
       <Project>{DDE2CFB0-6E45-6967-6E65-546573742E4C}</Project>
       <Name>GameEngineTest</Name>

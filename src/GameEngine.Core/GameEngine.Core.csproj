@@ -92,6 +92,10 @@
       <Project>{DDE2CFB0-6E45-6967-6E65-2E4755492E4C}</Project>
       <Name>GameEngine.GUI</Name>
     </ProjectReference>
+    <ProjectReference Include="..\GameEngine.Pokemon\GameEngine.Pokemon.csproj">
+      <Project>{6db8a02e-92bd-4f9d-a091-8a6685ad64d7}</Project>
+      <Name>GameEngine.Pokemon</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GameEngine.TypeRegistry\GameEngine.TypeRegistry.csproj">
       <Project>{73200884-85C6-4A3D-A3C2-A53D9C632613}</Project>
       <Name>GameEngine.TypeRegistry</Name>

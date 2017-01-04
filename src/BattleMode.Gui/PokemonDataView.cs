@@ -12,18 +12,17 @@ using ValueType = GameEngine.GUI.Panels.ValueType;
 
 namespace BattleMode.Core.Components.GraphicComponents
 {
-    // TODO come up with a better solution for this
 
-    public class PokemonDataView : AbstractGuiComponent
+    public abstract class PokemonDataView : AbstractGuiComponent
     {
         public event EventHandler HpUpdated;
 
-        public PokemonDataView(HpLine line, Label nameBox, Label levelBox, Label hpBox) :
+        protected PokemonDataView(HpLine line, Label nameBox, Label levelBox, Label hpBox) :
             this(line, nameBox, levelBox, hpBox, null)
         {
         }
 
-        public PokemonDataView(HpLine line, Label nameBox, Label levelBox, Label hpBox, HpText hpTextBox)
+        protected PokemonDataView(HpLine line, Label nameBox, Label levelBox, Label hpBox, HpText hpTextBox)
         {
             _container = new Grid();
 
@@ -91,11 +90,11 @@ namespace BattleMode.Core.Components.GraphicComponents
             }
         }
 
-        private readonly HpLine _hpLine;
-        private readonly HpText _hpText;
-        private readonly Label _name;
-        private readonly Label _lvl;
-        private readonly Grid _container;
+        protected readonly HpLine _hpLine;
+        protected readonly HpText _hpText;
+        protected readonly Label _name;
+        protected readonly Label _lvl;
+        protected readonly Grid _container;
 
 
         public void SetHp(int newHp)

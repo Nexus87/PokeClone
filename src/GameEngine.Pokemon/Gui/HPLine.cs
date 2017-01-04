@@ -4,6 +4,7 @@ using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Renderers;
 using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
+using GameEngine.Pokemon.Gui.Renderer;
 
 namespace GameEngine.GUI.Components
 {

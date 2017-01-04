@@ -9,6 +9,7 @@ using GameEngine.GUI.Components;
 using GameEngine.GUI.Loader;
 using GameEngine.GUI.Panels;
 using GameEngine.GUI.Renderers;
+using GameEngine.Pokemon.Gui.Renderer;
 using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework.Content;
 
@@ -48,9 +49,11 @@ namespace GameEngine.Core
             registry.ScanAssembly(Assembly.GetAssembly(typeof(IGuiComponent)));
             registry.ScanAssembly(Assembly.GetAssembly(typeof(IGameTypeRegistry)));
             registry.ScanAssembly(Assembly.GetAssembly(typeof(IGameEntity)));
+            registry.ScanAssembly(Assembly.GetAssembly(typeof(InitRenderers)));
 
             registry.RegisterType(r => new Panel(r.ResolveType<PanelRenderer>()) { BackgroundColor = r.ResolveType<ScreenConstants>().BackgroundColor});
 
+            InitRenderers.Init();
         }
 
         public void AddTextureConfigurations(TextureConfigurationBuilder builder)
