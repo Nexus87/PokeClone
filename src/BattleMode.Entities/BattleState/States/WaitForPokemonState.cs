@@ -28,7 +28,7 @@ namespace BattleMode.Entities.BattleState.States
                 .Where(id => NeedsPokemon(data, id))
                 .ToDictionary(id => id, id => (Pokemon)null);
 
-            IsDone = !data.Clients.Any();
+            IsDone = !_clients.Any();
         }
 
         public override void Update(BattleData data)
