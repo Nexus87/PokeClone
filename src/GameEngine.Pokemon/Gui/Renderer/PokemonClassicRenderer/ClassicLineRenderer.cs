@@ -1,10 +1,8 @@
 using GameEngine.Graphics.General;
 using GameEngine.Graphics.Textures;
-using GameEngine.GUI.Components;
-using GameEngine.Pokemon.Gui.Renderer;
 using Microsoft.Xna.Framework;
 
-namespace GameEngine.GUI.Renderers.PokemonClassicRenderer
+namespace GameEngine.Pokemon.Gui.Renderer.PokemonClassicRenderer
 {
     public class ClassicLineRenderer : HpLineRenderer
     {

@@ -6,7 +6,7 @@ using GameEngine.GUI.Controlls;
 using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
 
-namespace BattleMode.Core.Components.GraphicComponents
+namespace BattleMode.Graphic
 {
     [GameType]
     public class PokemonSprite : AbstractGuiComponent

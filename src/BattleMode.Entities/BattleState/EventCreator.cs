@@ -16,7 +16,7 @@ namespace BattleMode.Entities.BattleState
 
         public void SetHp(ClientIdentifier id, int hp)
         {
-            HPChanged(this, new HpChangedEventArgs(id, hp));
+            HpChanged(this, new HpChangedEventArgs(id, hp));
         }
 
         public void Effective(MoveEfficiency effect, PokemonWrapper target)
@@ -55,7 +55,7 @@ namespace BattleMode.Entities.BattleState
 
         public event EventHandler NewTurn = delegate { };
 
-        public event EventHandler<HpChangedEventArgs> HPChanged = delegate { };
+        public event EventHandler<HpChangedEventArgs> HpChanged = delegate { };
 
         public event EventHandler<ClientPokemonChangedEventArgs> PokemonChanged = delegate { };
 

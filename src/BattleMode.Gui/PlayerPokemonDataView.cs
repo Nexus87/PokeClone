@@ -1,6 +1,5 @@
 ﻿using BattleMode.Entities.BattleState;
 using GameEngine.Core;
-using GameEngine.GUI.Components;
 using GameEngine.GUI.Controlls;
 using GameEngine.GUI.Loader;
 using GameEngine.GUI.Panels;

@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Xml.Linq;
-using GameEngine.Core;
+using GameEngine.Globals;
 using Microsoft.Xna.Framework;
 
 namespace GameEngine.GUI.Loader

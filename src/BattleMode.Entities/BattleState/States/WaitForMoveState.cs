@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Base;
 using BattleMode.Entities.BattleState.Commands;
 using BattleMode.Shared;
 using GameEngine.Globals;
 using GameEngine.TypeRegistry;
 
-namespace BattleMode.Entities.BattleState
+namespace BattleMode.Entities.BattleState.States
 {
-    [GameService(typeof(WaitForActionState))]
-    public class WaitForActionState : IBattleState
+    [GameService(typeof(WaitForMoveState))]
+    public class WaitForMoveState : IBattleState
     {
-        private int _clientCnt;
         private readonly Dictionary<ClientIdentifier, ICommand> _commands = new Dictionary<ClientIdentifier, ICommand>();
-        public BattleStateComponent BattleState { get; set; }
+        public BattleStateEntity BattleState { get; set; }
 
         public BattleStates State => BattleStates.WaitForAction;
 
@@ -23,26 +23,23 @@ namespace BattleMode.Entities.BattleState
         {
             ValidateInput(id, pkmn, "pkmn");
             _commands[id] = new ChangeCommand(id, pkmn);
-            _clientCnt--;
         }
 
         public void SetItem(ClientIdentifier id, ClientIdentifier target, Item item)
         {
             ValidateInput(id, item, "item");
             _commands[id] = new ItemCommand(id, item);
-            _clientCnt--;
         }
 
         public void SetMove(ClientIdentifier id, ClientIdentifier target, Move move)
         {
             ValidateInput(id, move, "move");
             _commands[id] = new MoveCommand(id, target, move);
-            _clientCnt--;
         }
 
         public void Update(BattleData data)
         {
-            if (_clientCnt != 0)
+            if (_commands.Any(x => x.Value == null))
                 return;
 
             foreach (var c in _commands)
@@ -59,11 +56,9 @@ namespace BattleMode.Entities.BattleState
             IsDone = false;
             foreach (var c in data.Clients)
                 _commands[c] = null;
-
-            _clientCnt = _commands.Count;
         }
 
-        private void ValidateInput(ClientIdentifier id, Object obj, string varName)
+        private void ValidateInput(ClientIdentifier id, object obj, string varName)
         {
             if (!_commands.ContainsKey(id))
                 throw new InvalidOperationException("Id " + id.Name + " not found");

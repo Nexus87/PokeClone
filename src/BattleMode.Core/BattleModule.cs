@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using System.Reflection;
 using BattleMode.Core.Components;
-using BattleMode.Core.Components.GraphicComponents;
 using BattleMode.Entities.AI;
 using BattleMode.Entities.BattleState;
+using BattleMode.Graphic;
 using BattleMode.Gui;
 using BattleMode.Shared;
 using GameEngine.Core;

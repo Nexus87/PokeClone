@@ -4,6 +4,7 @@ using System.Linq;
 using BattleMode.Entities.BattleState;
 using BattleMode.Shared;
 using GameEngine.Core;
+using GameEngine.Globals;
 using GameEngine.GUI;
 using GameEngine.GUI.Components;
 using GameEngine.TypeRegistry;

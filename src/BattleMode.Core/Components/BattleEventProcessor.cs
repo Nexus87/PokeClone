@@ -1,6 +1,6 @@
 ﻿using System;
-using BattleMode.Core.Components.GraphicComponents;
 using BattleMode.Entities.BattleState;
+using BattleMode.Graphic;
 using BattleMode.Gui;
 using BattleMode.Shared;
 using GameEngine.Entities;
@@ -22,7 +22,7 @@ namespace BattleMode.Core.Components
             _queue = queue;
 
             events.CriticalDamage += CriticalDamageHandler;
-            events.HPChanged += HPChangedHandler;
+            events.HpChanged += HPChangedHandler;
             events.MoveEffective += MoveEffectiveHandler;
             events.MoveUsed += MoveUsedHandler;
             events.NewTurn += NewTurnHandler;

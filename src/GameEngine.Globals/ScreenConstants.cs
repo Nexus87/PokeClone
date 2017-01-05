@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace GameEngine.Core
+namespace GameEngine.Globals
 {
     public class ScreenConstants
     {

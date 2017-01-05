@@ -49,21 +49,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AI\AiEntity.cs" />
-    <Compile Include="BattleState\AbstractState.cs" />
     <Compile Include="BattleState\BattleData.cs" />
-    <Compile Include="BattleState\BattleStateComponent.cs" />
+    <Compile Include="BattleState\BattleStateEntity.cs" />
     <Compile Include="BattleState\BattleStates.cs" />
     <Compile Include="BattleState\ClientPokemonChangedEventArgs.cs" />
     <Compile Include="BattleState\ClientStatusChangedEventArgs.cs" />
+    <Compile Include="BattleState\CommandExecuter.cs" />
     <Compile Include="BattleState\Commands\ChangeCommand.cs" />
     <Compile Include="BattleState\Commands\ICommand.cs" />
     <Compile Include="BattleState\Commands\ItemCommand.cs" />
     <Compile Include="BattleState\Commands\MoveCommand.cs" />
     <Compile Include="BattleState\EventCreator.cs" />
-    <Compile Include="BattleState\ExecuteState.cs" />
     <Compile Include="BattleState\HPChangedEventArgs.cs" />
     <Compile Include="BattleState\IBattleEvents.cs" />
-    <Compile Include="BattleState\IBattleState.cs" />
     <Compile Include="BattleState\IBattleStateService.cs" />
     <Compile Include="BattleState\ICommandScheduler.cs" />
     <Compile Include="BattleState\IEventCreator.cs" />
@@ -73,9 +71,11 @@
     <Compile Include="BattleState\PokemonChangedEventArgs.cs" />
     <Compile Include="BattleState\PokemonWrapper.cs" />
     <Compile Include="BattleState\StateChangedEventArgs.cs" />
-    <Compile Include="BattleState\WaitForActionState.cs" />
-    <Compile Include="BattleState\WaitForCharState.cs" />
-    <Compile Include="CommandExecuter.cs" />
+    <Compile Include="BattleState\States\AbstractState.cs" />
+    <Compile Include="BattleState\States\ExecuteState.cs" />
+    <Compile Include="BattleState\States\IBattleState.cs" />
+    <Compile Include="BattleState\States\WaitForMoveState.cs" />
+    <Compile Include="BattleState\States\WaitForPokemonState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

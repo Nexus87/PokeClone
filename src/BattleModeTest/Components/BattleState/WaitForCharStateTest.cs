@@ -2,6 +2,7 @@
 using Base;
 using Base.Data;
 using BattleMode.Entities.BattleState;
+using BattleMode.Entities.BattleState.States;
 using BattleMode.Shared;
 using BattleModeTest.Utils;
 using FakeItEasy;
@@ -139,16 +140,16 @@ namespace BattleModeTest.Components.BattleState
             Assert.AreEqual(aiCharacter, _factory.GetAIPokemon());
         }
 
-        private static WaitForCharState CreateWaitForCharState(BattleData battleData)
+        private static WaitForPokemonState CreateWaitForCharState(BattleData battleData)
         {
             var state = CreateWaitForCharState();
             state.Init(battleData);
             return state;
         }
 
-        private static WaitForCharState CreateWaitForCharState()
+        private static WaitForPokemonState CreateWaitForCharState()
         {
-            return new WaitForCharState(A.Fake<IEventCreator>());
+            return new WaitForPokemonState(A.Fake<IEventCreator>());
         }
 
         private void SetNewPlayerCharacter(IBattleState state, Pokemon pokemon = null)

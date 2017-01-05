@@ -2,7 +2,7 @@
 using Base;
 using BattleMode.Shared;
 
-namespace BattleMode.Entities.BattleState
+namespace BattleMode.Entities.BattleState.States
 {
     public abstract class AbstractState : IBattleState
     {

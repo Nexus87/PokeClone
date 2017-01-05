@@ -1,5 +1,5 @@
 ﻿using FakeItEasy;
-using GameEngine.Core;
+using GameEngine.Globals;
 using GameEngineTest.TestUtils;
 using MainMode.Core;
 using MainMode.Core.Graphics;

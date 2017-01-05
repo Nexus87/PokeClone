@@ -1,10 +1,11 @@
 ﻿using System;
 using GameEngine.Graphics.General;
+using GameEngine.GUI;
+using GameEngine.Pokemon.Gui.Renderer;
 using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
-using GameEngine.Pokemon.Gui.Renderer;
 
-namespace GameEngine.GUI.Components
+namespace GameEngine.Pokemon.Gui
 {
     [GameType]
     public class HpLine : AbstractGuiComponent

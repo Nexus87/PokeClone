@@ -1,5 +1,5 @@
 ﻿using System.Xml.Linq;
-using GameEngine.Core;
+using GameEngine.Globals;
 using GameEngine.GUI.Controlls;
 using GameEngine.TypeRegistry;
 

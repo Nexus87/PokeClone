@@ -1,5 +1,4 @@
 ﻿using Base.Data;
-using BattleMode.Entities;
 using BattleMode.Entities.BattleState;
 using BattleMode.Entities.BattleState.Commands;
 using BattleMode.Shared;

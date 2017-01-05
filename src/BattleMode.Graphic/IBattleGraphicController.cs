@@ -4,7 +4,7 @@ using BattleMode.Entities.BattleState;
 using BattleMode.Shared;
 using GameEngine.GUI;
 
-namespace BattleMode.Core.Components.GraphicComponents
+namespace BattleMode.Graphic
 {
     public interface IBattleGraphicController : IGuiComponent
     {

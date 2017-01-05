@@ -1,5 +1,6 @@
 ﻿using System;
 using Base;
+using BattleMode.Entities.BattleState.States;
 using BattleMode.Shared;
 using GameEngine.Globals;
 using GameEngine.TypeRegistry;
@@ -8,7 +9,7 @@ using Microsoft.Xna.Framework;
 namespace BattleMode.Entities.BattleState
 {
     [GameService(typeof(IBattleStateService))]
-    public class BattleStateComponent : IBattleStateService
+    public class BattleStateEntity : IBattleStateService
     {
         private IBattleState _currentState;
 
@@ -16,10 +17,10 @@ namespace BattleMode.Entities.BattleState
 
         private readonly IEventCreator _eventCreator;
 
-        public BattleStateComponent(BattleData data, WaitForActionState actionState, WaitForCharState characterSetState, ExecuteState executionState, IEventCreator eventCreator) :
-            this(data, (IBattleState)actionState, characterSetState, executionState, eventCreator) { }
+        public BattleStateEntity(BattleData data, WaitForMoveState moveState, WaitForPokemonState characterSetState, ExecuteState executionState, IEventCreator eventCreator) :
+            this(data, (IBattleState)moveState, characterSetState, executionState, eventCreator) { }
         
-        internal BattleStateComponent(BattleData data, IBattleState actionState, IBattleState characterSetState, IBattleState executionState, IEventCreator eventCreator)
+        internal BattleStateEntity(BattleData data, IBattleState actionState, IBattleState characterSetState, IBattleState executionState, IEventCreator eventCreator)
         {
             actionState.CheckNull(nameof(actionState));
             characterSetState.CheckNull(nameof(characterSetState));

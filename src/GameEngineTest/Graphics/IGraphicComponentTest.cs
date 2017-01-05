@@ -2,7 +2,6 @@
 using NUnit.Framework;
 using System.Collections.Generic;
 using FakeItEasy;
-using GameEngine.Graphics.General;
 using GameEngine.Graphics.Textures;
 using GameEngine.GUI;
 

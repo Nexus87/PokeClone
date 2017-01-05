@@ -1,5 +1,5 @@
 ﻿using System;
-using GameEngine.Core;
+using GameEngine.Globals;
 using GameEngine.Graphics.General;
 using GameEngine.GUI;
 using GameEngine.TypeRegistry;

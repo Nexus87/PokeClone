@@ -6,17 +6,16 @@ using Base.Data;
 using BattleMode.Shared;
 using GameEngine.TypeRegistry;
 
-namespace BattleMode.Entities.BattleState
+namespace BattleMode.Entities.BattleState.States
 {
-    [GameService(typeof(WaitForCharState))]
-    public class WaitForCharState : AbstractState
+    [GameService(typeof(WaitForPokemonState))]
+    public class WaitForPokemonState : AbstractState
     {
         private readonly IEventCreator _eventCreator;
 
-        private int _clientsLeft;
         private Dictionary<ClientIdentifier, Pokemon> _clients = new Dictionary<ClientIdentifier, Pokemon>();
 
-        public WaitForCharState(IEventCreator eventCreator)
+        public WaitForPokemonState(IEventCreator eventCreator)
         {
             _eventCreator = eventCreator;
         }
@@ -25,20 +24,16 @@ namespace BattleMode.Entities.BattleState
 
         public override void Init(BattleData data)
         {
-            IsDone = false;
-
             _clients = data.Clients
                 .Where(id => NeedsPokemon(data, id))
                 .ToDictionary(id => id, id => (Pokemon)null);
 
-            _clientsLeft = _clients.Count;
-
-            IsDone = (_clientsLeft == 0);
+            IsDone = !data.Clients.Any();
         }
 
         public override void Update(BattleData data)
         {
-            if (_clientsLeft != 0)
+            if (_clients.Any(x => x.Value == null))
                 return;
 
             foreach (var c in _clients)
@@ -60,10 +55,9 @@ namespace BattleMode.Entities.BattleState
                 throw new InvalidOperationException("ClientIdentifer " + id.Name + " has already set its char");
 
             _clients[id] = pkmn;
-            _clientsLeft--;
         }
 
-        private bool NeedsPokemon(BattleData data, ClientIdentifier id)
+        private static bool NeedsPokemon(BattleData data, ClientIdentifier id)
         {
             var pkmn = data.GetPokemon(id);
             return pkmn.Pokemon == null || pkmn.Condition == StatusCondition.KO;

@@ -14,7 +14,7 @@ namespace BattleModeTest.Components
         public event EventHandler CriticalDamage;
         public event EventHandler<MoveEffectiveEventArgs> MoveEffective;
         public event EventHandler NewTurn;
-        public event EventHandler<HpChangedEventArgs> HPChanged;
+        public event EventHandler<HpChangedEventArgs> HpChanged;
         public event EventHandler<ClientPokemonChangedEventArgs> PokemonChanged;
         public event EventHandler<ClientStatusChangedEventArgs> StatusChanged;
         public event EventHandler<MoveUsedEventArgs> MoveUsed;
@@ -41,7 +41,7 @@ namespace BattleModeTest.Components
 
         public void RaiseHpChangedEvent(int hp = 10)
         {
-            HPChanged?.Invoke(this, new HpChangedEventArgs(_id, hp));
+            HpChanged?.Invoke(this, new HpChangedEventArgs(_id, hp));
         }
 
         public void RaisePokemonChangedEvent()

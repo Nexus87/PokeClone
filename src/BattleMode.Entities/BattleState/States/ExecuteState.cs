@@ -3,24 +3,21 @@ using System.Linq;
 using BattleMode.Entities.BattleState.Commands;
 using GameEngine.TypeRegistry;
 
-namespace BattleMode.Entities.BattleState
+namespace BattleMode.Entities.BattleState.States
 {
     [GameService(typeof(ExecuteState))]
     public class ExecuteState : AbstractState
     {
-        private readonly ICommandScheduler scheduler;
-        private readonly CommandExecuter executer;
+        private readonly ICommandScheduler _scheduler;
+        private readonly CommandExecuter _executer;
 
         public ExecuteState(ICommandScheduler scheduler, CommandExecuter executer)
         {
-            this.scheduler = scheduler;
-            this.executer = executer;
+            _scheduler = scheduler;
+            _executer = executer;
         }
 
-        public override BattleStates State
-        {
-            get { return BattleStates.Execute; }
-        }
+        public override BattleStates State => BattleStates.Execute;
 
         public override void Init(BattleData data)
         {
@@ -29,10 +26,10 @@ namespace BattleMode.Entities.BattleState
 
         public override void Update(BattleData data)
         {
-            executer.Data = data;
+            _executer.Data = data;
 
             var commands = ScheduleCommands(data);
-            commands.ForEach(c => c.Execute(executer));
+            commands.ForEach(c => c.Execute(_executer));
 
             data.ClearCommands();
             IsDone = true;
@@ -40,9 +37,9 @@ namespace BattleMode.Entities.BattleState
 
         private List<ICommand> ScheduleCommands(BattleData data)
         {
-            scheduler.ClearCommands();
-            scheduler.AppendCommands(data.Commands);
-            return scheduler.ScheduleCommands().ToList();
+            _scheduler.ClearCommands();
+            _scheduler.AppendCommands(data.Commands);
+            return _scheduler.ScheduleCommands().ToList();
         }
     }
 }

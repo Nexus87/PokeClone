@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Xml.Linq;
-using GameEngine.Core;
+using GameEngine.Globals;
 using GameEngine.GUI.Loader.ControllBuilder;
 using GameEngine.GUI.Loader.PanelBuilder;
 using GameEngine.TypeRegistry;

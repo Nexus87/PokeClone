@@ -1,9 +1,7 @@
 ﻿using Base;
-using BattleMode.Shared;
 using GameEngine.Core;
 using GameEngine.Graphics.General;
 using GameEngine.GUI;
-using GameEngine.GUI.Components;
 using GameEngine.GUI.Controlls;
 using GameEngine.GUI.Panels;
 using GameEngine.Pokemon.Gui;

@@ -1,12 +1,11 @@
 ﻿using System;
 using Base;
 using Base.Rules;
-using BattleMode.Entities.BattleState;
 using BattleMode.Entities.BattleState.Commands;
 using BattleMode.Shared;
 using GameEngine.TypeRegistry;
 
-namespace BattleMode.Entities
+namespace BattleMode.Entities.BattleState
 {
     [GameType]
     public class CommandExecuter

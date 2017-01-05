@@ -1,4 +1,5 @@
 ﻿using BattleMode.Entities.BattleState;
+using BattleMode.Entities.BattleState.States;
 using FakeItEasy;
 using GameEngineTest.TestUtils;
 using NUnit.Framework;
@@ -141,7 +142,7 @@ namespace BattleModeTest.Components.BattleState
             return mock;
         }
 
-        private static BattleStateComponent CreateStateComponent(IBattleState waitForChar = null, IBattleState waitForAction = null, IBattleState execute = null, IEventCreator creator = null)
+        private static BattleStateEntity CreateStateComponent(IBattleState waitForChar = null, IBattleState waitForAction = null, IBattleState execute = null, IEventCreator creator = null)
         {
             if (waitForChar == null)
                 waitForChar = CreateStateMock(BattleStates.WaitForPokemon);
@@ -152,7 +153,7 @@ namespace BattleModeTest.Components.BattleState
             if(creator == null)
                 creator = A.Fake<IEventCreator>();
 
-            var state = new BattleStateComponent(new BattleData(), waitForAction, waitForChar, execute, creator);
+            var state = new BattleStateEntity(new BattleData(), waitForAction, waitForChar, execute, creator);
             state.Initialize();
             return state;
         }
