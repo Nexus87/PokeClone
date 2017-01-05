@@ -1,5 +1,4 @@
 ﻿using System;
-using BattleMode.Core.Components.GraphicComponents;
 using BattleMode.Entities.BattleState;
 using GameEngine.Core;
 using GameEngine.GUI.Components;
@@ -14,10 +13,13 @@ namespace BattleMode.Gui
     public class AiPokemonDataView : IPokemonDataView
     {
         private readonly GuiManager _guiManager;
+#pragma warning disable 649
         [GuiLoaderId("Window")] private Grid _grid;
         [GuiLoaderId("HpLine")] private HpLine _hpLine;
         [GuiLoaderId("LevelLabel")] private Label _lvl;
         [GuiLoaderId("Name")] private Label _name;
+#pragma warning restore 649
+
 
         public AiPokemonDataView(GuiManager _guiManager)
         {

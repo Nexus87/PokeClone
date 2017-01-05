@@ -31,7 +31,7 @@ namespace GameEngine.GUI.Loader.PanelBuilder
                 grid.AddAllRows(
                     rowDefinitions
                         .Elements("RowDefinition")
-                        .Select(ReadProperty)
+                        .Select(x => ReadProperty(x, "Height"))
                         .Select(x => new RowProperty {Type = x.Item1, Share = x.Item2, Height = x.Item3})
                 );
             }
@@ -41,7 +41,7 @@ namespace GameEngine.GUI.Loader.PanelBuilder
                 grid.AddAllColumns(
                     columnDefinitions
                         .Elements("ColumnDefinition")
-                        .Select(ReadProperty)
+                        .Select(x => ReadProperty(x, "Width"))
                         .Select(x => new ColumnProperty {Type = x.Item1, Share = x.Item2, Width = x.Item3})
                 );
             }
@@ -69,9 +69,9 @@ namespace GameEngine.GUI.Loader.PanelBuilder
         }
 
 
-        private static Tuple<ValueType, int, float> ReadProperty(XElement arg)
+        private static Tuple<ValueType, int, float> ReadProperty(XElement arg, string propertyName)
         {
-            var attribute = arg.Attribute("Height");
+            var attribute = arg.Attribute(propertyName);
 
             if (attribute == null)
                 return Tuple.Create(ValueType.Percent, 1, 0f);

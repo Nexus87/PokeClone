@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Base.Data;
+using BattleMode.Core.Components.GraphicComponents;
 using BattleMode.Entities.BattleState;
 using BattleMode.Gui;
 using BattleMode.Shared;
@@ -11,7 +12,7 @@ using GameEngine.GUI;
 using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
 
-namespace BattleMode.Core.Components.GraphicComponents
+namespace BattleMode.Graphic
 {
     [GameService(typeof(IBattleGraphicController))]
     public class BattleGraphicController : AbstractGuiComponent, IBattleGraphicController
@@ -43,7 +44,7 @@ namespace BattleMode.Core.Components.GraphicComponents
                 view.Show();
 
             initAIGraphic(aiSprite, screen);
-            initPlayerGraphic(playerView, playerSprite, screen);
+            initPlayerGraphic(playerSprite, screen);
         }
 
         public event EventHandler ConditionSet
@@ -94,21 +95,13 @@ namespace BattleMode.Core.Components.GraphicComponents
             aiSprite.SetCoordinates(xPosition, yPosition, width, height);
         }
 
-        private void initPlayerGraphic(PokemonDataView playerView, PokemonSprite playerSprite, ScreenConstants screen)
+        private void initPlayerGraphic(PokemonSprite playerSprite, ScreenConstants screen)
         {
-            var xPosition = screen.ScreenWidth * 0.55f;
-            var yPosition = screen.ScreenHeight * 0.45f;
+            var xPosition = screen.ScreenWidth * 0.2f;
+            var yPosition = screen.ScreenHeight * 0.4f;
 
-            var height = screen.ScreenHeight * 0.15f;
-            var width = screen.ScreenWidth * 0.15f;
-
-            playerView.Container.SetCoordinates(xPosition, yPosition, width, height);
-
-            xPosition = screen.ScreenWidth * 0.2f;
-            yPosition = screen.ScreenHeight * 0.4f;
-
-            height = screen.ScreenHeight * 0.25f;
-            width = screen.ScreenHeight * 0.25f;
+            var height = screen.ScreenHeight * 0.25f;
+            var width = screen.ScreenHeight * 0.25f;
 
             playerSprite.SetCoordinates(xPosition, yPosition, width, height);
         }

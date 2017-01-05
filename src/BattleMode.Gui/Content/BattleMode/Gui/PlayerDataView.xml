@@ -1,4 +1,4 @@
-<Grid id="Window" X="0.2*" Y="0.1*" Width="250" Height="0.1*">
+<Grid id="Window" X="0.55*" Y="0.45*" Width="250" Height="0.15*">
     <Grid.RowDefinitions>
         <RowDefinition Height="Auto"/>
         <RowDefinition Height="15"/>
@@ -15,6 +15,8 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="10"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -28,5 +30,9 @@
 
         <Label Text="hp:" Grid.Column="0" Grid.Row="2" TextHeight="18"/>
         <HpLine id="HpLine" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2"/>
+
+        <Spacer Grid.Row="3" Grid.ColumnSpan="3" />
+
+        <HpText id="HpText" TextHeight="24" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2"/>
     </Grid>
 </Grid>
