@@ -1,7 +1,5 @@
 ﻿using System;
 using GameEngine.Graphics.General;
-using GameEngine.GUI.Graphics;
-using GameEngine.GUI.Renderers;
 using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
 using GameEngine.Pokemon.Gui.Renderer;
@@ -22,8 +20,6 @@ namespace GameEngine.GUI.Components
         {
             _renderer = renderer;
         }
-
-        public event EventHandler AnimationDone = delegate { };
 
         public int Current { 
             get { return _currentHp; }
@@ -51,16 +47,6 @@ namespace GameEngine.GUI.Components
 
         public Color Color { get; set; }
 
-        public void AnimationSetHp(int newHp)
-        {
-            if (newHp < 0 || newHp > _maxHp)
-                throw new ArgumentOutOfRangeException(nameof(newHp));
-
-            var animation = new HpResizeAnimation(newHp, this);
-            animation.AnimationFinished += animation_AnimationFinished;
-            PlayAnimation(animation);
-        }
-
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)
         {
             _renderer.Render(batch, this);
@@ -80,13 +66,6 @@ namespace GameEngine.GUI.Components
                 Color = Color.Yellow;
             else
                 Color = Color.Red;
-        }
-
-        private void animation_AnimationFinished(object sender, EventArgs e)
-        {
-            var animation = (IAnimation)sender;
-            animation.AnimationFinished -= animation_AnimationFinished;
-            AnimationDone(this, null);
         }
     }
 }

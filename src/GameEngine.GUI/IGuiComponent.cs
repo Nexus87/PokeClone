@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using GameEngine.Globals;
 using GameEngine.Graphics.General;
-using GameEngine.GUI.Graphics;
 using Microsoft.Xna.Framework;
 
 namespace GameEngine.GUI
@@ -24,12 +23,6 @@ namespace GameEngine.GUI
     public interface IGuiComponent : IInputHandler
     {
         event EventHandler<ComponentSelectedEventArgs> ComponentSelected;
-
-        /// <summary>
-        /// Play the given animation
-        /// </summary>
-        /// <param name="animation">Animation to play</param>
-        void PlayAnimation(IAnimation animation);
 
         event EventHandler<GraphicComponentSizeChangedEventArgs> PreferredSizeChanged;
 

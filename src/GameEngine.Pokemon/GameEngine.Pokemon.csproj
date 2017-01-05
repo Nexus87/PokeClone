@@ -55,7 +55,6 @@
     <Compile Include="Gui\Builder\HpLineBuilder.cs" />
     <Compile Include="Gui\Builder\HpTextBuilder.cs" />
     <Compile Include="Gui\HPLine.cs" />
-    <Compile Include="Gui\HPResizeAnimation.cs" />
     <Compile Include="Gui\HPText.cs" />
     <Compile Include="Gui\Renderer\HpLineRenderer.cs" />
     <Compile Include="Gui\Renderer\HpTextRenderer.cs" />

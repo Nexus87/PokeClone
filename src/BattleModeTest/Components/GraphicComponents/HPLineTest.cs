@@ -31,32 +31,6 @@ namespace BattleModeTest.Components.GraphicComponents
             new TestCaseData(0),
         };
 
-        [TestCaseSource(nameof(HpTestData))]
-        public void AnimationSetHP_WaitTillAnimationFinished_CurrentHPIsAsExpected(int hp)
-        {
-            var animationDone = false;
-            var line = CreateLine();
-            line.SetCoordinates(0, 0, 300, 300);
-            line.AnimationDone += delegate { animationDone = true; };
-            
-            line.AnimationSetHp(hp);
-
-            while (!animationDone)
-                line.Draw();
-
-            Assert.AreEqual(hp, line.Current);
-        }
-
-        [TestCase(110)]
-        [TestCase(-10)]
-        public void AnimationSetHP_SetInvalidData_ThrowsException(int hp)
-        {
-            var line = CreateLine();
-            line.SetCoordinates(0, 0, 300, 300);
-
-            Assert.Throws<ArgumentOutOfRangeException>(() => line.AnimationSetHp(hp));
-        }
-
         public static List<TestCaseData> HpColorTestData = new List<TestCaseData>
         {
             new TestCaseData(100, Color.Green),

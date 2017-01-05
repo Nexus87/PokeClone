@@ -77,7 +77,6 @@
     <Compile Include="Diagnostic\DebugRectangle.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="GraphicComponentSizeChangedEventArgs.cs" />
-    <Compile Include="Graphics\IAnimation.cs" />
     <Compile Include="IGuiComponent.cs" />
     <Compile Include="INode.cs" />
     <Compile Include="ISkin.cs" />
@@ -169,6 +168,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Graphics" />
     <Folder Include="Loader\ControllBuilder\" />
   </ItemGroup>
   <ItemGroup />

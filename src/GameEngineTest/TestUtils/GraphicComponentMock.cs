@@ -5,7 +5,6 @@ using GameEngine.Core;
 using GameEngine.Globals;
 using GameEngine.Graphics.General;
 using GameEngine.GUI;
-using GameEngine.GUI.Graphics;
 
 namespace GameEngineTest.TestUtils
 {
@@ -16,11 +15,6 @@ namespace GameEngineTest.TestUtils
         public int Column { get; set; }
 
         public IEngineInterface Game { get; set; }
-
-        public void PlayAnimation(IAnimation animation)
-        {
-            throw new NotImplementedException();
-        }
 
         public event EventHandler<GraphicComponentSizeChangedEventArgs> PreferredSizeChanged;
 
