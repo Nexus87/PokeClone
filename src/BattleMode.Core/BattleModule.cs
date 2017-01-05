@@ -37,6 +37,10 @@ namespace BattleMode.Core
         {
         }
 
+        public void AddBuilderAndRenderer()
+        {
+        }
+
         public void Start(IGameComponentManager componentManager, IInputHandlerManager inputHandlerManager, IGameTypeRegistry registry)
         {
             var data = registry.ResolveType<BattleData>();

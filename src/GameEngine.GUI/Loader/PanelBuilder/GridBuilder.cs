@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using GameEngine.Core;
@@ -47,7 +46,26 @@ namespace GameEngine.GUI.Loader.PanelBuilder
                 );
             }
 
+            var contentElements = xElement.Elements()
+                .Where(x => x.Name.LocalName != "Grid.RowDefinitions")
+                .Where(x => x.Name.LocalName != "Grid.ColumnDefinitions");
+            foreach (var content in contentElements)
+            {
+                AddContent(grid, content, controller);
+            }
             return grid;
+        }
+
+        private static void AddContent(Grid grid, XElement content, object controller)
+        {
+            var row = content.Attribute("Grid.Row")?.Value ?? "0";
+            var column = content.Attribute("Grid.Column")?.Value ?? "0";
+            var rowSpan = content.Attribute("Grid.RowSpan")?.Value ?? "1";
+            var columnSpan = content.Attribute("Grid.ColumnSpan")?.Value ?? "1";
+
+            var component = GuiLoader.Builders[content.Name.LocalName].Build(content, controller);
+
+            grid.SetComponent(component, int.Parse(row), int.Parse(column), int.Parse(rowSpan), int.Parse(columnSpan));
         }
 
 

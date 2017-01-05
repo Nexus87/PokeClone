@@ -50,5 +50,9 @@ namespace MainMode.Core
         {
             throw new System.NotImplementedException();
         }
+
+        public void AddBuilderAndRenderer()
+        {
+        }
     }
 }

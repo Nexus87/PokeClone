@@ -49,14 +49,16 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Gui\Builder\HpLineBuilder.cs" />
+    <Compile Include="Gui\Builder\HpTextBuilder.cs" />
     <Compile Include="Gui\HPLine.cs" />
     <Compile Include="Gui\HPResizeAnimation.cs" />
     <Compile Include="Gui\HPText.cs" />
     <Compile Include="Gui\Renderer\HpLineRenderer.cs" />
     <Compile Include="Gui\Renderer\HpTextRenderer.cs" />
-    <Compile Include="Gui\Renderer\InitRenderers.cs" />
     <Compile Include="Gui\Renderer\PokemonClassicRenderer\ClassicHpTextRenderer.cs" />
     <Compile Include="Gui\Renderer\PokemonClassicRenderer\ClassicLineRenderer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -30,5 +30,9 @@ namespace PokemonGame
         {
             throw new NotImplementedException();
         }
+
+        public void AddBuilderAndRenderer()
+        {
+        }
     }
 }

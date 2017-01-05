@@ -27,6 +27,13 @@ namespace GameEngine.Core.ModuleManager
             }
         }
 
+        public void AddBuilderAndRenderer()
+        {
+            foreach (var module in _registeredModules.Values)
+            {
+                module.AddBuilderAndRenderer();
+            }
+        }
         public void RegisterTypes()
         {
             foreach (var modules in _registeredModules.Values)

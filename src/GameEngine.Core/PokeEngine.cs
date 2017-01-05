@@ -1,5 +1,4 @@
 ﻿using GameEngine.Core.ModuleManager;
-using GameEngine.Graphics;
 using GameEngine.Graphics.Textures;
 using GameEngine.GUI;
 
@@ -45,12 +44,18 @@ namespace GameEngine.Core
         {
             BuildTextureConfiguration();
             RegisterModuleTypes();
+            AddBuilderAndRenderer();
 
+        }
+
+        private void AddBuilderAndRenderer()
+        {
         }
 
         private void RegisterModuleTypes()
         {
             _moduleRegistry.RegisterTypes();
+            _moduleRegistry.AddBuilderAndRenderer();
             _skin.RegisterRenderers(_moduleRegistry.TypeRegistry, _textureProvider);
         }
 

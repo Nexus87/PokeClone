@@ -9,7 +9,10 @@ using GameEngine.GUI.Components;
 using GameEngine.GUI.Loader;
 using GameEngine.GUI.Panels;
 using GameEngine.GUI.Renderers;
+using GameEngine.GUI.Renderers.PokemonClassicRenderer;
+using GameEngine.Pokemon.Gui.Builder;
 using GameEngine.Pokemon.Gui.Renderer;
+using GameEngine.Pokemon.Gui.Renderer.PokemonClassicRenderer;
 using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework.Content;
 
@@ -49,11 +52,10 @@ namespace GameEngine.Core
             registry.ScanAssembly(Assembly.GetAssembly(typeof(IGuiComponent)));
             registry.ScanAssembly(Assembly.GetAssembly(typeof(IGameTypeRegistry)));
             registry.ScanAssembly(Assembly.GetAssembly(typeof(IGameEntity)));
-            registry.ScanAssembly(Assembly.GetAssembly(typeof(InitRenderers)));
+            registry.ScanAssembly(Assembly.GetAssembly(typeof(HpLine)));
 
             registry.RegisterType(r => new Panel(r.ResolveType<PanelRenderer>()) { BackgroundColor = r.ResolveType<ScreenConstants>().BackgroundColor});
 
-            InitRenderers.Init();
         }
 
         public void AddTextureConfigurations(TextureConfigurationBuilder builder)
@@ -65,6 +67,19 @@ namespace GameEngine.Core
             };
 
             builder.AddTextureConfig(Key, textures);
+        }
+
+        public void AddBuilderAndRenderer()
+        {
+            ClassicSkin.AddAdditionalRenderer<ClassicLineRenderer, HpLineRenderer>(
+                t => new ClassicLineRenderer(t.GetTexture(ClassicSkin.Key, ClassicSkin.Circle), t.Pixel, ClassicSkin.BackgroundColor)
+            );
+            ClassicSkin.AddAdditionalRenderer<ClassicHpTextRenderer, HpTextRenderer>(
+                t => new ClassicHpTextRenderer(t.GetFont(ClassicSkin.Key, ClassicSkin.DefaultFont))
+            );
+
+            GuiLoader.AddBuilder("HpLine", (r, c) => new HpLineBuilder(r, c));
+            GuiLoader.AddBuilder("HpText", (r, c) => new HpTextBuilder(r, c));
         }
 
         public static string Name => "GameEngine";

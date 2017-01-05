@@ -37,5 +37,9 @@ namespace GameEngineTest.Registry
         {
             throw new NotImplementedException();
         }
+
+        public void AddBuilderAndRenderer()
+        {
+        }
     }
 }
