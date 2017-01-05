@@ -16,7 +16,7 @@ namespace BattleMode.Core.Components.GraphicComponents
     [GameService(typeof(IBattleGraphicController))]
     public class BattleGraphicController : AbstractGuiComponent, IBattleGraphicController
     {
-        private readonly Dictionary<ClientIdentifier, PokemonDataView> _dataViews = new Dictionary<ClientIdentifier, PokemonDataView>();
+        private readonly Dictionary<ClientIdentifier, IPokemonDataView> _dataViews = new Dictionary<ClientIdentifier, IPokemonDataView>();
         private readonly Dictionary<ClientIdentifier, PokemonSprite> _sprites = new Dictionary<ClientIdentifier, PokemonSprite>();
 
         public BattleGraphicController(ScreenConstants screen, 
@@ -36,13 +36,13 @@ namespace BattleMode.Core.Components.GraphicComponents
             _sprites[player] = playerSprite;
             _sprites[ai] = aiSprite;
 
-            foreach (var view in _dataViews.Values)
-                view.HpUpdated += delegate { HpSet?.Invoke(this, null); };
-
             foreach (var sprite in _sprites.Values)
                 sprite.OnPokemonAppeared += delegate { PokemonSet?.Invoke(this, null); };
 
-            initAIGraphic(aiView, aiSprite, screen);
+            foreach(var view in _dataViews.Values)
+                view.Show();
+
+            initAIGraphic(aiSprite, screen);
             initPlayerGraphic(playerView, playerSprite, screen);
         }
 
@@ -63,6 +63,7 @@ namespace BattleMode.Core.Components.GraphicComponents
         public void SetHp(ClientIdentifier id, int value)
         {
             _dataViews[id].SetHp(value);
+            HpSet?.Invoke(this, EventArgs.Empty);
         }
 
         public void SetPokemon(ClientIdentifier id, PokemonWrapper pokemon)
@@ -78,29 +79,17 @@ namespace BattleMode.Core.Components.GraphicComponents
 
         protected override void DrawComponent(GameTime time, ISpriteBatch batch)
         {
-            foreach (var view in _dataViews.Values)
-                view.Draw(time, batch);
-
             foreach (var sprite in _sprites.Values)
                 sprite.Draw(time, batch);
         }
 
-        private void initAIGraphic(PokemonDataView aiView, PokemonSprite aiSprite, ScreenConstants screen)
+        private void initAIGraphic(PokemonSprite aiSprite, ScreenConstants screen)
         {
-
-            var xPosition = screen.ScreenWidth * 0.2f;
+            var xPosition = screen.ScreenWidth * 0.6f;
             var yPosition = screen.ScreenHeight * 0.1f;
 
-            var height = screen.ScreenHeight * 0.1f;
-            var width = screen.ScreenWidth * 0.15f;
-
-            aiView.SetCoordinates(xPosition, yPosition, width, height);
-
-            xPosition = screen.ScreenWidth * 0.6f;
-            yPosition = screen.ScreenHeight * 0.1f;
-
-            height = screen.ScreenHeight * 0.25f;
-            width = screen.ScreenHeight * 0.25f;
+            var height = screen.ScreenHeight * 0.25f;
+            var width = screen.ScreenHeight * 0.25f;
 
             aiSprite.SetCoordinates(xPosition, yPosition, width, height);
         }
@@ -113,7 +102,7 @@ namespace BattleMode.Core.Components.GraphicComponents
             var height = screen.ScreenHeight * 0.15f;
             var width = screen.ScreenWidth * 0.15f;
 
-            playerView.SetCoordinates(xPosition, yPosition, width, height);
+            playerView.Container.SetCoordinates(xPosition, yPosition, width, height);
 
             xPosition = screen.ScreenWidth * 0.2f;
             yPosition = screen.ScreenHeight * 0.4f;

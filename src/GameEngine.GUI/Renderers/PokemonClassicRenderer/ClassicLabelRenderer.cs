@@ -15,18 +15,18 @@ namespace GameEngine.GUI.Renderers.PokemonClassicRenderer
 
         protected override void RenderComponent(ISpriteBatch spriteBatch, Label label)
         {
-            RenderText(spriteBatch, _font, label.Text, label.Area, label.TextSize);
+            RenderText(spriteBatch, _font, label.Text, label.Area, label.TextHeight);
         }
 
         public override float GetPreferedWidth(Label label)
         {
-            var scale = label.TextSize / _font.MeasureString(" ").Y;
+            var scale = label.TextHeight / _font.MeasureString(" ").Y;
             return scale * _font.MeasureString(label.Text).X;
         }
 
         public override float GetPreferedHeight(Label label)
         {
-            return label.TextSize;
+            return label.TextHeight;
         }
     }
 }

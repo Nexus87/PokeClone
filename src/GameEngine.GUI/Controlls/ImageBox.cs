@@ -1,6 +1,5 @@
 ﻿using GameEngine.Graphics.General;
 using GameEngine.Graphics.Textures;
-using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Renderers;
 using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
@@ -8,7 +7,7 @@ using Microsoft.Xna.Framework;
 namespace GameEngine.GUI.Controlls
 {
     [GameType]
-    public class ImageBox : AbstractGuiComponent, IImageBox
+    public class ImageBox : AbstractGuiComponent
     {
         private readonly ImageBoxRenderer _renderer;
         private ITexture2D _image;

@@ -71,7 +71,7 @@ namespace BattleMode.Gui
             var dataContainer = new Grid();
 
             _hpLabel.Text = "HP:";
-            _hpLabel.TextSize = 24;
+            _hpLabel.TextHeight = 24;
 
             hpLineContainer.AddPercentRow();
             hpLineContainer.AddAutoColumn();

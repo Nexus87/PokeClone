@@ -10,7 +10,7 @@ namespace GameEngine.GUI.Controlls
     {
         private readonly LabelRenderer _renderer;
         private string _text;
-        private float _textSize = 32;
+        private float _textHeight = 32;
 
         public Label(LabelRenderer renderer)
         {
@@ -29,12 +29,12 @@ namespace GameEngine.GUI.Controlls
             }
         }
 
-        public float TextSize
+        public float TextHeight
         {
-            get { return _textSize; }
+            get { return _textHeight; }
             set
             {
-                _textSize = value;
+                _textHeight = value;
                 Invalidate();
             }
         }

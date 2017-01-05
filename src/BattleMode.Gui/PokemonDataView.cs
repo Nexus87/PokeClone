@@ -1,33 +1,36 @@
-﻿using System;
-using BattleMode.Entities.BattleState;
-using GameEngine.Graphics.General;
+﻿using BattleMode.Entities.BattleState;
+using GameEngine.Core;
 using GameEngine.GUI;
 using GameEngine.GUI.Components;
 using GameEngine.GUI.Controlls;
 using GameEngine.GUI.Graphics;
 using GameEngine.GUI.Panels;
 using GameEngine.Pokemon.Gui;
-using Microsoft.Xna.Framework;
 using ValueType = GameEngine.GUI.Panels.ValueType;
 
 namespace BattleMode.Core.Components.GraphicComponents
 {
-
-    public abstract class PokemonDataView : AbstractGuiComponent
+    public interface IPokemonDataView
     {
-        public event EventHandler HpUpdated;
+        void SetHp(int newHp);
+        void SetPokemon(PokemonWrapper pokemon);
+        void Show();
+    }
 
-        protected PokemonDataView(HpLine line, Label nameBox, Label levelBox, Label hpBox) :
-            this(line, nameBox, levelBox, hpBox, null)
+    public abstract class PokemonDataView : IPokemonDataView
+    {
+        protected PokemonDataView(HpLine line, Label nameBox, Label levelBox, Label hpBox, GuiManager guiManager) :
+            this(line, nameBox, levelBox, hpBox, null, guiManager)
         {
         }
 
-        protected PokemonDataView(HpLine line, Label nameBox, Label levelBox, Label hpBox, HpText hpTextBox)
+        protected PokemonDataView(HpLine line, Label nameBox, Label levelBox, Label hpBox, HpText hpTextBox, GuiManager guiManager)
         {
-            _container = new Grid();
+            Container = new Grid();
 
             _hpLine = line;
             _lvl = levelBox;
+            _guiManager = guiManager;
             _name = nameBox;
 
             var lvlContainer = new Grid();
@@ -36,12 +39,12 @@ namespace BattleMode.Core.Components.GraphicComponents
             lvlContainer.AddColumn(new ColumnProperty {Type = ValueType.Auto,});
             lvlContainer.AddColumn(new ColumnProperty {Type = ValueType.Percent, Share = 1});
 
-            _lvl.TextSize = 24.0f;
+            _lvl.TextHeight = 24.0f;
 
-            lvlContainer.SetComponent(new NullGuiObject(), 0, 0);
+            lvlContainer.SetComponent(new Spacer(), 0, 0);
             lvlContainer.SetComponent(_lvl, 0, 1);
-            lvlContainer.SetComponent(new NullGuiObject(), 0, 2);
-            lvlContainer.SetCoordinates(0, 0, 0, _lvl.TextSize);
+            lvlContainer.SetComponent(new Spacer(), 0, 2);
+            lvlContainer.SetCoordinates(0, 0, 0, _lvl.TextHeight);
 
 
 
@@ -51,24 +54,24 @@ namespace BattleMode.Core.Components.GraphicComponents
             hpLineContainer.AddColumn(new ColumnProperty{Type = ValueType.Percent, Share = 1});
 
             hpBox.Text = "hp:";
-            hpBox.TextSize = 24.0f;
+            hpBox.TextHeight = 24.0f;
 
             hpLineContainer.SetComponent(hpBox, 0, 0);
             hpLineContainer.SetComponent(_hpLine, 0, 1);
 
 
-            _container.AddPercentColumn();
-            _container.AddPercentRow();
-            _container.AddAbsoluteRow(10f);
-            _container.AddAbsoluteRow(_lvl.TextSize);
-            _container.AddAbsoluteRow(10f);
-            _container.AddAbsoluteRow(hpBox.TextSize);
+            Container.AddPercentColumn();
+            Container.AddPercentRow();
+            Container.AddAbsoluteRow(10f);
+            Container.AddAbsoluteRow(_lvl.TextHeight);
+            Container.AddAbsoluteRow(10f);
+            Container.AddAbsoluteRow(hpBox.TextHeight);
 
-            _container.SetComponent(_name, 0, 0);
-            _container.SetComponent(new NullGuiObject(), 1, 0);
-            _container.SetComponent(lvlContainer, 2, 0);
-            _container.SetComponent(new NullGuiObject(), 3, 0);
-            _container.SetComponent(hpLineContainer, 4, 0);
+            Container.SetComponent(_name, 0, 0);
+            Container.SetComponent(new Spacer(), 1, 0);
+            Container.SetComponent(lvlContainer, 2, 0);
+            Container.SetComponent(new Spacer(), 3, 0);
+            Container.SetComponent(hpLineContainer, 4, 0);
 
             if (hpTextBox != null)
             {
@@ -80,13 +83,13 @@ namespace BattleMode.Core.Components.GraphicComponents
                 hpTextContainer.AddRow(new RowProperty{Type = ValueType.Percent, Share = 1});
                 hpTextContainer.AddColumn(new ColumnProperty{Type = ValueType.Percent, Share = 1});
                 hpTextContainer.AddColumn(new ColumnProperty{Type = ValueType.Auto});
-                hpTextContainer.SetComponent(new NullGuiObject(), 0, 0);
+                hpTextContainer.SetComponent(new Spacer(), 0, 0);
                 hpTextContainer.SetComponent(_hpText, 0, 1);
 
-                _container.AddRow(new RowProperty{Type = ValueType.Absolute, Height = 10f});
-                _container.AddRow(new RowProperty{Type = ValueType.Absolute, Height = _hpText.PreferredTextHeight});
-                _container.SetComponent(new NullGuiObject(), 5, 0);
-                _container.SetComponent(hpTextContainer, 6, 0);
+                Container.AddRow(new RowProperty{Type = ValueType.Absolute, Height = 10f});
+                Container.AddRow(new RowProperty{Type = ValueType.Absolute, Height = _hpText.PreferredTextHeight});
+                Container.SetComponent(new Spacer(), 5, 0);
+                Container.SetComponent(hpTextContainer, 6, 0);
             }
         }
 
@@ -94,15 +97,15 @@ namespace BattleMode.Core.Components.GraphicComponents
         protected readonly HpText _hpText;
         protected readonly Label _name;
         protected readonly Label _lvl;
-        protected readonly Grid _container;
+        public readonly Grid Container;
+        private readonly GuiManager _guiManager;
 
 
         public void SetHp(int newHp)
         {
-            var setHpAnimation = new SetHpAnimation(newHp, _hpLine, _hpText);
-            setHpAnimation.AnimationFinished += delegate { HpUpdated?.Invoke(this, EventArgs.Empty); };
-
-            PlayAnimation(setHpAnimation);
+            _hpLine.Current = newHp;
+            if(_hpText != null)
+                _hpText.CurrentHp = newHp;
         }
 
         public void SetPokemon(PokemonWrapper pokemon)
@@ -115,52 +118,9 @@ namespace BattleMode.Core.Components.GraphicComponents
             _hpText?.SetPokemon(pokemon.Pokemon);
         }
 
-        protected override void Update()
+        public void Show()
         {
-            _container.SetCoordinates(this);
-        }
-
-        protected override void DrawComponent(GameTime time, ISpriteBatch batch)
-        {
-            _container.Draw(time, batch);
-        }
-
-        private class SetHpAnimation : IAnimation
-        {
-            private readonly int _targetHp;
-            private readonly HpLine _line;
-            private readonly HpText _text;
-
-            private int _currentHp;
-            private readonly Func<int, int> _nextInt;
-
-            public event EventHandler AnimationFinished;
-
-            public SetHpAnimation(int targetHp, HpLine line, HpText text)
-            {
-                _targetHp = targetHp;
-                _line = line;
-                _text = text;
-                _currentHp = line.Current;
-
-                if (line.Current < targetHp)
-                    _nextInt = a => a + 1;
-                else
-                    _nextInt = a => a - 1;
-            }
-
-            public void Update(GameTime time, IGuiComponent component)
-            {
-                if (_currentHp == _targetHp)
-                {
-                    AnimationFinished?.Invoke(this, EventArgs.Empty);
-                    return;
-                }
-                _currentHp = _nextInt(_currentHp);
-                _line.Current = _currentHp;
-                if(_text != null)
-                    _text.CurrentHp = _line.Current;
-            }
+            _guiManager.ShowWidget(Container);
         }
     }
 }

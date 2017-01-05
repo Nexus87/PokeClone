@@ -1,15 +1,47 @@
-﻿using BattleMode.Core.Components.GraphicComponents;
+﻿using System;
+using BattleMode.Core.Components.GraphicComponents;
+using BattleMode.Entities.BattleState;
+using GameEngine.Core;
 using GameEngine.GUI.Components;
 using GameEngine.GUI.Controlls;
+using GameEngine.GUI.Loader;
+using GameEngine.GUI.Panels;
 using GameEngine.TypeRegistry;
 
 namespace BattleMode.Gui
 {
     [GameType]
-    public class AiPokemonDataView : PokemonDataView
+    public class AiPokemonDataView : IPokemonDataView
     {
-        public AiPokemonDataView(HpLine line, Label nameBox, Label levelBox, Label hpBox) :
-            base(line, nameBox, levelBox, hpBox)
-        { }
+        private readonly GuiManager _guiManager;
+        [GuiLoaderId("Window")] private Grid _grid;
+        [GuiLoaderId("HpLine")] private HpLine _hpLine;
+        [GuiLoaderId("LevelLabel")] private Label _lvl;
+        [GuiLoaderId("Name")] private Label _name;
+
+        public AiPokemonDataView(GuiManager _guiManager)
+        {
+            this._guiManager = _guiManager;
+            var loader = new GuiLoader(@"BattleMode\Gui\AiDataView.xml") {Controller = this};
+            loader.Load();
+        }
+
+        public void SetHp(int newHp)
+        {
+            _hpLine.Current = newHp;
+        }
+
+        public void SetPokemon(PokemonWrapper pokemon)
+        {
+            _name.Text = pokemon.Name;
+            _lvl.Text = ":L" + pokemon.Level;
+            _hpLine.MaxHp = pokemon.MaxHP;
+            _hpLine.Current = pokemon.HP;
+        }
+
+        public void Show()
+        {
+            _guiManager.ShowWidget(_grid);
+        }
     }
 }

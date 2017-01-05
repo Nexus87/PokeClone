@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Xml.Linq;
 using GameEngine.Core;
 using GameEngine.GUI.Controlls;
 using GameEngine.TypeRegistry;
 
-namespace GameEngine.GUI.Loader.PanelBuilder
+namespace GameEngine.GUI.Loader.ControllBuilder
 {
     public class ListViewBuilder : GuiComponentBuilder
     {

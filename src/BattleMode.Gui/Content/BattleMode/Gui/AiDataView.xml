@@ -1,16 +1,19 @@
-<Grid>
+<Grid id="Window" X="0.2*" Y="0.1*" Width="0.15*" Height="0.1*">
     <Grid.RowDefinitions>
         <RowDefinition Height="Auto"/>
+        <RowDefinition Height="25"/>
         <RowDefinition Height="1*"/>
     </Grid.RowDefinitions>
     <Grid.ColumnDefinitions>
         <ColumnDefinition/>
     </Grid.ColumnDefinitions>
 
-    <Label TextHeight="48"/>
-    <Grid Grid.Row="1">
+    <Label id="Name"/>
+    <Spacer Grid.Row="1"/>
+    <Grid Grid.Row="2">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="10"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -19,8 +22,11 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <Label Grid.Column="1"/>
-        <Label Text="hp:" Grid.Column="0" Grid.Row="1"/>
-        <HpLine Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2"/>
+        <Label id="LevelLabel" Grid.Column="1" TextHeight="24"/>
+
+        <Spacer Grid.Row="1" Grid.ColumnSpan="3" />
+
+        <Label Text="hp:" Grid.Column="0" Grid.Row="2" TextHeight="24"/>
+        <HpLine id="HpLine" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2"/>
     </Grid>
 </Grid>

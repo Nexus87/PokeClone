@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Xml.Linq;
 using GameEngine.Core;
+using GameEngine.GUI.Loader.ControllBuilder;
 using GameEngine.GUI.Loader.PanelBuilder;
 using GameEngine.TypeRegistry;
 
@@ -18,6 +19,8 @@ namespace GameEngine.GUI.Loader
             Builders["ScrollArea"] = new ScrollAreaBuilder(registry, screenConstants);
             Builders["ListView"] = new ListViewBuilder(registry, screenConstants);
             Builders["Panel"] = new PanelBuilder.PanelBuilder(registry, screenConstants);
+            Builders["Label"] = new LabelBuilder(registry, screenConstants);
+            Builders["Spacer"] = new SpacerBuilder(registry, screenConstants);
 
             foreach (var builder in AdditionalBuilders)
             {

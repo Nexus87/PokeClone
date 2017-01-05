@@ -1,4 +1,5 @@
 ﻿using GameEngine.GUI;
+using GameEngine.GUI.Controlls;
 using GameEngine.GUI.Graphics;
 using NUnit.Framework;
 
@@ -9,7 +10,7 @@ namespace GameEngineTest.Graphics
     {
         protected override IGuiComponent CreateComponent()
         {
-            return new NullGuiObject();
+            return new Spacer();
         }
     }
 }
