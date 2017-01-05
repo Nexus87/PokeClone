@@ -30,6 +30,8 @@ namespace BattleMode.Gui
             loader.Load();
         }
 
+        public int CurrentHp => _hpLine.Current;
+
         public void SetHp(int newHp)
         {
             _hpLine.Current = _hpText.CurrentHp = newHp;
@@ -46,7 +48,7 @@ namespace BattleMode.Gui
 
         public void Show()
         {
-            _guiManager.ShowWidget(_grid);
+            _guiManager.ShowWidget(_grid, -100);
         }
     }
 }

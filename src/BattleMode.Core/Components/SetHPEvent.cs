@@ -1,5 +1,5 @@
 ﻿using System;
-using BattleMode.Core.Components.GraphicComponents;
+using BattleMode.Gui;
 using BattleMode.Shared;
 using GameEngine.Entities;
 
@@ -9,24 +9,24 @@ namespace BattleMode.Core.Components
     {
         public event EventHandler EventProcessed
         {
-            add { _graphic.HpSet += value; }
-            remove { _graphic.HpSet -= value; }
+            add { _guiController.HpSet += value; }
+            remove { _guiController.HpSet -= value; }
         }
 
-        private readonly IBattleGraphicController _graphic;
+        private readonly IGuiController _guiController;
         private readonly int _hp;
         private readonly ClientIdentifier _id;
 
-        public SetHpEvent(IBattleGraphicController graphic, ClientIdentifier id, int hp)
+        public SetHpEvent(IGuiController guiController, ClientIdentifier id, int hp)
         {
-            _graphic = graphic;
             _id = id;
             _hp = hp;
+            _guiController = guiController;
         }
 
         public void Dispatch()
         {
-            _graphic.SetHp(_id, _hp);
+            _guiController.SetHp(_id, _hp);
         }
     }
 }

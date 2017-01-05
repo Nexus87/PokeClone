@@ -13,7 +13,7 @@ namespace BattleModeTest.Components
     public class BattleEventProcessorTest
     {
         private EventQueueFake _eventQueue;
-        private IGuiEntity _guiMock;
+        private IGuiController _guiMock;
         private IBattleGraphicController _graphicMock;
         private BattleEventFake _eventMock;
 
@@ -21,7 +21,7 @@ namespace BattleModeTest.Components
         public void Setup()
         {
             _eventQueue = new EventQueueFake();
-            _guiMock = A.Fake<IGuiEntity>();
+            _guiMock = A.Fake<IGuiController>();
             _eventMock = new BattleEventFake();
             _graphicMock = A.Fake<IBattleGraphicController>();
         }
@@ -80,7 +80,7 @@ namespace BattleModeTest.Components
             _eventMock.RaiseHpChangedEvent();
             _eventQueue.DispatchAllEvents();
 
-            A.CallTo(() => _graphicMock.SetHp(A<ClientIdentifier>.Ignored, 10)).MustHaveHappened(Repeated.Exactly.Once);
+            A.CallTo(() => _guiMock.SetHp(A<ClientIdentifier>.Ignored, 10)).MustHaveHappened(Repeated.Exactly.Once);
         }
 
         [TestCase]

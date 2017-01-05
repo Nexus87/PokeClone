@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BattleMode.Entities.BattleState;
 using BattleMode.Shared;
@@ -10,20 +11,25 @@ using Microsoft.Xna.Framework;
 
 namespace BattleMode.Gui
 {
-    [GameService(typeof(IGuiEntity))]
-    public class BattleGui : IGuiEntity
+    [GameService(typeof(IGuiController))]
+    public class GuiController : IGuiController
     {
         private readonly MessageBox _messageBox;
+        private readonly Dictionary<ClientIdentifier, IPokemonDataView> _dataViews = new Dictionary<ClientIdentifier, IPokemonDataView>();
 
-        public BattleGui(ScreenConstants screen, GuiManager manager,
+        public GuiController(ScreenConstants screen, GuiManager manager,
             MessageBox messageBox, IEngineInterface engineInterface,
             MainMenuController mainController,
             MoveMenuController moveController, PokemonMenuController pokemonController,
             ItemMenuController itemController, IBattleStateService battleState,
+            PlayerPokemonDataView playerView, AiPokemonDataView aiView,
             BattleData data)
         {
             var playerId = data.PlayerId;
             var ai = data.Clients.First(id => !id.IsPlayer);
+
+            _dataViews[playerId] = playerView;
+            _dataViews[ai] = aiView;
 
             _moveController = moveController;
             _itemController = itemController;
@@ -44,7 +50,11 @@ namespace BattleMode.Gui
             OnItemSelectCloseAll();
             OnExitRequestedBackToMain();
             manager.ShowWidget(_messageBox);
+
             _mainController.Show();
+
+            foreach(var view in _dataViews.Values)
+                view.Show();
         }
 
         private void OnExitRequestedBackToMain()
@@ -136,15 +146,45 @@ namespace BattleMode.Gui
 
 
         private readonly MainMenuController _mainController;
+        private Action _action;
 
         public void Update(GameTime time)
         {
-            throw new NotImplementedException();
+            _action?.Invoke();
         }
 
-        public void SetHp(int hp, ClientIdentifier target)
+        public void SetHp(ClientIdentifier target, int hp)
         {
-            throw new NotImplementedException();
+            var dataView = _dataViews[target];
+            if (hp > dataView.CurrentHp)
+            {
+                _action = () =>
+                {
+                    dataView.SetHp(dataView.CurrentHp + 1);
+                    if (dataView.CurrentHp != hp)
+                        return;
+                    _action = null;
+                    HpSet?.Invoke(this, EventArgs.Empty);
+                };
+            }
+            else
+            {
+                _action = () =>
+                {
+                    dataView.SetHp(dataView.CurrentHp - 1);
+                    if (dataView.CurrentHp != hp)
+                        return;
+                    _action = null;
+                    HpSet?.Invoke(this, EventArgs.Empty);
+                };
+            }
         }
+
+        public void SetPokemon(ClientIdentifier id, PokemonWrapper pokemon)
+        {
+            _dataViews[id].SetPokemon(pokemon);
+        }
+
+        public event EventHandler HpSet;
     }
 }

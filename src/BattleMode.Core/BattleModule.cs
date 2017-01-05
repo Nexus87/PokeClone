@@ -28,7 +28,7 @@ namespace BattleMode.Core
             registry.ScanAssembly(Assembly.GetExecutingAssembly());
             registry.ScanAssembly(Assembly.GetAssembly(typeof(ClientIdentifier)));
             registry.ScanAssembly(Assembly.GetAssembly(typeof(IBattleStateService)));
-            registry.ScanAssembly(Assembly.GetAssembly(typeof(IGuiEntity)));
+            registry.ScanAssembly(Assembly.GetAssembly(typeof(IGuiController)));
             registry.ScanAssembly(Assembly.GetAssembly(typeof(IBattleGraphicController)));
             registry.RegisterType(a => _player);
         }
@@ -58,7 +58,8 @@ namespace BattleMode.Core
 
             componentManager.AddGameComponent(_aiEntity);
             componentManager.AddGameComponent(_battleState);
-            componentManager.Gui = _graphic;
+            componentManager.AddGameComponent(registry.ResolveType<IGuiController>());
+            componentManager.Graphic = _graphic;
 
             _battleState.SetCharacter(_player.Id, _player.Pokemons.First());
 
@@ -69,7 +70,7 @@ namespace BattleMode.Core
         {
             componentManager.RemoveGameComponent(_aiEntity);
             componentManager.RemoveGameComponent(_battleState);
-            componentManager.Gui = null;
+            componentManager.Graphic = null;
 
             _battleState = null;
             _graphic = null;

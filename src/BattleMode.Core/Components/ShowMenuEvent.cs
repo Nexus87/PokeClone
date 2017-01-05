@@ -7,22 +7,22 @@ namespace BattleMode.Core.Components
     public class ShowMenuEvent : IEvent
     {
         public event EventHandler EventProcessed = delegate { };
-        private readonly IGuiEntity _entity;
+        private readonly IGuiController _controller;
 
-        public ShowMenuEvent(IGuiEntity entity)
+        public ShowMenuEvent(IGuiController controller)
         {
-            _entity = entity;
+            _controller = controller;
         }
 
         public void Dispatch()
         {
-            _entity.MenuShowed += MenuShowedHandler;
-            _entity.ShowMenu();
+            _controller.MenuShowed += MenuShowedHandler;
+            _controller.ShowMenu();
         }
 
         private void MenuShowedHandler(object sender, EventArgs e)
         {
-            _entity.MenuShowed -= MenuShowedHandler;
+            _controller.MenuShowed -= MenuShowedHandler;
             EventProcessed(this, EventArgs.Empty);
         }
     }

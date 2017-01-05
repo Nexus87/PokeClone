@@ -17,11 +17,10 @@ namespace BattleMode.Graphic
     [GameService(typeof(IBattleGraphicController))]
     public class BattleGraphicController : AbstractGuiComponent, IBattleGraphicController
     {
-        private readonly Dictionary<ClientIdentifier, IPokemonDataView> _dataViews = new Dictionary<ClientIdentifier, IPokemonDataView>();
         private readonly Dictionary<ClientIdentifier, PokemonSprite> _sprites = new Dictionary<ClientIdentifier, PokemonSprite>();
 
         public BattleGraphicController(ScreenConstants screen, 
-            PlayerPokemonDataView playerView, AiPokemonDataView aiView, 
+
             PokemonSprite playerSprite, PokemonSprite aiSprite,
             BattleData data)
         {
@@ -31,8 +30,7 @@ namespace BattleMode.Graphic
             playerSprite.IsPlayer = true;
             aiSprite.IsPlayer = false;
 
-            _dataViews[player] = playerView;
-            _dataViews[ai] = aiView;
+
 
             _sprites[player] = playerSprite;
             _sprites[ai] = aiSprite;
@@ -40,8 +38,7 @@ namespace BattleMode.Graphic
             foreach (var sprite in _sprites.Values)
                 sprite.OnPokemonAppeared += delegate { PokemonSet?.Invoke(this, null); };
 
-            foreach(var view in _dataViews.Values)
-                view.Show();
+
 
             initAIGraphic(aiSprite, screen);
             initPlayerGraphic(playerSprite, screen);
@@ -61,15 +58,8 @@ namespace BattleMode.Graphic
             _sprites[id].PlayAttackAnimation();
         }
 
-        public void SetHp(ClientIdentifier id, int value)
-        {
-            _dataViews[id].SetHp(value);
-            HpSet?.Invoke(this, EventArgs.Empty);
-        }
-
         public void SetPokemon(ClientIdentifier id, PokemonWrapper pokemon)
         {
-            _dataViews[id].SetPokemon(pokemon);
             _sprites[id].SetPokemon(pokemon.ID);
         }
 

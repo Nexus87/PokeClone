@@ -39,7 +39,7 @@ namespace MainMode.Core
 
         public void Start(IGameComponentManager manager, IInputHandlerManager inputHandlerManager, IGameTypeRegistry registry)
         {
-            manager.Gui = registry.ResolveType<IWorldScreenController>();
+            manager.Graphic = registry.ResolveType<IWorldScreenController>();
             inputHandlerManager.AddHandler(registry.ResolveType<GameInputHandler>());
             var gameStateComponent = registry.ResolveType<IGameStateComponent>();
             gameStateComponent.SetMap(_map);

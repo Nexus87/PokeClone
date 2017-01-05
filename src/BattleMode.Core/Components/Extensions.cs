@@ -9,22 +9,22 @@ namespace BattleMode.Core.Components
 {
     public static class Extensions
     {
-        public static void AddHpEvent(this IEventQueue queue, IBattleGraphicController graphic, ClientIdentifier id, int hp)
+        public static void AddHpEvent(this IEventQueue queue, IGuiController guiController, ClientIdentifier id, int hp)
         {
-            queue.AddEvent(new SetHpEvent(graphic, id, hp));
+            queue.AddEvent(new SetHpEvent(guiController, id, hp));
         }
 
-        public static void AddSetPokemonEvent(this IEventQueue queue, IBattleGraphicController service, ClientIdentifier id, PokemonWrapper pokemon)
+        public static void AddSetPokemonEvent(this IEventQueue queue, IBattleGraphicController service, IGuiController guiController, ClientIdentifier id, PokemonWrapper pokemon)
         {
-            queue.AddEvent(new SetPokemonEvent(service, id, pokemon));
+            queue.AddEvent(new SetPokemonEvent(service, guiController, id, pokemon));
         }
-        public static void AddShowMenuEvent(this IEventQueue queue, IGuiEntity entity)
+        public static void AddShowMenuEvent(this IEventQueue queue, IGuiController controller)
         {
-            queue.AddEvent(new ShowMenuEvent(entity));
+            queue.AddEvent(new ShowMenuEvent(controller));
         }
-        public static void AddShowMessageEvent(this IEventQueue queue, IGuiEntity entity, string message)
+        public static void AddShowMessageEvent(this IEventQueue queue, IGuiController controller, string message)
         {
-            queue.AddEvent(new ShowMessageEvent(entity, message));
+            queue.AddEvent(new ShowMessageEvent(controller, message));
         }
         public static void AddStatusEvent(this IEventQueue queue, IBattleGraphicController graphic, ClientIdentifier id, StatusCondition condition)
         {
