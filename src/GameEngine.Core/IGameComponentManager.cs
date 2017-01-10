@@ -1,5 +1,5 @@
 ﻿using GameEngine.Entities;
-using GameEngine.GUI;
+using GameEngine.Graphics;
 
 namespace GameEngine.Core
 {
@@ -7,6 +7,6 @@ namespace GameEngine.Core
     {
         void AddGameComponent(IGameEntity entity);
         void RemoveGameComponent(IGameEntity entity);
-        IGuiComponent Graphic { get; set; }
+        Scene Scene{ get; set; }
     }
 }

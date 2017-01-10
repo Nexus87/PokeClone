@@ -1,10 +1,10 @@
-﻿using GameEngine.Globals;
+﻿using System;
+using GameEngine.Globals;
 using GameEngine.Graphics.Textures;
-using GameEngine.GUI;
-using GameEngine.GUI.Controlls;
 using GameEngine.TypeRegistry;
 using MainMode.Core;
 using MainMode.Core.Graphics;
+using Microsoft.Xna.Framework;
 
 namespace PokemonGame.MainModuleClasses
 {
@@ -12,34 +12,30 @@ namespace PokemonGame.MainModuleClasses
     public class DummyMapLoader : IMapLoader
     {
         private readonly TextureProvider _textureProvider;
-        private readonly IGameTypeRegistry _registry;
-        private Table<IGuiComponent> _table;
+        private readonly TextureBuilder _builder;
 
-        public DummyMapLoader(TextureProvider textureProvider, IGameTypeRegistry registry)
+        public DummyMapLoader(TextureProvider textureProvider, TextureBuilder builder)
         {
             _textureProvider = textureProvider;
-            _registry = registry;
+            _builder = builder;
         }
+
         public IMapGraphic LoadMap(Map map)
         {
+            const int textureSize = 128;
             var tiles = map.Tiles;
-            _table = new Table<IGuiComponent>();
+            var table = new Table<Tuple<Rectangle, ITexture2D>>();
 
             for (var i = 0; i < tiles.Rows; i++)
             {
                 for (var j = 0; j < tiles.Columns; j++)
                 {
-                    var image = _registry.ResolveType<ImageBox>();
-                    image.Image = _textureProvider.GetTexture(MainModule.Key, tiles[i, j].TextureName);
-                    _table[i, j] = image;
+                    var position = new Rectangle(j * textureSize, i*textureSize, textureSize, textureSize);
+                    var image = _textureProvider.GetTexture(MainModule.Key, tiles[i, j].TextureName);
+                    table[i, j] = Tuple.Create(position, image);
                 }
             }
-            return new MapGraphic(_table);
-        }
-
-        public ITable<IGuiComponent> GetFieldTextures()
-        {
-            return _table;
+            return new MapGraphic(_builder.BuildTexture(table));
         }
     }
 }

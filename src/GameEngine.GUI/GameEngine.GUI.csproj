@@ -123,7 +123,6 @@
     <Compile Include="Renderers\PokemonClassicRenderer\ClassicWindowRenderer.cs" />
     <Compile Include="Renderers\PokemonClassicRenderer\ClassicPanelRenderer.cs" />
     <Compile Include="ResizeBehavoir.cs" />
-    <Compile Include="Scene.cs" />
     <Compile Include="VisibilityChangedEventArgs.cs" />
   </ItemGroup>
   <ItemGroup>

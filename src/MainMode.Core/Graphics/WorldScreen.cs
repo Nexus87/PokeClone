@@ -1,44 +1,29 @@
 ﻿using System;
-using GameEngine.Globals;
-using GameEngine.Graphics.General;
-using GameEngine.GUI;
+using GameEngine.Graphics;
 using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
 
 namespace MainMode.Core.Graphics
 {
     [GameService(typeof(IWorldScreenController))]
-    public class WorldScreen : AbstractGuiComponent, IWorldScreenController
+    public class WorldScreen : IWorldScreenController
     {
-        private ICharacterSprite _player;
-        private readonly IMapController _mapController;
-        private readonly ISpriteLoader _spriteLoader;
-        private readonly ScreenConstants _constants;
+        private readonly AbstractCharacterSprite _player;
+        private readonly ISceneController _sceneController;
 
-        public WorldScreen(IMapController mapController, ISpriteLoader spriteLoader, ScreenConstants constants)
+        public WorldScreen(ISceneController sceneController, ISpriteLoader spriteLoader)
         {
-            _mapController = mapController;
-            _spriteLoader = spriteLoader;
-            _constants = constants;
-            _player = _spriteLoader.GetSprite("player");
+            _sceneController = sceneController;
+            _player = spriteLoader.GetSprite("player");
 
+            Scene.AddSprite(_player);
+            Init();
         }
 
-        protected override void Update()
+        protected void Init()
         {
-            base.Update();
-
-            var playerX = _constants.ScreenWidth / 2.0f - 64;
-            var playerY = _constants.ScreenHeight / 2.0f - 64;
-
             //TODO remove hardcoded values
-            _player.Area = new Rectangle((int) playerX, (int) playerY, 128, 128);
-        }
-
-        protected override void DrawComponent(GameTime time, ISpriteBatch batch)
-        {
-            _mapController.Draw(time, batch);
-            _player.Draw(time, batch);
+            _player.Position = new Rectangle(0, 0, 128, 128);
         }
 
         private static Direction ReverseDirection(Direction direction)
@@ -65,13 +50,15 @@ namespace MainMode.Core.Graphics
 
         public void PlayerMoveDirection(Direction direction)
         {
-            _mapController.MoveMap(ReverseDirection(direction));
+            _sceneController.MoveMap(ReverseDirection(direction));
         }
 
         public void SetMap(Map map)
         {
-            _mapController.LoadMap(map);
-            _mapController.CenterField(map.PlayerStart.X, map.PlayerStart.Y);
+            _sceneController.LoadMap(map);
+            _sceneController.CenterField(map.PlayerStart.X, map.PlayerStart.Y);
         }
+
+        public Scene Scene => _sceneController.Scene;
     }
 }

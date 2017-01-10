@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using GameEngine.Entities;
-using GameEngine.GUI;
+using GameEngine.Graphics;
 using Microsoft.Xna.Framework;
 
 namespace GameEngine.Core
@@ -41,10 +41,10 @@ namespace GameEngine.Core
             }
         }
 
-        public IGuiComponent Graphic
+        public Scene Scene
         {
-            get { return _game.Gui; }
-            set { _game.Gui = value; }
+            get { return _game.Scene; }
+            set { _game.Scene = value; }
         }
     }
 }

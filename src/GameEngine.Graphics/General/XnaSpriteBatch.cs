@@ -18,7 +18,8 @@ namespace GameEngine.Graphics.General
         public void Draw(ITexture2D texture, Vector2 location, Vector2 scaling, Color color,
             SpriteEffects spriteEffects = SpriteEffects.None)
         {
-            Draw(texture: texture.Texture, position: location, sourceRectangle: texture.Bounds, scale: scaling, color: color, effects: spriteEffects);
+            var destination = new Rectangle(location.ToPoint(), scaling.ToPoint());
+            Draw(texture, destination, color, spriteEffects);
         }
 
         /// <see cref="Microsoft.Xna.Framework.Graphics.SpriteBatch.DrawString(SpriteFont, string, Vector2, Color, float, Vector2, float, SpriteEffects, float)"/>

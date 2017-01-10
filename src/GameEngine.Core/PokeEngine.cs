@@ -34,8 +34,10 @@ namespace GameEngine.Core
         {
             Init();
             _moduleRegistry.StartModule(GameEngineModule.Name);
-            _moduleRegistry.StartModule(_startModule);
-
+            _gameRunner.OnInit = () =>
+            {
+                _moduleRegistry.StartModule(_startModule);
+            };
 //            DebugRectangle.Enable(_textureProvider.Pixel);
             _gameRunner.Run();
         }

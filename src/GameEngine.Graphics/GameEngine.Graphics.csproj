@@ -63,6 +63,7 @@
     <Compile Include="Textures\JsonSpriteSheetConfigLoader.cs" />
     <Compile Include="Textures\SpriteSheetItem.cs" />
     <Compile Include="Textures\SubTextureProvider.cs" />
+    <Compile Include="Textures\TextureBuilder.cs" />
     <Compile Include="Textures\TextureConfigurationBuilder.cs" />
     <Compile Include="Textures\TextureItem.cs" />
     <Compile Include="Textures\TextureProvider.cs" />
@@ -79,6 +80,10 @@
     <ProjectReference Include="..\GameEngine.Globals\GameEngine.Globals.csproj">
       <Project>{b19bd4b3-dcae-e1dc-6e65-2e476c6f6261}</Project>
       <Name>GameEngine.Globals</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GameEngine.TypeRegistry\GameEngine.TypeRegistry.csproj">
+      <Project>{73200884-85C6-4A3D-A3C2-A53D9C632613}</Project>
+      <Name>GameEngine.TypeRegistry</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

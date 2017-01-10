@@ -60,10 +60,10 @@
     <Compile Include="GameInputHandler.cs" />
     <Compile Include="GameStateEntity.cs" />
     <Compile Include="Graphics\CharacterSprite.cs" />
-    <Compile Include="Graphics\FieldMapController.cs" />
+    <Compile Include="Graphics\SceneController.cs" />
     <Compile Include="Graphics\FieldSize.cs" />
-    <Compile Include="Graphics\ICharacterSprite.cs" />
-    <Compile Include="Graphics\IMapController.cs" />
+    <Compile Include="Graphics\AbstractCharacterSprite.cs" />
+    <Compile Include="Graphics\ISceneController.cs" />
     <Compile Include="Graphics\IMapGraphic.cs" />
     <Compile Include="Graphics\IWorldScreenController.cs" />
     <Compile Include="Graphics\MapGraphic.cs" />

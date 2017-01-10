@@ -1,17 +1,15 @@
-﻿using System;
-using Base.Data;
+﻿using Base.Data;
 using BattleMode.Entities.BattleState;
 using BattleMode.Shared;
-using GameEngine.GUI;
+using GameEngine.Graphics;
 
 namespace BattleMode.Graphic
 {
-    public interface IBattleGraphicController : IGuiComponent
+    public interface IBattleGraphicController
     {
-        event EventHandler ConditionSet;
-        event EventHandler PokemonSet;
-
         void SetPokemon(ClientIdentifier id, PokemonWrapper pokemon);
         void SetPokemonStatus(ClientIdentifier id, StatusCondition condition);
+
+        Scene Scene { get; }
     }
 }

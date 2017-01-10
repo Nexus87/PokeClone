@@ -59,7 +59,7 @@ namespace BattleMode.Core
             componentManager.AddGameComponent(_aiEntity);
             componentManager.AddGameComponent(_battleState);
             componentManager.AddGameComponent(registry.ResolveType<IGuiController>());
-            componentManager.Graphic = _graphic;
+            componentManager.Scene = _graphic.Scene;
 
             _battleState.SetCharacter(_player.Id, _player.Pokemons.First());
 
@@ -70,7 +70,7 @@ namespace BattleMode.Core
         {
             componentManager.RemoveGameComponent(_aiEntity);
             componentManager.RemoveGameComponent(_battleState);
-            componentManager.Graphic = null;
+            componentManager.Scene = null;
 
             _battleState = null;
             _graphic = null;

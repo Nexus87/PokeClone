@@ -17,16 +17,12 @@ namespace PokemonGame.MainModuleClasses
             _textureProvider = textureProvider;
             _registry = registry;
         }
-        public ICharacterSprite GetSprite(string spriteName)
+        public AbstractCharacterSprite GetSprite(string spriteName)
         {
-            var left = _registry.ResolveType<ImageBox>();
-            var right = _registry.ResolveType<ImageBox>();
-            var up = _registry.ResolveType<ImageBox>();
-            var down = _registry.ResolveType<ImageBox>();
-            left.Image = _textureProvider.GetTexture(MainModule.Key, spriteName + "Left");
-            right.Image = _textureProvider.GetTexture(MainModule.Key, spriteName + "Left");
-            up.Image = _textureProvider.GetTexture(MainModule.Key, spriteName + "Up");
-            down.Image = _textureProvider.GetTexture(MainModule.Key, spriteName + "Down");
+            var left = _textureProvider.GetTexture(MainModule.Key, spriteName + "Left");
+            var right = _textureProvider.GetTexture(MainModule.Key, spriteName + "Left");
+            var up = _textureProvider.GetTexture(MainModule.Key, spriteName + "Up");
+            var down = _textureProvider.GetTexture(MainModule.Key, spriteName + "Down");
 
             return new CharacterSprite(left, right, up, down);
         }

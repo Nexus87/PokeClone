@@ -54,6 +54,7 @@ namespace GameEngine.Core
             registry.ScanAssembly(Assembly.GetAssembly(typeof(IGameTypeRegistry)));
             registry.ScanAssembly(Assembly.GetAssembly(typeof(IGameEntity)));
             registry.ScanAssembly(Assembly.GetAssembly(typeof(HpLine)));
+            registry.ScanAssembly(Assembly.GetAssembly(typeof(TextureBuilder)));
 
             registry.RegisterType(r => new Panel(r.ResolveType<PanelRenderer>()) { BackgroundColor = r.ResolveType<ScreenConstants>().BackgroundColor});
 

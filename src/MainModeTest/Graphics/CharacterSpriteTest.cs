@@ -1,4 +1,5 @@
-﻿using GameEngineTest.TestUtils;
+﻿using FakeItEasy;
+using GameEngine.Graphics.Textures;
 using MainMode.Core;
 using MainMode.Core.Graphics;
 using NUnit.Framework;
@@ -8,18 +9,18 @@ namespace MainModeTest.Graphics
     [TestFixture]
     public class CharacterSpriteTest
     {
-        private GraphicComponentMock lookingDown;
-        private GraphicComponentMock lookingLeft;
-        private GraphicComponentMock lookingRight;
-        private GraphicComponentMock lookingUp;
+        private ITexture2D _lookingDown;
+        private ITexture2D _lookingLeft;
+        private ITexture2D _lookingRight;
+        private ITexture2D _lookingUp;
 
         [SetUp]
         public void Setup()
         {
-            lookingDown = new GraphicComponentMock();
-            lookingLeft = new GraphicComponentMock();
-            lookingRight = new GraphicComponentMock();
-            lookingUp = new GraphicComponentMock();
+            _lookingDown = A.Fake<ITexture2D>();
+            _lookingLeft = A.Fake<ITexture2D>();
+            _lookingRight = A.Fake<ITexture2D>();
+            _lookingUp = A.Fake<ITexture2D>();
         }
 
         [Test]
@@ -27,9 +28,7 @@ namespace MainModeTest.Graphics
         {
             var characterSprite = CreateSprite();
 
-            characterSprite.Draw();
-
-            Assert.True(lookingDown.WasDrawn);
+            Assert.AreEqual(_lookingDown, characterSprite.Texture);
         }
 
         [Test]
@@ -38,14 +37,13 @@ namespace MainModeTest.Graphics
             var characterSprite = CreateSprite();
 
             characterSprite.TurnToDirection(Direction.Up);
-            characterSprite.Draw();
 
-            Assert.True(lookingUp.WasDrawn);
+            Assert.AreEqual(_lookingUp, characterSprite.Texture);
 
         }
         private CharacterSprite CreateSprite()
         {
-            var sprite = new CharacterSprite(lookingLeft, lookingRight, lookingUp, lookingDown);
+            var sprite = new CharacterSprite(_lookingLeft, _lookingRight, _lookingUp, _lookingDown);
             return sprite;
         }
     }

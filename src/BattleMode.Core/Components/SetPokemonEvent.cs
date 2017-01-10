@@ -24,17 +24,11 @@ namespace BattleMode.Core.Components
             _pokemon = pokemon;
         }
 
-        private void PokemonSetHandler(object sender, EventArgs e)
-        {
-            _graphic.PokemonSet -= PokemonSetHandler;
-            _guiController.SetPokemon(_id, _pokemon);
-            EventProcessed(this, EventArgs.Empty);
-        }
-
         public void Dispatch()
         {
-            _graphic.PokemonSet += PokemonSetHandler;
             _graphic.SetPokemon(_id, _pokemon);
+            _guiController.SetPokemon(_id, _pokemon);
+            EventProcessed(this, EventArgs.Empty);
         }
     }
 }

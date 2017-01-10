@@ -1,45 +1,34 @@
 ﻿using System;
 using GameEngine.Globals;
-using GameEngine.Graphics.General;
-using GameEngine.GUI;
+using GameEngine.Graphics;
 using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
 
 namespace MainMode.Core.Graphics
 {
-    [GameService(typeof(IMapController))]
-    public class FieldMapController : AbstractGuiComponent, IMapController
+    [GameService(typeof(ISceneController))]
+    public class SceneController : ISceneController
     {
         private float _screenCenterX;
         private float _screenCenterY;
         private readonly IMapLoader _mapLoader;
         private readonly ScreenConstants _screenConstants;
         private IMapGraphic _mapGraphic;
-        private bool _mapChanged;
 
-        public FieldMapController(IMapLoader mapLoader, ScreenConstants screenConstants)
+        public SceneController(IMapLoader mapLoader, ScreenConstants screenConstants)
         {
             _mapLoader = mapLoader;
             _screenConstants = screenConstants;
+            Scene = new Scene();
         }
 
-        protected override void DrawComponent(GameTime time, ISpriteBatch batch)
+        protected void Update()
         {
-            _mapGraphic.Draw(time, batch);
-        }
-
-        protected override void Update()
-        {
-            base.Update();
-            if(_mapChanged)
-            {
-                CalculateScreenCenter();
-                _mapChanged = false;
-            }
+            CalculateScreenCenter();
             var x = _screenCenterX - _mapGraphic.GetXPositionOfColumn(CenteredFieldX);
             var y = _screenCenterY - _mapGraphic.GetYPositionOfRow(CenteredFieldY);
 
-            _mapGraphic.Area = new Rectangle((int) x, (int) y, _mapGraphic.Area.Width, _mapGraphic.Area.Height);
+            Scene.MoveSceneTo(new Vector2(x, y));
         }
 
         private void CalculateScreenCenter()
@@ -56,9 +45,10 @@ namespace MainMode.Core.Graphics
 
         public void CenterField(int fieldX, int fieldY)
         {
-            Invalidate();
             CenteredFieldX = fieldX;
             CenteredFieldY = fieldY;
+
+            Update();
         }
 
         public void MoveMap(Direction moveDirection)
@@ -85,8 +75,9 @@ namespace MainMode.Core.Graphics
         public void LoadMap(Map map)
         {
             _mapGraphic = _mapLoader.LoadMap(map);
-            Invalidate();
-            _mapChanged = true;
+            Scene.SetBackground(_mapGraphic.Texture2D);
         }
+
+        public Scene Scene { get; }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using GameEngine.Globals;
+using GameEngine.Graphics;
 using GameEngine.Graphics.General;
-using GameEngine.GUI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -73,9 +73,9 @@ namespace GameEngine.Core
                 (int) _screenConstants.ScreenHeight);
         }
 
-        public void Draw(IGuiComponent component, ISpriteBatch batch, GameTime gameTime)
+        public void Draw(Scene scene, ISpriteBatch batch, GameTime gameTime)
         {
-            component.Draw(gameTime, batch);
+            scene.DrawScene(batch);
         }
         public void End(SpriteBatch batch)
         {

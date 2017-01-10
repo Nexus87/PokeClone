@@ -1,10 +1,10 @@
-﻿using GameEngineTest.TestUtils;
+﻿using GameEngine.Graphics;
 using MainMode.Core;
 using MainMode.Core.Graphics;
 
 namespace MainModeTest.Utils
 {
-    public class MapControllerMock : GraphicComponentMock, IMapController
+    public class SceneControllerMock : ISceneController
     {
 
         public void CenterField(int fieldX, int fieldY)
@@ -20,5 +20,7 @@ namespace MainModeTest.Utils
         {
             throw new System.NotImplementedException();
         }
+
+        public Scene Scene { get; }
     }
 }

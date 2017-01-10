@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using GameEngine.Graphics.General;
+using GameEngine.Graphics.Textures;
 using GameEngine.GUI;
 using Microsoft.Xna.Framework;
 
 namespace MainMode.Core.Graphics
 {
-    public class CharacterSprite : AbstractGuiComponent, ICharacterSprite
+    public class CharacterSprite : AbstractCharacterSprite
     {
-        private IGuiComponent _currentDirection;
-        private readonly Dictionary<Direction, IGuiComponent> _directionDictionary = new Dictionary<Direction, IGuiComponent>();
+        private readonly Dictionary<Direction, ITexture2D> _directionDictionary = new Dictionary<Direction, ITexture2D>();
 
-        public CharacterSprite(IGuiComponent lookingLeft, IGuiComponent lookingRight, IGuiComponent lookingUp, IGuiComponent lookingDown)
+        public CharacterSprite(ITexture2D lookingLeft, ITexture2D lookingRight, ITexture2D lookingUp, ITexture2D lookingDown)
         {
             if (lookingLeft == null) throw new ArgumentNullException(nameof(lookingLeft));
             if (lookingRight == null) throw new ArgumentNullException(nameof(lookingRight));
@@ -23,24 +23,12 @@ namespace MainMode.Core.Graphics
             _directionDictionary[Direction.Right] = lookingRight;
             _directionDictionary[Direction.Up] = lookingUp;
 
-            _currentDirection = lookingDown;
+            Texture = lookingDown;
         }
 
-        protected override void Update()
+        public override void TurnToDirection(Direction direction)
         {
-            base.Update();
-            foreach (var component in _directionDictionary.Values)
-                component.SetCoordinates(this);
-        }
-
-        protected override void DrawComponent(GameTime time, ISpriteBatch batch)
-        {
-            _currentDirection.Draw(time, batch);
-        }
-
-        public void TurnToDirection(Direction direction)
-        {
-            _currentDirection = _directionDictionary[direction];
+            Texture = _directionDictionary[direction];
         }
     }
 }

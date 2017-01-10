@@ -19,15 +19,12 @@ namespace BattleMode.Core.Components
             _condition = condition;
         }
 
-        public event EventHandler EventProcessed
-        {
-            add { _graphic.ConditionSet += value; }
-            remove { _graphic.ConditionSet -= value; }
-        }
+        public event EventHandler EventProcessed;
 
         public void Dispatch()
         {
             _graphic.SetPokemonStatus(_id, _condition);
+            EventProcessed?.Invoke(this, EventArgs.Empty);
         }
     }
 }

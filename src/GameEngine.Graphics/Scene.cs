@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using GameEngine.Graphics.General;
 using GameEngine.Graphics.Textures;
 using Microsoft.Xna.Framework;
@@ -12,11 +13,15 @@ namespace GameEngine.Graphics
         private Vector2 _scenePosition = new Vector2(0, 0);
         private Vector2 _backgroundSize = new Vector2(0, 0);
 
+        public void MoveSceneTo(Vector2 position)
+        {
+            _scenePosition = position;
+        }
 
-        public void SetBackground(ITexture2D backgroundImage, Vector2 size)
+        public void SetBackground(ITexture2D backgroundImage)
         {
             _background = backgroundImage;
-            _backgroundSize = size;
+            _backgroundSize = new Vector2(backgroundImage.Width, backgroundImage.Height);
         }
 
         public void AddSprite(Sprite sprite)
@@ -34,7 +39,8 @@ namespace GameEngine.Graphics
             if(_background != null)
                 batch.Draw(_background, _scenePosition, _backgroundSize, Color.White);
 
-            foreach (var sprite in _sprites)
+
+            foreach (var sprite in _sprites.Where(x => x.Texture != null))
             {
                 batch.Draw(sprite.Texture, ToRelativePosition(sprite.Position), Color.White, sprite.SpriteEffect);
             }
