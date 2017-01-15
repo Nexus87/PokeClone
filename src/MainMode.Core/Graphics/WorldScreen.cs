@@ -14,7 +14,7 @@ namespace MainMode.Core.Graphics
         public WorldScreen(ISceneController sceneController, ISpriteLoader spriteLoader)
         {
             _sceneController = sceneController;
-            _player = spriteLoader.GetSprite("player");
+            _player = spriteLoader.GetSprite("Player");
 
             Scene.AddSprite(_player);
             Init();

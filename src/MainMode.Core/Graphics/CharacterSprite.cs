@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using GameEngine.Graphics.General;
 using GameEngine.Graphics.Textures;
-using GameEngine.GUI;
-using Microsoft.Xna.Framework;
 
 namespace MainMode.Core.Graphics
 {

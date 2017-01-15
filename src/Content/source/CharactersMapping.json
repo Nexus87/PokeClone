@@ -1,1 +1,2162 @@
-[{"Key":"LtSurgeLeft","Value":{"Height":16,"Width":15,"X":0,"Y":24}},{"Key":"OldGuyFront","Value":{"Height":16,"Width":16,"X":3,"Y":64}},{"Key":"HatGuyLeft","Value":{"Height":16,"Width":16,"X":3,"Y":81}},{"Key":"Girl1Front","Value":{"Height":16,"Width":16,"X":4,"Y":100}},{"Key":"AgathaFront","Value":{"Height":16,"Width":16,"X":4,"Y":210}},{"Key":"PoliceFront","Value":{"Height":16,"Width":16,"X":4,"Y":713}},{"Key":"Pokemon1Front","Value":{"Height":16,"Width":16,"X":4,"Y":767}},{"Key":"AssistantFront","Value":{"Height":16,"Width":16,"X":4,"Y":2}},{"Key":"SwimmerBack","Value":{"Height":16,"Width":16,"X":4,"Y":44}},{"Key":"Rock","Value":{"Height":16,"Width":16,"X":5,"Y":174}},{"Key":"ChildBack","Value":{"Height":16,"Width":16,"X":4,"Y":192}},{"Key":"ReinaFront","Value":{"Height":16,"Width":16,"X":5,"Y":382}},{"Key":"BirdLeft","Value":{"Height":16,"Width":16,"X":5,"Y":401}},{"Key":"SeamanBack","Value":{"Height":16,"Width":16,"X":4,"Y":532}},{"Key":"CookFront","Value":{"Height":16,"Width":16,"X":4,"Y":551}},{"Key":"GiovanniBack","Value":{"Height":16,"Width":16,"X":4,"Y":588}},{"Key":"RocketFrontMoving","Value":{"Height":16,"Width":16,"X":4,"Y":605}},{"Key":"GirlTrainerLeftMoving","Value":{"Height":16,"Width":16,"X":4,"Y":677}},{"Key":"MomBack","Value":{"Height":16,"Width":16,"X":4,"Y":695}},{"Key":"PikaLeft","Value":{"Height":16,"Width":16,"X":4,"Y":732}},{"Key":"GrassPokemonBack","Value":{"Height":16,"Width":16,"X":4,"Y":748}},{"Key":"JessieBackMoving","Value":{"Height":16,"Width":16,"X":4,"Y":802}},{"Key":"SomeGuyLeft","Value":{"Height":16,"Width":16,"X":5,"Y":118}},{"Key":"BigGuyBack","Value":{"Height":16,"Width":16,"X":6,"Y":136}},{"Key":"KarateGuyFrontMoving","Value":{"Height":16,"Width":16,"X":5,"Y":154}},{"Key":"Pokemon2Left","Value":{"Height":16,"Width":16,"X":6,"Y":344}},{"Key":"GentlemanFront","Value":{"Height":16,"Width":16,"X":5,"Y":496}},{"Key":"ErikaBack","Value":{"Height":16,"Width":16,"X":5,"Y":640}},{"Key":"FemaleTrainerFront","Value":{"Height":16,"Width":16,"X":4,"Y":658}},{"Key":"SurferPikaLeft","Value":{"Height":16,"Width":16,"X":5,"Y":785}},{"Key":"Pokemon3Front","Value":{"Height":16,"Width":16,"X":4,"Y":820}},{"Key":"PlayerBikeFront","Value":{"Height":16,"Width":16,"X":6,"Y":269}},{"Key":"PlayerLeft","Value":{"Height":16,"Width":16,"X":6,"Y":288}},{"Key":"RivalBackMoving","Value":{"Height":16,"Width":16,"X":6,"Y":307}},{"Key":"Trainer1Front","Value":{"Height":16,"Width":16,"X":6,"Y":326}},{"Key":"FemaleTrainer2BackMoving","Value":{"Height":16,"Width":16,"X":5,"Y":362}},{"Key":"BillFront","Value":{"Height":16,"Width":16,"X":6,"Y":439}},{"Key":"SabrinaLeft","Value":{"Height":16,"Width":16,"X":5,"Y":458}},{"Key":"GuyBackMoving","Value":{"Height":16,"Width":16,"X":6,"Y":477}},{"Key":"DaisyLeft","Value":{"Height":16,"Width":16,"X":5,"Y":514}},{"Key":"GlasesGuyLeft","Value":{"Height":16,"Width":16,"X":4,"Y":570}},{"Key":"OldWomanLeft","Value":{"Height":16,"Width":16,"X":4,"Y":623}},{"Key":"BrunoLeft","Value":{"Height":16,"Width":16,"X":7,"Y":231}},{"Key":"LoreleiBackMoving","Value":{"Height":16,"Width":16,"X":6,"Y":249}},{"Key":"BigGuyBackMoving","Value":{"Height":16,"Width":16,"X":7,"Y":420}},{"Key":"LtSurgeFrontMoving","Value":{"Height":16,"Width":16,"X":14,"Y":24}},{"Key":"OldWoman2Front","Value":{"Height":16,"Width":16,"X":19,"Y":82}},{"Key":"SafariZoneWardenFront","Value":{"Height":16,"Width":16,"X":21,"Y":118}},{"Key":"MelanieFrontMoving","Value":{"Height":15,"Width":16,"X":20,"Y":459}},{"Key":"BikerLeft","Value":{"Height":16,"Width":16,"X":20,"Y":532}},{"Key":"CookBack","Value":{"Height":16,"Width":16,"X":20,"Y":551}},{"Key":"FujiFront","Value":{"Height":16,"Width":16,"X":20,"Y":570}},{"Key":"RocketBackMoving","Value":{"Height":16,"Width":16,"X":20,"Y":605}},{"Key":"GuardFront","Value":{"Height":16,"Width":16,"X":20,"Y":622}},{"Key":"FemaleTrainerBackMoving","Value":{"Height":16,"Width":16,"X":20,"Y":658}},{"Key":"OldGuyBack","Value":{"Height":16,"Width":16,"X":21,"Y":64}},{"Key":"KarateGuyBackMoving","Value":{"Height":16,"Width":16,"X":21,"Y":154}},{"Key":"FemaleTrainerLeftMoving","Value":{"Height":16,"Width":16,"X":21,"Y":362}},{"Key":"DaisyFrontMoving","Value":{"Height":16,"Width":16,"X":21,"Y":514}},{"Key":"ErikaLeftMoving","Value":{"Height":16,"Width":16,"X":20,"Y":640}},{"Key":"MomLeft","Value":{"Height":16,"Width":16,"X":21,"Y":695}},{"Key":"PoliceBack","Value":{"Height":16,"Width":16,"X":22,"Y":713}},{"Key":"Pokemon1Back","Value":{"Height":16,"Width":16,"X":22,"Y":767}},{"Key":"SurferPikaFront","Value":{"Height":16,"Width":16,"X":21,"Y":785}},{"Key":"Pokemon3FrontLower","Value":{"Height":16,"Width":16,"X":20,"Y":820}},{"Key":"AssistantBack","Value":{"Height":16,"Width":16,"X":22,"Y":2}},{"Key":"LoreleiLeftMoving","Value":{"Height":16,"Width":16,"X":21,"Y":249}},{"Key":"PlayerFrontMoving","Value":{"Height":16,"Width":16,"X":22,"Y":288}},{"Key":"BoyTrainerBack","Value":{"Height":16,"Width":16,"X":22,"Y":326}},{"Key":"GiovanniLeft","Value":{"Height":16,"Width":16,"X":20,"Y":588}},{"Key":"PikaFrontMoving","Value":{"Height":16,"Width":16,"X":22,"Y":731}},{"Key":"GrassPokemonLeft","Value":{"Height":16,"Width":16,"X":22,"Y":748}},{"Key":"JessieLeftMoving","Value":{"Height":16,"Width":16,"X":22,"Y":802}},{"Key":"AgathaBack","Value":{"Height":16,"Width":16,"X":24,"Y":210}},{"Key":"BrunoFrontMoving","Value":{"Height":16,"Width":16,"X":23,"Y":231}},{"Key":"BirdFront","Value":{"Height":16,"Width":16,"X":24,"Y":401}},{"Key":"GentlemanBack","Value":{"Height":16,"Width":16,"X":23,"Y":496}},{"Key":"LanceFront","Value":{"Height":16,"Width":16,"X":24,"Y":676}},{"Key":"PlayerBikeBack","Value":{"Height":16,"Width":16,"X":24,"Y":269}},{"Key":"Pokemon2FrontMoving","Value":{"Height":16,"Width":16,"X":25,"Y":344}},{"Key":"BillBack","Value":{"Height":16,"Width":16,"X":24,"Y":439}},{"Key":"RivalLeftMoving","Value":{"Height":16,"Width":16,"X":25,"Y":306}},{"Key":"ReinaBack","Value":{"Height":16,"Width":16,"X":26,"Y":382}},{"Key":"SwimmerLeft","Value":{"Height":16,"Width":16,"X":23,"Y":45}},{"Key":"BigGuyLeft","Value":{"Height":16,"Width":16,"X":25,"Y":136}},{"Key":"Paper","Value":{"Height":16,"Width":16,"X":25,"Y":174}},{"Key":"BaldGuyLeftMoving","Value":{"Height":16,"Width":16,"X":26,"Y":420}},{"Key":"BrunoLeftMoving","Value":{"Height":16,"Width":16,"X":24,"Y":477}},{"Key":"ChildLookingLeft","Value":{"Height":16,"Width":16,"X":26,"Y":192}},{"Key":"LtSurgeBackMoving","Value":{"Height":16,"Width":16,"X":31,"Y":23}},{"Key":"SeamanFront","Value":{"Height":16,"Width":16,"X":37,"Y":532}},{"Key":"GiovanniFrontMoving","Value":{"Height":16,"Width":16,"X":36,"Y":589}},{"Key":"RocketLeftMoving","Value":{"Height":16,"Width":16,"X":36,"Y":605}},{"Key":"ManFront","Value":{"Height":16,"Width":16,"X":36,"Y":695}},{"Key":"FlowerPokemonFront","Value":{"Height":16,"Width":16,"X":37,"Y":820}},{"Key":"Woman2Left","Value":{"Height":16,"Width":16,"X":36,"Y":100}},{"Key":"WaterPokemon","Value":{"Height":16,"Width":16,"X":38,"Y":248}},{"Key":"SabrinaBackMoving","Value":{"Height":16,"Width":16,"X":36,"Y":458}},{"Key":"DaisyBackMoving","Value":{"Height":16,"Width":16,"X":37,"Y":514}},{"Key":"CookLeft","Value":{"Height":16,"Width":16,"X":36,"Y":551}},{"Key":"GuardBack","Value":{"Height":16,"Width":16,"X":37,"Y":622}},{"Key":"ErikaFrontMoving","Value":{"Height":16,"Width":16,"X":36,"Y":640}},{"Key":"FemaleTrainerLeft","Value":{"Height":16,"Width":16,"X":36,"Y":658}},{"Key":"Tile165","Value":{"Height":16,"Width":16,"X":37,"Y":64}},{"Key":"Tile166","Value":{"Height":16,"Width":16,"X":38,"Y":82}},{"Key":"SafariWardenBack","Value":{"Height":16,"Width":16,"X":39,"Y":118}},{"Key":"Tile168","Value":{"Height":16,"Width":16,"X":38,"Y":288}},{"Key":"Tile169","Value":{"Height":16,"Width":16,"X":38,"Y":570}},{"Key":"Tile170","Value":{"Height":16,"Width":16,"X":38,"Y":326}},{"Key":"Tile171","Value":{"Height":16,"Width":16,"X":39,"Y":362}},{"Key":"Tile172","Value":{"Height":16,"Width":16,"X":40,"Y":477}},{"Key":"Tile173","Value":{"Height":16,"Width":16,"X":40,"Y":713}},{"Key":"Tile174","Value":{"Height":16,"Width":16,"X":40,"Y":748}},{"Key":"Tile176","Value":{"Height":16,"Width":16,"X":39,"Y":2}},{"Key":"Tile177","Value":{"Height":16,"Width":16,"X":40,"Y":44}},{"Key":"Tile178","Value":{"Height":16,"Width":16,"X":39,"Y":154}},{"Key":"Tile179","Value":{"Height":16,"Width":16,"X":40,"Y":174}},{"Key":"Tile180","Value":{"Height":16,"Width":16,"X":41,"Y":269}},{"Key":"Tile181","Value":{"Height":16,"Width":16,"X":41,"Y":306}},{"Key":"Tile182","Value":{"Height":16,"Width":16,"X":40,"Y":496}},{"Key":"Tile183","Value":{"Height":16,"Width":16,"X":40,"Y":731}},{"Key":"Tile184","Value":{"Height":16,"Width":16,"X":40,"Y":785}},{"Key":"Tile185","Value":{"Height":16,"Width":16,"X":41,"Y":210}},{"Key":"Tile186","Value":{"Height":16,"Width":16,"X":40,"Y":439}},{"Key":"Tile187","Value":{"Height":16,"Width":16,"X":42,"Y":676}},{"Key":"Tile188","Value":{"Height":16,"Width":16,"X":41,"Y":767}},{"Key":"Tile189","Value":{"Height":16,"Width":16,"X":40,"Y":802}},{"Key":"Tile190","Value":{"Height":16,"Width":16,"X":43,"Y":136}},{"Key":"Tile191","Value":{"Height":16,"Width":16,"X":42,"Y":231}},{"Key":"Tile192","Value":{"Height":16,"Width":16,"X":43,"Y":400}},{"Key":"Tile193","Value":{"Height":15,"Width":16,"X":44,"Y":345}},{"Key":"Tile194","Value":{"Height":16,"Width":16,"X":42,"Y":382}},{"Key":"Tile195","Value":{"Height":16,"Width":16,"X":44,"Y":420}},{"Key":"Tile198","Value":{"Height":16,"Width":16,"X":46,"Y":192}},{"Key":"Tile207","Value":{"Height":16,"Width":16,"X":46,"Y":23}},{"Key":"Tile209","Value":{"Height":16,"Width":16,"X":52,"Y":100}},{"Key":"Tile210","Value":{"Height":16,"Width":16,"X":52,"Y":551}},{"Key":"Tile211","Value":{"Height":16,"Width":16,"X":52,"Y":588}},{"Key":"Tile212","Value":{"Height":16,"Width":16,"X":52,"Y":605}},{"Key":"Tile213","Value":{"Height":16,"Width":16,"X":52,"Y":695}},{"Key":"Tile218","Value":{"Height":16,"Width":16,"X":52,"Y":640}},{"Key":"Tile219","Value":{"Height":16,"Width":16,"X":52,"Y":658}},{"Key":"Tile224","Value":{"Height":16,"Width":16,"X":54,"Y":2}},{"Key":"Tile225","Value":{"Height":16,"Width":16,"X":54,"Y":288}},{"Key":"Tile226","Value":{"Height":16,"Width":16,"X":54,"Y":326}},{"Key":"Tile227","Value":{"Height":16,"Width":16,"X":54,"Y":458}},{"Key":"Tile228","Value":{"Height":16,"Width":16,"X":53,"Y":514}},{"Key":"Tile229","Value":{"Height":16,"Width":16,"X":55,"Y":821}},{"Key":"Tile231","Value":{"Height":16,"Width":16,"X":55,"Y":64}},{"Key":"Tile232","Value":{"Height":16,"Width":16,"X":54,"Y":82}},{"Key":"Tile233","Value":{"Height":16,"Width":16,"X":56,"Y":439}},{"Key":"Tile234","Value":{"Height":16,"Width":16,"X":56,"Y":532}},{"Key":"Tile235","Value":{"Height":16,"Width":16,"X":54,"Y":570}},{"Key":"Tile236","Value":{"Height":16,"Width":16,"X":53,"Y":622}},{"Key":"Tile238","Value":{"Height":16,"Width":16,"X":57,"Y":249}},{"Key":"Tile239","Value":{"Height":16,"Width":16,"X":56,"Y":496}},{"Key":"Tile240","Value":{"Height":16,"Width":16,"X":55,"Y":118}},{"Key":"Tile241","Value":{"Height":16,"Width":16,"X":57,"Y":154}},{"Key":"Tile243","Value":{"Height":16,"Width":16,"X":58,"Y":306}},{"Key":"Tile244","Value":{"Height":16,"Width":16,"X":57,"Y":362}},{"Key":"Tile245","Value":{"Height":16,"Width":16,"X":58,"Y":713}},{"Key":"Tile246","Value":{"Height":16,"Width":16,"X":58,"Y":748}},{"Key":"Tile247","Value":{"Height":16,"Width":16,"X":58,"Y":766}},{"Key":"Tile248","Value":{"Height":16,"Width":16,"X":58,"Y":44}},{"Key":"Tile249","Value":{"Height":16,"Width":16,"X":58,"Y":269}},{"Key":"Tile250","Value":{"Height":16,"Width":16,"X":59,"Y":477}},{"Key":"Tile251","Value":{"Height":16,"Width":16,"X":58,"Y":731}},{"Key":"Tile252","Value":{"Height":16,"Width":16,"X":57,"Y":785}},{"Key":"Tile253","Value":{"Height":16,"Width":16,"X":58,"Y":174}},{"Key":"Tile254","Value":{"Height":16,"Width":16,"X":60,"Y":210}},{"Key":"Tile255","Value":{"Height":16,"Width":16,"X":60,"Y":382}},{"Key":"Tile256","Value":{"Height":16,"Width":16,"X":58,"Y":676}},{"Key":"Tile257","Value":{"Height":16,"Width":16,"X":58,"Y":802}},{"Key":"Tile258","Value":{"Height":16,"Width":16,"X":61,"Y":400}},{"Key":"Tile262","Value":{"Height":16,"Width":16,"X":62,"Y":136}},{"Key":"Tile263","Value":{"Height":16,"Width":16,"X":61,"Y":231}},{"Key":"Tile268","Value":{"Height":16,"Width":16,"X":63,"Y":193}},{"Key":"Tile269","Value":{"Height":16,"Width":16,"X":63,"Y":344}},{"Key":"Tile270","Value":{"Height":16,"Width":16,"X":62,"Y":420}},{"Key":"Tile274","Value":{"Height":16,"Width":16,"X":66,"Y":23}},{"Key":"Tile276","Value":{"Height":16,"Width":16,"X":68,"Y":605}},{"Key":"Tile280","Value":{"Height":16,"Width":16,"X":70,"Y":82}},{"Key":"Tile281","Value":{"Height":16,"Width":16,"X":69,"Y":514}},{"Key":"Tile282","Value":{"Height":16,"Width":16,"X":69,"Y":551}},{"Key":"Tile283","Value":{"Height":16,"Width":16,"X":68,"Y":589}},{"Key":"Tile284","Value":{"Height":16,"Width":16,"X":69,"Y":622}},{"Key":"Tile285","Value":{"Height":16,"Width":16,"X":68,"Y":640}},{"Key":"Tile286","Value":{"Height":16,"Width":16,"X":68,"Y":658}},{"Key":"Tile292","Value":{"Height":16,"Width":16,"X":70,"Y":2}},{"Key":"Tile293","Value":{"Height":16,"Width":16,"X":70,"Y":288}},{"Key":"Tile294","Value":{"Height":16,"Width":16,"X":70,"Y":326}},{"Key":"Tile295","Value":{"Height":16,"Width":16,"X":70,"Y":570}},{"Key":"Tile296","Value":{"Height":16,"Width":16,"X":68,"Y":695}},{"Key":"Tile297","Value":{"Height":16,"Width":16,"X":71,"Y":118}},{"Key":"Tile298","Value":{"Height":16,"Width":16,"X":72,"Y":458}},{"Key":"Tile301","Value":{"Height":16,"Width":16,"X":72,"Y":64}},{"Key":"Tile302","Value":{"Height":16,"Width":16,"X":71,"Y":820}},{"Key":"Tile303","Value":{"Height":16,"Width":16,"X":74,"Y":306}},{"Key":"Tile304","Value":{"Height":16,"Width":16,"X":75,"Y":439}},{"Key":"Tile305","Value":{"Height":16,"Width":16,"X":74,"Y":496}},{"Key":"Tile306","Value":{"Height":16,"Width":16,"X":75,"Y":44}},{"Key":"Tile307","Value":{"Height":16,"Width":16,"X":76,"Y":173}},{"Key":"Tile308","Value":{"Height":16,"Width":16,"X":74,"Y":532}},{"Key":"Tile309","Value":{"Height":16,"Width":16,"X":76,"Y":713}},{"Key":"Tile310","Value":{"Height":16,"Width":16,"X":76,"Y":750}},{"Key":"Tile311","Value":{"Height":16,"Width":16,"X":76,"Y":766}},{"Key":"Tile312","Value":{"Height":16,"Width":16,"X":77,"Y":250}},{"Key":"Tile313","Value":{"Height":16,"Width":16,"X":75,"Y":362}},{"Key":"Tile314","Value":{"Height":16,"Width":16,"X":76,"Y":477}},{"Key":"Tile315","Value":{"Height":16,"Width":16,"X":76,"Y":731}},{"Key":"Tile316","Value":{"Height":16,"Width":16,"X":76,"Y":784}},{"Key":"Tile317","Value":{"Height":16,"Width":16,"X":75,"Y":802}},{"Key":"Tile324","Value":{"Height":16,"Width":16,"X":77,"Y":154}},{"Key":"Tile325","Value":{"Height":16,"Width":16,"X":78,"Y":210}},{"Key":"Tile326","Value":{"Height":16,"Width":16,"X":77,"Y":269}},{"Key":"Tile327","Value":{"Height":16,"Width":16,"X":78,"Y":401}},{"Key":"Tile328","Value":{"Height":16,"Width":16,"X":78,"Y":676}},{"Key":"Tile333","Value":{"Height":16,"Width":16,"X":77,"Y":231}},{"Key":"Tile334","Value":{"Height":16,"Width":16,"X":79,"Y":382}},{"Key":"Tile337","Value":{"Height":16,"Width":16,"X":79,"Y":136}},{"Key":"Tile338","Value":{"Height":16,"Width":16,"X":80,"Y":193}},{"Key":"Tile339","Value":{"Height":16,"Width":16,"X":78,"Y":420}},{"Key":"Tile341","Value":{"Height":16,"Width":16,"X":81,"Y":344}},{"Key":"Tile342","Value":{"Height":16,"Width":16,"X":84,"Y":588}},{"Key":"Tile349","Value":{"Height":16,"Width":16,"X":85,"Y":514}},{"Key":"Tile350","Value":{"Height":16,"Width":16,"X":85,"Y":622}},{"Key":"Tile351","Value":{"Height":16,"Width":16,"X":84,"Y":640}},{"Key":"Tile352","Value":{"Height":16,"Width":16,"X":85,"Y":658}},{"Key":"Tile353","Value":{"Height":16,"Width":16,"X":84,"Y":696}},{"Key":"Tile357","Value":{"Height":16,"Width":16,"X":86,"Y":24}},{"Key":"Tile358","Value":{"Height":16,"Width":16,"X":84,"Y":100}},{"Key":"Tile359","Value":{"Height":16,"Width":16,"X":85,"Y":551}},{"Key":"Tile360","Value":{"Height":16,"Width":16,"X":84,"Y":605}},{"Key":"Tile361","Value":{"Height":16,"Width":16,"X":86,"Y":2}},{"Key":"Tile362","Value":{"Height":16,"Width":16,"X":88,"Y":82}},{"Key":"Tile363","Value":{"Height":16,"Width":16,"X":86,"Y":326}},{"Key":"Tile364","Value":{"Height":16,"Width":16,"X":85,"Y":821}},{"Key":"Tile367","Value":{"Height":16,"Width":16,"X":88,"Y":288}},{"Key":"Tile368","Value":{"Height":16,"Width":16,"X":88,"Y":570}},{"Key":"Tile369","Value":{"Height":16,"Width":16,"X":88,"Y":64}},{"Key":"Tile370","Value":{"Height":16,"Width":16,"X":89,"Y":118}},{"Key":"Tile371","Value":{"Height":16,"Width":16,"X":90,"Y":306}},{"Key":"Tile372","Value":{"Height":16,"Width":16,"X":91,"Y":362}},{"Key":"Tile373","Value":{"Height":16,"Width":16,"X":90,"Y":532}},{"Key":"Tile374","Value":{"Height":16,"Width":16,"X":91,"Y":44}},{"Key":"Tile375","Value":{"Height":16,"Width":16,"X":91,"Y":496}},{"Key":"Tile376","Value":{"Height":16,"Width":16,"X":93,"Y":458}},{"Key":"Tile382","Value":{"Height":14,"Width":14,"X":92,"Y":175}},{"Key":"Tile383","Value":{"Height":16,"Width":16,"X":94,"Y":269}},{"Key":"Tile384","Value":{"Height":16,"Width":16,"X":94,"Y":477}},{"Key":"Tile385","Value":{"Height":16,"Width":16,"X":93,"Y":713}},{"Key":"Tile386","Value":{"Height":16,"Width":16,"X":93,"Y":766}},{"Key":"Tile390","Value":{"Height":16,"Width":16,"X":93,"Y":231}},{"Key":"Tile391","Value":{"Height":16,"Width":16,"X":94,"Y":420}},{"Key":"Tile392","Value":{"Height":16,"Width":16,"X":93,"Y":439}},{"Key":"Tile393","Value":{"Height":16,"Width":16,"X":94,"Y":731}},{"Key":"Tile394","Value":{"Height":16,"Width":16,"X":94,"Y":749}},{"Key":"Tile395","Value":{"Height":16,"Width":16,"X":94,"Y":784}},{"Key":"Tile396","Value":{"Height":16,"Width":16,"X":95,"Y":210}},{"Key":"Tile399","Value":{"Height":16,"Width":16,"X":96,"Y":401}},{"Key":"Tile400","Value":{"Height":16,"Width":16,"X":94,"Y":802}},{"Key":"Tile403","Value":{"Height":16,"Width":16,"X":96,"Y":136}},{"Key":"Tile404","Value":{"Height":16,"Width":16,"X":95,"Y":154}},{"Key":"Tile405","Value":{"Height":16,"Width":16,"X":95,"Y":250}},{"Key":"Tile406","Value":{"Height":16,"Width":16,"X":98,"Y":193}},{"Key":"Tile408","Value":{"Height":16,"Width":16,"X":96,"Y":383}},{"Key":"Tile409","Value":{"Height":16,"Width":16,"X":98,"Y":676}},{"Key":"Tile410","Value":{"Height":16,"Width":16,"X":97,"Y":344}},{"Key":"Tile411","Value":{"Height":16,"Width":16,"X":100,"Y":100}},{"Key":"Tile412","Value":{"Height":16,"Width":16,"X":100,"Y":605}},{"Key":"Tile413","Value":{"Height":16,"Width":16,"X":100,"Y":640}},{"Key":"Tile419","Value":{"Height":16,"Width":16,"X":100,"Y":658}},{"Key":"Tile420","Value":{"Height":16,"Width":16,"X":100,"Y":696}},{"Key":"Tile421","Value":{"Height":16,"Width":16,"X":102,"Y":821}},{"Key":"Tile423","Value":{"Height":16,"Width":16,"X":102,"Y":2}},{"Key":"Tile424","Value":{"Height":16,"Width":16,"X":102,"Y":551}},{"Key":"Tile425","Value":{"Height":16,"Width":16,"X":102,"Y":588}},{"Key":"Tile426","Value":{"Height":16,"Width":16,"X":101,"Y":622}},{"Key":"Tile427","Value":{"Height":16,"Width":16,"X":103,"Y":514}},{"Key":"Tile432","Value":{"Height":16,"Width":16,"X":105,"Y":64}},{"Key":"Tile435","Value":{"Height":16,"Width":16,"X":104,"Y":82}},{"Key":"Tile437","Value":{"Height":16,"Width":16,"X":104,"Y":288}},{"Key":"Tile438","Value":{"Height":16,"Width":16,"X":106,"Y":326}},{"Key":"Tile439","Value":{"Height":16,"Width":16,"X":104,"Y":24}},{"Key":"Tile440","Value":{"Height":16,"Width":16,"X":107,"Y":174}},{"Key":"Tile441","Value":{"Height":16,"Width":16,"X":106,"Y":532}},{"Key":"Tile442","Value":{"Height":16,"Width":16,"X":105,"Y":570}},{"Key":"Tile443","Value":{"Height":16,"Width":16,"X":107,"Y":306}},{"Key":"Tile444","Value":{"Height":16,"Width":16,"X":108,"Y":362}},{"Key":"Tile445","Value":{"Height":16,"Width":16,"X":108,"Y":44}},{"Key":"Tile446","Value":{"Height":16,"Width":16,"X":106,"Y":118}},{"Key":"Tile449","Value":{"Height":16,"Width":16,"X":107,"Y":496}},{"Key":"Tile458","Value":{"Height":16,"Width":16,"X":110,"Y":231}},{"Key":"Tile459","Value":{"Height":16,"Width":16,"X":111,"Y":439}},{"Key":"Tile460","Value":{"Height":16,"Width":16,"X":112,"Y":731}},{"Key":"BrunoFront","Value":{"Height":16,"Width":16,"X":113,"Y":210}},{"Key":"playerDown","Value":{"Height":16,"Width":16,"X":112,"Y":269}},{"Key":"Tile465","Value":{"Height":16,"Width":16,"X":112,"Y":420}},{"Key":"Tile466","Value":{"Height":16,"Width":16,"X":112,"Y":713}},{"Key":"Tile467","Value":{"Height":16,"Width":16,"X":112,"Y":749}},{"Key":"Tile468","Value":{"Height":16,"Width":16,"X":112,"Y":766}},{"Key":"Tile469","Value":{"Height":16,"Width":16,"X":112,"Y":784}},{"Key":"Tile470","Value":{"Height":16,"Width":16,"X":112,"Y":154}},{"Key":"Tile472","Value":{"Height":16,"Width":16,"X":113,"Y":344}},{"Key":"Tile473","Value":{"Height":16,"Width":16,"X":112,"Y":381}},{"Key":"Tile474","Value":{"Height":16,"Width":16,"X":111,"Y":458}},{"Key":"Tile475","Value":{"Height":16,"Width":16,"X":114,"Y":477}},{"Key":"Tile476","Value":{"Height":16,"Width":16,"X":112,"Y":802}},{"Key":"Tile477","Value":{"Height":16,"Width":16,"X":114,"Y":136}},{"Key":"Tile478","Value":{"Height":16,"Width":16,"X":114,"Y":249}},{"Key":"Tile479","Value":{"Height":16,"Width":16,"X":116,"Y":193}},{"Key":"Tile480","Value":{"Height":16,"Width":16,"X":113,"Y":401}},{"Key":"LanceLeftMoving","Value":{"Height":16,"Width":16,"X":115,"Y":676}},{"Key":"Tile482","Value":{"Height":16,"Width":16,"X":116,"Y":100}},{"Key":"Tile484","Value":{"Height":16,"Width":16,"X":116,"Y":605}},{"Key":"Tile489","Value":{"Height":16,"Width":16,"X":117,"Y":640}},{"Key":"Tile490","Value":{"Height":16,"Width":16,"X":116,"Y":658}},{"Key":"Tile491","Value":{"Height":16,"Width":16,"X":116,"Y":696}},{"Key":"Tile494","Value":{"Height":16,"Width":16,"X":118,"Y":588}},{"Key":"Tile495","Value":{"Height":16,"Width":16,"X":117,"Y":622}},{"Key":"Tile496","Value":{"Height":16,"Width":16,"X":121,"Y":2}},{"Key":"Tile497","Value":{"Height":16,"Width":16,"X":122,"Y":82}},{"Key":"Tile499","Value":{"Height":16,"Width":16,"X":123,"Y":64}},{"Key":"Tile500","Value":{"Height":16,"Width":16,"X":123,"Y":118}},{"Key":"Tile501","Value":{"Height":16,"Width":16,"X":122,"Y":288}},{"Key":"Tile502","Value":{"Height":16,"Width":16,"X":122,"Y":551}},{"Key":"GiovanniFront","Value":{"Height":16,"Width":16,"X":122,"Y":570}},{"Key":"BugFront","Value":{"Height":16,"Width":16,"X":123,"Y":822}},{"Key":"Tile505","Value":{"Height":16,"Width":16,"X":123,"Y":514}},{"Key":"Tile506","Value":{"Height":16,"Width":16,"X":123,"Y":496}},{"Key":"Tile507","Value":{"Height":16,"Width":16,"X":123,"Y":532}},{"Key":"SwimmerFrontMoving","Value":{"Height":16,"Width":16,"X":125,"Y":24}},{"Key":"Tile515","Value":{"Height":16,"Width":16,"X":124,"Y":44}},{"Key":"PokemonBack","Value":{"Height":16,"Width":16,"X":127,"Y":326}},{"Key":"Tile518","Value":{"Height":16,"Width":16,"X":127,"Y":174}},{"Key":"Tile519","Value":{"Height":16,"Width":16,"X":126,"Y":306}},{"Key":"Tile520","Value":{"Height":16,"Width":16,"X":126,"Y":362}},{"Key":"Fossil","Value":{"Height":16,"Width":16,"X":127,"Y":154}},{"Key":"Tile523","Value":{"Height":16,"Width":16,"X":127,"Y":231}},{"Key":"BirdFrontStill","Value":{"Height":16,"Width":16,"X":128,"Y":381}},{"Key":"Tile525","Value":{"Height":16,"Width":16,"X":129,"Y":401}},{"Key":"Tile526","Value":{"Height":16,"Width":16,"X":129,"Y":458}},{"Key":"Tile527","Value":{"Height":16,"Width":16,"X":130,"Y":766}},{"Key":"Tile528","Value":{"Height":16,"Width":16,"X":130,"Y":439}},{"Key":"GrassPokemonFront","Value":{"Height":16,"Width":16,"X":130,"Y":731}},{"Key":"Tile530","Value":{"Height":16,"Width":16,"X":130,"Y":749}},{"Key":"JessieFrontMoving","Value":{"Height":16,"Width":16,"X":130,"Y":784}},{"Key":"Tile532","Value":{"Height":16,"Width":16,"X":128,"Y":802}},{"Key":"KarateGuyLeft","Value":{"Height":16,"Width":16,"X":130,"Y":136}},{"Key":"WaterPokemonLeft","Value":{"Height":16,"Width":16,"X":132,"Y":250}},{"Key":"playerUp","Value":{"Height":16,"Width":16,"X":131,"Y":269}},{"Key":"Tile536","Value":{"Height":16,"Width":16,"X":130,"Y":344}},{"Key":"Tile537","Value":{"Height":16,"Width":16,"X":130,"Y":420}},{"Key":"Tile538","Value":{"Height":16,"Width":16,"X":131,"Y":477}},{"Key":"MomFront","Value":{"Height":16,"Width":16,"X":131,"Y":676}},{"Key":"PikaBack","Value":{"Height":16,"Width":16,"X":131,"Y":713}},{"Key":"Pokemon1Left","Value":{"Height":16,"Width":16,"X":133,"Y":193}},{"Key":"BrunoBack","Value":{"Height":16,"Width":16,"X":134,"Y":210}},{"Key":"Girl1Back","Value":{"Height":16,"Width":16,"X":20,"Y":100}},{"Key":"Item","Value":{"Height":16,"Width":16,"X":68,"Y":100}}]
+{
+  "AssistantFront": {
+    "X": 4,
+    "Y": 2,
+    "Width": 16,
+    "Height": 16
+  },
+  "AssistantBack": {
+    "X": 22,
+    "Y": 2,
+    "Width": 16,
+    "Height": 16
+  },
+  "AssistantLeft": {
+    "X": 39,
+    "Y": 2,
+    "Width": 16,
+    "Height": 16
+  },
+  "AssistantFrontMoving": {
+    "X": 54,
+    "Y": 2,
+    "Width": 16,
+    "Height": 16
+  },
+  "AssistantBackMoving": {
+    "X": 70,
+    "Y": 2,
+    "Width": 16,
+    "Height": 16
+  },
+  "AssistantLeftMoving": {
+    "X": 86,
+    "Y": 2,
+    "Width": 16,
+    "Height": 16
+  },
+  "LtSurgeFront": {
+    "X": 102,
+    "Y": 2,
+    "Width": 16,
+    "Height": 16
+  },
+  "LtSurgeBack": {
+    "X": 121,
+    "Y": 2,
+    "Width": 16,
+    "Height": 16
+  },
+  "LtSurgeBackMoving": {
+    "X": 31,
+    "Y": 23,
+    "Width": 16,
+    "Height": 16
+  },
+  "LtSurgeLeftMoving": {
+    "X": 46,
+    "Y": 23,
+    "Width": 16,
+    "Height": 16
+  },
+  "SwimmerFront": {
+    "X": 66,
+    "Y": 23,
+    "Width": 16,
+    "Height": 16
+  },
+  "LtSurgeLeft": {
+    "X": 0,
+    "Y": 24,
+    "Width": 15,
+    "Height": 16
+  },
+  "LtSurgeFrontMoving": {
+    "X": 14,
+    "Y": 24,
+    "Width": 16,
+    "Height": 16
+  },
+  "SwimmerBack": {
+    "X": 86,
+    "Y": 24,
+    "Width": 16,
+    "Height": 16
+  },
+  "SwimmerLeft": {
+    "X": 104,
+    "Y": 24,
+    "Width": 16,
+    "Height": 16
+  },
+  "SwimmerFrontMoving": {
+    "X": 125,
+    "Y": 24,
+    "Width": 16,
+    "Height": 16
+  },
+  "SwimmerBackMoving": {
+    "X": 4,
+    "Y": 44,
+    "Width": 16,
+    "Height": 16
+  },
+  "NPCMale1Front": {
+    "X": 40,
+    "Y": 44,
+    "Width": 16,
+    "Height": 16
+  },
+  "NPCMale1Back": {
+    "X": 58,
+    "Y": 44,
+    "Width": 16,
+    "Height": 16
+  },
+  "NPCMale1Left": {
+    "X": 75,
+    "Y": 44,
+    "Width": 16,
+    "Height": 16
+  },
+  "GymGuideFront": {
+    "X": 91,
+    "Y": 44,
+    "Width": 16,
+    "Height": 16
+  },
+  "GymGuideBack": {
+    "X": 108,
+    "Y": 44,
+    "Width": 16,
+    "Height": 16
+  },
+  "GymGuideLeft": {
+    "X": 124,
+    "Y": 44,
+    "Width": 16,
+    "Height": 16
+  },
+  "SwimmerLeftMoving": {
+    "X": 23,
+    "Y": 45,
+    "Width": 16,
+    "Height": 16
+  },
+  "NPCOld1Front": {
+    "X": 3,
+    "Y": 64,
+    "Width": 16,
+    "Height": 16
+  },
+  "NPCOld1Back": {
+    "X": 21,
+    "Y": 64,
+    "Width": 16,
+    "Height": 16
+  },
+  "NPCOld1Left": {
+    "X": 37,
+    "Y": 64,
+    "Width": 16,
+    "Height": 16
+  },
+  "NPCMale2Front": {
+    "X": 55,
+    "Y": 64,
+    "Width": 16,
+    "Height": 16
+  },
+  "NPCMale2Back": {
+    "X": 72,
+    "Y": 64,
+    "Width": 16,
+    "Height": 16
+  },
+  "NPCMale2Left": {
+    "X": 88,
+    "Y": 64,
+    "Width": 16,
+    "Height": 16
+  },
+  "NPCMale3Front": {
+    "X": 105,
+    "Y": 64,
+    "Width": 16,
+    "Height": 16
+  },
+  "NPCMale3Back": {
+    "X": 123,
+    "Y": 64,
+    "Width": 16,
+    "Height": 16
+  },
+  "NPCMale3Left": {
+    "X": 3,
+    "Y": 81,
+    "Width": 16,
+    "Height": 16
+  },
+  "NPCMale4Front": {
+    "X": 19,
+    "Y": 82,
+    "Width": 16,
+    "Height": 16
+  },
+  "NPCMale4Back": {
+    "X": 38,
+    "Y": 82,
+    "Width": 16,
+    "Height": 16
+  },
+  "NPCMale4Left": {
+    "X": 54,
+    "Y": 82,
+    "Width": 16,
+    "Height": 16
+  },
+  "NurseFront": {
+    "X": 70,
+    "Y": 82,
+    "Width": 16,
+    "Height": 16
+  },
+  "NurseBack": {
+    "X": 88,
+    "Y": 82,
+    "Width": 16,
+    "Height": 16
+  },
+  "NurseLeft": {
+    "X": 104,
+    "Y": 82,
+    "Width": 16,
+    "Height": 16
+  },
+  "NurseFrontMoving": {
+    "X": 122,
+    "Y": 82,
+    "Width": 16,
+    "Height": 16
+  },
+  "NPCFemale1Front": {
+    "X": 4,
+    "Y": 100,
+    "Width": 16,
+    "Height": 16
+  },
+  "NPCFemale1Back": {
+    "X": 20,
+    "Y": 100,
+    "Width": 16,
+    "Height": 16
+  },
+  "NPCFemale1Left": {
+    "X": 36,
+    "Y": 100,
+    "Width": 16,
+    "Height": 16
+  },
+  "NameRaterFront": {
+    "X": 52,
+    "Y": 100,
+    "Width": 16,
+    "Height": 16
+  },
+  "NameRaterBack": {
+    "X": 68,
+    "Y": 100,
+    "Width": 16,
+    "Height": 16
+  },
+  "NameRaterLeft": {
+    "X": 84,
+    "Y": 100,
+    "Width": 16,
+    "Height": 16
+  },
+  "KogaFront": {
+    "X": 100,
+    "Y": 100,
+    "Width": 16,
+    "Height": 16
+  },
+  "KogaBack": {
+    "X": 116,
+    "Y": 100,
+    "Width": 16,
+    "Height": 16
+  },
+  "KogaLeft": {
+    "X": 5,
+    "Y": 118,
+    "Width": 16,
+    "Height": 16
+  },
+  "SafariZoneWardenFront": {
+    "X": 21,
+    "Y": 118,
+    "Width": 16,
+    "Height": 16
+  },
+  "SafariZoneWardenBack": {
+    "X": 39,
+    "Y": 118,
+    "Width": 16,
+    "Height": 16
+  },
+  "SafariZoneWardenLeft": {
+    "X": 55,
+    "Y": 118,
+    "Width": 16,
+    "Height": 16
+  },
+  "NPCMale5Front": {
+    "X": 71,
+    "Y": 118,
+    "Width": 16,
+    "Height": 16
+  },
+  "NPCMale5Back": {
+    "X": 89,
+    "Y": 118,
+    "Width": 16,
+    "Height": 16
+  },
+  "NPCMale5Left": {
+    "X": 106,
+    "Y": 118,
+    "Width": 16,
+    "Height": 16
+  },
+  "FisherFront": {
+    "X": 123,
+    "Y": 118,
+    "Width": 16,
+    "Height": 16
+  },
+  "FisherBack": {
+    "X": 6,
+    "Y": 136,
+    "Width": 16,
+    "Height": 16
+  },
+  "FisherLeft": {
+    "X": 25,
+    "Y": 136,
+    "Width": 16,
+    "Height": 16
+  },
+  "FisherFrontMoving": {
+    "X": 43,
+    "Y": 136,
+    "Width": 16,
+    "Height": 16
+  },
+  "FisherBackMoving": {
+    "X": 62,
+    "Y": 136,
+    "Width": 16,
+    "Height": 16
+  },
+  "FisherLeftMoving": {
+    "X": 79,
+    "Y": 136,
+    "Width": 16,
+    "Height": 16
+  },
+  "BlackBeltFront": {
+    "X": 96,
+    "Y": 136,
+    "Width": 16,
+    "Height": 16
+  },
+  "BlackBeltBack": {
+    "X": 114,
+    "Y": 136,
+    "Width": 16,
+    "Height": 16
+  },
+  "BlackBeltLeft": {
+    "X": 130,
+    "Y": 136,
+    "Width": 16,
+    "Height": 16
+  },
+  "BlackBeltFrontMoving": {
+    "X": 5,
+    "Y": 154,
+    "Width": 16,
+    "Height": 16
+  },
+  "BlackBeltBackMoving": {
+    "X": 21,
+    "Y": 154,
+    "Width": 16,
+    "Height": 16
+  },
+  "BlackBeltLeftMoving": {
+    "X": 39,
+    "Y": 154,
+    "Width": 16,
+    "Height": 16
+  },
+  "PoliceFront": {
+    "X": 57,
+    "Y": 154,
+    "Width": 16,
+    "Height": 16
+  },
+  "PoliceBack": {
+    "X": 77,
+    "Y": 154,
+    "Width": 16,
+    "Height": 16
+  },
+  "PoliceLeft": {
+    "X": 95,
+    "Y": 154,
+    "Width": 16,
+    "Height": 16
+  },
+  "PokeballFront": {
+    "X": 112,
+    "Y": 154,
+    "Width": 16,
+    "Height": 16
+  },
+  "FossilFront": {
+    "X": 127,
+    "Y": 154,
+    "Width": 16,
+    "Height": 16
+  },
+  "SnorlaxFront": {
+    "X": 76,
+    "Y": 173,
+    "Width": 16,
+    "Height": 16
+  },
+  "RockFront": {
+    "X": 5,
+    "Y": 174,
+    "Width": 16,
+    "Height": 16
+  },
+  "PaperFront": {
+    "X": 25,
+    "Y": 174,
+    "Width": 16,
+    "Height": 16
+  },
+  "BookFront": {
+    "X": 40,
+    "Y": 174,
+    "Width": 16,
+    "Height": 16
+  },
+  "NoteFront": {
+    "X": 58,
+    "Y": 174,
+    "Width": 16,
+    "Height": 16
+  },
+  "OldManLyingFront": {
+    "X": 107,
+    "Y": 174,
+    "Width": 16,
+    "Height": 16
+  },
+  "NPCChild2Front": {
+    "X": 127,
+    "Y": 174,
+    "Width": 16,
+    "Height": 16
+  },
+  "CoinFront": {
+    "X": 92,
+    "Y": 175,
+    "Width": 14,
+    "Height": 14
+  },
+  "NPCChild2Back": {
+    "X": 4,
+    "Y": 192,
+    "Width": 16,
+    "Height": 16
+  },
+  "NPCChild2Left": {
+    "X": 26,
+    "Y": 192,
+    "Width": 16,
+    "Height": 16
+  },
+  "ClefairyFront": {
+    "X": 46,
+    "Y": 192,
+    "Width": 16,
+    "Height": 16
+  },
+  "ClefairyBack": {
+    "X": 63,
+    "Y": 193,
+    "Width": 16,
+    "Height": 16
+  },
+  "ClefairyLeft": {
+    "X": 80,
+    "Y": 193,
+    "Width": 16,
+    "Height": 16
+  },
+  "ClefairyFrontMoving": {
+    "X": 98,
+    "Y": 193,
+    "Width": 16,
+    "Height": 16
+  },
+  "ClefairyBackMoving": {
+    "X": 116,
+    "Y": 193,
+    "Width": 16,
+    "Height": 16
+  },
+  "ClefairyLeftMoving": {
+    "X": 133,
+    "Y": 193,
+    "Width": 16,
+    "Height": 16
+  },
+  "AghataFront": {
+    "X": 4,
+    "Y": 210,
+    "Width": 16,
+    "Height": 16
+  },
+  "AghataBack": {
+    "X": 24,
+    "Y": 210,
+    "Width": 16,
+    "Height": 16
+  },
+  "AghataLeft": {
+    "X": 41,
+    "Y": 210,
+    "Width": 16,
+    "Height": 16
+  },
+  "AghataFrontMoving": {
+    "X": 60,
+    "Y": 210,
+    "Width": 16,
+    "Height": 16
+  },
+  "AghataBackMoving": {
+    "X": 78,
+    "Y": 210,
+    "Width": 16,
+    "Height": 16
+  },
+  "AghataLeftMoving": {
+    "X": 95,
+    "Y": 210,
+    "Width": 16,
+    "Height": 16
+  },
+  "BrunoFront": {
+    "X": 113,
+    "Y": 210,
+    "Width": 16,
+    "Height": 16
+  },
+  "BrunoBack": {
+    "X": 134,
+    "Y": 210,
+    "Width": 16,
+    "Height": 16
+  },
+  "BrunoLeft": {
+    "X": 7,
+    "Y": 231,
+    "Width": 16,
+    "Height": 16
+  },
+  "BrunoFrontMoving": {
+    "X": 23,
+    "Y": 231,
+    "Width": 16,
+    "Height": 16
+  },
+  "BrunoBackMoving": {
+    "X": 42,
+    "Y": 231,
+    "Width": 16,
+    "Height": 16
+  },
+  "BrunoLeftMoving": {
+    "X": 61,
+    "Y": 231,
+    "Width": 16,
+    "Height": 16
+  },
+  "LorelieFront": {
+    "X": 77,
+    "Y": 231,
+    "Width": 16,
+    "Height": 16
+  },
+  "LorelieBack": {
+    "X": 93,
+    "Y": 231,
+    "Width": 16,
+    "Height": 16
+  },
+  "LorelieLeft": {
+    "X": 110,
+    "Y": 231,
+    "Width": 16,
+    "Height": 16
+  },
+  "LorelieFrontMoving": {
+    "X": 127,
+    "Y": 231,
+    "Width": 16,
+    "Height": 16
+  },
+  "WaterPokemonFront": {
+    "X": 38,
+    "Y": 248,
+    "Width": 16,
+    "Height": 16
+  },
+  "LorelieBackMoving": {
+    "X": 6,
+    "Y": 249,
+    "Width": 16,
+    "Height": 16
+  },
+  "LorelieLeftMoving": {
+    "X": 21,
+    "Y": 249,
+    "Width": 16,
+    "Height": 16
+  },
+  "WaterPokemonBack": {
+    "X": 57,
+    "Y": 249,
+    "Width": 16,
+    "Height": 16
+  },
+  "WaterPokemonBackMoving": {
+    "X": 114,
+    "Y": 249,
+    "Width": 16,
+    "Height": 16
+  },
+  "WaterPokemonLeft": {
+    "X": 77,
+    "Y": 250,
+    "Width": 16,
+    "Height": 16
+  },
+  "WaterPokemonFrontMoving": {
+    "X": 95,
+    "Y": 250,
+    "Width": 16,
+    "Height": 16
+  },
+  "WaterPokemonLeftMoving": {
+    "X": 132,
+    "Y": 250,
+    "Width": 16,
+    "Height": 16
+  },
+  "PlayerBikeFront": {
+    "X": 6,
+    "Y": 269,
+    "Width": 16,
+    "Height": 16
+  },
+  "PlayerBikeBack": {
+    "X": 24,
+    "Y": 269,
+    "Width": 16,
+    "Height": 16
+  },
+  "PlayerBikeLeft": {
+    "X": 41,
+    "Y": 269,
+    "Width": 16,
+    "Height": 16
+  },
+  "PlayerBikeFrontMoving": {
+    "X": 58,
+    "Y": 269,
+    "Width": 16,
+    "Height": 16
+  },
+  "PlayerBikeBackMoving": {
+    "X": 77,
+    "Y": 269,
+    "Width": 16,
+    "Height": 16
+  },
+  "PlayerBikeLeftMoving": {
+    "X": 94,
+    "Y": 269,
+    "Width": 16,
+    "Height": 16
+  },
+  "PlayerFront": {
+    "X": 112,
+    "Y": 269,
+    "Width": 16,
+    "Height": 16
+  },
+  "PlayerBack": {
+    "X": 131,
+    "Y": 269,
+    "Width": 16,
+    "Height": 16
+  },
+  "PlayerLeft": {
+    "X": 6,
+    "Y": 288,
+    "Width": 16,
+    "Height": 16
+  },
+  "PlayerFrontMoving": {
+    "X": 22,
+    "Y": 288,
+    "Width": 16,
+    "Height": 16
+  },
+  "PlayerBackMoving": {
+    "X": 38,
+    "Y": 288,
+    "Width": 16,
+    "Height": 16
+  },
+  "PlayerLeftMoving": {
+    "X": 54,
+    "Y": 288,
+    "Width": 16,
+    "Height": 16
+  },
+  "RivalFront": {
+    "X": 70,
+    "Y": 288,
+    "Width": 16,
+    "Height": 16
+  },
+  "RivalBack": {
+    "X": 88,
+    "Y": 288,
+    "Width": 16,
+    "Height": 16
+  },
+  "RivalLeft": {
+    "X": 104,
+    "Y": 288,
+    "Width": 16,
+    "Height": 16
+  },
+  "RivalFrontMoving": {
+    "X": 122,
+    "Y": 288,
+    "Width": 16,
+    "Height": 16
+  },
+  "RivalLeftMoving": {
+    "X": 25,
+    "Y": 306,
+    "Width": 16,
+    "Height": 16
+  },
+  "ProfOakFront": {
+    "X": 41,
+    "Y": 306,
+    "Width": 16,
+    "Height": 16
+  },
+  "ProfOakBack": {
+    "X": 58,
+    "Y": 306,
+    "Width": 16,
+    "Height": 16
+  },
+  "ProfOakLeft": {
+    "X": 74,
+    "Y": 306,
+    "Width": 16,
+    "Height": 16
+  },
+  "ProfOakFrontMoving": {
+    "X": 90,
+    "Y": 306,
+    "Width": 16,
+    "Height": 16
+  },
+  "ProfOakBackMoving": {
+    "X": 107,
+    "Y": 306,
+    "Width": 16,
+    "Height": 16
+  },
+  "ProfOakLeftMoving": {
+    "X": 126,
+    "Y": 306,
+    "Width": 16,
+    "Height": 16
+  },
+  "RivalBackMoving": {
+    "X": 6,
+    "Y": 307,
+    "Width": 16,
+    "Height": 16
+  },
+  "BugCatcherFront": {
+    "X": 6,
+    "Y": 326,
+    "Width": 16,
+    "Height": 16
+  },
+  "BugCatcherBack": {
+    "X": 22,
+    "Y": 326,
+    "Width": 16,
+    "Height": 16
+  },
+  "BugCatcherLeft": {
+    "X": 38,
+    "Y": 326,
+    "Width": 16,
+    "Height": 16
+  },
+  "BugCatcherFrontMoving": {
+    "X": 54,
+    "Y": 326,
+    "Width": 16,
+    "Height": 16
+  },
+  "BugCatcherBackMoving": {
+    "X": 70,
+    "Y": 326,
+    "Width": 16,
+    "Height": 16
+  },
+  "BugCatcherLeftMoving": {
+    "X": 86,
+    "Y": 326,
+    "Width": 16,
+    "Height": 16
+  },
+  "NormalPokemonFront": {
+    "X": 106,
+    "Y": 326,
+    "Width": 16,
+    "Height": 16
+  },
+  "NormalPokemonBack": {
+    "X": 127,
+    "Y": 326,
+    "Width": 16,
+    "Height": 16
+  },
+  "NormalPokemonLeft": {
+    "X": 6,
+    "Y": 344,
+    "Width": 16,
+    "Height": 16
+  },
+  "NormalPokemonFrontMoving": {
+    "X": 25,
+    "Y": 344,
+    "Width": 16,
+    "Height": 16
+  },
+  "NormalPokemonLeftMoving": {
+    "X": 63,
+    "Y": 344,
+    "Width": 16,
+    "Height": 16
+  },
+  "LassFront": {
+    "X": 81,
+    "Y": 344,
+    "Width": 16,
+    "Height": 16
+  },
+  "LassBack": {
+    "X": 97,
+    "Y": 344,
+    "Width": 16,
+    "Height": 16
+  },
+  "LassLeft": {
+    "X": 113,
+    "Y": 344,
+    "Width": 16,
+    "Height": 16
+  },
+  "LassFrontMoving": {
+    "X": 130,
+    "Y": 344,
+    "Width": 16,
+    "Height": 16
+  },
+  "NormalPokemonBackMoving": {
+    "X": 44,
+    "Y": 345,
+    "Width": 16,
+    "Height": 15
+  },
+  "LassBackMoving": {
+    "X": 5,
+    "Y": 362,
+    "Width": 16,
+    "Height": 16
+  },
+  "LassLeftMoving": {
+    "X": 21,
+    "Y": 362,
+    "Width": 16,
+    "Height": 16
+  },
+  "BrockFront": {
+    "X": 39,
+    "Y": 362,
+    "Width": 16,
+    "Height": 16
+  },
+  "BrockBack": {
+    "X": 57,
+    "Y": 362,
+    "Width": 16,
+    "Height": 16
+  },
+  "BrockLeft": {
+    "X": 75,
+    "Y": 362,
+    "Width": 16,
+    "Height": 16
+  },
+  "BrockFrontMoving": {
+    "X": 91,
+    "Y": 362,
+    "Width": 16,
+    "Height": 16
+  },
+  "BrockBackMoving": {
+    "X": 108,
+    "Y": 362,
+    "Width": 16,
+    "Height": 16
+  },
+  "BrockLeftMoving": {
+    "X": 126,
+    "Y": 362,
+    "Width": 16,
+    "Height": 16
+  },
+  "BirdFront": {
+    "X": 112,
+    "Y": 381,
+    "Width": 16,
+    "Height": 16
+  },
+  "BirdBack": {
+    "X": 128,
+    "Y": 381,
+    "Width": 16,
+    "Height": 16
+  },
+  "ReinaFront": {
+    "X": 5,
+    "Y": 382,
+    "Width": 16,
+    "Height": 16
+  },
+  "ReinaBack": {
+    "X": 26,
+    "Y": 382,
+    "Width": 16,
+    "Height": 16
+  },
+  "ReinaLeft": {
+    "X": 42,
+    "Y": 382,
+    "Width": 16,
+    "Height": 16
+  },
+  "ReinaFrontMoving": {
+    "X": 60,
+    "Y": 382,
+    "Width": 16,
+    "Height": 16
+  },
+  "ReinaBackMoving": {
+    "X": 79,
+    "Y": 382,
+    "Width": 16,
+    "Height": 16
+  },
+  "ReinaLeftMoving": {
+    "X": 96,
+    "Y": 383,
+    "Width": 16,
+    "Height": 16
+  },
+  "BirdBackMoving": {
+    "X": 43,
+    "Y": 400,
+    "Width": 16,
+    "Height": 16
+  },
+  "BirdLeftMoving": {
+    "X": 61,
+    "Y": 400,
+    "Width": 16,
+    "Height": 16
+  },
+  "BirdLeft": {
+    "X": 5,
+    "Y": 401,
+    "Width": 16,
+    "Height": 16
+  },
+  "BirdFrontMoving": {
+    "X": 24,
+    "Y": 401,
+    "Width": 16,
+    "Height": 16
+  },
+  "Tile327": {
+    "X": 78,
+    "Y": 401,
+    "Width": 16,
+    "Height": 16
+  },
+  "Tile399": {
+    "X": 96,
+    "Y": 401,
+    "Width": 16,
+    "Height": 16
+  },
+  "Tile480": {
+    "X": 113,
+    "Y": 401,
+    "Width": 16,
+    "Height": 16
+  },
+  "Tile525": {
+    "X": 129,
+    "Y": 401,
+    "Width": 16,
+    "Height": 16
+  },
+  "BigGuyBackMoving": {
+    "X": 7,
+    "Y": 420,
+    "Width": 16,
+    "Height": 16
+  },
+  "BaldGuyLeftMoving": {
+    "X": 26,
+    "Y": 420,
+    "Width": 16,
+    "Height": 16
+  },
+  "OldManFront": {
+    "X": 44,
+    "Y": 420,
+    "Width": 16,
+    "Height": 16
+  },
+  "OldManBack": {
+    "X": 62,
+    "Y": 420,
+    "Width": 16,
+    "Height": 16
+  },
+  "OldManLeft": {
+    "X": 78,
+    "Y": 420,
+    "Width": 16,
+    "Height": 16
+  },
+  "OldManFrontMoving": {
+    "X": 94,
+    "Y": 420,
+    "Width": 16,
+    "Height": 16
+  },
+  "OldManBackMoving": {
+    "X": 112,
+    "Y": 420,
+    "Width": 16,
+    "Height": 16
+  },
+  "OldManLeftMoving": {
+    "X": 130,
+    "Y": 420,
+    "Width": 16,
+    "Height": 16
+  },
+  "BillFront": {
+    "X": 6,
+    "Y": 439,
+    "Width": 16,
+    "Height": 16
+  },
+  "BillBack": {
+    "X": 24,
+    "Y": 439,
+    "Width": 16,
+    "Height": 16
+  },
+  "BillLeft": {
+    "X": 40,
+    "Y": 439,
+    "Width": 16,
+    "Height": 16
+  },
+  "BillFrontMoving": {
+    "X": 56,
+    "Y": 439,
+    "Width": 16,
+    "Height": 16
+  },
+  "BillBackMoving": {
+    "X": 75,
+    "Y": 439,
+    "Width": 16,
+    "Height": 16
+  },
+  "BillLeftMoving": {
+    "X": 93,
+    "Y": 439,
+    "Width": 16,
+    "Height": 16
+  },
+  "SabrinaFront": {
+    "X": 111,
+    "Y": 439,
+    "Width": 16,
+    "Height": 16
+  },
+  "SabrinaBack": {
+    "X": 130,
+    "Y": 439,
+    "Width": 16,
+    "Height": 16
+  },
+  "SabrinaLeft": {
+    "X": 5,
+    "Y": 458,
+    "Width": 16,
+    "Height": 16
+  },
+  "SabrinaBackMoving": {
+    "X": 36,
+    "Y": 458,
+    "Width": 16,
+    "Height": 16
+  },
+  "SabrinaLeftMoving": {
+    "X": 54,
+    "Y": 458,
+    "Width": 16,
+    "Height": 16
+  },
+  "KyioFront": {
+    "X": 72,
+    "Y": 458,
+    "Width": 16,
+    "Height": 16
+  },
+  "KyioBack": {
+    "X": 93,
+    "Y": 458,
+    "Width": 16,
+    "Height": 16
+  },
+  "KyioLeft": {
+    "X": 111,
+    "Y": 458,
+    "Width": 16,
+    "Height": 16
+  },
+  "KyioFrontMoving": {
+    "X": 129,
+    "Y": 458,
+    "Width": 16,
+    "Height": 16
+  },
+  "SabrinaFrontMoving": {
+    "X": 20,
+    "Y": 459,
+    "Width": 16,
+    "Height": 15
+  },
+  "KyioBackMoving": {
+    "X": 6,
+    "Y": 477,
+    "Width": 16,
+    "Height": 16
+  },
+  "KyioLeftMoving": {
+    "X": 24,
+    "Y": 477,
+    "Width": 16,
+    "Height": 16
+  },
+  "BeautyFront": {
+    "X": 40,
+    "Y": 477,
+    "Width": 16,
+    "Height": 16
+  },
+  "BeautyBack": {
+    "X": 59,
+    "Y": 477,
+    "Width": 16,
+    "Height": 16
+  },
+  "BeautyLeft": {
+    "X": 76,
+    "Y": 477,
+    "Width": 16,
+    "Height": 16
+  },
+  "BeautyFrontMoving": {
+    "X": 94,
+    "Y": 477,
+    "Width": 16,
+    "Height": 16
+  },
+  "BeautyBackMoving": {
+    "X": 114,
+    "Y": 477,
+    "Width": 16,
+    "Height": 16
+  },
+  "BeautyLeftMoving": {
+    "X": 131,
+    "Y": 477,
+    "Width": 16,
+    "Height": 16
+  },
+  "GentlemanFront": {
+    "X": 5,
+    "Y": 496,
+    "Width": 16,
+    "Height": 16
+  },
+  "GentlemanBack": {
+    "X": 23,
+    "Y": 496,
+    "Width": 16,
+    "Height": 16
+  },
+  "GentlemanLeft": {
+    "X": 40,
+    "Y": 496,
+    "Width": 16,
+    "Height": 16
+  },
+  "GentlemanFrontMoving": {
+    "X": 56,
+    "Y": 496,
+    "Width": 16,
+    "Height": 16
+  },
+  "GentlemanBackMoving": {
+    "X": 74,
+    "Y": 496,
+    "Width": 16,
+    "Height": 16
+  },
+  "GentlemanLeftMoving": {
+    "X": 91,
+    "Y": 496,
+    "Width": 16,
+    "Height": 16
+  },
+  "DaisyFront": {
+    "X": 107,
+    "Y": 496,
+    "Width": 16,
+    "Height": 16
+  },
+  "DaisyBack": {
+    "X": 123,
+    "Y": 496,
+    "Width": 16,
+    "Height": 16
+  },
+  "DaisyLeft": {
+    "X": 5,
+    "Y": 514,
+    "Width": 16,
+    "Height": 16
+  },
+  "DaisyFrontMoving": {
+    "X": 21,
+    "Y": 514,
+    "Width": 16,
+    "Height": 16
+  },
+  "DaisyBackMoving": {
+    "X": 37,
+    "Y": 514,
+    "Width": 16,
+    "Height": 16
+  },
+  "DaisyLeftMoving": {
+    "X": 53,
+    "Y": 514,
+    "Width": 16,
+    "Height": 16
+  },
+  "BikerFront": {
+    "X": 69,
+    "Y": 514,
+    "Width": 16,
+    "Height": 16
+  },
+  "BikerBack": {
+    "X": 85,
+    "Y": 514,
+    "Width": 16,
+    "Height": 16
+  },
+  "BikerLeftMoving": {
+    "X": 103,
+    "Y": 514,
+    "Width": 16,
+    "Height": 16
+  },
+  "BikerFrontMoving": {
+    "X": 123,
+    "Y": 514,
+    "Width": 16,
+    "Height": 16
+  },
+  "BikerBackMoving": {
+    "X": 4,
+    "Y": 532,
+    "Width": 16,
+    "Height": 16
+  },
+  "BikerLeft": {
+    "X": 20,
+    "Y": 532,
+    "Width": 16,
+    "Height": 16
+  },
+  "SailorFront": {
+    "X": 37,
+    "Y": 532,
+    "Width": 16,
+    "Height": 16
+  },
+  "SailorBack": {
+    "X": 56,
+    "Y": 532,
+    "Width": 16,
+    "Height": 16
+  },
+  "SailorLeft": {
+    "X": 74,
+    "Y": 532,
+    "Width": 16,
+    "Height": 16
+  },
+  "SailorFrontMoving": {
+    "X": 90,
+    "Y": 532,
+    "Width": 16,
+    "Height": 16
+  },
+  "SailorBackMoving": {
+    "X": 106,
+    "Y": 532,
+    "Width": 16,
+    "Height": 16
+  },
+  "SailorLeftMoving": {
+    "X": 123,
+    "Y": 532,
+    "Width": 16,
+    "Height": 16
+  },
+  "CookFront": {
+    "X": 4,
+    "Y": 551,
+    "Width": 16,
+    "Height": 16
+  },
+  "CookBack": {
+    "X": 20,
+    "Y": 551,
+    "Width": 16,
+    "Height": 16
+  },
+  "CookLeft": {
+    "X": 36,
+    "Y": 551,
+    "Width": 16,
+    "Height": 16
+  },
+  "CookFrontMoving": {
+    "X": 52,
+    "Y": 551,
+    "Width": 16,
+    "Height": 16
+  },
+  "CookBackMoving": {
+    "X": 69,
+    "Y": 551,
+    "Width": 16,
+    "Height": 16
+  },
+  "CookLeftMoving": {
+    "X": 85,
+    "Y": 551,
+    "Width": 16,
+    "Height": 16
+  },
+  "NPCMale6Front": {
+    "X": 102,
+    "Y": 551,
+    "Width": 16,
+    "Height": 16
+  },
+  "NPCMale6Back": {
+    "X": 122,
+    "Y": 551,
+    "Width": 16,
+    "Height": 16
+  },
+  "NPCMale6Left": {
+    "X": 4,
+    "Y": 570,
+    "Width": 16,
+    "Height": 16
+  },
+  "MrFujiFront": {
+    "X": 20,
+    "Y": 570,
+    "Width": 16,
+    "Height": 16
+  },
+  "MrFujiBack": {
+    "X": 38,
+    "Y": 570,
+    "Width": 16,
+    "Height": 16
+  },
+  "MrFujiLeft": {
+    "X": 54,
+    "Y": 570,
+    "Width": 16,
+    "Height": 16
+  },
+  "MrFujiFrontMoving": {
+    "X": 70,
+    "Y": 570,
+    "Width": 16,
+    "Height": 16
+  },
+  "MrFujiBackMoving": {
+    "X": 88,
+    "Y": 570,
+    "Width": 16,
+    "Height": 16
+  },
+  "MrFujiLeftMoving": {
+    "X": 105,
+    "Y": 570,
+    "Width": 16,
+    "Height": 16
+  },
+  "GiovanniFront": {
+    "X": 122,
+    "Y": 570,
+    "Width": 16,
+    "Height": 16
+  },
+  "GiovanniBack": {
+    "X": 4,
+    "Y": 588,
+    "Width": 16,
+    "Height": 16
+  },
+  "GiovanniLeft": {
+    "X": 20,
+    "Y": 588,
+    "Width": 16,
+    "Height": 16
+  },
+  "GiovanniBackMoving": {
+    "X": 52,
+    "Y": 588,
+    "Width": 16,
+    "Height": 16
+  },
+  "TeamRocketFront": {
+    "X": 84,
+    "Y": 588,
+    "Width": 16,
+    "Height": 16
+  },
+  "TeamRocketBack": {
+    "X": 102,
+    "Y": 588,
+    "Width": 16,
+    "Height": 16
+  },
+  "TeamRocketLeft": {
+    "X": 118,
+    "Y": 588,
+    "Width": 16,
+    "Height": 16
+  },
+  "GiovanniFrontMoving": {
+    "X": 36,
+    "Y": 589,
+    "Width": 16,
+    "Height": 16
+  },
+  "GiovanniLeftMoving": {
+    "X": 68,
+    "Y": 589,
+    "Width": 16,
+    "Height": 16
+  },
+  "TeamRocketFrontMoving": {
+    "X": 4,
+    "Y": 605,
+    "Width": 16,
+    "Height": 16
+  },
+  "TeamRocketBackMoving": {
+    "X": 20,
+    "Y": 605,
+    "Width": 16,
+    "Height": 16
+  },
+  "TeamRocketLeftMoving": {
+    "X": 36,
+    "Y": 605,
+    "Width": 16,
+    "Height": 16
+  },
+  "ChannelerFront": {
+    "X": 52,
+    "Y": 605,
+    "Width": 16,
+    "Height": 16
+  },
+  "ChannelerBack": {
+    "X": 68,
+    "Y": 605,
+    "Width": 16,
+    "Height": 16
+  },
+  "ChannelerLeft": {
+    "X": 84,
+    "Y": 605,
+    "Width": 16,
+    "Height": 16
+  },
+  "ChannelerFrontMoving": {
+    "X": 100,
+    "Y": 605,
+    "Width": 16,
+    "Height": 16
+  },
+  "ChannelerBackMoving": {
+    "X": 116,
+    "Y": 605,
+    "Width": 16,
+    "Height": 16
+  },
+  "GuardFront": {
+    "X": 20,
+    "Y": 622,
+    "Width": 16,
+    "Height": 16
+  },
+  "GuardBack": {
+    "X": 37,
+    "Y": 622,
+    "Width": 16,
+    "Height": 16
+  },
+  "GuardLeft": {
+    "X": 53,
+    "Y": 622,
+    "Width": 16,
+    "Height": 16
+  },
+  "GuardFrontMoving": {
+    "X": 69,
+    "Y": 622,
+    "Width": 16,
+    "Height": 16
+  },
+  "GuardBackMoving": {
+    "X": 85,
+    "Y": 622,
+    "Width": 16,
+    "Height": 16
+  },
+  "GuardLeftMoving": {
+    "X": 101,
+    "Y": 622,
+    "Width": 16,
+    "Height": 16
+  },
+  "ErikaFront": {
+    "X": 117,
+    "Y": 622,
+    "Width": 16,
+    "Height": 16
+  },
+  "ChannelerLeftMoving": {
+    "X": 4,
+    "Y": 623,
+    "Width": 16,
+    "Height": 16
+  },
+  "ErikaBack": {
+    "X": 5,
+    "Y": 640,
+    "Width": 16,
+    "Height": 16
+  },
+  "ErikaLeft": {
+    "X": 20,
+    "Y": 640,
+    "Width": 16,
+    "Height": 16
+  },
+  "ErikaFrontMoving": {
+    "X": 36,
+    "Y": 640,
+    "Width": 16,
+    "Height": 16
+  },
+  "ErikaBackMoving": {
+    "X": 52,
+    "Y": 640,
+    "Width": 16,
+    "Height": 16
+  },
+  "ErikaLeftMoving": {
+    "X": 68,
+    "Y": 640,
+    "Width": 16,
+    "Height": 16
+  },
+  "PokefanFront": {
+    "X": 84,
+    "Y": 640,
+    "Width": 16,
+    "Height": 16
+  },
+  "PokefanBack": {
+    "X": 100,
+    "Y": 640,
+    "Width": 16,
+    "Height": 16
+  },
+  "PokefanLeft": {
+    "X": 117,
+    "Y": 640,
+    "Width": 16,
+    "Height": 16
+  },
+  "PokefanFrontMoving": {
+    "X": 4,
+    "Y": 658,
+    "Width": 16,
+    "Height": 16
+  },
+  "PokefanBackMoving": {
+    "X": 20,
+    "Y": 658,
+    "Width": 16,
+    "Height": 16
+  },
+  "PokefanLeftMoving": {
+    "X": 36,
+    "Y": 658,
+    "Width": 16,
+    "Height": 16
+  },
+  "CopyCatFront": {
+    "X": 52,
+    "Y": 658,
+    "Width": 16,
+    "Height": 16
+  },
+  "CopyCatBack": {
+    "X": 68,
+    "Y": 658,
+    "Width": 16,
+    "Height": 16
+  },
+  "CopyCatLeft": {
+    "X": 85,
+    "Y": 658,
+    "Width": 16,
+    "Height": 16
+  },
+  "CopyCatFrontMoving": {
+    "X": 100,
+    "Y": 658,
+    "Width": 16,
+    "Height": 16
+  },
+  "CopyCatBackMoving": {
+    "X": 116,
+    "Y": 658,
+    "Width": 16,
+    "Height": 16
+  },
+  "LanceFront": {
+    "X": 24,
+    "Y": 676,
+    "Width": 16,
+    "Height": 16
+  },
+  "LanceBack": {
+    "X": 42,
+    "Y": 676,
+    "Width": 16,
+    "Height": 16
+  },
+  "LanceLeft": {
+    "X": 58,
+    "Y": 676,
+    "Width": 16,
+    "Height": 16
+  },
+  "LanceFrontMoving": {
+    "X": 78,
+    "Y": 676,
+    "Width": 16,
+    "Height": 16
+  },
+  "LanceBackMoving": {
+    "X": 98,
+    "Y": 676,
+    "Width": 16,
+    "Height": 16
+  },
+  "LanceLeftMoving": {
+    "X": 115,
+    "Y": 676,
+    "Width": 16,
+    "Height": 16
+  },
+  "MotherFront": {
+    "X": 131,
+    "Y": 676,
+    "Width": 16,
+    "Height": 16
+  },
+  "CopyCatLeftMoving": {
+    "X": 4,
+    "Y": 677,
+    "Width": 16,
+    "Height": 16
+  },
+  "MotherBack": {
+    "X": 4,
+    "Y": 695,
+    "Width": 16,
+    "Height": 16
+  },
+  "MotherLeft": {
+    "X": 21,
+    "Y": 695,
+    "Width": 16,
+    "Height": 16
+  },
+  "NPCMale7Front": {
+    "X": 36,
+    "Y": 695,
+    "Width": 16,
+    "Height": 16
+  },
+  "NPCMale7Back": {
+    "X": 52,
+    "Y": 695,
+    "Width": 16,
+    "Height": 16
+  },
+  "NPCMale7Left": {
+    "X": 68,
+    "Y": 695,
+    "Width": 16,
+    "Height": 16
+  },
+  "NPCChild1Front": {
+    "X": 84,
+    "Y": 696,
+    "Width": 16,
+    "Height": 16
+  },
+  "NPCChild1Back": {
+    "X": 100,
+    "Y": 696,
+    "Width": 16,
+    "Height": 16
+  },
+  "NPCChild1Left": {
+    "X": 116,
+    "Y": 696,
+    "Width": 16,
+    "Height": 16
+  },
+  "JennyFront": {
+    "X": 4,
+    "Y": 713,
+    "Width": 16,
+    "Height": 16
+  },
+  "JennyBack": {
+    "X": 22,
+    "Y": 713,
+    "Width": 16,
+    "Height": 16
+  },
+  "JennyLeft": {
+    "X": 40,
+    "Y": 713,
+    "Width": 16,
+    "Height": 16
+  },
+  "JennyFrontMoving": {
+    "X": 58,
+    "Y": 713,
+    "Width": 16,
+    "Height": 16
+  },
+  "JennyBackMoving": {
+    "X": 76,
+    "Y": 713,
+    "Width": 16,
+    "Height": 16
+  },
+  "JennyLeftMoving": {
+    "X": 93,
+    "Y": 713,
+    "Width": 16,
+    "Height": 16
+  },
+  "PikaFront": {
+    "X": 112,
+    "Y": 713,
+    "Width": 16,
+    "Height": 16
+  },
+  "PikaBack": {
+    "X": 131,
+    "Y": 713,
+    "Width": 16,
+    "Height": 16
+  },
+  "PikaFrontMoving": {
+    "X": 22,
+    "Y": 731,
+    "Width": 16,
+    "Height": 16
+  },
+  "PikaBackMoving": {
+    "X": 40,
+    "Y": 731,
+    "Width": 16,
+    "Height": 16
+  },
+  "PikaLeftMoving": {
+    "X": 58,
+    "Y": 731,
+    "Width": 16,
+    "Height": 16
+  },
+  "Tile315": {
+    "X": 76,
+    "Y": 731,
+    "Width": 16,
+    "Height": 16
+  },
+  "Tile393": {
+    "X": 94,
+    "Y": 731,
+    "Width": 16,
+    "Height": 16
+  },
+  "Tile460": {
+    "X": 112,
+    "Y": 731,
+    "Width": 16,
+    "Height": 16
+  },
+  "GrassPokemonFront": {
+    "X": 130,
+    "Y": 731,
+    "Width": 16,
+    "Height": 16
+  },
+  "PikaLeft": {
+    "X": 4,
+    "Y": 732,
+    "Width": 16,
+    "Height": 16
+  },
+  "GrassPokemonBack": {
+    "X": 4,
+    "Y": 748,
+    "Width": 16,
+    "Height": 16
+  },
+  "GrassPokemonLeft": {
+    "X": 22,
+    "Y": 748,
+    "Width": 16,
+    "Height": 16
+  },
+  "BulbasaurFront": {
+    "X": 40,
+    "Y": 748,
+    "Width": 16,
+    "Height": 16
+  },
+  "BulbasaurBack": {
+    "X": 58,
+    "Y": 748,
+    "Width": 16,
+    "Height": 16
+  },
+  "JigglypuffFront": {
+    "X": 94,
+    "Y": 749,
+    "Width": 16,
+    "Height": 16
+  },
+  "JigglypuffBack": {
+    "X": 112,
+    "Y": 749,
+    "Width": 16,
+    "Height": 16
+  },
+  "JigglypuffLeft": {
+    "X": 130,
+    "Y": 749,
+    "Width": 16,
+    "Height": 16
+  },
+  "BulbasaurLeft": {
+    "X": 76,
+    "Y": 750,
+    "Width": 16,
+    "Height": 16
+  },
+  "ChanseyFront": {
+    "X": 58,
+    "Y": 766,
+    "Width": 16,
+    "Height": 16
+  },
+  "ChanseyBack": {
+    "X": 76,
+    "Y": 766,
+    "Width": 16,
+    "Height": 16
+  },
+  "ChanseyLeft": {
+    "X": 93,
+    "Y": 766,
+    "Width": 16,
+    "Height": 16
+  },
+  "SurferPikaFrontMoving": {
+    "X": 112,
+    "Y": 766,
+    "Width": 16,
+    "Height": 16
+  },
+  "SurferPikaBackMoving": {
+    "X": 130,
+    "Y": 766,
+    "Width": 16,
+    "Height": 16
+  },
+  "Wigglytuff Front": {
+    "X": 4,
+    "Y": 767,
+    "Width": 16,
+    "Height": 16
+  },
+  "Wigglytuff Back": {
+    "X": 22,
+    "Y": 767,
+    "Width": 16,
+    "Height": 16
+  },
+  "Wigglytuff Left": {
+    "X": 41,
+    "Y": 767,
+    "Width": 16,
+    "Height": 16
+  },
+  "JessieFront": {
+    "X": 76,
+    "Y": 784,
+    "Width": 16,
+    "Height": 16
+  },
+  "JessieBack": {
+    "X": 94,
+    "Y": 784,
+    "Width": 16,
+    "Height": 16
+  },
+  "JessieLeft": {
+    "X": 112,
+    "Y": 784,
+    "Width": 16,
+    "Height": 16
+  },
+  "JessieFrontMoving": {
+    "X": 130,
+    "Y": 784,
+    "Width": 16,
+    "Height": 16
+  },
+  "SurferPikaLeftMoving": {
+    "X": 5,
+    "Y": 785,
+    "Width": 16,
+    "Height": 16
+  },
+  "SurferPikaFront": {
+    "X": 21,
+    "Y": 785,
+    "Width": 16,
+    "Height": 16
+  },
+  "SurferPikaBack": {
+    "X": 40,
+    "Y": 785,
+    "Width": 16,
+    "Height": 16
+  },
+  "SurferPikaLeft": {
+    "X": 57,
+    "Y": 785,
+    "Width": 16,
+    "Height": 16
+  },
+  "JessieBackMoving": {
+    "X": 4,
+    "Y": 802,
+    "Width": 16,
+    "Height": 16
+  },
+  "JessieLeftMoving": {
+    "X": 22,
+    "Y": 802,
+    "Width": 16,
+    "Height": 16
+  },
+  "JamesFront": {
+    "X": 40,
+    "Y": 802,
+    "Width": 16,
+    "Height": 16
+  },
+  "JamesBack": {
+    "X": 58,
+    "Y": 802,
+    "Width": 16,
+    "Height": 16
+  },
+  "JamesLeft": {
+    "X": 75,
+    "Y": 802,
+    "Width": 16,
+    "Height": 16
+  },
+  "JamesFrontMoving": {
+    "X": 94,
+    "Y": 802,
+    "Width": 16,
+    "Height": 16
+  },
+  "JamesBackMoving": {
+    "X": 112,
+    "Y": 802,
+    "Width": 16,
+    "Height": 16
+  },
+  "JamesLeftMoving": {
+    "X": 128,
+    "Y": 802,
+    "Width": 16,
+    "Height": 16
+  },
+  "NormalFront": {
+    "X": 4,
+    "Y": 820,
+    "Width": 16,
+    "Height": 16
+  },
+  "NormalFrontMoving": {
+    "X": 20,
+    "Y": 820,
+    "Width": 16,
+    "Height": 16
+  },
+  "FlowerPokemonFront": {
+    "X": 37,
+    "Y": 820,
+    "Width": 16,
+    "Height": 16
+  },
+  "PoisonPokemonFront": {
+    "X": 71,
+    "Y": 820,
+    "Width": 16,
+    "Height": 16
+  },
+  "FlowerPokemonFrontMoving": {
+    "X": 55,
+    "Y": 821,
+    "Width": 16,
+    "Height": 16
+  },
+  "PoisonPokemonFrontMoving": {
+    "X": 85,
+    "Y": 821,
+    "Width": 16,
+    "Height": 16
+  },
+  "BugFront": {
+    "X": 102,
+    "Y": 821,
+    "Width": 16,
+    "Height": 16
+  },
+  "BugFrontMoving": {
+    "X": 123,
+    "Y": 822,
+    "Width": 16,
+    "Height": 16
+  }
+}

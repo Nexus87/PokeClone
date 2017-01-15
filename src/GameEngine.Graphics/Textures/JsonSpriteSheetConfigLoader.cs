@@ -2,8 +2,8 @@
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.Runtime.Serialization.Json;
 using Microsoft.Xna.Framework;
+using Newtonsoft.Json;
 
 namespace GameEngine.Graphics.Textures
 {
@@ -29,8 +29,8 @@ namespace GameEngine.Graphics.Textures
 
         private static Dictionary<string, Area> ReadAreaMapping(string fileName)
         {
-            var deserializer = new DataContractJsonSerializer(typeof(Dictionary<string, Area>));
-            return (Dictionary<string, Area>) deserializer.ReadObject(new FileStream(fileName, FileMode.Open, FileAccess.Read));
+
+            return JsonConvert.DeserializeObject<Dictionary<string, Area>>(File.ReadAllText(fileName));
 
         }
 

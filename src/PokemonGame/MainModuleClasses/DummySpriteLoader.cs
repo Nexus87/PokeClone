@@ -21,8 +21,8 @@ namespace PokemonGame.MainModuleClasses
         {
             var left = _textureProvider.GetTexture(MainModule.Key, spriteName + "Left");
             var right = _textureProvider.GetTexture(MainModule.Key, spriteName + "Left");
-            var up = _textureProvider.GetTexture(MainModule.Key, spriteName + "Up");
-            var down = _textureProvider.GetTexture(MainModule.Key, spriteName + "Down");
+            var up = _textureProvider.GetTexture(MainModule.Key, spriteName + "Back");
+            var down = _textureProvider.GetTexture(MainModule.Key, spriteName + "Front");
 
             return new CharacterSprite(left, right, up, down);
         }
