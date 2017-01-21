@@ -64,7 +64,9 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Compile Include="Class1.cs" />
+  </ItemGroup>
   <ItemGroup />
   <ItemGroup />
   <ItemGroup />
