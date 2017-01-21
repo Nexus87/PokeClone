@@ -43,7 +43,15 @@ namespace Base.Rules
                 PokemonChanged?.Invoke(this, new PokemonChangedEventArgs(this));
             }
         }
-        public StatusCondition Condition { get; set; }
+        public StatusCondition Condition {
+            get { return Pokemon?.Condition ?? StatusCondition.KO; }
+            set {
+                if (value == Condition)
+                    return;
+                Pokemon.Condition = value;
+                OnStatusChanged(value);
+            }
+        }
 
         public int Accuracy
         {
