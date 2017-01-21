@@ -1,4 +1,5 @@
 ﻿using GameEngine.Core.ModuleManager;
+using GameEngine.Graphics.Diagnostic;
 using GameEngine.Graphics.Textures;
 using GameEngine.GUI;
 
@@ -38,7 +39,7 @@ namespace GameEngine.Core
             {
                 _moduleRegistry.StartModule(_startModule);
             };
-//            DebugRectangle.Enable(_textureProvider.Pixel);
+            DebugRectangle.Enable(_textureProvider.Pixel);
             _gameRunner.Run();
         }
 

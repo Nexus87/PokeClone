@@ -74,7 +74,6 @@
     <Compile Include="Controlls\Spacer.cs" />
     <Compile Include="Controlls\TextArea.cs" />
     <Compile Include="Controlls\TextAreaLine.cs" />
-    <Compile Include="Diagnostic\DebugRectangle.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="GraphicComponentSizeChangedEventArgs.cs" />
     <Compile Include="IGuiComponent.cs" />

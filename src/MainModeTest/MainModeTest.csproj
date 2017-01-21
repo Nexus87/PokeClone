@@ -62,18 +62,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Graphics\CharacterSpriteMock.cs" />
-    <Compile Include="Graphics\CharacterSpriteTest.cs" />
-    <Compile Include="Graphics\GameStateComponentTest.cs" />
-    <Compile Include="Graphics\MapControllerTest.cs" />
-    <Compile Include="Graphics\WorldScreenTest.cs" />
-    <Compile Include="Utils\SceneControllerMock.cs" />
-  </ItemGroup>
-  <ItemGroup />
-  <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup />
   <ItemGroup />
   <ItemGroup />

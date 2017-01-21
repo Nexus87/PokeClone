@@ -5,24 +5,26 @@ using GameEngine.Core.ModuleManager;
 using GameEngine.Entities;
 using GameEngine.Graphics.Textures;
 using GameEngine.TypeRegistry;
-using MainMode.Core.Graphics;
+using MainMode.Core.Loader;
+using MainMode.Entities;
+using MainMode.Globals;
+using MainMode.Graphic;
+using Microsoft.Xna.Framework;
 
 namespace MainMode.Core
 {
     public class MainModule : IModule
     {
-        private readonly Map _map;
 
-        public MainModule(Map map)
-        {
-            _map = map;
-        }
+        private MainModeController _mainModeController;
         public string ModuleName => "MainModule";
-        public static object Key { get; } = new object();
 
         public void RegisterTypes(IGameTypeRegistry registry)
         {
             registry.ScanAssembly(Assembly.GetExecutingAssembly());
+            registry.ScanAssembly(typeof(GameStateEntity).Assembly);
+            registry.ScanAssembly(typeof(GraphicController).Assembly);
+            registry.ScanAssembly(typeof(TextureKey).Assembly);
         }
 
         public void AddTextureConfigurations(TextureConfigurationBuilder builder)
@@ -34,16 +36,23 @@ namespace MainMode.Core
                 new SpriteSheetItem(@"MainMode\TileSet", tileMapping, true),
                 new SpriteSheetItem(@"MainMode\Characters Overworld", characterMapping, true)
             };
-            builder.AddSpriteSheet(Key, spriteSheetItems);
+
+            builder.AddSpriteSheet(TextureKey.Key, spriteSheetItems);
         }
 
         public void Start(IGameComponentManager manager, IInputHandlerManager inputHandlerManager, IGameTypeRegistry registry)
         {
-            manager.Scene = registry.ResolveType<IWorldScreenController>().Scene;
-            inputHandlerManager.AddHandler(registry.ResolveType<GameInputHandler>());
-            var gameStateComponent = registry.ResolveType<IGameStateComponent>();
-            gameStateComponent.SetMap(_map);
-            gameStateComponent.PlaceSprite(0, new FieldCoordinate(1, 0));
+            registry.ResolveType<CharacterSpriteLoader>().LoadEntityMapping(@"MainMode\EntitySpriteMap.json");
+
+            manager.AddGameComponent(registry.ResolveType<GameStateEntity>());
+            manager.AddGameComponent(registry.ResolveType<GraphicController>());
+
+            _mainModeController = registry.ResolveType<MainModeController>();
+            _mainModeController.SetMap("Test");
+            inputHandlerManager.AddHandler(_mainModeController.InputHandler);
+
+            Connector.Connect(registry.ResolveType<GameStateEntity>(), registry.ResolveType<GraphicController>());
+
         }
 
         public void Stop(IGameComponentManager engine, IInputHandlerManager inputHandlerManager)

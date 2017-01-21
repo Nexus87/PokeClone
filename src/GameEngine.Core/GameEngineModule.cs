@@ -4,6 +4,7 @@ using System.Reflection;
 using GameEngine.Core.ModuleManager;
 using GameEngine.Entities;
 using GameEngine.Globals;
+using GameEngine.Graphics;
 using GameEngine.Graphics.Textures;
 using GameEngine.GUI;
 using GameEngine.GUI.Components;
@@ -49,6 +50,7 @@ namespace GameEngine.Core
             registry.RegisterType<IEngineInterface>(r => _engine);
             registry.RegisterType(r => _screenConstants);
             registry.RegisterType(r => _engine.GraphicsDeviceManager);
+            registry.RegisterType(r => _engine.Scene);
             registry.ScanAssembly(Assembly.GetExecutingAssembly());
             registry.ScanAssembly(Assembly.GetAssembly(typeof(IGuiComponent)));
             registry.ScanAssembly(Assembly.GetAssembly(typeof(IGameTypeRegistry)));
@@ -89,6 +91,7 @@ namespace GameEngine.Core
 
         public void Start(IGameComponentManager componentManager, IInputHandlerManager inputHandlerManager, IGameTypeRegistry registry)
         {
+            componentManager.Scene = new Scene(registry.ResolveType<ScreenConstants>());
             GuiLoader.InitLoaderResources(registry);
 
             componentManager.AddGameComponent(registry.ResolveType<InputEntity>());

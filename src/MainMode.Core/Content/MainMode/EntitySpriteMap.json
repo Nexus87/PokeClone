@@ -1,0 +1,904 @@
+[
+  {
+    "Name": "Bird",
+    "Mappings": {
+      "Front": "BirdFront",
+      "Left": "BirdLeft",
+      "Back": "BirdBack",
+      "FrontMoving": "BirdFrontMoving",
+      "LeftMoving": "BirdLeftMoving",
+      "BackMoving": "BirdBackMoving"
+    }
+  },
+  {
+    "Name": "Player",
+    "Mappings": {
+      "Front": "PlayerFront",
+      "Left": "PlayerLeft",
+      "Back": "PlayerBack",
+      "FrontMoving": "PlayerFrontMoving",
+      "LeftMoving": "PlayerLeftMoving",
+      "BackMoving": "PlayerBackMoving"
+    }
+  },
+  {
+    "Name": "GrassPokemon",
+    "Mappings": {
+      "Front": "GrassPokemonFront",
+      "Left": "GrassPokemonLeft",
+      "Back": "GrassPokemonBack",
+      "FrontMoving": null,
+      "LeftMoving": null,
+      "BackMoving": null
+    }
+  },
+  {
+    "Name": "NormalPokemon",
+    "Mappings": {
+      "Front": "NormalPokemonFront",
+      "Left": "NormalPokemonLeft",
+      "Back": "NormalPokemonBack",
+      "FrontMoving": "NormalPokemonFrontMoving",
+      "LeftMoving": "NormalPokemonLeftMoving",
+      "BackMoving": "NormalPokemonBackMoving"
+    }
+  },
+  {
+    "Name": "LtSurge",
+    "Mappings": {
+      "Front": "LtSurgeFront",
+      "Left": "LtSurgeLeft",
+      "Back": "LtSurgeBack",
+      "FrontMoving": "LtSurgeFrontMoving",
+      "LeftMoving": "LtSurgeLeftMoving",
+      "BackMoving": "LtSurgeBackMoving"
+    }
+  },
+  {
+    "Name": "TeamRocket",
+    "Mappings": {
+      "Front": "TeamRocketFront",
+      "Left": "TeamRocketLeft",
+      "Back": "TeamRocketBack",
+      "FrontMoving": "TeamRocketFrontMoving",
+      "LeftMoving": "TeamRocketLeftMoving",
+      "BackMoving": "TeamRocketBackMoving"
+    }
+  },
+  {
+    "Name": "Lance",
+    "Mappings": {
+      "Front": "LanceFront",
+      "Left": "LanceLeft",
+      "Back": "LanceBack",
+      "FrontMoving": "LanceFrontMoving",
+      "LeftMoving": "LanceLeftMoving",
+      "BackMoving": "LanceBackMoving"
+    }
+  },
+  {
+    "Name": "Bruno",
+    "Mappings": {
+      "Front": "BrunoFront",
+      "Left": "BrunoLeft",
+      "Back": "BrunoBack",
+      "FrontMoving": "BrunoFrontMoving",
+      "LeftMoving": "BrunoLeftMoving",
+      "BackMoving": "BrunoBackMoving"
+    }
+  },
+  {
+    "Name": "BlackBelt",
+    "Mappings": {
+      "Front": "BlackBeltFront",
+      "Left": "BlackBeltLeft",
+      "Back": "BlackBeltBack",
+      "FrontMoving": "BlackBeltFrontMoving",
+      "LeftMoving": "BlackBeltLeftMoving",
+      "BackMoving": "BlackBeltBackMoving"
+    }
+  },
+  {
+    "Name": "Giovanni",
+    "Mappings": {
+      "Front": "GiovanniFront",
+      "Left": "GiovanniLeft",
+      "Back": "GiovanniBack",
+      "FrontMoving": "GiovanniFrontMoving",
+      "LeftMoving": "GiovanniLeftMoving",
+      "BackMoving": "GiovanniBackMoving"
+    }
+  },
+  {
+    "Name": "Cook",
+    "Mappings": {
+      "Front": "CookFront",
+      "Left": "CookLeft",
+      "Back": "CookBack",
+      "FrontMoving": "CookFrontMoving",
+      "LeftMoving": "CookLeftMoving",
+      "BackMoving": "CookBackMoving"
+    }
+  },
+  {
+    "Name": "Jessie",
+    "Mappings": {
+      "Front": "JessieFront",
+      "Left": "JessieLeft",
+      "Back": "JessieBack",
+      "FrontMoving": "JessieFrontMoving",
+      "LeftMoving": "JessieLeftMoving",
+      "BackMoving": "JessieBackMoving"
+    }
+  },
+  {
+    "Name": "James",
+    "Mappings": {
+      "Front": "JamesFront",
+      "Left": "JamesLeft",
+      "Back": "JamesBack",
+      "FrontMoving": "JamesFrontMoving",
+      "LeftMoving": "JamesLeftMoving",
+      "BackMoving": "JamesBackMoving"
+    }
+  },
+  {
+    "Name": "ProfOak",
+    "Mappings": {
+      "Front": "ProfOakFront",
+      "Left": "ProfOakLeft",
+      "Back": "ProfOakBack",
+      "FrontMoving": "ProfOakFrontMoving",
+      "LeftMoving": "ProfOakLeftMoving",
+      "BackMoving": "ProfOakBackMoving"
+    }
+  },
+  {
+    "Name": "Kyio",
+    "Mappings": {
+      "Front": "KyioFront",
+      "Left": "KyioLeft",
+      "Back": "KyioBack",
+      "FrontMoving": "KyioFrontMoving",
+      "LeftMoving": "KyioLeftMoving",
+      "BackMoving": "KyioBackMoving"
+    }
+  },
+  {
+    "Name": "Swimmer",
+    "Mappings": {
+      "Front": "SwimmerFront",
+      "Left": "SwimmerLeft",
+      "Back": "SwimmerBack",
+      "FrontMoving": "SwimmerFrontMoving",
+      "LeftMoving": "SwimmerLeftMoving",
+      "BackMoving": "SwimmerBackMoving"
+    }
+  },
+  {
+    "Name": "WaterPokemon",
+    "Mappings": {
+      "Front": "WaterPokemonFront",
+      "Left": "WaterPokemonLeft",
+      "Back": "WaterPokemonBack",
+      "FrontMoving": "WaterPokemonFrontMoving",
+      "LeftMoving": "WaterPokemonLeftMoving",
+      "BackMoving": "WaterPokemonBackMoving"
+    }
+  },
+  {
+    "Name": "Jenny",
+    "Mappings": {
+      "Front": "JennyFront",
+      "Left": "JennyLeft",
+      "Back": "JennyBack",
+      "FrontMoving": "JennyFrontMoving",
+      "LeftMoving": "JennyLeftMoving",
+      "BackMoving": "JennyBackMoving"
+    }
+  },
+  {
+    "Name": "Erika",
+    "Mappings": {
+      "Front": "ErikaFront",
+      "Left": "ErikaLeft",
+      "Back": "ErikaBack",
+      "FrontMoving": "ErikaFrontMoving",
+      "LeftMoving": "ErikaLeftMoving",
+      "BackMoving": "ErikaBackMoving"
+    }
+  },
+  {
+    "Name": "Mother",
+    "Mappings": {
+      "Front": "MotherFront",
+      "Left": "MotherLeft",
+      "Back": "MotherBack",
+      "FrontMoving": null,
+      "LeftMoving": null,
+      "BackMoving": null
+    }
+  },
+  {
+    "Name": "PlayerBike",
+    "Mappings": {
+      "Front": "PlayerBikeFront",
+      "Left": "PlayerBikeLeft",
+      "Back": "PlayerBikeBack",
+      "FrontMoving": "PlayerBikeFrontMoving",
+      "LeftMoving": "PlayerBikeLeftMoving",
+      "BackMoving": "PlayerBikeBackMoving"
+    }
+  },
+  {
+    "Name": "Biker",
+    "Mappings": {
+      "Front": "BikerFront",
+      "Left": "BikerLeft",
+      "Back": "BikerBack",
+      "FrontMoving": "BikerFrontMoving",
+      "LeftMoving": "BikerLeftMoving",
+      "BackMoving": "BikerBackMoving"
+    }
+  },
+  {
+    "Name": "Sailor",
+    "Mappings": {
+      "Front": "SailorFront",
+      "Left": "SailorLeft",
+      "Back": "SailorBack",
+      "FrontMoving": "SailorFrontMoving",
+      "LeftMoving": "SailorLeftMoving",
+      "BackMoving": "SailorBackMoving"
+    }
+  },
+  {
+    "Name": "Pika",
+    "Mappings": {
+      "Front": "PikaFront",
+      "Left": "PikaLeft",
+      "Back": "PikaBack",
+      "FrontMoving": "PikaFrontMoving",
+      "LeftMoving": "PikaLeftMoving",
+      "BackMoving": "PikaBackMoving"
+    }
+  },
+  {
+    "Name": "Lorelie",
+    "Mappings": {
+      "Front": "LorelieFront",
+      "Left": "LorelieLeft",
+      "Back": "LorelieBack",
+      "FrontMoving": "LorelieFrontMoving",
+      "LeftMoving": "LorelieLeftMoving",
+      "BackMoving": "LorelieBackMoving"
+    }
+  },
+  {
+    "Name": "Sabrina",
+    "Mappings": {
+      "Front": "SabrinaFront",
+      "Left": "SabrinaLeft",
+      "Back": "SabrinaBack",
+      "FrontMoving": "SabrinaFrontMoving",
+      "LeftMoving": "SabrinaLeftMoving",
+      "BackMoving": "SabrinaBackMoving"
+    }
+  },
+  {
+    "Name": "Daisy",
+    "Mappings": {
+      "Front": "DaisyFront",
+      "Left": "DaisyLeft",
+      "Back": "DaisyBack",
+      "FrontMoving": "DaisyFrontMoving",
+      "LeftMoving": "DaisyLeftMoving",
+      "BackMoving": "DaisyBackMoving"
+    }
+  },
+  {
+    "Name": "Jigglypuff",
+    "Mappings": {
+      "Front": "JigglypuffFront",
+      "Left": "JigglypuffLeft",
+      "Back": "JigglypuffBack",
+      "FrontMoving": null,
+      "LeftMoving": null,
+      "BackMoving": null
+    }
+  },
+  {
+    "Name": "Rival",
+    "Mappings": {
+      "Front": "RivalFront",
+      "Left": "RivalLeft",
+      "Back": "RivalBack",
+      "FrontMoving": "RivalFrontMoving",
+      "LeftMoving": "RivalLeftMoving",
+      "BackMoving": "RivalBackMoving"
+    }
+  },
+  {
+    "Name": "OldMan",
+    "Mappings": {
+      "Front": "OldManFront",
+      "Left": "OldManLeft",
+      "Back": "OldManBack",
+      "FrontMoving": "OldManFrontMoving",
+      "LeftMoving": "OldManLeftMoving",
+      "BackMoving": "OldManBackMoving"
+    }
+  },
+  {
+    "Name": "Gentleman",
+    "Mappings": {
+      "Front": "GentlemanFront",
+      "Left": "GentlemanLeft",
+      "Back": "GentlemanBack",
+      "FrontMoving": "GentlemanFrontMoving",
+      "LeftMoving": "GentlemanLeftMoving",
+      "BackMoving": "GentlemanBackMoving"
+    }
+  },
+  {
+    "Name": "Sandshrew",
+    "Mappings": {
+      "Front": "Tile315",
+      "Left": "Tile460",
+      "Back": "Tile393",
+      "FrontMoving": null,
+      "LeftMoving": null,
+      "BackMoving": null
+    }
+  },
+  {
+    "Name": "NameRater",
+    "Mappings": {
+      "Front": "NameRaterFront",
+      "Left": "NameRaterLeft",
+      "Back": "NameRaterBack",
+      "FrontMoving": null,
+      "LeftMoving": null,
+      "BackMoving": null
+    }
+  },
+  {
+    "Name": "SurferPika",
+    "Mappings": {
+      "Front": "SurferPikaFront",
+      "Left": "SurferPikaLeft",
+      "Back": "SurferPikaBack",
+      "FrontMoving": "SurferPikaFrontMoving",
+      "LeftMoving": "SurferPikaLeftMoving",
+      "BackMoving": "SurferPikaBackMoving"
+    }
+  },
+  {
+    "Name": "Pokeball",
+    "Mappings": {
+      "Front": "PokeballFront",
+      "Left": null,
+      "Back": null,
+      "FrontMoving": null,
+      "LeftMoving": null,
+      "BackMoving": null
+    }
+  },
+  {
+    "Name": "Rock",
+    "Mappings": {
+      "Front": "RockFront",
+      "Left": null,
+      "Back": null,
+      "FrontMoving": null,
+      "LeftMoving": null,
+      "BackMoving": null
+    }
+  },
+  {
+    "Name": "Reina",
+    "Mappings": {
+      "Front": "ReinaFront",
+      "Left": "ReinaLeft",
+      "Back": "ReinaBack",
+      "FrontMoving": "ReinaFrontMoving",
+      "LeftMoving": "ReinaLeftMoving",
+      "BackMoving": "ReinaBackMoving"
+    }
+  },
+  {
+    "Name": "Assistant",
+    "Mappings": {
+      "Front": "AssistantFront",
+      "Left": "AssistantLeft",
+      "Back": "AssistantBack",
+      "FrontMoving": "AssistantFrontMoving",
+      "LeftMoving": "AssistantLeftMoving",
+      "BackMoving": "AssistantBackMoving"
+    }
+  },
+  {
+    "Name": "Aghata",
+    "Mappings": {
+      "Front": "AghataFront",
+      "Left": "AghataLeft",
+      "Back": "AghataBack",
+      "FrontMoving": "AghataFrontMoving",
+      "LeftMoving": "AghataLeftMoving",
+      "BackMoving": "AghataBackMoving"
+    }
+  },
+  {
+    "Name": "Channeler",
+    "Mappings": {
+      "Front": "ChannelerFront",
+      "Left": "ChannelerLeft",
+      "Back": "ChannelerBack",
+      "FrontMoving": "ChannelerFrontMoving",
+      "LeftMoving": "ChannelerLeftMoving",
+      "BackMoving": "ChannelerBackMoving"
+    }
+  },
+  {
+    "Name": "MrFuji",
+    "Mappings": {
+      "Front": "MrFujiFront",
+      "Left": "MrFujiLeft",
+      "Back": "MrFujiBack",
+      "FrontMoving": "MrFujiFrontMoving",
+      "LeftMoving": "MrFujiLeftMoving",
+      "BackMoving": "MrFujiBackMoving"
+    }
+  },
+  {
+    "Name": "Brock",
+    "Mappings": {
+      "Front": "BrockFront",
+      "Left": "BrockLeft",
+      "Back": "BrockBack",
+      "FrontMoving": "BrockFrontMoving",
+      "LeftMoving": "BrockLeftMoving",
+      "BackMoving": "BrockBackMoving"
+    }
+  },
+  {
+    "Name": "Blaine",
+    "Mappings": {
+      "Front": "Tile327",
+      "Left": "Tile480",
+      "Back": "Tile399",
+      "FrontMoving": "Tile525",
+      "LeftMoving": "BaldGuyLeftMoving",
+      "BackMoving": "BigGuyBackMoving"
+    }
+  },
+  {
+    "Name": "Bill",
+    "Mappings": {
+      "Front": "BillFront",
+      "Left": "BillLeft",
+      "Back": "BillBack",
+      "FrontMoving": "BillFrontMoving",
+      "LeftMoving": "BillLeftMoving",
+      "BackMoving": "BillBackMoving"
+    }
+  },
+  {
+    "Name": "CopyCat",
+    "Mappings": {
+      "Front": "CopyCatFront",
+      "Left": "CopyCatLeft",
+      "Back": "CopyCatBack",
+      "FrontMoving": "CopyCatFrontMoving",
+      "LeftMoving": "CopyCatLeftMoving",
+      "BackMoving": "CopyCatBackMoving"
+    }
+  },
+  {
+    "Name": "Snorlax",
+    "Mappings": {
+      "Front": "SnorlaxFront",
+      "Left": null,
+      "Back": null,
+      "FrontMoving": null,
+      "LeftMoving": null,
+      "BackMoving": null
+    }
+  },
+  {
+    "Name": "SafariZoneWarden",
+    "Mappings": {
+      "Front": "SafariZoneWardenFront",
+      "Left": "SafariZoneWardenLeft",
+      "Back": "SafariZoneWardenBack",
+      "FrontMoving": null,
+      "LeftMoving": null,
+      "BackMoving": null
+    }
+  },
+  {
+    "Name": "Koga",
+    "Mappings": {
+      "Front": "KogaFront",
+      "Left": "KogaLeft",
+      "Back": "KogaBack",
+      "FrontMoving": null,
+      "LeftMoving": null,
+      "BackMoving": null
+    }
+  },
+  {
+    "Name": "Fisher",
+    "Mappings": {
+      "Front": "FisherFront",
+      "Left": "FisherLeft",
+      "Back": "FisherBack",
+      "FrontMoving": "FisherFrontMoving",
+      "LeftMoving": "FisherLeftMoving",
+      "BackMoving": "FisherBackMoving"
+    }
+  },
+  {
+    "Name": "Bulbasaur",
+    "Mappings": {
+      "Front": "BulbasaurFront",
+      "Left": "BulbasaurLeft",
+      "Back": "BulbasaurBack",
+      "FrontMoving": null,
+      "LeftMoving": null,
+      "BackMoving": null
+    }
+  },
+  {
+    "Name": "Beauty",
+    "Mappings": {
+      "Front": "BeautyFront",
+      "Left": "BeautyLeft",
+      "Back": "BeautyBack",
+      "FrontMoving": "BeautyFrontMoving",
+      "LeftMoving": "BeautyLeftMoving",
+      "BackMoving": "BeautyBackMoving"
+    }
+  },
+  {
+    "Name": "BugCatcher",
+    "Mappings": {
+      "Front": "BugCatcherFront",
+      "Left": "BugCatcherLeft",
+      "Back": "BugCatcherBack",
+      "FrontMoving": "BugCatcherFrontMoving",
+      "LeftMoving": "BugCatcherLeftMoving",
+      "BackMoving": "BugCatcherBackMoving"
+    }
+  },
+  {
+    "Name": "Lass",
+    "Mappings": {
+      "Front": "LassFront",
+      "Left": "LassLeft",
+      "Back": "LassBack",
+      "FrontMoving": "LassFrontMoving",
+      "LeftMoving": "LassLeftMoving",
+      "BackMoving": "LassBackMoving"
+    }
+  },
+  {
+    "Name": "Clefairy",
+    "Mappings": {
+      "Front": "ClefairyFront",
+      "Left": "ClefairyLeft",
+      "Back": "ClefairyBack",
+      "FrontMoving": "ClefairyFrontMoving",
+      "LeftMoving": "ClefairyLeftMoving",
+      "BackMoving": "ClefairyBackMoving"
+    }
+  },
+  {
+    "Name": "Wigglytuff ",
+    "Mappings": {
+      "Front": "Wigglytuff Front",
+      "Left": "Wigglytuff Left",
+      "Back": "Wigglytuff Back",
+      "FrontMoving": null,
+      "LeftMoving": null,
+      "BackMoving": null
+    }
+  },
+  {
+    "Name": "Chansey",
+    "Mappings": {
+      "Front": "ChanseyFront",
+      "Left": "ChanseyLeft",
+      "Back": "ChanseyBack",
+      "FrontMoving": null,
+      "LeftMoving": null,
+      "BackMoving": null
+    }
+  },
+  {
+    "Name": "Bug",
+    "Mappings": {
+      "Front": "BugFront",
+      "Left": null,
+      "Back": null,
+      "FrontMoving": "BugFrontMoving",
+      "LeftMoving": null,
+      "BackMoving": null
+    }
+  },
+  {
+    "Name": "Normal",
+    "Mappings": {
+      "Front": "NormalFront",
+      "Left": null,
+      "Back": null,
+      "FrontMoving": "NormalFrontMoving",
+      "LeftMoving": null,
+      "BackMoving": null
+    }
+  },
+  {
+    "Name": "FlowerPokemon",
+    "Mappings": {
+      "Front": "FlowerPokemonFront",
+      "Left": null,
+      "Back": null,
+      "FrontMoving": "FlowerPokemonFrontMoving",
+      "LeftMoving": null,
+      "BackMoving": null
+    }
+  },
+  {
+    "Name": "Fossil",
+    "Mappings": {
+      "Front": "FossilFront",
+      "Left": null,
+      "Back": null,
+      "FrontMoving": null,
+      "LeftMoving": null,
+      "BackMoving": null
+    }
+  },
+  {
+    "Name": "GymGuide",
+    "Mappings": {
+      "Front": "GymGuideFront",
+      "Left": "GymGuideLeft",
+      "Back": "GymGuideBack",
+      "FrontMoving": null,
+      "LeftMoving": null,
+      "BackMoving": null
+    }
+  },
+  {
+    "Name": "NPCMale1",
+    "Mappings": {
+      "Front": "NPCMale1Front",
+      "Left": "NPCMale1Left",
+      "Back": "NPCMale1Back",
+      "FrontMoving": null,
+      "LeftMoving": null,
+      "BackMoving": null
+    }
+  },
+  {
+    "Name": "NPCOld1",
+    "Mappings": {
+      "Front": "NPCOld1Front",
+      "Left": "NPCOld1Left",
+      "Back": "NPCOld1Back",
+      "FrontMoving": null,
+      "LeftMoving": null,
+      "BackMoving": null
+    }
+  },
+  {
+    "Name": "NPCMale2",
+    "Mappings": {
+      "Front": "NPCMale2Front",
+      "Left": "NPCMale2Left",
+      "Back": "NPCMale2Back",
+      "FrontMoving": null,
+      "LeftMoving": null,
+      "BackMoving": null
+    }
+  },
+  {
+    "Name": "NPCMale3",
+    "Mappings": {
+      "Front": "NPCMale3Front",
+      "Left": "NPCMale3Left",
+      "Back": "NPCMale3Back",
+      "FrontMoving": null,
+      "LeftMoving": null,
+      "BackMoving": null
+    }
+  },
+  {
+    "Name": "NPCMale4",
+    "Mappings": {
+      "Front": "NPCMale4Front",
+      "Left": "NPCMale4Left",
+      "Back": "NPCMale4Back",
+      "FrontMoving": null,
+      "LeftMoving": null,
+      "BackMoving": null
+    }
+  },
+  {
+    "Name": "NPCFemale1",
+    "Mappings": {
+      "Front": "NPCFemale1Front",
+      "Left": "NPCFemale1Left",
+      "Back": "NPCFemale1Back",
+      "FrontMoving": null,
+      "LeftMoving": null,
+      "BackMoving": null
+    }
+  },
+  {
+    "Name": "NPCChild1",
+    "Mappings": {
+      "Front": "NPCChild1Front",
+      "Left": "NPCChild1Left",
+      "Back": "NPCChild1Back",
+      "FrontMoving": null,
+      "LeftMoving": null,
+      "BackMoving": null
+    }
+  },
+  {
+    "Name": "NPCMale5",
+    "Mappings": {
+      "Front": "NPCMale5Front",
+      "Left": "NPCMale5Left",
+      "Back": "NPCMale5Back",
+      "FrontMoving": null,
+      "LeftMoving": null,
+      "BackMoving": null
+    }
+  },
+  {
+    "Name": "Police",
+    "Mappings": {
+      "Front": "PoliceFront",
+      "Left": "PoliceLeft",
+      "Back": "PoliceBack",
+      "FrontMoving": null,
+      "LeftMoving": null,
+      "BackMoving": null
+    }
+  },
+  {
+    "Name": "NPCChild2",
+    "Mappings": {
+      "Front": "NPCChild2Front",
+      "Left": "NPCChild2Left",
+      "Back": "NPCChild2Back",
+      "FrontMoving": null,
+      "LeftMoving": null,
+      "BackMoving": null
+    }
+  },
+  {
+    "Name": "Pokefan",
+    "Mappings": {
+      "Front": "PokefanFront",
+      "Left": "PokefanLeft",
+      "Back": "PokefanBack",
+      "FrontMoving": "PokefanFrontMoving",
+      "LeftMoving": "PokefanLeftMoving",
+      "BackMoving": "PokefanBackMoving"
+    }
+  },
+  {
+    "Name": "NPCMale6",
+    "Mappings": {
+      "Front": "NPCMale6Front",
+      "Left": "NPCMale6Left",
+      "Back": "NPCMale6Back",
+      "FrontMoving": null,
+      "LeftMoving": null,
+      "BackMoving": null
+    }
+  },
+  {
+    "Name": "NPCMale7",
+    "Mappings": {
+      "Front": "NPCMale7Front",
+      "Left": "NPCMale7Left",
+      "Back": "NPCMale7Back",
+      "FrontMoving": null,
+      "LeftMoving": null,
+      "BackMoving": null
+    }
+  },
+  {
+    "Name": "Guard",
+    "Mappings": {
+      "Front": "GuardFront",
+      "Left": "GuardLeft",
+      "Back": "GuardBack",
+      "FrontMoving": "GuardFrontMoving",
+      "LeftMoving": "GuardLeftMoving",
+      "BackMoving": "GuardBackMoving"
+    }
+  },
+  {
+    "Name": "PoisonPokemon",
+    "Mappings": {
+      "Front": "PoisonPokemonFront",
+      "Left": null,
+      "Back": null,
+      "FrontMoving": "PoisonPokemonFrontMoving",
+      "LeftMoving": null,
+      "BackMoving": null
+    }
+  },
+  {
+    "Name": "OldManLying",
+    "Mappings": {
+      "Front": "OldManLyingFront",
+      "Left": null,
+      "Back": null,
+      "FrontMoving": null,
+      "LeftMoving": null,
+      "BackMoving": null
+    }
+  },
+  {
+    "Name": "Paper",
+    "Mappings": {
+      "Front": "PaperFront",
+      "Left": null,
+      "Back": null,
+      "FrontMoving": null,
+      "LeftMoving": null,
+      "BackMoving": null
+    }
+  },
+  {
+    "Name": "Book",
+    "Mappings": {
+      "Front": "BookFront",
+      "Left": null,
+      "Back": null,
+      "FrontMoving": null,
+      "LeftMoving": null,
+      "BackMoving": null
+    }
+  },
+  {
+    "Name": "Note",
+    "Mappings": {
+      "Front": "NoteFront",
+      "Left": null,
+      "Back": null,
+      "FrontMoving": null,
+      "LeftMoving": null,
+      "BackMoving": null
+    }
+  },
+  {
+    "Name": "Coin",
+    "Mappings": {
+      "Front": "CoinFront",
+      "Left": null,
+      "Back": null,
+      "FrontMoving": null,
+      "LeftMoving": null,
+      "BackMoving": null
+    }
+  },
+  {
+    "Name": "Nurse",
+    "Mappings": {
+      "Front": "NurseFront",
+      "Left": "NurseLeft",
+      "Back": "NurseBack",
+      "FrontMoving": "NurseFrontMoving",
+      "LeftMoving": null,
+      "BackMoving": null
+    }
+  }
+]

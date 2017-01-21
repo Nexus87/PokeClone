@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace GameEngine.Graphics
 {
-    public class Sprite
+    public class Sprite : ISprite
     {
         public ITexture2D Texture { get; set; }
         public SpriteEffects SpriteEffect { get; set; }

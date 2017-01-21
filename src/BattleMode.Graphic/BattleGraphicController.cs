@@ -31,7 +31,7 @@ namespace BattleMode.Graphic
             initAIGraphic(_sprites[ai], screen);
             initPlayerGraphic(_sprites[player], screen);
 
-            Scene = new Scene();
+            Scene = new Scene(screen);
             foreach (var spritesValue in _sprites.Values)
             {
                 Scene.AddSprite(spritesValue);

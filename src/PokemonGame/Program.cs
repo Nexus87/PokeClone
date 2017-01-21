@@ -27,28 +27,10 @@ namespace PokemonGame
 
             engine.RegisterModule(new PokemonGameModule());
             engine.RegisterModule(new BattleModule());
-            engine.RegisterModule(new MainModule(CreateDummyMap()));
+            engine.RegisterModule(new MainModule());
             engine.SetSkin(new ClassicSkin());
             engine.SetStartModule(startModule);
             engine.Run();
-        }
-
-        private static Map CreateDummyMap()
-        {
-            var table = new Table<Tile>
-            {
-                [0, 0] = new Tile("Tile0303", false),
-                [0, 1] = new Tile("Tile0304", true),
-                [0, 2] = new Tile("Tile0305", false),
-                [1, 0] = new Tile("Tile0403", false),
-                [1, 1] = new Tile("Tile0404", true),
-                [1, 2] = new Tile("Tile0405", false),
-                [2, 0] = new Tile("Tile0503", false),
-                [2, 1] = new Tile("Tile0504", false),
-                [2, 2] = new Tile("Tile0505", false)
-            };
-
-            return new Map(table, new TilePosition(1, 0));
         }
     }
 }

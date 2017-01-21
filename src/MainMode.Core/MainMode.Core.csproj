@@ -40,6 +40,9 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
@@ -55,32 +58,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CharacterSprite.cs" />
-    <Compile Include="CharacterSpriteLoader.cs" />
-    <Compile Include="Direction.cs" />
-    <Compile Include="FieldCoordinate.cs" />
-    <Compile Include="GameInputHandler.cs" />
-    <Compile Include="GameStateEntity.cs" />
-    <Compile Include="Graphics\CharacterSprite.cs" />
-    <Compile Include="Graphics\SceneController.cs" />
-    <Compile Include="Graphics\FieldSize.cs" />
-    <Compile Include="Graphics\AbstractCharacterSprite.cs" />
-    <Compile Include="Graphics\ISceneController.cs" />
-    <Compile Include="Graphics\IMapGraphic.cs" />
-    <Compile Include="Graphics\IWorldScreenController.cs" />
-    <Compile Include="Graphics\MapGraphic.cs" />
-    <Compile Include="Graphics\WorldScreen.cs" />
-    <Compile Include="IGameStateComponent.cs" />
-    <Compile Include="IMapLoader.cs" />
-    <Compile Include="ISpriteLoader.cs" />
-    <Compile Include="IWorldEvent.cs" />
+    <Compile Include="Connector.cs" />
+    <Compile Include="Entities\PlayerSpriteEntity.cs" />
+    <Compile Include="Graphic\PlayerSpriteController.cs" />
+    <Compile Include="Loader\CharacterSpriteLoader.cs" />
+    <Compile Include="Loader\MapLoader.cs" />
+    <Compile Include="MainModeController.cs" />
     <Compile Include="MainModule.cs" />
-    <Compile Include="Map.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SpriteState.cs" />
-    <Compile Include="Tile.cs" />
-    <Compile Include="TilePosition.cs" />
-    <Compile Include="WorldObject.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GameEngine.Entities\GameEngine.Entities.csproj">
@@ -107,6 +92,18 @@
       <Project>{73200884-85C6-4A3D-A3C2-A53D9C632613}</Project>
       <Name>GameEngine.TypeRegistry</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MainMode.Entities\MainMode.Entities.csproj">
+      <Project>{81f74f93-a308-4037-b184-40dbd986613e}</Project>
+      <Name>MainMode.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MainMode.Globals\MainMode.Globals.csproj">
+      <Project>{D1FEA8CF-F9EB-40F7-A2CF-9E26201A0EB3}</Project>
+      <Name>MainMode.Globals</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MainMode.Graphic\MainMode.Graphic.csproj">
+      <Project>{D90A00CD-0053-4846-B278-DEBFAA1D85E4}</Project>
+      <Name>MainMode.Graphic</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -121,6 +118,9 @@
     <Content Include="Content\MainMode\CharactersMapping.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\MainMode\EntitySpriteMap.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\MainMode\TilesetMapping.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -131,9 +131,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup />
-  <ItemGroup />
-  <ItemGroup />
   <ItemGroup />
   <ItemGroup />
   <ItemGroup />
