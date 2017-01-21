@@ -9,7 +9,6 @@ using MainMode.Core.Loader;
 using MainMode.Entities;
 using MainMode.Globals;
 using MainMode.Graphic;
-using Microsoft.Xna.Framework;
 
 namespace MainMode.Core
 {

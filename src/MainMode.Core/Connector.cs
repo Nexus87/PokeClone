@@ -12,11 +12,12 @@ namespace MainMode.Core
 
             gameStateEntity.SpriteTurned +=
                 (sender, args) => graphicController.TurnSprite(args.SpriteId, args.Direction);
+
             gameStateEntity.SpritePositionChanged += (sender, args) =>
             {
                 graphicController.MoveSprite(
                     args.SpriteId,
-                    new Point(args.NewX, args.NewY) * Constants.Size,
+                    args.Position * Constants.Size,
                     () => gameStateEntity.UnlockSprite(args.SpriteId));
             };
         }

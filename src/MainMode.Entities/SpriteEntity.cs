@@ -9,8 +9,7 @@ namespace MainMode.Entities
         private readonly GameStateEntity _gameStateEntity;
         public SpriteId SpriteId { get; }
 
-        internal int X { get; set; }
-        internal int Y { get; set; }
+        internal Point Position { get; set; }
         internal bool BlockInput { get; set; }
         protected internal Direction Direction { get; set; }
 

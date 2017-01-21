@@ -48,7 +48,7 @@ namespace MainMode.Core
             var playerSprite = new PlayerSpriteController(_scene, playerTexutres);
             _player = new PlayerSpriteEntity(new SpriteId(), _gameStateEntity, _engineInterface);
 
-            _gameStateEntity.PlaceSpriteEntity(_player, 1, 0);
+            _gameStateEntity.PlaceSpriteEntity(_player, new Point(1, 0));
             _graphicController.AddSpriteEntity(_player.SpriteId, playerSprite, new Point(1, 0) * Constants.Size);
             _scene.SetBackground(map.MapTexture);
 

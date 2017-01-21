@@ -18,12 +18,11 @@ namespace MainMode.Entities
         private Table<MapField> _mapFields = new Table<MapField>();
         private readonly Dictionary<SpriteId, SpriteEntity> _entities = new Dictionary<SpriteId, SpriteEntity>();
 
-        public void PlaceSpriteEntity(SpriteEntity spriteEntity, int x, int y)
+        public void PlaceSpriteEntity(SpriteEntity spriteEntity, Point location)
         {
             _entities[spriteEntity.SpriteId] = spriteEntity;
-            spriteEntity.X = x;
-            spriteEntity.Y = y;
-            _mapFields[y, x].SpriteEntity = spriteEntity;
+            spriteEntity.Position= location;
+            _mapFields.Get(location).SpriteEntity = spriteEntity;
         }
 
         public void ClearState()
@@ -49,9 +48,9 @@ namespace MainMode.Entities
             }
         }
 
-        private void OnSpritePositionChanged(int x, int y, SpriteId spriteId)
+        private void OnSpritePositionChanged(Point position, SpriteId spriteId)
         {
-            SpritePositionChanged?.Invoke(this, new SpritePositionChangedEventArgs(x, y, spriteId));
+            SpritePositionChanged?.Invoke(this, new SpritePositionChangedEventArgs(position, spriteId));
         }
 
         public void UnlockSprite(SpriteId spriteId)
@@ -65,24 +64,22 @@ namespace MainMode.Entities
             if(entity.BlockInput)
                 return;
 
-            var x = entity.X + XMovement(direction);
-            var y = entity.Y + YMovement(direction);
+            var newPosition = entity.Position + new Point(XMovement(direction), YMovement(direction));
 
-            if(!IsAccessable(x, y))
+            if(!IsAccessable(newPosition))
                 return;
 
-            _mapFields[entity.Y, entity.X].SpriteEntity = null;
+            _mapFields.Get(entity.Position).SpriteEntity = null;
             entity.BlockInput = true;
-            entity.X = x;
-            entity.Y = y;
-            _mapFields[y, x].SpriteEntity = entity;
+            entity.Position = newPosition;
+            _mapFields.Get(entity.Position).SpriteEntity = entity;
 
-            OnSpritePositionChanged(x, y, spriteId);
+            OnSpritePositionChanged(newPosition, spriteId);
         }
 
-        private bool IsAccessable(int x, int y)
+        private bool IsAccessable(Point location)
         {
-            var field = _mapFields[y, x];
+            var field = _mapFields.Get(location);
             return field.IsAccessable && field.SpriteEntity == null;
         }
 
