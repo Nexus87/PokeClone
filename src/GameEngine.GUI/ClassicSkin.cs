@@ -27,7 +27,6 @@ namespace GameEngine.GUI
         {
             var arrow = provider.GetTexture(Key, Arrow);
             var border = provider.GetTexture(Key, Border);
-            var circle = provider.GetTexture(Key, Circle);
             var font = provider.GetFont(Key, DefaultFont);
             var pixel = provider.Pixel;
 
