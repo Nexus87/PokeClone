@@ -1,4 +1,4 @@
-﻿using BattleMode.Entities.BattleState;
+﻿using Base.Rules;
 using GameEngine.Core;
 using GameEngine.GUI.Controlls;
 using GameEngine.GUI.Loader;
@@ -36,12 +36,12 @@ namespace BattleMode.Gui
             _hpLine.Current = _hpText.CurrentHp = newHp;
         }
 
-        public void SetPokemon(PokemonWrapper pokemon)
+        public void SetPokemon(PokemonEntity pokemon)
         {
             _name.Text = pokemon.Name;
             _lvl.Text = ":L" + pokemon.Level;
-            _hpText.MaxHp = _hpLine.MaxHp = pokemon.MaxHP;
-            SetHp(pokemon.HP);
+            _hpText.MaxHp = _hpLine.MaxHp = pokemon.MaxHp;
+            SetHp(pokemon.Hp);
 
         }
 

@@ -33,7 +33,8 @@
     <OutputPath>bin\AnyCPU\Release</OutputPath>
     <IntermediateOutputPath>obj\AnyCPU\Release</IntermediateOutputPath>
     <DocumentationFile>bin\AnyCPU\Release\Base.xml</DocumentationFile>
-    <DefineConstants></DefineConstants>
+    <DefineConstants>
+    </DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
@@ -60,12 +61,17 @@
     <Compile Include="Move.cs" />
     <Compile Include="Pokemon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Rules\IBattlePokemon.cs" />
+    <Compile Include="Rules\HpChangedEventArgs.cs" />
+    <Compile Include="Rules\PokemonChangedEventArgs.cs" />
+    <Compile Include="Rules\PokemonEntity.cs" />
     <Compile Include="Rules\IBattleRules.cs" />
     <Compile Include="Rules\IMoveEffectCalculator.cs" />
     <Compile Include="Rules\IPokemonRules.cs" />
     <Compile Include="Rules\ITypeTable.cs" />
     <Compile Include="Rules\RulesSet.cs" />
+    <Compile Include="Rules\BattleStats.cs" />
+    <Compile Include="Rules\StateChangedEventArgs.cs" />
+    <Compile Include="Rules\StatusConditionEventArgs.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup />
@@ -86,7 +92,7 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <_PostBuildHookTimestamp>@(IntermediateAssembly-&gt;'%(FullPath).timestamp')</_PostBuildHookTimestamp>
+    <_PostBuildHookTimestamp>@(IntermediateAssembly->'%(FullPath).timestamp')</_PostBuildHookTimestamp>
     <_PostBuildHookHostPlatform>$(Platform)</_PostBuildHookHostPlatform>
   </PropertyGroup>
   <Target Name="PostBuildHooks" Inputs="@(IntermediateAssembly);@(ReferencePath)" Outputs="@(IntermediateAssembly);$(_PostBuildHookTimestamp)" AfterTargets="CoreCompile" BeforeTargets="AfterCompile">

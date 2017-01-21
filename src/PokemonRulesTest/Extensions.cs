@@ -11,7 +11,7 @@ namespace PokemonRulesTest
             var other = (PokemonData)obj;
             return d.Name.Equals(other.Name) &&
                    d.Id == other.Id &&
-                   d.BaseStats.HP == other.BaseStats.HP &&
+                   d.BaseStats.Hp == other.BaseStats.Hp &&
                    d.BaseStats.Atk == other.BaseStats.Atk &&
                    d.BaseStats.Def == other.BaseStats.Def &&
                    d.BaseStats.SpAtk == other.BaseStats.SpAtk &&
@@ -31,7 +31,7 @@ namespace PokemonRulesTest
                    p.SpAtk == data.BaseStats.SpAtk &&
                    p.SpDef == data.BaseStats.SpDef &&
                    p.Speed == data.BaseStats.Speed &&
-                   p.HP == data.BaseStats.HP &&
+                   p.Hp == data.BaseStats.Hp &&
                    p.Name == data.Name &&
                    p.Type1 == data.Type1 &&
                    p.Type2 == data.Type2;

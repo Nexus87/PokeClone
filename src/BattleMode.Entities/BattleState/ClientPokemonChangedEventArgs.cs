@@ -1,14 +1,15 @@
 ﻿using System;
+using Base.Rules;
 using BattleMode.Shared;
 
 namespace BattleMode.Entities.BattleState
 {
     public class ClientPokemonChangedEventArgs : EventArgs
     {
-        public PokemonWrapper Pokemon { get; private set; }
-        public ClientIdentifier Id { get; private set; }
+        public PokemonEntity Pokemon { get; }
+        public ClientIdentifier Id { get; }
 
-        public ClientPokemonChangedEventArgs(ClientIdentifier id, PokemonWrapper pokemon)
+        public ClientPokemonChangedEventArgs(ClientIdentifier id, PokemonEntity pokemon)
         {
             Id = id;
             Pokemon = pokemon;

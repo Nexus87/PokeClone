@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Linq;
 using Base;
-using Base.Data;
+using Base.Rules;
 using BattleMode.Shared;
 using GameEngine.TypeRegistry;
 
@@ -9,58 +10,51 @@ namespace BattleMode.Entities.BattleState
     [GameService(typeof(IEventCreator))]
     public class EventCreator : IEventCreator
     {
-        public void UsingMove(PokemonWrapper source, Move move)
+        public EventCreator(BattleData data)
         {
-            MoveUsed(this, new MoveUsedEventArgs(move, source));
+            var ids = data.Clients.ToDictionary(data.GetPokemon, x => x);
+
+            foreach (var pokemonEntity in ids.Keys)
+            {
+                pokemonEntity.HpChanged += (sender, args) =>
+                    HpChanged?.Invoke(this, new HpChangedEventArgs(ids[pokemonEntity], args.NewHp));
+
+                pokemonEntity.PokemonChanged += (sender, args) =>
+                    PokemonChanged?.Invoke(this, new ClientPokemonChangedEventArgs(ids[pokemonEntity], pokemonEntity));
+
+                pokemonEntity.StatusChanged += (sender, args) =>
+                    StatusChanged?.Invoke(this, new ClientStatusChangedEventArgs(ids[pokemonEntity], args.NewCondition));
+
+            }
         }
 
-        public void SetHp(ClientIdentifier id, int hp)
+        public void UsingMove(PokemonEntity source, Move move)
         {
-            HpChanged(this, new HpChangedEventArgs(id, hp));
+            MoveUsed?.Invoke(this, new MoveUsedEventArgs(move, source));
         }
 
-        public void Effective(MoveEfficiency effect, PokemonWrapper target)
+
+        public void Effective(MoveEfficiency effect, PokemonEntity target)
         {
-            MoveEffective(this, new MoveEffectiveEventArgs(effect, target));
+            MoveEffective?.Invoke(this, new MoveEffectiveEventArgs(effect, target));
         }
 
         public void Critical()
         {
-            CriticalDamage(this, EventArgs.Empty);
-        }
-
-        public void SetStatus(PokemonWrapper pokemon, StatusCondition condition)
-        {
-            StatusChanged(this, new ClientStatusChangedEventArgs(pokemon.Identifier, condition));
-        }
-
-        public void SetPokemon(ClientIdentifier id, PokemonWrapper pokemon)
-        {
-            PokemonChanged(this, new ClientPokemonChangedEventArgs(id, pokemon));
+            CriticalDamage?.Invoke(this, EventArgs.Empty);
         }
 
         public void SetNewTurn()
         {
-            NewTurn(this, EventArgs.Empty);
+            NewTurn?.Invoke(this, EventArgs.Empty);
         }
 
-        public void SwitchPokemon(PokemonWrapper pokemon)
-        {
-            PokemonChanged(this, new ClientPokemonChangedEventArgs(pokemon.Identifier, pokemon));
-        }
-
-        public event EventHandler CriticalDamage = delegate { };
-
-        public event EventHandler<MoveEffectiveEventArgs> MoveEffective = delegate { };
-
-        public event EventHandler NewTurn = delegate { };
-
-        public event EventHandler<HpChangedEventArgs> HpChanged = delegate { };
-
-        public event EventHandler<ClientPokemonChangedEventArgs> PokemonChanged = delegate { };
-
-        public event EventHandler<ClientStatusChangedEventArgs> StatusChanged = delegate { };
-
-        public event EventHandler<MoveUsedEventArgs> MoveUsed = delegate { };
+        public event EventHandler CriticalDamage;
+        public event EventHandler<MoveEffectiveEventArgs> MoveEffective;
+        public event EventHandler NewTurn;
+        public event EventHandler<HpChangedEventArgs> HpChanged ;
+        public event EventHandler<ClientPokemonChangedEventArgs> PokemonChanged;
+        public event EventHandler<ClientStatusChangedEventArgs> StatusChanged;
+        public event EventHandler<MoveUsedEventArgs> MoveUsed;
     }
 }

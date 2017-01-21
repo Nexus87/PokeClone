@@ -1,6 +1,6 @@
 ﻿using Base.Data;
+using Base.Rules;
 using BattleMode.Core.Components;
-using BattleMode.Entities.BattleState;
 using BattleMode.Graphic;
 using BattleMode.Gui;
 using BattleMode.Shared;
@@ -91,7 +91,7 @@ namespace BattleModeTest.Components
             _eventMock.RaisePokemonChangedEvent();
             _eventQueue.DispatchAllEvents();
 
-            A.CallTo(() => _graphicMock.SetPokemon(A<ClientIdentifier>.Ignored, A<PokemonWrapper>.Ignored))
+            A.CallTo(() => _graphicMock.SetPokemon(A<ClientIdentifier>.Ignored, A<PokemonEntity>.Ignored))
                 .MustHaveHappened(Repeated.Exactly.Once);
         }
 

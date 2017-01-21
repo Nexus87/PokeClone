@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Base.Data;
+using Base.Rules;
 using BattleMode.Entities.BattleState;
 using BattleMode.Shared;
 using GameEngine.Core;
@@ -42,11 +43,11 @@ namespace BattleMode.Graphic
         {
         }
 
-        public void SetPokemon(ClientIdentifier id, PokemonWrapper pokemon)
+        public void SetPokemon(ClientIdentifier id, PokemonEntity pokemon)
         {
             _sprites[id].Texture = id.IsPlayer
-                ? _provider.GetTextureBack(pokemon.ID)
-                : _provider.GetTexturesFront(pokemon.ID);
+                ? _provider.GetTextureBack(pokemon.Id)
+                : _provider.GetTexturesFront(pokemon.Id);
         }
 
         public void SetPokemonStatus(ClientIdentifier id, StatusCondition condition)

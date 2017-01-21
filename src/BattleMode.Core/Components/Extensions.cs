@@ -1,4 +1,5 @@
 ﻿using Base.Data;
+using Base.Rules;
 using BattleMode.Entities.BattleState;
 using BattleMode.Graphic;
 using BattleMode.Gui;
@@ -14,7 +15,7 @@ namespace BattleMode.Core.Components
             queue.AddEvent(new SetHpEvent(guiController, id, hp));
         }
 
-        public static void AddSetPokemonEvent(this IEventQueue queue, IBattleGraphicController service, IGuiController guiController, ClientIdentifier id, PokemonWrapper pokemon)
+        public static void AddSetPokemonEvent(this IEventQueue queue, IBattleGraphicController service, IGuiController guiController, ClientIdentifier id, PokemonEntity pokemon)
         {
             queue.AddEvent(new SetPokemonEvent(service, guiController, id, pokemon));
         }

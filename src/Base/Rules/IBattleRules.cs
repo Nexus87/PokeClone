@@ -2,7 +2,7 @@
 {
     public interface IBattleRules
     {
-        float CalculateBaseDamage(IBattlePokemon source, IBattlePokemon target, Move move);
+        float CalculateBaseDamage(PokemonEntity source, PokemonEntity target, Move move);
 
         bool CanChange();
 
@@ -12,14 +12,14 @@
 
         float GetCriticalHitModifier();
 
-        float GetHitChance(IBattlePokemon source, IBattlePokemon target, Move move);
+        float GetHitChance(PokemonEntity source, PokemonEntity target, Move move);
 
-        float GetMiscModifier(IBattlePokemon source, IBattlePokemon target, Move move);
+        float GetMiscModifier(PokemonEntity source, PokemonEntity target, Move move);
 
         float GetStateModifier(int stage);
 
-        float GetTypeModifier(IBattlePokemon source, IBattlePokemon target, Move move);
+        float GetTypeModifier(PokemonEntity source, PokemonEntity target, Move move);
 
-        float SameTypeAttackBonus(IBattlePokemon source, Move move);
+        float SameTypeAttackBonus(PokemonEntity source, Move move);
     }
 }

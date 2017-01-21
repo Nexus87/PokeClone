@@ -1,5 +1,6 @@
 ﻿using System;
 using Base;
+using Base.Rules;
 using BattleMode.Shared;
 using GameEngine.Entities;
 
@@ -9,7 +10,7 @@ namespace BattleMode.Entities.BattleState
     {
         event EventHandler<StateChangedEventArgs> StateChanged;
 
-        PokemonWrapper GetPokemon(ClientIdentifier id);
+        PokemonEntity GetPokemon(ClientIdentifier id);
 
         void SetCharacter(ClientIdentifier id, Pokemon pkmn);
 

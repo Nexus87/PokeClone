@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using Base;
 using BattleMode.Entities.BattleState;
 using GameEngine.Core;
@@ -31,7 +32,18 @@ namespace BattleMode.Gui
             var loader = new GuiLoader(@"BattleMode\Gui\MoveMenu.xml") {Controller = this};
             loader.Load();
 
-            _listView.Model = data.GetPokemon(data.PlayerId).Moves;
+            _listView.Model = new ObservableCollection<Move>(data.GetPokemon(data.PlayerId).Moves);
+
+            data.GetPokemon(data.PlayerId).PokemonChanged += (sender, args) =>
+            {
+                _listView.Model.Clear();
+                foreach (var sourceMove in args.Source.Moves)
+                {
+                    _listView.Model.Add(sourceMove);
+                }
+            };
+
+
             _listView.ListCellFactory = value =>
             {
                 var button = registry.ResolveType<Button>();

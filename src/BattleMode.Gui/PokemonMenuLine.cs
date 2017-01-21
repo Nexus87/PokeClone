@@ -44,7 +44,7 @@ namespace BattleMode.Gui
         {
             _pokemon = pokemon;
             _hpText.SetPokemon(_pokemon);
-            _hpLine.MaxHp = _pokemon.MaxHP;
+            _hpLine.MaxHp = _pokemon.MaxHp;
             _nameBox.Text = _pokemon.Name;
             _icon.Image = _spriteProvider.GetIcon(_pokemon.Id);
             UpdateData();
@@ -52,7 +52,7 @@ namespace BattleMode.Gui
 
         public void UpdateData()
         {
-            _hpLine.Current = _pokemon.HP;
+            _hpLine.Current = _pokemon.Hp;
             _level.Text = "L" + _pokemon.Level;
 
         }

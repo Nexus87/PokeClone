@@ -1,4 +1,5 @@
 ﻿using Base.Data;
+using Base.Rules;
 using BattleMode.Entities.BattleState;
 using BattleMode.Entities.BattleState.Commands;
 using BattleMode.Shared;
@@ -29,20 +30,9 @@ namespace BattleModeTest
             var executer = CreateExecuter();
             _factory.CreateAllPokemon(hp);
 
-            ExecuteMoveCommand(executer, _factory.PlayerID, damage);
+            ExecuteMoveCommand(executer, _factory.PlayerId, damage);
 
-            Assert.AreEqual(result, _factory.GetPlayerPokemon().HP);
-        }
-
-        [TestCase(100, 10, 90)]
-        public void ExecuteMove_NonCritical_EventCreatorSetHPCalled(int hp, int damage, int result)
-        {
-            var executer = CreateExecuter();
-            _factory.CreateAllPokemon(hp);
-
-            ExecuteMoveCommand(executer, _factory.PlayerID, damage);
-
-            A.CallTo(() => _creatorMock.SetHp(_factory.PlayerID, result)).MustHaveHappened(Repeated.Exactly.Once);
+            Assert.AreEqual(result, _factory.GetPlayerPokemon().Hp);
         }
 
         [Test]
@@ -78,7 +68,7 @@ namespace BattleModeTest
 
             ExecuteMoveCommand(executer, typeModifier: modifier);
 
-            A.CallTo(() => _creatorMock.Effective(expected, A<PokemonWrapper>.Ignored))
+            A.CallTo(() => _creatorMock.Effective(expected, A<PokemonEntity>.Ignored))
                 .MustHaveHappened(Repeated.Exactly.Once);
         }
 
@@ -90,34 +80,9 @@ namespace BattleModeTest
             var executer = CreateExecuter();
             _factory.CreateAllPokemon();
 
-            ExecuteMoveCommand(executer, target: _factory.PlayerID, newCondition: condition);
+            ExecuteMoveCommand(executer, target: _factory.PlayerId, newCondition: condition);
 
             Assert.AreEqual(condition, _factory.GetPlayerPokemon().Condition);
-        }
-
-        [TestCase(StatusCondition.KO)]
-        [TestCase(StatusCondition.Paralyzed)]
-        public void ExecuteMove_ChangingStatusCondition_EventCreatorSetStatusCalled(StatusCondition condition)
-        {
-            var executer = CreateExecuter();
-            _factory.CreateAllPokemon();
-
-            ExecuteMoveCommand(executer, target: _factory.PlayerID, newCondition: condition);
-
-            A.CallTo(() => _creatorMock.SetStatus(A<PokemonWrapper>.Ignored, condition))
-                .MustHaveHappened(Repeated.Exactly.Once);
-        }
-
-        [Test]
-        public void ExecuteMove_StatusDoesNotChange_EventCreatorSetStatusNotCalled()
-        {
-            var executer = CreateExecuter();
-            _factory.CreateAllPokemon();
-
-            ExecuteMoveCommand(executer, target: _factory.PlayerID);
-
-            A.CallTo(() => _creatorMock.SetStatus(A<PokemonWrapper>.Ignored, A<StatusCondition>.Ignored))
-                .MustNotHaveHappened();
         }
 
         private void ExecuteMoveCommand(CommandExecuter executer, ClientIdentifier clientIdentifier, int damage)
@@ -131,7 +96,7 @@ namespace BattleModeTest
             ClientIdentifier target = null, StatusCondition newCondition = StatusCondition.Normal)
         {
             if (target == null)
-                target = _factory.PlayerID;
+                target = _factory.PlayerId;
             var command = new MoveCommand(target, target, _factory.CreateMove());
             _calculator.IsCritical = critical;
             _calculator.TypeModifier = typeModifier;

@@ -9,7 +9,7 @@ namespace PokemonGame.Rules
     [GameService(typeof(IPokemonRules))]
     public class DummyPokemonRules : IPokemonRules
     {
-        public Stats GenerateIV()
+        public Stats GenerateIv()
         {
             return new Stats();
         }

@@ -33,13 +33,8 @@ namespace BattleMode.Entities.BattleState
 
         public void DispatchCommand(ChangeCommand command)
         {
-            ExecChange(Data.GetPokemon(command.Source), command.Pokemon);
-        }
-
-        private void ExecChange(PokemonWrapper pokemonWrapper, Pokemon newPokemon)
-        {
-            pokemonWrapper.Pokemon = newPokemon;
-            _eventCreator.SwitchPokemon(pokemonWrapper);
+            var pokemonEntity = Data.GetPokemon(command.Source);
+            pokemonEntity.Pokemon = command.Pokemon;
         }
 
         private static MoveEfficiency GetEffect(float typeModifier)
@@ -57,7 +52,7 @@ namespace BattleMode.Entities.BattleState
             return MoveEfficiency.Normal;
         }
 
-        private void ExecMove(PokemonWrapper source, Move move, PokemonWrapper target)
+        private void ExecMove(PokemonEntity source, Move move, PokemonEntity target)
         {
             _eventCreator.UsingMove(source, move);
             _calculator.Init(source, move, target);
@@ -68,14 +63,12 @@ namespace BattleMode.Entities.BattleState
             HandleStatusConditionChange(target);
         }
 
-        private void HandleStatusConditionChange(PokemonWrapper target)
+        private void HandleStatusConditionChange(PokemonEntity target)
         {
+            if (target.Condition == _calculator.StatusCondition)
+                return;
 
-            if (target.Condition != _calculator.StatusCondition)
-            {
-                target.Condition = _calculator.StatusCondition;
-                _eventCreator.SetStatus(target, target.Condition);
-            }
+            target.Condition = _calculator.StatusCondition;
         }
 
         private void CheckIfCritical()
@@ -84,14 +77,13 @@ namespace BattleMode.Entities.BattleState
                 _eventCreator.Critical();
         }
 
-        private void DoDamage(PokemonWrapper target)
+        private void DoDamage(PokemonEntity target)
         {
             var damage = _calculator.Damage;
-            target.HP -= damage;
-            _eventCreator.SetHp(target.Identifier, target.HP);
+            target.Hp -= damage;
         }
 
-        private void HandleEfficiency(PokemonWrapper target)
+        private void HandleEfficiency(PokemonEntity target)
         {
             var effect = GetEffect(_calculator.TypeModifier);
             _eventCreator.Effective(effect, target);

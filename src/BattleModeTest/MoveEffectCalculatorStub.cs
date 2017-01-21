@@ -7,7 +7,7 @@ namespace BattleModeTest
     public class MoveEffectCalculatorStub : IMoveEffectCalculator
     {
 
-        public void Init(IBattlePokemon source, Move move, IBattlePokemon target)
+        public void Init(PokemonEntity source, Move move, PokemonEntity target)
         {
         }
 

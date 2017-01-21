@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Base.Rules;
 using BattleMode.Entities.BattleState;
 using BattleMode.Shared;
 using GameEngine.Core;
@@ -181,7 +182,7 @@ namespace BattleMode.Gui
             }
         }
 
-        public void SetPokemon(ClientIdentifier id, PokemonWrapper pokemon)
+        public void SetPokemon(ClientIdentifier id, PokemonEntity pokemon)
         {
             _dataViews[id].SetPokemon(pokemon);
         }

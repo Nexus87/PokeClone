@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Base;
 using Base.Data;
+using Base.Rules;
 using BattleMode.Entities.BattleState;
 using BattleMode.Shared;
 
@@ -10,19 +11,19 @@ namespace BattleModeTest.Utils
     {
         public TestFactory()
         {
-            PlayerID = new ClientIdentifier();
-            AIID = new ClientIdentifier();
-            BattleData = new BattleData(PlayerID, AIID);
+            PlayerId = new ClientIdentifier();
+            Aiid = new ClientIdentifier();
+            BattleData = new BattleData(PlayerId, Aiid);
         }
 
-        public ClientIdentifier PlayerID { get; private set; }
-        public ClientIdentifier AIID { get; private set; }
-        public BattleData BattleData { get; private set; }
+        public ClientIdentifier PlayerId { get; }
+        public ClientIdentifier Aiid { get; }
+        public BattleData BattleData { get; }
         
         public static Client CreatePlayerClient(int numPokemon)
         {
             var pokemons = new List<Pokemon>();
-            for (int i = 0; i < numPokemon; i++)
+            for (var i = 0; i < numPokemon; i++)
             {
                 pokemons.Add(CreatePokemon());
             }
@@ -30,21 +31,20 @@ namespace BattleModeTest.Utils
             return new Client(new ClientIdentifier(), pokemons);
         }
 
-        public void CreatePlayerPokemon(StatusCondition statusCondition = StatusCondition.Normal, int HP = 100)
+        public void CreatePlayerPokemon(StatusCondition statusCondition = StatusCondition.Normal, int hp = 100)
         {
-            BattleData.GetPokemon(PlayerID).Pokemon = CreatePokemon(statusCondition, HP);
+            BattleData.GetPokemon(PlayerId).Pokemon = CreatePokemon(statusCondition, hp);
         }
 
-        public void CreateAIPokemon(StatusCondition statusCondition = StatusCondition.Normal, int HP = 100)
+        public void CreateAiPokemon(StatusCondition statusCondition = StatusCondition.Normal, int hp = 100)
         {
-            BattleData.GetPokemon(AIID).Pokemon = CreatePokemon(statusCondition, HP);
+            BattleData.GetPokemon(Aiid).Pokemon = CreatePokemon(statusCondition, hp);
         }
 
-        public static Pokemon CreatePokemon(StatusCondition statusCondition = StatusCondition.Normal, int HP = 100)
+        public static Pokemon CreatePokemon(StatusCondition statusCondition = StatusCondition.Normal, int hp = 100)
         {
-            var baseData = new PokemonData();
-            baseData.BaseStats = new Stats { HP = 100 };
-            return new Pokemon(baseData, new Stats()) { Condition = statusCondition, HP = HP };
+            var baseData = new PokemonData {BaseStats = new Stats {Hp = 100}};
+            return new Pokemon(baseData, new Stats()) { Condition = statusCondition, Hp = hp };
         }
 
         public Move CreateMove()
@@ -57,20 +57,20 @@ namespace BattleModeTest.Utils
             return new Item();
         }
 
-        public Pokemon GetPlayerPokemon()
+        public PokemonEntity GetPlayerPokemon()
         {
-            return BattleData.GetPokemon(PlayerID).Pokemon;
+            return BattleData.GetPokemon(PlayerId);
         }
 
-        public Pokemon GetAIPokemon()
+        public PokemonEntity GetAiPokemon()
         {
-            return BattleData.GetPokemon(AIID).Pokemon;
+            return BattleData.GetPokemon(Aiid);
         }
 
-        public void CreateAllPokemon(int HP = 100)
+        public void CreateAllPokemon(int hp = 100)
         {
-            CreatePlayerPokemon(HP: HP);
-            CreateAIPokemon(HP: HP);
+            CreatePlayerPokemon(hp: hp);
+            CreateAiPokemon(hp: hp);
         }
     }
 }

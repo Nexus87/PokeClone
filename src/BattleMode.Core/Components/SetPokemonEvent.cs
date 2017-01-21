@@ -1,5 +1,5 @@
 ﻿using System;
-using BattleMode.Entities.BattleState;
+using Base.Rules;
 using BattleMode.Graphic;
 using BattleMode.Gui;
 using BattleMode.Shared;
@@ -14,9 +14,9 @@ namespace BattleMode.Core.Components
         private readonly IBattleGraphicController _graphic;
         private readonly IGuiController _guiController;
         private readonly ClientIdentifier _id;
-        private readonly PokemonWrapper _pokemon;
+        private readonly PokemonEntity _pokemon;
 
-        public SetPokemonEvent(IBattleGraphicController graphic, IGuiController guiController, ClientIdentifier id, PokemonWrapper pokemon)
+        public SetPokemonEvent(IBattleGraphicController graphic, IGuiController guiController, ClientIdentifier id, PokemonEntity pokemon)
         {
             _graphic = graphic;
             _guiController = guiController;

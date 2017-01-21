@@ -4,7 +4,7 @@ namespace Base.Rules
 {
     public interface IMoveEffectCalculator
     {
-        void Init(IBattlePokemon source, Move move, IBattlePokemon target);
+        void Init(PokemonEntity source, Move move, PokemonEntity target);
 
         bool IsHit { get; }
         bool IsCritical { get; }

@@ -6,15 +6,15 @@ namespace Base
 {
     public class Pokemon
     {
-        private string name;
+        private string _name;
         public Pokemon(PokemonData baseData, int level, string name, Stats stats, Stats iv)
         {
             BaseData = baseData;
-            this.name = name;
+            _name = name;
             Level = level;
             Stats = stats;
-            IV = iv;
-            HP = MaxHP;
+            Iv = iv;
+            Hp = MaxHp;
 
             Condition = StatusCondition.Normal;
         }
@@ -23,28 +23,29 @@ namespace Base
             : this(baseData, 0, null, new Stats(), iv)
         { }
 
-        public int Atk { get { return Stats.Atk; } }
-        public PokemonData BaseData { get; private set; }
+        public int Atk => Stats.Atk;
+        public PokemonData BaseData { get; }
         public StatusCondition Condition { get; set; }
-        public int Def { get { return Stats.Def; } }
-        public int HP { get; set; }
+        public int Def => Stats.Def;
+        public int Hp { get; set; }
 
-        public int Id { get { return BaseData.Id; } }
+        public int Id => BaseData.Id;
 
-        public Stats IV { get; private set; }
+        public Stats Iv { get; private set; }
         public int Level { get; set; }
-        public int MaxHP { get { return Stats.HP; } }
-        public IReadOnlyList<Move> Moves { get { return moves.AsReadOnly(); } }
-        public string Name { get { return name == null ? BaseData.Name : name; } set { name = value; } }
-        public int SpAtk { get { return Stats.SpAtk; } }
-        public int SpDef { get { return Stats.SpDef; } }
-        public int Speed { get { return Stats.Speed; } }
+        public int MaxHp => Stats.Hp;
+        public IReadOnlyList<Move> Moves => _moves.AsReadOnly();
+        public string Name { get { return _name ?? BaseData.Name; } set { _name = value; } }
+        public int SpAtk => Stats.SpAtk;
+        public int SpDef => Stats.SpDef;
+        public int Speed => Stats.Speed;
         public Stats Stats { get; set; }
 
-        public PokemonType Type1 { get { return BaseData.Type1; } }
-        public PokemonType Type2 { get { return BaseData.Type2; } }
+        public PokemonType Type1 => BaseData.Type1;
+        public PokemonType Type2 => BaseData.Type2;
 
-        private readonly List<Move> moves = new List<Move>();
+        private readonly List<Move> _moves = new List<Move>();
+
         public void SetMove(int index, Move move)
         {
             if (index > 4)
@@ -52,13 +53,13 @@ namespace Base
             else if (index < 0)
                 throw new InvalidOperationException("Index must be positive");
 
-            if (index >= moves.Count)
-                moves.Add(move);
+            if (index >= _moves.Count)
+                _moves.Add(move);
             else
-                moves[index] = move;
+                _moves[index] = move;
             
         }
-        public bool IsKO()
+        public bool IsKo()
         {
             return Condition == StatusCondition.KO;
         }

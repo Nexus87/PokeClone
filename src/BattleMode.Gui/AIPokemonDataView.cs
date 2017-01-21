@@ -1,4 +1,4 @@
-﻿using BattleMode.Entities.BattleState;
+﻿using Base.Rules;
 using GameEngine.Core;
 using GameEngine.GUI.Controlls;
 using GameEngine.GUI.Loader;
@@ -20,9 +20,9 @@ namespace BattleMode.Gui
 #pragma warning restore 649
 
 
-        public AiPokemonDataView(GuiManager _guiManager)
+        public AiPokemonDataView(GuiManager guiManager)
         {
-            this._guiManager = _guiManager;
+            _guiManager = guiManager;
             var loader = new GuiLoader(@"BattleMode\Gui\AiDataView.xml") {Controller = this};
             loader.Load();
         }
@@ -34,12 +34,12 @@ namespace BattleMode.Gui
             _hpLine.Current = newHp;
         }
 
-        public void SetPokemon(PokemonWrapper pokemon)
+        public void SetPokemon(PokemonEntity pokemon)
         {
             _name.Text = pokemon.Name;
             _lvl.Text = ":L" + pokemon.Level;
-            _hpLine.MaxHp = pokemon.MaxHP;
-            _hpLine.Current = pokemon.HP;
+            _hpLine.MaxHp = pokemon.MaxHp;
+            _hpLine.Current = pokemon.Hp;
         }
 
         public void Show()

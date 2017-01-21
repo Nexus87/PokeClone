@@ -59,7 +59,7 @@ namespace BattleMode.Entities.AI
 
         private void ChoosePokemon()
         {
-            var pkmn = (from p in _pokemons where !p.IsKO() select p).FirstOrDefault();
+            var pkmn = (from p in _pokemons where !p.IsKo() select p).FirstOrDefault();
 
             if (pkmn == null)
                 throw new NotImplementedException();

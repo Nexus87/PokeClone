@@ -12,7 +12,7 @@ namespace Base.Data
         public int Def { get; set; }
 
         [DataMember]
-        public int HP { get; set; }
+        public int Hp { get; set; }
 
         [DataMember]
         public int SpAtk { get; set; }

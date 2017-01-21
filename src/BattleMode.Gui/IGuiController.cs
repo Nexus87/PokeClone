@@ -1,5 +1,5 @@
 ﻿using System;
-using BattleMode.Entities.BattleState;
+using Base.Rules;
 using BattleMode.Shared;
 using GameEngine.Entities;
 
@@ -14,6 +14,6 @@ namespace BattleMode.Gui
         void ShowMenu();
         void SetText(string text);
         void SetHp(ClientIdentifier target, int hp);
-        void SetPokemon(ClientIdentifier id, PokemonWrapper pokemon);
+        void SetPokemon(ClientIdentifier id, PokemonEntity pokemon);
     }
 }

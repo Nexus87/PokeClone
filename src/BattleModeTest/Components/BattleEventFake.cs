@@ -1,15 +1,17 @@
 ﻿using System;
 using Base;
 using Base.Data;
+using Base.Rules;
 using BattleMode.Entities.BattleState;
 using BattleMode.Shared;
+using HpChangedEventArgs = BattleMode.Entities.BattleState.HpChangedEventArgs;
 
 namespace BattleModeTest.Components
 {
     public class BattleEventFake : IEventCreator
     {
         private readonly ClientIdentifier _id = new ClientIdentifier();
-        private readonly PokemonWrapper _pokemon;
+        private readonly PokemonEntity _pokemon;
 
         public event EventHandler CriticalDamage;
         public event EventHandler<MoveEffectiveEventArgs> MoveEffective;
@@ -22,7 +24,7 @@ namespace BattleModeTest.Components
         public BattleEventFake()
         {
             var pkmn = new Pokemon(new PokemonData { Name = "name" }, new Stats());
-            _pokemon = new PokemonWrapper(_id) { Pokemon = pkmn };
+            _pokemon = new PokemonEntity() { Pokemon = pkmn };
         }
         public void RaiseCritcalDamageEvent()
         {
@@ -67,7 +69,7 @@ namespace BattleModeTest.Components
             throw new NotImplementedException();
         }
 
-        public void Effective(MoveEfficiency effect, PokemonWrapper target)
+        public void Effective(MoveEfficiency effect, PokemonEntity target)
         {
             throw new NotImplementedException();
         }
@@ -82,22 +84,22 @@ namespace BattleModeTest.Components
             throw new NotImplementedException();
         }
 
-        public void SetPokemon(ClientIdentifier id, PokemonWrapper pokemon)
+        public void SetPokemon(ClientIdentifier id, PokemonEntity pokemon)
         {
             throw new NotImplementedException();
         }
 
-        public void SetStatus(PokemonWrapper pokemon, StatusCondition condition)
+        public void SetStatus(PokemonEntity pokemon, StatusCondition condition)
         {
             throw new NotImplementedException();
         }
 
-        public void UsingMove(PokemonWrapper source, Move move)
+        public void UsingMove(PokemonEntity source, Move move)
         {
             throw new NotImplementedException();
         }
 
-        public void SwitchPokemon(PokemonWrapper pokemon)
+        public void SwitchPokemon(PokemonEntity pokemon)
         {
             throw new NotImplementedException();
         }

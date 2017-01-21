@@ -7,7 +7,7 @@ namespace PokemonGame.Rules
     [GameService(typeof(IBattleRules))]
     public class DummyBattleRules : IBattleRules
     {
-        public float CalculateBaseDamage(IBattlePokemon source, IBattlePokemon target, Move move)
+        public float CalculateBaseDamage(PokemonEntity source, PokemonEntity target, Move move)
         {
             return 50.0f;
         }
@@ -32,12 +32,12 @@ namespace PokemonGame.Rules
             return 2.0f;
         }
 
-        public float GetHitChance(IBattlePokemon source, IBattlePokemon target, Move move)
+        public float GetHitChance(PokemonEntity source, PokemonEntity target, Move move)
         {
             return 0.95f;
         }
 
-        public float GetMiscModifier(IBattlePokemon source, IBattlePokemon target, Move move)
+        public float GetMiscModifier(PokemonEntity source, PokemonEntity target, Move move)
         {
             return 1.0f;
         }
@@ -47,12 +47,12 @@ namespace PokemonGame.Rules
             return 1.0f;
         }
 
-        public float GetTypeModifier(IBattlePokemon source, IBattlePokemon target, Move move)
+        public float GetTypeModifier(PokemonEntity source, PokemonEntity target, Move move)
         {
             return 1.0f;
         }
 
-        public float SameTypeAttackBonus(IBattlePokemon source, Move move)
+        public float SameTypeAttackBonus(PokemonEntity source, Move move)
         {
             return 1.0f;
         }

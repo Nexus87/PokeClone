@@ -12,7 +12,7 @@ namespace PokemonRulesTest.TestData
                     {
                         Atk = 10,
                         Def = 10,
-                        HP = 10,
+                        Hp = 10,
                         SpAtk = 10,
                         SpDef = 10,
                         Speed = 10
@@ -29,7 +29,7 @@ namespace PokemonRulesTest.TestData
             {
                 Atk = 1,
                 Def = 1,
-                HP = 1,
+                Hp = 1,
                 SpAtk = 1,
                 SpDef = 1,
                 Speed = 1
@@ -46,7 +46,7 @@ namespace PokemonRulesTest.TestData
             {
                 Atk = 2,
                 Def = 2,
-                HP = 2,
+                Hp = 2,
                 SpAtk = 2,
                 SpDef = 2,
                 Speed = 2

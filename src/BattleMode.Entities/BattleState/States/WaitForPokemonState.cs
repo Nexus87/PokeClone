@@ -11,14 +11,7 @@ namespace BattleMode.Entities.BattleState.States
     [GameService(typeof(WaitForPokemonState))]
     public class WaitForPokemonState : AbstractState
     {
-        private readonly IEventCreator _eventCreator;
-
         private Dictionary<ClientIdentifier, Pokemon> _clients = new Dictionary<ClientIdentifier, Pokemon>();
-
-        public WaitForPokemonState(IEventCreator eventCreator)
-        {
-            _eventCreator = eventCreator;
-        }
 
         public override BattleStates State => BattleStates.WaitForPokemon;
 
@@ -40,7 +33,6 @@ namespace BattleMode.Entities.BattleState.States
             {
                 var pokemon = data.GetPokemon(c.Key);
                 pokemon.Pokemon = c.Value;
-                _eventCreator.SetPokemon(c.Key, pokemon);
             }
 
             IsDone = true;
@@ -60,7 +52,7 @@ namespace BattleMode.Entities.BattleState.States
         private static bool NeedsPokemon(BattleData data, ClientIdentifier id)
         {
             var pkmn = data.GetPokemon(id);
-            return pkmn.Pokemon == null || pkmn.Condition == StatusCondition.KO;
+            return !pkmn.HasPokemon || pkmn.Condition == StatusCondition.KO;
         }
     }
 }

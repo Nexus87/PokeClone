@@ -5,7 +5,7 @@ namespace Base.Rules
 {
     public interface IPokemonRules
     {
-        Stats GenerateIV();
+        Stats GenerateIv();
 
         IEnumerable<Move> LevelUp(Pokemon character);
         void ToLevel(Pokemon character, int level);

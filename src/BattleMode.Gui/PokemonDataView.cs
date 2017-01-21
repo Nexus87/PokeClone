@@ -1,4 +1,4 @@
-﻿using BattleMode.Entities.BattleState;
+﻿using Base.Rules;
 
 namespace BattleMode.Gui
 {
@@ -6,7 +6,7 @@ namespace BattleMode.Gui
     {
         int CurrentHp { get; }
         void SetHp(int newHp);
-        void SetPokemon(PokemonWrapper pokemon);
+        void SetPokemon(PokemonEntity pokemon);
         void Show();
     }
 }

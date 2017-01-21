@@ -53,13 +53,13 @@ namespace PokemonGame.Rules
             throw new NotImplementedException();
         }
 
-        public Stats GenerateIV()
+        public Stats GenerateIv()
         {
             return new Stats
             {
                 Atk = _generator(0, 15),
                 Def = _generator(0, 15),
-                HP = _generator(0, 15),
+                Hp = _generator(0, 15),
                 SpAtk = _generator(0, 15),
                 SpDef = _generator(0, 15),
                 Speed = _generator(0, 15)
@@ -85,10 +85,10 @@ namespace PokemonGame.Rules
             if (character == null) throw new ArgumentNullException("character", "Argument should not be null");
 
             var baseStates = character.BaseData.BaseStats;
-            var ivStates = character.IV;
+            var ivStates = character.Iv;
             var stats = new Stats();
 
-            stats.HP = newState(baseStates.HP, ivStates.HP + 50.0d, level);
+            stats.Hp = newState(baseStates.Hp, ivStates.Hp + 50.0d, level);
             stats.Atk = newState(baseStates.Atk, ivStates.Atk, level);
             stats.Def = newState(baseStates.Def, ivStates.Def, level);
             stats.SpAtk = newState(baseStates.SpAtk, ivStates.SpAtk, level);

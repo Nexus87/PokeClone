@@ -26,8 +26,8 @@ namespace GameEngine.Pokemon.Gui
 
         public void SetPokemon(Base.Pokemon pokemon)
         {
-            MaxHp = pokemon.MaxHP;
-            CurrentHp = pokemon.HP;
+            MaxHp = pokemon.MaxHp;
+            CurrentHp = pokemon.Hp;
         }
 
         public int CurrentHp { get; set; }

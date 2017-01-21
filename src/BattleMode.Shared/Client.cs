@@ -20,7 +20,7 @@ namespace BattleMode.Shared
         {
             Id = id;
 
-            var stats = new Stats { Atk = 10, Def = 10, HP = 30, SpAtk = 10, SpDef = 10, Speed = 10 };
+            var stats = new Stats { Atk = 10, Def = 10, Hp = 30, SpAtk = 10, SpDef = 10, Speed = 10 };
             var data = new PokemonData { Id = 0, Type1 = PokemonType.Normal, BaseStats = stats };
 
             var moveData = new MoveData
@@ -38,8 +38,8 @@ namespace BattleMode.Shared
                 var pkmn = new Pokemon(data, stats) { Name = Id.Name + "_Pkmn" + i, Level = i + 20};
                 for (var j = 0; j < 2; j++)
                     pkmn.SetMove(j, new Move(moveData));
-                pkmn.Stats.HP = 900;
-                pkmn.HP = 900;
+                pkmn.Stats.Hp = 900;
+                pkmn.Hp = 900;
 
                 _pokemons.Add(pkmn);
             }

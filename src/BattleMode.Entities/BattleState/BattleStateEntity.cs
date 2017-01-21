@@ -1,5 +1,6 @@
 ﻿using System;
 using Base;
+using Base.Rules;
 using BattleMode.Entities.BattleState.States;
 using BattleMode.Shared;
 using GameEngine.Globals;
@@ -55,10 +56,7 @@ namespace BattleMode.Entities.BattleState
             }
         }
 
-        public PokemonWrapper GetPokemon(ClientIdentifier id)
-        {
-            return _data.GetPokemon(id);
-        }
+        public PokemonEntity GetPokemon(ClientIdentifier id) => _data.GetPokemon(id);
 
         public void SetCharacter(ClientIdentifier id, Pokemon pkmn)
         {
