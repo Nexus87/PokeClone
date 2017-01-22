@@ -4,6 +4,7 @@ using GameEngine.Core;
 using GameEngine.Core.ModuleManager;
 using GameEngine.Entities;
 using GameEngine.Graphics.Textures;
+using GameEngine.Tools.Storages;
 using GameEngine.TypeRegistry;
 using MainMode.Core.Loader;
 using MainMode.Entities;
@@ -28,8 +29,8 @@ namespace MainMode.Core
 
         public void AddTextureConfigurations(TextureConfigurationBuilder builder)
         {
-            var tileMapping = JsonSpriteSheetConfigLoader.Load(@"MainMode\TilesetMapping.json");
-            var characterMapping = JsonSpriteSheetConfigLoader.Load(@"MainMode\CharactersMapping.json");
+            var tileMapping = JsonSpriteSheetConfigStorage.Load(@"Content\MainMode\TilesetMapping.json");
+            var characterMapping = JsonSpriteSheetConfigStorage.Load(@"Content\MainMode\CharactersMapping.json");
 
             var spriteSheetItems = new List<SpriteSheetItem>{
                 new SpriteSheetItem(@"MainMode\TileSet", tileMapping, true),
