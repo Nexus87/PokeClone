@@ -7,6 +7,8 @@ namespace GameEngine.Graphics.Textures
     {
         private readonly Dictionary<object, TempConfig> _configurations = new Dictionary<object, TempConfig>();
 
+        public const string ContentRoot = "Content";
+
         private class TempConfig
         {
             public readonly List<TextureItem> TextureConfigs = new List<TextureItem>();

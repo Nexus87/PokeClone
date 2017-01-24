@@ -67,6 +67,10 @@
     <Compile Include="IEngineInterface.cs" />
     <Compile Include="IGameComponentManager.cs" />
     <Compile Include="GameRunner.cs" />
+    <Compile Include="ModuleManager\Extensions.cs" />
+    <Compile Include="ModuleManager\IConfigurationHandler.cs" />
+    <Compile Include="ModuleManager\Module.cs" />
+    <Compile Include="ModuleManager\ModuleConfiguration.cs" />
     <Compile Include="PokeEngine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ModuleManager\AutofacModuleManager.cs" />
@@ -96,6 +100,10 @@
       <Project>{6db8a02e-92bd-4f9d-a091-8a6685ad64d7}</Project>
       <Name>GameEngine.Pokemon</Name>
     </ProjectReference>
+    <ProjectReference Include="..\GameEngine.Tools\GameEngine.Tools.csproj">
+      <Project>{1CA01096-AE42-4FF6-BF8D-AB39A94F4F6F}</Project>
+      <Name>GameEngine.Tools</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GameEngine.TypeRegistry\GameEngine.TypeRegistry.csproj">
       <Project>{73200884-85C6-4A3D-A3C2-A53D9C632613}</Project>
       <Name>GameEngine.TypeRegistry</Name>
@@ -106,11 +114,47 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
-  <ItemGroup />
-  <ItemGroup />
-  <ItemGroup />
-  <ItemGroup />
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Content\GameEngine\Textures\Linux\charmander-back.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\GameEngine\Textures\Linux\charmander-front.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\GameEngine\Textures\Linux\GuiSkins\ClassicSkin\arrow.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\GameEngine\Textures\Linux\GuiSkins\ClassicSkin\border.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\GameEngine\Textures\Linux\GuiSkins\ClassicSkin\circle.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\GameEngine\Textures\Linux\GuiSkins\ClassicSkin\MenuFont.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\GameEngine\Textures\TextureConfig.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\GameEngine\Textures\Windows\charmander-back.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\GameEngine\Textures\Windows\charmander-front.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\GameEngine\Textures\Windows\GuiSkins\ClassicSkin\arrow.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\GameEngine\Textures\Windows\GuiSkins\ClassicSkin\border.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\GameEngine\Textures\Windows\GuiSkins\ClassicSkin\circle.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\GameEngine\Textures\Windows\GuiSkins\ClassicSkin\MenuFont.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <ItemGroup />
   <ItemGroup />
   <ItemGroup />

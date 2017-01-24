@@ -50,20 +50,6 @@ namespace GameEngine.GUI
 
         public void AddTextureConfigurations(TextureConfigurationBuilder builder)
         {
-            var textureItems = new List<TextureItem>
-            {
-                new TextureItem(@"GuiSkins\ClassicSkin\arrow", Arrow, true),
-                new TextureItem(@"GuiSkins\ClassicSkin\border", Border, true),
-                new TextureItem(@"GuiSkins\ClassicSkin\circle", Circle, true),
-            };
-
-            var fontItems = new List<FontItem>
-            {
-                new FontItem(@"GuiSkins\ClassicSkin\MenuFont", DefaultFont, true)
-            };
-
-            builder.AddTextureConfig(Key, textureItems);
-            builder.AddFont(Key, fontItems);
         }
     }
 }

@@ -1,0 +1,12 @@
+{
+    "SpriteSheetConfigurations": [
+        {
+            "TextureFile": "$Platform\\Characters Overworld",
+            "MappingFile": "CharactersMapping.json"
+        },
+        {
+            "TextureFile": "$Platform\\Tileset",
+            "MappingFile": "TilesetMapping.json"
+        }
+    ]
+}

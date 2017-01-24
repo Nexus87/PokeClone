@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework.Content;
@@ -7,8 +6,6 @@ namespace GameEngine.Graphics.Textures
 {
     internal class SubTextureProvider
     {
-        private static string PlatformString { get; } = Type.GetType("Mono.Runtime") != null ? @"Linux\" : @"Windows\";
-
         private readonly IEnumerable<TextureItem> _configs;
         private readonly IEnumerable<FontItem> _fontConfig;
         private readonly IEnumerable<SpriteSheetItem> _spriteSheetConfigs;
@@ -44,16 +41,14 @@ namespace GameEngine.Graphics.Textures
             var textureConfig = _configs.SingleOrDefault(x => x.TextureName == textureIdentifier);
             if(textureConfig != null)
             {
-                var pathPrefix = textureConfig.IsPlatformSpecific ? PlatformString : "";
-                texture =  new XnaTexture2D(pathPrefix + textureConfig.Path, _contentManager);
+                texture =  new XnaTexture2D(textureConfig.Path, _contentManager);
 
             }
             else
             {
                 var spriteSheetConfig = _spriteSheetConfigs.Single(x => x.Map.ContainsKey(textureIdentifier));
                 var source = spriteSheetConfig.Map[textureIdentifier];
-                var pathPrefix = spriteSheetConfig.IsPlatformSpecific ? PlatformString : "";
-                texture = new XnaSpriteSheetTexture2D(source,new XnaTexture2D(pathPrefix + spriteSheetConfig.Path, _contentManager));
+                texture = new XnaSpriteSheetTexture2D(source,new XnaTexture2D(spriteSheetConfig.Path, _contentManager));
 
             }
             _textures[textureIdentifier] = texture;
@@ -92,8 +87,7 @@ namespace GameEngine.Graphics.Textures
         private ISpriteFont CreateFont(string fontIdentifier)
         {
             var fontConfig = _fontConfig.Single(x => x.FontName == fontIdentifier);
-            var pathPrefix = fontConfig.IsPlatfromSpecific ? PlatformString : "";
-            var font = new XnaSpriteFont(pathPrefix + fontConfig.Path, _contentManager);
+            var font = new XnaSpriteFont(fontConfig.Path, _contentManager);
             _fonts[fontIdentifier] = font;
 
             if(_isInitialized)

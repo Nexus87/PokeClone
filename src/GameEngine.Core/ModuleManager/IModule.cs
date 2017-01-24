@@ -10,6 +10,7 @@ namespace GameEngine.Core.ModuleManager
         void RegisterTypes(IGameTypeRegistry registry);
         void AddTextureConfigurations(TextureConfigurationBuilder builder);
         void AddBuilderAndRenderer();
+
         void Start(IGameComponentManager manager, IInputHandlerManager inputHandlerManager, IGameTypeRegistry registry);
         void Stop(IGameComponentManager engine, IInputHandlerManager inputHandlerManager);
     }

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace GameEngine.Tools.Configuration
+namespace GameEngine.Tools.Storages
 {
     public class TextureConfiguration
     {

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reflection;
 using GameEngine.Core.ModuleManager;
 using GameEngine.Entities;
 using GameEngine.Globals;
@@ -17,10 +16,11 @@ using GameEngine.Pokemon.Gui.Renderer;
 using GameEngine.Pokemon.Gui.Renderer.PokemonClassicRenderer;
 using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework.Content;
+using Module = GameEngine.Core.ModuleManager.Module;
 
 namespace GameEngine.Core
 {
-    internal class GameEngineModule : IModule
+    internal class GameEngineModule : Module
     {
         private readonly GameRunner _engine;
         private readonly TextureProvider _textureProvider;
@@ -29,7 +29,8 @@ namespace GameEngine.Core
         private readonly GameComponentManager _gameComponentManager;
 
         public static object Key = new object();
-        public GameEngineModule(GameRunner engine, TextureProvider textureProvider, Configuration config)
+        public GameEngineModule(GameRunner engine, TextureProvider textureProvider, Configuration config) :
+            base(Key, "GameEngine", "GameEngine")
         {
             _engine = engine;
             _textureProvider = textureProvider;
@@ -38,7 +39,7 @@ namespace GameEngine.Core
             _gameComponentManager = new GameComponentManager(engine.Components, engine);
         }
 
-        public void RegisterTypes(IGameTypeRegistry registry)
+        public override void RegisterTypes(IGameTypeRegistry registry)
         {
             registry.RegisterTypeAs<DefaultTextSplitter, ITextSplitter>();
             registry.RegisterAsService<InputEntity, InputEntity>(reg => _inputEntity);
@@ -46,34 +47,40 @@ namespace GameEngine.Core
             registry.RegisterAsService<ContentManager, ContentManager>(reg => _engine.Content);
             registry.RegisterAsService<TextureProvider, TextureProvider>(r => _textureProvider);
             registry.RegisterAsService<GameComponentManager, IGameComponentManager>(r => _gameComponentManager);
-            registry.RegisterAsService<Screen, Screen>();
             registry.RegisterType<IEngineInterface>(r => _engine);
             registry.RegisterType(r => _screenConstants);
             registry.RegisterType(r => _engine.GraphicsDeviceManager);
             registry.RegisterType(r => _engine.Scene);
-            registry.ScanAssembly(Assembly.GetExecutingAssembly());
-            registry.ScanAssembly(Assembly.GetAssembly(typeof(IGuiComponent)));
-            registry.ScanAssembly(Assembly.GetAssembly(typeof(IGameTypeRegistry)));
-            registry.ScanAssembly(Assembly.GetAssembly(typeof(IGameEntity)));
-            registry.ScanAssembly(Assembly.GetAssembly(typeof(HpLine)));
-            registry.ScanAssembly(Assembly.GetAssembly(typeof(TextureBuilder)));
-
+            registry.ScanAssemblies(new[]
+            {
+                typeof(GameEngineModule).Assembly,
+                typeof(IGuiComponent).Assembly,
+                typeof(IGameTypeRegistry).Assembly,
+                typeof(IGameEntity).Assembly,
+                typeof(HpLine).Assembly,
+                typeof(TextureBuilder).Assembly
+            });
             registry.RegisterType(r => new Panel(r.ResolveType<PanelRenderer>()) { BackgroundColor = r.ResolveType<ScreenConstants>().BackgroundColor});
 
         }
 
-        public void AddTextureConfigurations(TextureConfigurationBuilder builder)
+        public override void AddTextureConfigurations(TextureConfigurationBuilder builder)
         {
+            var platform = Type.GetType("Mono.Runtime") == null ? "Windows" : "Linux";
+
+            var fullPath = TextureConfigurationBuilder.ContentRoot + "\\" + "GameEngine\\Textures" + "\\" + platform + "\\";
             var textures = new List<TextureItem>
             {
-                new TextureItem("charmander-front", "charmander-front", true),
-                new TextureItem("charmander-back", "charmander-back", true)
+                new TextureItem(fullPath + "charmander-front", "charmander-front"),
+                new TextureItem(fullPath + "charmander-back", "charmander-back")
             };
 
             builder.AddTextureConfig(Key, textures);
+
+            ReadConfiguration(builder, resourceKey: ClassicSkin.Key);
         }
 
-        public void AddBuilderAndRenderer()
+        public override void AddBuilderAndRenderer()
         {
             ClassicSkin.AddAdditionalRenderer<ClassicLineRenderer, HpLineRenderer>(
                 t => new ClassicLineRenderer(t.GetTexture(ClassicSkin.Key, ClassicSkin.Circle), t.Pixel, ClassicSkin.BackgroundColor)
@@ -87,9 +94,8 @@ namespace GameEngine.Core
         }
 
         public static string Name => "GameEngine";
-        public string ModuleName => Name;
 
-        public void Start(IGameComponentManager componentManager, IInputHandlerManager inputHandlerManager, IGameTypeRegistry registry)
+        public override void Start(IGameComponentManager componentManager, IInputHandlerManager inputHandlerManager, IGameTypeRegistry registry)
         {
             componentManager.Scene = new Scene(registry.ResolveType<ScreenConstants>());
             GuiLoader.InitLoaderResources(registry);
@@ -102,7 +108,7 @@ namespace GameEngine.Core
             _engine.TextureProvider = registry.ResolveType<TextureProvider>();
         }
 
-        public void Stop(IGameComponentManager componentManager, IInputHandlerManager inputHandlerManager)
+        public override void Stop(IGameComponentManager componentManager, IInputHandlerManager inputHandlerManager)
         {
             throw new NotImplementedException();
         }

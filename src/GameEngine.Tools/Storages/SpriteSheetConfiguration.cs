@@ -1,4 +1,4 @@
-﻿namespace GameEngine.Tools.Configuration
+﻿namespace GameEngine.Tools.Storages
 {
     public class SpriteSheetConfiguration
     {

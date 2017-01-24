@@ -1,0 +1,22 @@
+{
+    "SingleTextureConfigurations":[
+        {
+            "Name": "arrow",
+            "Path": "$Platform/GuiSkins/ClassicSkin/arrow"
+        },
+        {
+            "Name": "border",
+            "Path": "$Platform/GuiSkins/ClassicSkin/border"
+        },
+        {
+            "Name": "circle",
+            "Path": "$Platform/GuiSkins/ClassicSkin/circle"
+        }
+    ],
+    "FontConfigurations":[
+        {
+            "Name": "DefaultFont",
+            "Path": "$Platform/GuiSkins/ClassicSkin/MenuFont"
+        }
+    ]
+}

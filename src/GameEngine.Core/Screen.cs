@@ -1,11 +1,13 @@
 ﻿using GameEngine.Globals;
 using GameEngine.Graphics;
 using GameEngine.Graphics.General;
+using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace GameEngine.Core
 {
+    [GameService(typeof(Screen))]
     internal class Screen
     {
         private readonly ScreenConstants _screenConstants;

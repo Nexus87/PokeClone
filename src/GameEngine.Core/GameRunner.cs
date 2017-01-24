@@ -20,7 +20,7 @@ namespace GameEngine.Core
         public GameRunner()         {
             GraphicsDeviceManager = new GraphicsDeviceManager(this);
             Window.AllowUserResizing = true;
-            Content.RootDirectory = @"Content";
+            Content.RootDirectory = @".";
 
             GraphicsDeviceManager.ApplyChanges();
         }

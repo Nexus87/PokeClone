@@ -1,0 +1,5 @@
+{
+    "ModuleName": "MainModule",
+    "TextureConfiguration": "Textures/TextureConfig.json",
+    "EntityMapping": "EntitySpriteMap.json"
+}

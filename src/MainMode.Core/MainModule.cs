@@ -1,25 +1,21 @@
-﻿using System.Collections.Generic;
-using System.Reflection;
+﻿using System.Reflection;
 using GameEngine.Core;
-using GameEngine.Core.ModuleManager;
 using GameEngine.Entities;
-using GameEngine.Graphics.Textures;
-using GameEngine.Tools.Storages;
 using GameEngine.TypeRegistry;
 using MainMode.Core.Loader;
 using MainMode.Entities;
 using MainMode.Globals;
 using MainMode.Graphic;
+using Module = GameEngine.Core.ModuleManager.Module;
 
 namespace MainMode.Core
 {
-    public class MainModule : IModule
+    public class MainModule : Module
     {
 
         private MainModeController _mainModeController;
-        public string ModuleName => "MainModule";
 
-        public void RegisterTypes(IGameTypeRegistry registry)
+        public override void RegisterTypes(IGameTypeRegistry registry)
         {
             registry.ScanAssembly(Assembly.GetExecutingAssembly());
             registry.ScanAssembly(typeof(GameStateEntity).Assembly);
@@ -27,20 +23,7 @@ namespace MainMode.Core
             registry.ScanAssembly(typeof(TextureKey).Assembly);
         }
 
-        public void AddTextureConfigurations(TextureConfigurationBuilder builder)
-        {
-            var tileMapping = JsonSpriteSheetConfigStorage.Load(@"Content\MainMode\TilesetMapping.json");
-            var characterMapping = JsonSpriteSheetConfigStorage.Load(@"Content\MainMode\CharactersMapping.json");
-
-            var spriteSheetItems = new List<SpriteSheetItem>{
-                new SpriteSheetItem(@"MainMode\TileSet", tileMapping, true),
-                new SpriteSheetItem(@"MainMode\Characters Overworld", characterMapping, true)
-            };
-
-            builder.AddSpriteSheet(TextureKey.Key, spriteSheetItems);
-        }
-
-        public void Start(IGameComponentManager manager, IInputHandlerManager inputHandlerManager, IGameTypeRegistry registry)
+        public override void Start(IGameComponentManager manager, IInputHandlerManager inputHandlerManager, IGameTypeRegistry registry)
         {
             registry.ResolveType<CharacterSpriteLoader>().LoadEntityMapping(@"MainMode\EntitySpriteMap.json");
 
@@ -55,12 +38,13 @@ namespace MainMode.Core
 
         }
 
-        public void Stop(IGameComponentManager engine, IInputHandlerManager inputHandlerManager)
+        public override void Stop(IGameComponentManager engine, IInputHandlerManager inputHandlerManager)
         {
             throw new System.NotImplementedException();
         }
 
-        public void AddBuilderAndRenderer()
+        public MainModule() :
+            base(TextureKey.Key, "MainModule", "MainMode")
         {
         }
     }

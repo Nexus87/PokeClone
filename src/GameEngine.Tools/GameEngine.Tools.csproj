@@ -51,15 +51,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration\ModuleConfiguration.cs" />
-    <Compile Include="Configuration\SingleTextureConfiguration.cs" />
-    <Compile Include="Configuration\SpriteSheetConfiguration.cs" />
-    <Compile Include="Configuration\TextureConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Storages\Area.cs" />
-    <Compile Include="Storages\ConfigurationStorage.cs" />
     <Compile Include="Storages\JsonNetStorage.cs" />
     <Compile Include="Storages\JsonSpriteSheetConfigStorage.cs" />
+    <Compile Include="Storages\SingleTextureConfiguration.cs" />
+    <Compile Include="Storages\SpriteSheetConfiguration.cs" />
+    <Compile Include="Storages\TextureConfiguration.cs" />
+    <Compile Include="Storages\TextureConfigurationStorage.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
