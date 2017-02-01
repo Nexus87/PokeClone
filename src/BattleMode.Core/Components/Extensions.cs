@@ -1,6 +1,5 @@
 ﻿using Base.Data;
 using Base.Rules;
-using BattleMode.Entities.BattleState;
 using BattleMode.Graphic;
 using BattleMode.Gui;
 using BattleMode.Shared;

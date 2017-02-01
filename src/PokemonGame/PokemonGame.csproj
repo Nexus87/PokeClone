@@ -111,6 +111,18 @@
       <Project>{6E69614D-6F4D-7564-6C65-2E4C696E7578}</Project>
       <Name>MainMode.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Pokemon.Data\Pokemon.Data.csproj">
+      <Project>{7A7A9117-EEB0-43A5-84FF-9BCA7E393C85}</Project>
+      <Name>Pokemon.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pokemon.Services\Pokemon.Services.csproj">
+      <Project>{7FA7EE85-0D0A-4C40-8FCA-CFFD8F67E13C}</Project>
+      <Name>Pokemon.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PokemonModels\PokemonModels.csproj">
+      <Project>{9403C59F-8E52-4006-9827-64CDB4241E79}</Project>
+      <Name>PokemonModels</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">

@@ -8,27 +8,27 @@ namespace PokemonGame.Rules
     [GameService(typeof(ITypeTable))]
     public class DummyTable : ITypeTable
     {
-        private readonly int typeCount = Enum.GetNames(typeof(PokemonType)).Length;
+        private readonly int _typeCount = Enum.GetNames(typeof(PokemonType)).Length;
 
-        private float[,] table;
+        private readonly float[,] _table;
 
         public DummyTable()
         {
-            table = new float[typeCount, typeCount];
-            initTable();
+            _table = new float[_typeCount, _typeCount];
+            InitTable();
         }
 
         public float GetModifier(PokemonType source, PokemonType target)
         {
-            return table[(int)source, (int)target];
+            return _table[(int)source, (int)target];
         }
 
-        private void initTable()
+        private void InitTable()
         {
-            for (int i = 0; i < typeCount; i++)
+            for (int i = 0; i < _typeCount; i++)
             {
-                for (int j = 0; j < typeCount; j++)
-                    table[i, j] = 1.0f;
+                for (int j = 0; j < _typeCount; j++)
+                    _table[i, j] = 1.0f;
             }
         }
     }
