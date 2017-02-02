@@ -1,4 +1,4 @@
-﻿namespace MainMode.Graphic
+﻿namespace MainMode.Globals
 {
     public class SpriteId
     {

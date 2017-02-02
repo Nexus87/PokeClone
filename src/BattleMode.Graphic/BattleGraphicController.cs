@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Base.Data;
-using Base.Rules;
 using BattleMode.Entities.BattleState;
 using BattleMode.Shared;
 using GameEngine.Core;
@@ -11,6 +9,8 @@ using GameEngine.Graphics;
 using GameEngine.GUI;
 using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
+using Pokemon.Models;
+using Pokemon.Services.Rules;
 
 namespace BattleMode.Graphic
 {

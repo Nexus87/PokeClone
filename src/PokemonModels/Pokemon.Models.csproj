@@ -8,8 +8,8 @@
     <ProjectTypeGuids>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PokemonModels</RootNamespace>
-    <AssemblyName>PokemonModels</AssemblyName>
+    <RootNamespace>Pokemon.Models</RootNamespace>
+    <AssemblyName>Pokemon.Models</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -43,6 +43,7 @@
     <Compile Include="Move.cs" />
     <Compile Include="Pokemon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StatusCondition.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Pokemon.Data\Pokemon.Data.csproj">

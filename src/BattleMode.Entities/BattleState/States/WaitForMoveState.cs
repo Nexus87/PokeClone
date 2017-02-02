@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Base;
 using BattleMode.Entities.BattleState.Commands;
 using BattleMode.Shared;
 using GameEngine.Globals;
 using GameEngine.TypeRegistry;
+using Pokemon.Models;
 
 namespace BattleMode.Entities.BattleState.States
 {
@@ -19,7 +19,7 @@ namespace BattleMode.Entities.BattleState.States
 
         public bool IsDone { get; private set; }
 
-        public void SetCharacter(ClientIdentifier id, Pokemon pkmn)
+        public void SetCharacter(ClientIdentifier id, Pokemon.Models.Pokemon pkmn)
         {
             ValidateInput(id, pkmn, "pkmn");
             _commands[id] = new ChangeCommand(id, pkmn);

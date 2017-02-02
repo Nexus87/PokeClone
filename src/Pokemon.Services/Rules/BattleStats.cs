@@ -1,4 +1,4 @@
-﻿namespace Base.Rules
+﻿namespace Pokemon.Services.Rules
 {
     public enum BattleStats
     {

@@ -1,7 +1,7 @@
-﻿using Base.Data;
-using System;
+﻿using System;
+using Pokemon.Data;
 
-namespace Base
+namespace Pokemon.Models
 {
     public class Move
     {
@@ -9,9 +9,8 @@ namespace Base
         
         public Move(MoveData data)
         {
-            if (data == null) throw new ArgumentNullException("data", "Argument should not be null");
+            this.data = data ?? throw new ArgumentNullException("data", "Argument should not be null");
 
-            this.data = data;
             RemainingPP = data.PP;
         }
         

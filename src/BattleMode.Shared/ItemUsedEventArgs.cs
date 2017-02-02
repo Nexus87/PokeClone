@@ -1,5 +1,5 @@
 ﻿using System;
-using Base;
+using Pokemon.Models;
 
 namespace BattleMode.Shared
 {

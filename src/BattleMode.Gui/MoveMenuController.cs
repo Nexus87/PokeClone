@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using Base;
 using BattleMode.Entities.BattleState;
 using GameEngine.Core;
 using GameEngine.Globals;
@@ -8,6 +7,7 @@ using GameEngine.GUI.Controlls;
 using GameEngine.GUI.Loader;
 using GameEngine.GUI.Panels;
 using GameEngine.TypeRegistry;
+using Pokemon.Models;
 
 namespace BattleMode.Gui
 {

@@ -1,6 +1,7 @@
-﻿using Base.Data;
+﻿using Pokemon.Data;
+using Pokemon.Models;
 
-namespace Base.Rules
+namespace Pokemon.Services.Rules
 {
     public interface IMoveEffectCalculator
     {

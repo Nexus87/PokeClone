@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using Base;
-using Base.Data;
-using Base.Rules;
 using BattleMode.Shared;
 
 namespace BattleMode.Entities.BattleState

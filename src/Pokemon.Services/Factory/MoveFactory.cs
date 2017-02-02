@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using Pokemon.Models;
 
-namespace Base.Factory
+namespace Pokemon.Services.Factory
 {
     public class MoveFactory
     {

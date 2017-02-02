@@ -1,15 +1,17 @@
 ﻿using System;
-using MainMode.Graphic;
+using MainMode.Globals;
 using Microsoft.Xna.Framework;
 
 namespace MainMode.Entities
 {
     public class SpritePositionChangedEventArgs : EventArgs
     {
+        private SpriteId spriteId;
+
         public SpritePositionChangedEventArgs(Point position, SpriteId spriteId)
         {
             Position = position;
-            SpriteId = spriteId;
+            this.spriteId = spriteId;
         }
 
         public Point Position { get; }

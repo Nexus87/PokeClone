@@ -50,10 +50,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Base\Base.csproj">
-      <Project>{65736142-4C2E-6E69-7578-426173652E4C}</Project>
-      <Name>Base</Name>
-    </ProjectReference>
     <ProjectReference Include="..\GameEngine.Core\GameEngine.Core.csproj">
       <Project>{656D6147-6E45-6967-6E65-2E4C696E7578}</Project>
       <Name>GameEngine.Core</Name>
@@ -75,12 +71,12 @@
       <Name>GameEngine.TypeRegistry</Name>
     </ProjectReference>
     <ProjectReference Include="..\Pokemon.Data\Pokemon.Data.csproj">
-      <Project>{7A7A9117-EEB0-43A5-84FF-9BCA7E393C85}</Project>
+      <Project>{7a7a9117-eeb0-43a5-84ff-9bca7e393c85}</Project>
       <Name>Pokemon.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PokemonModels\PokemonModels.csproj">
-      <Project>{9403C59F-8E52-4006-9827-64CDB4241E79}</Project>
-      <Name>PokemonModels</Name>
+    <ProjectReference Include="..\PokemonModels\Pokemon.Models.csproj">
+      <Project>{9403c59f-8e52-4006-9827-64cdb4241e79}</Project>
+      <Name>Pokemon.Models</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

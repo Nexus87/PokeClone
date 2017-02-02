@@ -1,9 +1,9 @@
 ﻿using System;
-using Base.Rules;
 using BattleMode.Graphic;
 using BattleMode.Gui;
 using BattleMode.Shared;
 using GameEngine.Entities;
+using Pokemon.Services.Rules;
 
 namespace BattleMode.Core.Components
 {

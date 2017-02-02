@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Runtime.Serialization;
 
-namespace Base.Data
+namespace Pokemon.Data
 {
     public class MoveList
     {

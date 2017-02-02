@@ -1,11 +1,10 @@
 ﻿using System;
-using Base;
-using Base.Data;
 using BattleMode.Entities.BattleState;
 using BattleMode.Entities.BattleState.States;
 using BattleMode.Shared;
 using BattleModeTest.Utils;
 using NUnit.Framework;
+using Pokemon.Models;
 
 namespace BattleModeTest.Components.BattleState
 {
@@ -158,17 +157,17 @@ namespace BattleModeTest.Components.BattleState
             return new WaitForPokemonState();
         }
 
-        private void SetNewPlayerCharacter(IBattleState state, Pokemon pokemon = null)
+        private void SetNewPlayerCharacter(IBattleState state, Pokemon.Models.Pokemon pokemon = null)
         {
             SetNewCharacter(state, _factory.PlayerId, pokemon);
         }
 
-        private void SetNewAiCharacter(IBattleState state, Pokemon pokemon = null)
+        private void SetNewAiCharacter(IBattleState state, Pokemon.Models.Pokemon pokemon = null)
         {
             SetNewCharacter(state, _factory.Aiid, pokemon);
         }
 
-        private static void SetNewCharacter(IBattleState state, ClientIdentifier id, Pokemon pokemon = null){
+        private static void SetNewCharacter(IBattleState state, ClientIdentifier id, Pokemon.Models.Pokemon pokemon = null){
             if(pokemon == null)
                 pokemon = TestFactory.CreatePokemon();
 

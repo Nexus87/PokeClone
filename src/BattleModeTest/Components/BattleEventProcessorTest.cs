@@ -1,11 +1,11 @@
-﻿using Base.Data;
-using Base.Rules;
-using BattleMode.Core.Components;
+﻿using BattleMode.Core.Components;
 using BattleMode.Graphic;
 using BattleMode.Gui;
 using BattleMode.Shared;
 using FakeItEasy;
 using NUnit.Framework;
+using Pokemon.Models;
+using Pokemon.Services.Rules;
 
 namespace BattleModeTest.Components
 {

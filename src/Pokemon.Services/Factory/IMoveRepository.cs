@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Base.Data;
+using Pokemon.Data;
 
-namespace Base.Factory
+namespace Pokemon.Services.Factory
 {
     public interface IMoveRepository
     {

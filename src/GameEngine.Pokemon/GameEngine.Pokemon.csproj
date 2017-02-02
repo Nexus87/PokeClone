@@ -65,10 +65,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Base\Base.csproj">
-      <Project>{65736142-4c2e-6e69-7578-426173652e4c}</Project>
-      <Name>Base</Name>
-    </ProjectReference>
     <ProjectReference Include="..\GameEngine.Globals\GameEngine.Globals.csproj">
       <Project>{b19bd4b3-dcae-e1dc-6e65-2e476c6f6261}</Project>
       <Name>GameEngine.Globals</Name>
@@ -85,9 +81,9 @@
       <Project>{73200884-85c6-4a3d-a3c2-a53d9c632613}</Project>
       <Name>GameEngine.TypeRegistry</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PokemonModels\PokemonModels.csproj">
-      <Project>{9403C59F-8E52-4006-9827-64CDB4241E79}</Project>
-      <Name>PokemonModels</Name>
+    <ProjectReference Include="..\PokemonModels\Pokemon.Models.csproj">
+      <Project>{9403c59f-8e52-4006-9827-64cdb4241e79}</Project>
+      <Name>Pokemon.Models</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -1,11 +1,11 @@
-﻿using Base.Data;
-using Base.Rules;
-using BattleMode.Entities.BattleState;
+﻿using BattleMode.Entities.BattleState;
 using BattleMode.Entities.BattleState.Commands;
 using BattleMode.Shared;
 using BattleModeTest.Utils;
 using FakeItEasy;
 using NUnit.Framework;
+using Pokemon.Models;
+using Pokemon.Services.Rules;
 
 namespace BattleModeTest
 {

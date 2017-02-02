@@ -1,15 +1,16 @@
-﻿using Base.Data;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Pokemon.Data;
+using Pokemon.Models;
 
-namespace Base.Rules
+namespace Pokemon.Services.Rules
 {
     public interface IPokemonRules
     {
         Stats GenerateIv();
 
-        IEnumerable<Move> LevelUp(Pokemon character);
-        void ToLevel(Pokemon character, int level);
+        IEnumerable<Move> LevelUp(Models.Pokemon character);
+        void ToLevel(Models.Pokemon character, int level);
 
-        Pokemon FromPokemonData(PokemonData data);
+        Models.Pokemon FromPokemonData(PokemonData data);
     }
 }

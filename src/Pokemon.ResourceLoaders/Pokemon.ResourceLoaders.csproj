@@ -4,13 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{7FA7EE85-0D0A-4C40-8FCA-CFFD8F67E13C}</ProjectGuid>
+    <ProjectGuid>{FCA1938E-AE81-4E54-9AB8-851BA4030836}</ProjectGuid>
     <ProjectTypeGuids>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Pokemon.Services</RootNamespace>
-    <AssemblyName>Pokemon.Services</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <RootNamespace>Pokemon.ResourceLoaders</RootNamespace>
+    <AssemblyName>Pokemon.ResourceLoaders</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -39,32 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Factory\IMoveRepository.cs" />
-    <Compile Include="Factory\IPokemonRepository.cs" />
-    <Compile Include="Factory\MoveFactory.cs" />
-    <Compile Include="Factory\PokemonFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Rules\BattleStats.cs" />
-    <Compile Include="Rules\HpChangedEventArgs.cs" />
-    <Compile Include="Rules\IBattleRules.cs" />
-    <Compile Include="Rules\IMoveEffectCalculator.cs" />
-    <Compile Include="Rules\IPokemonRules.cs" />
-    <Compile Include="Rules\ITypeTable.cs" />
-    <Compile Include="Rules\PokemonChangedEventArgs.cs" />
-    <Compile Include="Rules\PokemonEntity.cs" />
-    <Compile Include="Rules\RulesSet.cs" />
-    <Compile Include="Rules\StateChangedEventArgs.cs" />
-    <Compile Include="Rules\StatusConditionEventArgs.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Pokemon.Data\Pokemon.Data.csproj">
-      <Project>{7a7a9117-eeb0-43a5-84ff-9bca7e393c85}</Project>
-      <Name>Pokemon.Data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PokemonModels\Pokemon.Models.csproj">
-      <Project>{9403c59f-8e52-4006-9827-64cdb4241e79}</Project>
-      <Name>Pokemon.Models</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,6 +1,5 @@
 ﻿using System;
 using MainMode.Globals;
-using MainMode.Graphic;
 
 namespace MainMode.Entities
 {

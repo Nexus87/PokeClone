@@ -1,7 +1,9 @@
-﻿namespace Base.Rules
+﻿using Pokemon.Data;
+
+namespace Pokemon.Services.Rules
 {
     public interface ITypeTable
     {
-        float GetModifier(Base.Data.PokemonType source, Base.Data.PokemonType target);
+        float GetModifier(PokemonType source, PokemonType target);
     }
 }

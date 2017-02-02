@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using Base;
-using Base.Data;
-using Base.Rules;
 using GameEngine.TypeRegistry;
+using Pokemon.Data;
+using Pokemon.Services.Rules;
+using Pokemon.Models;
 
 namespace PokemonGame.Rules
 {
@@ -14,19 +14,19 @@ namespace PokemonGame.Rules
             return new Stats();
         }
 
-        public IEnumerable<Move> LevelUp(Pokemon character)
+        public IEnumerable<Move> LevelUp(Pokemon.Models.Pokemon character)
         {
             return new List<Move>();
         }
 
-        public void ToLevel(Pokemon character, int level)
+        public void ToLevel(Pokemon.Models.Pokemon character, int level)
         {
             
         }
 
-        public Pokemon FromPokemonData(PokemonData data)
+        public Pokemon.Models.Pokemon FromPokemonData(PokemonData data)
         {
-            return new Pokemon(data, new Stats());
+            return new Pokemon.Models.Pokemon(data, new Stats());
         }
     }
 }

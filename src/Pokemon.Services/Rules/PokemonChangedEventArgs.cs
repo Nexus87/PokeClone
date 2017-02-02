@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Base.Rules
+namespace Pokemon.Services.Rules
 {
     public class PokemonChangedEventArgs : EventArgs
     {

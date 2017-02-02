@@ -1,8 +1,8 @@
-﻿using Base.Data;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Pokemon.Data;
 
-namespace Base
+namespace Pokemon.Models
 {
     public class Pokemon
     {

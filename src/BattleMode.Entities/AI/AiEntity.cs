@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Base;
 using BattleMode.Entities.BattleState;
 using BattleMode.Shared;
 using GameEngine.Entities;
@@ -15,8 +14,8 @@ namespace BattleMode.Entities.AI
         private Action _nextAction;
         private readonly ClientIdentifier _id;
         private readonly ClientIdentifier _player;
-        private readonly IReadOnlyList<Pokemon> _pokemons;
-        private Pokemon _currentPokemon;
+        private readonly IReadOnlyList<Pokemon.Models.Pokemon> _pokemons;
+        private Pokemon.Models.Pokemon _currentPokemon;
 
         public AiEntity(IBattleStateService state, Client ai, ClientIdentifier player)
         {

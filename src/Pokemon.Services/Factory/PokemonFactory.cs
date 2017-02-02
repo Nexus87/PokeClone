@@ -18,10 +18,10 @@
 // this program; if not, write to the Free Software Foundation, Inc., 59 Temple
 // Place, Suite 330, Boston, MA 02111-1307 USA
 
-using Base.Rules;
 using System.Collections.Generic;
+using Pokemon.Services.Rules;
 
-namespace Base.Factory
+namespace Pokemon.Services.Factory
 {
     public class PokemonFactory
     {
@@ -36,12 +36,12 @@ namespace Base.Factory
 
         public IEnumerable<int> Ids { get { return repository.Ids; } }
 
-        public Pokemon GetPokemon(int id)
+        public Models.Pokemon GetPokemon(int id)
         {
             return GetPokemon(id, 1);
         }
 
-        public Pokemon GetPokemon(int id, int level)
+        public Models.Pokemon GetPokemon(int id, int level)
         {
             var charakter = rules.FromPokemonData(repository.GetPokemonData(id));
             rules.ToLevel(charakter, level);

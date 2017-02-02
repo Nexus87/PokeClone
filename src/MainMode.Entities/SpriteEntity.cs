@@ -1,5 +1,4 @@
 ﻿using MainMode.Globals;
-using MainMode.Graphic;
 using Microsoft.Xna.Framework;
 
 namespace MainMode.Entities

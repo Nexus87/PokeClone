@@ -1,5 +1,4 @@
-﻿using Base;
-using GameEngine.Core;
+﻿using GameEngine.Core;
 using GameEngine.Graphics.General;
 using GameEngine.GUI;
 using GameEngine.GUI.Controlls;
@@ -22,7 +21,7 @@ namespace BattleMode.Gui
         private readonly Label _hpLabel;
         private readonly Label _level;
         private readonly SpriteProvider _spriteProvider;
-        private Pokemon _pokemon;
+        private Pokemon.Models.Pokemon _pokemon;
 
         public PokemonMenuLine(ImageBox icon, HpLine hpLine, Label nameBox, HpText hpText, Label level,
             Label hpLabel, SpriteProvider spriteProvider)
@@ -40,7 +39,7 @@ namespace BattleMode.Gui
             Init();
         }
 
-        public void SetPokemon(Pokemon pokemon)
+        public void SetPokemon(Pokemon.Models.Pokemon pokemon)
         {
             _pokemon = pokemon;
             _hpText.SetPokemon(_pokemon);

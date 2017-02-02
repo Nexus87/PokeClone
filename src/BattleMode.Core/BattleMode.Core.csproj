@@ -90,13 +90,9 @@
     <Touch Files="$(_PostBuildHookTimestamp)" AlwaysCreate="True" />
   </Target>
   <ItemGroup>
-    <ProjectReference Include="..\Base\Base.csproj">
-      <Project>{65736142-4C2E-6E69-7578-426173652E4C}</Project>
-      <Name>Base</Name>
-    </ProjectReference>
     <ProjectReference Include="..\BattleMode.Entities\BattleMode.Entities.csproj">
       <Project>{7C124625-9566-46E9-BF6B-D045F90B35A1}</Project>
-      <Name>BattleMode.Components</Name>
+      <Name>BattleMode.Entities</Name>
     </ProjectReference>
     <ProjectReference Include="..\BattleMode.Graphic\BattleMode.Graphic.csproj">
       <Project>{d94b6faf-a173-42b5-ac09-59200da76024}</Project>
@@ -134,17 +130,13 @@
       <Project>{73200884-85C6-4A3D-A3C2-A53D9C632613}</Project>
       <Name>GameEngine.TypeRegistry</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Pokemon.Data\Pokemon.Data.csproj">
-      <Project>{7A7A9117-EEB0-43A5-84FF-9BCA7E393C85}</Project>
-      <Name>Pokemon.Data</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Pokemon.Services\Pokemon.Services.csproj">
-      <Project>{7FA7EE85-0D0A-4C40-8FCA-CFFD8F67E13C}</Project>
+      <Project>{7fa7ee85-0d0a-4c40-8fca-cffd8f67e13c}</Project>
       <Name>Pokemon.Services</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PokemonModels\PokemonModels.csproj">
-      <Project>{9403C59F-8E52-4006-9827-64CDB4241E79}</Project>
-      <Name>PokemonModels</Name>
+    <ProjectReference Include="..\PokemonModels\Pokemon.Models.csproj">
+      <Project>{9403c59f-8e52-4006-9827-64cdb4241e79}</Project>
+      <Name>Pokemon.Models</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

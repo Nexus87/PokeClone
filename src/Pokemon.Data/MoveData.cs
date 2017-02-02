@@ -1,6 +1,4 @@
-﻿using System.Runtime.Serialization;
-
-namespace Base.Data
+﻿namespace Pokemon.Data
 {
     public class MoveData
     {

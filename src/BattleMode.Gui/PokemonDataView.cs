@@ -1,4 +1,4 @@
-﻿using Base.Rules;
+﻿using Pokemon.Services.Rules;
 
 namespace BattleMode.Gui
 {

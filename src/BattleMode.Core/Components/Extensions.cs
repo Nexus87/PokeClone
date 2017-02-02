@@ -1,9 +1,9 @@
-﻿using Base.Data;
-using Base.Rules;
-using BattleMode.Graphic;
+﻿using BattleMode.Graphic;
 using BattleMode.Gui;
 using BattleMode.Shared;
 using GameEngine.Entities;
+using Pokemon.Models;
+using Pokemon.Services.Rules;
 
 namespace BattleMode.Core.Components
 {

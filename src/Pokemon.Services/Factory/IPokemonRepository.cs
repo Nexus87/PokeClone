@@ -1,7 +1,7 @@
-﻿using Base.Data;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Pokemon.Data;
 
-namespace Base.Factory
+namespace Pokemon.Services.Factory
 {
     public interface IPokemonRepository
     {

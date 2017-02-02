@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Base.Rules;
 using BattleMode.Entities.BattleState;
 using BattleMode.Shared;
 using GameEngine.Core;
@@ -10,6 +9,7 @@ using GameEngine.GUI;
 using GameEngine.GUI.Components;
 using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
+using Pokemon.Services.Rules;
 
 namespace BattleMode.Gui
 {

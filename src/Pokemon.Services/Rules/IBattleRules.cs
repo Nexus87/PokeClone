@@ -1,4 +1,6 @@
-﻿namespace Base.Rules
+﻿using Pokemon.Models;
+
+namespace Pokemon.Services.Rules
 {
     public interface IBattleRules
     {

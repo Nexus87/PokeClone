@@ -1,6 +1,5 @@
-﻿using Base;
-using Base.Data;
-using Base.Rules;
+﻿using Pokemon.Models;
+using Pokemon.Services.Rules;
 
 namespace BattleModeTest
 {

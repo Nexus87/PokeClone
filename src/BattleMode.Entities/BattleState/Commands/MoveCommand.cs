@@ -1,5 +1,5 @@
-﻿using Base;
-using BattleMode.Shared;
+﻿using BattleMode.Shared;
+using Pokemon.Models;
 
 namespace BattleMode.Entities.BattleState.Commands
 {

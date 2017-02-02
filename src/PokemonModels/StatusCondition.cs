@@ -1,4 +1,4 @@
-﻿namespace Base.Data
+﻿namespace Pokemon.Models
 {
     public enum StatusCondition
     {

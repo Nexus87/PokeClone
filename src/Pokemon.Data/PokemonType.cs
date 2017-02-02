@@ -1,4 +1,4 @@
-﻿namespace Base.Data
+﻿namespace Pokemon.Data
 {
     public enum PokemonType
     {
