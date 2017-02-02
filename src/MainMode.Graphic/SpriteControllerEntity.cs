@@ -24,7 +24,7 @@ namespace MainMode.Graphic
 
         protected SpriteControllerEntity(SpriteEntityTextures spriteEntityTextures)
         {
-            Sprite = new Sprite()
+            Sprite = new Sprite
             {
                 Position = new Rectangle(Point.Zero, Constants.Size),
                 SpriteEffect = spriteEntityTextures.StandingTextures[Direction.Down].Item2,

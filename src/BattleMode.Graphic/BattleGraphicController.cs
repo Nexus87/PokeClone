@@ -9,8 +9,8 @@ using GameEngine.Graphics;
 using GameEngine.GUI;
 using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
-using Pokemon.Models;
 using Pokemon.Services.Rules;
+using PokemonShared.Models;
 
 namespace BattleMode.Graphic
 {

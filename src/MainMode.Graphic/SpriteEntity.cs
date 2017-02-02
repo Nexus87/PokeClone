@@ -1,6 +1,4 @@
-﻿using GameEngine.Graphics.Textures;
-
-namespace MainMode.Graphic
+﻿namespace MainMode.Graphic
 {
     public class SpriteEntity
     {

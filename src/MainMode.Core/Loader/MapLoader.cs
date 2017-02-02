@@ -3,7 +3,6 @@ using GameEngine.Globals;
 using GameEngine.Graphics.Textures;
 using GameEngine.TypeRegistry;
 using MainMode.Globals;
-using MainMode.Graphic;
 using Microsoft.Xna.Framework;
 
 namespace MainMode.Core.Loader

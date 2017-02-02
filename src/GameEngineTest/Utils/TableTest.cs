@@ -1,8 +1,8 @@
-﻿using NUnit.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using GameEngine.Globals;
+using NUnit.Framework;
 
 namespace GameEngineTest.Utils
 {
@@ -160,7 +160,7 @@ namespace GameEngineTest.Utils
             Assert.AreEqual(0, enumerator.Count());
         }
 
-        public static List<TestCaseData> EnumeratedData = new List<TestCaseData>()
+        public static List<TestCaseData> EnumeratedData = new List<TestCaseData>
         {
             new TestCaseData(new List<int>{1, 2, 3, 4, 5, 6, 7, 8, 9})
         };

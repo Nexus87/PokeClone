@@ -4,14 +4,14 @@ namespace BattleMode.Entities.BattleState
 {
     public class PokemonChangedEventArgs : EventArgs
     {
-        public PokemonChangedEventArgs(Pokemon.Models.Pokemon pokemon)
+        public PokemonChangedEventArgs(PokemonShared.Models.Pokemon pokemon)
         {
-            this.Pokemon = pokemon;
+            Pokemon = pokemon;
         }
 
-        public Pokemon.Models.Pokemon Pokemon { get; private set; }
+        public PokemonShared.Models.Pokemon Pokemon { get; private set; }
 
-        public static implicit operator PokemonChangedEventArgs(Pokemon.Models.Pokemon pokemon)
+        public static implicit operator PokemonChangedEventArgs(PokemonShared.Models.Pokemon pokemon)
         {
             return new PokemonChangedEventArgs(pokemon);
         }

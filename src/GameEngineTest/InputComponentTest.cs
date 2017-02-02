@@ -1,11 +1,11 @@
-﻿using GameEngineTest.TestUtils;
-using Microsoft.Xna.Framework.Input;
-using NUnit.Framework;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using FakeItEasy;
 using GameEngine.Entities;
 using GameEngine.Globals;
+using GameEngineTest.TestUtils;
+using Microsoft.Xna.Framework.Input;
+using NUnit.Framework;
 
 namespace GameEngineTest
 {

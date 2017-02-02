@@ -1,7 +1,6 @@
 ﻿using System;
 using BattleMode.Core;
 using GameEngine.Core;
-using GameEngine.Globals;
 using GameEngine.GUI;
 using MainMode.Core;
 

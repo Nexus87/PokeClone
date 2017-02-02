@@ -1,8 +1,8 @@
 ﻿using System;
 using BattleMode.Shared;
 using GameEngine.Entities;
-using Pokemon.Models;
 using Pokemon.Services.Rules;
+using PokemonShared.Models;
 
 namespace BattleMode.Entities.BattleState
 {
@@ -12,7 +12,7 @@ namespace BattleMode.Entities.BattleState
 
         PokemonEntity GetPokemon(ClientIdentifier id);
 
-        void SetCharacter(ClientIdentifier id, Pokemon.Models.Pokemon pkmn);
+        void SetCharacter(ClientIdentifier id, PokemonShared.Models.Pokemon pkmn);
 
         void SetItem(ClientIdentifier id, ClientIdentifier target, Item item);
 

@@ -1,10 +1,10 @@
-﻿using Pokemon.Data;
-using Pokemon.Models;
-using Pokemon.Services.Factory;
-using Pokemon.Services.Rules;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using PokemonShared.Data;
+using PokemonShared.Models;
+using PokemonShared.Services.Factory;
+using PokemonShared.Services.Rules;
 
 namespace PokemonGame.Rules
 {
@@ -30,7 +30,7 @@ namespace PokemonGame.Rules
             _factory = factory;
         }
 
-        public Pokemon.Models.Pokemon FromPokemonData(PokemonData data)
+        public PokemonShared.Models.Pokemon FromPokemonData(PokemonData data)
         {
             if (data == null)
                 return null;
@@ -66,7 +66,7 @@ namespace PokemonGame.Rules
             };
         }
 
-        public IEnumerable<Move> LevelUp(Pokemon.Models.Pokemon character)
+        public IEnumerable<Move> LevelUp(PokemonShared.Models.Pokemon character)
         {
             if (character == null) throw new ArgumentNullException("character", "Argument should not be null");
 
@@ -80,13 +80,13 @@ namespace PokemonGame.Rules
                    select _factory.GetMove(moves.Item2);
         }
 
-        public void ToLevel(Pokemon.Models.Pokemon character, int level)
+        public void ToLevel(PokemonShared.Models.Pokemon character, int level)
         {
             if (character == null) throw new ArgumentNullException("character", "Argument should not be null");
 
             var baseStates = character.BaseData.BaseStats;
             var ivStates = character.Iv;
-            var stats = new Stats()
+            var stats = new Stats
             {
                 Hp = newState(baseStates.Hp, ivStates.Hp + 50.0d, level),
                 Atk = newState(baseStates.Atk, ivStates.Atk, level),

@@ -46,8 +46,7 @@ namespace GameEngineTest.TestUtils
                 source.Copy(tmp);
                 return tmp;
             }
-            else
-                return source;
+            return source;
         }
 
         public void Reset()

@@ -1,8 +1,8 @@
-﻿using Microsoft.Xna.Framework;
-using NUnit.Framework;
-using System;
+﻿using System;
 using FakeItEasy;
 using GameEngine.Entities;
+using Microsoft.Xna.Framework;
+using NUnit.Framework;
 
 namespace GameEngineTest.EventComponent
 {

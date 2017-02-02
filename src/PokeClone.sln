@@ -70,15 +70,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameEngine.Scripting", "Gam
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameEngine.Tools", "GameEngine.Tools\GameEngine.Tools.csproj", "{1CA01096-AE42-4FF6-BF8D-AB39A94F4F6F}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Pokemon", "Pokemon", "{998F0684-5579-47D1-A8E4-6F24AF9E68C8}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PokemonShared", "PokemonShared", "{998F0684-5579-47D1-A8E4-6F24AF9E68C8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pokemon.Data", "Pokemon.Data\Pokemon.Data.csproj", "{7A7A9117-EEB0-43A5-84FF-9BCA7E393C85}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokemonShared.Data", "PokemonShared.Data\PokemonShared.Data.csproj", "{7A7A9117-EEB0-43A5-84FF-9BCA7E393C85}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pokemon.Models", "PokemonModels\Pokemon.Models.csproj", "{9403C59F-8E52-4006-9827-64CDB4241E79}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokemonShared.Models", "PokemonShared.Models\PokemonShared.Models.csproj", "{9403C59F-8E52-4006-9827-64CDB4241E79}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pokemon.Services", "Pokemon.Services\Pokemon.Services.csproj", "{7FA7EE85-0D0A-4C40-8FCA-CFFD8F67E13C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokemonShared.Services", "PokemonShared.Services\PokemonShared.Services.csproj", "{7FA7EE85-0D0A-4C40-8FCA-CFFD8F67E13C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pokemon.ResourceLoaders", "Pokemon.ResourceLoaders\Pokemon.ResourceLoaders.csproj", "{FCA1938E-AE81-4E54-9AB8-851BA4030836}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokemonShared.ResourceLoaders", "PokemonShared.ResourceLoaders\PokemonShared.ResourceLoaders.csproj", "{FCA1938E-AE81-4E54-9AB8-851BA4030836}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

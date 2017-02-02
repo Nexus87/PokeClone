@@ -126,7 +126,7 @@ namespace GameEngine.GUI.Test.Controls
         }
         private static ListView<int> CreateListViewWithCellFactory(ListCellFactory<int> factory)
         {
-            return new ListView<int>() {ListCellFactory = factory};
+            return new ListView<int> {ListCellFactory = factory};
         }
 
         private static List<IGuiComponent>  CreateComponentMockList(int rows)

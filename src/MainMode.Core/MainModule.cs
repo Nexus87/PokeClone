@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using GameEngine.Core;
 using GameEngine.Entities;
 using GameEngine.TypeRegistry;
@@ -40,7 +41,7 @@ namespace MainMode.Core
 
         public override void Stop(IGameComponentManager engine, IInputHandlerManager inputHandlerManager)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public MainModule() :

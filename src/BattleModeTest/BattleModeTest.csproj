@@ -152,17 +152,17 @@
       <Project>{DDE2CFB0-6E45-6967-6E65-546573742E4C}</Project>
       <Name>GameEngineTest</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Pokemon.Data\Pokemon.Data.csproj">
-      <Project>{7a7a9117-eeb0-43a5-84ff-9bca7e393c85}</Project>
-      <Name>Pokemon.Data</Name>
+    <ProjectReference Include="..\PokemonShared.Data\PokemonShared.Data.csproj">
+      <Project>{7A7A9117-EEB0-43A5-84FF-9BCA7E393C85}</Project>
+      <Name>PokemonShared.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Pokemon.Services\Pokemon.Services.csproj">
-      <Project>{7fa7ee85-0d0a-4c40-8fca-cffd8f67e13c}</Project>
-      <Name>Pokemon.Services</Name>
+    <ProjectReference Include="..\PokemonShared.Models\PokemonShared.Models.csproj">
+      <Project>{9403C59F-8E52-4006-9827-64CDB4241E79}</Project>
+      <Name>PokemonShared.Models</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PokemonModels\Pokemon.Models.csproj">
-      <Project>{9403c59f-8e52-4006-9827-64cdb4241e79}</Project>
-      <Name>Pokemon.Models</Name>
+    <ProjectReference Include="..\PokemonShared.Services\PokemonShared.Services.csproj">
+      <Project>{7FA7EE85-0D0A-4C40-8FCA-CFFD8F67E13C}</Project>
+      <Name>PokemonShared.Services</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

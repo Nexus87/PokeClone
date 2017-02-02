@@ -1,10 +1,10 @@
 ﻿using System;
 using BattleMode.Entities.BattleState;
 using BattleMode.Shared;
-using HpChangedEventArgs = BattleMode.Entities.BattleState.HpChangedEventArgs;
-using Pokemon.Models;
-using Pokemon.Data;
 using Pokemon.Services.Rules;
+using PokemonShared.Data;
+using PokemonShared.Models;
+using HpChangedEventArgs = BattleMode.Entities.BattleState.HpChangedEventArgs;
 
 namespace BattleModeTest.Components
 {
@@ -23,8 +23,8 @@ namespace BattleModeTest.Components
 
         public BattleEventFake()
         {
-            var pkmn = new Pokemon.Models.Pokemon(new PokemonData { Name = "name" }, new Stats());
-            _pokemon = new PokemonEntity() { Pokemon = pkmn };
+            var pkmn = new PokemonShared.Models.Pokemon(new PokemonData { Name = "name" }, new Stats());
+            _pokemon = new PokemonEntity { Pokemon = pkmn };
         }
         public void RaiseCritcalDamageEvent()
         {
@@ -58,7 +58,7 @@ namespace BattleModeTest.Components
 
         public void RaiseMoveUsed()
         {
-            var move = new Move(new MoveData(){Name = "Name"});
+            var move = new Move(new MoveData {Name = "Name"});
             MoveUsed?.Invoke(this, new MoveUsedEventArgs(move, _pokemon));
         }
 

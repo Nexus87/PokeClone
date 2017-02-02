@@ -7,7 +7,7 @@ using GameEngine.GUI.Controlls;
 using GameEngine.GUI.Loader;
 using GameEngine.GUI.Panels;
 using GameEngine.TypeRegistry;
-using Pokemon.Models;
+using PokemonShared.Models;
 
 namespace BattleMode.Gui
 {

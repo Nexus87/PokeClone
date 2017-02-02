@@ -1,6 +1,6 @@
-﻿using NUnit.Framework;
-using System.Reflection;
+﻿using System.Reflection;
 using GameEngine.TypeRegistry;
+using NUnit.Framework;
 
 namespace GameEngineTest.Registry
 {

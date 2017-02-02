@@ -2,8 +2,8 @@
 using BattleMode.Gui;
 using BattleMode.Shared;
 using GameEngine.Entities;
-using Pokemon.Models;
 using Pokemon.Services.Rules;
+using PokemonShared.Models;
 
 namespace BattleMode.Core.Components
 {

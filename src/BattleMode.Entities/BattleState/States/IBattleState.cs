@@ -1,5 +1,5 @@
 ﻿using BattleMode.Shared;
-using Pokemon.Models;
+using PokemonShared.Models;
 
 namespace BattleMode.Entities.BattleState.States
 {
@@ -11,7 +11,7 @@ namespace BattleMode.Entities.BattleState.States
         void Init(BattleData data);
         void Update(BattleData data);
 
-        void SetCharacter(ClientIdentifier id, Pokemon.Models.Pokemon pkmn);
+        void SetCharacter(ClientIdentifier id, PokemonShared.Models.Pokemon pkmn);
         void SetMove(ClientIdentifier id, ClientIdentifier target, Move move);
         void SetItem(ClientIdentifier id, ClientIdentifier target, Item item);
     }

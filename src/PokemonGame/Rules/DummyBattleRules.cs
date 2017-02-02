@@ -1,6 +1,6 @@
 ﻿using GameEngine.TypeRegistry;
-using Pokemon.Models;
 using Pokemon.Services.Rules;
+using PokemonShared.Models;
 
 namespace PokemonGame.Rules
 {

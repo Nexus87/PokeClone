@@ -82,7 +82,7 @@ namespace GameEngine.GUI.Test.Panels
                     {true, true, true}
                 },
                 CommandKeys.Left, 0, 0
-            ),
+            )
         };
 
         [TestCaseSource(nameof(InputHandlerData))]

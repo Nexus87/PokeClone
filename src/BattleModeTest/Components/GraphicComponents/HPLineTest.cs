@@ -28,7 +28,7 @@ namespace BattleModeTest.Components.GraphicComponents
         {
             new TestCaseData(100),
             new TestCaseData(25),
-            new TestCaseData(0),
+            new TestCaseData(0)
         };
 
         public static List<TestCaseData> HpColorTestData = new List<TestCaseData>

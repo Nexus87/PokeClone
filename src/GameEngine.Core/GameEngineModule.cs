@@ -16,7 +16,6 @@ using GameEngine.Pokemon.Gui.Renderer;
 using GameEngine.Pokemon.Gui.Renderer.PokemonClassicRenderer;
 using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework.Content;
-using Module = GameEngine.Core.ModuleManager.Module;
 
 namespace GameEngine.Core
 {

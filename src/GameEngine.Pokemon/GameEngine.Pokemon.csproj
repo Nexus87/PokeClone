@@ -81,9 +81,9 @@
       <Project>{73200884-85c6-4a3d-a3c2-a53d9c632613}</Project>
       <Name>GameEngine.TypeRegistry</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PokemonModels\Pokemon.Models.csproj">
-      <Project>{9403c59f-8e52-4006-9827-64cdb4241e79}</Project>
-      <Name>Pokemon.Models</Name>
+    <ProjectReference Include="..\PokemonShared.Models\PokemonShared.Models.csproj">
+      <Project>{9403C59F-8E52-4006-9827-64CDB4241E79}</Project>
+      <Name>PokemonShared.Models</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

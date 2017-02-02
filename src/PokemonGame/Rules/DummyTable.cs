@@ -1,7 +1,7 @@
 ﻿using System;
 using GameEngine.TypeRegistry;
-using Pokemon.Data;
-using Pokemon.Services.Rules;
+using PokemonShared.Data;
+using PokemonShared.Services.Rules;
 
 namespace PokemonGame.Rules
 {

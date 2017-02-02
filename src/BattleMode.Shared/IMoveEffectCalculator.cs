@@ -1,5 +1,4 @@
-﻿using Pokemon.Data;
-using Pokemon.Models;
+﻿using PokemonShared.Models;
 
 namespace Pokemon.Services.Rules
 {

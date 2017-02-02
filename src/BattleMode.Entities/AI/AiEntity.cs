@@ -14,8 +14,8 @@ namespace BattleMode.Entities.AI
         private Action _nextAction;
         private readonly ClientIdentifier _id;
         private readonly ClientIdentifier _player;
-        private readonly IReadOnlyList<Pokemon.Models.Pokemon> _pokemons;
-        private Pokemon.Models.Pokemon _currentPokemon;
+        private readonly IReadOnlyList<PokemonShared.Models.Pokemon> _pokemons;
+        private PokemonShared.Models.Pokemon _currentPokemon;
 
         public AiEntity(IBattleStateService state, Client ai, ClientIdentifier player)
         {

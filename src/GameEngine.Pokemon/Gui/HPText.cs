@@ -24,7 +24,7 @@ namespace GameEngine.Pokemon.Gui
         }
 
 
-        public void SetPokemon(global::Pokemon.Models.Pokemon pokemon)
+        public void SetPokemon(PokemonShared.Models.Pokemon pokemon)
         {
             MaxHp = pokemon.MaxHp;
             CurrentHp = pokemon.Hp;

@@ -1,5 +1,4 @@
 ﻿using GameEngine.Core.ModuleManager;
-using GameEngine.Graphics.Diagnostic;
 using GameEngine.Graphics.Textures;
 using GameEngine.GUI;
 

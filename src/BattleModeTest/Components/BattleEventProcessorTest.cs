@@ -4,8 +4,8 @@ using BattleMode.Gui;
 using BattleMode.Shared;
 using FakeItEasy;
 using NUnit.Framework;
-using Pokemon.Models;
 using Pokemon.Services.Rules;
+using PokemonShared.Models;
 
 namespace BattleModeTest.Components
 {

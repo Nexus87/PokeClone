@@ -5,7 +5,7 @@ using GameEngine.Globals;
 using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
 using Pokemon.Services.Rules;
-using Pokemon.Models;
+using PokemonShared.Models;
 
 namespace BattleMode.Entities.BattleState
 {
@@ -58,7 +58,7 @@ namespace BattleMode.Entities.BattleState
 
         public PokemonEntity GetPokemon(ClientIdentifier id) => _data.GetPokemon(id);
 
-        public void SetCharacter(ClientIdentifier id, Pokemon.Models.Pokemon pkmn)
+        public void SetCharacter(ClientIdentifier id, PokemonShared.Models.Pokemon pkmn)
         {
             CurrentState.SetCharacter(id, pkmn);
         }
@@ -105,9 +105,9 @@ namespace BattleMode.Entities.BattleState
         {
             if (current == ActionState)
                 return ExecutionState;
-            else if (current == CharacterSetState)
+            if (current == CharacterSetState)
                 return ActionState;
-            else if (current == ExecutionState)
+            if (current == ExecutionState)
                 return CharacterSetState;
 
             throw new InvalidOperationException("Current state is unkown");

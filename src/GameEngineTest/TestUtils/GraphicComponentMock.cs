@@ -1,10 +1,10 @@
-﻿using Microsoft.Xna.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using GameEngine.Core;
 using GameEngine.Globals;
 using GameEngine.Graphics.General;
 using GameEngine.GUI;
+using Microsoft.Xna.Framework;
 
 namespace GameEngineTest.TestUtils
 {

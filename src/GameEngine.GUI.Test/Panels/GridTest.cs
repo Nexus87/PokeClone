@@ -11,7 +11,7 @@ namespace GameEngine.GUI.Test.Panels
     [TestFixture]
     public class GridTest
     {
-        public static List<TestCaseData> PercentPropertiesData = new List<TestCaseData>()
+        public static List<TestCaseData> PercentPropertiesData = new List<TestCaseData>
         {
             new TestCaseData(new Rectangle(0, 0, 100, 100),
                 new List<RowProperty>
@@ -79,7 +79,7 @@ namespace GameEngine.GUI.Test.Panels
             VerifyComponentsHaveExpectedPosition(components, expectedPositions);
         }
 
-        public static List<TestCaseData> FixedPropertiesTestData = new List<TestCaseData>()
+        public static List<TestCaseData> FixedPropertiesTestData = new List<TestCaseData>
         {
             new TestCaseData(new Rectangle(0, 0, 100, 100),
                 new List<RowProperty>
@@ -149,7 +149,7 @@ namespace GameEngine.GUI.Test.Panels
             VerifyComponentsHaveExpectedPosition(components, expectedPositions);
         }
 
-        public static List<TestCaseData> AutoPropertiesTestData = new List<TestCaseData>()
+        public static List<TestCaseData> AutoPropertiesTestData = new List<TestCaseData>
         {
             new TestCaseData(new Rectangle(0, 0, 100, 100),
                 new List<RowProperty>
@@ -217,7 +217,7 @@ namespace GameEngine.GUI.Test.Panels
                     {new Rectangle(0, 0, 90, 80), new Rectangle(90, 0, 30, 80)},
                     {new Rectangle(0, 80, 90, 30), new Rectangle(90, 80, 30, 30)}
                 })
-            ),
+            )
         };
 
         [TestCaseSource(nameof(AutoPropertiesTestData))]
@@ -235,7 +235,7 @@ namespace GameEngine.GUI.Test.Panels
             VerifyComponentsHaveExpectedPosition(components, expectedPositions);
         }
 
-        public static List<TestCaseData> MixedPropertiesTestData = new List<TestCaseData>()
+        public static List<TestCaseData> MixedPropertiesTestData = new List<TestCaseData>
         {
             new TestCaseData(new Rectangle(0, 0, 100, 100),
                 new List<RowProperty>
@@ -258,7 +258,7 @@ namespace GameEngine.GUI.Test.Panels
                     {new Rectangle(0, 0, 110, 20), new Rectangle(110, 0, 0, 20)},
                     {new Rectangle(0, 20, 110, 80), new Rectangle(110, 20, 0, 80)}
                 })
-            ),
+            )
         };
 
         [TestCaseSource(nameof(MixedPropertiesTestData))]
@@ -411,21 +411,21 @@ namespace GameEngine.GUI.Test.Panels
             });
         }
 
-        public static List<TestCaseData> RowSpanTestData = new List<TestCaseData>()
+        public static List<TestCaseData> RowSpanTestData = new List<TestCaseData>
         {
             new TestCaseData(new Rectangle(0, 0, 100, 100),
                 new List<RowProperty>
                 {
                     new RowProperty {Height = 20, Type = ValueType.Absolute},
-                    new RowProperty {Height = 80, Type = ValueType.Absolute},
+                    new RowProperty {Height = 80, Type = ValueType.Absolute}
                 },
                 new List<ColumnProperty>
                 {
-                    new ColumnProperty {Width = 30, Type = ValueType.Absolute},
+                    new ColumnProperty {Width = 30, Type = ValueType.Absolute}
                 },
                 new Table<Rectangle>(new[,]
                 {
-                    {new Rectangle(0, 0, 30, 100)},
+                    {new Rectangle(0, 0, 30, 100)}
                 })
             )
         };
@@ -443,21 +443,21 @@ namespace GameEngine.GUI.Test.Panels
             Assert.AreEqual(expectedAreas[0, 0], firstComponent.Area);
         }
 
-        public static List<TestCaseData> ColumnSpanTestData = new List<TestCaseData>()
+        public static List<TestCaseData> ColumnSpanTestData = new List<TestCaseData>
         {
             new TestCaseData(new Rectangle(0, 0, 100, 100),
                 new List<RowProperty>
                 {
-                    new RowProperty {Height = 20, Type = ValueType.Absolute},
+                    new RowProperty {Height = 20, Type = ValueType.Absolute}
                 },
                 new List<ColumnProperty>
                 {
                     new ColumnProperty {Width = 30, Type = ValueType.Absolute},
-                    new ColumnProperty {Width = 70, Type = ValueType.Absolute},
+                    new ColumnProperty {Width = 70, Type = ValueType.Absolute}
                 },
                 new Table<Rectangle>(new[,]
                 {
-                    {new Rectangle(0, 0, 100, 20)},
+                    {new Rectangle(0, 0, 100, 20)}
                 })
             )
         };

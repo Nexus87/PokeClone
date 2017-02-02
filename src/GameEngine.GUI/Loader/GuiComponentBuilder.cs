@@ -58,10 +58,7 @@ namespace GameEngine.GUI.Loader
                 var scaling = float.Parse(attribute.Value.Replace("*", string.Empty).Trim(), CultureInfo.InvariantCulture);
                 return (int) (scaling * referenceSize);
             }
-            else
-            {
-                return int.Parse(attribute.Value);
-            }
+            return int.Parse(attribute.Value);
         }
     }
 }

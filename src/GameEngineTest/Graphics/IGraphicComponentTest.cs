@@ -1,9 +1,9 @@
-﻿using GameEngineTest.TestUtils;
-using NUnit.Framework;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using FakeItEasy;
 using GameEngine.Graphics.Textures;
 using GameEngine.GUI;
+using GameEngineTest.TestUtils;
+using NUnit.Framework;
 
 namespace GameEngineTest.Graphics
 {

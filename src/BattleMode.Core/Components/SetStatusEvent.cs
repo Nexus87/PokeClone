@@ -2,7 +2,7 @@
 using BattleMode.Graphic;
 using BattleMode.Shared;
 using GameEngine.Entities;
-using Pokemon.Models;
+using PokemonShared.Models;
 
 namespace BattleMode.Core.Components
 {

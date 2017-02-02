@@ -4,8 +4,6 @@ using GameEngine.Globals;
 using GameEngine.TypeRegistry;
 using MainMode.Entities;
 using MainMode.Globals;
-using MainMode.Graphic;
-using SpriteEntity = MainMode.Entities.SpriteEntity;
 
 namespace MainMode.Core.Entities
 {

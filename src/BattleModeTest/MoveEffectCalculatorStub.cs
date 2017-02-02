@@ -1,5 +1,5 @@
-﻿using Pokemon.Models;
-using Pokemon.Services.Rules;
+﻿using Pokemon.Services.Rules;
+using PokemonShared.Models;
 
 namespace BattleModeTest
 {

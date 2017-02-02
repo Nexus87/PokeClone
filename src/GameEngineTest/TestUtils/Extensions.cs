@@ -1,10 +1,10 @@
-﻿using NUnit.Framework;
-using System;
+﻿using System;
 using GameEngine.Core;
 using GameEngine.Entities;
 using GameEngine.Graphics.General;
 using GameEngine.GUI;
 using Microsoft.Xna.Framework;
+using NUnit.Framework;
 
 namespace GameEngineTest.TestUtils
 {

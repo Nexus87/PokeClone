@@ -20,7 +20,7 @@ namespace BattleMode.Gui
 #pragma warning disable 649
 
         [GuiLoaderId("ListView")]
-        private readonly ListView<Pokemon.Models.Pokemon> _listView;
+        private readonly ListView<PokemonShared.Models.Pokemon> _listView;
         [GuiLoaderId("Panel")]
         private readonly Panel _panel;
 
@@ -34,7 +34,7 @@ namespace BattleMode.Gui
 
             _panel.SetContent(_listView);
 
-            _listView.Model = new ObservableCollection<Pokemon.Models.Pokemon>(client.Pokemons);
+            _listView.Model = new ObservableCollection<PokemonShared.Models.Pokemon>(client.Pokemons);
             _listView.CellHeight = 75;
             _listView.ListCellFactory = value =>
             {
@@ -53,7 +53,7 @@ namespace BattleMode.Gui
         }
 
         public event EventHandler ExitRequested;
-        public event EventHandler<SelectionEventArgs<Pokemon.Models.Pokemon>> ItemSelected;
+        public event EventHandler<SelectionEventArgs<PokemonShared.Models.Pokemon>> ItemSelected;
 
 
         public void HandleKeyInput(CommandKeys key)
@@ -80,9 +80,9 @@ namespace BattleMode.Gui
             ExitRequested?.Invoke(this, EventArgs.Empty);
         }
 
-        protected void OnItemSelected(Pokemon.Models.Pokemon p)
+        protected void OnItemSelected(PokemonShared.Models.Pokemon p)
         {
-            ItemSelected?.Invoke(this, new SelectionEventArgs<Pokemon.Models.Pokemon>(p));
+            ItemSelected?.Invoke(this, new SelectionEventArgs<PokemonShared.Models.Pokemon>(p));
         }
     }
 }
