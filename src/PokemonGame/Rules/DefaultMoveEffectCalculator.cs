@@ -2,7 +2,7 @@
 using GameEngine.Globals;
 using GameEngine.TypeRegistry;
 using Pokemon.Services.Rules;
-using Pokemon.Models;
+using PokemonShared.Models;
 
 namespace PokemonGame.Rules
 {

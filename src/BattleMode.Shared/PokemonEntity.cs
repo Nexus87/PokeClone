@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Pokemon.Data;
-using Pokemon.Models;
+using PokemonShared.Data;
+using PokemonShared.Models;
 
 namespace Pokemon.Services.Rules
 {
@@ -14,7 +14,7 @@ namespace Pokemon.Services.Rules
 
         private readonly Dictionary<BattleStats, Func<int>> _stateGetter = new Dictionary<BattleStats, Func<int>>();
 
-        private Models.Pokemon _pokemon;
+        private PokemonShared.Models.Pokemon _pokemon;
 
         public PokemonEntity()
         {
@@ -33,7 +33,7 @@ namespace Pokemon.Services.Rules
         public event EventHandler<PokemonChangedEventArgs> PokemonChanged;
 
         public bool HasPokemon => Pokemon != null;
-        public Models.Pokemon Pokemon
+        public PokemonShared.Models.Pokemon Pokemon
         {
             private get { return _pokemon; }
             set
