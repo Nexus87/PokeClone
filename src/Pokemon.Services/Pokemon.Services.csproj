@@ -44,17 +44,8 @@
     <Compile Include="Factory\MoveFactory.cs" />
     <Compile Include="Factory\PokemonFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Rules\BattleStats.cs" />
-    <Compile Include="Rules\HpChangedEventArgs.cs" />
-    <Compile Include="Rules\IBattleRules.cs" />
-    <Compile Include="Rules\IMoveEffectCalculator.cs" />
     <Compile Include="Rules\IPokemonRules.cs" />
     <Compile Include="Rules\ITypeTable.cs" />
-    <Compile Include="Rules\PokemonChangedEventArgs.cs" />
-    <Compile Include="Rules\PokemonEntity.cs" />
-    <Compile Include="Rules\RulesSet.cs" />
-    <Compile Include="Rules\StateChangedEventArgs.cs" />
-    <Compile Include="Rules\StatusConditionEventArgs.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Pokemon.Data\Pokemon.Data.csproj">

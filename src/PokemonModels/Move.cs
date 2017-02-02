@@ -5,27 +5,28 @@ namespace Pokemon.Models
 {
     public class Move
     {
-        private readonly MoveData data;
+        private readonly MoveData _data;
         
         public Move(MoveData data)
         {
-            this.data = data ?? throw new ArgumentNullException("data", "Argument should not be null");
+            if (data == null) throw new ArgumentNullException(nameof(data));
+            _data = data;
 
-            RemainingPP = data.PP;
+            RemainingPp = data.PP;
         }
         
-        public int? Accuracy { get { return data.Accuracy; } }
-        public int? Damage { get { return data.Damage; } }
-        public DamageCategory DamageType { get { return data.DamageType; } }
-        public string Name { get { return data.Name; } }
-        public PokemonType PokemonType { get { return data.PokemonType; } }
-        public int PP { get { return data.PP; } }
-        public int Priority { get { return data.Priority; } }
-        public int RemainingPP { get; set; }
+        public int? Accuracy => _data.Accuracy;
+        public int? Damage => _data.Damage;
+        public DamageCategory DamageType => _data.DamageType;
+        public string Name => _data.Name;
+        public PokemonType PokemonType => _data.PokemonType;
+        public int Pp => _data.PP;
+        public int Priority => _data.Priority;
+        public int RemainingPp { get; set; }
         
         public override string ToString()
         {
-            return data.Name;
+            return _data.Name;
         }
     }
 }

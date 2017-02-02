@@ -48,7 +48,7 @@ namespace BattleMode.Entities.AI
             if (_currentPokemon == null)
                 throw new InvalidOperationException("No Pokemon is set");
 
-            var move = (from m in _currentPokemon.Moves where m.RemainingPP > 0 select m).FirstOrDefault();
+            var move = (from m in _currentPokemon.Moves where m.RemainingPp > 0 select m).FirstOrDefault();
 
             if (move == null)
                 throw new NotImplementedException();

@@ -43,11 +43,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BattleStats.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="ClientIdentifier.cs" />
+    <Compile Include="HpChangedEventArgs.cs" />
+    <Compile Include="IBattleRules.cs" />
+    <Compile Include="IMoveEffectCalculator.cs" />
     <Compile Include="ItemUsedEventArgs.cs" />
     <Compile Include="MoveEfficiency.cs" />
+    <Compile Include="PokemonChangedEventArgs.cs" />
+    <Compile Include="PokemonEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StateChangedEventArgs.cs" />
+    <Compile Include="StatusConditionEventArgs.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GameEngine.Core\GameEngine.Core.csproj">

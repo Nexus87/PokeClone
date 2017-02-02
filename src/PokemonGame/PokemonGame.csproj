@@ -79,6 +79,10 @@
       <Project>{74746142-656C-694C-622E-4C696E757842}</Project>
       <Name>BattleMode.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\BattleMode.Shared\BattleMode.Shared.csproj">
+      <Project>{627954FA-93D0-4524-B2AD-E7D301DAC6AE}</Project>
+      <Name>BattleMode.Shared</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GameEngine.Entities\GameEngine.Entities.csproj">
       <Project>{C80E7E11-9184-46F3-B66E-236229E44614}</Project>
       <Name>GameEngine.Entities</Name>
