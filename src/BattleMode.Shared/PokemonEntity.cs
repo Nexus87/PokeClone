@@ -4,7 +4,7 @@ using System.Linq;
 using PokemonShared.Data;
 using PokemonShared.Models;
 
-namespace Pokemon.Services.Rules
+namespace BattleMode.Shared
 {
     public class PokemonEntity
     {
@@ -14,7 +14,7 @@ namespace Pokemon.Services.Rules
 
         private readonly Dictionary<BattleStats, Func<int>> _stateGetter = new Dictionary<BattleStats, Func<int>>();
 
-        private PokemonShared.Models.Pokemon _pokemon;
+        private Pokemon _pokemon;
 
         public PokemonEntity()
         {
@@ -33,7 +33,7 @@ namespace Pokemon.Services.Rules
         public event EventHandler<PokemonChangedEventArgs> PokemonChanged;
 
         public bool HasPokemon => Pokemon != null;
-        public PokemonShared.Models.Pokemon Pokemon
+        public Pokemon Pokemon
         {
             private get { return _pokemon; }
             set

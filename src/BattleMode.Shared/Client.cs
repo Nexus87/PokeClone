@@ -7,10 +7,10 @@ namespace BattleMode.Shared
 {
     public class Client
     {
-        private readonly List<PokemonShared.Models.Pokemon> _pokemons = new List<PokemonShared.Models.Pokemon>();
+        private readonly List<Pokemon> _pokemons = new List<Pokemon>();
         private readonly List<Item> _items = new List<Item>();
 
-        public Client(ClientIdentifier id, List<PokemonShared.Models.Pokemon> pokemons)
+        public Client(ClientIdentifier id, List<Pokemon> pokemons)
         {
             Id = id;
             _pokemons.AddRange(pokemons);
@@ -35,7 +35,7 @@ namespace BattleMode.Shared
 
             for (var i = 0; i < 6; i++)
             {
-                var pkmn = new PokemonShared.Models.Pokemon(data, stats) { Name = Id.Name + "_Pkmn" + i, Level = i + 20};
+                var pkmn = new Pokemon(data, stats) { Name = Id.Name + "_Pkmn" + i, Level = i + 20};
                 for (var j = 0; j < 2; j++)
                     pkmn.SetMove(j, new Move(moveData));
                 pkmn.Stats.Hp = 900;
@@ -60,6 +60,6 @@ namespace BattleMode.Shared
         public event EventHandler<ItemUsedEventArgs> ItemUsed = delegate { };
         public IReadOnlyList<Item> Items => _items.AsReadOnly();
         public ClientIdentifier Id { get; }
-        public IReadOnlyList<PokemonShared.Models.Pokemon> Pokemons => _pokemons.AsReadOnly();
+        public IReadOnlyList<Pokemon> Pokemons => _pokemons.AsReadOnly();
     }
 }

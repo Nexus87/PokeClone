@@ -1,7 +1,6 @@
 ﻿using System;
 using BattleMode.Shared;
 using GameEngine.Entities;
-using Pokemon.Services.Rules;
 
 namespace BattleMode.Gui
 {

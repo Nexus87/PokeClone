@@ -4,7 +4,6 @@ using BattleMode.Shared;
 using GameEngine.Globals;
 using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
-using Pokemon.Services.Rules;
 using PokemonShared.Models;
 
 namespace BattleMode.Entities.BattleState
@@ -58,7 +57,7 @@ namespace BattleMode.Entities.BattleState
 
         public PokemonEntity GetPokemon(ClientIdentifier id) => _data.GetPokemon(id);
 
-        public void SetCharacter(ClientIdentifier id, PokemonShared.Models.Pokemon pkmn)
+        public void SetCharacter(ClientIdentifier id, Pokemon pkmn)
         {
             CurrentState.SetCharacter(id, pkmn);
         }

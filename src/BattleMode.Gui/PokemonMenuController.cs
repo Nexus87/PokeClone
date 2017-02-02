@@ -8,6 +8,7 @@ using GameEngine.GUI.Controlls;
 using GameEngine.GUI.Loader;
 using GameEngine.GUI.Panels;
 using GameEngine.TypeRegistry;
+using PokemonShared.Models;
 
 namespace BattleMode.Gui
 {
@@ -20,7 +21,7 @@ namespace BattleMode.Gui
 #pragma warning disable 649
 
         [GuiLoaderId("ListView")]
-        private readonly ListView<PokemonShared.Models.Pokemon> _listView;
+        private readonly ListView<Pokemon> _listView;
         [GuiLoaderId("Panel")]
         private readonly Panel _panel;
 
@@ -34,7 +35,7 @@ namespace BattleMode.Gui
 
             _panel.SetContent(_listView);
 
-            _listView.Model = new ObservableCollection<PokemonShared.Models.Pokemon>(client.Pokemons);
+            _listView.Model = new ObservableCollection<Pokemon>(client.Pokemons);
             _listView.CellHeight = 75;
             _listView.ListCellFactory = value =>
             {
@@ -53,7 +54,7 @@ namespace BattleMode.Gui
         }
 
         public event EventHandler ExitRequested;
-        public event EventHandler<SelectionEventArgs<PokemonShared.Models.Pokemon>> ItemSelected;
+        public event EventHandler<SelectionEventArgs<Pokemon>> ItemSelected;
 
 
         public void HandleKeyInput(CommandKeys key)
@@ -80,9 +81,9 @@ namespace BattleMode.Gui
             ExitRequested?.Invoke(this, EventArgs.Empty);
         }
 
-        protected void OnItemSelected(PokemonShared.Models.Pokemon p)
+        protected void OnItemSelected(Pokemon p)
         {
-            ItemSelected?.Invoke(this, new SelectionEventArgs<PokemonShared.Models.Pokemon>(p));
+            ItemSelected?.Invoke(this, new SelectionEventArgs<Pokemon>(p));
         }
     }
 }

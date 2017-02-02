@@ -14,19 +14,19 @@ namespace PokemonGame.Rules
             return new Stats();
         }
 
-        public IEnumerable<Move> LevelUp(PokemonShared.Models.Pokemon character)
+        public IEnumerable<Move> LevelUp(Pokemon character)
         {
             return new List<Move>();
         }
 
-        public void ToLevel(PokemonShared.Models.Pokemon character, int level)
+        public void ToLevel(Pokemon character, int level)
         {
             
         }
 
-        public PokemonShared.Models.Pokemon FromPokemonData(PokemonData data)
+        public Pokemon FromPokemonData(PokemonData data)
         {
-            return new PokemonShared.Models.Pokemon(data, new Stats());
+            return new Pokemon(data, new Stats());
         }
     }
 }

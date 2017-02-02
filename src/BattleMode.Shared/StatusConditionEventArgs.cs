@@ -1,6 +1,6 @@
 ﻿using PokemonShared.Models;
 
-namespace Pokemon.Services.Rules
+namespace BattleMode.Shared
 {
     public class StatusConditionEventArgs
     {

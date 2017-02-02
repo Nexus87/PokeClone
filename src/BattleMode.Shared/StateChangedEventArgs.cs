@@ -1,6 +1,6 @@
 using System;
 
-namespace Pokemon.Services.Rules
+namespace BattleMode.Shared
 {
     public class StateChangedEventArgs : EventArgs
     {

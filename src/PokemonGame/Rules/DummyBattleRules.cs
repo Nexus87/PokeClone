@@ -1,5 +1,5 @@
-﻿using GameEngine.TypeRegistry;
-using Pokemon.Services.Rules;
+﻿using BattleMode.Shared;
+using GameEngine.TypeRegistry;
 using PokemonShared.Models;
 
 namespace PokemonGame.Rules

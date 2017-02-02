@@ -19,7 +19,7 @@ namespace BattleMode.Entities.BattleState.States
 
         public bool IsDone { get; private set; }
 
-        public void SetCharacter(ClientIdentifier id, PokemonShared.Models.Pokemon pkmn)
+        public void SetCharacter(ClientIdentifier id, Pokemon pkmn)
         {
             ValidateInput(id, pkmn, "pkmn");
             _commands[id] = new ChangeCommand(id, pkmn);

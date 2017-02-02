@@ -30,7 +30,7 @@ namespace PokemonGame.Rules
             _factory = factory;
         }
 
-        public PokemonShared.Models.Pokemon FromPokemonData(PokemonData data)
+        public Pokemon FromPokemonData(PokemonData data)
         {
             if (data == null)
                 return null;
@@ -66,7 +66,7 @@ namespace PokemonGame.Rules
             };
         }
 
-        public IEnumerable<Move> LevelUp(PokemonShared.Models.Pokemon character)
+        public IEnumerable<Move> LevelUp(Pokemon character)
         {
             if (character == null) throw new ArgumentNullException("character", "Argument should not be null");
 
@@ -80,7 +80,7 @@ namespace PokemonGame.Rules
                    select _factory.GetMove(moves.Item2);
         }
 
-        public void ToLevel(PokemonShared.Models.Pokemon character, int level)
+        public void ToLevel(Pokemon character, int level)
         {
             if (character == null) throw new ArgumentNullException("character", "Argument should not be null");
 

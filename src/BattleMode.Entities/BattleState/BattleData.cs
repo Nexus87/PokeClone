@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using BattleMode.Entities.BattleState.Commands;
 using BattleMode.Shared;
 using GameEngine.TypeRegistry;
-using Pokemon.Services.Rules;
 
 namespace BattleMode.Entities.BattleState
 {

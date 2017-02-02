@@ -2,7 +2,6 @@
 using System.Linq;
 using BattleMode.Shared;
 using GameEngine.TypeRegistry;
-using Pokemon.Services.Rules;
 using PokemonShared.Models;
 
 namespace BattleMode.Entities.BattleState

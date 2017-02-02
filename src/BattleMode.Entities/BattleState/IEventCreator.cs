@@ -1,5 +1,4 @@
 ﻿using BattleMode.Shared;
-using Pokemon.Services.Rules;
 using PokemonShared.Models;
 
 namespace BattleMode.Entities.BattleState

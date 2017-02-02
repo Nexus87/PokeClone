@@ -1,17 +1,18 @@
 ﻿using System;
+using PokemonShared.Models;
 
 namespace BattleMode.Entities.BattleState
 {
     public class PokemonChangedEventArgs : EventArgs
     {
-        public PokemonChangedEventArgs(PokemonShared.Models.Pokemon pokemon)
+        public PokemonChangedEventArgs(Pokemon pokemon)
         {
             Pokemon = pokemon;
         }
 
-        public PokemonShared.Models.Pokemon Pokemon { get; private set; }
+        public Pokemon Pokemon { get; private set; }
 
-        public static implicit operator PokemonChangedEventArgs(PokemonShared.Models.Pokemon pokemon)
+        public static implicit operator PokemonChangedEventArgs(Pokemon pokemon)
         {
             return new PokemonChangedEventArgs(pokemon);
         }

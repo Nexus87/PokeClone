@@ -1,6 +1,5 @@
 ﻿using BattleMode.Shared;
 using GameEngine.Graphics;
-using Pokemon.Services.Rules;
 using PokemonShared.Models;
 
 namespace BattleMode.Graphic

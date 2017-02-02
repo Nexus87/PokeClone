@@ -6,6 +6,7 @@ using GameEngine.GUI.Panels;
 using GameEngine.Pokemon.Gui;
 using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
+using PokemonShared.Models;
 
 namespace BattleMode.Gui
 {
@@ -21,7 +22,7 @@ namespace BattleMode.Gui
         private readonly Label _hpLabel;
         private readonly Label _level;
         private readonly SpriteProvider _spriteProvider;
-        private PokemonShared.Models.Pokemon _pokemon;
+        private Pokemon _pokemon;
 
         public PokemonMenuLine(ImageBox icon, HpLine hpLine, Label nameBox, HpText hpText, Label level,
             Label hpLabel, SpriteProvider spriteProvider)
@@ -39,7 +40,7 @@ namespace BattleMode.Gui
             Init();
         }
 
-        public void SetPokemon(PokemonShared.Models.Pokemon pokemon)
+        public void SetPokemon(Pokemon pokemon)
         {
             _pokemon = pokemon;
             _hpText.SetPokemon(_pokemon);

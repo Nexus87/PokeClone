@@ -1,10 +1,10 @@
-﻿using GameEngine.Core;
+﻿using BattleMode.Shared;
+using GameEngine.Core;
 using GameEngine.GUI.Controlls;
 using GameEngine.GUI.Loader;
 using GameEngine.GUI.Panels;
 using GameEngine.Pokemon.Gui;
 using GameEngine.TypeRegistry;
-using Pokemon.Services.Rules;
 
 namespace BattleMode.Gui
 {

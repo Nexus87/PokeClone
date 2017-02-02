@@ -1,4 +1,4 @@
-﻿namespace Pokemon.Services.Rules
+﻿namespace BattleMode.Shared
 {
     public enum BattleStats
     {

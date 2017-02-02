@@ -1,4 +1,4 @@
-﻿using Pokemon.Services.Rules;
+﻿using BattleMode.Shared;
 
 namespace BattleMode.Gui
 {

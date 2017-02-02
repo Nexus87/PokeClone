@@ -1,14 +1,15 @@
 ﻿using System;
 using BattleMode.Shared;
+using PokemonShared.Models;
 
 namespace BattleMode.Entities.BattleState.Commands
 {
     public class ChangeCommand : ICommand
     {
         public ClientIdentifier Source { get; private set; }
-        public PokemonShared.Models.Pokemon Pokemon { get; private set; }
+        public Pokemon Pokemon { get; private set; }
 
-        public ChangeCommand(ClientIdentifier source, PokemonShared.Models.Pokemon newPkmn)
+        public ChangeCommand(ClientIdentifier source, Pokemon newPkmn)
         {
             Source = source;
             Pokemon = newPkmn;

@@ -5,6 +5,7 @@ using BattleMode.Gui;
 using BattleMode.Shared;
 using GameEngine.Entities;
 using GameEngine.TypeRegistry;
+using HpChangedEventArgs = BattleMode.Entities.BattleState.HpChangedEventArgs;
 
 namespace BattleMode.Core.Components
 {

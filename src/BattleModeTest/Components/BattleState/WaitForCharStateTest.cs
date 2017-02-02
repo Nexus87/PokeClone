@@ -157,17 +157,17 @@ namespace BattleModeTest.Components.BattleState
             return new WaitForPokemonState();
         }
 
-        private void SetNewPlayerCharacter(IBattleState state, PokemonShared.Models.Pokemon pokemon = null)
+        private void SetNewPlayerCharacter(IBattleState state, Pokemon pokemon = null)
         {
             SetNewCharacter(state, _factory.PlayerId, pokemon);
         }
 
-        private void SetNewAiCharacter(IBattleState state, PokemonShared.Models.Pokemon pokemon = null)
+        private void SetNewAiCharacter(IBattleState state, Pokemon pokemon = null)
         {
             SetNewCharacter(state, _factory.Aiid, pokemon);
         }
 
-        private static void SetNewCharacter(IBattleState state, ClientIdentifier id, PokemonShared.Models.Pokemon pokemon = null){
+        private static void SetNewCharacter(IBattleState state, ClientIdentifier id, Pokemon pokemon = null){
             if(pokemon == null)
                 pokemon = TestFactory.CreatePokemon();
 

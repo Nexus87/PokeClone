@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using BattleMode.Entities.BattleState;
 using BattleMode.Shared;
-using Pokemon.Services.Rules;
 using PokemonShared.Data;
 using PokemonShared.Models;
 
@@ -22,7 +21,7 @@ namespace BattleModeTest.Utils
         
         public static Client CreatePlayerClient(int numPokemon)
         {
-            var pokemons = new List<PokemonShared.Models.Pokemon>();
+            var pokemons = new List<Pokemon>();
             for (var i = 0; i < numPokemon; i++)
             {
                 pokemons.Add(CreatePokemon());
@@ -41,10 +40,10 @@ namespace BattleModeTest.Utils
             BattleData.GetPokemon(Aiid).Pokemon = CreatePokemon(statusCondition, hp);
         }
 
-        public static PokemonShared.Models.Pokemon CreatePokemon(StatusCondition statusCondition = StatusCondition.Normal, int hp = 100)
+        public static Pokemon CreatePokemon(StatusCondition statusCondition = StatusCondition.Normal, int hp = 100)
         {
             var baseData = new PokemonData {BaseStats = new Stats {Hp = 100}};
-            return new PokemonShared.Models.Pokemon(baseData, new Stats()) { Condition = statusCondition, Hp = hp };
+            return new Pokemon(baseData, new Stats()) { Condition = statusCondition, Hp = hp };
         }
 
         public Move CreateMove()

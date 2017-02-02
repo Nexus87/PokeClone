@@ -1,7 +1,6 @@
 ﻿using System;
 using BattleMode.Entities.BattleState;
 using BattleMode.Shared;
-using Pokemon.Services.Rules;
 using PokemonShared.Data;
 using PokemonShared.Models;
 using HpChangedEventArgs = BattleMode.Entities.BattleState.HpChangedEventArgs;
@@ -23,7 +22,7 @@ namespace BattleModeTest.Components
 
         public BattleEventFake()
         {
-            var pkmn = new PokemonShared.Models.Pokemon(new PokemonData { Name = "name" }, new Stats());
+            var pkmn = new Pokemon(new PokemonData { Name = "name" }, new Stats());
             _pokemon = new PokemonEntity { Pokemon = pkmn };
         }
         public void RaiseCritcalDamageEvent()

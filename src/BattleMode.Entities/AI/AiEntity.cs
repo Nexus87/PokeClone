@@ -5,6 +5,8 @@ using BattleMode.Entities.BattleState;
 using BattleMode.Shared;
 using GameEngine.Entities;
 using Microsoft.Xna.Framework;
+using PokemonShared.Models;
+using StateChangedEventArgs = BattleMode.Entities.BattleState.StateChangedEventArgs;
 
 namespace BattleMode.Entities.AI
 {
@@ -14,8 +16,8 @@ namespace BattleMode.Entities.AI
         private Action _nextAction;
         private readonly ClientIdentifier _id;
         private readonly ClientIdentifier _player;
-        private readonly IReadOnlyList<PokemonShared.Models.Pokemon> _pokemons;
-        private PokemonShared.Models.Pokemon _currentPokemon;
+        private readonly IReadOnlyList<Pokemon> _pokemons;
+        private Pokemon _currentPokemon;
 
         public AiEntity(IBattleStateService state, Client ai, ClientIdentifier player)
         {
