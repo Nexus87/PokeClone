@@ -6,8 +6,6 @@
 
         public int Id { get; set; }
 
-        public MoveList MoveList { get; set; }
-
         public string Name { get; set; }
 
         public PokemonType Type1 { get; set; }

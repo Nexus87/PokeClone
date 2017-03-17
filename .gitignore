@@ -33,3 +33,4 @@ Content/source/.source
 .rider
 .idea
 src/packages/
+src/.vs/config/applicationhost.config

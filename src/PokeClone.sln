@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26127.0
+VisualStudioVersion = 15.0.26228.4
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokemonGame", "PokemonGame\PokemonGame.csproj", "{656B6FC8-6F6D-476E-616D-652E4C696E75}"
 EndProject
@@ -76,9 +76,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokemonShared.Data", "Pokem
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokemonShared.Models", "PokemonShared.Models\PokemonShared.Models.csproj", "{9403C59F-8E52-4006-9827-64CDB4241E79}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokemonShared.Services", "PokemonShared.Services\PokemonShared.Services.csproj", "{7FA7EE85-0D0A-4C40-8FCA-CFFD8F67E13C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokemonShared.Core", "PokemonShared.Core\PokemonShared.Core.csproj", "{6EBD8F0E-CC08-4BD4-96BB-DC2490B8EA22}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokemonShared.ResourceLoaders", "PokemonShared.ResourceLoaders\PokemonShared.ResourceLoaders.csproj", "{FCA1938E-AE81-4E54-9AB8-851BA4030836}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokemonShared.Service", "PokemonShared.Service\PokemonShared.Service.csproj", "{7E38E565-79B0-4174-A40B-C68B363C6790}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -186,14 +186,14 @@ Global
 		{9403C59F-8E52-4006-9827-64CDB4241E79}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9403C59F-8E52-4006-9827-64CDB4241E79}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9403C59F-8E52-4006-9827-64CDB4241E79}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7FA7EE85-0D0A-4C40-8FCA-CFFD8F67E13C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7FA7EE85-0D0A-4C40-8FCA-CFFD8F67E13C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7FA7EE85-0D0A-4C40-8FCA-CFFD8F67E13C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7FA7EE85-0D0A-4C40-8FCA-CFFD8F67E13C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FCA1938E-AE81-4E54-9AB8-851BA4030836}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FCA1938E-AE81-4E54-9AB8-851BA4030836}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FCA1938E-AE81-4E54-9AB8-851BA4030836}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FCA1938E-AE81-4E54-9AB8-851BA4030836}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6EBD8F0E-CC08-4BD4-96BB-DC2490B8EA22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6EBD8F0E-CC08-4BD4-96BB-DC2490B8EA22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6EBD8F0E-CC08-4BD4-96BB-DC2490B8EA22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6EBD8F0E-CC08-4BD4-96BB-DC2490B8EA22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E38E565-79B0-4174-A40B-C68B363C6790}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E38E565-79B0-4174-A40B-C68B363C6790}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E38E565-79B0-4174-A40B-C68B363C6790}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E38E565-79B0-4174-A40B-C68B363C6790}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -223,7 +223,7 @@ Global
 		{1CA01096-AE42-4FF6-BF8D-AB39A94F4F6F} = {36033961-4F42-4203-8274-40942A990CD5}
 		{7A7A9117-EEB0-43A5-84FF-9BCA7E393C85} = {998F0684-5579-47D1-A8E4-6F24AF9E68C8}
 		{9403C59F-8E52-4006-9827-64CDB4241E79} = {998F0684-5579-47D1-A8E4-6F24AF9E68C8}
-		{7FA7EE85-0D0A-4C40-8FCA-CFFD8F67E13C} = {998F0684-5579-47D1-A8E4-6F24AF9E68C8}
-		{FCA1938E-AE81-4E54-9AB8-851BA4030836} = {998F0684-5579-47D1-A8E4-6F24AF9E68C8}
+		{6EBD8F0E-CC08-4BD4-96BB-DC2490B8EA22} = {998F0684-5579-47D1-A8E4-6F24AF9E68C8}
+		{7E38E565-79B0-4174-A40B-C68B363C6790} = {998F0684-5579-47D1-A8E4-6F24AF9E68C8}
 	EndGlobalSection
 EndGlobal

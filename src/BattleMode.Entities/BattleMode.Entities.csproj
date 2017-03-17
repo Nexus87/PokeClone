@@ -71,7 +71,6 @@
     <Compile Include="BattleState\MoveEffectiveEventArgs.cs" />
     <Compile Include="BattleState\MoveUsedEventArgs.cs" />
     <Compile Include="BattleState\PokemonChangedEventArgs.cs" />
-    <Compile Include="BattleState\PokemonWrapper.cs" />
     <Compile Include="BattleState\StateChangedEventArgs.cs" />
     <Compile Include="BattleState\States\AbstractState.cs" />
     <Compile Include="BattleState\States\ExecuteState.cs" />

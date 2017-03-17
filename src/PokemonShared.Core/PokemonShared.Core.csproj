@@ -4,12 +4,12 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1CA01096-AE42-4FF6-BF8D-AB39A94F4F6F}</ProjectGuid>
+    <ProjectGuid>{6EBD8F0E-CC08-4BD4-96BB-DC2490B8EA22}</ProjectGuid>
     <ProjectTypeGuids>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GameEngine.Tools</RootNamespace>
-    <AssemblyName>GameEngine.Tools</AssemblyName>
+    <RootNamespace>PokemonShared.Core</RootNamespace>
+    <AssemblyName>PokemonShared.Core</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -33,37 +33,41 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MonoGame.Framework, Version=3.5.1.1679, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\MonoGame.Framework.DesktopGL.3.5.1.1679\lib\net40\MonoGame.Framework.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
-      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="NVorbis, Version=0.8.4.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\MonoGame.Framework.DesktopGL.3.5.1.1679\lib\net40\NVorbis.dll</HintPath>
-    </Reference>
-    <Reference Include="OpenTK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4">
-      <HintPath>..\packages\MonoGame.Framework.DesktopGL.3.5.1.1679\lib\net40\OpenTK.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IStorage.cs" />
-    <Compile Include="JSonStorage.cs" />
+    <Compile Include="PokemonSharedModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Storages\Area.cs" />
-    <Compile Include="Storages\JsonNetStorage.cs" />
-    <Compile Include="Storages\JsonSpriteSheetConfigStorage.cs" />
-    <Compile Include="Storages\SingleTextureConfiguration.cs" />
-    <Compile Include="Storages\SpriteSheetConfiguration.cs" />
-    <Compile Include="Storages\TextureConfiguration.cs" />
-    <Compile Include="Storages\TextureConfigurationStorage.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="packages.config" />
+    <ProjectReference Include="..\GameEngine.Core\GameEngine.Core.csproj">
+      <Project>{656D6147-6E45-6967-6E65-2E4C696E7578}</Project>
+      <Name>GameEngine.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GameEngine.Entities\GameEngine.Entities.csproj">
+      <Project>{C80E7E11-9184-46F3-B66E-236229E44614}</Project>
+      <Name>GameEngine.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GameEngine.Tools\GameEngine.Tools.csproj">
+      <Project>{1CA01096-AE42-4FF6-BF8D-AB39A94F4F6F}</Project>
+      <Name>GameEngine.Tools</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GameEngine.TypeRegistry\GameEngine.TypeRegistry.csproj">
+      <Project>{73200884-85C6-4A3D-A3C2-A53D9C632613}</Project>
+      <Name>GameEngine.TypeRegistry</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PokemonShared.Data\PokemonShared.Data.csproj">
+      <Project>{7A7A9117-EEB0-43A5-84FF-9BCA7E393C85}</Project>
+      <Name>PokemonShared.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Content\PokemonShared\MoveData.json" />
+    <None Include="Content\PokemonShared\MoveSets.json" />
+    <None Include="Content\PokemonShared\PokemonData.json" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

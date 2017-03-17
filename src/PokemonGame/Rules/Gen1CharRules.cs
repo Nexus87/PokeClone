@@ -74,10 +74,10 @@ namespace PokemonGame.Rules
                 return new List<Move>();
 
             ToLevel(character, character.Level + 1);
-
-            return from moves in character.BaseData.MoveList.Moves
-                   where moves.Item1 == character.Level
-                   select _factory.GetMove(moves.Item2);
+            return new List<Move>();
+            //return from moves in character.BaseData.MoveList.Moves
+            //       where moves.Item1 == character.Level
+            //       select _factory.GetMove(moves.Item2);
         }
 
         public void ToLevel(Pokemon character, int level)
@@ -88,18 +88,18 @@ namespace PokemonGame.Rules
             var ivStates = character.Iv;
             var stats = new Stats
             {
-                Hp = newState(baseStates.Hp, ivStates.Hp + 50.0d, level),
-                Atk = newState(baseStates.Atk, ivStates.Atk, level),
-                Def = newState(baseStates.Def, ivStates.Def, level),
-                SpAtk = newState(baseStates.SpAtk, ivStates.SpAtk, level),
-                SpDef = newState(baseStates.SpDef, ivStates.SpDef, level),
-                Speed = newState(baseStates.Speed, ivStates.Speed, level)
+                Hp = NewState(baseStates.Hp, ivStates.Hp + 50.0d, level),
+                Atk = NewState(baseStates.Atk, ivStates.Atk, level),
+                Def = NewState(baseStates.Def, ivStates.Def, level),
+                SpAtk = NewState(baseStates.SpAtk, ivStates.SpAtk, level),
+                SpDef = NewState(baseStates.SpDef, ivStates.SpDef, level),
+                Speed = NewState(baseStates.Speed, ivStates.Speed, level)
             };
             character.Stats = stats;
             character.Level++;
         }
 
-        private static int newState(double baseV, double iV, double level)
+        private static int NewState(double baseV, double iV, double level)
         {
             return (int)Math.Floor((baseV + iV) * level / 50.0d + 10.0d);
         }
