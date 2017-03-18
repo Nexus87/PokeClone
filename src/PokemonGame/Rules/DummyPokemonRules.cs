@@ -2,12 +2,10 @@
 using GameEngine.TypeRegistry;
 using PokemonShared.Data;
 using PokemonShared.Models;
-using PokemonShared.Services.Rules;
 
 namespace PokemonGame.Rules
 {
-    [GameService(typeof(IPokemonRules))]
-    public class DummyPokemonRules : IPokemonRules
+    public class DummyPokemonRules
     {
         public Stats GenerateIv()
         {
