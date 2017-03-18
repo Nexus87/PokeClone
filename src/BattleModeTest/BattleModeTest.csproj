@@ -160,9 +160,5 @@
       <Project>{9403C59F-8E52-4006-9827-64CDB4241E79}</Project>
       <Name>PokemonShared.Models</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PokemonShared.Services\PokemonShared.Services.csproj">
-      <Project>{7FA7EE85-0D0A-4C40-8FCA-CFFD8F67E13C}</Project>
-      <Name>PokemonShared.Services</Name>
-    </ProjectReference>
   </ItemGroup>
 </Project>
