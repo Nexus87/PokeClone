@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO.IsolatedStorage;
 using System.Linq;
 using GameEngine.Tools;
 using PokemonShared.Data;
@@ -11,14 +10,14 @@ namespace PokemonShared.Service
     {
         private readonly IStorage<PokemonData> _pokemonDatas;
         private readonly IStorage<MoveSetItem> _moveSetItems;
-        private readonly IStorage<MoveData> _moveDatas;
+        private readonly MoveService _moveService;
         private readonly Random _random = new Random();
 
-        public PokemonService(IStorage<PokemonData> pokemonDatas, IStorage<MoveSetItem> moveSetItems, IStorage<MoveData> moveDatas )
+        public PokemonService(IStorage<PokemonData> pokemonDatas, IStorage<MoveSetItem> moveSetItems, MoveService moveService)
         {
             _pokemonDatas = pokemonDatas;
             _moveSetItems = moveSetItems;
-            _moveDatas = moveDatas;
+            _moveService = moveService;
         }
 
         public Pokemon GetPokemon(int id, int level)
@@ -45,12 +44,28 @@ namespace PokemonShared.Service
             };
 
             var pokemon = new Pokemon(baseData, 1, null, stats, iv);
+            var moveIds = _moveSetItems
+                .Where(x => x.PokemonId == id && x.Level <= level)
+                .Select(x => x.MoveId);
+
+            var moves = _moveService.GetMoves(moveIds)
+                .Reverse()
+                .Take(4)
+                .Reverse()
+                .ToList();
+
+            for (var i = 0; i < moves.Count; i++)
+            {
+                pokemon.SetMove(i, moves[i]);
+            }
 
             return LevelUp(pokemon, level);
         }
 
         public Pokemon LevelUp(Pokemon source, int targetLevel)
         {
+            // TODO implement
+            source.Level = targetLevel;
             return source;
         }
     }

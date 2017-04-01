@@ -2,6 +2,8 @@
 {
     public class MoveData
     {
+        public int Id { get; set; }
+
         public int? Accuracy { get; set; }
 
         public int? Damage { get; set; }
