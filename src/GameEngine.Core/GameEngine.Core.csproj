@@ -64,6 +64,7 @@
     <Compile Include="GameEngineModule.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="GUIManager.cs" />
+    <Compile Include="GuiSystem.cs" />
     <Compile Include="IEngineInterface.cs" />
     <Compile Include="IGameComponentManager.cs" />
     <Compile Include="GameRunner.cs" />

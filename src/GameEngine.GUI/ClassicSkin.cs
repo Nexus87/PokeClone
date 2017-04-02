@@ -10,11 +10,11 @@ namespace GameEngine.GUI
 {
     public class ClassicSkin : ISkin
     {
-        private static readonly List<Action<IGameTypeRegistry, TextureProvider>> AdditionalRenderers = new List<Action<IGameTypeRegistry, TextureProvider>>();
+        private readonly List<Action<IGameTypeRegistry, TextureProvider>> _additionalRenderers = new List<Action<IGameTypeRegistry, TextureProvider>>();
 
-        public static void AddAdditionalRenderer<T, TService>(Func<TextureProvider, T> factory)
+        public void AddAdditionalRenderer<T, TService>(Func<TextureProvider, T> factory)
         {
-            AdditionalRenderers.Add((r, t) => { r.RegisterAsService<T, TService>(reg => factory(t)); });
+            _additionalRenderers.Add((r, t) => { r.RegisterAsService<T, TService>(reg => factory(t)); });
         }
 
         public const string Arrow = "arrow";
@@ -39,7 +39,7 @@ namespace GameEngine.GUI
             registry.RegisterAsService<ClassicSelectablePanelRenderer, SelectablePanelRenderer>(r => new ClassicSelectablePanelRenderer(arrow));
             registry.RegisterAsService<ClassicScrollAreaRenderer, ScrollAreaRenderer>();
 
-            foreach (var rendererFactory in AdditionalRenderers)
+            foreach (var rendererFactory in _additionalRenderers)
             {
                 rendererFactory(registry, provider);
             }

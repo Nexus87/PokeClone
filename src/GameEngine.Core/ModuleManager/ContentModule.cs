@@ -47,6 +47,5 @@ namespace GameEngine.Core.ModuleManager
         }
 
         public abstract void AddTextureConfigurations(TextureConfigurationBuilder builder);
-        public abstract void AddBuilderAndRenderer();
     }
 }

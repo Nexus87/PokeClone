@@ -11,6 +11,5 @@ namespace GameEngine.Core.ModuleManager
         IGameTypeRegistry TypeRegistry { get; }
         void RegisterTypes();
         void AddTextureConfigurations(TextureConfigurationBuilder builder);
-        void AddBuilderAndRenderer();
     }
 }

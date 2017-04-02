@@ -119,6 +119,10 @@
       <Project>{7A7A9117-EEB0-43A5-84FF-9BCA7E393C85}</Project>
       <Name>PokemonShared.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PokemonShared.Gui\PokemonShared.Gui.csproj">
+      <Project>{BFFE8C85-5C46-4595-AA1C-3DEE4B3DCFF9}</Project>
+      <Name>PokemonShared.Gui</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PokemonShared.Models\PokemonShared.Models.csproj">
       <Project>{9403C59F-8E52-4006-9827-64CDB4241E79}</Project>
       <Name>PokemonShared.Models</Name>

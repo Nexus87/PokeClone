@@ -6,6 +6,8 @@ namespace GameEngine.Core
 {
     public class PokeEngine
     {
+        public GuiSystem GuiSystem { get; } = new GuiSystem();
+
         private readonly GameRunner _gameRunner;
         private readonly IModuleManager _moduleRegistry;
         private readonly TextureProvider _textureProvider;
@@ -48,18 +50,12 @@ namespace GameEngine.Core
         {
             BuildTextureConfiguration();
             RegisterModuleTypes();
-            AddBuilderAndRenderer();
-
         }
 
-        private void AddBuilderAndRenderer()
-        {
-        }
 
         private void RegisterModuleTypes()
         {
             _moduleRegistry.RegisterTypes();
-            _moduleRegistry.AddBuilderAndRenderer();
             _skin.RegisterRenderers(_moduleRegistry.TypeRegistry, _textureProvider);
         }
 

@@ -55,18 +55,5 @@ namespace PokemonShared.Core
         {
             ReadConfiguration(builder, TextureKey, _gameConfig.Textures);
         }
-
-        public override void AddBuilderAndRenderer()
-        {
-            ClassicSkin.AddAdditionalRenderer<ClassicLineRenderer, HpLineRenderer>(
-                t => new ClassicLineRenderer(t.GetTexture(ClassicSkin.Key, ClassicSkin.Circle), t.Pixel, ClassicSkin.BackgroundColor)
-);
-            ClassicSkin.AddAdditionalRenderer<ClassicHpTextRenderer, HpTextRenderer>(
-                t => new ClassicHpTextRenderer(t.GetFont(ClassicSkin.Key, ClassicSkin.DefaultFont))
-            );
-
-            GuiLoader.AddBuilder("HpLine", (r, c) => new HpLineBuilder(r, c));
-            GuiLoader.AddBuilder("HpText", (r, c) => new HpTextBuilder(r, c));
-        }
     }
 }

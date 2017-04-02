@@ -29,10 +29,6 @@ namespace GameEngine.Core.ModuleManager
             _contentModules.ForEach(x => x.AddTextureConfigurations(builder));
         }
 
-        public void AddBuilderAndRenderer()
-        {
-            _contentModules.ForEach(x => x.AddBuilderAndRenderer());
-        }
         public void RegisterTypes()
         {
             foreach (var modules in _registeredModules.Values)

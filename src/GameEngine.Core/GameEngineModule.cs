@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using GameEngine.Core.ModuleManager;
 using GameEngine.Entities;
 using GameEngine.Globals;
@@ -63,9 +62,6 @@ namespace GameEngine.Core
             ReadConfiguration(builder, ClassicSkin.Key, @"GameEngine/Textures/TextureConfig.json");
         }
 
-        public override void AddBuilderAndRenderer()
-        {
-        }
 
         public static string Name => "GameEngine";
 
