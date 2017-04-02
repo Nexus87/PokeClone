@@ -4,7 +4,7 @@ using GameEngine.GUI;
 using GameEngine.GUI.Loader;
 using GameEngine.TypeRegistry;
 
-namespace GameEngine.Pokemon.Gui.Builder
+namespace PokemonShared.Gui.Builder
 {
     public class HpTextBuilder : GuiComponentBuilder
     {

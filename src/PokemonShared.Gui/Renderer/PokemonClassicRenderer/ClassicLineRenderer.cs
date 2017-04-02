@@ -2,7 +2,7 @@ using GameEngine.Graphics.General;
 using GameEngine.Graphics.Textures;
 using Microsoft.Xna.Framework;
 
-namespace GameEngine.Pokemon.Gui.Renderer.PokemonClassicRenderer
+namespace PokemonShared.Gui.Renderer.PokemonClassicRenderer
 {
     public class ClassicLineRenderer : HpLineRenderer
     {

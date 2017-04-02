@@ -10,10 +10,6 @@ using GameEngine.GUI.Components;
 using GameEngine.GUI.Loader;
 using GameEngine.GUI.Panels;
 using GameEngine.GUI.Renderers;
-using GameEngine.Pokemon.Gui;
-using GameEngine.Pokemon.Gui.Builder;
-using GameEngine.Pokemon.Gui.Renderer;
-using GameEngine.Pokemon.Gui.Renderer.PokemonClassicRenderer;
 using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework.Content;
 
@@ -56,7 +52,6 @@ namespace GameEngine.Core
                 typeof(IGuiComponent).Assembly,
                 typeof(IGameTypeRegistry).Assembly,
                 typeof(IGameEntity).Assembly,
-                typeof(HpLine).Assembly,
                 typeof(TextureBuilder).Assembly
             });
             registry.RegisterType(r => new Panel(r.ResolveType<PanelRenderer>()) { BackgroundColor = r.ResolveType<ScreenConstants>().BackgroundColor});
@@ -70,15 +65,6 @@ namespace GameEngine.Core
 
         public override void AddBuilderAndRenderer()
         {
-            ClassicSkin.AddAdditionalRenderer<ClassicLineRenderer, HpLineRenderer>(
-                t => new ClassicLineRenderer(t.GetTexture(ClassicSkin.Key, ClassicSkin.Circle), t.Pixel, ClassicSkin.BackgroundColor)
-            );
-            ClassicSkin.AddAdditionalRenderer<ClassicHpTextRenderer, HpTextRenderer>(
-                t => new ClassicHpTextRenderer(t.GetFont(ClassicSkin.Key, ClassicSkin.DefaultFont))
-            );
-
-            GuiLoader.AddBuilder("HpLine", (r, c) => new HpLineBuilder(r, c));
-            GuiLoader.AddBuilder("HpText", (r, c) => new HpTextBuilder(r, c));
         }
 
         public static string Name => "GameEngine";

@@ -1,10 +1,11 @@
 ﻿using GameEngine.Graphics.General;
 using GameEngine.GUI;
-using GameEngine.Pokemon.Gui.Renderer;
 using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
+using PokemonShared.Gui.Renderer;
+using PokemonShared.Models;
 
-namespace GameEngine.Pokemon.Gui
+namespace PokemonShared.Gui
 {
     [GameType]
     public class HpText : AbstractGuiComponent
@@ -24,7 +25,7 @@ namespace GameEngine.Pokemon.Gui
         }
 
 
-        public void SetPokemon(PokemonShared.Models.Pokemon pokemon)
+        public void SetPokemon(Pokemon pokemon)
         {
             MaxHp = pokemon.MaxHp;
             CurrentHp = pokemon.Hp;

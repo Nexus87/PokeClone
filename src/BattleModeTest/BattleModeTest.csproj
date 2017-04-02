@@ -144,10 +144,6 @@
       <Project>{DDE2CFB0-6E45-6967-6E65-2E4755492E4C}</Project>
       <Name>GameEngine.GUI</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GameEngine.Pokemon\GameEngine.Pokemon.csproj">
-      <Project>{6db8a02e-92bd-4f9d-a091-8a6685ad64d7}</Project>
-      <Name>GameEngine.Pokemon</Name>
-    </ProjectReference>
     <ProjectReference Include="..\GameEngineTest\GameEngineTest.csproj">
       <Project>{DDE2CFB0-6E45-6967-6E65-546573742E4C}</Project>
       <Name>GameEngineTest</Name>
@@ -155,6 +151,10 @@
     <ProjectReference Include="..\PokemonShared.Data\PokemonShared.Data.csproj">
       <Project>{7A7A9117-EEB0-43A5-84FF-9BCA7E393C85}</Project>
       <Name>PokemonShared.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PokemonShared.Gui\PokemonShared.Gui.csproj">
+      <Project>{BFFE8C85-5C46-4595-AA1C-3DEE4B3DCFF9}</Project>
+      <Name>PokemonShared.Gui</Name>
     </ProjectReference>
     <ProjectReference Include="..\PokemonShared.Models\PokemonShared.Models.csproj">
       <Project>{9403C59F-8E52-4006-9827-64CDB4241E79}</Project>

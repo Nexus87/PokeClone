@@ -1,7 +1,7 @@
 ﻿using GameEngine.Graphics.General;
 using GameEngine.Graphics.Textures;
 
-namespace GameEngine.Pokemon.Gui.Renderer.PokemonClassicRenderer
+namespace PokemonShared.Gui.Renderer.PokemonClassicRenderer
 {
     public class ClassicHpTextRenderer : HpTextRenderer
     {

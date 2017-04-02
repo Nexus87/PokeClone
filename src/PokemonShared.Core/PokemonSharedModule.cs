@@ -3,11 +3,17 @@ using GameEngine.Core;
 using GameEngine.Core.ModuleManager;
 using GameEngine.Entities;
 using GameEngine.Graphics.Textures;
+using GameEngine.GUI;
+using GameEngine.GUI.Loader;
 using GameEngine.Tools;
 using GameEngine.TypeRegistry;
 using Newtonsoft.Json;
 using PokemonShared.Core.GameConfiguration;
 using PokemonShared.Data;
+using PokemonShared.Gui;
+using PokemonShared.Gui.Builder;
+using PokemonShared.Gui.Renderer;
+using PokemonShared.Gui.Renderer.PokemonClassicRenderer;
 using PokemonShared.Service;
 
 namespace PokemonShared.Core
@@ -31,6 +37,8 @@ namespace PokemonShared.Core
             registry.RegisterAsService<JSonStorage<PokemonData>, IStorage<PokemonData>>(x => new JSonStorage<PokemonData>(_gameConfig.Pokemons));
             registry.RegisterAsService<JSonStorage<MoveSetItem>, IStorage<MoveSetItem>>(x => new JSonStorage<MoveSetItem>(_gameConfig.MoveSet));
             registry.RegisterAsService<SpriteProvider, SpriteProvider>(x => new SpriteProvider(x.ResolveType<TextureProvider>(), TextureKey));
+
+            registry.ScanAssembly(typeof(HpLine).Assembly);
         }
 
         public void Start(IGameComponentManager manager, IInputHandlerManager inputHandlerManager, IGameTypeRegistry registry)
@@ -50,6 +58,15 @@ namespace PokemonShared.Core
 
         public override void AddBuilderAndRenderer()
         {
+            ClassicSkin.AddAdditionalRenderer<ClassicLineRenderer, HpLineRenderer>(
+                t => new ClassicLineRenderer(t.GetTexture(ClassicSkin.Key, ClassicSkin.Circle), t.Pixel, ClassicSkin.BackgroundColor)
+);
+            ClassicSkin.AddAdditionalRenderer<ClassicHpTextRenderer, HpTextRenderer>(
+                t => new ClassicHpTextRenderer(t.GetFont(ClassicSkin.Key, ClassicSkin.DefaultFont))
+            );
+
+            GuiLoader.AddBuilder("HpLine", (r, c) => new HpLineBuilder(r, c));
+            GuiLoader.AddBuilder("HpText", (r, c) => new HpTextBuilder(r, c));
         }
     }
 }

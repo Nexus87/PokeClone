@@ -1,6 +1,6 @@
 ﻿using GameEngine.GUI.Renderers;
 
-namespace GameEngine.Pokemon.Gui.Renderer
+namespace PokemonShared.Gui.Renderer
 {
     public abstract class HpTextRenderer : AbstractRenderer<HpText>
     {

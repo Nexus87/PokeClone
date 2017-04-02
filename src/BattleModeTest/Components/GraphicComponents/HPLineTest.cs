@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using FakeItEasy;
 using GameEngine.Graphics.Textures;
 using GameEngine.GUI;
-using GameEngine.Pokemon.Gui;
-using GameEngine.Pokemon.Gui.Renderer.PokemonClassicRenderer;
 using GameEngineTest.Graphics;
 using GameEngineTest.TestUtils;
 using Microsoft.Xna.Framework;
 using NUnit.Framework;
+using PokemonShared.Gui;
+using PokemonShared.Gui.Renderer.PokemonClassicRenderer;
 
 namespace BattleModeTest.Components.GraphicComponents
 {

@@ -3,8 +3,8 @@ using GameEngine.Core;
 using GameEngine.GUI.Controlls;
 using GameEngine.GUI.Loader;
 using GameEngine.GUI.Panels;
-using GameEngine.Pokemon.Gui;
 using GameEngine.TypeRegistry;
+using PokemonShared.Gui;
 
 namespace BattleMode.Gui
 {

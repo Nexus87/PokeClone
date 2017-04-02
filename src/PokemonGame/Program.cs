@@ -18,8 +18,8 @@ namespace PokemonGame
         [STAThread]
         private static void Main(string[] args)
         {
-            //var startModule = "BattleMode";
-            var startModule = "MainMode";
+            var startModule = "BattleMode";
+            //var startModule = "MainMode";
             if (args.Length != 0)
                 startModule = args[0];
 
