@@ -1,0 +1,22 @@
+{
+    "SingleTextureConfigurations":[
+        {
+            "Name": "charmander-back",
+            "Path": "$Platform/charmander-back"
+        },
+        {
+            "Name": "charmander-front",
+            "Path": "$Platform/charmander-front"
+        }
+    ],
+    "SpriteSheetConfigurations": [
+        {
+            "TextureFile": "$Platform\\Characters Overworld",
+            "MappingFile": "CharactersMapping.json"
+        },
+        {
+            "TextureFile": "$Platform\\Tileset",
+            "MappingFile": "TilesetMapping.json"
+        }
+    ]
+}

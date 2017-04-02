@@ -34,3 +34,4 @@ Content/source/.source
 .idea
 src/packages/
 src/.vs/config/applicationhost.config
+src/.vs/PokeClone.sqlite

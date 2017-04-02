@@ -33,12 +33,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GameConfiguration\Game.cs" />
     <Compile Include="PokemonSharedModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -50,6 +54,10 @@
     <ProjectReference Include="..\GameEngine.Entities\GameEngine.Entities.csproj">
       <Project>{C80E7E11-9184-46F3-B66E-236229E44614}</Project>
       <Name>GameEngine.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GameEngine.Graphics\GameEngine.Graphics.csproj">
+      <Project>{0205D32E-BE54-4B98-A66E-85D4A0C02B6A}</Project>
+      <Name>GameEngine.Graphics</Name>
     </ProjectReference>
     <ProjectReference Include="..\GameEngine.Tools\GameEngine.Tools.csproj">
       <Project>{1CA01096-AE42-4FF6-BF8D-AB39A94F4F6F}</Project>
@@ -63,11 +71,16 @@
       <Project>{7A7A9117-EEB0-43A5-84FF-9BCA7E393C85}</Project>
       <Name>PokemonShared.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PokemonShared.Service\PokemonShared.Service.csproj">
+      <Project>{7E38E565-79B0-4174-A40B-C68B363C6790}</Project>
+      <Name>PokemonShared.Service</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Content\PokemonShared\MoveData.json" />
     <None Include="Content\PokemonShared\MoveSets.json" />
     <None Include="Content\PokemonShared\PokemonData.json" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using BattleMode.Entities.BattleState;
 using BattleMode.Shared;
-using GameEngine.Core;
 using GameEngine.Globals;
 using GameEngine.Graphics;
 using GameEngine.GUI;
 using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
 using PokemonShared.Models;
+using PokemonShared.Service;
 
 namespace BattleMode.Graphic
 {

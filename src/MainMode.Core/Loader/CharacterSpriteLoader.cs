@@ -8,6 +8,7 @@ using MainMode.Globals;
 using MainMode.Graphic;
 using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
+using PokemonShared.Core;
 
 namespace MainMode.Core.Loader
 {
@@ -71,7 +72,7 @@ namespace MainMode.Core.Loader
         private SpriteEntityTextures CreateTexture(string name)
         {
             var mapping = _entityMapping[name];
-            var getTexture = new Func<string, ITexture2D>(texture => _textureProvider.GetTexture(TextureKey.Key, texture));
+            var getTexture = new Func<string, ITexture2D>(texture => _textureProvider.GetTexture(PokemonSharedModule.TextureKey, texture));
 
             var standingTextures = new Dictionary<Direction, Tuple<ITexture2D, SpriteEffects>>();
             var movingTextures = new Dictionary<Direction, Tuple<ITexture2D, SpriteEffects>>();

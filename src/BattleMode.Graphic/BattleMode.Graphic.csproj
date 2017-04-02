@@ -88,6 +88,10 @@
       <Project>{9403C59F-8E52-4006-9827-64CDB4241E79}</Project>
       <Name>PokemonShared.Models</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PokemonShared.Service\PokemonShared.Service.csproj">
+      <Project>{7E38E565-79B0-4174-A40B-C68B363C6790}</Project>
+      <Name>PokemonShared.Service</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

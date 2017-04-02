@@ -4,6 +4,7 @@ using GameEngine.Graphics.Textures;
 using GameEngine.TypeRegistry;
 using MainMode.Globals;
 using Microsoft.Xna.Framework;
+using PokemonShared.Core;
 
 namespace MainMode.Core.Loader
 {
@@ -37,7 +38,7 @@ namespace MainMode.Core.Loader
             var textures = new Table<Tuple<Rectangle, ITexture2D>>();
             tiles.LoopOverTable((row, column) =>
             {
-                var t = _textureProvider.GetTexture(TextureKey.Key, tiles[row, column].TextureName);
+                var t = _textureProvider.GetTexture(PokemonSharedModule.TextureKey, tiles[row, column].TextureName);
                 textures[row, column] = Tuple.Create(new Rectangle(new Point(column, row) *Constants.Size, Constants.Size), t);
             });
 

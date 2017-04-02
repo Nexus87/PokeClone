@@ -111,6 +111,10 @@
       <Project>{6E69614D-6F4D-7564-6C65-2E4C696E7578}</Project>
       <Name>MainMode.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PokemonShared.Core\PokemonShared.Core.csproj">
+      <Project>{6EBD8F0E-CC08-4BD4-96BB-DC2490B8EA22}</Project>
+      <Name>PokemonShared.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PokemonShared.Data\PokemonShared.Data.csproj">
       <Project>{7A7A9117-EEB0-43A5-84FF-9BCA7E393C85}</Project>
       <Name>PokemonShared.Data</Name>
@@ -124,110 +128,60 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Content\Game.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\Levels\Config.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\Levels\EntitySpriteMap.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\PokemonData\MoveData.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\PokemonData\MoveSets.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\PokemonData\Pokemons.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\Textures\CharactersMapping.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\Textures\Linux\Characters Overworld.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\Textures\Linux\charmander-back.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\Textures\Linux\charmander-front.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\Textures\Linux\Tileset.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\Textures\TextureConfig.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\Textures\TilesetMapping.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\Textures\Windows\Characters Overworld.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\Textures\Windows\charmander-back.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\Textures\Windows\charmander-front.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\Textures\Windows\Tileset.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="..\Content\compiled\Linux\Characters%20Overworld.xnb">
-      <Link>Content\Linux\Characters Overworld.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <FromContentProject>True</FromContentProject>
-    </None>
-    <None Include="..\Content\compiled\Linux\MenuFont.xnb">
-      <Link>Content\Linux\MenuFont.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <FromContentProject>True</FromContentProject>
-    </None>
-    <None Include="..\Content\compiled\Linux\Tileset.xnb">
-      <Link>Content\Linux\Tileset.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <FromContentProject>True</FromContentProject>
-    </None>
-    <None Include="..\Content\compiled\Linux\arrow.xnb">
-      <Link>Content\Linux\arrow.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <FromContentProject>True</FromContentProject>
-    </None>
-    <None Include="..\Content\compiled\Linux\border.xnb">
-      <Link>Content\Linux\border.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <FromContentProject>True</FromContentProject>
-    </None>
-    <None Include="..\Content\compiled\Linux\charmander-back.xnb">
-      <Link>Content\Linux\charmander-back.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <FromContentProject>True</FromContentProject>
-    </None>
-    <None Include="..\Content\compiled\Linux\charmander-front.xnb">
-      <Link>Content\Linux\charmander-front.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <FromContentProject>True</FromContentProject>
-    </None>
-    <None Include="..\Content\compiled\Linux\circle.xnb">
-      <Link>Content\Linux\circle.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <FromContentProject>True</FromContentProject>
-    </None>
-    <None Include="..\Content\compiled\Linux\TilesetMap.txt">
-      <Link>Content\Linux\TilesetMap.txt</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <FromContentProject>True</FromContentProject>
-    </None>
-    <None Include="..\Content\compiled\Linux\CharactersMapping.json">
-      <Link>Content\Linux\CharactersMapping.json</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <FromContentProject>True</FromContentProject>
-    </None>
-    <None Include="..\Content\compiled\Windows\Characters%20Overworld.xnb">
-      <Link>Content\Windows\Characters Overworld.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <FromContentProject>True</FromContentProject>
-    </None>
-    <None Include="..\Content\compiled\Windows\MenuFont.xnb">
-      <Link>Content\Windows\MenuFont.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <FromContentProject>True</FromContentProject>
-    </None>
-    <None Include="..\Content\compiled\Windows\Tileset.xnb">
-      <Link>Content\Windows\Tileset.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <FromContentProject>True</FromContentProject>
-    </None>
-    <None Include="..\Content\compiled\Windows\arrow.xnb">
-      <Link>Content\Windows\arrow.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <FromContentProject>True</FromContentProject>
-    </None>
-    <None Include="..\Content\compiled\Windows\border.xnb">
-      <Link>Content\Windows\border.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <FromContentProject>True</FromContentProject>
-    </None>
-    <None Include="..\Content\compiled\Windows\charmander-back.xnb">
-      <Link>Content\Windows\charmander-back.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <FromContentProject>True</FromContentProject>
-    </None>
-    <None Include="..\Content\compiled\Windows\charmander-front.xnb">
-      <Link>Content\Windows\charmander-front.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <FromContentProject>True</FromContentProject>
-    </None>
-    <None Include="..\Content\compiled\Windows\circle.xnb">
-      <Link>Content\Windows\circle.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <FromContentProject>True</FromContentProject>
-    </None>
-    <None Include="..\Content\compiled\Windows\TilesetMap.txt">
-      <Link>Content\Windows\TilesetMap.txt</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <FromContentProject>True</FromContentProject>
-    </None>
-    <None Include="..\Content\compiled\Windows\CharactersMapping.json">
-      <Link>Content\Windows\CharactersMapping.json</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <FromContentProject>True</FromContentProject>
-    </None>
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <_PostBuildHookTimestamp>@(IntermediateAssembly->'%(FullPath).timestamp')</_PostBuildHookTimestamp>

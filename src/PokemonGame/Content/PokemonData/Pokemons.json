@@ -1,0 +1,58 @@
+[
+    {
+        "baseStates": {
+            "hp": 39,
+            "atk": 52,
+            "def": 43,
+            "spAtk": 60,
+            "spDef": 50,
+            "speed": 65
+        },
+        "id": 4,
+        "name": "Charmander",
+        "type1": 2,
+        "type2": 0
+    },
+    {
+        "baseStates": {
+            "hp": 58,
+            "atk": 64,
+            "def": 58,
+            "spAtk": 80,
+            "spDef": 65,
+            "speed": 80
+        },
+        "id": 5,
+        "name": "Charmeleon",
+        "type1": 2,
+        "type2": 0
+    },
+    {
+        "baseStates": {
+            "hp": 78,
+            "atk": 84,
+            "def": 78,
+            "spAtk": 109,
+            "spDef": 85,
+            "speed": 100
+        },
+        "id": 6,
+        "name": "Charizard",
+        "type1": 2,
+        "type2": 10
+    },
+    {
+        "baseStates": {
+            "hp": 35,
+            "atk": 55,
+            "def": 40,
+            "spAtk": 50,
+            "spDef": 50,
+            "speed": 90
+        },
+        "id": 25,
+        "name": "Pikachu",
+        "type1": 2,
+        "type2": 10
+    }
+]

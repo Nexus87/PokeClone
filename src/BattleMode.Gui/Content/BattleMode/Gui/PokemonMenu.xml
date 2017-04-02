@@ -1,3 +1,3 @@
 <Panel id="Panel" X="0" Y="0" Width="1*" Height="0.66*">
-    <ListView id="ListView" ModelType="Base.Pokemon, Base" CellHeight="75"/>
+    <ListView id="ListView" ModelType="PokemonShared.Models.Pokemon, PokemonShared.Models" CellHeight="75"/>
 </Panel>

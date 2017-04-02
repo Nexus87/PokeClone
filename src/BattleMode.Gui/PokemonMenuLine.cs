@@ -7,6 +7,7 @@ using GameEngine.Pokemon.Gui;
 using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
 using PokemonShared.Models;
+using PokemonShared.Service;
 
 namespace BattleMode.Gui
 {

@@ -1,5 +1,5 @@
 <Window id="Window" X="0.375*" Y="0.125*" Width="0.625*" Height="0.541*">
     <ScrollArea>
-        <ListView id="ListView" ModelType="Base.Item, Base"/>
+        <ListView id="ListView" ModelType="PokemonShared.Models.Item, PokemonShared.Models"/>
     </ScrollArea>
 </Window>

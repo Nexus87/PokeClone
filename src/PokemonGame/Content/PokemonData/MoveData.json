@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "name": "Pound",
+    "type": 1,
+    "category": 0,
+    "pp": 35,
+    "damage": 40,
+    "accuracy": 100
+  },
+  {
+    "id": 2,
+    "name": "Karate Chop",
+    "type": 7,
+    "category": 0,
+    "pp": 25,
+    "damage": 50,
+    "accuracy": 100
+  }
+]

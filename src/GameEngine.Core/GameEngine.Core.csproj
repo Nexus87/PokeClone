@@ -67,9 +67,10 @@
     <Compile Include="IEngineInterface.cs" />
     <Compile Include="IGameComponentManager.cs" />
     <Compile Include="GameRunner.cs" />
+    <Compile Include="ModuleManager\ContentModule.cs" />
     <Compile Include="ModuleManager\Extensions.cs" />
     <Compile Include="ModuleManager\IConfigurationHandler.cs" />
-    <Compile Include="ModuleManager\Module.cs" />
+    <Compile Include="ModuleManager\IContentModule.cs" />
     <Compile Include="ModuleManager\ModuleConfiguration.cs" />
     <Compile Include="PokeEngine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -77,7 +78,6 @@
     <Compile Include="ModuleManager\IModule.cs" />
     <Compile Include="ModuleManager\IModuleManager.cs" />
     <Compile Include="Screen.cs" />
-    <Compile Include="SpriteProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GameEngine.Entities\GameEngine.Entities.csproj">
@@ -115,12 +115,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\GameEngine\Textures\Linux\charmander-back.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\GameEngine\Textures\Linux\charmander-front.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Content\GameEngine\Textures\Linux\GuiSkins\ClassicSkin\arrow.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -134,12 +128,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\GameEngine\Textures\TextureConfig.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\GameEngine\Textures\Windows\charmander-back.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\GameEngine\Textures\Windows\charmander-front.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\GameEngine\Textures\Windows\GuiSkins\ClassicSkin\arrow.xnb">

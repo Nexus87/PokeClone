@@ -12,12 +12,14 @@ namespace GameEngine.Core
         private string _startModule;
         private ISkin _skin;
 
-        public PokeEngine(Configuration config)
+        public PokeEngine(Configuration config, string contentRoot)
         {
             _gameRunner = new GameRunner();
             _moduleRegistry = new AutofacModuleManager();
             _textureProvider = new TextureProvider();
-            _moduleRegistry.RegisterModule(new GameEngineModule(_gameRunner, _textureProvider, config));
+            var gameEngine = new GameEngineModule(_gameRunner, _textureProvider, config, contentRoot);
+            _moduleRegistry.RegisterModule(gameEngine);
+            _moduleRegistry.RegisterContentModule(gameEngine);
         }
 
         public void RegisterModule(IModule module)
@@ -72,6 +74,11 @@ namespace GameEngine.Core
         public void SetSkin(ISkin skin)
         {
             _skin = skin;
+        }
+
+        public void RegisterContentModule(IContentModule module)
+        {
+            _moduleRegistry.RegisterContentModule(module);
         }
     }
 }

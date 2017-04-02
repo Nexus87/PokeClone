@@ -1,27 +1,27 @@
 ﻿using GameEngine.Graphics.Textures;
-using GameEngine.TypeRegistry;
 
-namespace GameEngine.Core
+namespace PokemonShared.Service
 {
-    [GameService(typeof(SpriteProvider))]
     public class SpriteProvider
     {
         private readonly TextureProvider _textureProvider;
+        private readonly object _resourceKey;
 
-        public SpriteProvider(TextureProvider textureProvider)
+        public SpriteProvider(TextureProvider textureProvider, object resourceKey)
         {
             _textureProvider = textureProvider;
+            _resourceKey = resourceKey;
         }
 
 
         public ITexture2D GetTexturesFront(int id)
         {
-            return id == -1 ? null : _textureProvider.GetTexture(GameEngineModule.Key, "charmander-front");
+            return id == -1 ? null : _textureProvider.GetTexture(_resourceKey, "charmander-front");
         }
 
         public ITexture2D GetTextureBack(int id)
         {
-            return id == -1 ? null : _textureProvider.GetTexture(GameEngineModule.Key, "charmander-back");
+            return id == -1 ? null : _textureProvider.GetTexture(_resourceKey, "charmander-back");
         }
 
         public ITexture2D GetIcon(int id)

@@ -43,11 +43,20 @@
     <Compile Include="MoveService.cs" />
     <Compile Include="PokemonService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SpriteProvider.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\GameEngine.Graphics\GameEngine.Graphics.csproj">
+      <Project>{0205D32E-BE54-4B98-A66E-85D4A0C02B6A}</Project>
+      <Name>GameEngine.Graphics</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GameEngine.Tools\GameEngine.Tools.csproj">
       <Project>{1CA01096-AE42-4FF6-BF8D-AB39A94F4F6F}</Project>
       <Name>GameEngine.Tools</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GameEngine.TypeRegistry\GameEngine.TypeRegistry.csproj">
+      <Project>{73200884-85C6-4A3D-A3C2-A53D9C632613}</Project>
+      <Name>GameEngine.TypeRegistry</Name>
     </ProjectReference>
     <ProjectReference Include="..\PokemonShared.Data\PokemonShared.Data.csproj">
       <Project>{7A7A9117-EEB0-43A5-84FF-9BCA7E393C85}</Project>

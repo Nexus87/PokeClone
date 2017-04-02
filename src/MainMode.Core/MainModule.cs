@@ -1,30 +1,31 @@
 ﻿using System;
 using System.Reflection;
 using GameEngine.Core;
+using GameEngine.Core.ModuleManager;
 using GameEngine.Entities;
 using GameEngine.TypeRegistry;
 using MainMode.Core.Loader;
 using MainMode.Entities;
 using MainMode.Globals;
 using MainMode.Graphic;
-using Module = GameEngine.Core.ModuleManager.Module;
 
 namespace MainMode.Core
 {
-    public class MainModule : Module
+    public class MainModule : IModule
     {
 
         private MainModeController _mainModeController;
+        public string ModuleName => "MainMode";
 
-        public override void RegisterTypes(IGameTypeRegistry registry)
+        public void RegisterTypes(IGameTypeRegistry registry)
         {
             registry.ScanAssembly(Assembly.GetExecutingAssembly());
             registry.ScanAssembly(typeof(GameStateEntity).Assembly);
             registry.ScanAssembly(typeof(GraphicController).Assembly);
-            registry.ScanAssembly(typeof(TextureKey).Assembly);
+            registry.ScanAssembly(typeof(SpriteId).Assembly);
         }
 
-        public override void Start(IGameComponentManager manager, IInputHandlerManager inputHandlerManager, IGameTypeRegistry registry)
+        public void Start(IGameComponentManager manager, IInputHandlerManager inputHandlerManager, IGameTypeRegistry registry)
         {
             registry.ResolveType<CharacterSpriteLoader>().LoadEntityMapping(@"MainMode\EntitySpriteMap.json");
 
@@ -39,14 +40,9 @@ namespace MainMode.Core
 
         }
 
-        public override void Stop(IGameComponentManager engine, IInputHandlerManager inputHandlerManager)
+        public void Stop(IGameComponentManager engine, IInputHandlerManager inputHandlerManager)
         {
             throw new NotImplementedException();
-        }
-
-        public MainModule() :
-            base(TextureKey.Key, "MainModule", "MainMode")
-        {
         }
     }
 }

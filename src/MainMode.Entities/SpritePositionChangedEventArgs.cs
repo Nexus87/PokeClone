@@ -6,12 +6,11 @@ namespace MainMode.Entities
 {
     public class SpritePositionChangedEventArgs : EventArgs
     {
-        private SpriteId spriteId;
 
         public SpritePositionChangedEventArgs(Point position, SpriteId spriteId)
         {
             Position = position;
-            this.spriteId = spriteId;
+            SpriteId = spriteId;
         }
 
         public Point Position { get; }

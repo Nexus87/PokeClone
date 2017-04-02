@@ -108,6 +108,10 @@
       <Project>{D90A00CD-0053-4846-B278-DEBFAA1D85E4}</Project>
       <Name>MainMode.Graphic</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PokemonShared.Core\PokemonShared.Core.csproj">
+      <Project>{6EBD8F0E-CC08-4BD4-96BB-DC2490B8EA22}</Project>
+      <Name>PokemonShared.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

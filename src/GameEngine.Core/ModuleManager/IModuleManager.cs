@@ -6,6 +6,7 @@ namespace GameEngine.Core.ModuleManager
     internal interface IModuleManager
     {
         void RegisterModule(IModule module);
+        void RegisterContentModule(IContentModule module);
         void StartModule(string moduleName);
         IGameTypeRegistry TypeRegistry { get; }
         void RegisterTypes();

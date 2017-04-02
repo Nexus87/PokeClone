@@ -11,18 +11,19 @@ using GameEngine.Core;
 using GameEngine.Core.ModuleManager;
 using GameEngine.Entities;
 using GameEngine.TypeRegistry;
-using Module = GameEngine.Core.ModuleManager.Module;
 
 namespace BattleMode.Core
 {
-    public class BattleModule : Module
+    public class BattleModule : IModule
     {
         private IBattleGraphicController _graphic;
         private IBattleStateService _battleState;
         private AiEntity _aiEntity;
         private Client _player;
 
-        public override void RegisterTypes(IGameTypeRegistry registry)
+        public string ModuleName => "BattleMode";
+
+        public virtual void RegisterTypes(IGameTypeRegistry registry)
         {
             registry.ScanAssemblies(new List<Assembly>
             {
@@ -36,7 +37,7 @@ namespace BattleMode.Core
             registry.RegisterType(a => _player);
         }
 
-        public override void Start(IGameComponentManager componentManager, IInputHandlerManager inputHandlerManager, IGameTypeRegistry registry)
+        public virtual void Start(IGameComponentManager componentManager, IInputHandlerManager inputHandlerManager, IGameTypeRegistry registry)
         {
             var data = registry.ResolveType<BattleData>();
             var playerId = data.PlayerId;
@@ -61,7 +62,7 @@ namespace BattleMode.Core
             registry.ResolveType<GuiManager>().Show();
         }
 
-        public override void Stop(IGameComponentManager componentManager, IInputHandlerManager inputHandlerManager)
+        public virtual void Stop(IGameComponentManager componentManager, IInputHandlerManager inputHandlerManager)
         {
             componentManager.RemoveGameComponent(_aiEntity);
             componentManager.RemoveGameComponent(_battleState);
@@ -72,8 +73,5 @@ namespace BattleMode.Core
             _aiEntity = null;
         }
 
-        public BattleModule() : base(new object(), nameof(BattleModule), "BattleMode")
-        {
-        }
     }
 }

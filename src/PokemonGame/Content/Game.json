@@ -1,0 +1,7 @@
+{
+  "textures": "Textures/Config.json",
+  "moves": "PokemonData/Moves.json",
+  "pokemons": "PokemonData/Pokemons.json",
+  "moveSet": "PokemonData/MoveSets.json",
+  "levelData": "Levels/Config.json"
+}
