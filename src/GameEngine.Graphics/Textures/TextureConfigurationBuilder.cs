@@ -1,11 +1,20 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using GameEngine.Tools.Storages;
 
 namespace GameEngine.Graphics.Textures
 {
     public class TextureConfigurationBuilder
     {
-        private readonly Dictionary<object, TempConfig> _configurations = new Dictionary<object, TempConfig>();
+        private readonly string _contentRoot;
+
+        public TextureConfigurationBuilder(string contentRoot)
+        {
+            _contentRoot = contentRoot;
+        }
+
+        private readonly TempConfig _configurations = new TempConfig();
 
 
         private class TempConfig
@@ -14,43 +23,56 @@ namespace GameEngine.Graphics.Textures
             public readonly List<FontItem> FontConfigs = new List<FontItem>();
             public readonly List<SpriteSheetItem> SpriteSheetConfigs = new List<SpriteSheetItem>();
         }
-        public void AddTextureConfig(object key, IEnumerable<TextureItem> textureConfig)
+
+        public void ReadConfigFile(string configFile)
         {
-            var tempConfig = GetTempConfig(key);
-            tempConfig.TextureConfigs.AddRange(textureConfig);
+            var path = Path.GetDirectoryName(configFile) ?? "";
+            var configuration = TextureConfigurationStorage.LoadTextureConfiguration(Path.Combine(_contentRoot, configFile));
+            configuration.FontConfigurations.ForEach(x => x.Path = Path.Combine(path, x.Path));
+            configuration.SingleTextureConfigurations.ForEach(x => x.Path = Path.Combine( path, x.Path));
+            configuration.SpriteSheetConfigurations.ForEach(x =>
+            {
+                x.MappingFile = Path.Combine(_contentRoot, path, x.MappingFile);
+                x.TextureFile = Path.Combine(_contentRoot, path, x.TextureFile);
+            });
+
+            AddFont( configuration
+                .FontConfigurations
+                .Select(x => new FontItem(x.Path, x.Name))
+            );
+
+            AddSpriteSheet(configuration
+                .SpriteSheetConfigurations
+                .Select(x => new SpriteSheetItem(x.TextureFile, JsonSpriteSheetConfigStorage.Load(x.MappingFile)))
+            );
+
+            AddTextureConfig(configuration
+                .SingleTextureConfigurations
+                .Select(x => new TextureItem(x.Path, x.Name))
+            );
         }
 
-        private TempConfig GetTempConfig(object key)
+        public void AddTextureConfig(IEnumerable<TextureItem> textureConfig)
         {
-            TempConfig config;
-            if (!_configurations.TryGetValue(key, out config))
-                _configurations[key] = config = new TempConfig();
-
-            return config;
+            _configurations.TextureConfigs.AddRange(textureConfig);
         }
 
-        public void AddFont(object key, IEnumerable<FontItem> fontConfigs)
+        public void AddFont(IEnumerable<FontItem> fontConfigs)
         {
-            var tempConfig = GetTempConfig(key);
-            tempConfig.FontConfigs.AddRange(fontConfigs);
+            _configurations.FontConfigs.AddRange(fontConfigs);
         }
 
-        public void AddSpriteSheet(object key, IEnumerable<SpriteSheetItem> spriteSheetConfig)
+        public void AddSpriteSheet(IEnumerable<SpriteSheetItem> spriteSheetConfig)
         {
-            var tempConfig = GetTempConfig(key);
-            tempConfig.SpriteSheetConfigs.AddRange(spriteSheetConfig);
+            _configurations.SpriteSheetConfigs.AddRange(spriteSheetConfig);
         }
 
-        internal IEnumerable<TextureProviderConfiguration> BuildConfiguration()
+        internal TextureProviderConfiguration BuildConfiguration()
         {
-            return _configurations
-                .Select(x =>
-                    new TextureProviderConfiguration(
-                        x.Key,
-                        x.Value.TextureConfigs,
-                        x.Value.FontConfigs,
-                        x.Value.SpriteSheetConfigs)
-                );
+            return new TextureProviderConfiguration(
+                        _configurations.TextureConfigs,
+                        _configurations.FontConfigs,
+                        _configurations.SpriteSheetConfigs);
         }
     }
 }

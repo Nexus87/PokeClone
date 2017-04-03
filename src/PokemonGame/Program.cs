@@ -45,10 +45,10 @@ namespace PokemonGame
         private static void RegisterRenderers(GuiSystem guiSystem)
         {
              guiSystem.ClassicSkin.AddAdditionalRenderer<ClassicLineRenderer, HpLineRenderer>(
-                t => new ClassicLineRenderer(t.GetTexture(ClassicSkin.Key, ClassicSkin.Circle), t.Pixel, ClassicSkin.BackgroundColor)
+                t => new ClassicLineRenderer(t.GetTexture(ClassicSkin.Circle), t.Pixel, ClassicSkin.BackgroundColor)
 );
             guiSystem.ClassicSkin.AddAdditionalRenderer<ClassicHpTextRenderer, HpTextRenderer>(
-                t => new ClassicHpTextRenderer(t.GetFont(ClassicSkin.Key, ClassicSkin.DefaultFont))
+                t => new ClassicHpTextRenderer(t.GetFont(ClassicSkin.DefaultFont))
             );
 
             guiSystem.AddGuiElement("HpLine", (r, c) => new HpLineBuilder(r, c));

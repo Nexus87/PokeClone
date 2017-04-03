@@ -14,7 +14,7 @@ using Microsoft.Xna.Framework.Content;
 
 namespace GameEngine.Core
 {
-    internal class GameEngineModule : ContentModule, IModule
+    internal class GameEngineModule : IContentModule, IModule
     {
         private readonly GameRunner _engine;
         private readonly TextureProvider _textureProvider;
@@ -23,8 +23,7 @@ namespace GameEngine.Core
         private readonly GameComponentManager _gameComponentManager;
         public string ModuleName => "GameEngine";
 
-        public static object Key = new object();
-        public GameEngineModule(GameRunner engine, TextureProvider textureProvider, Configuration config, string contentRoot) : base(contentRoot)
+        public GameEngineModule(GameRunner engine, TextureProvider textureProvider, Configuration config)
         {
             _engine = engine;
             _textureProvider = textureProvider;
@@ -57,9 +56,8 @@ namespace GameEngine.Core
 
         }
 
-        public override void AddTextureConfigurations(TextureConfigurationBuilder builder)
+        public void AddTextureConfigurations(TextureConfigurationBuilder builder)
         {
-            ReadConfiguration(builder, ClassicSkin.Key, @"GameEngine/Textures/TextureConfig.json");
         }
 
 
@@ -75,7 +73,6 @@ namespace GameEngine.Core
 
             _engine.GuiManager = registry.ResolveType<GuiManager>();
             _engine.Screen = registry.ResolveType<Screen>();
-            _engine.TextureProvider = registry.ResolveType<TextureProvider>();
         }
 
         public virtual void Stop(IGameComponentManager componentManager, IInputHandlerManager inputHandlerManager)

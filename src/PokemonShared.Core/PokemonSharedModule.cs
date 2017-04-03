@@ -18,13 +18,11 @@ using PokemonShared.Service;
 
 namespace PokemonShared.Core
 {
-    public class PokemonSharedModule : ContentModule, IModule
+    public class PokemonSharedModule : IContentModule, IModule
     {
         private readonly Game _gameConfig;
-        public static readonly object TextureKey = new object();
 
-        public PokemonSharedModule(string gameConfig) : 
-            base(Path.GetDirectoryName(gameConfig))
+        public PokemonSharedModule(string gameConfig)
         {
             _gameConfig = JsonConvert.DeserializeObject<Game>(File.ReadAllText(gameConfig));
         }
@@ -36,7 +34,7 @@ namespace PokemonShared.Core
             registry.RegisterAsService<JSonStorage<MoveData>, IStorage<MoveData>>(x => new JSonStorage<MoveData>(_gameConfig.Moves));
             registry.RegisterAsService<JSonStorage<PokemonData>, IStorage<PokemonData>>(x => new JSonStorage<PokemonData>(_gameConfig.Pokemons));
             registry.RegisterAsService<JSonStorage<MoveSetItem>, IStorage<MoveSetItem>>(x => new JSonStorage<MoveSetItem>(_gameConfig.MoveSet));
-            registry.RegisterAsService<SpriteProvider, SpriteProvider>(x => new SpriteProvider(x.ResolveType<TextureProvider>(), TextureKey));
+            registry.RegisterAsService<SpriteProvider, SpriteProvider>(x => new SpriteProvider(x.ResolveType<TextureProvider>()));
 
             registry.ScanAssembly(typeof(HpLine).Assembly);
         }
@@ -51,9 +49,9 @@ namespace PokemonShared.Core
             throw new System.NotImplementedException();
         }
 
-        public override void AddTextureConfigurations(TextureConfigurationBuilder builder)
+        public void AddTextureConfigurations(TextureConfigurationBuilder builder)
         {
-            ReadConfiguration(builder, TextureKey, _gameConfig.Textures);
+            builder.ReadConfigFile(_gameConfig.Textures);
         }
     }
 }

@@ -68,7 +68,6 @@
     <Compile Include="IEngineInterface.cs" />
     <Compile Include="IGameComponentManager.cs" />
     <Compile Include="GameRunner.cs" />
-    <Compile Include="ModuleManager\ContentModule.cs" />
     <Compile Include="ModuleManager\Extensions.cs" />
     <Compile Include="ModuleManager\IConfigurationHandler.cs" />
     <Compile Include="ModuleManager\IContentModule.cs" />

@@ -1,27 +1,34 @@
 ﻿using GameEngine.Core.ModuleManager;
 using GameEngine.Graphics.Textures;
 using GameEngine.GUI;
+using Microsoft.Xna.Framework.Content;
 
 namespace GameEngine.Core
 {
     public class PokeEngine
     {
+        private const string EngineContentRoot = "Content";
+
         public GuiSystem GuiSystem { get; } = new GuiSystem();
 
-        private readonly GameRunner _gameRunner;
-        private readonly IModuleManager _moduleRegistry;
-        private readonly TextureProvider _textureProvider;
+        private readonly GameRunner _gameRunner = new GameRunner();
+        private readonly IModuleManager _moduleRegistry = new AutofacModuleManager();
+        private readonly TextureProvider _textureProvider = new TextureProvider();
+        private readonly TextureProvider _skinTextureProvider = new TextureProvider();
+        public string ContentRoot { get; set; }
+
         private string _startModule;
         private ISkin _skin;
 
         public PokeEngine(Configuration config, string contentRoot)
         {
-            _gameRunner = new GameRunner();
-            _moduleRegistry = new AutofacModuleManager();
-            _textureProvider = new TextureProvider();
-            var gameEngine = new GameEngineModule(_gameRunner, _textureProvider, config, contentRoot);
+            var gameEngine = new GameEngineModule(_gameRunner, _textureProvider, config);
+
             _moduleRegistry.RegisterModule(gameEngine);
             _moduleRegistry.RegisterContentModule(gameEngine);
+            _gameRunner.TextureProviders.Add(_textureProvider);
+            _gameRunner.TextureProviders.Add(_skinTextureProvider);
+            ContentRoot = contentRoot;
         }
 
         public void RegisterModule(IModule module)
@@ -56,15 +63,18 @@ namespace GameEngine.Core
         private void RegisterModuleTypes()
         {
             _moduleRegistry.RegisterTypes();
-            _skin.RegisterRenderers(_moduleRegistry.TypeRegistry, _textureProvider);
+            _skin.RegisterRenderers(_moduleRegistry.TypeRegistry, _skinTextureProvider);
         }
 
         private void BuildTextureConfiguration()
         {
-            var textureConfigBuilder = new TextureConfigurationBuilder();
+            _gameRunner.Content.RootDirectory = ContentRoot;
+            var textureConfigBuilder = new TextureConfigurationBuilder(ContentRoot);
+            var skinTextureConfigBuilder = new TextureConfigurationBuilder(EngineContentRoot);
             _moduleRegistry.AddTextureConfigurations(textureConfigBuilder);
-            _skin.AddTextureConfigurations(textureConfigBuilder);
+            _skin.AddTextureConfigurations(skinTextureConfigBuilder);
             _textureProvider.SetConfiguration(textureConfigBuilder.BuildConfiguration(), _gameRunner.Content);
+            _skinTextureProvider.SetConfiguration(skinTextureConfigBuilder.BuildConfiguration(), new ContentManager(_gameRunner.Services, EngineContentRoot));
         }
 
         public void SetSkin(ISkin skin)

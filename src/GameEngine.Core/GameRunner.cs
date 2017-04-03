@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using GameEngine.Graphics;
 using GameEngine.Graphics.General;
 using GameEngine.Graphics.Textures;
@@ -14,7 +15,7 @@ namespace GameEngine.Core
         private XnaSpriteBatch _batch;
         internal Screen Screen { get; set; }
 
-        internal TextureProvider TextureProvider;
+        internal List<TextureProvider> TextureProviders = new List<TextureProvider>();
         public readonly GraphicsDeviceManager GraphicsDeviceManager;
 
         public GameRunner()         {
@@ -51,7 +52,7 @@ namespace GameEngine.Core
         protected override void LoadContent()
         {
             base.LoadContent();
-            TextureProvider.Init(GraphicsDevice);
+            TextureProviders.ForEach(x => x.Init(GraphicsDevice));
             _batch = new XnaSpriteBatch(GraphicsDevice);
         }
 

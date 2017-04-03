@@ -21,13 +21,12 @@ namespace GameEngine.GUI
         public const string Border = "border";
         public const string Circle = "circle";
         public const string DefaultFont = "DefaultFont";
-        public static readonly object Key = new object();
 
         public void RegisterRenderers(IGameTypeRegistry registry, TextureProvider provider)
         {
-            var arrow = provider.GetTexture(Key, Arrow);
-            var border = provider.GetTexture(Key, Border);
-            var font = provider.GetFont(Key, DefaultFont);
+            var arrow = provider.GetTexture(Arrow);
+            var border = provider.GetTexture(Border);
+            var font = provider.GetFont(DefaultFont);
             var pixel = provider.Pixel;
 
             registry.RegisterAsService<ClassicButtonRenderer, ButtonRenderer>(r => new ClassicButtonRenderer(arrow, font));
@@ -45,11 +44,11 @@ namespace GameEngine.GUI
             }
 
         }
-
-        public static Color BackgroundColor { get; } = new Color(248, 248, 248, 0);
-
         public void AddTextureConfigurations(TextureConfigurationBuilder builder)
         {
+            builder.ReadConfigFile(@"GameEngine/Textures/TextureConfig.json");
         }
+
+        public static Color BackgroundColor { get; } = new Color(248, 248, 248, 0);
     }
 }
