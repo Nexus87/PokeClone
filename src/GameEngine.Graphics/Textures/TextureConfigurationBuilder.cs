@@ -28,12 +28,13 @@ namespace GameEngine.Graphics.Textures
         {
             var path = Path.GetDirectoryName(configFile) ?? "";
             var configuration = TextureConfigurationStorage.LoadTextureConfiguration(Path.Combine(_contentRoot, configFile));
+
             configuration.FontConfigurations.ForEach(x => x.Path = Path.Combine(path, x.Path));
             configuration.SingleTextureConfigurations.ForEach(x => x.Path = Path.Combine( path, x.Path));
             configuration.SpriteSheetConfigurations.ForEach(x =>
             {
                 x.MappingFile = Path.Combine(_contentRoot, path, x.MappingFile);
-                x.TextureFile = Path.Combine(_contentRoot, path, x.TextureFile);
+                x.TextureFile = Path.Combine(path, x.TextureFile);
             });
 
             AddFont( configuration

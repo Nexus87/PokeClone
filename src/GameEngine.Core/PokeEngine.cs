@@ -22,10 +22,7 @@ namespace GameEngine.Core
 
         public PokeEngine(Configuration config, string contentRoot)
         {
-            var gameEngine = new GameEngineModule(_gameRunner, _textureProvider, config);
-
-            _moduleRegistry.RegisterModule(gameEngine);
-            _moduleRegistry.RegisterContentModule(gameEngine);
+            _moduleRegistry.RegisterModule(new GameEngineModule(_gameRunner, _textureProvider, config));
             _gameRunner.TextureProviders.Add(_textureProvider);
             _gameRunner.TextureProviders.Add(_skinTextureProvider);
             ContentRoot = contentRoot;

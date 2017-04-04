@@ -14,7 +14,7 @@ using Microsoft.Xna.Framework.Content;
 
 namespace GameEngine.Core
 {
-    internal class GameEngineModule : IContentModule, IModule
+    internal class GameEngineModule : IModule
     {
         private readonly GameRunner _engine;
         private readonly TextureProvider _textureProvider;
@@ -54,10 +54,6 @@ namespace GameEngine.Core
             });
             registry.RegisterType(r => new Panel(r.ResolveType<PanelRenderer>()) { BackgroundColor = r.ResolveType<ScreenConstants>().BackgroundColor});
 
-        }
-
-        public void AddTextureConfigurations(TextureConfigurationBuilder builder)
-        {
         }
 
 
