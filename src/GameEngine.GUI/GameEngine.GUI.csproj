@@ -121,8 +121,6 @@
     <Compile Include="Renderers\PokemonClassicRenderer\ClassicTextAreaRenderer.cs" />
     <Compile Include="Renderers\PokemonClassicRenderer\ClassicWindowRenderer.cs" />
     <Compile Include="Renderers\PokemonClassicRenderer\ClassicPanelRenderer.cs" />
-    <Compile Include="ResizeBehavoir.cs" />
-    <Compile Include="VisibilityChangedEventArgs.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -140,9 +138,6 @@
       <Project>{73200884-85C6-4A3D-A3C2-A53D9C632613}</Project>
       <Name>GameEngine.TypeRegistry</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Graphics\" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup />
