@@ -62,6 +62,7 @@
     <Compile Include="GameComponentManager.cs" />
     <Compile Include="GameComponentWrapper.cs" />
     <Compile Include="GameEngineModule.cs" />
+    <Compile Include="GameStates\IState.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="GuiSystem.cs" />
     <Compile Include="IEngineInterface.cs" />
@@ -79,6 +80,10 @@
     <Compile Include="Screen.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\GameEngine.ECS\GameEngine.ECS.csproj">
+      <Project>{F80C8B45-30A0-4566-B2F7-7B896F859065}</Project>
+      <Name>GameEngine.ECS</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GameEngine.Entities\GameEngine.Entities.csproj">
       <Project>{c80e7e11-9184-46f3-b66e-236229e44614}</Project>
       <Name>GameEngine.Entities</Name>
