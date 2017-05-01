@@ -69,7 +69,7 @@ namespace GameEngine.GUI.Loader.PanelBuilder
         }
 
 
-        private static System.Tuple<ValueType, int, float> ReadProperty(XElement arg, string propertyName)
+        private static Tuple<ValueType, int, float> ReadProperty(XElement arg, string propertyName)
         {
             var attribute = arg.Attribute(propertyName);
 
