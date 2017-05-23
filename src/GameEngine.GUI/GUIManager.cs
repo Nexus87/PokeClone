@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using GameEngine.Entities;
 using GameEngine.Globals;
 using GameEngine.Graphics.General;
 using GameEngine.GUI;
@@ -11,7 +10,7 @@ using Microsoft.Xna.Framework;
 namespace GameEngine.Core
 {
     [GameService(typeof(GuiManager))]
-    public class GuiManager : IInputHandler
+    internal class GuiManager : IInputHandler
     {
         private class WidgetItem : IComparable<WidgetItem>
         {
@@ -44,13 +43,8 @@ namespace GameEngine.Core
             }
         }
 
-        private readonly IInputHandlerManager _inputComponent;
         private readonly List<WidgetItem> _widgets = new List<WidgetItem>();
 
-        public GuiManager(IInputHandlerManager inputComponent)
-        {
-            _inputComponent = inputComponent;
-        }
 
         public void ShowWidget(IGuiComponent widget, int? priority = null)
         {
@@ -86,7 +80,6 @@ namespace GameEngine.Core
         public void Close()
         {
             IsActive = false;
-            _inputComponent.RemoveHandler(this);
         }
 
         public void Draw(GameTime time, ISpriteBatch batch)
@@ -99,7 +92,6 @@ namespace GameEngine.Core
         public void Show()
         {
             IsActive = true;
-            _inputComponent.AddHandler(this, true);
         }
     }
 }

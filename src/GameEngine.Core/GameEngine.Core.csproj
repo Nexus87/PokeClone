@@ -59,14 +59,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration.cs" />
-    <Compile Include="GameComponentManager.cs" />
-    <Compile Include="GameComponentWrapper.cs" />
+    <Compile Include="ECS\Components\RenderComponent.cs" />
+    <Compile Include="ECS\Entity.cs" />
+    <Compile Include="ECS\EntityManager.cs" />
+    <Compile Include="ECS\IComponent.cs" />
+    <Compile Include="ECS\ISystem.cs" />
+    <Compile Include="ECS\Messages\KeyInputMessage.cs" />
+    <Compile Include="ECS\MessagingSystem.cs" />
+    <Compile Include="ECS\SystemManager.cs" />
+    <Compile Include="ECS\Systems\GuiSystem.cs" />
+    <Compile Include="ECS\Systems\InputSystem.cs" />
+    <Compile Include="ECS\Systems\RenderSystem.cs" />
+    <Compile Include="ECS\Messages\ShowGuiMessage.cs" />
     <Compile Include="GameEngineModule.cs" />
-    <Compile Include="GameStates\IState.cs" />
+    <Compile Include="GameStates\State.cs" />
+    <Compile Include="GameStates\StateManager.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="GuiSystem.cs" />
     <Compile Include="IEngineInterface.cs" />
-    <Compile Include="IGameComponentManager.cs" />
     <Compile Include="GameRunner.cs" />
     <Compile Include="ModuleManager\Extensions.cs" />
     <Compile Include="ModuleManager\IConfigurationHandler.cs" />
@@ -83,10 +93,6 @@
     <ProjectReference Include="..\GameEngine.ECS\GameEngine.ECS.csproj">
       <Project>{F80C8B45-30A0-4566-B2F7-7B896F859065}</Project>
       <Name>GameEngine.ECS</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GameEngine.Entities\GameEngine.Entities.csproj">
-      <Project>{c80e7e11-9184-46f3-b66e-236229e44614}</Project>
-      <Name>GameEngine.Entities</Name>
     </ProjectReference>
     <ProjectReference Include="..\GameEngine.Globals\GameEngine.Globals.csproj">
       <Project>{B19BD4B3-DCAE-E1DC-6E65-2E476C6F6261}</Project>
@@ -143,7 +149,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="ECS\Entities\" />
+  </ItemGroup>
   <ItemGroup />
   <ItemGroup />
   <ItemGroup />

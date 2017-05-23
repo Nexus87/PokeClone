@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using GameEngine.Entities;
+﻿using System.Collections.Generic;
 using GameEngine.Graphics.Textures;
 using GameEngine.TypeRegistry;
 
@@ -35,16 +33,6 @@ namespace GameEngine.Core.ModuleManager
             {
                 modules.RegisterTypes(TypeRegistry);
             }
-        }
-
-        public void StartModule(string moduleName)
-        {
-            if (!_registeredModules.ContainsKey(moduleName))
-                throw new InvalidOperationException("Unkown module name: " + moduleName);
-
-            var componentManager = TypeRegistry.ResolveType<IGameComponentManager>();
-            var inputHandlerManager = TypeRegistry.ResolveType<IInputHandlerManager>();
-            _registeredModules[moduleName].Start(componentManager, inputHandlerManager, TypeRegistry);
         }
     }
 }

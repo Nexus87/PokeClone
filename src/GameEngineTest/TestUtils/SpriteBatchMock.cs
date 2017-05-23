@@ -133,6 +133,11 @@ namespace GameEngineTest.TestUtils
             throw new NotImplementedException();
         }
 
+        public void Draw(RenderTarget2D texture, Rectangle destinationRectangle)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Dispose()
         {
             throw new NotImplementedException();

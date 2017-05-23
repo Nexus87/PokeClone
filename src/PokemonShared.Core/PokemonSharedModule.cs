@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using GameEngine.Core;
 using GameEngine.Core.ModuleManager;
 using GameEngine.Entities;
 using GameEngine.Graphics.Textures;

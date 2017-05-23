@@ -28,5 +28,7 @@ namespace GameEngine.Graphics.General
         void DrawString(ISpriteFont spriteFont, string text, Vector2 position, Color color, float rotation, Vector2 origin, float scale, SpriteEffects effects, float layerDepth);
         /// <see cref="Microsoft.Xna.Framework.Graphics.SpriteBatch.End"/>
         void End();
+
+        void Draw(RenderTarget2D texture, Rectangle destinationRectangle);
     }
 }

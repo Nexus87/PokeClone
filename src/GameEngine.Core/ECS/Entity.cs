@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace GameEngine.ECS
+namespace GameEngine.Core.ECS
 {
     public class Entity
     {

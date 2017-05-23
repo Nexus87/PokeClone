@@ -9,13 +9,12 @@ namespace GameEngine.Core
     {
         private const string EngineContentRoot = "Content";
 
-        public GuiSystem GuiSystem { get; } = new GuiSystem();
 
-        private readonly GameRunner _gameRunner = new GameRunner();
+        private GameRunner _gameRunner;
         private readonly IModuleManager _moduleRegistry = new AutofacModuleManager();
         private readonly TextureProvider _textureProvider = new TextureProvider();
         private readonly TextureProvider _skinTextureProvider = new TextureProvider();
-        public string ContentRoot { get; set; }
+        private string ContentRoot { get; }
 
         private string _startModule;
         private ISkin _skin;
@@ -41,10 +40,9 @@ namespace GameEngine.Core
         public void Run()
         {
             Init();
-            _moduleRegistry.StartModule(GameEngineModule.Name);
+            _gameRunner = _moduleRegistry.TypeRegistry.ResolveType<GameRunner>();
             _gameRunner.OnInit = () =>
             {
-                _moduleRegistry.StartModule(_startModule);
             };
             //DebugRectangle.Enable(_textureProvider.Pixel);
             _gameRunner.Run();

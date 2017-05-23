@@ -94,7 +94,6 @@
     <Compile Include="Loader\PanelBuilder\PanelBuilder.cs" />
     <Compile Include="Loader\PanelBuilder\ScrollAreaBuilder.cs" />
     <Compile Include="Loader\PanelBuilder\WindowBuilder.cs" />
-    <Compile Include="Messages\ShowGuiMessage.cs" />
     <Compile Include="Panels\AbstractPanel.cs" />
     <Compile Include="Panels\ColumnProperty.cs" />
     <Compile Include="Panels\Grid.cs" />
@@ -126,7 +125,6 @@
     <Compile Include="Renderers\PokemonClassicRenderer\ClassicTextAreaRenderer.cs" />
     <Compile Include="Renderers\PokemonClassicRenderer\ClassicWindowRenderer.cs" />
     <Compile Include="Renderers\PokemonClassicRenderer\ClassicPanelRenderer.cs" />
-    <Compile Include="System\GuiSystem.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -135,10 +133,6 @@
     <ProjectReference Include="..\GameEngine.ECS\GameEngine.ECS.csproj">
       <Project>{F80C8B45-30A0-4566-B2F7-7B896F859065}</Project>
       <Name>GameEngine.ECS</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GameEngine.Entities\GameEngine.Entities.csproj">
-      <Project>{C80E7E11-9184-46F3-B66E-236229E44614}</Project>
-      <Name>GameEngine.Entities</Name>
     </ProjectReference>
     <ProjectReference Include="..\GameEngine.Globals\GameEngine.Globals.csproj">
       <Project>{B19BD4B3-DCAE-E1DC-6E65-2E476C6F6261}</Project>
@@ -153,7 +147,9 @@
       <Name>GameEngine.TypeRegistry</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="System\" />
+  </ItemGroup>
   <ItemGroup />
   <ItemGroup />
   <ItemGroup />

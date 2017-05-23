@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 namespace GameEngine.Core
 {
     [GameService(typeof(Screen))]
-    internal class Screen
+    public class Screen
     {
         private readonly ScreenConstants _screenConstants;
         private readonly GraphicsDeviceManager _graphicsDeviceManager;
@@ -79,7 +79,7 @@ namespace GameEngine.Core
         {
             scene.DrawScene(batch);
         }
-        public void End(SpriteBatch batch)
+        public void End(ISpriteBatch batch)
         {
             batch.End();
 
@@ -90,7 +90,7 @@ namespace GameEngine.Core
             batch.End();
         }
 
-        public void Draw(GuiManager guiManager, ISpriteBatch batch, GameTime gameTime)
+        internal void Draw(GuiManager guiManager, ISpriteBatch batch, GameTime gameTime)
         {
             guiManager.Draw(gameTime, batch);
         }

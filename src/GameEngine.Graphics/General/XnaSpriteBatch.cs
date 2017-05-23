@@ -28,6 +28,11 @@ namespace GameEngine.Graphics.General
             DrawString(spriteFont.SpriteFont, text, position, color, rotation, origin, scale, effects, layerDepth);
         }
 
+        public void Draw(RenderTarget2D texture, Rectangle destinationRectangle)
+        {
+            base.Draw(texture, destinationRectangle: destinationRectangle);
+        }
+
         public void Draw(ITexture2D texture, Rectangle destinationRectangle, Color color, SpriteEffects spriteEffects = SpriteEffects.None)
         {
             Draw(texture.Texture, destinationRectangle, sourceRectangle: texture.Bounds, color: color);

@@ -83,6 +83,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\GameEngine.ECS\GameEngine.ECS.csproj">
+      <Project>{F80C8B45-30A0-4566-B2F7-7B896F859065}</Project>
+      <Name>GameEngine.ECS</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GameEngine.Globals\GameEngine.Globals.csproj">
       <Project>{b19bd4b3-dcae-e1dc-6e65-2e476c6f6261}</Project>
       <Name>GameEngine.Globals</Name>

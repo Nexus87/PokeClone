@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using GameEngine.ECS.Messages;
+using GameEngine.Core.ECS.Messages;
 using GameEngine.Globals;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-namespace GameEngine.ECS.Systems
+namespace GameEngine.Core.ECS.Systems
 {
     public class InputSystem : ISystem
     {

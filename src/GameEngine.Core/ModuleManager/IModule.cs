@@ -1,5 +1,4 @@
-﻿using GameEngine.Entities;
-using GameEngine.TypeRegistry;
+﻿using GameEngine.TypeRegistry;
 
 namespace GameEngine.Core.ModuleManager
 {
@@ -7,8 +6,5 @@ namespace GameEngine.Core.ModuleManager
     {
         string ModuleName { get; }
         void RegisterTypes(IGameTypeRegistry registry);
-
-        void Start(IGameComponentManager manager, IInputHandlerManager inputHandlerManager, IGameTypeRegistry registry);
-        void Stop(IGameComponentManager engine, IInputHandlerManager inputHandlerManager);
     }
 }

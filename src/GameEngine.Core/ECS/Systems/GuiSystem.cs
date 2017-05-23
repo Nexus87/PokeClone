@@ -1,11 +1,8 @@
-﻿using GameEngine.Core;
-using GameEngine.ECS;
-using GameEngine.ECS.Messages;
+﻿using GameEngine.Core.ECS.Messages;
 using GameEngine.Graphics.General;
-using GameEngine.GUI.Messages;
 using Microsoft.Xna.Framework;
 
-namespace GameEngine.GUI.System
+namespace GameEngine.Core.ECS.Systems
 {
     public class GuiSystem : ISystem
     {
@@ -13,7 +10,7 @@ namespace GameEngine.GUI.System
         private readonly GuiManager _guiManager;
         private readonly ISpriteBatch _spriteBatch;
 
-        public GuiSystem(GuiManager guiManager, ISpriteBatch spriteBatch)
+        internal GuiSystem(GuiManager guiManager, ISpriteBatch spriteBatch)
         {
             _guiManager = guiManager;
             _spriteBatch = spriteBatch;

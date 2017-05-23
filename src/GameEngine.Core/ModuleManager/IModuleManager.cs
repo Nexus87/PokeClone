@@ -7,7 +7,6 @@ namespace GameEngine.Core.ModuleManager
     {
         void RegisterModule(IModule module);
         void RegisterContentModule(IContentModule module);
-        void StartModule(string moduleName);
         IGameTypeRegistry TypeRegistry { get; }
         void RegisterTypes();
         void AddTextureConfigurations(TextureConfigurationBuilder builder);

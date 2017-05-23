@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Reflection;
-using GameEngine.Core;
 using GameEngine.Core.ModuleManager;
 using GameEngine.Entities;
 using GameEngine.TypeRegistry;
