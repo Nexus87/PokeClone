@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework;
 namespace GameEngine.Core
 {
     [GameService(typeof(GuiManager))]
-    internal class GuiManager : IInputHandler
+    internal class GuiManager
     {
         private class WidgetItem : IComparable<WidgetItem>
         {

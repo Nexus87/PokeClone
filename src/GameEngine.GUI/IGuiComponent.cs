@@ -20,8 +20,10 @@ namespace GameEngine.GUI
     /// Changed of the position or size is signaled by the corresponding event
     /// SizeChanged and PositionChanged.
     /// </remarks>
-    public interface IGuiComponent : IInputHandler
+    public interface IGuiComponent
     {
+        void HandleKeyInput(CommandKeys key);
+
         event EventHandler<ComponentSelectedEventArgs> ComponentSelected;
 
         event EventHandler<GraphicComponentSizeChangedEventArgs> PreferredSizeChanged;

@@ -55,7 +55,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CommandKeys.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="IInputHandler.cs" />
     <Compile Include="ITable.cs" />
     <Compile Include="PublicExtensions.cs" />
     <Compile Include="ScreenConstants.cs" />
