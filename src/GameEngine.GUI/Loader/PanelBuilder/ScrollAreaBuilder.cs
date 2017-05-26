@@ -1,23 +1,23 @@
 ﻿using System.Linq;
 using System.Xml.Linq;
+using Autofac;
 using GameEngine.Globals;
 using GameEngine.GUI.Panels;
-using GameEngine.TypeRegistry;
 
 namespace GameEngine.GUI.Loader.PanelBuilder
 {
     public class ScrollAreaBuilder : GuiComponentBuilder
     {
-        private readonly IGameTypeRegistry _registry;
+        private readonly IContainer _container;
 
-        public ScrollAreaBuilder(IGameTypeRegistry registry, ScreenConstants screenConstants) : base(screenConstants)
+        public ScrollAreaBuilder(IContainer container, ScreenConstants screenConstants) : base(screenConstants)
         {
-            _registry = registry;
+            _container = container;
         }
 
         public override IGuiComponent Build(XElement xElement, object controller)
         {
-            var scrollArea = _registry.ResolveType<ScrollArea>();
+            var scrollArea = _container.Resolve<ScrollArea>();
             scrollArea.Area = ReadPosition(xElement);
             SetUpController(controller, scrollArea, xElement);
 

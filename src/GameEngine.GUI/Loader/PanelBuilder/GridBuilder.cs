@@ -1,26 +1,26 @@
 ﻿using System;
 using System.Linq;
 using System.Xml.Linq;
+using Autofac;
 using GameEngine.Globals;
 using GameEngine.GUI.Panels;
-using GameEngine.TypeRegistry;
 using ValueType = GameEngine.GUI.Panels.ValueType;
 
 namespace GameEngine.GUI.Loader.PanelBuilder
 {
     public class GridBuilder : GuiComponentBuilder
     {
-        private readonly IGameTypeRegistry _registry;
+        private readonly IContainer _container;
 
-        public GridBuilder(IGameTypeRegistry registry, ScreenConstants screenConstants)
+        public GridBuilder(IContainer container, ScreenConstants screenConstants)
             : base(screenConstants)
         {
-            _registry = registry;
+            _container = container;
         }
 
         public override IGuiComponent Build(XElement xElement, object controller)
         {
-            var grid = _registry.ResolveType<Grid>();
+            var grid = _container.Resolve<Grid>();
             grid.Area = ReadPosition(xElement);
             SetUpController(controller, grid, xElement);
             var rowDefinitions = xElement.Element("Grid.RowDefinitions");

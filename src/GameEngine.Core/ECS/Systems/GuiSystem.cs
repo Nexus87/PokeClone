@@ -27,7 +27,7 @@ namespace GameEngine.Core.ECS.Systems
             if(_guiIsVisible)
                 _guiManager.HandleKeyInput(message.Key);
         }
-        public void Update(GameTime time)
+        public void Update(GameTime time, EntityManager entityManager)
         {
             if(_guiIsVisible)
                 _guiManager.Draw(time, _spriteBatch);

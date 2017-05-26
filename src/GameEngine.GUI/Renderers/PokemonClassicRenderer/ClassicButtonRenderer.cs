@@ -7,13 +7,13 @@ namespace GameEngine.GUI.Renderers.PokemonClassicRenderer
 {
     public class ClassicButtonRenderer : ButtonRenderer
     {
-        private readonly ITexture2D _arrow;
-        private readonly ISpriteFont _font;
+        private ITexture2D _arrow;
+        private ISpriteFont _font;
 
-        public ClassicButtonRenderer(ITexture2D arrow, ISpriteFont font)
+        public override void Init(TextureProvider textureProvider)
         {
-            _arrow = arrow;
-            _font = font;
+            _arrow = textureProvider.GetTexture(ClassicSkin.Arrow);
+            _font = textureProvider.GetFont(ClassicSkin.DefaultFont);
         }
 
         protected override void RenderComponent(ISpriteBatch spriteBatch, Button component)

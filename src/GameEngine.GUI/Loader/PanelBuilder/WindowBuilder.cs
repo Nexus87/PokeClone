@@ -1,26 +1,26 @@
 using System.Linq;
 using System.Xml.Linq;
+using Autofac;
 using GameEngine.Globals;
 using GameEngine.GUI.Panels;
-using GameEngine.TypeRegistry;
 
 namespace GameEngine.GUI.Loader.PanelBuilder
 {
     public class WindowBuilder : GuiComponentBuilder
     {
-        private readonly IGameTypeRegistry _registry;
+        private readonly IContainer _container;
 
 
 
-        public WindowBuilder(IGameTypeRegistry registry, ScreenConstants screenConstants) :
+        public WindowBuilder(IContainer container, ScreenConstants screenConstants) :
             base(screenConstants)
         {
-            _registry = registry;
+            _container = container;
         }
 
         public override IGuiComponent Build(XElement xElement, object controller)
         {
-            var window = _registry.ResolveType<Window>();
+            var window = _container.Resolve<Window>();
             window.Area = ReadPosition(xElement);
             SetUpController(controller, window, xElement);
 

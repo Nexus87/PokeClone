@@ -23,7 +23,7 @@ namespace GameEngine.Core.ECS.Systems
             _messagingSystem = messagingSystem;
         }
 
-        public void Update(GameTime time)
+        public void Update(GameTime time, EntityManager entityManager)
         {
             _keyboardManager.Update();
 

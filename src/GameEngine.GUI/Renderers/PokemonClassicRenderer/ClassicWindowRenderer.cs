@@ -6,15 +6,19 @@ namespace GameEngine.GUI.Renderers.PokemonClassicRenderer
 {
     public class ClassicWindowRenderer : WindowRenderer
     {
-        private readonly ITexture2D _borderTexture;
+        private ITexture2D _borderTexture;
 
-        public ClassicWindowRenderer(ITexture2D borderTexture)
+        public ClassicWindowRenderer()
         {
-            _borderTexture = borderTexture;
             LeftMargin = 50;
             RightMargin = 10;
             TopMargin = 100;
             BottomMargin = 75;
+        }
+
+        public override void Init(TextureProvider textureProvider)
+        {
+            _borderTexture = textureProvider.GetTexture(ClassicSkin.Border);
         }
 
         protected override void RenderComponent(ISpriteBatch spriteBatch, Window component)

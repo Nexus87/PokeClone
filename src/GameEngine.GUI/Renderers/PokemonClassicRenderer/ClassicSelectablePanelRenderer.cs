@@ -8,11 +8,12 @@ namespace GameEngine.GUI.Renderers.PokemonClassicRenderer
 {
     public class ClassicSelectablePanelRenderer : SelectablePanelRenderer
     {
-        private readonly ITexture2D _arrow;
+        private ITexture2D _arrow;
         private const int DefaultArrowSize = 32;
-        public ClassicSelectablePanelRenderer(ITexture2D arrow)
+
+        public override void Init(TextureProvider textureProvider)
         {
-            _arrow = arrow;
+            _arrow = textureProvider.GetTexture(ClassicSkin.Arrow);
         }
 
         protected override void RenderComponent(ISpriteBatch spriteBatch, SelectablePanel component)

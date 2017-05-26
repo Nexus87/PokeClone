@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Xml.Linq;
+using Autofac;
 using GameEngine.Globals;
 using GameEngine.GUI.Controlls;
-using GameEngine.TypeRegistry;
 
 namespace GameEngine.GUI.Loader.ControllBuilder
 {
     public class ListViewBuilder : GuiComponentBuilder
     {
-        private readonly IGameTypeRegistry _registry;
+        private readonly IContainer _container;
 
-        public ListViewBuilder(IGameTypeRegistry registry, ScreenConstants screenConstants) : base(screenConstants)
+        public ListViewBuilder(IContainer container, ScreenConstants screenConstants) : base(screenConstants)
         {
-            _registry = registry;
+            _container = container;
         }
 
         public override IGuiComponent Build(XElement xElement, object controller)
@@ -24,7 +24,7 @@ namespace GameEngine.GUI.Loader.ControllBuilder
             }
 
             var modelType = Type.GetType(modelTypeValue);
-            var listView = (IGuiComponent) _registry.ResolveGenericType(typeof(ListView<>), modelType);
+            var listView = (IGuiComponent) _container.Resolve(typeof(ListView<>).MakeGenericType(modelType));
 
             listView.Area = ReadPosition(xElement);
             SetUpController(controller, listView, xElement);

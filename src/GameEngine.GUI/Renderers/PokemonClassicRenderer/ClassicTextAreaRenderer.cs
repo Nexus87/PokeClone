@@ -6,12 +6,16 @@ namespace GameEngine.GUI.Renderers.PokemonClassicRenderer
 {
     public class ClassicTextAreaRenderer : TextAreaRenderer
     {
-        private readonly ISpriteFont _font;
+        private ISpriteFont _font;
 
-        public ClassicTextAreaRenderer(ISpriteFont font)
+        public ClassicTextAreaRenderer()
         {
-            _font = font;
             LineSpacing = 10;
+        }
+
+        public override void Init(TextureProvider textureProvider)
+        {
+            _font = textureProvider.GetFont(ClassicSkin.DefaultFont);
         }
 
         protected override void RenderComponent(ISpriteBatch spriteBatch, TextArea component)

@@ -2,40 +2,40 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Xml.Linq;
+using Autofac;
 using GameEngine.Globals;
 using GameEngine.GUI.Loader.ControllBuilder;
 using GameEngine.GUI.Loader.PanelBuilder;
-using GameEngine.TypeRegistry;
 
 namespace GameEngine.GUI.Loader
 {
     public class GuiLoader
     {
-        internal static void InitLoaderResources(IGameTypeRegistry registry)
+        internal static void InitLoaderResources(IContainer container)
         {
-            var screenConstants = registry.ResolveType<ScreenConstants>();
-            Builders["Window"] = new WindowBuilder(registry, screenConstants);
-            Builders["Grid"] = new GridBuilder(registry, screenConstants);
-            Builders["ScrollArea"] = new ScrollAreaBuilder(registry, screenConstants);
-            Builders["ListView"] = new ListViewBuilder(registry, screenConstants);
-            Builders["Panel"] = new PanelBuilder.PanelBuilder(registry, screenConstants);
-            Builders["Label"] = new LabelBuilder(registry, screenConstants);
-            Builders["Spacer"] = new SpacerBuilder(registry, screenConstants);
+            var screenConstants = container.Resolve<ScreenConstants>();
+            Builders["Window"] = new WindowBuilder(container, screenConstants);
+            Builders["Grid"] = new GridBuilder(container, screenConstants);
+            Builders["ScrollArea"] = new ScrollAreaBuilder(container, screenConstants);
+            Builders["ListView"] = new ListViewBuilder(container, screenConstants);
+            Builders["Panel"] = new PanelBuilder.PanelBuilder(container, screenConstants);
+            Builders["Label"] = new LabelBuilder(container, screenConstants);
+            Builders["Spacer"] = new SpacerBuilder(container, screenConstants);
 
             foreach (var builder in AdditionalBuilders)
             {
-                Builders[builder.Key] = builder.Value(registry, screenConstants);
+                Builders[builder.Key] = builder.Value(container, screenConstants);
             }
         }
 
-        public static void AddBuilder(string componentName, Func<IGameTypeRegistry, ScreenConstants, IBuilder> factory)
+        public static void AddBuilder(string componentName, Func<IContainer, ScreenConstants, IBuilder> factory)
         {
             AdditionalBuilders[componentName] = factory;
         }
 
         private readonly string _path;
         internal static readonly Dictionary<string, IBuilder> Builders = new Dictionary<string, IBuilder>();
-        private static readonly Dictionary<string, Func<IGameTypeRegistry, ScreenConstants, IBuilder>> AdditionalBuilders = new Dictionary<string, Func<IGameTypeRegistry, ScreenConstants, IBuilder>>();
+        private static readonly Dictionary<string, Func<IContainer, ScreenConstants, IBuilder>> AdditionalBuilders = new Dictionary<string, Func<IContainer, ScreenConstants, IBuilder>>();
 
         public GuiLoader(string path)
         {

@@ -78,15 +78,11 @@
     <Compile Include="GuiSystem.cs" />
     <Compile Include="IEngineInterface.cs" />
     <Compile Include="GameRunner.cs" />
-    <Compile Include="ModuleManager\Extensions.cs" />
     <Compile Include="ModuleManager\IConfigurationHandler.cs" />
     <Compile Include="ModuleManager\IContentModule.cs" />
     <Compile Include="ModuleManager\ModuleConfiguration.cs" />
     <Compile Include="PokeEngine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ModuleManager\AutofacModuleManager.cs" />
-    <Compile Include="ModuleManager\IModule.cs" />
-    <Compile Include="ModuleManager\IModuleManager.cs" />
     <Compile Include="Screen.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,22 +1,22 @@
 ﻿using System.Xml.Linq;
+using Autofac;
 using GameEngine.Globals;
 using GameEngine.GUI.Controlls;
-using GameEngine.TypeRegistry;
 
 namespace GameEngine.GUI.Loader.ControllBuilder
 {
     public class LabelBuilder : GuiComponentBuilder
     {
-        private readonly IGameTypeRegistry _registry;
+        private readonly IContainer _container;
 
-        public LabelBuilder(IGameTypeRegistry registry, ScreenConstants screenConstants) : base(screenConstants)
+        public LabelBuilder(IContainer container, ScreenConstants screenConstants) : base(screenConstants)
         {
-            _registry = registry;
+            _container = container;
         }
 
         public override IGuiComponent Build(XElement xElement, object controller)
         {
-            var label = _registry.ResolveType<Label>();
+            var label = _container.Resolve<Label>();
             label.Area = ReadPosition(xElement);
             SetUpController(controller, label, xElement);
 

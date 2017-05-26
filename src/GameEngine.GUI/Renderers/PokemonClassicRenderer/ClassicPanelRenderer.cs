@@ -6,11 +6,11 @@ namespace GameEngine.GUI.Renderers.PokemonClassicRenderer
 {
     public class ClassicPanelRenderer : PanelRenderer
     {
-        private readonly ITexture2D _pixel;
+        private ITexture2D _pixel;
 
-        public ClassicPanelRenderer(ITexture2D pixel)
+        public override void Init(TextureProvider textureProvider)
         {
-            _pixel = pixel;
+            _pixel = textureProvider.Pixel;
         }
 
         protected override void RenderComponent(ISpriteBatch spriteBatch, Panel component)

@@ -3,23 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using GameEngine.TypeRegistry;
+using Autofac;
 
 namespace GameEngine.Core.GameStates
 {
     public class StateManager
     {
-        private readonly IGameTypeRegistry _registry;
+        private readonly IContainer _container;
         private readonly Stack<State> _states = new Stack<State>();
 
-        public StateManager(IGameTypeRegistry registry)
+        public StateManager(IContainer container)
         {
-            _registry = registry;
+            _container = container;
         }
 
         public void PushState<T>() where T: State
         {
-            _states.Push(_registry.ResolveType<T>());
+            _states.Push(_container.Resolve<T>());
         }
 
         public void PopState()

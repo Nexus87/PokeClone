@@ -1,4 +1,5 @@
 ﻿using GameEngine.Graphics.General;
+using GameEngine.Graphics.Textures;
 using GameEngine.GUI.Panels;
 using Microsoft.Xna.Framework;
 
@@ -6,6 +7,10 @@ namespace GameEngine.GUI.Renderers.PokemonClassicRenderer
 {
     public class ClassicScrollAreaRenderer : ScrollAreaRenderer
     {
+        public override void Init(TextureProvider textureProvider)
+        {
+        }
+
         protected override void RenderComponent(ISpriteBatch spriteBatch, ScrollArea component)
         {
         }

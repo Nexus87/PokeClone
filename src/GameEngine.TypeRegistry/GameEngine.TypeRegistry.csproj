@@ -47,7 +47,6 @@
     <Compile Include="AutofacGameTypeRegistry.cs" />
     <Compile Include="GameServiceAttribute.cs" />
     <Compile Include="GameTypeAttribute.cs" />
-    <Compile Include="IGameTypeRegistry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TypeNotRegisteredException.cs" />
   </ItemGroup>
