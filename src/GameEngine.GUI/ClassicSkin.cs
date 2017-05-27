@@ -11,7 +11,7 @@ namespace GameEngine.GUI
 {
     public class ClassicSkin : ISkin
     {
-        private readonly Dictionary<Type, object> _renderers = new Dictionary<Type, object>();
+        private readonly Dictionary<Type, IRenderer> _renderers = new Dictionary<Type, IRenderer>();
         private readonly Dictionary<Type, Action<TextureProvider>> _initFunctions = new Dictionary<Type, Action<TextureProvider>>();
 
         public const string Arrow = "arrow";
@@ -38,20 +38,20 @@ namespace GameEngine.GUI
 
         public static Color BackgroundColor { get; } = new Color(248, 248, 248, 0);
 
-        public T GetRenderer<T>() where  T : class
+        public IRenderer GetRendererForComponent(Type ComponentType)
         {
-            object renderer;
-            if (!_renderers.TryGetValue(typeof(T), out renderer))
+            IRenderer renderer;
+            if (!_renderers.TryGetValue(ComponentType, out renderer))
             {
                 return null;
             }
 
-            return (T) renderer;
+            return renderer;
         }
 
         public void SetRendererAs<T, TRenderer, TComponent>(T renderer) where T : TRenderer where TRenderer : AbstractRenderer<TComponent> where TComponent : IGuiComponent
         {
-            _renderers[typeof(TRenderer)] = renderer;
+            _renderers[typeof(TComponent)] = renderer;
             _initFunctions[typeof(T)] = t => renderer?.Init(t);
 
         }

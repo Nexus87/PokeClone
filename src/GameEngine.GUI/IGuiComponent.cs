@@ -22,18 +22,14 @@ namespace GameEngine.GUI
     /// </remarks>
     public interface IGuiComponent
     {
+
+        void Update();
+
         void HandleKeyInput(CommandKeys key);
 
         event EventHandler<ComponentSelectedEventArgs> ComponentSelected;
 
         event EventHandler<GraphicComponentSizeChangedEventArgs> PreferredSizeChanged;
-
-        /// <summary>
-        /// Called when the component needs to be drawn
-        /// </summary>
-        /// <param name="time">Time passed since the last call to Draw</param>
-        /// <param name="batch">Current SpriteBatch</param>
-        void Draw(GameTime time, ISpriteBatch batch);
 
         float PreferredHeight { get; }
         float PreferredWidth { get; }

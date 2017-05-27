@@ -27,16 +27,12 @@ namespace GameEngine.GUI.Panels
             AddChild(component);
         }
 
-        protected override void Update()
+        public override void Update()
         {
+            if(!NeedsUpdate)
+                return;
 
             _component.SetCoordinates(Area.X + 20, Area.Y + 20, Area.Width - 40, Area.Height - 40);
-        }
-
-        protected override void DrawComponent(GameTime time, ISpriteBatch batch)
-        {
-            _renderer.Render(batch, this);
-            _component?.Draw(time, batch);
         }
 
         public void AddInputListener(CommandKeys key, Action action)

@@ -58,13 +58,11 @@ namespace GameEngine.GUI.Controlls
             ButtonPressed?.Invoke(this, EventArgs.Empty);
         }
 
-        protected override void DrawComponent(GameTime time, ISpriteBatch batch)
+        public override void Update()
         {
-            _buttonRenderer.Render(batch, this);
-        }
+            if (!NeedsUpdate)
+                return;
 
-        protected override void Update()
-        {
             base.Update();
             UpdatePreferredSize();
         }

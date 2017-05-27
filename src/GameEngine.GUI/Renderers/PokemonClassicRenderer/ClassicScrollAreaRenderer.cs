@@ -17,12 +17,7 @@ namespace GameEngine.GUI.Renderers.PokemonClassicRenderer
 
         public override void RenderContent(ISpriteBatch batch, GameTime time, ScrollArea scrollArea)
         {
-            var tmp = batch.GraphicsDevice.ScissorRectangle;
-            batch.GraphicsDevice.ScissorRectangle = Rectangle.Intersect(tmp, scrollArea.Area);
-
-            scrollArea.Content?.Draw(time, batch);
-
-            batch.GraphicsDevice.ScissorRectangle = tmp;
+          
         }
     }
 }

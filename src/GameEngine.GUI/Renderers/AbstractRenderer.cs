@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace GameEngine.GUI.Renderers
 {
-    public abstract class AbstractRenderer<T> where T : IGuiComponent
+    public abstract class AbstractRenderer<T> : IRenderer where T : IGuiComponent
     {
         protected static void RenderText(ISpriteBatch spriteBatch, ISpriteFont font, string text, Vector2 position, float textHeight)
         {
@@ -29,9 +29,10 @@ namespace GameEngine.GUI.Renderers
             spriteBatch.Draw(texture: texture, destinationRectangle: position, color: color);
         }
 
-        public void Render(ISpriteBatch spriteBatch, T component)
+        public void Render(ISpriteBatch spriteBatch, IGuiComponent component)
         {
-            RenderComponent(spriteBatch, component);
+            var typedComponent = (T) component;
+            RenderComponent(spriteBatch, typedComponent);
 #if DEBUG
             DebugRectangle.Rectangle?.Draw(spriteBatch, component.Area, Color.Black);
 #endif

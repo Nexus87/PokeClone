@@ -75,7 +75,7 @@
     <Compile Include="GameStates\State.cs" />
     <Compile Include="GameStates\StateManager.cs" />
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="GuiSystem.cs" />
+    <Compile Include="GuiConfig.cs" />
     <Compile Include="IEngineInterface.cs" />
     <Compile Include="GameRunner.cs" />
     <Compile Include="ModuleManager\IConfigurationHandler.cs" />

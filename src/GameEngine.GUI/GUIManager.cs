@@ -16,7 +16,6 @@ namespace GameEngine.Core
         {
             public readonly int Priority;
             public readonly IGuiComponent Component;
-
             public WidgetItem(int priority, IGuiComponent component)
             {
                 Priority = priority;
@@ -42,6 +41,7 @@ namespace GameEngine.Core
                 return Component?.GetHashCode() ?? 0;
             }
         }
+        private ISkin _skin;
 
         private readonly List<WidgetItem> _widgets = new List<WidgetItem>();
 
@@ -86,7 +86,26 @@ namespace GameEngine.Core
         {
             if (!IsActive)
                 return;
-            _widgets.ForEach(x => x.Component.Draw(time, batch));
+            var completeArea = batch.GraphicsDevice.ScissorRectangle;
+
+            _widgets.ForEach(x => DrawRecursive(x.Component, time, batch, completeArea));
+
+            batch.GraphicsDevice.ScissorRectangle = completeArea;
+        }
+
+        private void DrawRecursive(IGuiComponent component, GameTime time, ISpriteBatch batch, Rectangle parentRectangle)
+        {
+            var componentRectangle = Rectangle.Intersect(parentRectangle, component.Area);
+            batch.GraphicsDevice.ScissorRectangle = componentRectangle;
+
+            component.Update();
+            _skin.GetRendererForComponent(component.GetType())?
+                .Render(batch, component);
+
+            foreach (var componentChild in component.Children)
+            {
+                DrawRecursive(componentChild, time, batch, componentRectangle);
+            }
         }
 
         public void Show()

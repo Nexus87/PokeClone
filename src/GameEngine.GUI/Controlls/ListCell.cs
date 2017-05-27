@@ -71,10 +71,5 @@ namespace GameEngine.GUI.Controlls
         {
             CellSelected?.Invoke(this, componentSelectedEventArgs);
         }
-
-        public void Draw(GameTime time, ISpriteBatch batch)
-        {
-            _component?.Draw(time, batch);
-        }
     }
 }

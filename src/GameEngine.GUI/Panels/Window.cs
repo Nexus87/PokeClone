@@ -29,14 +29,11 @@ namespace GameEngine.GUI.Panels
         }
 
 
-        protected override void DrawComponent(GameTime time, ISpriteBatch batch)
+        public override void Update()
         {
-            _renderer.Render(batch, this);
-            _content?.Draw(time, batch);
-        }
+            if(!NeedsUpdate)
+                return;
 
-        protected override void Update()
-        {
             _content?.SetCoordinates(
                 Area.X + _renderer.LeftMargin,
                 Area.Y + _renderer.TopMargin,

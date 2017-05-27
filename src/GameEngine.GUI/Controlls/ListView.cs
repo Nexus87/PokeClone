@@ -169,22 +169,17 @@ namespace GameEngine.GUI.Controlls
                 _listItems[_lastSelectedIndex].IsSelected = false;
         }
 
-        protected override void Update()
+        public override void Update()
         {
+            if (!NeedsUpdate)
+                return;
+
             for (var i = 0; i < _listItems.Count; i++)
             {
                 _listItems[i].Area = new Rectangle(Area.X, Area.Y + i * CellHeight, Area.Width, CellHeight);
             }
 
             PreferredHeight = _listItems.Count * CellHeight;
-        }
-
-        protected override void DrawComponent(GameTime time, ISpriteBatch spriteBatch)
-        {
-            foreach (var listItem in _listItems)
-            {
-                listItem.Draw(time, spriteBatch);
-            }
         }
 
         private void ReCreateItems()

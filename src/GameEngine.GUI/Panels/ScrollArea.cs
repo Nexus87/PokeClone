@@ -59,12 +59,6 @@ namespace GameEngine.GUI.Panels
             }
         }
 
-        protected override void DrawComponent(GameTime time, ISpriteBatch batch)
-        {
-            _renderer.Render(batch, this);
-            _renderer.RenderContent(batch, time, this);
-        }
-
         private void ComponentOnComponentSelected(object sender, ComponentSelectedEventArgs componentSelectedEventArgs)
         {
             var selectedArea = componentSelectedEventArgs.Source.Area;

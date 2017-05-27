@@ -60,11 +60,6 @@ namespace GameEngine.GUI.Panels
             set { GuiComponent.IsSelected = value; }
         }
 
-        public void Draw(GameTime time, ISpriteBatch spriteBatch)
-        {
-            GuiComponent?.Draw(time, spriteBatch);
-        }
-
         public void ApplySizeToComponent()
         {
             if(GuiComponent == null)

@@ -27,11 +27,5 @@ namespace GameEngine.GUI.Controlls
         {
             _renderer = renderer;
         }
-
-        protected override void DrawComponent(GameTime time, ISpriteBatch batch)
-        {
-            _renderer.Render(batch, this);
-        }
-
     }
 }

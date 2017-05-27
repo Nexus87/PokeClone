@@ -1,11 +1,12 @@
-﻿using GameEngine.Graphics.Textures;
+﻿using System;
+using GameEngine.Graphics.Textures;
 using GameEngine.GUI.Renderers;
 
 namespace GameEngine.GUI
 {
     public interface ISkin
     {
-        T GetRenderer<T>() where  T : class;
+        IRenderer GetRendererForComponent(Type componentType);
 
         void SetRendererAs<T, TRenderer, TComponent>(T renderer) 
             where TRenderer : AbstractRenderer<TComponent> 

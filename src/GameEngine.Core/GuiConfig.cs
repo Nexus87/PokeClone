@@ -6,9 +6,15 @@ using GameEngine.GUI.Loader;
 
 namespace GameEngine.Core
 {
-    public class GuiSystem
+    public class GuiConfig
     {
+        public GuiConfig()
+        {
+            CurrentSkin = ClassicSkin;
+        }
         public ClassicSkin ClassicSkin { get; } = new ClassicSkin();
+
+        public ISkin CurrentSkin { get; set; }
 
         public void AddGuiElement(string componentName, Func<IContainer, ScreenConstants, IBuilder> factory)
         {

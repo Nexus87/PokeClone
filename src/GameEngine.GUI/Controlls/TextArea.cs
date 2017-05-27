@@ -80,8 +80,11 @@ namespace GameEngine.GUI.Controlls
             CurrentLineIndex = nextIndex;
         }
 
-        protected override void Update()
+        public override void Update()
         {
+            if(!NeedsUpdate)
+                return;
+
             _allLines = _splitter
                 .SplitText(_renderer.CharsPerLine(this), Text)
                 .Select(x => new TextAreaLine{Text = x})
@@ -94,11 +97,6 @@ namespace GameEngine.GUI.Controlls
                 i++;
             }
             CurrentLineIndex = Math.Min(CurrentLineIndex, _allLines.Count - 1);
-        }
-
-        protected override void DrawComponent(GameTime time, ISpriteBatch batch)
-        {
-            _renderer.Render(batch, this);
         }
 
         public override void HandleKeyInput(CommandKeys key)

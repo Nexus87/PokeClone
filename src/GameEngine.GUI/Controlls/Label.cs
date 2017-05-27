@@ -39,13 +39,11 @@ namespace GameEngine.GUI.Controlls
             }
         }
 
-        protected override void DrawComponent(GameTime time, ISpriteBatch batch)
+        public override void Update()
         {
-            _renderer.Render(batch, this);
-        }
+            if (!NeedsUpdate)
+                return;
 
-        protected override void Update()
-        {
             PreferredHeight = _renderer.GetPreferedHeight(this);
             PreferredWidth = _renderer.GetPreferedWidth(this);
         }

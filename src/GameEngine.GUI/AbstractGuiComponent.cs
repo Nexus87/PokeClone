@@ -29,29 +29,13 @@ namespace GameEngine.GUI
         {
             PreferredSizeChanged?.Invoke(this, eventArgs);
         }
-        public void Draw(GameTime time, ISpriteBatch batch)
-        {
-            if (NeedsUpdate)
-            {
-                Update();
-                NeedsUpdate = false;
-            }
-            DrawComponent(time, batch);
-        }
 
-
-        protected virtual void DrawComponent(GameTime time, ISpriteBatch batch)
-        {
-        }
 
         protected void Invalidate()
         {
             NeedsUpdate = true;
         }
 
-        protected virtual void Update()
-        {
-        }
 
         public virtual float PreferredHeight {
             get
@@ -116,6 +100,10 @@ namespace GameEngine.GUI
         }
 
         public bool IsSelectable { get; protected set; }
+
+        public virtual void Update()
+        {
+        }
 
         public virtual void HandleKeyInput(CommandKeys key)
         {

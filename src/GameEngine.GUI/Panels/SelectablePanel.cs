@@ -39,16 +39,14 @@ namespace GameEngine.GUI.Panels
         }
 
 
-        protected override void Update()
+        public override void Update()
         {
+            if(!NeedsUpdate)
+                return;
+
             Content.Area = _renderer.GetContentArea(this);
         }
 
-        protected override void DrawComponent(GameTime time, ISpriteBatch batch)
-        {
-            _renderer.Render(batch, this);
-            _content.Draw(time, batch);
-        }
 
         public override void HandleKeyInput(CommandKeys key)
         {

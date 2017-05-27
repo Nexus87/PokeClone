@@ -41,17 +41,12 @@ namespace GameEngine.GUI.Components
 
         }
 
-        protected override void DrawComponent(GameTime time, ISpriteBatch batch)
-        {
-            _window.Draw(time, batch);
-        }
-
         public void ResetText()
         {
             _textArea.Text = "";
         }
 
-        protected override void Update()
+        public override void Update()
         {
             _window.SetCoordinates(this);
         }

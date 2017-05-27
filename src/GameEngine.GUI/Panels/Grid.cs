@@ -96,8 +96,11 @@ namespace GameEngine.GUI.Panels
             Invalidate();
         }
 
-        protected override void Update()
+        public override void Update()
         {
+            if(!NeedsUpdate)
+                return;
+
             if (Rows == 0 || Columns == 0)
                 return;
 
@@ -128,14 +131,6 @@ namespace GameEngine.GUI.Panels
                 .Sum(column => _cells[0, column].PreferedWidth);
 
             PreferredWidth = autoColumnSize + fixedColumnSize;
-        }
-
-        protected override void DrawComponent(GameTime time, ISpriteBatch batch)
-        {
-            foreach (var gridCell in _cells)
-            {
-                gridCell.Draw(time, batch);
-            }
         }
 
         public override void HandleKeyInput(CommandKeys key)

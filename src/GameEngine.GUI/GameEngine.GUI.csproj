@@ -110,6 +110,7 @@
     <Compile Include="Renderers\AbstractRenderer.cs" />
     <Compile Include="Renderers\ButtonRenderer.cs" />
     <Compile Include="Renderers\ImageBoxRenderer.cs" />
+    <Compile Include="Renderers\IRenderer.cs" />
     <Compile Include="Renderers\LabelRenderer.cs" />
     <Compile Include="Renderers\PanelRenderer.cs" />
     <Compile Include="Renderers\ScrollAreaRenderer.cs" />
