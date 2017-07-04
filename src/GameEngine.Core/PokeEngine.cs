@@ -1,5 +1,4 @@
 ﻿using Autofac;
-using Autofac.Core;
 using GameEngine.Core.ModuleManager;
 using GameEngine.Graphics.Textures;
 using GameEngine.GUI;
@@ -10,7 +9,7 @@ namespace GameEngine.Core
     public class PokeEngine
     {
         private const string EngineContentRoot = "Content";
-        private ContainerBuilder _builder = new ContainerBuilder();
+        private readonly ContainerBuilder _builder = new ContainerBuilder();
         private readonly TextureConfigurationBuilder _textureConfigurationBuilder;
         private GameRunner _gameRunner;
         private readonly TextureProvider _textureProvider = new TextureProvider();

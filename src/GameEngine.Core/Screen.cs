@@ -1,6 +1,7 @@
 ﻿using GameEngine.Globals;
 using GameEngine.Graphics;
 using GameEngine.Graphics.General;
+using GameEngine.GUI;
 using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -79,6 +80,18 @@ namespace GameEngine.Core
         {
             scene.DrawScene(batch);
         }
+
+        public void Draw(RenderTarget2D scene, RenderTarget2D gui, ISpriteBatch batch)
+        {
+            batch.Begin();
+            batch.Draw(scene, destinationRectangle: _display);
+            if (gui != null)
+            {
+                batch.Draw(gui, _display);
+            }
+            batch.End();
+        }
+
         public void End(ISpriteBatch batch)
         {
             batch.End();

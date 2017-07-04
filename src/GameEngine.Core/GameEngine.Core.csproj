@@ -60,17 +60,19 @@
   <ItemGroup>
     <Compile Include="Configuration.cs" />
     <Compile Include="ECS\Components\RenderComponent.cs" />
+    <Compile Include="ECS\Components\ScreenComponent.cs" />
+    <Compile Include="ECS\Entities\ScreenEntity.cs" />
     <Compile Include="ECS\Entity.cs" />
     <Compile Include="ECS\EntityManager.cs" />
     <Compile Include="ECS\IComponent.cs" />
     <Compile Include="ECS\ISystem.cs" />
-    <Compile Include="ECS\Messages\KeyInputMessage.cs" />
+    <Compile Include="ECS\Actions\KeyInputAction.cs" />
+    <Compile Include="ECS\Actions\TimerAction.cs" />
     <Compile Include="ECS\MessagingSystem.cs" />
-    <Compile Include="ECS\SystemManager.cs" />
     <Compile Include="ECS\Systems\GuiSystem.cs" />
     <Compile Include="ECS\Systems\InputSystem.cs" />
     <Compile Include="ECS\Systems\RenderSystem.cs" />
-    <Compile Include="ECS\Messages\ShowGuiMessage.cs" />
+    <Compile Include="ECS\Actions\ShowGuiAction.cs" />
     <Compile Include="GameEngineModule.cs" />
     <Compile Include="GameStates\State.cs" />
     <Compile Include="GameStates\StateManager.cs" />
@@ -145,9 +147,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ECS\Entities\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup />
   <ItemGroup />
   <ItemGroup />

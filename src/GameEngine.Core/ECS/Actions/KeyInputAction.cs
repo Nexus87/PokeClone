@@ -2,7 +2,7 @@
 
 namespace GameEngine.Core.ECS.Messages
 {
-    public class KeyInputMessage
+    public class KeyInputAction
     {
         public CommandKeys Key { get; set; }
     }

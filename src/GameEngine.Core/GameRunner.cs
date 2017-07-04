@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using GameEngine.Core.ECS.Messages;
 using GameEngine.Core.GameStates;
+using GameEngine.Globals;
+using GameEngine.Graphics.General;
 using GameEngine.Graphics.Textures;
 using Microsoft.Xna.Framework;
 
@@ -8,14 +11,15 @@ namespace GameEngine.Core
 {
     public class GameRunner : Game, IEngineInterface
     {
-        internal Action OnInit;
         private readonly Screen _screen;
-        private readonly StateManager _stateManager;
-        internal readonly List<TextureProvider> TextureProviders = new List<TextureProvider>();
         public readonly GraphicsDeviceManager GraphicsDeviceManager;
+        internal readonly List<TextureProvider> TextureProviders = new List<TextureProvider>();
+        private XnaSpriteBatch _spriteBatch;
+        private StateManager _stateManager;
+        internal Action OnInit;
 
-        public GameRunner(StateManager stateManager, Screen screen)         {
-            _stateManager = stateManager;
+        public GameRunner(Screen screen)
+        {
             _screen = screen;
             GraphicsDeviceManager = new GraphicsDeviceManager(this);
             Window.AllowUserResizing = true;
@@ -24,19 +28,29 @@ namespace GameEngine.Core
             GraphicsDeviceManager.ApplyChanges();
         }
 
+        protected override void Draw(GameTime gameTime)
+        {
+            var screenState = _stateManager.CurrentState.ScreenState;
+
+            _screen.Draw(screenState.Scene, screenState.Gui, _spriteBatch);
+        }
 
         protected override void Update(GameTime gameTime)
         {
-            _stateManager.CurrentState.Update(gameTime);
+            _stateManager.CurrentState.MessagingSystem.SendMessage(new TimerAction {Time = gameTime});
         }
 
         protected override void Initialize()
         {
             base.Initialize();
-            Window.ClientSizeChanged += delegate { _screen.WindowsResizeHandler(Window.ClientBounds.Width, Window.ClientBounds.Height); };
+            Window.ClientSizeChanged += delegate
+            {
+                _screen.WindowsResizeHandler(Window.ClientBounds.Width, Window.ClientBounds.Height);
+            };
             _screen.WindowsResizeHandler(Window.ClientBounds.Width, Window.ClientBounds.Height);
-
+            _stateManager = new StateManager(GraphicsDevice, new ScreenConstants());
             OnInit?.Invoke();
+            _spriteBatch = new XnaSpriteBatch(GraphicsDevice);
         }
 
         protected override void LoadContent()
@@ -44,6 +58,5 @@ namespace GameEngine.Core
             base.LoadContent();
             TextureProviders.ForEach(x => x.Init(GraphicsDevice));
         }
-
     }
 }

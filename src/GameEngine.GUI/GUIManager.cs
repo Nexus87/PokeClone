@@ -3,19 +3,87 @@ using System.Collections.Generic;
 using System.Linq;
 using GameEngine.Globals;
 using GameEngine.Graphics.General;
-using GameEngine.GUI;
 using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
 
-namespace GameEngine.Core
+namespace GameEngine.GUI
 {
     [GameService(typeof(GuiManager))]
-    internal class GuiManager
+    public class GuiManager
     {
+        private readonly List<WidgetItem> _widgets = new List<WidgetItem>();
+        private ISkin _skin;
+
+        public bool IsActive { get; set; }
+
+        public IGuiComponent FocusedWidget => _widgets.LastOrDefault()?.Component;
+
+
+        public void ShowWidget(IGuiComponent widget, int? priority = null)
+        {
+            if (_widgets.Any(x => x.Component == widget))
+                return;
+
+            if (!priority.HasValue)
+                priority = _widgets.Count == 0 ? 0 : _widgets.Max(x => x.Priority) + 1;
+
+            _widgets.Add(new WidgetItem(priority.Value, widget));
+            _widgets.Sort();
+        }
+
+        public void CloseWidget(IGuiComponent widget)
+        {
+            var w = _widgets.FirstOrDefault(x => x.Component == widget);
+            if (w != null)
+                _widgets.Remove(w);
+        }
+
+
+        public void HandleKeyInput(CommandKeys key)
+        {
+            FocusedWidget?.HandleKeyInput(key);
+        }
+
+        public void Close()
+        {
+            IsActive = false;
+        }
+
+        public void Draw(GameTime time, ISpriteBatch batch)
+        {
+            if (!IsActive)
+                return;
+            var completeArea = batch.GraphicsDevice.ScissorRectangle;
+
+            _widgets.ForEach(x => DrawRecursive(x.Component, time, batch, completeArea));
+
+            batch.GraphicsDevice.ScissorRectangle = completeArea;
+        }
+
+        private void DrawRecursive(IGuiComponent component, GameTime time, ISpriteBatch batch,
+            Rectangle parentRectangle)
+        {
+            var componentRectangle = Rectangle.Intersect(parentRectangle, component.Area);
+            batch.GraphicsDevice.ScissorRectangle = componentRectangle;
+
+            component.Update();
+            _skin.GetRendererForComponent(component.GetType())?
+                .Render(batch, component);
+
+            foreach (var componentChild in component.Children)
+                DrawRecursive(componentChild, time, batch, componentRectangle);
+        }
+
+        public void Show()
+        {
+            IsActive = true;
+        }
+
         private class WidgetItem : IComparable<WidgetItem>
         {
-            public readonly int Priority;
             public readonly IGuiComponent Component;
+            public readonly int Priority;
+
             public WidgetItem(int priority, IGuiComponent component)
             {
                 Priority = priority;
@@ -40,77 +108,6 @@ namespace GameEngine.Core
             {
                 return Component?.GetHashCode() ?? 0;
             }
-        }
-        private ISkin _skin;
-
-        private readonly List<WidgetItem> _widgets = new List<WidgetItem>();
-
-
-        public void ShowWidget(IGuiComponent widget, int? priority = null)
-        {
-            if(_widgets.Any(x => x.Component == widget))
-                return;
-
-            if (!priority.HasValue)
-                priority = _widgets.Count == 0 ? 0 : _widgets.Max(x => x.Priority) + 1;
-
-            _widgets.Add(new WidgetItem(priority.Value, widget));
-            _widgets.Sort();
-
-        }
-
-        public void CloseWidget(IGuiComponent widget)
-        {
-            var w = _widgets.FirstOrDefault(x => x.Component == widget);
-            if (w != null)
-                _widgets.Remove(w);
-        }
-
-        public bool IsActive { get; set; }
-
-
-        public void HandleKeyInput(CommandKeys key)
-        {
-
-            FocusedWidget?.HandleKeyInput(key);
-        }
-
-        public IGuiComponent FocusedWidget => _widgets.LastOrDefault()?.Component;
-
-        public void Close()
-        {
-            IsActive = false;
-        }
-
-        public void Draw(GameTime time, ISpriteBatch batch)
-        {
-            if (!IsActive)
-                return;
-            var completeArea = batch.GraphicsDevice.ScissorRectangle;
-
-            _widgets.ForEach(x => DrawRecursive(x.Component, time, batch, completeArea));
-
-            batch.GraphicsDevice.ScissorRectangle = completeArea;
-        }
-
-        private void DrawRecursive(IGuiComponent component, GameTime time, ISpriteBatch batch, Rectangle parentRectangle)
-        {
-            var componentRectangle = Rectangle.Intersect(parentRectangle, component.Area);
-            batch.GraphicsDevice.ScissorRectangle = componentRectangle;
-
-            component.Update();
-            _skin.GetRendererForComponent(component.GetType())?
-                .Render(batch, component);
-
-            foreach (var componentChild in component.Children)
-            {
-                DrawRecursive(componentChild, time, batch, componentRectangle);
-            }
-        }
-
-        public void Show()
-        {
-            IsActive = true;
         }
     }
 }

@@ -1,43 +1,57 @@
-﻿using GameEngine.Core.ECS;
+﻿using System.Collections.Generic;
+using GameEngine.Core.ECS;
 using GameEngine.Core.ECS.Systems;
 using GameEngine.Graphics.General;
-using Microsoft.Xna.Framework;
+using GameEngine.GUI;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace GameEngine.Core.GameStates
 {
     public abstract class State
     {
-        private readonly Screen _screen;
-        private readonly ISpriteBatch _spriteBatch;
-        protected readonly EntityManager EntityManager;
-        protected readonly SystemManager SystemManager;
+        public ScreenState ScreenState { get; set; }
+        public EntityManager EntityManager{ get; }
+        public MessagingSystem MessagingSystem { get; }
 
-        public ECS.Systems.GuiSystem GuiSystem { get; }
-        public RenderSystem RenderSystem { get; }
+        protected List<ISystem> Systems { get; } = new List<ISystem>();
 
-        protected State(Screen screen, ISpriteBatch spriteBatch, EntityManager entityManager, SystemManager systemManager)
+        protected State() : this(new EntityManager(), new MessagingSystem())
         {
-            _screen = screen;
-            _spriteBatch = spriteBatch;
+            
+        }
+
+        protected State(EntityManager entityManager, MessagingSystem messagingSystem)
+        {
             EntityManager = entityManager;
-            SystemManager = systemManager;
-            RenderSystem = new RenderSystem(spriteBatch);
-            GuiSystem = new ECS.Systems.GuiSystem(new GuiManager(), spriteBatch);
+            MessagingSystem = messagingSystem;
         }
 
-        public void Update(GameTime time)
+        protected virtual void InitDefault()
         {
-            _screen.Begin(_spriteBatch);
-            RenderSystem.Update(time, EntityManager);
-            GuiSystem.Update(time, EntityManager);
-            _screen.End(_spriteBatch);
-
-            SystemManager.Update(time, EntityManager);
+            Systems.Add(new GuiSystem(ScreenState));
+            Systems.Add(new RenderSystem(ScreenState, EntityManager));
         }
 
-        public abstract void Init();
+        protected abstract void InitCustom();
+
+        public void Init()
+        {
+            InitDefault();
+            InitCustom();
+            Systems.ForEach(x => x.Init(MessagingSystem));
+        }
+
         public abstract void Pause();
         public abstract void Resume();
         public abstract void Stop();
+    }
+
+    public class ScreenState
+    {
+        public RenderTarget2D Scene { get; set; }
+        public RenderTarget2D Gui { get; set; }
+        public GuiManager GuiManager { get; set; } = new GuiManager();
+        public bool IsGuiVisible { get; set; }
+        public ISpriteBatch SpriteBatch { get; set; }
     }
 }

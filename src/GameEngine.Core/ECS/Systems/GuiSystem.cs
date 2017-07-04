@@ -1,4 +1,5 @@
 ﻿using GameEngine.Core.ECS.Messages;
+using GameEngine.Core.GameStates;
 using GameEngine.Graphics.General;
 using Microsoft.Xna.Framework;
 
@@ -6,31 +7,35 @@ namespace GameEngine.Core.ECS.Systems
 {
     public class GuiSystem : ISystem
     {
-        private bool _guiIsVisible;
-        private readonly GuiManager _guiManager;
-        private readonly ISpriteBatch _spriteBatch;
+        private readonly ScreenState _screenState;
 
-        internal GuiSystem(GuiManager guiManager, ISpriteBatch spriteBatch)
+        internal GuiSystem(ScreenState screenState)
         {
-            _guiManager = guiManager;
-            _spriteBatch = spriteBatch;
+            _screenState = screenState;
         }
 
         public void Init(MessagingSystem messagingSystem)
         {
-            messagingSystem.ListenForMessage<ShowGuiMessage>(m => _guiIsVisible = m.ShowGui);
-            messagingSystem.ListenForMessage<KeyInputMessage>(HandleInput);
+            messagingSystem.ListenForMessage<ShowGuiAction>(m => { _screenState.IsGuiVisible = m.ShowGui; });
+
+            messagingSystem.ListenForMessage<KeyInputAction>(HandleInput);
+            messagingSystem.ListenForMessage<TimerAction>(Update);
         }
 
-        private void HandleInput(KeyInputMessage message)
+        private void HandleInput(KeyInputAction action)
         {
-            if(_guiIsVisible)
-                _guiManager.HandleKeyInput(message.Key);
+            if (_screenState.IsGuiVisible)
+                _screenState.GuiManager.HandleKeyInput(action.Key);
         }
-        public void Update(GameTime time, EntityManager entityManager)
+
+        private void Update(TimerAction action)
         {
-            if(_guiIsVisible)
-                _guiManager.Draw(time, _spriteBatch);
+            _screenState.SpriteBatch.GraphicsDevice.SetRenderTarget(_screenState.Gui);
+            _screenState.SpriteBatch.GraphicsDevice.Clear(Color.Transparent);
+            _screenState.SpriteBatch.Begin();
+            if (_screenState.IsGuiVisible)
+                _screenState.GuiManager.Draw(action.Time, _screenState.SpriteBatch);
+            _screenState.SpriteBatch.End();
         }
     }
 }

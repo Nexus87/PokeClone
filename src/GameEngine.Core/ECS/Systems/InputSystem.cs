@@ -29,7 +29,7 @@ namespace GameEngine.Core.ECS.Systems
 
             foreach (var entry in _keyMap.Where(x => HasKeyChangedToDown(x.Key)))
             {
-                _messagingSystem.SendMessage(new KeyInputMessage{Key = entry.Value});
+                _messagingSystem.SendMessage(new KeyInputAction{Key = entry.Value});
             }
         }
 

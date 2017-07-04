@@ -1,6 +1,6 @@
 ﻿namespace GameEngine.Core.ECS.Messages
 {
-    public class ShowGuiMessage
+    public class ShowGuiAction
     {
         public bool ShowGui { get; set; }
     }
