@@ -16,12 +16,13 @@ namespace GameEngine.Core
         internal readonly List<TextureProvider> TextureProviders = new List<TextureProvider>();
         private XnaSpriteBatch _spriteBatch;
         private StateManager _stateManager;
-        internal Action OnInit;
+        internal Action<GameRunner> OnContentLoad;
 
-        public GameRunner(Screen screen)
+        public GameRunner()
         {
-            _screen = screen;
             GraphicsDeviceManager = new GraphicsDeviceManager(this);
+            _screen = new Screen(new ScreenConstants(), GraphicsDeviceManager);
+
             Window.AllowUserResizing = true;
             Content.RootDirectory = @".";
 
@@ -49,7 +50,7 @@ namespace GameEngine.Core
             };
             _screen.WindowsResizeHandler(Window.ClientBounds.Width, Window.ClientBounds.Height);
             _stateManager = new StateManager(GraphicsDevice, new ScreenConstants());
-            OnInit?.Invoke();
+            OnContentLoad?.Invoke(this);
             _spriteBatch = new XnaSpriteBatch(GraphicsDevice);
         }
 

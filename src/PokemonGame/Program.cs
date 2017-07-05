@@ -1,6 +1,7 @@
 ﻿using System;
 using BattleMode.Core;
 using GameEngine.Core;
+using GameEngine.Core.ECS.Systems;
 using GameEngine.GUI;
 using GameEngine.GUI.Loader;
 using MainMode.Core;
@@ -29,30 +30,34 @@ namespace PokemonGame
 
             var config = new Configuration();
             var engine = new PokeEngine(config, "Content");
-            RegisterRenderers(engine.GuiSystem);
+            var skin = new ClassicSkin();
+            RegisterRenderers(skin);
+            //RegisterRenderers(engine.GuiSystem);
 
-            engine.RegisterModule(new PokemonGameModule());
-            engine.RegisterModule(new BattleModule());
-            engine.RegisterModule(new MainModule());
-            var pokemonSharedModule = new PokemonSharedModule(@"Content/Game.json");
-            engine.RegisterModule(pokemonSharedModule);
-            engine.RegisterContentModule(pokemonSharedModule);
-            engine.SetSkin(engine.GuiSystem.ClassicSkin);
-            engine.SetStartModule(startModule);
+            //engine.RegisterModule(new PokemonGameModule());
+            //engine.RegisterModule(new BattleModule());
+            //engine.RegisterModule(new MainModule());
+            //var pokemonSharedModule = new PokemonSharedModule(@"Content/Game.json");
+            //engine.RegisterModule(pokemonSharedModule);
+            //engine.RegisterContentModule(pokemonSharedModule);
+            //engine.SetSkin(engine.GuiSystem.ClassicSkin);
+            //engine.SetStartModule(startModule);
+            engine.SetSkin(skin);
             engine.Run();
         }
 
-        private static void RegisterRenderers(GuiSystem guiSystem)
+        private static void RegisterRenderers(ClassicSkin skin)
         {
-             guiSystem.ClassicSkin.AddAdditionalRenderer<ClassicLineRenderer, HpLineRenderer>(
-                t => new ClassicLineRenderer(t.GetTexture(ClassicSkin.Circle), t.Pixel, ClassicSkin.BackgroundColor)
-);
-            guiSystem.ClassicSkin.AddAdditionalRenderer<ClassicHpTextRenderer, HpTextRenderer>(
-                t => new ClassicHpTextRenderer(t.GetFont(ClassicSkin.DefaultFont))
-            );
+//            skin.SetRendererAs<>();
+//             skin.ClassicSkin.AddAdditionalRenderer<ClassicLineRenderer, HpLineRenderer>(
+//                t => new ClassicLineRenderer(t.GetTexture(ClassicSkin.Circle), t.Pixel, ClassicSkin.BackgroundColor)
+//);
+//            skin.ClassicSkin.AddAdditionalRenderer<ClassicHpTextRenderer, HpTextRenderer>(
+//                t => new ClassicHpTextRenderer(t.GetFont(ClassicSkin.DefaultFont))
+//            );
 
-            guiSystem.AddGuiElement("HpLine", (r, c) => new HpLineBuilder(r, c));
-            guiSystem.AddGuiElement("HpText", (r, c) => new HpTextBuilder(r, c));
+//            skin.AddGuiElement("HpLine", (r, c) => new HpLineBuilder(r, c));
+//            skin.AddGuiElement("HpText", (r, c) => new HpTextBuilder(r, c));
         }
     }
 }

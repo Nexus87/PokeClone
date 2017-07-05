@@ -14,5 +14,6 @@ namespace GameEngine.GUI
             where TComponent : IGuiComponent;
 
         void Init(TextureProvider textureProvider);
+        void AddTextureConfigurations(TextureConfigurationBuilder builder);
     }
 }
