@@ -13,7 +13,6 @@ namespace GameEngine.Core
     {
         private readonly Screen _screen;
         public readonly GraphicsDeviceManager GraphicsDeviceManager;
-        internal readonly List<TextureProvider> TextureProviders = new List<TextureProvider>();
         private XnaSpriteBatch _spriteBatch;
         private StateManager _stateManager;
         internal Action<GameRunner> OnContentLoad;
@@ -33,7 +32,18 @@ namespace GameEngine.Core
         {
             var screenState = _stateManager.CurrentState.ScreenState;
 
-            _screen.Draw(screenState.Scene, screenState.Gui, _spriteBatch);
+            _spriteBatch.GraphicsDevice.SetRenderTarget(_screen.Target);
+
+            _spriteBatch.Begin();
+            _spriteBatch.Draw(screenState.Scene);
+            _spriteBatch.Draw(screenState.Gui);
+            _spriteBatch.End();
+
+            _spriteBatch.GraphicsDevice.SetRenderTarget(null);
+            _spriteBatch.Begin();
+            _spriteBatch.Draw(_screen.Target, _screen.TargetRectangle);
+            _spriteBatch.End();
+
         }
 
         protected override void Update(GameTime gameTime)
@@ -49,15 +59,16 @@ namespace GameEngine.Core
                 _screen.WindowsResizeHandler(Window.ClientBounds.Width, Window.ClientBounds.Height);
             };
             _screen.WindowsResizeHandler(Window.ClientBounds.Width, Window.ClientBounds.Height);
+
             _stateManager = new StateManager(GraphicsDevice, new ScreenConstants());
-            OnContentLoad?.Invoke(this);
             _spriteBatch = new XnaSpriteBatch(GraphicsDevice);
+
         }
 
         protected override void LoadContent()
         {
             base.LoadContent();
-            TextureProviders.ForEach(x => x.Init(GraphicsDevice));
+            OnContentLoad?.Invoke(this);
         }
     }
 }
