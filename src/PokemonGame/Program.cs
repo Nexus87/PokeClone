@@ -37,9 +37,9 @@ namespace PokemonGame
             //engine.RegisterModule(new PokemonGameModule());
             //engine.RegisterModule(new BattleModule());
             //engine.RegisterModule(new MainModule());
-            //var pokemonSharedModule = new PokemonSharedModule(@"Content/Game.json");
+            var pokemonSharedModule = new PokemonSharedModule(@"Content/Game.json");
             //engine.RegisterModule(pokemonSharedModule);
-            //engine.RegisterContentModule(pokemonSharedModule);
+            engine.RegisterContentModule(pokemonSharedModule);
             //engine.SetSkin(engine.GuiSystem.ClassicSkin);
             //engine.SetStartModule(startModule);
             engine.SetSkin(skin);

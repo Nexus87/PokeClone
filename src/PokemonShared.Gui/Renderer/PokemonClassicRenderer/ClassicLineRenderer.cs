@@ -1,21 +1,23 @@
 using GameEngine.Graphics.General;
 using GameEngine.Graphics.Textures;
+using GameEngine.GUI;
 using Microsoft.Xna.Framework;
 
 namespace PokemonShared.Gui.Renderer.PokemonClassicRenderer
 {
     public class ClassicLineRenderer : HpLineRenderer
     {
-        private readonly ITexture2D _cup;
-        private readonly ITexture2D _pixel;
-        private readonly Color _backgroundColor;
+        private ITexture2D _cup;
+        private ITexture2D _pixel;
+        private Color _backgroundColor;
         private const float RelativeBorderSize = 0.2f;
 
-        public ClassicLineRenderer(ITexture2D cup, ITexture2D pixel, Color backgroundColor)
+
+        public override void Init(TextureProvider textureProvider)
         {
-            _cup = cup;
-            _pixel = pixel;
-            _backgroundColor = backgroundColor;
+            _cup = textureProvider.GetTexture(ClassicSkin.Circle);
+            _pixel = textureProvider.Pixel;
+            _backgroundColor = ClassicSkin.BackgroundColor;
         }
 
         protected override void RenderComponent(ISpriteBatch spriteBatch, HpLine component)

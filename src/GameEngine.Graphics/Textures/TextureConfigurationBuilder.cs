@@ -7,11 +7,11 @@ namespace GameEngine.Graphics.Textures
 {
     public class TextureConfigurationBuilder
     {
-        private readonly string _contentRoot;
+        public string ContentRoot { get; }
 
         public TextureConfigurationBuilder(string contentRoot)
         {
-            _contentRoot = contentRoot;
+            ContentRoot = contentRoot;
         }
 
         private readonly TempConfig _configurations = new TempConfig();
@@ -27,13 +27,13 @@ namespace GameEngine.Graphics.Textures
         public void ReadConfigFile(string configFile)
         {
             var path = Path.GetDirectoryName(configFile) ?? "";
-            var configuration = TextureConfigurationStorage.LoadTextureConfiguration(Path.Combine(_contentRoot, configFile));
+            var configuration = TextureConfigurationStorage.LoadTextureConfiguration(Path.Combine(ContentRoot, configFile));
 
             configuration.FontConfigurations.ForEach(x => x.Path = Path.Combine(path, x.Path));
             configuration.SingleTextureConfigurations.ForEach(x => x.Path = Path.Combine( path, x.Path));
             configuration.SpriteSheetConfigurations.ForEach(x =>
             {
-                x.MappingFile = Path.Combine(_contentRoot, path, x.MappingFile);
+                x.MappingFile = Path.Combine(ContentRoot, path, x.MappingFile);
                 x.TextureFile = Path.Combine(path, x.TextureFile);
             });
 

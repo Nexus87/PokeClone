@@ -1,13 +1,11 @@
 ﻿using GameEngine.Graphics.General;
 using GameEngine.GUI;
-using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
 using PokemonShared.Gui.Renderer;
 using PokemonShared.Models;
 
 namespace PokemonShared.Gui
 {
-    [GameType]
     public class HpText : AbstractGuiComponent
     {
         private readonly HpTextRenderer _renderer;
@@ -19,11 +17,6 @@ namespace PokemonShared.Gui
 
         public float PreferredTextHeight { get; set; }
 
-        protected override void DrawComponent(GameTime time, ISpriteBatch batch)
-        {
-            _renderer.Render(batch, this);
-        }
-
 
         public void SetPokemon(Pokemon pokemon)
         {
@@ -34,7 +27,7 @@ namespace PokemonShared.Gui
         public int CurrentHp { get; set; }
         public int MaxHp { get; set; }
 
-        protected override void Update()
+        public override void Update()
         {
             PreferredHeight = _renderer.GetPreferredHeight(this);
             PreferredWidth = _renderer.GetPreferredWidth(this);

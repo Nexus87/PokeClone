@@ -1,13 +1,11 @@
 ﻿using System;
 using GameEngine.Graphics.General;
 using GameEngine.GUI;
-using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
 using PokemonShared.Gui.Renderer;
 
 namespace PokemonShared.Gui
 {
-    [GameType]
     public class HpLine : AbstractGuiComponent
     {
         private readonly HpLineRenderer _renderer;
@@ -48,12 +46,7 @@ namespace PokemonShared.Gui
 
         public Color Color { get; set; }
 
-        protected override void DrawComponent(GameTime time, ISpriteBatch batch)
-        {
-            _renderer.Render(batch, this);
-        }
-
-        protected override void Update()
+        public override void Update()
         {
             var factor = _maxHp == 0 ? 0 : _currentHp / ((float)_maxHp);
             SetHpLineColor(factor);

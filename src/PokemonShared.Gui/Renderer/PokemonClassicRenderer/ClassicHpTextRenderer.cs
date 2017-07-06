@@ -1,15 +1,16 @@
 ﻿using GameEngine.Graphics.General;
 using GameEngine.Graphics.Textures;
+using GameEngine.GUI;
 
 namespace PokemonShared.Gui.Renderer.PokemonClassicRenderer
 {
     public class ClassicHpTextRenderer : HpTextRenderer
     {
-        private readonly ISpriteFont _font;
+        private ISpriteFont _font;
 
-        public ClassicHpTextRenderer(ISpriteFont font)
+        public override void Init(TextureProvider textureProvider)
         {
-            _font = font;
+            _font = textureProvider.GetFont(ClassicSkin.DefaultFont);
         }
 
         protected override void RenderComponent(ISpriteBatch spriteBatch, HpText component)

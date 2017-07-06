@@ -1,23 +1,23 @@
 ﻿using System.Xml.Linq;
+using Autofac;
 using GameEngine.Globals;
 using GameEngine.GUI;
 using GameEngine.GUI.Loader;
-using GameEngine.TypeRegistry;
 
 namespace PokemonShared.Gui.Builder
 {
     public class HpTextBuilder : GuiComponentBuilder
     {
-        private readonly IGameTypeRegistry _registry;
+        private readonly IContainer _container;
 
-        public HpTextBuilder(IGameTypeRegistry registry, ScreenConstants screenConstants) : base(screenConstants)
+        public HpTextBuilder(IContainer container, ScreenConstants screenConstants) : base(screenConstants)
         {
-            _registry = registry;
+            _container = container;
         }
 
         public override IGuiComponent Build(XElement xElement, object controller)
         {
-            var text = _registry.ResolveType<HpText>();
+            var text = _container.Resolve<HpText>();
             text.Area = ReadPosition(xElement);
             SetUpController(controller, text, xElement);
 
