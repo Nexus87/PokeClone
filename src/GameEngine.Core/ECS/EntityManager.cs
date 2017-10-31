@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace GameEngine.Core.ECS
 {
-    public class EntityManager
+    public class EntityManager : IEntityManager
     {
         private readonly List<Entity> _entities = new List<Entity>();
 

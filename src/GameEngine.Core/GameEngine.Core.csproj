@@ -68,7 +68,9 @@
     <Compile Include="ECS\Entity.cs" />
     <Compile Include="ECS\EntityManager.cs" />
     <Compile Include="ECS\IComponent.cs" />
+    <Compile Include="ECS\IEntityManager.cs" />
     <Compile Include="ECS\IMessageBus.cs" />
+    <Compile Include="ECS\MessageBus.cs" />
     <Compile Include="ECS\Systems\GuiSystem.cs" />
     <Compile Include="ECS\Systems\InputSystem.cs" />
     <Compile Include="ECS\Systems\RenderSystem.cs" />
