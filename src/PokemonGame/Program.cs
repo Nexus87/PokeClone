@@ -1,14 +1,8 @@
 ﻿using System;
-using BattleMode.Core;
+//using BattleMode.Core;
 using GameEngine.Core;
-using GameEngine.Core.ECS.Systems;
 using GameEngine.GUI;
-using GameEngine.GUI.Loader;
-using MainMode.Core;
 using PokemonShared.Core;
-using PokemonShared.Gui.Builder;
-using PokemonShared.Gui.Renderer;
-using PokemonShared.Gui.Renderer.PokemonClassicRenderer;
 
 namespace PokemonGame
 {
@@ -21,17 +15,12 @@ namespace PokemonGame
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        private static void Main(string[] args)
+        private static void Main()
         {
-            var startModule = "BattleMode";
             //var startModule = "MainMode";
-            if (args.Length != 0)
-                startModule = args[0];
 
-            var config = new Configuration();
-            var engine = new PokeEngine(config, "Content");
+            var engine = new PokeEngine("Content");
             var skin = new ClassicSkin();
-            RegisterRenderers(skin);
             //RegisterRenderers(engine.GuiSystem);
 
             //engine.RegisterModule(new PokemonGameModule());
@@ -43,21 +32,8 @@ namespace PokemonGame
             //engine.SetSkin(engine.GuiSystem.ClassicSkin);
             //engine.SetStartModule(startModule);
             engine.SetSkin(skin);
+            //engine.SetState(new BattleState());
             engine.Run();
-        }
-
-        private static void RegisterRenderers(ClassicSkin skin)
-        {
-//            skin.SetRendererAs<>();
-//             skin.ClassicSkin.AddAdditionalRenderer<ClassicLineRenderer, HpLineRenderer>(
-//                t => new ClassicLineRenderer(t.GetTexture(ClassicSkin.Circle), t.Pixel, ClassicSkin.BackgroundColor)
-//);
-//            skin.ClassicSkin.AddAdditionalRenderer<ClassicHpTextRenderer, HpTextRenderer>(
-//                t => new ClassicHpTextRenderer(t.GetFont(ClassicSkin.DefaultFont))
-//            );
-
-//            skin.AddGuiElement("HpLine", (r, c) => new HpLineBuilder(r, c));
-//            skin.AddGuiElement("HpText", (r, c) => new HpTextBuilder(r, c));
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using GameEngine.Globals;
+using GameEngine.Graphics.General;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -9,9 +10,40 @@ namespace GameEngine.Core
         private readonly ScreenConstants _screenConstants;
         private readonly GraphicsDeviceManager _graphicsDeviceManager;
 
-        public RenderTarget2D Target { get; private set; }
-        public Rectangle TargetRectangle { get; private set; }
+        private RenderTarget2D _guiRenderTarget;
+        private RenderTarget2D _sceneRenderTarget;
+        private RenderTarget2D _target;
+
+        private Rectangle TargetRectangle { get; set; }
         private GraphicsDevice _device;
+        private XnaSpriteBatch _spriteBatch;
+
+        public ISpriteBatch GuiSpriteBatch
+        {
+            get
+            {
+                _spriteBatch.GraphicsDevice.SetRenderTarget(_guiRenderTarget);
+                return _spriteBatch;
+            }
+        }
+
+        public ISpriteBatch SceneSpriteBatch
+        {
+            get
+            {
+                _spriteBatch.GraphicsDevice.SetRenderTarget(_sceneRenderTarget);
+                return _spriteBatch;
+            }
+        }
+
+        private XnaSpriteBatch DefaultSpriteBatch
+        {
+            get
+            {
+                _spriteBatch.GraphicsDevice.SetRenderTarget(null);
+                return _spriteBatch;
+            }
+        }
 
         private GraphicsDevice Device
         {
@@ -63,8 +95,34 @@ namespace GameEngine.Core
         private void Init()
         {
             _device = _graphicsDeviceManager.GraphicsDevice;
-            Target = new RenderTarget2D(Device, (int) _screenConstants.ScreenWidth,
+            
+            _target = CreateRenderTarget();
+            _guiRenderTarget = CreateRenderTarget();
+            _sceneRenderTarget = CreateRenderTarget();
+
+            _spriteBatch = new XnaSpriteBatch(_graphicsDeviceManager.GraphicsDevice);
+        }
+
+        private RenderTarget2D CreateRenderTarget()
+        {
+            return new RenderTarget2D(Device, 
+                (int) _screenConstants.ScreenWidth,
                 (int) _screenConstants.ScreenHeight);
+        }
+
+        public void Draw()
+        {
+            DefaultSpriteBatch.GraphicsDevice.SetRenderTarget(_target);
+
+            DefaultSpriteBatch.Begin();
+            DefaultSpriteBatch.Draw(_sceneRenderTarget);
+            DefaultSpriteBatch.Draw(_guiRenderTarget);
+            DefaultSpriteBatch.End();
+
+            DefaultSpriteBatch.GraphicsDevice.SetRenderTarget(null);
+            DefaultSpriteBatch.Begin();
+            DefaultSpriteBatch.Draw(_target, TargetRectangle);
+            DefaultSpriteBatch.End();
         }
     }
 }

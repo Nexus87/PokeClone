@@ -98,6 +98,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="Content\PokemonShared\MoveData.json" />
     <None Include="Content\PokemonShared\MoveSets.json" />
     <None Include="Content\PokemonShared\PokemonData.json" />

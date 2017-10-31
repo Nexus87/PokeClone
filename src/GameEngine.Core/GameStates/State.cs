@@ -1,44 +1,45 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using GameEngine.Core.ECS;
 using GameEngine.Core.ECS.Systems;
-using GameEngine.Graphics.General;
+using GameEngine.Globals;
 using GameEngine.GUI;
-using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 
 namespace GameEngine.Core.GameStates
 {
     public abstract class State
     {
+        private InputSystem InputSystem { get; }
+        private GuiSystem GuiSystem { get; }
+        private RenderSystem RenderSystem { get; }
+
+        protected readonly IObservable<bool> ShowGuiStream;
+        public Action<GameTime> Update;
+        private Screen _screen;
         public ScreenState ScreenState { get; set; }
-        public EntityManager EntityManager{ get; }
-        public MessagingSystem MessagingSystem { get; }
+        private readonly EntityManager _entityManager;
 
-        protected List<ISystem> Systems { get; } = new List<ISystem>();
-
-        protected State() : this(new EntityManager(), new MessagingSystem())
+        protected State(IReadOnlyDictionary<Keys, CommandKeys> keyMap, ISkin skin)
         {
-            
-        }
-
-        protected State(EntityManager entityManager, MessagingSystem messagingSystem)
-        {
-            EntityManager = entityManager;
-            MessagingSystem = messagingSystem;
+            InputSystem = new InputSystem(keyMap);
+            GuiSystem = new GuiSystem(skin);
+            RenderSystem = new RenderSystem();
+            _entityManager = new EntityManager();
         }
 
         protected virtual void InitDefault()
         {
-            Systems.Add(new GuiSystem(ScreenState));
-            Systems.Add(new RenderSystem(ScreenState, EntityManager));
         }
 
         protected abstract void InitCustom();
 
-        public void Init()
+        public void Init(Screen screen)
         {
+            _screen = screen;
             InitDefault();
             InitCustom();
-            Systems.ForEach(x => x.Init(MessagingSystem));
         }
 
         public abstract void Pause();
@@ -48,10 +49,6 @@ namespace GameEngine.Core.GameStates
 
     public class ScreenState
     {
-        public RenderTarget2D Scene { get; set; }
-        public RenderTarget2D Gui { get; set; }
-        public GuiManager GuiManager { get; set; } = new GuiManager();
         public bool IsGuiVisible { get; set; }
-        public ISpriteBatch SpriteBatch { get; set; }
     }
 }

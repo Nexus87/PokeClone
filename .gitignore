@@ -35,3 +35,4 @@ Content/source/.source
 src/packages/
 src/.vs/config/applicationhost.config
 src/.vs/PokeClone.sqlite
+/src/.vs/**

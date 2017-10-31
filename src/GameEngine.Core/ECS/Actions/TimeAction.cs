@@ -1,8 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace GameEngine.Core.ECS.Messages
+namespace GameEngine.Core.ECS.Actions
 {
-    public class TimerAction
+    public class TimeAction
     {
         public GameTime Time { get; set; }
     }

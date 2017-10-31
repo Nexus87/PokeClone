@@ -1,26 +1,26 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using GameEngine.Core.ECS.Messages;
+using GameEngine.Core.ECS.Actions;
 using GameEngine.Globals;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
 namespace GameEngine.Core.ECS.Systems
 {
-    public class InputSystem : ISystem
+    public class InputSystem
     {
         private readonly IReadOnlyDictionary<Keys, CommandKeys> _keyMap;
         private readonly KeyboardManager _keyboardManager;
-        private MessagingSystem _messagingSystem;
+        private IMessageBus _messageBus;
 
         public InputSystem(IReadOnlyDictionary<Keys, CommandKeys> keyMap)
         {
             _keyMap = keyMap;
             _keyboardManager = new KeyboardManager();
         }
-        public void Init(MessagingSystem messagingSystem)
+        public void Init(IMessageBus messageBus)
         {
-            _messagingSystem = messagingSystem;
+            _messageBus = messageBus;
         }
 
         public void Update(GameTime time, EntityManager entityManager)
@@ -29,7 +29,7 @@ namespace GameEngine.Core.ECS.Systems
 
             foreach (var entry in _keyMap.Where(x => HasKeyChangedToDown(x.Key)))
             {
-                _messagingSystem.SendMessage(new KeyInputAction{Key = entry.Value});
+                _messageBus.SendAction(new KeyInputAction{Key = entry.Value});
             }
         }
 

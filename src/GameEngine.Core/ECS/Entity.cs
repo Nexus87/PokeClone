@@ -1,16 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace GameEngine.Core.ECS
 {
     public class Entity
     {
         private readonly List<IComponent> _components = new List<IComponent>();
-        internal Entity(int id)
+        internal Entity(Guid id)
         {
             Id = id;
         }
 
-        public int Id { get; }
+        public Guid Id { get; }
 
         public void AddComponent(IComponent component)
         {

@@ -46,6 +46,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Windows" />
     <Reference Include="System.Xml" />
     <Reference Include="MonoGame.Framework">
       <HintPath>..\packages\MonoGame.Framework.DesktopGL.3.5.1.1679\lib\net40\MonoGame.Framework.dll</HintPath>
@@ -56,21 +57,21 @@
     <Reference Include="OpenTK">
       <HintPath>..\packages\MonoGame.Framework.DesktopGL.3.5.1.1679\lib\net40\OpenTK.dll</HintPath>
     </Reference>
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration.cs" />
+    <Compile Include="ECS\Actions\KeyInputAction.cs" />
+    <Compile Include="ECS\Actions\TimeAction.cs" />
+    <Compile Include="ECS\Components\PositionComponent.cs" />
     <Compile Include="ECS\Components\RenderComponent.cs" />
     <Compile Include="ECS\Entity.cs" />
     <Compile Include="ECS\EntityManager.cs" />
     <Compile Include="ECS\IComponent.cs" />
-    <Compile Include="ECS\ISystem.cs" />
-    <Compile Include="ECS\Actions\KeyInputAction.cs" />
-    <Compile Include="ECS\Actions\TimerAction.cs" />
-    <Compile Include="ECS\MessagingSystem.cs" />
+    <Compile Include="ECS\IMessageBus.cs" />
     <Compile Include="ECS\Systems\GuiSystem.cs" />
     <Compile Include="ECS\Systems\InputSystem.cs" />
     <Compile Include="ECS\Systems\RenderSystem.cs" />
-    <Compile Include="ECS\Actions\ShowGuiAction.cs" />
     <Compile Include="GameEngineModule.cs" />
     <Compile Include="GameStates\State.cs" />
     <Compile Include="GameStates\StateManager.cs" />
@@ -86,10 +87,6 @@
     <Compile Include="Screen.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GameEngine.ECS\GameEngine.ECS.csproj">
-      <Project>{F80C8B45-30A0-4566-B2F7-7B896F859065}</Project>
-      <Name>GameEngine.ECS</Name>
-    </ProjectReference>
     <ProjectReference Include="..\GameEngine.Globals\GameEngine.Globals.csproj">
       <Project>{B19BD4B3-DCAE-E1DC-6E65-2E476C6F6261}</Project>
       <Name>GameEngine.Globals</Name>
@@ -112,6 +109,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>

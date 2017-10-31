@@ -1,32 +1,22 @@
 ﻿using System.Collections.Generic;
-using GameEngine.Globals;
-using GameEngine.Graphics.General;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace GameEngine.Core.GameStates
 {
     public class StateManager
     {
-        private readonly GraphicsDevice _device;
-        private readonly ScreenConstants _screenConstants;
+        private readonly Screen _screen;
         private readonly Stack<State> _states = new Stack<State>();
 
-        public StateManager(GraphicsDevice device, ScreenConstants screenConstants)
+        public StateManager(Screen screen)
         {
-            _device = device;
-            _screenConstants = screenConstants;
+            _screen = screen;
         }
 
         public void PushState(State state)
         {
             _states.Push(state);
-            CurrentState.ScreenState = new ScreenState
-            {
-                Scene = new RenderTarget2D(_device, (int) _screenConstants.ScreenWidth, (int) _screenConstants.ScreenWidth),
-                Gui = new RenderTarget2D(_device, (int) _screenConstants.ScreenWidth, (int) _screenConstants.ScreenWidth),
-                SpriteBatch = new XnaSpriteBatch(_device)
-            };
-            CurrentState.Init();
+            state.Init(_screen);
+            CurrentState.ScreenState = new ScreenState();
         }
 
         public void PopState()

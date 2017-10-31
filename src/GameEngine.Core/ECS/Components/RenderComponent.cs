@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace GameEngine.Core.ECS.Components
 {
-    public class RenderComponent
+    public class RenderComponent : IComponent
     {
         public Rectangle Destination { get; set; }
         public int Z { get; set; }

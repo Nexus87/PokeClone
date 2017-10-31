@@ -1,4 +1,4 @@
-﻿using Autofac;
+﻿using GameEngine.Core.GameStates;
 using GameEngine.Core.ModuleManager;
 using GameEngine.Graphics.Textures;
 using GameEngine.GUI;
@@ -9,13 +9,12 @@ namespace GameEngine.Core
     public class PokeEngine
     {
         private const string EngineContentRoot = "Content";
-        private readonly ContainerBuilder _builder = new ContainerBuilder();
         private readonly GameRunner _gameRunner;
 
         private ISkin _skin;
         private readonly TextureConfigurationBuilder _textureConfigurationBuilder ;
 
-        public PokeEngine(Configuration config, string contentRoot)
+        public PokeEngine(string contentRoot)
         {
             _gameRunner = new GameRunner();
             _textureConfigurationBuilder = new TextureConfigurationBuilder(contentRoot);
@@ -60,6 +59,11 @@ namespace GameEngine.Core
         public void RegisterContentModule(IContentModule contentModule)
         {
             contentModule.AddTextureConfigurations(_textureConfigurationBuilder);
+        }
+
+        public void SetState(State state)
+        {
+            _gameRunner.InitialState = state;
         }
     }
 }

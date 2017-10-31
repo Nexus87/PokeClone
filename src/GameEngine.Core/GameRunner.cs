@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using GameEngine.Core.ECS.Messages;
 using GameEngine.Core.GameStates;
 using GameEngine.Globals;
-using GameEngine.Graphics.General;
-using GameEngine.Graphics.Textures;
 using Microsoft.Xna.Framework;
 
 namespace GameEngine.Core
@@ -13,9 +9,9 @@ namespace GameEngine.Core
     {
         private readonly Screen _screen;
         public readonly GraphicsDeviceManager GraphicsDeviceManager;
-        private XnaSpriteBatch _spriteBatch;
-        private StateManager _stateManager;
+
         internal Action<GameRunner> OnContentLoad;
+        internal StateManager StateManager;
 
         public GameRunner()
         {
@@ -28,27 +24,16 @@ namespace GameEngine.Core
             GraphicsDeviceManager.ApplyChanges();
         }
 
+        public State InitialState { get; set; }
+
         protected override void Draw(GameTime gameTime)
         {
-            var screenState = _stateManager.CurrentState.ScreenState;
-
-            _spriteBatch.GraphicsDevice.SetRenderTarget(_screen.Target);
-
-            _spriteBatch.Begin();
-            _spriteBatch.Draw(screenState.Scene);
-            _spriteBatch.Draw(screenState.Gui);
-            _spriteBatch.End();
-
-            _spriteBatch.GraphicsDevice.SetRenderTarget(null);
-            _spriteBatch.Begin();
-            _spriteBatch.Draw(_screen.Target, _screen.TargetRectangle);
-            _spriteBatch.End();
-
+            _screen.Draw();
         }
 
         protected override void Update(GameTime gameTime)
         {
-            _stateManager.CurrentState.MessagingSystem.SendMessage(new TimerAction {Time = gameTime});
+            StateManager.CurrentState.Update(gameTime);
         }
 
         protected override void Initialize()
@@ -60,9 +45,8 @@ namespace GameEngine.Core
             };
             _screen.WindowsResizeHandler(Window.ClientBounds.Width, Window.ClientBounds.Height);
 
-            _stateManager = new StateManager(GraphicsDevice, new ScreenConstants());
-            _spriteBatch = new XnaSpriteBatch(GraphicsDevice);
-
+            StateManager = new StateManager(_screen);
+            StateManager.PushState(InitialState);
         }
 
         protected override void LoadContent()

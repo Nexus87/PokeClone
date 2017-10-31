@@ -1,6 +1,6 @@
 ﻿using GameEngine.Globals;
 
-namespace GameEngine.Core.ECS.Messages
+namespace GameEngine.Core.ECS.Actions
 {
     public class KeyInputAction
     {
