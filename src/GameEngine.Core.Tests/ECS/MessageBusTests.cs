@@ -1,4 +1,5 @@
 ﻿using System.Threading;
+using System.Threading.Tasks;
 using FakeItEasy;
 using GameEngine.Core.ECS;
 using NUnit.Framework;
@@ -43,7 +44,8 @@ namespace GameEngine.Core.Tests.ECS
             RegisterHandlers();
 
             _messageBus.SendAction(StringAction);
-            WaitForActionProcessed();
+
+            _messageBus.StartProcess();
 
             A.CallTo(() => _handlerFake.StringHandler(StringAction, A<IEntityManager>._))
                 .MustHaveHappened(Repeated.Exactly.Once);
@@ -56,7 +58,7 @@ namespace GameEngine.Core.Tests.ECS
             RegisterHandlers();
 
             messageBus.SendAction(IntAction);
-            WaitForActionProcessed();
+            messageBus.StartProcess();
 
             A.CallTo(() => _handlerFake.StringHandler(A<string>._, A<IEntityManager>._))
                 .MustNotHaveHappened();
@@ -71,8 +73,7 @@ namespace GameEngine.Core.Tests.ECS
             _messageBus.UnregisterHandler<string>(_handlerFake.StringHandler);
 
             _messageBus.SendAction(StringAction);
-            WaitForActionProcessed();
-
+            _messageBus.StartProcess();
 
             A.CallTo(() => _handlerFake.StringHandler(StringAction, A<IEntityManager>._))
                 .MustNotHaveHappened();
@@ -85,7 +86,7 @@ namespace GameEngine.Core.Tests.ECS
 
             _messageBus.SendAction(StringAction);
             _messageBus.SendAction(_objectAction);
-            WaitForActionProcessed();
+            _messageBus.StartProcess();
 
 
             A.CallTo(() => _handlerFake.StringHandler(A<string>._, A<IEntityManager>._))
@@ -124,7 +125,7 @@ namespace GameEngine.Core.Tests.ECS
         }
 
         [Test]
-        public void Handlers_are_called_in_a_sync_way()
+        public async Task Handlers_are_called_in_a_sync_way()
         {
             var blockingHandler = BlockingHandler.Instance();
 
@@ -133,6 +134,8 @@ namespace GameEngine.Core.Tests.ECS
             _messageBus.SendAction(StringAction);
             _messageBus.SendAction(_objectAction);
 
+            var processTask = Task.Run(() => _messageBus.StartProcess());
+
             WaitForActionProcessed(1);
 
             A.CallTo(() => blockingHandler.ObjectHandler(_objectAction, A<IEntityManager>._))
@@ -140,7 +143,8 @@ namespace GameEngine.Core.Tests.ECS
 
             blockingHandler.StopBlocking();
 
-            WaitForActionProcessed();
+            await processTask;
+
             A.CallTo(() => blockingHandler.ObjectHandler(_objectAction, A<IEntityManager>._))
                 .MustHaveHappened();
         }

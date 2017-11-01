@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace GameEngine.Core.ECS
 {
@@ -10,7 +8,7 @@ namespace GameEngine.Core.ECS
         public int ActionCount => _messageQueue.Count;
 
         private readonly IEntityManager _entityManager;
-        private readonly ConcurrentQueue<object> _messageQueue = new ConcurrentQueue<object>();
+        private readonly Queue<object> _messageQueue = new Queue<object>();
 
         private readonly Dictionary<Type, List<Action<object, IEntityManager>>> _handlers = 
             new Dictionary<Type, List<Action<object, IEntityManager>>>();
@@ -18,31 +16,12 @@ namespace GameEngine.Core.ECS
         private readonly Dictionary<object, Action<object, IEntityManager>> _handlerMap =
             new Dictionary<object, Action<object, IEntityManager>>();
 
-        private readonly Task _processingTask;
 
         public MessageBus(IEntityManager entityManager)
         {
             _entityManager = entityManager;
-            _processingTask = new Task(QueueProcessor, TaskCreationOptions.LongRunning);
-            _processingTask.Start();
         }
 
-        private void QueueProcessor()
-        {
-            while (true)
-            {
-                object action;
-                List<Action<object, IEntityManager>> handlers;
-
-                if (!_messageQueue.TryDequeue(out action) ||
-                    !_handlers.TryGetValue(action.GetType(), out handlers)) continue;
-
-                foreach (var handler in handlers)
-                {
-                    handler(action, _entityManager);
-                }
-            }
-        }
 
         public void RegisterForAction<TAction>(Action<TAction, IEntityManager> handler)
         {
@@ -73,6 +52,18 @@ namespace GameEngine.Core.ECS
             }
 
             _handlers[typeof(TAction)].Remove(wrapper);
+        }
+
+        public void StartProcess()
+        {
+            while (_messageQueue.Count > 0)
+            {
+                var action = _messageQueue.Dequeue();
+                List<Action<object, IEntityManager>> handlers;
+
+                if (_handlers.TryGetValue(action.GetType(), out handlers))
+                    handlers.ForEach(x => x(action, _entityManager));
+            }
         }
 
         public void SendAction<TAction>(TAction action)
