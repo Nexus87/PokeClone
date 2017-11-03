@@ -6,39 +6,95 @@ namespace GameEngine.Core.ECS
 {
     public class EntityManager : IEntityManager
     {
-        private readonly List<Entity> _entities = new List<Entity>();
+        private Dictionary<Type, List<Component>> _components = new Dictionary<Type, List<Component>>();
 
-        public Entity CreateEntity()
+        public IEnumerable<T> GetComponentsOfType<T>() where T : Component
         {
-            return new Entity(Guid.NewGuid());
+            return TryGetComponents<T>()
+                .OfType<T>();
         }
 
-        public void AddEntity(Entity entity)
+        private IEnumerable<Component> TryGetComponents<T>() where T : Component
         {
-            _entities.Add(entity);
+            if (!_components.TryGetValue(typeof(T), out var components))
+            {
+                components = new List<Component>();
+                _components[typeof(T)] = components;
+            }
+            return components;
         }
 
-        public void RemoveEntity(Entity entity)
+        public IEnumerable<(T1, T2)> GetComponentsOfType<T1, T2>() where T1 : Component where T2 : Component
         {
-            _entities.Remove(entity);
+            var t1 = TryGetComponents<T1>();
+            var t2 = TryGetComponents<T2>();
+
+            return t1.Join(t2, 
+                x => x.EntityId, 
+                x => x.EntityId,
+                (c1, c2) => ((T1) c1, (T2) c2));
+
         }
 
-        public IEnumerable<T> GetComponentsOfType<T>() where T : IComponent
+        public IEnumerable<(T1, T2, T3)> GetComponentsOfType<T1, T2, T3>() where T1 : Component where T2 : Component where T3 : Component
         {
-            return _entities
-                .SelectMany(x => x.Components)
-                .Where(x => x.GetType() == typeof(T))
-                .Select(x => (T) x);
+            var t1 = TryGetComponents<T1>();
+            var t2 = TryGetComponents<T2>();
+            var t3 = TryGetComponents<T3>();
+
+            return t1.Join(t2,
+                    x => x.EntityId,
+                    x => x.EntityId,
+                    (c1, c2) => ((T1) c1, (T2) c2))
+                .Join(t3,
+                    x => x.Item1.EntityId,
+                    x => x.EntityId,
+                    (c1, c2) => (c1.Item1, c1.Item2, (T3) c2));
         }
 
-        public Entity GetEntityById(Guid id)
+        public IEnumerable<T> GetComponentByTypeAndEntity<T>(Entity entity) where T : Component
         {
-            return _entities.Single(x => x.Id == id);
+            return TryGetComponents<T>()
+                .Where(x => x.EntityId == entity.Id)
+                .OfType<T>();
         }
 
-        public void AddEntities(IEnumerable<Entity> entities)
+        public IEnumerable<(T1, T2)> GetComponentByTypeAndEntity<T1, T2>(Entity entity) where T1 : Component where T2 : Component
         {
-            _entities.AddRange(entities);
+            var t1 = TryGetComponents<T1>().Where(x => x.EntityId == entity.Id);
+            var t2 = TryGetComponents<T2>().Where(x => x.EntityId == entity.Id);
+
+            return t1.Join(t2,
+                x => x.EntityId,
+                x => x.EntityId,
+                (c1, c2) => ((T1)c1, (T2)c2));
+        }
+
+        public IEnumerable<(T1, T2, T3)> GetComponentByTypeAndEntity<T1, T2, T3>(Entity entity) where T1 : Component where T2 : Component where T3 : Component
+        {
+            var t1 = TryGetComponents<T1>().Where(x => x.EntityId == entity.Id);
+            var t2 = TryGetComponents<T2>().Where(x => x.EntityId == entity.Id);
+            var t3 = TryGetComponents<T3>().Where(x => x.EntityId == entity.Id);
+
+            return t1.Join(t2,
+                    x => x.EntityId,
+                    x => x.EntityId,
+                    (c1, c2) => ((T1)c1, (T2)c2))
+                .Join(t3,
+                    x => x.Item1.EntityId,
+                    x => x.EntityId,
+                    (c1, c2) => (c1.Item1, c1.Item2, (T3)c2));
+        }
+
+        public void AddComponent<TComponent>(TComponent component) where TComponent : Component
+        {
+            if (!_components.TryGetValue(typeof(TComponent), out var components))
+            {
+                components = new List<Component>();
+                _components[typeof(TComponent)] = components;
+            }
+
+            components.Add(component);
         }
     }
 }
