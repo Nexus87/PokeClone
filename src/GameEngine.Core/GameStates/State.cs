@@ -25,7 +25,7 @@ namespace GameEngine.Core.GameStates
         {
             InputSystem = new InputSystem(keyMap);
             GuiSystem = new GuiSystem(skin);
-            RenderSystem = new RenderSystem();
+            //RenderSystem = new RenderSystem();
             _entityManager = new EntityManager();
         }
 
