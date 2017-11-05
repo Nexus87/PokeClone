@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using GameEngine.Core.ECS.Actions;
+using GameEngine.Core.ECS.Components;
 using GameEngine.Globals;
 using GameEngine.Graphics.General;
 using GameEngine.GUI;
@@ -11,20 +13,18 @@ namespace GameEngine.Core.ECS.Systems
     public class GuiSystem
     {
         private readonly List<WidgetItem> _widgets = new List<WidgetItem>();
-        private readonly ISkin _skin;
 
-        public GuiSystem(ISkin skin)
-        {
-            _skin = skin;
-        }
 
         private IGuiComponent FocusedWidget => _widgets.LastOrDefault()?.Component;
 
-        public void Update(GameTime time, ISpriteBatch spriteBatch)
+        public void Update(TimeAction action, IEntityManager entityManager)
         {
+            var guiComponent = entityManager.GetFirstCompnentOfType<GuiComponent>();
+            var spriteBatch = guiComponent.SpriteBatch;
+
             spriteBatch.GraphicsDevice.Clear(Color.Transparent);
             spriteBatch.Begin();
-            Draw(spriteBatch);
+            Draw(spriteBatch, guiComponent.Skin);
             spriteBatch.End();
         }
 
@@ -59,25 +59,25 @@ namespace GameEngine.Core.ECS.Systems
             FocusedWidget?.HandleKeyInput(key);
         }
 
-        private void Draw(ISpriteBatch batch)
+        private void Draw(ISpriteBatch batch, ISkin skin)
         {
             var completeArea = batch.GraphicsDevice.ScissorRectangle;
-            _widgets.ForEach(x => DrawRecursive(x.Component, batch, completeArea));
+            _widgets.ForEach(x => DrawRecursive(x.Component, batch, completeArea, skin));
             batch.GraphicsDevice.ScissorRectangle = completeArea;
         }
 
         private void DrawRecursive(IGuiComponent component, ISpriteBatch batch,
-            Rectangle parentRectangle)
+            Rectangle parentRectangle, ISkin skin)
         {
             var componentRectangle = Rectangle.Intersect(parentRectangle, component.Area);
             batch.GraphicsDevice.ScissorRectangle = componentRectangle;
 
             component.Update();
-            _skin.GetRendererForComponent(component.GetType())?
+            skin.GetRendererForComponent(component.GetType())?
                 .Render(batch, component);
 
             foreach (var componentChild in component.Children)
-                DrawRecursive(componentChild, batch, componentRectangle);
+                DrawRecursive(componentChild, batch, componentRectangle, skin);
         }
 
         private class WidgetItem : IComparable<WidgetItem>

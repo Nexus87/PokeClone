@@ -88,7 +88,11 @@ namespace GameEngine.Core.Tests.ECS.Systems
         {
             _spriteBatch = A.Fake<ISpriteBatch>();
             _entityManager  = A.Fake<IEntityManager>();
-            return new RenderSystem(_spriteBatch);
+            var screen = A.Fake<IScreen>();
+            A.CallTo(() => screen.SceneSpriteBatch).Returns(_spriteBatch);
+            A.CallTo(() => _entityManager.GetFirstCompnentOfType<RenderAreaComponent>())
+                .Returns(new RenderAreaComponent(Guid.NewGuid(), screen));
+            return new RenderSystem();
         }
     }
 }

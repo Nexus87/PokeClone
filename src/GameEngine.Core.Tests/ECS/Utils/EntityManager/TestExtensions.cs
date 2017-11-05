@@ -12,5 +12,9 @@ namespace GameEngine.Core.Tests.ECS.Utils.EntityManager
         {
             entityManager.AddComponent(new SecondComponent(entity.Id));
         }
+        public static void AddThirdComponent(this Core.ECS.EntityManager entityManager, Entity entity)
+        {
+            entityManager.AddComponent(new ThirdComponent(entity.Id));
+        }
     }
 }

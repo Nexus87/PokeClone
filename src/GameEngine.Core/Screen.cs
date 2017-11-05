@@ -1,11 +1,12 @@
 ﻿using GameEngine.Globals;
 using GameEngine.Graphics.General;
+using GameEngine.GUI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace GameEngine.Core
 {
-    public class Screen
+    public class Screen : IScreen
     {
         private readonly ScreenConstants _screenConstants;
         private readonly GraphicsDeviceManager _graphicsDeviceManager;
@@ -18,6 +19,7 @@ namespace GameEngine.Core
         private GraphicsDevice _device;
         private XnaSpriteBatch _spriteBatch;
 
+        public ISkin Skin { get; set; }
         public ISpriteBatch GuiSpriteBatch
         {
             get

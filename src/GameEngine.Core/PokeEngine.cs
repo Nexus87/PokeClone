@@ -16,7 +16,7 @@ namespace GameEngine.Core
 
         public PokeEngine(string contentRoot)
         {
-            _gameRunner = new GameRunner();
+            _gameRunner = new GameRunner(new Configuration().KeyMap);
             _textureConfigurationBuilder = new TextureConfigurationBuilder(contentRoot);
         }
 

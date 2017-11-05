@@ -68,8 +68,12 @@
     <Compile Include="Configuration.cs" />
     <Compile Include="ECS\Actions\KeyInputAction.cs" />
     <Compile Include="ECS\Actions\TimeAction.cs" />
+    <Compile Include="ECS\Components\GuiComponent.cs" />
+    <Compile Include="ECS\Components\KeyMapComponent.cs" />
     <Compile Include="ECS\Components\PositionComponent.cs" />
     <Compile Include="ECS\Components\RenderComponent.cs" />
+    <Compile Include="ECS\Components\RenderAreaComponent.cs" />
+    <Compile Include="ECS\Entities\GameStateEntity.cs" />
     <Compile Include="ECS\Entity.cs" />
     <Compile Include="ECS\EntityManager.cs" />
     <Compile Include="ECS\IComponent.cs" />
@@ -86,6 +90,7 @@
     <Compile Include="GuiConfig.cs" />
     <Compile Include="IEngineInterface.cs" />
     <Compile Include="GameRunner.cs" />
+    <Compile Include="IScreen.cs" />
     <Compile Include="ModuleManager\IConfigurationHandler.cs" />
     <Compile Include="ModuleManager\IContentModule.cs" />
     <Compile Include="ModuleManager\ModuleConfiguration.cs" />
@@ -150,9 +155,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ECS\Entities\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup />
   <ItemGroup />
   <ItemGroup />

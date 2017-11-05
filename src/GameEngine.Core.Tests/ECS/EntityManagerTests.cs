@@ -52,6 +52,51 @@ namespace GameEngine.Core.Tests.ECS
             var result = entityManager.GetComponentByTypeAndEntity<FirstComponent>(_firstEntity);
             Assert.AreEqual(1, result.Count());
         }
+
+        [Test]
+        public void GetComponentsByType_with_three_component_types()
+        {
+            var entityManager = GetEntityManager();
+            SetupEntityManager(entityManager);
+            entityManager.AddSecondComponent(_firstEntity);
+            entityManager.AddThirdComponent(_firstEntity);
+
+            var result = entityManager.GetComponentsOfType<FirstComponent, SecondComponent, ThirdComponent>();
+            Assert.AreEqual(1, result.Count());
+        }
+
+        [Test]
+        public void GetComponentsByTypeAndEntity_with_three_component_types()
+        {
+            var entityManager = GetEntityManager();
+            SetupEntityManager(entityManager);
+            entityManager.AddSecondComponent(_firstEntity);
+            entityManager.AddThirdComponent(_firstEntity);
+
+            var result = entityManager.GetComponentByTypeAndEntity<FirstComponent, SecondComponent, ThirdComponent>(_firstEntity);
+            Assert.AreEqual(1, result.Count());
+        }
+
+        [Test]
+        public void GetComponentByType_for_unkown_type_returns_empty_list()
+        {
+            var entityManager = GetEntityManager();
+            SetupEntityManager(entityManager);
+
+            var result = entityManager.GetComponentsOfType<FirstComponent, SecondComponent, ThirdComponent>();
+            Assert.AreEqual(0, result.Count());
+        }
+
+        [Test]
+        public void GetComponentByTypeAndEntity_for_unkown_type_returns_empty_list()
+        {
+            var entityManager = GetEntityManager();
+            SetupEntityManager(entityManager);
+
+            var result = entityManager.GetComponentByTypeAndEntity<FirstComponent, SecondComponent, ThirdComponent>(_firstEntity);
+            Assert.AreEqual(0, result.Count());
+        }
+
         private EntityManager GetEntityManager()
         {
             return new EntityManager();

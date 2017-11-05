@@ -1,33 +1,31 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using GameEngine.Core.ECS.Actions;
-using GameEngine.Globals;
-using Microsoft.Xna.Framework;
+using GameEngine.Core.ECS.Components;
 using Microsoft.Xna.Framework.Input;
 
 namespace GameEngine.Core.ECS.Systems
 {
     public class InputSystem
     {
-        private readonly IReadOnlyDictionary<Keys, CommandKeys> _keyMap;
         private readonly KeyboardManager _keyboardManager;
         private IMessageBus _messageBus;
 
-        public InputSystem(IReadOnlyDictionary<Keys, CommandKeys> keyMap)
+        public InputSystem()
         {
-            _keyMap = keyMap;
             _keyboardManager = new KeyboardManager();
         }
+
         public void Init(IMessageBus messageBus)
         {
             _messageBus = messageBus;
         }
 
-        public void Update(GameTime time, EntityManager entityManager)
+        public void Update(TimeAction action, IEntityManager entityManager)
         {
+            var keyMap = entityManager.GetFirstCompnentOfType<KeyMapComponent>().KeyMap;
             _keyboardManager.Update();
 
-            foreach (var entry in _keyMap.Where(x => HasKeyChangedToDown(x.Key)))
+            foreach (var entry in keyMap.Where(x => HasKeyChangedToDown(x.Key)))
             {
                 _messageBus.SendAction(new KeyInputAction{Key = entry.Value});
             }
