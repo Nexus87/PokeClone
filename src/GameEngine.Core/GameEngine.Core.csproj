@@ -68,6 +68,7 @@
     <Compile Include="Configuration.cs" />
     <Compile Include="ECS\Actions\KeyInputAction.cs" />
     <Compile Include="ECS\Actions\TimeAction.cs" />
+    <Compile Include="ECS\Component.cs" />
     <Compile Include="ECS\Components\GuiComponent.cs" />
     <Compile Include="ECS\Components\KeyMapComponent.cs" />
     <Compile Include="ECS\Components\PositionComponent.cs" />
@@ -76,7 +77,6 @@
     <Compile Include="ECS\Entities\GameStateEntity.cs" />
     <Compile Include="ECS\Entity.cs" />
     <Compile Include="ECS\EntityManager.cs" />
-    <Compile Include="ECS\IComponent.cs" />
     <Compile Include="ECS\IEntityManager.cs" />
     <Compile Include="ECS\IMessageBus.cs" />
     <Compile Include="ECS\MessageBus.cs" />

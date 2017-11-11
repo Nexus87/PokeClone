@@ -4,9 +4,9 @@ using Microsoft.Xna.Framework.Content;
 
 namespace GameEngine.Graphics.Textures
 {
-    internal class SubTextureProvider
+    internal class TextureStore
     {
-        private readonly IEnumerable<TextureItem> _configs;
+        private readonly IEnumerable<TextureItem> _textureConfigs;
         private readonly IEnumerable<FontItem> _fontConfig;
         private readonly IEnumerable<SpriteSheetItem> _spriteSheetConfigs;
 
@@ -15,18 +15,17 @@ namespace GameEngine.Graphics.Textures
         private readonly Dictionary<string, ISpriteFont> _fonts = new Dictionary<string, ISpriteFont>();
         private bool _isInitialized;
 
-        public SubTextureProvider(TextureProviderConfiguration configuration, ContentManager contentManager)
+        public TextureStore(TextureProviderConfiguration configuration, ContentManager contentManager)
         {
             _contentManager = contentManager;
-            _configs = configuration.TextureConfigs;
+            _textureConfigs = configuration.TextureConfigs;
             _fontConfig = configuration.FontConfigs;
             _spriteSheetConfigs = configuration.SpriteSheetConfigs;
         }
 
         public ITexture2D GetTexture(string textureIdentifier)
         {
-            ITexture2D texture;
-            if (!_textures.TryGetValue(textureIdentifier, out texture))
+            if (!_textures.TryGetValue(textureIdentifier, out var texture))
             {
                 texture = CreateTexture(textureIdentifier);
             }
@@ -38,7 +37,7 @@ namespace GameEngine.Graphics.Textures
         {
             ITexture2D texture;
 
-            var textureConfig = _configs.SingleOrDefault(x => x.TextureName == textureIdentifier);
+            var textureConfig = _textureConfigs.SingleOrDefault(x => x.TextureName == textureIdentifier);
             if(textureConfig != null)
             {
                 texture =  new XnaTexture2D(textureConfig.Path, _contentManager);
@@ -75,8 +74,7 @@ namespace GameEngine.Graphics.Textures
 
         public ISpriteFont GetFont(string fontIdentifier)
         {
-            ISpriteFont font;
-            if (!_fonts.TryGetValue(fontIdentifier, out font))
+            if (!_fonts.TryGetValue(fontIdentifier, out var font))
             {
                 font = CreateFont(fontIdentifier);
             }

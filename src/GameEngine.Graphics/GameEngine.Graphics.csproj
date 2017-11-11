@@ -70,7 +70,7 @@
     <Compile Include="Textures\ISpriteFont.cs" />
     <Compile Include="Textures\ITexture2D.cs" />
     <Compile Include="Textures\SpriteSheetItem.cs" />
-    <Compile Include="Textures\SubTextureProvider.cs" />
+    <Compile Include="Textures\TextureStore.cs" />
     <Compile Include="Textures\TextureBuilder.cs" />
     <Compile Include="Textures\TextureConfigurationBuilder.cs" />
     <Compile Include="Textures\TextureItem.cs" />

@@ -2,13 +2,11 @@
 using System.Linq;
 using GameEngine.Globals;
 using GameEngine.Graphics.General;
-using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace GameEngine.Graphics.Textures
 {
-    [GameService(typeof(TextureBuilder))]
     public class TextureBuilder
     {
         private readonly GraphicsDeviceManager _deviceManager;
