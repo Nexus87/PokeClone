@@ -16,10 +16,12 @@ namespace GameEngineTest.Graphics
         [TestCase]
         public void Draw_NoImage_NothingIsDrawn()
         {
+            var renderer = new ClassicImageBoxRenderer();
             var testObj = CreateEmptyBox();
             var spriteBatch = new SpriteBatchMock();
 
-            testObj.Draw(spriteBatch);
+            testObj.Update();
+            renderer.Render(spriteBatch, testObj);
 
             Assert.IsEmpty(spriteBatch.DrawnObjects);
         }

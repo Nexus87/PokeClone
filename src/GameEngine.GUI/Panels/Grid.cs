@@ -2,14 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using GameEngine.Globals;
-using GameEngine.Graphics.General;
-using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
 
 namespace GameEngine.GUI.Panels
 
 {
-    [GameType]
     public class Grid : AbstractPanel
     {
         private readonly Table<GridCell> _cells = new Table<GridCell>();

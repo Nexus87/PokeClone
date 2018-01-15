@@ -16,7 +16,7 @@ namespace GameEngine.GUI.Renderers.PokemonClassicRenderer
             BottomMargin = 75;
         }
 
-        public override void Init(TextureProvider textureProvider)
+        public override void Init(ITextureProvider textureProvider)
         {
             _borderTexture = textureProvider.GetTexture(ClassicSkin.Border);
         }

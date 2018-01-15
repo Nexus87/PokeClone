@@ -1,11 +1,7 @@
-﻿using GameEngine.Graphics.General;
-using GameEngine.GUI.Renderers;
-using GameEngine.TypeRegistry;
-using Microsoft.Xna.Framework;
+﻿using GameEngine.GUI.Renderers;
 
 namespace GameEngine.GUI.Controlls
 {
-    [GameType]
     public class Label : AbstractGuiComponent
     {
         private readonly LabelRenderer _renderer;

@@ -26,8 +26,7 @@ namespace GameEngine.GUI.Test.Controls
             var listView = CreateListViewWithCellFactory(r => components[r]);
 
             listView.Model = model;
-            listView.Draw();
-
+            listView.Update();
             foreach (var mock in components)
             {
                 A.CallToSet(() => mock.Area).MustHaveHappened(Repeated.AtLeast.Once);
@@ -42,10 +41,10 @@ namespace GameEngine.GUI.Test.Controls
             var listView = CreateListViewWithCellFactory(r => components[r]);
 
             listView.Model = model;
-            listView.Draw();
+            listView.Update();
 
             model.Remove(model.Last());
-            listView.Draw();
+            listView.Update();
 
             A.CallToSet(() => components.Last().Area).MustHaveHappened(Repeated.Exactly.Times(InitialCallTimes));
         }
@@ -58,10 +57,10 @@ namespace GameEngine.GUI.Test.Controls
 
             model.Remove(5);
             listView.Model = model;
-            listView.Draw();
+            listView.Update();
 
             model.Insert(5, 5);
-            listView.Draw();
+            listView.Update();
 
             var newComponent = listView.GetComponent(5) as FakeComponent;
             Assert.AreEqual(5, newComponent.Value);
@@ -75,10 +74,10 @@ namespace GameEngine.GUI.Test.Controls
             var listView = CreateListViewWithCellFactory(r => components[r]);
 
             listView.Model = model;
-            listView.Draw();
+            listView.Update();
 
             model.Add(rows);
-            listView.Draw();
+            listView.Update();
 
             A.CallToSet(() => components.Last().Area).MustHaveHappened(Repeated.AtLeast.Once);
 

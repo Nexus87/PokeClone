@@ -1,11 +1,9 @@
 ﻿using System;
 using GameEngine.Globals;
 using GameEngine.GUI.Renderers;
-using GameEngine.TypeRegistry;
 
 namespace GameEngine.GUI.Controlls
 {
-    [GameType]
     public sealed class Button : AbstractGuiComponent
     {
         private readonly ButtonRenderer _buttonRenderer;

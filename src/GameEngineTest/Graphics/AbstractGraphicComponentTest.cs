@@ -25,7 +25,7 @@ namespace GameEngineTest.Graphics
         private AbstractGuiComponent CreateComponentMockWithoutInvalidation()
         {
             var mock = CreateComponentMock();
-            mock.Draw();
+            mock.Update();
             return mock;
         }
 
@@ -39,7 +39,7 @@ namespace GameEngineTest.Graphics
         {
             var componentMock = CreateComponentMock();
 
-            componentMock.Draw();
+            componentMock.Update();
 
             A.CallTo(componentMock)
                 .Where(x => x.Method.Name == "Update")
@@ -52,7 +52,7 @@ namespace GameEngineTest.Graphics
             var componentMock = CreateComponentMockWithoutInvalidation();
             componentMock.XPosition(componentMock.XPosition() + 10.0f);
 
-            componentMock.Draw();
+            componentMock.Update();
 
             A.CallTo(componentMock)
                 .Where(x => x.Method.Name == "Update")
@@ -65,7 +65,7 @@ namespace GameEngineTest.Graphics
             var componentMock = CreateComponentMockWithoutInvalidation();
             componentMock.YPosition(componentMock.YPosition() + 10.0f);
 
-            componentMock.Draw();
+            componentMock.Update();
 
             A.CallTo(componentMock)
                 .Where(x => x.Method.Name == "Update")
@@ -78,7 +78,7 @@ namespace GameEngineTest.Graphics
             var componentMock = CreateComponentMockWithoutInvalidation();
             componentMock.Width(componentMock.Width() + 10.0f);
 
-            componentMock.Draw();
+            componentMock.Update();
 
             A.CallTo(componentMock)
                 .Where(x => x.Method.Name == "Update")
@@ -91,39 +91,12 @@ namespace GameEngineTest.Graphics
             var componentMock = CreateComponentMockWithoutInvalidation();
             componentMock.Height(componentMock.Height() + 10.0f);
 
-            componentMock.Draw();
+            componentMock.Update();
 
             A.CallTo(componentMock)
                 .Where(x => x.Method.Name == "Update")
                 .MustHaveHappened(Repeated.Exactly.Times(IntialCallTimes + 1));
         }
-
-        [TestCase]
-        public void Draw_SetArea_NoUpdateCall()
-        {
-            var componentMock = CreateComponentMockWithoutInvalidation();
-            var sameArea = new Rectangle(componentMock.Area.Location, componentMock.Area.Size);
-            componentMock.Area = sameArea;
-
-            componentMock.Draw();
-
-            A.CallTo(componentMock)
-                .Where(x => x.Method.Name == "Update")
-                .MustHaveHappened(Repeated.Exactly.Times(IntialCallTimes));
-        }
-
-        [TestCase]
-        public void Draw_Call_DrawComponentCalled()
-        {
-            var componentMock = CreateComponentMock();
-
-            componentMock.Draw();
-
-            A.CallTo(componentMock)
-                .Where(x => x.Method.Name == "DrawComponent")
-                .MustHaveHappened(Repeated.AtLeast.Once);
-        }
-
 
         protected override IGuiComponent CreateComponent()
         {

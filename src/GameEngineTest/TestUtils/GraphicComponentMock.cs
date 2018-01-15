@@ -47,9 +47,14 @@ namespace GameEngineTest.TestUtils
         public Rectangle Area { get; set; }
 
         public IGuiComponent Parent { get; set; }
-        public IEnumerable<IGuiComponent> Children { get; } = new List<IGuiComponent>();
+        public List<IGuiComponent> Children { get; } = new List<IGuiComponent>();
         public bool IsSelected { get; set; }
         public bool IsSelectable { get; set; }
+        public void Update()
+        {
+            throw new NotImplementedException();
+        }
+
         public virtual void HandleKeyInput(CommandKeys key)
         {
             throw new NotImplementedException();

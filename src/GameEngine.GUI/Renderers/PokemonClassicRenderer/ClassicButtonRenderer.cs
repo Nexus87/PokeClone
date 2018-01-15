@@ -10,7 +10,7 @@ namespace GameEngine.GUI.Renderers.PokemonClassicRenderer
         private ITexture2D _arrow;
         private ISpriteFont _font;
 
-        public override void Init(TextureProvider textureProvider)
+        public override void Init(ITextureProvider textureProvider)
         {
             _arrow = textureProvider.GetTexture(ClassicSkin.Arrow);
             _font = textureProvider.GetFont(ClassicSkin.DefaultFont);

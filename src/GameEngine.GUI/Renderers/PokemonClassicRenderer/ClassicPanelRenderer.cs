@@ -8,7 +8,7 @@ namespace GameEngine.GUI.Renderers.PokemonClassicRenderer
     {
         private ITexture2D _pixel;
 
-        public override void Init(TextureProvider textureProvider)
+        public override void Init(ITextureProvider textureProvider)
         {
             _pixel = textureProvider.Pixel;
         }

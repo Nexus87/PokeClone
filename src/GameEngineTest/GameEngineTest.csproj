@@ -96,10 +96,6 @@
     <Compile Include="Utils\TableTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GameEngine.Entities\GameEngine.Entities.csproj">
-      <Project>{C80E7E11-9184-46F3-B66E-236229E44614}</Project>
-      <Name>GameEngine.Entities</Name>
-    </ProjectReference>
     <ProjectReference Include="..\GameEngine.Core\GameEngine.Core.csproj">
       <Project>{656D6147-6E45-6967-6E65-2E4C696E7578}</Project>
       <Name>GameEngine.Core</Name>
@@ -115,10 +111,6 @@
     <ProjectReference Include="..\GameEngine.GUI\GameEngine.GUI.csproj">
       <Project>{DDE2CFB0-6E45-6967-6E65-2E4755492E4C}</Project>
       <Name>GameEngine.GUI</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GameEngine.TypeRegistry\GameEngine.TypeRegistry.csproj">
-      <Project>{73200884-85C6-4A3D-A3C2-A53D9C632613}</Project>
-      <Name>GameEngine.TypeRegistry</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

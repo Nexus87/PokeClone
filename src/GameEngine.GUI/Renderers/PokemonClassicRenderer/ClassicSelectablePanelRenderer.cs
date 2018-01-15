@@ -11,7 +11,7 @@ namespace GameEngine.GUI.Renderers.PokemonClassicRenderer
         private ITexture2D _arrow;
         private const int DefaultArrowSize = 32;
 
-        public override void Init(TextureProvider textureProvider)
+        public override void Init(ITextureProvider textureProvider)
         {
             _arrow = textureProvider.GetTexture(ClassicSkin.Arrow);
         }

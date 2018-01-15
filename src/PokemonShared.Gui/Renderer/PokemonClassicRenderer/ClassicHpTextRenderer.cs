@@ -8,7 +8,7 @@ namespace PokemonShared.Gui.Renderer.PokemonClassicRenderer
     {
         private ISpriteFont _font;
 
-        public override void Init(TextureProvider textureProvider)
+        public override void Init(ITextureProvider textureProvider)
         {
             _font = textureProvider.GetFont(ClassicSkin.DefaultFont);
         }

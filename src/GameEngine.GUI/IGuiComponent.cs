@@ -38,7 +38,7 @@ namespace GameEngine.GUI
         Rectangle Area { get; set; }
 
         IGuiComponent Parent { get; set; }
-        IEnumerable<IGuiComponent> Children { get; }
+        List<IGuiComponent> Children { get; }
 
         bool IsSelected { get; set; }
         bool IsSelectable { get; }

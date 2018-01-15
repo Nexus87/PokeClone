@@ -4,15 +4,12 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using GameEngine.Globals;
-using GameEngine.Graphics.General;
-using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
 
 namespace GameEngine.GUI.Controlls
 {
     public delegate IGuiComponent ListCellFactory<in T>(T value);
 
-    [GameType]
     public sealed class ListView<T> : AbstractGuiComponent
     {
         private ListCellFactory<T> _listCellFactory = delegate { return null; };

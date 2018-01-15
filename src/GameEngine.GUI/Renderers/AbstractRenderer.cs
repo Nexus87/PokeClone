@@ -38,7 +38,7 @@ namespace GameEngine.GUI.Renderers
 #endif
         }
 
-        public abstract void Init(TextureProvider textureProvider);
+        public abstract void Init(ITextureProvider textureProvider);
 
         protected abstract void RenderComponent(ISpriteBatch spriteBatch, T component);
     }

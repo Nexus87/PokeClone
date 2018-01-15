@@ -6,7 +6,6 @@ using GameEngine.GUI;
 using GameEngine.GUI.Components;
 using GameEngine.GUI.Panels;
 using GameEngine.GUI.Renderers;
-using GameEngine.TypeRegistry;
 
 namespace GameEngine.Core
 {
@@ -31,26 +30,26 @@ namespace GameEngine.Core
             builder.Register(x => _engine).AsImplementedInterfaces();
             builder.Register(x => _screenConstants);
             builder.Register(x => _engine.GraphicsDeviceManager);
-
-            builder.RegisterAssemblyTypes(new[]
-                {
-                    typeof(GameEngineModule).Assembly,
-                    typeof(IGuiComponent).Assembly,
-                    typeof(TextureBuilder).Assembly
-                }).Where(x => x.CustomAttributes.Any(y => y.AttributeType == typeof(GameServiceAttribute)))
-                .AsImplementedInterfaces()
-                .AsSelf()
-                .SingleInstance();
-
-            builder.RegisterAssemblyTypes(new[]
-                {
-                    typeof(GameEngineModule).Assembly,
-                    typeof(IGuiComponent).Assembly,
-                    typeof(TextureBuilder).Assembly
-                }).Where(x => x.CustomAttributes.Any(y => y.AttributeType == typeof(GameTypeAttribute)))
-                .AsImplementedInterfaces()
-                .AsSelf()
-                .InstancePerDependency();
+            // TODO
+            //builder.RegisterAssemblyTypes(new[]
+            //    {
+            //        typeof(GameEngineModule).Assembly,
+            //        typeof(IGuiComponent).Assembly,
+            //        typeof(TextureBuilder).Assembly
+            //    }).Where(x => x.CustomAttributes.Any(y => y.AttributeType == typeof(GameServiceAttribute)))
+            //    .AsImplementedInterfaces()
+            //    .AsSelf()
+            //    .SingleInstance();
+            // TODO
+            //builder.RegisterAssemblyTypes(new[]
+            //    {
+            //        typeof(GameEngineModule).Assembly,
+            //        typeof(IGuiComponent).Assembly,
+            //        typeof(TextureBuilder).Assembly
+            //    }).Where(x => x.CustomAttributes.Any(y => y.AttributeType == typeof(GameTypeAttribute)))
+            //    .AsImplementedInterfaces()
+            //    .AsSelf()
+            //    .InstancePerDependency();
 
             builder.Register(
                 x => new Panel(x.Resolve<PanelRenderer>())

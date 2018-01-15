@@ -7,7 +7,7 @@ namespace GameEngine.GUI.Renderers.PokemonClassicRenderer
 {
     public class ClassicScrollAreaRenderer : ScrollAreaRenderer
     {
-        public override void Init(TextureProvider textureProvider)
+        public override void Init(ITextureProvider textureProvider)
         {
         }
 

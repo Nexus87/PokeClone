@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using FakeItEasy;
+using GameEngine.Graphics.Textures;
 using GameEngine.GUI.Components;
 using GameEngine.GUI.Controlls;
 using GameEngine.GUI.Renderers.PokemonClassicRenderer;
@@ -34,7 +35,7 @@ namespace GameEngine.GUI.Test.Controls
             A.CallTo(() => splitterMock.SplitText(A<int>.Ignored, A<string>.Ignored)).Returns(new List<string>());
             textBox.Text = SampleString;
 
-            textBox.Draw(new SpriteBatchMock());
+            textBox.Update();
 
             A.CallTo(() => splitterMock.SplitText(A<int>.Ignored, SampleString))
                 .MustHaveHappened(Repeated.AtLeast.Once);
@@ -82,7 +83,7 @@ namespace GameEngine.GUI.Test.Controls
             var textBox = CreateTextBox(splitterStub);
 
             textBox.Text = SampleString;
-            textBox.Draw(new SpriteBatchMock());
+            textBox.Update();
 
             var componentStrings = textBox.Lines.Select(x => x.Text).ToList();
             Assert.Contains(firstLine, componentStrings);
@@ -100,7 +101,7 @@ namespace GameEngine.GUI.Test.Controls
 
             textBox.Text = SampleString;
             textBox.NextLine();
-            textBox.Draw(new SpriteBatchMock());
+            textBox.Update();;
 
             var componentStrings = textBox.Lines.Select(x => x.Text).ToList();
             Assert.Contains(firstLine, componentStrings);
@@ -119,7 +120,7 @@ namespace GameEngine.GUI.Test.Controls
             textBox.Text = SampleString;
             textBox.NextLine();
             textBox.NextLine();
-            textBox.Draw(new SpriteBatchMock());
+            textBox.Update();
 
             var componentStrings = textBox.Lines.Select(x => x.Text).ToList();
             Assert.Contains(firstLine, componentStrings);
@@ -138,7 +139,7 @@ namespace GameEngine.GUI.Test.Controls
 
             textBox.Text = SampleString;
             textBox.NextLine();
-            textBox.Draw(new SpriteBatchMock());
+            textBox.Update();
 
             var componentStrings = textBox.Lines.Select(x => x.Text).ToList();
             Assert.Contains(thirdLine, componentStrings);
@@ -173,7 +174,12 @@ namespace GameEngine.GUI.Test.Controls
         }
         private TextArea CreateTextBox(ITextSplitter splitter)
         {
-            var box = new TextArea(new ClassicTextAreaRenderer(FontMock), splitter);
+            var textureProvider = A.Fake<ITextureProvider>();
+            A.CallTo(() => textureProvider.GetFont(A<string>._))
+                .Returns(FontMock);
+            var renderer = new ClassicTextAreaRenderer();
+            renderer.Init(textureProvider);
+            var box = new TextArea(renderer, splitter);
             box.SetCoordinates(10, 10, 300, 400);
             return box;
         }

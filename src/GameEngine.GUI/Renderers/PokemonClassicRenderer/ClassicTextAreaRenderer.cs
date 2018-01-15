@@ -13,7 +13,7 @@ namespace GameEngine.GUI.Renderers.PokemonClassicRenderer
             LineSpacing = 10;
         }
 
-        public override void Init(TextureProvider textureProvider)
+        public override void Init(ITextureProvider textureProvider)
         {
             _font = textureProvider.GetFont(ClassicSkin.DefaultFont);
         }

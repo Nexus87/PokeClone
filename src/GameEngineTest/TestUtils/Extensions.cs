@@ -1,6 +1,4 @@
 ﻿using System;
-using GameEngine.Core;
-using GameEngine.Entities;
 using GameEngine.Graphics.General;
 using GameEngine.GUI;
 using Microsoft.Xna.Framework;
@@ -10,24 +8,20 @@ namespace GameEngineTest.TestUtils
 {
     public static class Extensions
     {
-        public static void Draw(this GuiManager manager)
-        {
-            manager.Draw(new GameTime(), new SpriteBatchMock());
-        }
-        public static void Draw(this IGuiComponent component, ISpriteBatch spriteBatch)
-        {
-            component.Draw(new GameTime(), spriteBatch);
-        }
+        //public static void Draw(this GuiManager manager)
+        //{
+        //    manager.Draw(new GameTime(), new SpriteBatchMock());
+        //}
+        //public static void Draw(this IGuiComponent component, ISpriteBatch spriteBatch)
+        //{
+        //    component.Draw(new GameTime(), spriteBatch);
+        //}
 
-        public static void Draw(this IGuiComponent component)
-        {
-            component.Draw(new GameTime(), new SpriteBatchMock());
-        }
+        //public static void Draw(this IGuiComponent component)
+        //{
+        //    component.Draw(new GameTime(), new SpriteBatchMock());
+        //}
 
-        public static void Update(this IGameEntity entity)
-        {
-            entity.Update(new GameTime());
-        }
 
         public static void IsInConstraints(this IGuiComponent component, float x, float y, float width, float height)
         {

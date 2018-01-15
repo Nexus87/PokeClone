@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using GameEngine.Globals;
-using GameEngine.Graphics.General;
 using GameEngine.GUI.Renderers;
-using GameEngine.TypeRegistry;
-using Microsoft.Xna.Framework;
 
 namespace GameEngine.GUI.Panels
 {
-    [GameType]
     public class Window : AbstractPanel
     {
         private readonly WindowRenderer _renderer;

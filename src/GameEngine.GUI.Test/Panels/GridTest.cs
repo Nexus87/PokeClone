@@ -74,8 +74,7 @@ namespace GameEngine.GUI.Test.Panels
             var grid = CreateGrid(gridPosition, rows, columns);
             var components = FillGrid(grid, rows.Count, columns.Count);
 
-            grid.Draw();
-
+            grid.Update();
             VerifyComponentsHaveExpectedPosition(components, expectedPositions);
         }
 
@@ -144,8 +143,7 @@ namespace GameEngine.GUI.Test.Panels
             var grid = CreateGrid(gridPosition, rows, columns);
             var components = FillGrid(grid, rows.Count, columns.Count);
 
-            grid.Draw();
-
+            grid.Update();
             VerifyComponentsHaveExpectedPosition(components, expectedPositions);
         }
 
@@ -230,8 +228,7 @@ namespace GameEngine.GUI.Test.Panels
             var grid = CreateGrid(gridPosition, rows, columns);
             var components = FillGridWithPreferedSizes(grid, preferredSizes, rows.Count, columns.Count);
 
-            grid.Draw();
-
+            grid.Update();
             VerifyComponentsHaveExpectedPosition(components, expectedPositions);
         }
 
@@ -271,8 +268,7 @@ namespace GameEngine.GUI.Test.Panels
             var grid = CreateGrid(gridPosition, rows, columns);
             var components = FillGridWithPreferedSizes(grid, preferredSizes, rows.Count, columns.Count);
 
-            grid.Draw();
-
+            grid.Update();
             VerifyComponentsHaveExpectedPosition(components, expectedPositions);
         }
 
@@ -330,7 +326,7 @@ namespace GameEngine.GUI.Test.Panels
             var components = FillGrid(grid, rows, columns);
 
             grid.RemoveColumn(columnToBeRemoved);
-            grid.Draw();
+            grid.Update();
 
             foreach (var component in components.EnumerateRows(columnToBeRemoved))
             {
@@ -351,7 +347,7 @@ namespace GameEngine.GUI.Test.Panels
             var components = FillGrid(grid, rows, columns);
 
             grid.RemoveRow(rowToBeRemoved);
-            grid.Draw();
+            grid.Update();
 
             foreach (var component in components.EnumerateColumns(rowToBeRemoved))
             {
@@ -438,8 +434,7 @@ namespace GameEngine.GUI.Test.Panels
 
             grid.SetComponent(firstComponent, 0, 0, 2);
 
-            grid.Draw();
-
+            grid.Update();
             Assert.AreEqual(expectedAreas[0, 0], firstComponent.Area);
         }
 
@@ -470,8 +465,7 @@ namespace GameEngine.GUI.Test.Panels
 
             grid.SetComponent(firstComponent, 0, 0, 1, 2);
 
-            grid.Draw();
-
+            grid.Update();
             Assert.AreEqual(expectedAreas[0, 0], firstComponent.Area);
         }
 

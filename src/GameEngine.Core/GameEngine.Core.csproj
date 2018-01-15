@@ -115,10 +115,6 @@
       <Project>{1CA01096-AE42-4FF6-BF8D-AB39A94F4F6F}</Project>
       <Name>GameEngine.Tools</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GameEngine.TypeRegistry\GameEngine.TypeRegistry.csproj">
-      <Project>{73200884-85C6-4A3D-A3C2-A53D9C632613}</Project>
-      <Name>GameEngine.TypeRegistry</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

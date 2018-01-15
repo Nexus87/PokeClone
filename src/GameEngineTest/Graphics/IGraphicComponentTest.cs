@@ -80,7 +80,7 @@ namespace GameEngineTest.Graphics
             var batch = new SpriteBatchMock();
             testComponent.SetCoordinates(x, y, width, height);
 
-            testComponent.Draw(batch);
+            testComponent.Update();
 
             foreach (var obj in batch.DrawnObjects)
                 obj.IsInConstraints(testComponent);

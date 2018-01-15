@@ -6,7 +6,7 @@ namespace GameEngine.GUI.Renderers.PokemonClassicRenderer
 {
     public class ClassicImageBoxRenderer : ImageBoxRenderer
     {
-        public override void Init(TextureProvider textureProvider)
+        public override void Init(ITextureProvider textureProvider)
         {
         }
 

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using GameEngine.Globals;
-using GameEngine.Graphics.General;
 using Microsoft.Xna.Framework;
 
 namespace GameEngine.GUI
@@ -18,14 +17,13 @@ namespace GameEngine.GUI
         protected bool NeedsUpdate { get; set; }
         private float _preferredHeight;
         private float _preferredWidth;
-        protected readonly List<IGuiComponent> children = new List<IGuiComponent>();
         private Rectangle _area;
         private bool _isSelected;
 
         public event EventHandler<GraphicComponentSizeChangedEventArgs> PreferredSizeChanged;
 
 
-        protected void OnPreferredSizeChanged(GraphicComponentSizeChangedEventArgs eventArgs)
+        private void OnPreferredSizeChanged(GraphicComponentSizeChangedEventArgs eventArgs)
         {
             PreferredSizeChanged?.Invoke(this, eventArgs);
         }
@@ -38,11 +36,8 @@ namespace GameEngine.GUI
 
 
         public virtual float PreferredHeight {
-            get
-            {
-                return _preferredHeight;
-            }
-            set
+            get => _preferredHeight;
+            protected set
             {
                 if (value.AlmostEqual(_preferredHeight))
                     return;
@@ -53,11 +48,8 @@ namespace GameEngine.GUI
 
         public virtual float PreferredWidth
         {
-            get
-            {
-                return _preferredWidth;
-            }
-            set
+            get => _preferredWidth;
+            protected set
             {
                 if (value.AlmostEqual(_preferredWidth))
                     return;
@@ -70,7 +62,7 @@ namespace GameEngine.GUI
 
         public virtual Rectangle Area
         {
-            get { return _area; }
+            get => _area;
             set
             {
                 if(_area == value)
@@ -83,11 +75,11 @@ namespace GameEngine.GUI
 
         public IGuiComponent Parent { get; set; }
 
-        public IEnumerable<IGuiComponent> Children => children;
+        public List<IGuiComponent> Children { get; } = new List<IGuiComponent>();
 
         public bool IsSelected
         {
-            get { return _isSelected; }
+            get => _isSelected;
             set
             {
                 if(_isSelected == value)
@@ -109,7 +101,7 @@ namespace GameEngine.GUI
         {
         }
 
-        protected virtual void OnComponentSelected(ComponentSelectedEventArgs e)
+        protected void OnComponentSelected(ComponentSelectedEventArgs e)
         {
             ComponentSelected?.Invoke(this, e);
         }

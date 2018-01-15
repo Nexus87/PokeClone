@@ -81,7 +81,6 @@
     <Compile Include="Controlls\TextAreaLine.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="GraphicComponentSizeChangedEventArgs.cs" />
-    <Compile Include="GUIManager.cs" />
     <Compile Include="IGuiComponent.cs" />
     <Compile Include="INode.cs" />
     <Compile Include="ISkin.cs" />
@@ -140,10 +139,6 @@
     <ProjectReference Include="..\GameEngine.Graphics\GameEngine.Graphics.csproj">
       <Project>{0205d32e-be54-4b98-a66e-85d4a0c02b6a}</Project>
       <Name>GameEngine.Graphics</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GameEngine.TypeRegistry\GameEngine.TypeRegistry.csproj">
-      <Project>{73200884-85C6-4A3D-A3C2-A53D9C632613}</Project>
-      <Name>GameEngine.TypeRegistry</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

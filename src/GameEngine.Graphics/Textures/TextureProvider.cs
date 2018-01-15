@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace GameEngine.Graphics.Textures
 {
-    public class TextureProvider
+    public class TextureProvider : ITextureProvider
     {
         public ITexture2D Pixel => _pixel;
 

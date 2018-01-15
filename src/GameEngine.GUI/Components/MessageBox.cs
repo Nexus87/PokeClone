@@ -1,14 +1,10 @@
 ﻿using System;
 using GameEngine.Globals;
-using GameEngine.Graphics.General;
 using GameEngine.GUI.Controlls;
 using GameEngine.GUI.Panels;
-using GameEngine.TypeRegistry;
-using Microsoft.Xna.Framework;
 
 namespace GameEngine.GUI.Components
 {
-    [GameType]
     public class MessageBox : AbstractGuiComponent
     {
         private readonly Window _window;

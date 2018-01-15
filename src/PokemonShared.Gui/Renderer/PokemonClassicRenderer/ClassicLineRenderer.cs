@@ -13,7 +13,7 @@ namespace PokemonShared.Gui.Renderer.PokemonClassicRenderer
         private const float RelativeBorderSize = 0.2f;
 
 
-        public override void Init(TextureProvider textureProvider)
+        public override void Init(ITextureProvider textureProvider)
         {
             _cup = textureProvider.GetTexture(ClassicSkin.Circle);
             _pixel = textureProvider.Pixel;
