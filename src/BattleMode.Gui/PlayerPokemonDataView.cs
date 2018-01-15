@@ -1,17 +1,15 @@
 ﻿using BattleMode.Shared;
-using GameEngine.Core;
+using GameEngine.Core.ECS.Systems;
 using GameEngine.GUI.Controlls;
 using GameEngine.GUI.Loader;
 using GameEngine.GUI.Panels;
-using GameEngine.TypeRegistry;
 using PokemonShared.Gui;
 
 namespace BattleMode.Gui
 {
-    [GameType]
     public class PlayerPokemonDataView : IPokemonDataView
     {
-        private readonly GuiManager _guiManager;
+        private readonly GuiSystem _guiManager;
 
 #pragma warning disable 649
         [GuiLoaderId("Window")] private Grid _grid;
@@ -21,7 +19,7 @@ namespace BattleMode.Gui
         [GuiLoaderId("HpText")] private HpText _hpText;
 #pragma warning restore 649
 
-        public PlayerPokemonDataView(GuiManager guiManager)
+        public PlayerPokemonDataView(GuiSystem guiManager)
         {
             _guiManager = guiManager;
 

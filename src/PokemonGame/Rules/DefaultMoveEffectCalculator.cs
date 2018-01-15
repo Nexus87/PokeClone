@@ -1,12 +1,10 @@
 ﻿using System;
 using BattleMode.Shared;
 using GameEngine.Globals;
-using GameEngine.TypeRegistry;
 using PokemonShared.Models;
 
 namespace PokemonGame.Rules
 {
-    [GameService(typeof(IMoveEffectCalculator))]
     public class DefaultMoveEffectCalculator : IMoveEffectCalculator
     {
         private PokemonEntity _source;

@@ -1,5 +1,4 @@
 ﻿using System;
-using GameEngine.TypeRegistry;
 using PokemonShared.Data;
 
 namespace PokemonGame.Rules

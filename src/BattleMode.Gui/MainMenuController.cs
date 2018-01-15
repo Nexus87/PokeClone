@@ -1,17 +1,15 @@
 ﻿using System;
-using GameEngine.Core;
+using GameEngine.Core.ECS.Systems;
 using GameEngine.Globals;
 using GameEngine.GUI.Controlls;
 using GameEngine.GUI.Loader;
 using GameEngine.GUI.Panels;
-using GameEngine.TypeRegistry;
 
 namespace BattleMode.Gui
 {
-    [GameType]
     public class MainMenuController
     {
-        private readonly GuiManager _guiManager;
+        private readonly GuiSystem _guiManager;
 
 #pragma warning disable 649
 
@@ -22,7 +20,7 @@ namespace BattleMode.Gui
 
 #pragma warning restore 649
 
-        public MainMenuController(GuiManager guiManager, Button attackButton, Button pkmnButton, Button itemButton, Button runButton)
+        public MainMenuController(GuiSystem guiManager, Button attackButton, Button pkmnButton, Button itemButton, Button runButton)
         {
             _guiManager = guiManager;
             var loader = new GuiLoader(@"BattleMode\Gui\MainMenu.xml") {Controller = this};

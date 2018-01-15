@@ -1,10 +1,8 @@
 ﻿using BattleMode.Shared;
-using GameEngine.TypeRegistry;
 using PokemonShared.Models;
 
 namespace PokemonGame.Rules
 {
-    [GameService(typeof(IBattleRules))]
     public class DummyBattleRules : IBattleRules
     {
         public float CalculateBaseDamage(PokemonEntity source, PokemonEntity target, Move move)

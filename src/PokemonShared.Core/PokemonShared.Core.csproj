@@ -62,10 +62,6 @@
       <Project>{656D6147-6E45-6967-6E65-2E4C696E7578}</Project>
       <Name>GameEngine.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GameEngine.Entities\GameEngine.Entities.csproj">
-      <Project>{C80E7E11-9184-46F3-B66E-236229E44614}</Project>
-      <Name>GameEngine.Entities</Name>
-    </ProjectReference>
     <ProjectReference Include="..\GameEngine.Globals\GameEngine.Globals.csproj">
       <Project>{B19BD4B3-DCAE-E1DC-6E65-2E476C6F6261}</Project>
       <Name>GameEngine.Globals</Name>
@@ -82,21 +78,9 @@
       <Project>{1CA01096-AE42-4FF6-BF8D-AB39A94F4F6F}</Project>
       <Name>GameEngine.Tools</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GameEngine.TypeRegistry\GameEngine.TypeRegistry.csproj">
-      <Project>{73200884-85C6-4A3D-A3C2-A53D9C632613}</Project>
-      <Name>GameEngine.TypeRegistry</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PokemonShared.Data\PokemonShared.Data.csproj">
-      <Project>{7A7A9117-EEB0-43A5-84FF-9BCA7E393C85}</Project>
-      <Name>PokemonShared.Data</Name>
-    </ProjectReference>
     <ProjectReference Include="..\PokemonShared.Gui\PokemonShared.Gui.csproj">
       <Project>{BFFE8C85-5C46-4595-AA1C-3DEE4B3DCFF9}</Project>
       <Name>PokemonShared.Gui</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PokemonShared.Service\PokemonShared.Service.csproj">
-      <Project>{7E38E565-79B0-4174-A40B-C68B363C6790}</Project>
-      <Name>PokemonShared.Service</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

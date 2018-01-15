@@ -54,6 +54,7 @@ namespace GameEngine.Core
         public void SetSkin(ISkin skin)
         {
             _skin = skin;
+            _gameRunner.Skin = skin;
         }
 
         public void RegisterContentModule(IContentModule contentModule)

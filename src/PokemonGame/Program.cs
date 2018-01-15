@@ -1,4 +1,5 @@
 ﻿using System;
+using BattleMode.Core;
 //using BattleMode.Core;
 using GameEngine.Core;
 using GameEngine.GUI;
@@ -32,7 +33,7 @@ namespace PokemonGame
             //engine.SetSkin(engine.GuiSystem.ClassicSkin);
             //engine.SetStartModule(startModule);
             engine.SetSkin(skin);
-            //engine.SetState(new BattleState());
+            engine.SetState(new BattleModule());
             engine.Run();
         }
     }

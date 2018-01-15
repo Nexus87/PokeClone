@@ -1,20 +1,21 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using BattleMode.Entities.BattleState;
-using GameEngine.Core;
+using BattleMode.Shared;
+using GameEngine.Core.ECS.Systems;
 using GameEngine.Globals;
+using GameEngine.GUI;
 using GameEngine.GUI.Controlls;
 using GameEngine.GUI.Loader;
 using GameEngine.GUI.Panels;
-using GameEngine.TypeRegistry;
+using GameEngine.GUI.Renderers;
 using PokemonShared.Models;
 
 namespace BattleMode.Gui
 {
-    [GameType]
     public class MoveMenuController
     {
-        private readonly GuiManager _guiManager;
+        private readonly GuiSystem _guiManager;
+        private readonly ISkin _skin;
 
 #pragma warning disable 649
 
@@ -25,9 +26,10 @@ namespace BattleMode.Gui
 
 #pragma warning restore 649
 
-        public MoveMenuController(GuiManager guiManager, BattleData data, IGameTypeRegistry registry)
+        public MoveMenuController(GuiSystem guiManager, BattleData data, ISkin skin)
         {
             _guiManager = guiManager;
+            _skin = skin;
 
             var loader = new GuiLoader(@"BattleMode\Gui\MoveMenu.xml") {Controller = this};
             loader.Load();
@@ -46,7 +48,7 @@ namespace BattleMode.Gui
 
             _listView.ListCellFactory = value =>
             {
-                var button = registry.ResolveType<Button>();
+                var button = new Button((ButtonRenderer) _skin.GetRendererForComponent(typeof(Button)));
                 button.Text = value?.Name ?? "--------";
                 button.Enabled = value != null;
                 button.ButtonPressed += delegate { OnItemSelected(value); };

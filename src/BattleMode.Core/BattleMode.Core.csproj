@@ -90,14 +90,6 @@
     <Touch Files="$(_PostBuildHookTimestamp)" AlwaysCreate="True" />
   </Target>
   <ItemGroup>
-    <ProjectReference Include="..\BattleMode.Entities\BattleMode.Entities.csproj">
-      <Project>{7C124625-9566-46E9-BF6B-D045F90B35A1}</Project>
-      <Name>BattleMode.Entities</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\BattleMode.Graphic\BattleMode.Graphic.csproj">
-      <Project>{d94b6faf-a173-42b5-ac09-59200da76024}</Project>
-      <Name>BattleMode.Graphic</Name>
-    </ProjectReference>
     <ProjectReference Include="..\BattleMode.Gui\BattleMode.Gui.csproj">
       <Project>{0194EA5F-B7C8-4087-9680-21E19334F1E7}</Project>
       <Name>BattleMode.Gui</Name>
@@ -105,10 +97,6 @@
     <ProjectReference Include="..\BattleMode.Shared\BattleMode.Shared.csproj">
       <Project>{627954FA-93D0-4524-B2AD-E7D301DAC6AE}</Project>
       <Name>BattleMode.Shared</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GameEngine.Entities\GameEngine.Entities.csproj">
-      <Project>{C80E7E11-9184-46F3-B66E-236229E44614}</Project>
-      <Name>GameEngine.Entities</Name>
     </ProjectReference>
     <ProjectReference Include="..\GameEngine.Core\GameEngine.Core.csproj">
       <Project>{656D6147-6E45-6967-6E65-2E4C696E7578}</Project>
@@ -125,14 +113,6 @@
     <ProjectReference Include="..\GameEngine.GUI\GameEngine.GUI.csproj">
       <Project>{DDE2CFB0-6E45-6967-6E65-2E4755492E4C}</Project>
       <Name>GameEngine.GUI</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GameEngine.TypeRegistry\GameEngine.TypeRegistry.csproj">
-      <Project>{73200884-85C6-4A3D-A3C2-A53D9C632613}</Project>
-      <Name>GameEngine.TypeRegistry</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PokemonShared.Models\PokemonShared.Models.csproj">
-      <Project>{9403C59F-8E52-4006-9827-64CDB4241E79}</Project>
-      <Name>PokemonShared.Models</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

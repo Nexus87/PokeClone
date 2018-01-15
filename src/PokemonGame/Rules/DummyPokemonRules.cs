@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using GameEngine.TypeRegistry;
 using PokemonShared.Data;
 using PokemonShared.Models;
 

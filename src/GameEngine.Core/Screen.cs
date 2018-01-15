@@ -8,7 +8,7 @@ namespace GameEngine.Core
 {
     public class Screen : IScreen
     {
-        private readonly ScreenConstants _screenConstants;
+        public ScreenConstants Constants { get; }
         private readonly GraphicsDeviceManager _graphicsDeviceManager;
 
         private RenderTarget2D _guiRenderTarget;
@@ -68,12 +68,12 @@ namespace GameEngine.Core
             var displayRatio = windowX / windowY;
             var invBufferRatio = bufferY / bufferX;
 
-            var scaleX = bufferX / _screenConstants.ScreenWidth;
+            var scaleX = bufferX / Constants.ScreenWidth;
             var scaleY = displayRatio * invBufferRatio * scaleX;
 
-            if (scaleY * _screenConstants.ScreenHeight > Device.PresentationParameters.BackBufferHeight)
+            if (scaleY * Constants.ScreenHeight > Device.PresentationParameters.BackBufferHeight)
             {
-                scaleY = bufferY / _screenConstants.ScreenHeight;
+                scaleY = bufferY / Constants.ScreenHeight;
                 scaleX = scaleY / (displayRatio * invBufferRatio);
             }
 
@@ -81,15 +81,15 @@ namespace GameEngine.Core
             {
                 X = (int)((bufferX - TargetRectangle.Width) / 2.0f),
                 Y= (int)((bufferY - TargetRectangle.Height) / 2.0f),
-                Width = (int)(scaleX * _screenConstants.ScreenWidth),
-                Height = (int)(scaleY * _screenConstants.ScreenHeight)
+                Width = (int)(scaleX * Constants.ScreenWidth),
+                Height = (int)(scaleY * Constants.ScreenHeight)
 
             };
         }
 
         public Screen(ScreenConstants screenConstants, GraphicsDeviceManager graphicsDeviceManager)
         {
-            _screenConstants = screenConstants;
+            Constants = screenConstants;
             _graphicsDeviceManager = graphicsDeviceManager;
         }
 
@@ -108,8 +108,8 @@ namespace GameEngine.Core
         private RenderTarget2D CreateRenderTarget()
         {
             return new RenderTarget2D(Device, 
-                (int) _screenConstants.ScreenWidth,
-                (int) _screenConstants.ScreenHeight);
+                (int) Constants.ScreenWidth,
+                (int) Constants.ScreenHeight);
         }
 
         public void Draw()

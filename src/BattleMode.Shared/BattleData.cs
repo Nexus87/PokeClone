@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using BattleMode.Entities.BattleState.Commands;
-using BattleMode.Shared;
-using GameEngine.TypeRegistry;
+﻿using System.Collections.Generic;
 
-namespace BattleMode.Entities.BattleState
+namespace BattleMode.Shared
 {
-    [GameService(typeof(BattleData))]
     public class BattleData
     {
         private ClientIdentifier Ai { get; }
@@ -14,8 +9,8 @@ namespace BattleMode.Entities.BattleState
 
         public ClientIdentifier PlayerId => Player;
 
-        private readonly Dictionary<ClientIdentifier, ICommand> _commands =
-            new Dictionary<ClientIdentifier, ICommand>();
+        //private readonly Dictionary<ClientIdentifier, ICommand> _commands =
+        //    new Dictionary<ClientIdentifier, ICommand>();
 
         private readonly List<ClientIdentifier> _clients = new List<ClientIdentifier>();
 
@@ -41,7 +36,7 @@ namespace BattleMode.Entities.BattleState
 
         public IReadOnlyList<ClientIdentifier> Clients => _clients.AsReadOnly();
 
-        public IEnumerable<ICommand> Commands => _commands.Values;
+        //public IEnumerable<ICommand> Commands => _commands.Values;
         private PokemonEntity PlayerPokemon { get; }
 
         public PokemonEntity GetPokemon(ClientIdentifier id)
@@ -51,15 +46,15 @@ namespace BattleMode.Entities.BattleState
 
         public void ClearCommands()
         {
-            _commands.Clear();
+            //_commands.Clear();
         }
 
-        public void SetCommand(ClientIdentifier id, ICommand command)
-        {
-            if (!_clients.Contains(id))
-                throw new InvalidOperationException("ID " + id.Name + "is unknown");
+        //public void SetCommand(ClientIdentifier id, ICommand command)
+        //{
+        //    if (!_clients.Contains(id))
+        //        throw new InvalidOperationException("ID " + id.Name + "is unknown");
 
-            _commands[id] = command;
-        }
+        //    _commands[id] = command;
+        //}
     }
 }

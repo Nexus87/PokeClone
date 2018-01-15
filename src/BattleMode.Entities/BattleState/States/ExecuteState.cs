@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BattleMode.Entities.BattleState.Commands;
+using BattleMode.Shared;
 using GameEngine.TypeRegistry;
 
 namespace BattleMode.Entities.BattleState.States

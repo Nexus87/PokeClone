@@ -51,7 +51,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AI\AiEntity.cs" />
-    <Compile Include="BattleState\BattleData.cs" />
     <Compile Include="BattleState\BattleStateEntity.cs" />
     <Compile Include="BattleState\BattleStates.cs" />
     <Compile Include="BattleState\ClientPokemonChangedEventArgs.cs" />

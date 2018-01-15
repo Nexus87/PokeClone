@@ -1,6 +1,4 @@
-﻿using GameEngine.Graphics.General;
-using GameEngine.GUI;
-using Microsoft.Xna.Framework;
+﻿using GameEngine.GUI;
 using PokemonShared.Gui.Renderer;
 using PokemonShared.Models;
 

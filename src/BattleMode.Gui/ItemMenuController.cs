@@ -1,20 +1,19 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using GameEngine.Core;
+using GameEngine.Core.ECS.Systems;
 using GameEngine.Globals;
 using GameEngine.GUI.Controlls;
 using GameEngine.GUI.Loader;
 using GameEngine.GUI.Panels;
-using GameEngine.TypeRegistry;
+using GameEngine.GUI.Renderers.PokemonClassicRenderer;
 using PokemonShared.Models;
 
 namespace BattleMode.Gui
 {
-    [GameType]
     public class ItemMenuController
     {
-        private readonly GuiManager _guiManager;
+        private readonly GuiSystem _guiManager;
 #pragma warning disable 649
 
         [GuiLoaderId("Window")]
@@ -24,7 +23,7 @@ namespace BattleMode.Gui
 
 #pragma warning restore 649
 
-        public ItemMenuController(GuiManager guiManager, IGameTypeRegistry registry)
+        public ItemMenuController(GuiSystem guiManager)
         {
             _guiManager = guiManager;
 
@@ -38,7 +37,7 @@ namespace BattleMode.Gui
             _listView.Model = new ObservableCollection<Item>(model);
             _listView.ListCellFactory = value =>
             {
-                var button = registry.ResolveType<Button>();
+                var button = new Button(new ClassicButtonRenderer());
                 button.Text = value.Name;
                 button.ButtonPressed += delegate { OnItemSelected(value); };
                 return button;

@@ -4,6 +4,7 @@ using GameEngine.Core.ECS.Actions;
 using GameEngine.Core.ECS.Entities;
 using GameEngine.Core.ECS.Systems;
 using GameEngine.Globals;
+using GameEngine.GUI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
@@ -11,13 +12,7 @@ namespace GameEngine.Core.GameStates
 {
     public abstract class State
     {
-        private InputSystem InputSystem { get; }
-        private GuiSystem GuiSystem { get; }
-        private RenderSystem RenderSystem { get; }
-        protected IMessageBus MessageBus { get; set; }
-
         private readonly EntityManager _entityManager;
-        protected Entity StateEntity { get; private set; }
 
         protected State()
         {
@@ -32,17 +27,28 @@ namespace GameEngine.Core.GameStates
             MessageBus.RegisterForAction<TimeAction>(GuiSystem.Update);
         }
 
+        private InputSystem InputSystem { get; }
+        protected GuiSystem GuiSystem { get; }
+        private RenderSystem RenderSystem { get; }
+        protected IMessageBus MessageBus { get; set; }
+        protected Entity StateEntity { get; private set; }
+        protected Screen Screen { get; private set; }
+
+        protected ISkin Skin { get; private set; }
+
         protected abstract void Init();
 
-        public void Init(Screen screen, IReadOnlyDictionary<Keys, CommandKeys> keyMap)
+        public void Init(Screen screen, IReadOnlyDictionary<Keys, CommandKeys> keyMap, ISkin skin)
         {
             StateEntity = GameStateEntity.Create(_entityManager, screen, keyMap);
+            Screen = screen;
+            Skin = skin;
             Init();
         }
 
         public void Update(GameTime gameTime)
         {
-           MessageBus.SendAction(new TimeAction{Time = gameTime});
+            MessageBus.SendAction(new TimeAction {Time = gameTime});
             MessageBus.StartProcess();
         }
 

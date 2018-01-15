@@ -2,21 +2,21 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using BattleMode.Shared;
-using GameEngine.Core;
+using GameEngine.Core.ECS.Systems;
 using GameEngine.Globals;
+using GameEngine.GUI;
 using GameEngine.GUI.Controlls;
 using GameEngine.GUI.Loader;
 using GameEngine.GUI.Panels;
-using GameEngine.TypeRegistry;
+using GameEngine.GUI.Renderers;
 using PokemonShared.Models;
 
 namespace BattleMode.Gui
 {
-    [GameType]
     public class PokemonMenuController
     {
-        private readonly List<PokemonMenuLine> _pokemonMenuLines = new List<PokemonMenuLine>();
-        private readonly GuiManager _guiManager;
+        //private readonly List<PokemonMenuLine> _pokemonMenuLines = new List<PokemonMenuLine>();
+        private readonly GuiSystem _guiManager;
 
 #pragma warning disable 649
 
@@ -26,11 +26,11 @@ namespace BattleMode.Gui
         private readonly Panel _panel;
 
 #pragma warning restore 649
-        public PokemonMenuController(GuiManager guiManager, Client client, IGameTypeRegistry registry)
+        public PokemonMenuController(GuiSystem guiManager, Client client, ISkin skin)
         {
             _guiManager = guiManager;
 
-            var loader = new GuiLoader(@"BattleMode\Gui\PokemonMenu.xml") {Controller = this};
+            var loader = new GuiLoader(@"BattleMode\Gui\PokemonMenu.xml") { Controller = this };
             loader.Load();
 
             _panel.SetContent(_listView);
@@ -39,13 +39,13 @@ namespace BattleMode.Gui
             _listView.CellHeight = 75;
             _listView.ListCellFactory = value =>
             {
-                var component = registry.ResolveType<SelectablePanel>();
-                var line = registry.ResolveType<PokemonMenuLine>();
-                component.Content = line;
+                var component = new SelectablePanel((SelectablePanelRenderer)skin.GetRendererForComponent(typeof(SelectablePanel)));
+                //var line = new PokemonMenuLine(); registry.ResolveType<PokemonMenuLine>();
+                //component.Content = line;
                 component.ShouldHandleKeyInput = true;
                 component.PanelPressed += delegate { OnItemSelected(value); };
-                line.SetPokemon(value);
-                _pokemonMenuLines.Add(line);
+                //line.SetPokemon(value);
+                //_pokemonMenuLines.Add(line);
                 return component;
             };
 
@@ -59,7 +59,7 @@ namespace BattleMode.Gui
 
         public void HandleKeyInput(CommandKeys key)
         {
-            if(key == CommandKeys.Back)
+            if (key == CommandKeys.Back)
                 OnExitRequested();
             else
                 _listView.HandleKeyInput(key);
@@ -68,7 +68,7 @@ namespace BattleMode.Gui
         public void Show()
         {
             _listView.SelectCell(0);
-            _pokemonMenuLines.ForEach(x => x.UpdateData());
+            //_pokemonMenuLines.ForEach(x => x.UpdateData());
             _guiManager.ShowWidget(_panel);
         }
 

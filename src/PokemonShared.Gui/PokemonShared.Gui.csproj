@@ -78,7 +78,7 @@
       <Name>GameEngine.GUI</Name>
     </ProjectReference>
     <ProjectReference Include="..\PokemonShared.Models\PokemonShared.Models.csproj">
-      <Project>{9403c59f-8e52-4006-9827-64cdb4241e79}</Project>
+      <Project>{9403C59F-8E52-4006-9827-64CDB4241E79}</Project>
       <Name>PokemonShared.Models</Name>
     </ProjectReference>
   </ItemGroup>

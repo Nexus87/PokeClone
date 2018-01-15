@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using GameEngine.Core.GameStates;
 using GameEngine.Globals;
+using GameEngine.GUI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
@@ -14,7 +15,8 @@ namespace GameEngine.Core
 
         internal Action<GameRunner> OnContentLoad;
         internal StateManager StateManager;
-        private IReadOnlyDictionary<Keys, CommandKeys> _keyMap;
+        internal ISkin Skin;
+        private readonly IReadOnlyDictionary<Keys, CommandKeys> _keyMap;
 
         public GameRunner(IReadOnlyDictionary<Keys, CommandKeys> keyMap)
         {
@@ -49,7 +51,7 @@ namespace GameEngine.Core
             };
             _screen.WindowsResizeHandler(Window.ClientBounds.Width, Window.ClientBounds.Height);
 
-            StateManager = new StateManager(_screen, _keyMap);
+            StateManager = new StateManager(_screen, _keyMap, Skin);
             StateManager.PushState(InitialState);
         }
 

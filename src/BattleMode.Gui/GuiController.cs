@@ -1,28 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using BattleMode.Entities.BattleState;
 using BattleMode.Shared;
-using GameEngine.Core;
+using GameEngine.Core.ECS.Systems;
 using GameEngine.Globals;
 using GameEngine.GUI;
 using GameEngine.GUI.Components;
-using GameEngine.TypeRegistry;
 using Microsoft.Xna.Framework;
 
 namespace BattleMode.Gui
 {
-    [GameService(typeof(IGuiController))]
-    public class GuiController : IGuiController
+    public class GuiController
     {
         private readonly MessageBox _messageBox;
         private readonly Dictionary<ClientIdentifier, IPokemonDataView> _dataViews = new Dictionary<ClientIdentifier, IPokemonDataView>();
 
-        public GuiController(ScreenConstants screen, GuiManager manager,
-            MessageBox messageBox, IEngineInterface engineInterface,
+        public GuiController(ScreenConstants screen, GuiSystem manager,
+            MessageBox messageBox,
             MainMenuController mainController,
             MoveMenuController moveController, PokemonMenuController pokemonController,
-            ItemMenuController itemController, IBattleStateService battleState,
+            ItemMenuController itemController, 
             PlayerPokemonDataView playerView, AiPokemonDataView aiView,
             BattleData data)
         {
@@ -42,11 +39,11 @@ namespace BattleMode.Gui
             InitMessageBox(screen);
 
             _mainController.ItemSelected += MainMenu_ItemSelected;
-            _mainController.ExitRequested += delegate { engineInterface.Exit(); };
+            //_mainController.ExitRequested += delegate { engineInterface.Exit(); };
 
-            _itemController.ItemSelected += (obj, e) => battleState.SetItem(playerId, playerId, e.SelectedData);
-            _moveController.ItemSelected += (obj, e) => battleState.SetMove(playerId, ai, e.SelectedData);
-            _pokemonController.ItemSelected += (obj, e) => battleState.SetCharacter(playerId, e.SelectedData);
+            //_itemController.ItemSelected += (obj, e) => battleState.SetItem(playerId, playerId, e.SelectedData);
+            //_moveController.ItemSelected += (obj, e) => battleState.SetMove(playerId, ai, e.SelectedData);
+            //_pokemonController.ItemSelected += (obj, e) => battleState.SetCharacter(playerId, e.SelectedData);
 
             OnItemSelectCloseAll();
             OnExitRequestedBackToMain();
