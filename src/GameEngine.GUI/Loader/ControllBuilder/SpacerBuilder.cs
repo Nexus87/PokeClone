@@ -5,19 +5,19 @@ using GameEngine.GUI.Controlls;
 
 namespace GameEngine.GUI.Loader.ControllBuilder
 {
-    public class SpacerBuilder : GuiComponentBuilder
+    public class SpacerBuilder : AbstractGuiComponentBuilder
     {
         private readonly IContainer _container;
 
-        public SpacerBuilder(IContainer container, ScreenConstants screenConstants) : base(screenConstants)
+        public SpacerBuilder(IContainer container)
         {
             _container = container;
         }
 
-        public override IGuiComponent Build(XElement xElement, object controller)
+        public override IGuiComponent Build(ScreenConstants screenConstants,  XElement xElement, object controller)
         {
             var spacer = _container.Resolve<Spacer>();
-            spacer.Area = ReadPosition(xElement);
+            spacer.Area = ReadPosition(screenConstants, xElement);
             SetUpController(controller, spacer, xElement);
 
             return spacer;

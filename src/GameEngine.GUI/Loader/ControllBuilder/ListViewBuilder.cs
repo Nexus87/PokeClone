@@ -6,16 +6,16 @@ using GameEngine.GUI.Controlls;
 
 namespace GameEngine.GUI.Loader.ControllBuilder
 {
-    public class ListViewBuilder : GuiComponentBuilder
+    public class ListViewBuilder : AbstractGuiComponentBuilder
     {
         private readonly IContainer _container;
 
-        public ListViewBuilder(IContainer container, ScreenConstants screenConstants) : base(screenConstants)
+        public ListViewBuilder(IContainer container) 
         {
             _container = container;
         }
 
-        public override IGuiComponent Build(XElement xElement, object controller)
+        public override IGuiComponent Build(ScreenConstants screenConstants, XElement xElement, object controller)
         {
             var modelTypeValue = xElement.Attribute("ModelType")?.Value;
             if (modelTypeValue == null)
@@ -26,7 +26,7 @@ namespace GameEngine.GUI.Loader.ControllBuilder
             var modelType = Type.GetType(modelTypeValue);
             var listView = (IGuiComponent) _container.Resolve(typeof(ListView<>).MakeGenericType(modelType));
 
-            listView.Area = ReadPosition(xElement);
+            listView.Area = ReadPosition(screenConstants, xElement);
             SetUpController(controller, listView, xElement);
 
             var cellHeightAttribute = xElement.Attribute("CellHeight");

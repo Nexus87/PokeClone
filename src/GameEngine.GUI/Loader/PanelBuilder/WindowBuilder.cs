@@ -6,27 +6,26 @@ using GameEngine.GUI.Panels;
 
 namespace GameEngine.GUI.Loader.PanelBuilder
 {
-    public class WindowBuilder : GuiComponentBuilder
+    public class WindowBuilder : AbstractGuiComponentBuilder
     {
         private readonly IContainer _container;
 
 
 
-        public WindowBuilder(IContainer container, ScreenConstants screenConstants) :
-            base(screenConstants)
+        public WindowBuilder(IContainer container)
         {
             _container = container;
         }
 
-        public override IGuiComponent Build(XElement xElement, object controller)
+        public override IGuiComponent Build(ScreenConstants screenConstants, XElement xElement, object controller)
         {
             var window = _container.Resolve<Window>();
-            window.Area = ReadPosition(xElement);
+            window.Area = ReadPosition(screenConstants, xElement);
             SetUpController(controller, window, xElement);
 
             var contentXElement = xElement.Elements().SingleOrDefault();
             if(contentXElement != null)
-                window.SetContent(GuiLoader.Builders[contentXElement.Name.LocalName].Build(contentXElement, controller));
+                window.SetContent(GuiLoader.Builders[contentXElement.Name.LocalName].Build(screenConstants, contentXElement, controller));
 
             return window;
         }

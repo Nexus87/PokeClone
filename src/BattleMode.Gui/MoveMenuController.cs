@@ -26,13 +26,12 @@ namespace BattleMode.Gui
 
 #pragma warning restore 649
 
-        public MoveMenuController(GuiSystem guiManager, BattleData data, ISkin skin)
+        public MoveMenuController(GuiSystem guiManager, BattleData data, ISkin skin, GuiLoader loader)
         {
             _guiManager = guiManager;
             _skin = skin;
 
-            var loader = new GuiLoader(@"BattleMode\Gui\MoveMenu.xml") {Controller = this};
-            loader.Load();
+            loader.Load(@"BattleMode\Gui\MoveMenu.xml", this);
 
             _listView.Model = new ObservableCollection<Move>(data.GetPokemon(data.PlayerId).Moves);
 

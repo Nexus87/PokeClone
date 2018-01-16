@@ -1,5 +1,6 @@
 ﻿using BattleMode.Shared;
 using GameEngine.Core.ECS.Systems;
+using GameEngine.Globals;
 using GameEngine.GUI.Controlls;
 using GameEngine.GUI.Loader;
 using GameEngine.GUI.Panels;
@@ -18,11 +19,10 @@ namespace BattleMode.Gui
 #pragma warning restore 649
 
 
-        public AiPokemonDataView(GuiSystem guiManager)
+        public AiPokemonDataView(GuiSystem guiManager, GuiLoader loader)
         {
             _guiManager = guiManager;
-            var loader = new GuiLoader(@"BattleMode\Gui\AiDataView.xml") {Controller = this};
-            loader.Load();
+            loader.Load(@"BattleMode\Gui\AiDataView.xml", this);
         }
 
         public int CurrentHp => _hpLine.Current;

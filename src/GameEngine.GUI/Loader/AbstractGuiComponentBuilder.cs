@@ -8,15 +8,9 @@ using Microsoft.Xna.Framework;
 
 namespace GameEngine.GUI.Loader
 {
-    public abstract class GuiComponentBuilder : IBuilder
+    public abstract class AbstractGuiComponentBuilder : IBuilder
     {
-        private readonly ScreenConstants _screenConstants;
-        public abstract IGuiComponent Build(XElement xElement, object controller);
-
-        protected GuiComponentBuilder(ScreenConstants screenConstants)
-        {
-            _screenConstants = screenConstants;
-        }
+        public abstract IGuiComponent Build(ScreenConstants screenConstants, XElement xElement, object controller);
 
         protected void SetUpController(object controller, IGuiComponent component, XElement xElement)
         {
@@ -37,12 +31,12 @@ namespace GameEngine.GUI.Loader
                 field.SetValue(controller, component);
         }
 
-        protected Rectangle ReadPosition(XElement xElement)
+        protected Rectangle ReadPosition(ScreenConstants screenConstants, XElement xElement)
         {
-            var x = AttributeToInt(xElement, "X", _screenConstants.ScreenWidth);
-            var y = AttributeToInt(xElement, "Y", _screenConstants.ScreenHeight);
-            var width = AttributeToInt(xElement, "Width", _screenConstants.ScreenWidth);
-            var height = AttributeToInt(xElement, "Height", _screenConstants.ScreenHeight);
+            var x = AttributeToInt(xElement, "X", screenConstants.ScreenWidth);
+            var y = AttributeToInt(xElement, "Y", screenConstants.ScreenHeight);
+            var width = AttributeToInt(xElement, "Width", screenConstants.ScreenWidth);
+            var height = AttributeToInt(xElement, "Height", screenConstants.ScreenHeight);
 
             return new Rectangle(x, y, width, height);
         }

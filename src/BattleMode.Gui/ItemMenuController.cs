@@ -23,12 +23,11 @@ namespace BattleMode.Gui
 
 #pragma warning restore 649
 
-        public ItemMenuController(GuiSystem guiManager)
+        public ItemMenuController(GuiSystem guiManager, GuiLoader loader)
         {
             _guiManager = guiManager;
 
-            var loader = new GuiLoader(@"BattleMode\Gui\ItemMenu.xml") {Controller = this};
-            loader.Load();
+            loader.Load(@"BattleMode\Gui\ItemMenu.xml", this);
 
             var model = Enumerable
                 .Range(0, 20)

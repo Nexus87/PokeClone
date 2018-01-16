@@ -5,6 +5,7 @@ using GameEngine.Core.ECS.Entities;
 using GameEngine.Core.ECS.Systems;
 using GameEngine.Globals;
 using GameEngine.GUI;
+using GameEngine.GUI.Loader;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
@@ -41,6 +42,8 @@ namespace GameEngine.Core.GameStates
         public void Init(Screen screen, IReadOnlyDictionary<Keys, CommandKeys> keyMap, ISkin skin)
         {
             StateEntity = GameStateEntity.Create(_entityManager, screen, keyMap);
+            //TODO
+            GuiSystem.GuiLoader = new GuiLoader(Screen.Constants);
             Screen = screen;
             Skin = skin;
             Init();

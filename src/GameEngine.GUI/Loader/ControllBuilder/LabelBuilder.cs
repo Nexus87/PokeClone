@@ -5,19 +5,19 @@ using GameEngine.GUI.Controlls;
 
 namespace GameEngine.GUI.Loader.ControllBuilder
 {
-    public class LabelBuilder : GuiComponentBuilder
+    public class LabelBuilder : AbstractGuiComponentBuilder
     {
         private readonly IContainer _container;
 
-        public LabelBuilder(IContainer container, ScreenConstants screenConstants) : base(screenConstants)
+        public LabelBuilder(IContainer container, ScreenConstants screenConstants)
         {
             _container = container;
         }
 
-        public override IGuiComponent Build(XElement xElement, object controller)
+        public override IGuiComponent Build(ScreenConstants screenConstants, XElement xElement, object controller)
         {
             var label = _container.Resolve<Label>();
-            label.Area = ReadPosition(xElement);
+            label.Area = ReadPosition(screenConstants, xElement);
             SetUpController(controller, label, xElement);
 
             var text = xElement.Attribute(nameof(Label.Text));

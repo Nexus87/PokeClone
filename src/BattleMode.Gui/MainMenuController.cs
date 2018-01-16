@@ -20,12 +20,11 @@ namespace BattleMode.Gui
 
 #pragma warning restore 649
 
-        public MainMenuController(GuiSystem guiManager, Button attackButton, Button pkmnButton, Button itemButton, Button runButton)
+        public MainMenuController(GuiSystem guiManager, Button attackButton, Button pkmnButton, Button itemButton, Button runButton, GuiLoader loader)
         {
             _guiManager = guiManager;
-            var loader = new GuiLoader(@"BattleMode\Gui\MainMenu.xml") {Controller = this};
 
-            loader.Load();
+            loader.Load(@"BattleMode\Gui\MainMenu.xml", this);
 
             attackButton.Text = MainMenuEntries.Attack.ToString();
             attackButton.ButtonPressed += delegate { OnItemSelected(MainMenuEntries.Attack); };

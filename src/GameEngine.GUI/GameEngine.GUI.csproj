@@ -87,7 +87,7 @@
     <Compile Include="Loader\ControllBuilder\LabelBuilder.cs" />
     <Compile Include="Loader\ControllBuilder\ListViewBuilder.cs" />
     <Compile Include="Loader\ControllBuilder\SpacerBuilder.cs" />
-    <Compile Include="Loader\GuiComponentBuilder.cs" />
+    <Compile Include="Loader\AbstractGuiComponentBuilder.cs" />
     <Compile Include="Loader\GuiLoader.cs" />
     <Compile Include="Loader\GuiLoaderIdAttribute.cs" />
     <Compile Include="Loader\IBuilder.cs" />

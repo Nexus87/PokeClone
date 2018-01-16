@@ -11,16 +11,18 @@ namespace GameEngine.GUI.Loader
 {
     public class GuiLoader
     {
+        private readonly ScreenConstants _screenConstants;
+
         internal static void InitLoaderResources(IContainer container)
         {
             var screenConstants = container.Resolve<ScreenConstants>();
-            Builders["Window"] = new WindowBuilder(container, screenConstants);
-            Builders["Grid"] = new GridBuilder(container, screenConstants);
-            Builders["ScrollArea"] = new ScrollAreaBuilder(container, screenConstants);
-            Builders["ListView"] = new ListViewBuilder(container, screenConstants);
-            Builders["Panel"] = new PanelBuilder.PanelBuilder(container, screenConstants);
+            Builders["Window"] = new WindowBuilder(container);
+            Builders["Grid"] = new GridBuilder(container);
+            Builders["ScrollArea"] = new ScrollAreaBuilder(container);
+            Builders["ListView"] = new ListViewBuilder(container);
+            Builders["Panel"] = new PanelBuilder.PanelBuilder(container);
             Builders["Label"] = new LabelBuilder(container, screenConstants);
-            Builders["Spacer"] = new SpacerBuilder(container, screenConstants);
+            Builders["Spacer"] = new SpacerBuilder(container);
 
             foreach (var builder in AdditionalBuilders)
             {
@@ -33,24 +35,23 @@ namespace GameEngine.GUI.Loader
             AdditionalBuilders[componentName] = factory;
         }
 
-        private readonly string _path;
         internal static readonly Dictionary<string, IBuilder> Builders = new Dictionary<string, IBuilder>();
         private static readonly Dictionary<string, Func<IContainer, ScreenConstants, IBuilder>> AdditionalBuilders = new Dictionary<string, Func<IContainer, ScreenConstants, IBuilder>>();
 
-        public GuiLoader(string path)
+        public GuiLoader(ScreenConstants screenConstants)
         {
-            _path = @"Content\" + path;
+            _screenConstants = screenConstants;
         }
 
-        public object Controller { get; set; }
-
-        public IGuiComponent Load()
+        public IGuiComponent Load(string path, object controller)
         {
-            var xmlDoc = XDocument.Load(_path);
+            path = @"Content\" + path;
+
+            var xmlDoc = XDocument.Load(path);
             Debug.Assert(xmlDoc.Root != null, "xmlDoc.Root != null");
             var firstComponent = xmlDoc.Root.Name.LocalName;
 
-            return Builders[firstComponent].Build(xmlDoc.Root, Controller);
+            return Builders[firstComponent].Build(_screenConstants, xmlDoc.Root, controller);
 
         }
     }
