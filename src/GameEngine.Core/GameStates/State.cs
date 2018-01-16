@@ -43,7 +43,7 @@ namespace GameEngine.Core.GameStates
         {
             StateEntity = GameStateEntity.Create(_entityManager, screen, keyMap);
             //TODO
-            GuiSystem.GuiLoader = new GuiLoader(Screen.Constants);
+            //GuiSystem.GuiLoader = new GuiLoader(Screen.Constants);
             Screen = screen;
             Skin = skin;
             Init();

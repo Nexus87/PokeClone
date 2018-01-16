@@ -3,6 +3,7 @@ using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Xml.Linq;
+using Autofac;
 using GameEngine.Globals;
 using Microsoft.Xna.Framework;
 
@@ -10,7 +11,7 @@ namespace GameEngine.GUI.Loader
 {
     public abstract class AbstractGuiComponentBuilder : IBuilder
     {
-        public abstract IGuiComponent Build(ScreenConstants screenConstants, XElement xElement, object controller);
+        public abstract IGuiComponent Build(IContainer container, GuiLoader loader, ScreenConstants screenConstants, XElement xElement, object controller);
 
         protected void SetUpController(object controller, IGuiComponent component, XElement xElement)
         {

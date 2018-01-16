@@ -17,7 +17,7 @@ namespace GameEngine.GUI.Controlls
 
         public string Text
         {
-            get { return _text; }
+            get => _text;
             set
             {
                 _text = value ?? "";
@@ -27,7 +27,7 @@ namespace GameEngine.GUI.Controlls
 
         public float TextHeight
         {
-            get { return _textHeight; }
+            get => _textHeight;
             set
             {
                 _textHeight = value;

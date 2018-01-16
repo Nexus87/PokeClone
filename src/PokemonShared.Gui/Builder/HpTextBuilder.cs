@@ -8,16 +8,9 @@ namespace PokemonShared.Gui.Builder
 {
     public class HpTextBuilder : AbstractGuiComponentBuilder
     {
-        private readonly IContainer _container;
-
-        public HpTextBuilder(IContainer container)
+        public override IGuiComponent Build(IContainer container, GuiLoader loader, ScreenConstants screenConstants, XElement xElement, object controller)
         {
-            _container = container;
-        }
-
-        public override IGuiComponent Build(ScreenConstants screenConstants, XElement xElement, object controller)
-        {
-            var text = _container.Resolve<HpText>();
+            var text = container.Resolve<HpText>();
             text.Area = ReadPosition(screenConstants, xElement);
             SetUpController(controller, text, xElement);
 

@@ -28,7 +28,7 @@ namespace GameEngineTest.Graphics
 
         private static ImageBox CreateEmptyBox()
         {
-            return new ImageBox(new ClassicImageBoxRenderer());
+            return new ImageBox();
         }
 
         protected override IGuiComponent CreateComponent()

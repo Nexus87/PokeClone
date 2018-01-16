@@ -8,14 +8,7 @@ namespace GameEngine.GUI.Loader.ControllBuilder
 {
     public class ListViewBuilder : AbstractGuiComponentBuilder
     {
-        private readonly IContainer _container;
-
-        public ListViewBuilder(IContainer container) 
-        {
-            _container = container;
-        }
-
-        public override IGuiComponent Build(ScreenConstants screenConstants, XElement xElement, object controller)
+        public override IGuiComponent Build(IContainer container, GuiLoader loader, ScreenConstants screenConstants, XElement xElement, object controller)
         {
             var modelTypeValue = xElement.Attribute("ModelType")?.Value;
             if (modelTypeValue == null)
@@ -24,7 +17,7 @@ namespace GameEngine.GUI.Loader.ControllBuilder
             }
 
             var modelType = Type.GetType(modelTypeValue);
-            var listView = (IGuiComponent) _container.Resolve(typeof(ListView<>).MakeGenericType(modelType));
+            var listView = (IGuiComponent) container.Resolve(typeof(ListView<>).MakeGenericType(modelType));
 
             listView.Area = ReadPosition(screenConstants, xElement);
             SetUpController(controller, listView, xElement);

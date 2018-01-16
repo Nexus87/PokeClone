@@ -8,16 +8,10 @@ namespace PokemonShared.Gui.Builder
 {
     public class HpLineBuilder : AbstractGuiComponentBuilder
     {
-        private readonly IContainer _container;
 
-        public HpLineBuilder(IContainer container)
+        public override IGuiComponent Build(IContainer container, GuiLoader loader, ScreenConstants screenConstants, XElement xElement, object controller)
         {
-            _container = container;
-        }
-
-        public override IGuiComponent Build(ScreenConstants screenConstants, XElement xElement, object controller)
-        {
-            var hpLine = _container.Resolve<HpLine>();
+            var hpLine = container.Resolve<HpLine>();
             SetUpController(controller, hpLine, xElement);
             hpLine.Area = ReadPosition(screenConstants, xElement);
 

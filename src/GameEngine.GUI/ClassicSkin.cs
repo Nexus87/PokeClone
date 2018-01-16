@@ -38,10 +38,9 @@ namespace GameEngine.GUI
 
         public static Color BackgroundColor { get; } = new Color(248, 248, 248, 0);
 
-        public IRenderer GetRendererForComponent(Type ComponentType)
+        public IRenderer GetRendererForComponent(Type componentType)
         {
-            IRenderer renderer;
-            if (!_renderers.TryGetValue(ComponentType, out renderer))
+            if (!_renderers.TryGetValue(componentType, out var renderer))
             {
                 return null;
             }

@@ -7,16 +7,9 @@ namespace GameEngine.GUI.Loader.ControllBuilder
 {
     public class SpacerBuilder : AbstractGuiComponentBuilder
     {
-        private readonly IContainer _container;
-
-        public SpacerBuilder(IContainer container)
+        public override IGuiComponent Build(IContainer container, GuiLoader loader, ScreenConstants screenConstants,  XElement xElement, object controller)
         {
-            _container = container;
-        }
-
-        public override IGuiComponent Build(ScreenConstants screenConstants,  XElement xElement, object controller)
-        {
-            var spacer = _container.Resolve<Spacer>();
+            var spacer = container.Resolve<Spacer>();
             spacer.Area = ReadPosition(screenConstants, xElement);
             SetUpController(controller, spacer, xElement);
 

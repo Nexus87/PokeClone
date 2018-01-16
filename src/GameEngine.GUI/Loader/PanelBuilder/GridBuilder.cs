@@ -10,16 +10,9 @@ namespace GameEngine.GUI.Loader.PanelBuilder
 {
     public class GridBuilder : AbstractGuiComponentBuilder
     {
-        private readonly IContainer _container;
-
-        public GridBuilder(IContainer container)
+        public override IGuiComponent Build(IContainer container, GuiLoader loader, ScreenConstants screenConstants, XElement xElement, object controller)
         {
-            _container = container;
-        }
-
-        public override IGuiComponent Build(ScreenConstants screenConstants, XElement xElement, object controller)
-        {
-            var grid = _container.Resolve<Grid>();
+            var grid = container.Resolve<Grid>();
             grid.Area = ReadPosition(screenConstants, xElement);
             SetUpController(controller, grid, xElement);
             var rowDefinitions = xElement.Element("Grid.RowDefinitions");
@@ -50,19 +43,19 @@ namespace GameEngine.GUI.Loader.PanelBuilder
                 .Where(x => x.Name.LocalName != "Grid.ColumnDefinitions");
             foreach (var content in contentElements)
             {
-                AddContent(screenConstants, grid, content, controller);
+                AddContent(loader, screenConstants, grid, content, controller);
             }
             return grid;
         }
 
-        private static void AddContent(ScreenConstants screenConstants, Grid grid, XElement content, object controller)
+        private static void AddContent(GuiLoader loader, ScreenConstants screenConstants, Grid grid, XElement content, object controller)
         {
             var row = content.Attribute("Grid.Row")?.Value ?? "0";
             var column = content.Attribute("Grid.Column")?.Value ?? "0";
             var rowSpan = content.Attribute("Grid.RowSpan")?.Value ?? "1";
             var columnSpan = content.Attribute("Grid.ColumnSpan")?.Value ?? "1";
 
-            var component = GuiLoader.Builders[content.Name.LocalName].Build(screenConstants, content, controller);
+            var component = loader.LoadFromXml(content, controller);
 
             grid.SetComponent(component, int.Parse(row), int.Parse(column), int.Parse(rowSpan), int.Parse(columnSpan));
         }

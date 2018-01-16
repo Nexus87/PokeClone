@@ -37,10 +37,7 @@ namespace GameEngine.GUI.Controlls
                 CurrentLineIndex = 0;
                 Invalidate();
             }
-            get
-            {
-                return _text;
-            }
+            get => _text;
         }
 
         public bool HasNext()

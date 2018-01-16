@@ -10,30 +10,6 @@ namespace GameEngine.GUI.Controlls
         private string _text;
         private float _textHeight;
 
-        public bool Enabled{get { return IsSelectable; } set { IsSelectable = value; }}
-        public string Text
-        {
-            get { return _text; }
-            set
-            {
-                if (value == null) throw new ArgumentNullException(nameof(value));
-                if(_text == value) return;
-                _text = value;
-                Invalidate();
-            }
-        }
-
-        public float TextHeight
-        {
-            get { return _textHeight; }
-            set
-            {
-                if(value.AlmostEqual(_textHeight)) return;
-                _textHeight = value;
-                Invalidate();
-            }
-        }
-
         public Button(ButtonRenderer buttonRenderer)
         {
             TextHeight = 32;
@@ -41,15 +17,44 @@ namespace GameEngine.GUI.Controlls
             IsSelectable = true;
         }
 
+        public bool Enabled
+        {
+            get => IsSelectable;
+            set => IsSelectable = value;
+        }
+
+        public string Text
+        {
+            get => _text;
+            set
+            {
+                if (value == null) throw new ArgumentNullException(nameof(value));
+                if (_text == value) return;
+                _text = value;
+                Invalidate();
+            }
+        }
+
+        public float TextHeight
+        {
+            get => _textHeight;
+            set
+            {
+                if (value.AlmostEqual(_textHeight)) return;
+                _textHeight = value;
+                Invalidate();
+            }
+        }
+
         public event EventHandler ButtonPressed;
 
         public override void HandleKeyInput(CommandKeys key)
         {
-            if(key == CommandKeys.Select)
+            if (key == CommandKeys.Select)
                 OnButtonPressed();
         }
 
-        internal void OnButtonPressed()
+        private void OnButtonPressed()
         {
             ButtonPressed?.Invoke(this, EventArgs.Empty);
         }

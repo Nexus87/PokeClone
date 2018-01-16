@@ -8,23 +8,16 @@ namespace GameEngine.GUI.Loader.PanelBuilder
 {
     public class PanelBuilder : AbstractGuiComponentBuilder
     {
-        private readonly IContainer _container;
-
-        public PanelBuilder(IContainer container)
+        public override IGuiComponent Build(IContainer container, GuiLoader loader, ScreenConstants screenConstants, XElement xElement, object controller)
         {
-            _container = container;
-        }
-
-        public override IGuiComponent Build(ScreenConstants screenConstants, XElement xElement, object controller)
-        {
-            var panel = _container.Resolve<Panel>();
+            var panel = container.Resolve<Panel>();
 
             panel.Area = ReadPosition(screenConstants, xElement);
             SetUpController(controller, panel, xElement);
 
             var content = xElement.Elements().FirstOrDefault();
             if (content != null)
-                panel.SetContent(GuiLoader.Builders[content.Name.LocalName].Build(screenConstants, content, controller));
+                panel.SetContent(loader.LoadFromXml(content, controller));
 
             return panel;
         }

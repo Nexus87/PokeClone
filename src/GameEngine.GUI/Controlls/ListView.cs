@@ -12,15 +12,20 @@ namespace GameEngine.GUI.Controlls
 
     public sealed class ListView<T> : AbstractGuiComponent
     {
-        private ListCellFactory<T> _listCellFactory = delegate { return null; };
         private readonly List<ListCell> _listItems = new List<ListCell>();
-        private ObservableCollection<T> _model = new ObservableCollection<T>(new List<T>());
-        private int _lastSelectedIndex;
         private int _cellHeight = 100;
+        private int _lastSelectedIndex;
+        private ListCellFactory<T> _listCellFactory = delegate { return null; };
+        private ObservableCollection<T> _model = new ObservableCollection<T>(new List<T>());
+
+        public ListView()
+        {
+            Area = new Rectangle(0, 0, DefaultListWidth, 0);
+        }
 
         public int CellHeight
         {
-            get { return _cellHeight; }
+            get => _cellHeight;
             set
             {
                 _cellHeight = value;
@@ -30,14 +35,9 @@ namespace GameEngine.GUI.Controlls
 
         public int DefaultListWidth { get; set; } = 300;
 
-        public ListView()
-        {
-            Area = new Rectangle(0, 0, DefaultListWidth, 0);
-        }
-
         public ObservableCollection<T> Model
         {
-            get { return _model; }
+            get => _model;
             set
             {
                 if (value == null)
@@ -47,6 +47,16 @@ namespace GameEngine.GUI.Controlls
                     _model.CollectionChanged -= ModelOnCollectionChanged;
                 _model = value;
                 _model.CollectionChanged += ModelOnCollectionChanged;
+                ReCreateItems();
+            }
+        }
+
+        public ListCellFactory<T> ListCellFactory
+        {
+            get => _listCellFactory;
+            set
+            {
+                _listCellFactory = value;
                 ReCreateItems();
             }
         }
@@ -92,16 +102,6 @@ namespace GameEngine.GUI.Controlls
                 _listItems.AddRange(newCells);
             else
                 _listItems.InsertRange(argsNewStartingIndex, newCells);
-        }
-
-        public ListCellFactory<T> ListCellFactory
-        {
-            get { return _listCellFactory; }
-            set
-            {
-                _listCellFactory = value;
-                ReCreateItems();
-            }
         }
 
         public override void HandleKeyInput(CommandKeys key)
@@ -172,9 +172,7 @@ namespace GameEngine.GUI.Controlls
                 return;
 
             for (var i = 0; i < _listItems.Count; i++)
-            {
                 _listItems[i].Area = new Rectangle(Area.X, Area.Y + i * CellHeight, Area.Width, CellHeight);
-            }
 
             PreferredHeight = _listItems.Count * CellHeight;
         }

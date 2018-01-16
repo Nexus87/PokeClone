@@ -81,6 +81,7 @@
     <Compile Include="Controlls\TextAreaLine.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="GraphicComponentSizeChangedEventArgs.cs" />
+    <Compile Include="GuiFactory.cs" />
     <Compile Include="IGuiComponent.cs" />
     <Compile Include="INode.cs" />
     <Compile Include="ISkin.cs" />

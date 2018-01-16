@@ -1,26 +1,22 @@
 ﻿using System;
 using GameEngine.Globals;
-using GameEngine.Graphics.General;
 using Microsoft.Xna.Framework;
 
 namespace GameEngine.GUI.Controlls
 {
     public class ListCell
     {
+        private Rectangle _area;
         private IGuiComponent _component;
         private bool _isSelected;
-        private Rectangle _area;
-        public event EventHandler<ComponentSelectedEventArgs> CellSelected;
 
         public IGuiComponent Component
         {
-            get { return _component; }
+            get => _component;
             set
             {
                 if (_component != null)
-                {
                     _component.ComponentSelected -= ComponentOnComponentSelected;
-                }
 
                 _component = value;
 
@@ -33,14 +29,9 @@ namespace GameEngine.GUI.Controlls
             }
         }
 
-        private void ComponentOnComponentSelected(object sender, ComponentSelectedEventArgs componentSelectedEventArgs)
-        {
-            OnCellSelected(componentSelectedEventArgs);
-        }
-
         public bool IsSelected
         {
-            get { return _isSelected; }
+            get => _isSelected;
             set
             {
                 _isSelected = value;
@@ -51,13 +42,20 @@ namespace GameEngine.GUI.Controlls
 
         public Rectangle Area
         {
-            get { return _area; }
+            get => _area;
             set
             {
                 _area = value;
                 if (_component != null)
                     _component.Area = _area;
             }
+        }
+
+        public event EventHandler<ComponentSelectedEventArgs> CellSelected;
+
+        private void ComponentOnComponentSelected(object sender, ComponentSelectedEventArgs componentSelectedEventArgs)
+        {
+            OnCellSelected(componentSelectedEventArgs);
         }
 
 
@@ -67,7 +65,7 @@ namespace GameEngine.GUI.Controlls
         }
 
 
-        protected virtual void OnCellSelected(ComponentSelectedEventArgs componentSelectedEventArgs)
+        private void OnCellSelected(ComponentSelectedEventArgs componentSelectedEventArgs)
         {
             CellSelected?.Invoke(this, componentSelectedEventArgs);
         }

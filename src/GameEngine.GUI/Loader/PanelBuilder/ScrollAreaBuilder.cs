@@ -8,22 +8,15 @@ namespace GameEngine.GUI.Loader.PanelBuilder
 {
     public class ScrollAreaBuilder : AbstractGuiComponentBuilder
     {
-        private readonly IContainer _container;
-
-        public ScrollAreaBuilder(IContainer container)
+        public override IGuiComponent Build(IContainer container, GuiLoader loader, ScreenConstants screenConstants, XElement xElement, object controller)
         {
-            _container = container;
-        }
-
-        public override IGuiComponent Build(ScreenConstants screenConstants, XElement xElement, object controller)
-        {
-            var scrollArea = _container.Resolve<ScrollArea>();
+            var scrollArea = container.Resolve<ScrollArea>();
             scrollArea.Area = ReadPosition(screenConstants, xElement);
             SetUpController(controller, scrollArea, xElement);
 
             var content = xElement.Elements().SingleOrDefault();
             if (content != null)
-                scrollArea.Content = GuiLoader.Builders[content.Name.LocalName].Build(screenConstants, content, controller);
+                scrollArea.Content = loader.LoadFromXml(content, controller);
 
             return scrollArea;
         }
