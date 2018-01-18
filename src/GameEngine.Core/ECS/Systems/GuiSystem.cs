@@ -6,7 +6,6 @@ using GameEngine.Core.ECS.Components;
 using GameEngine.Globals;
 using GameEngine.Graphics.General;
 using GameEngine.GUI;
-using GameEngine.GUI.Loader;
 using Microsoft.Xna.Framework;
 
 namespace GameEngine.Core.ECS.Systems
@@ -14,9 +13,9 @@ namespace GameEngine.Core.ECS.Systems
     public class GuiSystem
     {
         private readonly List<WidgetItem> _widgets = new List<WidgetItem>();
-        public GuiLoader GuiLoader { get; set; }
 
         private IGuiComponent FocusedWidget => _widgets.LastOrDefault()?.Component;
+        public GuiFactory Factory { get; set; }
 
         public void Update(TimeAction action, IEntityManager entityManager)
         {

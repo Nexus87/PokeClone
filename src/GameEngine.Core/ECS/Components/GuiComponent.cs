@@ -8,9 +8,10 @@ namespace GameEngine.Core.ECS.Components
     {
         private readonly IScreen _screen;
 
-        public GuiComponent(Guid entityId, IScreen screen) : base(entityId)
+        public GuiComponent(Guid entityId, IScreen screen, ISkin skin) : base(entityId)
         {
             _screen = screen;
+            Skin = skin;
         }
 
         public ISpriteBatch SpriteBatch => _screen.GuiSpriteBatch;

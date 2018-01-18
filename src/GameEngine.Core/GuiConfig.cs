@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using Autofac;
 using GameEngine.Globals;
 using GameEngine.GUI;
+using GameEngine.GUI.Controlls;
 using GameEngine.GUI.Loader;
 using GameEngine.GUI.Loader.ControllBuilder;
 using GameEngine.GUI.Loader.PanelBuilder;
 using GameEngine.GUI.Panels;
+using GameEngine.GUI.Renderers;
 
 namespace GameEngine.Core
 {
@@ -30,14 +32,26 @@ namespace GameEngine.Core
 
         internal void InitDefaults()
         {
-            //AddGuiElement("Window", new WindowBuilder(), skin => new Window(skin.GetRendererForComponent(typeof)));
             _builders["Window"] = new WindowBuilder();
+            _builder.Register(x => new Window(CurrentSkin.GetRendererForComponent<Window, WindowRenderer>()));
+
             _builders["Grid"] = new GridBuilder();
+            _builder.Register(x => new Grid());
+
             _builders["ScrollArea"] = new ScrollAreaBuilder();
+            _builder.Register(x => new ScrollArea(CurrentSkin.GetRendererForComponent<ScrollArea, ScrollAreaRenderer>()));
+
             _builders["ListView"] = new ListViewBuilder();
+            _builder.RegisterGeneric(typeof(ListView<>));
+
             _builders["Panel"] = new PanelBuilder();
+            _builder.Register(x => new Panel(CurrentSkin.GetRendererForComponent<Panel, PanelRenderer>()));
+
             _builders["Label"] = new LabelBuilder();
+            _builder.Register(x => new Label(CurrentSkin.GetRendererForComponent<Label, LabelRenderer>()));
+
             _builders["Spacer"] = new SpacerBuilder();
+            _builder.Register(x => new Spacer());
         }
 
 

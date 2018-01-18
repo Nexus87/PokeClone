@@ -1,6 +1,7 @@
 ﻿using System;
 using GameEngine.Core.ECS.Systems;
 using GameEngine.Globals;
+using GameEngine.GUI;
 using GameEngine.GUI.Controlls;
 using GameEngine.GUI.Loader;
 using GameEngine.GUI.Panels;
@@ -20,11 +21,11 @@ namespace BattleMode.Gui
 
 #pragma warning restore 649
 
-        public MainMenuController(GuiSystem guiManager, Button attackButton, Button pkmnButton, Button itemButton, Button runButton, GuiLoader loader)
+        public MainMenuController(GuiSystem guiManager, Button attackButton, Button pkmnButton, Button itemButton, Button runButton, GuiFactory factory)
         {
             _guiManager = guiManager;
 
-            loader.Load(@"BattleMode\Gui\MainMenu.xml", this);
+            factory.LoadFromFile(@"BattleMode\Gui\MainMenu.xml", this);
 
             attackButton.Text = MainMenuEntries.Attack.ToString();
             attackButton.ButtonPressed += delegate { OnItemSelected(MainMenuEntries.Attack); };

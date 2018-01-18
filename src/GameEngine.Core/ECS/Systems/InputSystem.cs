@@ -8,16 +8,13 @@ namespace GameEngine.Core.ECS.Systems
     public class InputSystem
     {
         private readonly KeyboardManager _keyboardManager;
-        private IMessageBus _messageBus;
+        private readonly IMessageBus _messageBus;
 
-        public InputSystem()
+        public InputSystem(IMessageBus messageBus)
         {
             _keyboardManager = new KeyboardManager();
-        }
-
-        public void Init(IMessageBus messageBus)
-        {
             _messageBus = messageBus;
+
         }
 
         public void Update(TimeAction action, IEntityManager entityManager)

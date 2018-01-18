@@ -1,7 +1,6 @@
 ﻿using GameEngine.Core.GameStates;
 using GameEngine.Core.ModuleManager;
 using GameEngine.Graphics.Textures;
-using GameEngine.GUI;
 using Microsoft.Xna.Framework.Content;
 
 namespace GameEngine.Core
@@ -10,8 +9,7 @@ namespace GameEngine.Core
     {
         private const string EngineContentRoot = "Content";
         private readonly GameRunner _gameRunner;
-
-        private ISkin _skin;
+        public GuiConfig GuiConfig { get; } = new GuiConfig();
         private readonly TextureConfigurationBuilder _textureConfigurationBuilder ;
 
         public PokeEngine(string contentRoot)
@@ -26,11 +24,11 @@ namespace GameEngine.Core
             var textureProvider = new TextureProvider();
 
 
-
+            _gameRunner.Skin = GuiConfig.CurrentSkin;
             _gameRunner.OnContentLoad = (gameRunner) =>
             {
                 InitSkin(gameRunner);
-
+                gameRunner.GuiFactory = GuiConfig.Init(gameRunner.Screen.Constants);
                 textureProvider.SetConfiguration(_textureConfigurationBuilder.BuildConfiguration(), new ContentManager(_gameRunner.Services, _textureConfigurationBuilder.ContentRoot));
                 textureProvider.Init(gameRunner.GraphicsDevice);
                 
@@ -42,19 +40,14 @@ namespace GameEngine.Core
         private void InitSkin(GameRunner gameRunner)
         {
             var skinTextureConfigBuilder = new TextureConfigurationBuilder(EngineContentRoot);
-            _skin.AddTextureConfigurations(skinTextureConfigBuilder);
+            GuiConfig.CurrentSkin.AddTextureConfigurations(skinTextureConfigBuilder);
 
             var skinTextureProvider = new TextureProvider();
             skinTextureProvider.SetConfiguration(skinTextureConfigBuilder.BuildConfiguration(), new ContentManager(_gameRunner.Services, skinTextureConfigBuilder.ContentRoot));
 
             skinTextureProvider.Init(gameRunner.GraphicsDevice);
-            _skin.Init(skinTextureProvider);
+            GuiConfig.CurrentSkin.Init(skinTextureProvider);
 
-        }
-        public void SetSkin(ISkin skin)
-        {
-            _skin = skin;
-            _gameRunner.Skin = skin;
         }
 
         public void RegisterContentModule(IContentModule contentModule)

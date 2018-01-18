@@ -2,8 +2,11 @@
 using BattleMode.Core;
 //using BattleMode.Core;
 using GameEngine.Core;
-using GameEngine.GUI;
 using PokemonShared.Core;
+using PokemonShared.Gui;
+using PokemonShared.Gui.Builder;
+using PokemonShared.Gui.Renderer;
+using PokemonShared.Gui.Renderer.PokemonClassicRenderer;
 
 namespace PokemonGame
 {
@@ -21,7 +24,6 @@ namespace PokemonGame
             //var startModule = "MainMode";
 
             var engine = new PokeEngine("Content");
-            var skin = new ClassicSkin();
             //RegisterRenderers(engine.GuiSystem);
 
             //engine.RegisterModule(new PokemonGameModule());
@@ -32,7 +34,13 @@ namespace PokemonGame
             engine.RegisterContentModule(pokemonSharedModule);
             //engine.SetSkin(engine.GuiSystem.ClassicSkin);
             //engine.SetStartModule(startModule);
-            engine.SetSkin(skin);
+
+            engine.GuiConfig.AddGuiElement("HpLine", new HpLineBuilder(), skin => new HpLine(skin.GetRendererForComponent<HpLine, HpLineRenderer>()));
+            engine.GuiConfig.AddGuiElement("HpText", new HpTextBuilder(), skin => new HpText(skin.GetRendererForComponent<HpText, HpTextRenderer>()));
+
+            engine.GuiConfig.ClassicSkin.SetRendererAs<ClassicLineRenderer, HpLineRenderer, HpLine>(new ClassicLineRenderer());
+            engine.GuiConfig.ClassicSkin.SetRendererAs<ClassicHpTextRenderer, HpTextRenderer, HpText>(new ClassicHpTextRenderer());
+
             engine.SetState(new BattleModule());
             engine.Run();
         }

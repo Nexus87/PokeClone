@@ -114,17 +114,17 @@ namespace GameEngine.Core
 
         public void Draw()
         {
-            DefaultSpriteBatch.GraphicsDevice.SetRenderTarget(_target);
-
-            DefaultSpriteBatch.Begin();
-            DefaultSpriteBatch.Draw(_sceneRenderTarget);
-            DefaultSpriteBatch.Draw(_guiRenderTarget);
-            DefaultSpriteBatch.End();
-
             DefaultSpriteBatch.GraphicsDevice.SetRenderTarget(null);
+
             DefaultSpriteBatch.Begin();
-            DefaultSpriteBatch.Draw(_target, TargetRectangle);
+            DefaultSpriteBatch.Draw(_sceneRenderTarget, TargetRectangle);
+            DefaultSpriteBatch.Draw(_guiRenderTarget, TargetRectangle);
             DefaultSpriteBatch.End();
+
+            //DefaultSpriteBatch.GraphicsDevice.SetRenderTarget(null);
+            //DefaultSpriteBatch.Begin();
+            //DefaultSpriteBatch.Draw(_target, TargetRectangle);
+            //DefaultSpriteBatch.End();
         }
     }
 }

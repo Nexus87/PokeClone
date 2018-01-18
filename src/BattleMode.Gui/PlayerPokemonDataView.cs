@@ -1,6 +1,7 @@
 ﻿using BattleMode.Shared;
 using GameEngine.Core.ECS.Systems;
 using GameEngine.Globals;
+using GameEngine.GUI;
 using GameEngine.GUI.Controlls;
 using GameEngine.GUI.Loader;
 using GameEngine.GUI.Panels;
@@ -20,11 +21,11 @@ namespace BattleMode.Gui
         [GuiLoaderId("HpText")] private HpText _hpText;
 #pragma warning restore 649
 
-        public PlayerPokemonDataView(GuiSystem guiManager, GuiLoader loader)
+        public PlayerPokemonDataView(GuiSystem guiManager, GuiFactory factory)
         {
             _guiManager = guiManager;
 
-            loader.Load(@"BattleMode\Gui\PlayerDataView.xml", this);
+            factory.LoadFromFile(@"BattleMode\Gui\PlayerDataView.xml", this);
         }
 
         public int CurrentHp => _hpLine.Current;

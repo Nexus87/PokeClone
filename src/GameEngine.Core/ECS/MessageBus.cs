@@ -30,23 +30,21 @@ namespace GameEngine.Core.ECS
                 return;
             }
 
-            Action<object, IEntityManager> wrapper = (x, y) => handler((TAction) x, y);
+            void Wrapper(object x, IEntityManager y) => handler((TAction) x, y);
 
-            _handlerMap[handler] = wrapper;
-            List<Action<object, IEntityManager>> handlerList;
-            if (!_handlers.TryGetValue(typeof(TAction), out handlerList))
+            _handlerMap[handler] = Wrapper;
+            if (!_handlers.TryGetValue(typeof(TAction), out var handlerList))
             {
                 handlerList = new List<Action<object, IEntityManager>>();
                 _handlers[typeof(TAction)] = handlerList;
             }
 
-            handlerList.Add(wrapper);
+            handlerList.Add(Wrapper);
         }
 
         public void UnregisterHandler<TAction>(Action<TAction, IEntityManager> handler)
         {
-            Action<object, IEntityManager> wrapper;
-            if (!_handlerMap.TryGetValue(handler, out wrapper))
+            if (!_handlerMap.TryGetValue(handler, out var wrapper))
             {
                 return;
             }
@@ -59,9 +57,8 @@ namespace GameEngine.Core.ECS
             while (_messageQueue.Count > 0)
             {
                 var action = _messageQueue.Dequeue();
-                List<Action<object, IEntityManager>> handlers;
 
-                if (_handlers.TryGetValue(action.GetType(), out handlers))
+                if (_handlers.TryGetValue(action.GetType(), out var handlers))
                     handlers.ForEach(x => x(action, _entityManager));
             }
         }

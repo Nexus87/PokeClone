@@ -26,11 +26,11 @@ namespace BattleMode.Gui
         private readonly Panel _panel;
 
 #pragma warning restore 649
-        public PokemonMenuController(GuiSystem guiManager, Client client, ISkin skin, GuiLoader loader)
+        public PokemonMenuController(GuiSystem guiManager, Client client, ISkin skin, GuiFactory factory)
         {
             _guiManager = guiManager;
 
-            loader.Load(@"BattleMode\Gui\PokemonMenu.xml", this);
+            factory.LoadFromFile(@"BattleMode\Gui\PokemonMenu.xml", this);
 
             _panel.SetContent(_listView);
 

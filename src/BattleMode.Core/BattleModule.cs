@@ -67,15 +67,15 @@ namespace BattleMode.Core
                 new Button((ButtonRenderer) Skin.GetRendererForComponent(typeof(Button))),
                 new Button((ButtonRenderer) Skin.GetRendererForComponent(typeof(Button))),
                 new Button((ButtonRenderer) Skin.GetRendererForComponent(typeof(Button))),
-                GuiSystem.GuiLoader
+                GuiSystem.Factory
             );
 
-            var moveMenuController = new MoveMenuController(GuiSystem, data, Skin, GuiSystem.GuiLoader);
+            var moveMenuController = new MoveMenuController(GuiSystem, data, Skin, GuiSystem.Factory);
 
-            var pokemonMenuController = new PokemonMenuController(GuiSystem, _player, Skin, GuiSystem.GuiLoader);
-            var itemMenuController = new ItemMenuController(GuiSystem, GuiSystem.GuiLoader);
-            var playerPokemonDataView = new PlayerPokemonDataView(GuiSystem, GuiSystem.GuiLoader);
-            var aiPokemonDataView = new AiPokemonDataView(GuiSystem, GuiSystem.GuiLoader);
+            var pokemonMenuController = new PokemonMenuController(GuiSystem, _player, Skin, GuiSystem.Factory);
+            var itemMenuController = new ItemMenuController(GuiSystem, GuiSystem.Factory);
+            var playerPokemonDataView = new PlayerPokemonDataView(GuiSystem, GuiSystem.Factory);
+            var aiPokemonDataView = new AiPokemonDataView(GuiSystem, GuiSystem.Factory);
             _guiController = new GuiController(Screen.Constants, GuiSystem, messageBox, mainMenuController, moveMenuController,
                 pokemonMenuController, itemMenuController, playerPokemonDataView, aiPokemonDataView, data);
         }

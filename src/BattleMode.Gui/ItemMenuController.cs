@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using GameEngine.Core.ECS.Systems;
 using GameEngine.Globals;
+using GameEngine.GUI;
 using GameEngine.GUI.Controlls;
 using GameEngine.GUI.Loader;
 using GameEngine.GUI.Panels;
@@ -23,11 +24,11 @@ namespace BattleMode.Gui
 
 #pragma warning restore 649
 
-        public ItemMenuController(GuiSystem guiManager, GuiLoader loader)
+        public ItemMenuController(GuiSystem guiManager, GuiFactory factory)
         {
             _guiManager = guiManager;
 
-            loader.Load(@"BattleMode\Gui\ItemMenu.xml", this);
+            factory.LoadFromFile(@"BattleMode\Gui\ItemMenu.xml", this);
 
             var model = Enumerable
                 .Range(0, 20)

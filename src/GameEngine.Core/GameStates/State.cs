@@ -17,11 +17,12 @@ namespace GameEngine.Core.GameStates
 
         protected State()
         {
-            RenderSystem = new RenderSystem();
-            InputSystem = new InputSystem();
-            GuiSystem = new GuiSystem();
             _entityManager = new EntityManager();
             MessageBus = new MessageBus(_entityManager);
+
+            RenderSystem = new RenderSystem();
+            InputSystem = new InputSystem(MessageBus);
+            GuiSystem = new GuiSystem();
 
             MessageBus.RegisterForAction<TimeAction>(RenderSystem.Render);
             MessageBus.RegisterForAction<TimeAction>(InputSystem.Update);
@@ -39,11 +40,10 @@ namespace GameEngine.Core.GameStates
 
         protected abstract void Init();
 
-        public void Init(Screen screen, IReadOnlyDictionary<Keys, CommandKeys> keyMap, ISkin skin)
+        public void Init(Screen screen, IReadOnlyDictionary<Keys, CommandKeys> keyMap, ISkin skin, GuiFactory factory)
         {
-            StateEntity = GameStateEntity.Create(_entityManager, screen, keyMap);
-            //TODO
-            //GuiSystem.GuiLoader = new GuiLoader(Screen.Constants);
+            StateEntity = GameStateEntity.Create(_entityManager, screen, keyMap, skin);
+            GuiSystem.Factory = factory;
             Screen = screen;
             Skin = skin;
             Init();

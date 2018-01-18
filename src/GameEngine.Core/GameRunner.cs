@@ -10,19 +10,20 @@ namespace GameEngine.Core
 {
     public class GameRunner : Game, IEngineInterface
     {
-        private readonly Screen _screen;
+        internal readonly Screen Screen;
         public readonly GraphicsDeviceManager GraphicsDeviceManager;
 
         internal Action<GameRunner> OnContentLoad;
         internal StateManager StateManager;
         internal ISkin Skin;
+        internal GuiFactory GuiFactory;
         private readonly IReadOnlyDictionary<Keys, CommandKeys> _keyMap;
 
         public GameRunner(IReadOnlyDictionary<Keys, CommandKeys> keyMap)
         {
             _keyMap = keyMap;
             GraphicsDeviceManager = new GraphicsDeviceManager(this);
-            _screen = new Screen(new ScreenConstants(), GraphicsDeviceManager);
+            Screen = new Screen(new ScreenConstants(), GraphicsDeviceManager);
 
             Window.AllowUserResizing = true;
             Content.RootDirectory = @".";
@@ -34,7 +35,7 @@ namespace GameEngine.Core
 
         protected override void Draw(GameTime gameTime)
         {
-            _screen.Draw();
+            Screen.Draw();
         }
 
         protected override void Update(GameTime gameTime)
@@ -47,11 +48,11 @@ namespace GameEngine.Core
             base.Initialize();
             Window.ClientSizeChanged += delegate
             {
-                _screen.WindowsResizeHandler(Window.ClientBounds.Width, Window.ClientBounds.Height);
+                Screen.WindowsResizeHandler(Window.ClientBounds.Width, Window.ClientBounds.Height);
             };
-            _screen.WindowsResizeHandler(Window.ClientBounds.Width, Window.ClientBounds.Height);
+            Screen.WindowsResizeHandler(Window.ClientBounds.Width, Window.ClientBounds.Height);
 
-            StateManager = new StateManager(_screen, _keyMap, Skin);
+            StateManager = new StateManager(Screen, _keyMap, Skin, GuiFactory);
             StateManager.PushState(InitialState);
         }
 
