@@ -51,7 +51,6 @@
   <ItemGroup>
     <Compile Include="AIPokemonDataView.cs" />
     <Compile Include="GuiController.cs" />
-    <Compile Include="IGuiController.cs" />
     <Compile Include="ItemMenuController.cs" />
     <Compile Include="MainMenuEntries.cs" />
     <Compile Include="MainMenuController.cs" />

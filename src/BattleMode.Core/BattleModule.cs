@@ -61,21 +61,14 @@ namespace BattleMode.Core
                 )
             );
 
-            var mainMenuController = new MainMenuController(
-                GuiSystem,
-                new Button((ButtonRenderer) Skin.GetRendererForComponent(typeof(Button))),
-                new Button((ButtonRenderer) Skin.GetRendererForComponent(typeof(Button))),
-                new Button((ButtonRenderer) Skin.GetRendererForComponent(typeof(Button))),
-                new Button((ButtonRenderer) Skin.GetRendererForComponent(typeof(Button))),
-                GuiSystem.Factory
-            );
+            var mainMenuController = new MainMenuController(GuiSystem);
 
             var moveMenuController = new MoveMenuController(GuiSystem, data, Skin, GuiSystem.Factory);
 
             var pokemonMenuController = new PokemonMenuController(GuiSystem, _player, Skin, GuiSystem.Factory);
             var itemMenuController = new ItemMenuController(GuiSystem, GuiSystem.Factory);
             var playerPokemonDataView = new PlayerPokemonDataView(GuiSystem, GuiSystem.Factory);
-            var aiPokemonDataView = new AiPokemonDataView(GuiSystem, GuiSystem.Factory);
+            var aiPokemonDataView = new AiPokemonDataView(GuiSystem);
             _guiController = new GuiController(Screen.Constants, GuiSystem, messageBox, mainMenuController, moveMenuController,
                 pokemonMenuController, itemMenuController, playerPokemonDataView, aiPokemonDataView, data);
         }

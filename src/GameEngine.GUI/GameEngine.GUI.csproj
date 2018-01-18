@@ -90,6 +90,7 @@
     <Compile Include="IGuiComponent.cs" />
     <Compile Include="INode.cs" />
     <Compile Include="ISkin.cs" />
+    <Compile Include="Loader\ControllBuilder\ButtonBuilder.cs" />
     <Compile Include="Loader\ControllBuilder\LabelBuilder.cs" />
     <Compile Include="Loader\ControllBuilder\ListViewBuilder.cs" />
     <Compile Include="Loader\ControllBuilder\SpacerBuilder.cs" />

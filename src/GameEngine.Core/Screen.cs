@@ -13,7 +13,6 @@ namespace GameEngine.Core
 
         private RenderTarget2D _guiRenderTarget;
         private RenderTarget2D _sceneRenderTarget;
-        private RenderTarget2D _target;
 
         private Rectangle _targetRectangle;
         private GraphicsDevice _device;
@@ -95,7 +94,7 @@ namespace GameEngine.Core
         {
             _device = _graphicsDeviceManager.GraphicsDevice;
             
-            _target = CreateRenderTarget();
+            CreateRenderTarget();
             _guiRenderTarget = CreateRenderTarget();
             _sceneRenderTarget = CreateRenderTarget();
 

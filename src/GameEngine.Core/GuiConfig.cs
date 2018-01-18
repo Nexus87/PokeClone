@@ -52,6 +52,9 @@ namespace GameEngine.Core
 
             _builders["Spacer"] = new SpacerBuilder();
             _builder.Register(x => new Spacer());
+
+            _builders["Button"] = new ButtonBuilder();
+            _builder.Register(x => new Button(CurrentSkin.GetRendererForComponent<Button, ButtonRenderer>()));
         }
 
 

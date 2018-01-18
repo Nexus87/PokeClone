@@ -1,7 +1,5 @@
 ﻿using BattleMode.Shared;
 using GameEngine.Core.ECS.Systems;
-using GameEngine.Globals;
-using GameEngine.GUI;
 using GameEngine.GUI.Controlls;
 using GameEngine.GUI.Loader;
 using GameEngine.GUI.Panels;
@@ -11,7 +9,7 @@ namespace BattleMode.Gui
 {
     public class AiPokemonDataView : IPokemonDataView
     {
-        private readonly GuiSystem _guiManager;
+        private readonly GuiSystem _guiSystem;
 #pragma warning disable 649
         [GuiLoaderId("Window")] private Grid _grid;
         [GuiLoaderId("HpLine")] private HpLine _hpLine;
@@ -20,10 +18,10 @@ namespace BattleMode.Gui
 #pragma warning restore 649
 
 
-        public AiPokemonDataView(GuiSystem guiManager, GuiFactory factory)
+        public AiPokemonDataView(GuiSystem guiSystem)
         {
-            _guiManager = guiManager;
-            factory.LoadFromFile(@"BattleMode\Gui\AiDataView.xml", this);
+            _guiSystem = guiSystem;
+            _guiSystem.Factory.LoadFromFile(@"BattleMode\Gui\AiDataView.xml", this);
         }
 
         public int CurrentHp => _hpLine.Current;
@@ -43,7 +41,7 @@ namespace BattleMode.Gui
 
         public void Show()
         {
-            _guiManager.ShowWidget(_grid, -100);
+            _guiSystem.ShowWidget(_grid, -100);
         }
     }
 }
