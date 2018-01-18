@@ -15,7 +15,7 @@ namespace GameEngine.Core
         private RenderTarget2D _sceneRenderTarget;
         private RenderTarget2D _target;
 
-        private Rectangle TargetRectangle { get; set; }
+        private Rectangle _targetRectangle;
         private GraphicsDevice _device;
         private XnaSpriteBatch _spriteBatch;
 
@@ -34,6 +34,7 @@ namespace GameEngine.Core
             get
             {
                 _spriteBatch.GraphicsDevice.SetRenderTarget(_sceneRenderTarget);
+                Device.Clear(Constants.BackgroundColor);
                 return _spriteBatch;
             }
         }
@@ -77,14 +78,10 @@ namespace GameEngine.Core
                 scaleX = scaleY / (displayRatio * invBufferRatio);
             }
 
-            TargetRectangle = new Rectangle
-            {
-                X = (int)((bufferX - TargetRectangle.Width) / 2.0f),
-                Y= (int)((bufferY - TargetRectangle.Height) / 2.0f),
-                Width = (int)(scaleX * Constants.ScreenWidth),
-                Height = (int)(scaleY * Constants.ScreenHeight)
-
-            };
+            _targetRectangle.Width = (int)(scaleX * Constants.ScreenWidth);
+            _targetRectangle.Height = (int)(scaleY * Constants.ScreenHeight);
+            _targetRectangle.X = (int)((bufferX - _targetRectangle.Width) / 2.0f);
+            _targetRectangle.Y = (int)((bufferY - _targetRectangle.Height) / 2.0f);
         }
 
         public Screen(ScreenConstants screenConstants, GraphicsDeviceManager graphicsDeviceManager)
@@ -115,16 +112,10 @@ namespace GameEngine.Core
         public void Draw()
         {
             DefaultSpriteBatch.GraphicsDevice.SetRenderTarget(null);
-
             DefaultSpriteBatch.Begin();
-            DefaultSpriteBatch.Draw(_sceneRenderTarget, TargetRectangle);
-            DefaultSpriteBatch.Draw(_guiRenderTarget, TargetRectangle);
+            DefaultSpriteBatch.Draw(_sceneRenderTarget, _targetRectangle);
+            DefaultSpriteBatch.Draw(_guiRenderTarget, _targetRectangle);
             DefaultSpriteBatch.End();
-
-            //DefaultSpriteBatch.GraphicsDevice.SetRenderTarget(null);
-            //DefaultSpriteBatch.Begin();
-            //DefaultSpriteBatch.Draw(_target, TargetRectangle);
-            //DefaultSpriteBatch.End();
         }
     }
 }
