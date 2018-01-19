@@ -5,8 +5,6 @@ using BattleMode.Shared;
 using GameEngine.Core.ECS;
 using GameEngine.Core.ECS.Actions;
 using GameEngine.Core.ECS.Systems;
-using GameEngine.Globals;
-using GameEngine.GUI;
 using GameEngine.GUI.Components;
 using GameEngine.GUI.Loader;
 using Microsoft.Xna.Framework;
@@ -53,7 +51,7 @@ namespace BattleMode.Gui
 
             OnItemSelectCloseAll();
             OnExitRequestedBackToMain();
-            messageBus.SendAction(new SetGuiComponentVisibleAction{Widget = _messageBox, IsVisble = true});
+            messageBus.SendAction(new SetGuiComponentVisibleAction(_messageBox, true));
 
             _mainController.Show();
 

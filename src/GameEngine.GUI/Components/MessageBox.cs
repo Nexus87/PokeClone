@@ -17,6 +17,8 @@ namespace GameEngine.GUI.Components
             _textArea = textArea;
 
             _window.Content = _textArea;
+
+            Children.Add(_window);
         }
 
         public event EventHandler OnAllLineShowed = delegate { };

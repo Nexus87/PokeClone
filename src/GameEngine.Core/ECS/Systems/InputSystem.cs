@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using GameEngine.Core.ECS.Actions;
 using GameEngine.Core.ECS.Components;
+using GameEngine.Globals;
 using Microsoft.Xna.Framework.Input;
 
 namespace GameEngine.Core.ECS.Systems
@@ -14,18 +16,22 @@ namespace GameEngine.Core.ECS.Systems
         {
             _keyboardManager = new KeyboardManager();
             _messageBus = messageBus;
-
         }
 
         public void Update(TimeAction action, IEntityManager entityManager)
         {
             var keyMap = entityManager.GetFirstCompnentOfType<KeyMapComponent>().KeyMap;
+            var guiVisible = entityManager.GetFirstCompnentOfType<GuiComponent>().GuiVisible;
+            var send = guiVisible
+                ? (Action<CommandKeys>) (key => _messageBus.SendAction(new GuiKeyInputAction(key)))
+                : key => _messageBus.SendAction(new KeyInputAction(key));
+
             _keyboardManager.Update();
 
-            foreach (var entry in keyMap.Where(x => HasKeyChangedToDown(x.Key)))
-            {
-                _messageBus.SendAction(new KeyInputAction{Key = entry.Value});
-            }
+            keyMap.Where(x => HasKeyChangedToDown(x.Key))
+                .Select(x => x.Value)
+                .ToList()
+                .ForEach(send);
         }
 
         private bool HasKeyChangedToDown(Keys keys)

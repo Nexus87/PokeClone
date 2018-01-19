@@ -5,7 +5,6 @@ using GameEngine.Core.ECS.Entities;
 using GameEngine.Core.ECS.Systems;
 using GameEngine.Globals;
 using GameEngine.GUI;
-using GameEngine.GUI.Loader;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
@@ -28,13 +27,15 @@ namespace GameEngine.Core.GameStates
             MessageBus.RegisterForAction<TimeAction>(InputSystem.Update);
             MessageBus.RegisterForAction<TimeAction>(GuiSystem.Update);
             MessageBus.RegisterForAction<SetGuiComponentVisibleAction>(GuiSystem.SetWidgetVisibility);
+            MessageBus.RegisterForAction<GuiKeyInputAction>(GuiSystem.HandleInput);
+            MessageBus.RegisterForAction<SetGuiVisibleAction>(GuiSystem.SetGuiVisiblity);
         }
 
         private InputSystem InputSystem { get; }
         protected GuiSystem GuiSystem { get; }
         private RenderSystem RenderSystem { get; }
-        protected IMessageBus MessageBus { get; set; }
-        protected Entity StateEntity { get; private set; }
+        protected IMessageBus MessageBus { get; }
+        private Entity StateEntity { get; set; }
 
         protected abstract void Init();
 
@@ -47,7 +48,7 @@ namespace GameEngine.Core.GameStates
 
         public void Update(GameTime gameTime)
         {
-            MessageBus.SendAction(new TimeAction {Time = gameTime});
+            MessageBus.SendAction(new TimeAction(gameTime));
             MessageBus.StartProcess();
         }
 

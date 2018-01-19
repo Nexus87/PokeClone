@@ -4,6 +4,12 @@ namespace GameEngine.Core.ECS.Actions
 {
     public class TimeAction
     {
-        public GameTime Time { get; set; }
+
+        public readonly GameTime Time;
+
+        public TimeAction(GameTime time)
+        {
+            Time = time;
+        }
     }
 }

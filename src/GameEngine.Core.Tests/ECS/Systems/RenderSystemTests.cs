@@ -25,7 +25,7 @@ namespace GameEngine.Core.Tests.ECS.Systems
             var sut = GetRenderSystem();
             SetupEntityManager(CreateComponenTuple());
 
-            sut.Render(new TimeAction(), _entityManager);
+            sut.Render(new TimeAction(new GameTime()), _entityManager);
 
             A.CallTo(() => _spriteBatch.Draw(A<ITexture2D>._, A<Rectangle>._, A<Color>._, A<SpriteEffects>._))
                 .MustHaveHappened();
@@ -37,7 +37,7 @@ namespace GameEngine.Core.Tests.ECS.Systems
             var sut = GetRenderSystem();
             SetupEntityManager();
 
-            sut.Render(new TimeAction(), _entityManager);
+            sut.Render(new TimeAction(new GameTime()), _entityManager);
 
             A.CallTo(() => 
             _spriteBatch.Begin(A<SpriteSortMode>._, A<BlendState>._ , A<SamplerState>._, A<DepthStencilState>._, A<RasterizerState>._, A<Effect>._, A<Matrix?>._))
@@ -58,7 +58,7 @@ namespace GameEngine.Core.Tests.ECS.Systems
             };
             SetupEntityManager(components);
 
-            sut.Render(new TimeAction(), _entityManager);
+            sut.Render(new TimeAction(new GameTime()), _entityManager);
 
             ACallToDrawWithComponent(components[2]).MustHaveHappened()
                 .Then(ACallToDrawWithComponent(components[1]).MustHaveHappened())

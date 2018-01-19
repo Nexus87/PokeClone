@@ -2,12 +2,11 @@
 
 namespace GameEngine.Core.ECS.Actions
 {
-    public class KeyInputAction
+    public class GuiKeyInputAction
     {
-
         public readonly CommandKeys Key;
 
-        public KeyInputAction(CommandKeys key)
+        public GuiKeyInputAction(CommandKeys key)
         {
             Key = key;
         }

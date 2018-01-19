@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using BattleMode.Shared;
 using GameEngine.Core.ECS;
 using GameEngine.Core.ECS.Actions;
-using GameEngine.Core.ECS.Systems;
 using GameEngine.Globals;
 using GameEngine.GUI;
 using GameEngine.GUI.Controlls;
 using GameEngine.GUI.Loader;
 using GameEngine.GUI.Panels;
-using GameEngine.GUI.Renderers;
 using PokemonShared.Models;
 
 namespace BattleMode.Gui
@@ -18,7 +15,6 @@ namespace BattleMode.Gui
     public class PokemonMenuController
     {
         //private readonly List<PokemonMenuLine> _pokemonMenuLines = new List<PokemonMenuLine>();
-        private readonly GuiSystem _guiManager;
         private readonly IMessageBus _messageBus;
 
 
@@ -30,9 +26,8 @@ namespace BattleMode.Gui
         private readonly Panel _panel;
 
 #pragma warning restore 649
-        public PokemonMenuController(GuiSystem guiManager, Client client, GuiFactory factory, IMessageBus messageBus)
+        public PokemonMenuController(Client client, GuiFactory factory, IMessageBus messageBus)
         {
-            _guiManager = guiManager;
             _messageBus = messageBus;
 
             factory.LoadFromFile(@"BattleMode\Gui\PokemonMenu.xml", this);
@@ -43,10 +38,9 @@ namespace BattleMode.Gui
             _listView.CellHeight = 75;
             _listView.ListCellFactory = value =>
             {
-                var component = new SelectablePanel();
+                var component = new SelectablePanel {ShouldHandleKeyInput = true};
                 //var line = new PokemonMenuLine(); registry.ResolveType<PokemonMenuLine>();
                 //component.Content = line;
-                component.ShouldHandleKeyInput = true;
                 component.PanelPressed += delegate { OnItemSelected(value); };
                 //line.SetPokemon(value);
                 //_pokemonMenuLines.Add(line);
@@ -72,13 +66,13 @@ namespace BattleMode.Gui
         public void Show()
         {
             _listView.SelectCell(0);
-            _messageBus.SendAction(new SetGuiComponentVisibleAction { Widget = _panel, IsVisble = true });
+            _messageBus.SendAction(new SetGuiComponentVisibleAction(_panel, true));
 
         }
 
         public void Close()
         {
-            _messageBus.SendAction(new SetGuiComponentVisibleAction { Widget = _panel, IsVisble = false });
+            _messageBus.SendAction(new SetGuiComponentVisibleAction(_panel, false));
 
         }
         protected void OnExitRequested()

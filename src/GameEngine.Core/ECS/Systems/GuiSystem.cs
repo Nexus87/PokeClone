@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using GameEngine.Core.ECS.Actions;
 using GameEngine.Core.ECS.Components;
-using GameEngine.Globals;
 using GameEngine.Graphics.General;
 using GameEngine.GUI;
 using Microsoft.Xna.Framework;
@@ -20,6 +19,11 @@ namespace GameEngine.Core.ECS.Systems
         public void Update(TimeAction action, IEntityManager entityManager)
         {
             var guiComponent = entityManager.GetFirstCompnentOfType<GuiComponent>();
+            if (!guiComponent.GuiVisible)
+            {
+                return;
+            }
+
             var spriteBatch = guiComponent.SpriteBatch;
 
             spriteBatch.GraphicsDevice.Clear(Color.Transparent);
@@ -64,10 +68,14 @@ namespace GameEngine.Core.ECS.Systems
                 _widgets.Remove(w);
         }
 
-
-        public void HandleInput(CommandKeys key)
+        public void SetGuiVisiblity(SetGuiVisibleAction action, IEntityManager entityManager)
         {
-            FocusedWidget?.HandleKeyInput(key);
+            entityManager.GetFirstCompnentOfType<GuiComponent>().GuiVisible = action.IsVisible;
+        }
+
+        public void HandleInput(GuiKeyInputAction action, IEntityManager entityManager)
+        {
+            FocusedWidget?.HandleKeyInput(action.Key);
         }
 
         private void Draw(ISpriteBatch batch, ISkin skin)

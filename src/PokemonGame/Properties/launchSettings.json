@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "PokemonGame": {
+      "commandName": "Project",
+      "workingDirectory": "C:\\Users\\Kevin\\Source\\Repos\\PokeClone\\src\\PokemonGame\\bin\\Debug\\netcoreapp2.0"
+    }
+  }
+}

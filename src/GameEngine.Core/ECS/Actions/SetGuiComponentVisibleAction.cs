@@ -4,9 +4,16 @@ namespace GameEngine.Core.ECS.Actions
 {
     public class SetGuiComponentVisibleAction
     {
-        public IGuiComponent Widget { get; set; }
-        public bool IsVisble { get; set; }
+        public readonly IGuiComponent Widget;
+        public readonly bool IsVisble;
 
-        public int? Priority { get; set; }
+        public readonly int? Priority;
+
+        public SetGuiComponentVisibleAction(IGuiComponent widget, bool isVisble, int? priority = null)
+        {
+            Widget = widget;
+            IsVisble = isVisble;
+            Priority = priority;
+        }
     }
 }

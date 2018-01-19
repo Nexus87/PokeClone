@@ -3,6 +3,7 @@ using GameEngine.Core.ECS;
 using GameEngine.Core.ECS.Actions;
 using GameEngine.Core.ECS.Systems;
 using GameEngine.Globals;
+using GameEngine.GUI;
 using GameEngine.GUI.Controlls;
 using GameEngine.GUI.Loader;
 using GameEngine.GUI.Panels;
@@ -11,8 +12,6 @@ namespace BattleMode.Gui
 {
     public class MainMenuController
     {
-        private readonly GuiSystem _guiSystem;
-
 #pragma warning disable 649
 
         [GuiLoaderId("Grid")]
@@ -31,11 +30,10 @@ namespace BattleMode.Gui
 #pragma warning restore 649
         private readonly IMessageBus _messageBus;
 
-        public MainMenuController(GuiSystem guiSystem, IMessageBus messageBus)
+        public MainMenuController(GuiFactory factory, IMessageBus messageBus)
         {
-            _guiSystem = guiSystem;
             _messageBus = messageBus;
-            _guiSystem.Factory.LoadFromFile(@"BattleMode\Gui\MainMenu.xml", this);
+            factory.LoadFromFile(@"BattleMode\Gui\MainMenu.xml", this);
 
             _attackButton.ButtonPressed += delegate { OnItemSelected(MainMenuEntries.Attack); };
             _pkmnButton.ButtonPressed += delegate { OnItemSelected(MainMenuEntries.Pkmn); };
@@ -51,13 +49,13 @@ namespace BattleMode.Gui
         public void Show()
         {
             _grid.SelectComponent(0, 0);
-            _messageBus.SendAction(new SetGuiComponentVisibleAction{Widget = _window, IsVisble = true});
+            _messageBus.SendAction(new SetGuiComponentVisibleAction(_window, true));
         }
 
 
         public void Close()
         {
-            _messageBus.SendAction(new SetGuiComponentVisibleAction{Widget = _window, IsVisble = false});
+            _messageBus.SendAction(new SetGuiComponentVisibleAction(_window, false));
         }
 
         protected virtual void OnItemSelected(MainMenuEntries e)

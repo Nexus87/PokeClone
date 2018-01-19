@@ -1,7 +1,7 @@
 ﻿using BattleMode.Shared;
 using GameEngine.Core.ECS;
 using GameEngine.Core.ECS.Actions;
-using GameEngine.Core.ECS.Systems;
+using GameEngine.GUI;
 using GameEngine.GUI.Controlls;
 using GameEngine.GUI.Loader;
 using GameEngine.GUI.Panels;
@@ -11,7 +11,6 @@ namespace BattleMode.Gui
 {
     public class AiPokemonDataView : IPokemonDataView
     {
-        private readonly GuiSystem _guiSystem;
         private readonly IMessageBus _messageBus;
 
 #pragma warning disable 649
@@ -22,12 +21,10 @@ namespace BattleMode.Gui
 #pragma warning restore 649
 
 
-        public AiPokemonDataView(GuiSystem guiSystem, IMessageBus messageBus)
+        public AiPokemonDataView(GuiFactory factory, IMessageBus messageBus)
         {
-            _guiSystem = guiSystem;
             _messageBus = messageBus;
-
-            _guiSystem.Factory.LoadFromFile(@"BattleMode\Gui\AiDataView.xml", this);
+            factory.LoadFromFile(@"BattleMode\Gui\AiDataView.xml", this);
         }
 
         public int CurrentHp => _hpLine.Current;
@@ -47,7 +44,7 @@ namespace BattleMode.Gui
 
         public void Show()
         {
-            _messageBus.SendAction(new SetGuiComponentVisibleAction { Widget = _grid, IsVisble = true, Priority = -100 });
+            _messageBus.SendAction(new SetGuiComponentVisibleAction(_grid, true,-100 ));
         }
     }
 }
