@@ -21,15 +21,8 @@ namespace GameEngine.GUI.Loader.ControllBuilder
 
             listView.Area = ReadPosition(screenConstants, xElement);
             SetUpController(controller, listView, xElement);
+            MapElementsToProperties(xElement, listView);
 
-            var cellHeightAttribute = xElement.Attribute("CellHeight");
-            if (cellHeightAttribute != null)
-            {
-                listView
-                    .GetType()
-                    .GetProperty(nameof(ListView<object>.CellHeight))
-                    .SetValue(listView, int.Parse(cellHeightAttribute.Value));
-            }
             return listView;
         }
     }

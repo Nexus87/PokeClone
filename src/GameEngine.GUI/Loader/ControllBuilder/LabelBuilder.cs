@@ -13,13 +13,7 @@ namespace GameEngine.GUI.Loader.ControllBuilder
             var label = container.Resolve<Label>();
             label.Area = ReadPosition(screenConstants, xElement);
             SetUpController(controller, label, xElement);
-
-            var text = xElement.Attribute(nameof(Label.Text));
-            var textSize = xElement.Attribute(nameof(Label.TextHeight));
-            if (text != null)
-                label.Text = text.Value;
-            if (textSize != null)
-                label.TextHeight = int.Parse(textSize.Value);
+            MapElementsToProperties(xElement, label);
 
             return label;
         }

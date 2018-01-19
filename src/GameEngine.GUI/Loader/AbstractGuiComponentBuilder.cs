@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
@@ -15,11 +16,11 @@ namespace GameEngine.GUI.Loader
 
         protected void SetUpController(object controller, IGuiComponent component, XElement xElement)
         {
-            if(controller == null)
+            if (controller == null)
                 return;
 
             var componentId = xElement.Attribute("id")?.Value;
-            if(componentId == null)
+            if (componentId == null)
                 return;
 
             var field = controller
@@ -28,7 +29,7 @@ namespace GameEngine.GUI.Loader
                 .Where(x => Attribute.IsDefined(x, typeof(GuiLoaderIdAttribute)))
                 .SingleOrDefault(x => x.GetCustomAttribute<GuiLoaderIdAttribute>().Name == componentId);
 
-            if(field != null)
+            if (field != null)
                 field.SetValue(controller, component);
         }
 
@@ -42,6 +43,39 @@ namespace GameEngine.GUI.Loader
             return new Rectangle(x, y, width, height);
         }
 
+        protected void MapElementsToProperties(XElement xElement, IGuiComponent component)
+        {
+            var reservedProps = new HashSet<string>(new[] { "X", "Y", "Width", "Height", "id" });
+            xElement.Attributes()
+                .Where(x => !reservedProps.Contains(x.Name.LocalName))
+                .ToList()
+                .ForEach(x =>
+                {
+                    var prop = component.GetType().GetProperty(x.Name.LocalName);
+                    if(prop == null)
+                        return;
+
+                    prop.SetValue(component, ConvertToType(prop.PropertyType, x.Value));
+                });
+        }
+
+        private object ConvertToType(Type propertyType, string value)
+        {
+            if(propertyType == typeof(string)){
+                return value;
+            }
+            if(propertyType == typeof(int)){
+                int.TryParse(value, out var result);
+                return result;
+            }
+            if(propertyType == typeof(float)){
+                float.TryParse(value, out var result);
+                return result;
+            }
+
+            return null;
+        }
+
         private static int AttributeToInt(XElement xElement, string attributeName, float referenceSize)
         {
             var attribute = xElement.Attribute(attributeName);
@@ -51,7 +85,7 @@ namespace GameEngine.GUI.Loader
             if (attribute.Value.EndsWith("*"))
             {
                 var scaling = float.Parse(attribute.Value.Replace("*", string.Empty).Trim(), CultureInfo.InvariantCulture);
-                return (int) (scaling * referenceSize);
+                return (int)(scaling * referenceSize);
             }
             return int.Parse(attribute.Value);
         }

@@ -13,13 +13,7 @@ namespace GameEngine.GUI.Loader.ControllBuilder
             var button = container.Resolve<Button>();
             button.Area = ReadPosition(screenConstants, xElement);
             SetUpController(controller, button, xElement);
-
-            var text = xElement.Attribute(nameof(Button.Text));
-            var textSize = xElement.Attribute(nameof(Button.TextHeight));
-            if (text != null)
-                button.Text = text.Value;
-            if (textSize != null)
-                button.TextHeight = int.Parse(textSize.Value);
+            MapElementsToProperties(xElement, button);
 
             return button;
         }
