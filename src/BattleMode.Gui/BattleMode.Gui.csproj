@@ -1,124 +1,14 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\GameEngine.GUI\GameEngine.GUI.csproj" />
+    <ProjectReference Include="..\PokemonShared.Gui\PokemonShared.Gui.csproj" />
+    <ProjectReference Include="..\GameEngine.Core\GameEngine.Core.csproj" />
+    <ProjectReference Include="..\BattleMode.Shared\BattleMode.Shared.csproj" />
+  </ItemGroup>
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0194EA5F-B7C8-4087-9680-21E19334F1E7}</ProjectGuid>
-    <ProjectTypeGuids>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BattleMode.Gui</RootNamespace>
-    <AssemblyName>BattleMode.Gui</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
+    <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="MonoGame.Framework, Version=3.5.1.1679, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\MonoGame.Framework.DesktopGL.3.5.1.1679\lib\net40\MonoGame.Framework.dll</HintPath>
-    </Reference>
-    <Reference Include="NVorbis, Version=0.8.4.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\MonoGame.Framework.DesktopGL.3.5.1.1679\lib\net40\NVorbis.dll</HintPath>
-    </Reference>
-    <Reference Include="OpenTK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4">
-      <HintPath>..\packages\MonoGame.Framework.DesktopGL.3.5.1.1679\lib\net40\OpenTK.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="AIPokemonDataView.cs" />
-    <Compile Include="GuiController.cs" />
-    <Compile Include="ItemMenuController.cs" />
-    <Compile Include="MainMenuEntries.cs" />
-    <Compile Include="MainMenuController.cs" />
-    <Compile Include="MoveMenuController.cs" />
-    <Compile Include="PlayerPokemonDataView.cs" />
-    <Compile Include="PokemonDataView.cs" />
-    <Compile Include="PokemonMenuLine.cs" />
-    <Compile Include="PokemonMenuController.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SelectionEventArgs.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\BattleMode.Shared\BattleMode.Shared.csproj">
-      <Project>{627954FA-93D0-4524-B2AD-E7D301DAC6AE}</Project>
-      <Name>BattleMode.Shared</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GameEngine.Core\GameEngine.Core.csproj">
-      <Project>{656D6147-6E45-6967-6E65-2E4C696E7578}</Project>
-      <Name>GameEngine.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GameEngine.Globals\GameEngine.Globals.csproj">
-      <Project>{B19BD4B3-DCAE-E1DC-6E65-2E476C6F6261}</Project>
-      <Name>GameEngine.Globals</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GameEngine.Graphics\GameEngine.Graphics.csproj">
-      <Project>{0205d32e-be54-4b98-a66e-85d4a0c02b6a}</Project>
-      <Name>GameEngine.Graphics</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GameEngine.GUI\GameEngine.GUI.csproj">
-      <Project>{DDE2CFB0-6E45-6967-6E65-2E4755492E4C}</Project>
-      <Name>GameEngine.GUI</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PokemonShared.Gui\PokemonShared.Gui.csproj">
-      <Project>{BFFE8C85-5C46-4595-AA1C-3DEE4B3DCFF9}</Project>
-      <Name>PokemonShared.Gui</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PokemonShared.Models\PokemonShared.Models.csproj">
-      <Project>{9403C59F-8E52-4006-9827-64CDB4241E79}</Project>
-      <Name>PokemonShared.Models</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Content\BattleMode\Gui\AiDataView.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\BattleMode\Gui\ItemMenu.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\BattleMode\Gui\MainMenu.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\BattleMode\Gui\MoveMenu.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\BattleMode\Gui\PlayerDataView.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\BattleMode\Gui\PokemonMenu.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="packages.config" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
 </Project>

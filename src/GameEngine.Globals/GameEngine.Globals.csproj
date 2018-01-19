@@ -1,95 +1,11 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>10.0.0</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{B19BD4B3-DCAE-E1DC-6E65-2E476C6F6261}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <RootNamespace>GameEngine.Globals</RootNamespace>
-    <AssemblyName>GameEngine.Globals</AssemblyName>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <NoWarn>1591</NoWarn>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
-    <TargetFrameworkProfile />
-    <LangVersion>6</LangVersion>
+    <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <Optimize>false</Optimize>
-    <DebugType>full</DebugType>
-    <OutputPath>bin\AnyCPU\Debug</OutputPath>
-    <IntermediateOutputPath>obj\AnyCPU\Debug</IntermediateOutputPath>
-    <DocumentationFile>bin\AnyCPU\Debug\GameEngine.Globals.xml</DocumentationFile>
-    <DefineConstants>DEBUG</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-    <LangVersion>7</LangVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <Optimize>true</Optimize>
-    <DebugType>none</DebugType>
-    <OutputPath>bin\AnyCPU\Release</OutputPath>
-    <IntermediateOutputPath>obj\AnyCPU\Release</IntermediateOutputPath>
-    <DocumentationFile>bin\AnyCPU\Release\GameEngine.Globals.xml</DocumentationFile>
-    <DefineConstants>
-    </DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-    <LangVersion>7</LangVersion>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="MonoGame.Framework, Version=3.5.1.1679, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\MonoGame.Framework.DesktopGL.3.5.1.1679\lib\net40\MonoGame.Framework.dll</HintPath>
-    </Reference>
-    <Reference Include="NVorbis, Version=0.8.4.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\MonoGame.Framework.DesktopGL.3.5.1.1679\lib\net40\NVorbis.dll</HintPath>
-    </Reference>
-    <Reference Include="OpenTK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4">
-      <HintPath>..\packages\MonoGame.Framework.DesktopGL.3.5.1.1679\lib\net40\OpenTK.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
+    <PackageReference Include="Monogame.Framework.DesktopGL" Version="3.6.0.1625" NoWarn="NU1701" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="CommandKeys.cs" />
-    <Compile Include="Extensions.cs" />
-    <Compile Include="ITable.cs" />
-    <Compile Include="PublicExtensions.cs" />
-    <Compile Include="ScreenConstants.cs" />
-    <Compile Include="SubTable.cs" />
-    <Compile Include="Table.cs" />
-    <Compile Include="TableIndex.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup />
-  <ItemGroup />
-  <ItemGroup />
-  <ItemGroup />
-  <ItemGroup />
-  <ItemGroup />
-  <ItemGroup />
-  <ItemGroup />
-  <ItemGroup />
-  <ItemGroup />
-  <ItemGroup />
-  <ItemGroup />
-  <ItemGroup />
-  <ItemGroup />
-  <ItemGroup />
-  <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <_PostBuildHookTimestamp>@(IntermediateAssembly->'%(FullPath).timestamp')</_PostBuildHookTimestamp>
-    <_PostBuildHookHostPlatform>$(Platform)</_PostBuildHookHostPlatform>
-  </PropertyGroup>
-  <Target Name="PostBuildHooks" Inputs="@(IntermediateAssembly);@(ReferencePath)" Outputs="@(IntermediateAssembly);$(_PostBuildHookTimestamp)" AfterTargets="CoreCompile" BeforeTargets="AfterCompile">
-    <Touch Files="$(_PostBuildHookTimestamp)" AlwaysCreate="True" />
-  </Target>
-  <ItemGroup />
+
 </Project>

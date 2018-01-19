@@ -1,166 +1,17 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>10.0.0</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{DDE2CFB0-6E45-6967-6E65-2E4755492E4C}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <RootNamespace>GameEngine.GUI</RootNamespace>
-    <AssemblyName>GameEngine.GUI</AssemblyName>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <NoWarn>1591</NoWarn>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
-    <TargetFrameworkProfile />
-    <LangVersion>6</LangVersion>
+    <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <Optimize>false</Optimize>
-    <DebugType>full</DebugType>
-    <OutputPath>bin\AnyCPU\Debug</OutputPath>
-    <IntermediateOutputPath>obj\AnyCPU\Debug</IntermediateOutputPath>
-    <DocumentationFile>bin\AnyCPU\Debug\GameEngine.GUI.xml</DocumentationFile>
-    <DefineConstants>DEBUG</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-    <LangVersion>7</LangVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <Optimize>true</Optimize>
-    <DebugType>none</DebugType>
-    <OutputPath>bin\AnyCPU\Release</OutputPath>
-    <IntermediateOutputPath>obj\AnyCPU\Release</IntermediateOutputPath>
-    <DocumentationFile>bin\AnyCPU\Release\GameEngine.GUI.xml</DocumentationFile>
-    <DefineConstants>
-    </DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-    <LangVersion>7</LangVersion>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="Autofac, Version=4.6.2.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <HintPath>..\packages\Autofac.4.6.2\lib\net45\Autofac.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.IO.Compression.FileSystem" />
-    <Reference Include="System.Numerics" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.ValueTuple, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.ValueTuple.4.3.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="MonoGame.Framework">
-      <HintPath>..\packages\MonoGame.Framework.DesktopGL.3.5.1.1679\lib\net40\MonoGame.Framework.dll</HintPath>
-    </Reference>
-    <Reference Include="NVorbis">
-      <HintPath>..\packages\MonoGame.Framework.DesktopGL.3.5.1.1679\lib\net40\NVorbis.dll</HintPath>
-    </Reference>
-    <Reference Include="OpenTK">
-      <HintPath>..\packages\MonoGame.Framework.DesktopGL.3.5.1.1679\lib\net40\OpenTK.dll</HintPath>
-    </Reference>
+    <PackageReference Include="Autofac" Version="4.6.2" />
+    <PackageReference Include="Monogame.Framework.DesktopGL" Version="3.6.0.1625" NoWarn="NU1701" />
   </ItemGroup>
+
   <ItemGroup>
-    <Compile Include="AbstractGuiComponent.cs" />
-    <Compile Include="ClassicSkin.cs" />
-    <Compile Include="ComponentSelectedEventArgs.cs" />
-    <Compile Include="Components\DefaultTextSplitter.cs" />
-    <Compile Include="Components\ITextSplitter.cs" />
-    <Compile Include="Components\MessageBox.cs" />
-    <Compile Include="Controlls\Button.cs" />
-    <Compile Include="Controlls\IListCell.cs" />
-    <Compile Include="Controlls\ImageBox.cs" />
-    <Compile Include="Controlls\Label.cs" />
-    <Compile Include="Controlls\ListCell.cs" />
-    <Compile Include="Controlls\ListView.cs" />
-    <Compile Include="Controlls\Spacer.cs" />
-    <Compile Include="Controlls\TextArea.cs" />
-    <Compile Include="Controlls\TextAreaLine.cs" />
-    <Compile Include="Extensions.cs" />
-    <Compile Include="GraphicComponentSizeChangedEventArgs.cs" />
-    <Compile Include="GuiFactory.cs" />
-    <Compile Include="IGuiComponent.cs" />
-    <Compile Include="INode.cs" />
-    <Compile Include="ISkin.cs" />
-    <Compile Include="Loader\ControllBuilder\ButtonBuilder.cs" />
-    <Compile Include="Loader\ControllBuilder\LabelBuilder.cs" />
-    <Compile Include="Loader\ControllBuilder\ListViewBuilder.cs" />
-    <Compile Include="Loader\ControllBuilder\SpacerBuilder.cs" />
-    <Compile Include="Loader\AbstractGuiComponentBuilder.cs" />
-    <Compile Include="Loader\GuiLoader.cs" />
-    <Compile Include="Loader\GuiLoaderIdAttribute.cs" />
-    <Compile Include="Loader\IBuilder.cs" />
-    <Compile Include="Loader\PanelBuilder\GridBuilder.cs" />
-    <Compile Include="Loader\PanelBuilder\PanelBuilder.cs" />
-    <Compile Include="Loader\PanelBuilder\ScrollAreaBuilder.cs" />
-    <Compile Include="Loader\PanelBuilder\WindowBuilder.cs" />
-    <Compile Include="Panels\AbstractPanel.cs" />
-    <Compile Include="Panels\ColumnProperty.cs" />
-    <Compile Include="Panels\Grid.cs" />
-    <Compile Include="Panels\GridCell.cs" />
-    <Compile Include="Panels\GridExtensions.cs" />
-    <Compile Include="Panels\GridInputHandler.cs" />
-    <Compile Include="Panels\Panel.cs" />
-    <Compile Include="Panels\RowProperty.cs" />
-    <Compile Include="Panels\ScrollArea.cs" />
-    <Compile Include="Panels\SelectablePanel.cs" />
-    <Compile Include="Panels\ValueType.cs" />
-    <Compile Include="Panels\Window.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Renderers\AbstractRenderer.cs" />
-    <Compile Include="Renderers\ButtonRenderer.cs" />
-    <Compile Include="Renderers\ImageBoxRenderer.cs" />
-    <Compile Include="Renderers\IRenderer.cs" />
-    <Compile Include="Renderers\LabelRenderer.cs" />
-    <Compile Include="Renderers\PanelRenderer.cs" />
-    <Compile Include="Renderers\ScrollAreaRenderer.cs" />
-    <Compile Include="Renderers\SelectablePanelRenderer.cs" />
-    <Compile Include="Renderers\TextAreaRenderer.cs" />
-    <Compile Include="Renderers\WindowRenderer.cs" />
-    <Compile Include="Renderers\NullRenderer.cs" />
-    <Compile Include="Renderers\PokemonClassicRenderer\ClassicButtonRenderer.cs" />
-    <Compile Include="Renderers\PokemonClassicRenderer\ClassicImageBoxRenderer.cs" />
-    <Compile Include="Renderers\PokemonClassicRenderer\ClassicLabelRenderer.cs" />
-    <Compile Include="Renderers\PokemonClassicRenderer\ClassicScrollAreaRenderer.cs" />
-    <Compile Include="Renderers\PokemonClassicRenderer\ClassicSelectablePanelRenderer.cs" />
-    <Compile Include="Renderers\PokemonClassicRenderer\ClassicTextAreaRenderer.cs" />
-    <Compile Include="Renderers\PokemonClassicRenderer\ClassicWindowRenderer.cs" />
-    <Compile Include="Renderers\PokemonClassicRenderer\ClassicPanelRenderer.cs" />
+    <ProjectReference Include="..\GameEngine.Graphics\GameEngine.Graphics.csproj" />
+    <ProjectReference Include="..\GameEngine.Globals\GameEngine.Globals.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\GameEngine.Globals\GameEngine.Globals.csproj">
-      <Project>{B19BD4B3-DCAE-E1DC-6E65-2E476C6F6261}</Project>
-      <Name>GameEngine.Globals</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GameEngine.Graphics\GameEngine.Graphics.csproj">
-      <Project>{0205d32e-be54-4b98-a66e-85d4a0c02b6a}</Project>
-      <Name>GameEngine.Graphics</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup />
-  <ItemGroup />
-  <ItemGroup />
-  <ItemGroup />
-  <ItemGroup />
-  <ItemGroup />
-  <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <_PostBuildHookTimestamp>@(IntermediateAssembly->'%(FullPath).timestamp')</_PostBuildHookTimestamp>
-    <_PostBuildHookHostPlatform>$(Platform)</_PostBuildHookHostPlatform>
-  </PropertyGroup>
-  <Target Name="PostBuildHooks" Inputs="@(IntermediateAssembly);@(ReferencePath)" Outputs="@(IntermediateAssembly);$(_PostBuildHookTimestamp)" AfterTargets="CoreCompile" BeforeTargets="AfterCompile">
-    <Touch Files="$(_PostBuildHookTimestamp)" AlwaysCreate="True" />
-  </Target>
+
 </Project>
