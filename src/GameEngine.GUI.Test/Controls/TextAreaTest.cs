@@ -179,7 +179,7 @@ namespace GameEngine.GUI.Test.Controls
                 .Returns(FontMock);
             var renderer = new ClassicTextAreaRenderer();
             renderer.Init(textureProvider);
-            var box = new TextArea(renderer, splitter);
+            var box = new TextArea();
             box.SetCoordinates(10, 10, 300, 400);
             return box;
         }

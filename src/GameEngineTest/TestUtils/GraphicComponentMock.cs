@@ -50,6 +50,8 @@ namespace GameEngineTest.TestUtils
         public List<IGuiComponent> Children { get; } = new List<IGuiComponent>();
         public bool IsSelected { get; set; }
         public bool IsSelectable { get; set; }
+        public bool NeedsUpdate { get; set; }
+
         public void Update()
         {
             throw new NotImplementedException();

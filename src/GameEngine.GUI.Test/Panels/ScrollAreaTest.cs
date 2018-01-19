@@ -56,7 +56,7 @@ namespace GameEngine.GUI.Test.Panels
 
         private ScrollArea CreateScrollArea(Rectangle initalArea)
         {
-            var scrollArea = new ScrollArea(new ClassicScrollAreaRenderer()) {Area = initalArea};
+            var scrollArea = new ScrollArea() {Area = initalArea};
             _content = A.Fake<IGuiComponent>();
             return scrollArea;
         }

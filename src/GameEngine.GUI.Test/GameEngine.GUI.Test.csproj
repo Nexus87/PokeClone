@@ -4,4 +4,14 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="FakeItEasy" Version="4.3.0" />
+    <PackageReference Include="NUnit" Version="3.9.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GameEngine.GUI\GameEngine.GUI.csproj" />
+    <ProjectReference Include="..\GameEngineTest\GameEngineTest.csproj" />
+  </ItemGroup>
+
 </Project>
