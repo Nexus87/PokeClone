@@ -53,13 +53,7 @@ namespace BattleMode.Core
             var aiId = data.Clients.First(id => !id.IsPlayer);
             _player = new Client(playerId);
             var ai = new Client(aiId);
-            var messageBox = new MessageBox(
-                new Window(),
-                new TextArea(
-                    (TextAreaRenderer) Skin.GetRendererForComponent(typeof(TextAreaRenderer)),
-                    new DefaultTextSplitter()
-                )
-            );
+            var messageBox = new MessageBox();
 
             var mainMenuController = new MainMenuController(GuiSystem);
 

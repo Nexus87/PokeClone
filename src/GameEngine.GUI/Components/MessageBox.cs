@@ -10,6 +10,7 @@ namespace GameEngine.GUI.Components
         private readonly Window _window;
         private readonly TextArea _textArea;
 
+        public MessageBox() : this(new Window(), new TextArea()){}
         public MessageBox(Window window, TextArea textArea)
         {
             _window = window;

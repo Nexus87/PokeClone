@@ -12,21 +12,19 @@ namespace GameEngine.GUI.Controlls
     {
         public int NumberOfLines { get; }
         private string _text;
-        private readonly ITextSplitter _splitter;
-        private readonly TextAreaRenderer _renderer;
+        internal readonly ITextSplitter _splitter;
 
         public IEnumerable<TextAreaLine> Lines => _allLines.Skip(CurrentLineIndex).Take(NumberOfLines);
 
-        private List<TextAreaLine> _allLines;
+        internal List<TextAreaLine> _allLines;
         public int CurrentLineIndex { get; set; }
 
         public int TextHeight { get; set; } = 32;
 
-        public TextArea(TextAreaRenderer renderer, ITextSplitter splitter, int numberOfLines = 2)
+        public TextArea(ITextSplitter splitter = null, int numberOfLines = 2)
         {
             NumberOfLines = numberOfLines;
-            _splitter = splitter;
-            _renderer = renderer;
+            _splitter = splitter ?? new DefaultTextSplitter();
         }
 
         public string Text
@@ -56,46 +54,12 @@ namespace GameEngine.GUI.Controlls
             if (!HasNext())
                 return;
 
-            MoveLines();
+            CurrentLineIndex++;
+            Invalidate();
         }
-
-        private void MoveLines()
-        {
-            var nextIndex = Math.Min(_allLines.Count - 1, CurrentLineIndex + NumberOfLines);
-            var linesToMove = nextIndex - CurrentLineIndex;
-
-            var lineHeight = _renderer.GetLineHeight(this);
-            var moveVector = linesToMove * new Vector2(0, lineHeight);
-
-            foreach (var line in Lines)
-            {
-                line.Position += moveVector;
-            }
-            CurrentLineIndex = nextIndex;
-        }
-
-        public override void Update()
-        {
-            if(!NeedsUpdate)
-                return;
-
-            _allLines = _splitter
-                .SplitText(_renderer.CharsPerLine(this), Text)
-                .Select(x => new TextAreaLine{Text = x})
-                .ToList();
-
-            var lineHeight = _renderer.GetLineHeight(this);
-            for(var i = 0; i < _allLines.Count; i++)
-            {
-                _allLines[i].Position = new Vector2(Area.X, Area.Y + + lineHeight);
-                i++;
-            }
-            CurrentLineIndex = Math.Min(CurrentLineIndex, _allLines.Count - 1);
-        }
-
         public override void HandleKeyInput(CommandKeys key)
         {
-            if(key == CommandKeys.Select)
+            if (key == CommandKeys.Select)
                 NextLine();
         }
     }
