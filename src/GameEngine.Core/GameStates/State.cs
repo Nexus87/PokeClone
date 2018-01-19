@@ -27,6 +27,7 @@ namespace GameEngine.Core.GameStates
             MessageBus.RegisterForAction<TimeAction>(RenderSystem.Render);
             MessageBus.RegisterForAction<TimeAction>(InputSystem.Update);
             MessageBus.RegisterForAction<TimeAction>(GuiSystem.Update);
+            MessageBus.RegisterForAction<SetGuiComponentVisibleAction>(GuiSystem.SetWidgetVisibility);
         }
 
         private InputSystem InputSystem { get; }

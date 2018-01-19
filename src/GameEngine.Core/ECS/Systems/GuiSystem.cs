@@ -33,8 +33,19 @@ namespace GameEngine.Core.ECS.Systems
             spriteBatch.GraphicsDevice.Clear(Color.Transparent);
         }
 
+        public void SetWidgetVisibility(SetGuiComponentVisibleAction action, IEntityManager entityManager)
+        {
+            if (action.IsVisble)
+            {
+                ShowWidget(action.Widget, action.Priority);
+            }
+            else
+            {
+                RemoveWidget(action.Widget);
+            }
+        }
 
-        public void ShowWidget(IGuiComponent widget, int? priority = null)
+        private void ShowWidget(IGuiComponent widget, int? priority = null)
         {
             if (_widgets.Any(x => x.Component == widget))
                 return;
@@ -46,7 +57,7 @@ namespace GameEngine.Core.ECS.Systems
             _widgets.Sort();
         }
 
-        public void CloseWidget(IGuiComponent widget)
+        private void RemoveWidget(IGuiComponent widget)
         {
             var w = _widgets.FirstOrDefault(x => x.Component == widget);
             if (w != null)

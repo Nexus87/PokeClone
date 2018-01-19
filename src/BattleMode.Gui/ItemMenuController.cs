@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using GameEngine.Core.ECS;
+using GameEngine.Core.ECS.Actions;
 using GameEngine.Core.ECS.Systems;
 using GameEngine.Globals;
 using GameEngine.GUI;
@@ -15,6 +17,7 @@ namespace BattleMode.Gui
     public class ItemMenuController
     {
         private readonly GuiSystem _guiManager;
+        private readonly IMessageBus _messageBus;
 #pragma warning disable 649
 
         [GuiLoaderId("Window")]
@@ -24,10 +27,10 @@ namespace BattleMode.Gui
 
 #pragma warning restore 649
 
-        public ItemMenuController(GuiSystem guiManager, GuiFactory factory)
+        public ItemMenuController(GuiSystem guiManager, GuiFactory factory, IMessageBus messageBus) 
         {
             _guiManager = guiManager;
-
+            _messageBus = messageBus;
             factory.LoadFromFile(@"BattleMode\Gui\ItemMenu.xml", this);
 
             var model = Enumerable
@@ -53,12 +56,12 @@ namespace BattleMode.Gui
         public void Show()
         {
             _listView.SelectCell(0);
-            _guiManager.ShowWidget(_window);
+            _messageBus.SendAction(new SetGuiComponentVisibleAction{Widget = _window, IsVisble = true});
         }
 
         public void Close()
         {
-            _guiManager.CloseWidget(_window);
+            _messageBus.SendAction(new SetGuiComponentVisibleAction{Widget = _window, IsVisble = false});
         }
 
         protected virtual void OnItemSelected(Item i)

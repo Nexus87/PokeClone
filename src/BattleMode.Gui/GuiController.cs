@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using BattleMode.Shared;
+using GameEngine.Core.ECS;
+using GameEngine.Core.ECS.Actions;
 using GameEngine.Core.ECS.Systems;
 using GameEngine.Globals;
 using GameEngine.GUI;
@@ -25,6 +27,7 @@ namespace BattleMode.Gui
             MoveMenuController moveController, PokemonMenuController pokemonController,
             ItemMenuController itemController, 
             PlayerPokemonDataView playerView, AiPokemonDataView aiView,
+            IMessageBus messageBus,
             BattleData data)
         {
             manager.Factory.LoadFromFile(@"BattleMode\Gui\MessageBox.xml", this);
@@ -50,7 +53,7 @@ namespace BattleMode.Gui
 
             OnItemSelectCloseAll();
             OnExitRequestedBackToMain();
-            manager.ShowWidget(_messageBox);
+            messageBus.SendAction(new SetGuiComponentVisibleAction{Widget = _messageBox, IsVisble = true});
 
             _mainController.Show();
 

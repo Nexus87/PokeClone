@@ -24,15 +24,15 @@ namespace BattleMode.Core
             _player = new Client(playerId);
             var ai = new Client(aiId);
 
-            var mainMenuController = new MainMenuController(GuiSystem);
-            var moveMenuController = new MoveMenuController(GuiSystem, data, GuiSystem.Factory);
+            var mainMenuController = new MainMenuController(GuiSystem, MessageBus);
+            var moveMenuController = new MoveMenuController(GuiSystem, data, GuiSystem.Factory, MessageBus);
 
-            var pokemonMenuController = new PokemonMenuController(GuiSystem, _player, GuiSystem.Factory);
-            var itemMenuController = new ItemMenuController(GuiSystem, GuiSystem.Factory);
-            var playerPokemonDataView = new PlayerPokemonDataView(GuiSystem, GuiSystem.Factory);
-            var aiPokemonDataView = new AiPokemonDataView(GuiSystem);
+            var pokemonMenuController = new PokemonMenuController(GuiSystem, _player, GuiSystem.Factory, MessageBus);
+            var itemMenuController = new ItemMenuController(GuiSystem, GuiSystem.Factory, MessageBus);
+            var playerPokemonDataView = new PlayerPokemonDataView(GuiSystem, GuiSystem.Factory, MessageBus);
+            var aiPokemonDataView = new AiPokemonDataView(GuiSystem, MessageBus);
             _guiController = new GuiController(GuiSystem, mainMenuController, moveMenuController,
-                pokemonMenuController, itemMenuController, playerPokemonDataView, aiPokemonDataView, data);
+                pokemonMenuController, itemMenuController, playerPokemonDataView, aiPokemonDataView, MessageBus, data);
         }
 
         public override void Pause()

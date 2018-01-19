@@ -1,4 +1,6 @@
 ﻿using BattleMode.Shared;
+using GameEngine.Core.ECS;
+using GameEngine.Core.ECS.Actions;
 using GameEngine.Core.ECS.Systems;
 using GameEngine.Globals;
 using GameEngine.GUI;
@@ -12,6 +14,8 @@ namespace BattleMode.Gui
     public class PlayerPokemonDataView : IPokemonDataView
     {
         private readonly GuiSystem _guiManager;
+        private readonly IMessageBus _messageBus;
+
 
 #pragma warning disable 649
         [GuiLoaderId("Window")] private Grid _grid;
@@ -21,9 +25,10 @@ namespace BattleMode.Gui
         [GuiLoaderId("HpText")] private HpText _hpText;
 #pragma warning restore 649
 
-        public PlayerPokemonDataView(GuiSystem guiManager, GuiFactory factory)
+        public PlayerPokemonDataView(GuiSystem guiManager, GuiFactory factory, IMessageBus messageBus)
         {
             _guiManager = guiManager;
+            _messageBus = messageBus;
 
             factory.LoadFromFile(@"BattleMode\Gui\PlayerDataView.xml", this);
         }
@@ -46,7 +51,8 @@ namespace BattleMode.Gui
 
         public void Show()
         {
-            _guiManager.ShowWidget(_grid, -100);
+            _messageBus.SendAction(new SetGuiComponentVisibleAction { Widget = _grid, IsVisble = true, Priority = -100 });
+
         }
     }
 }

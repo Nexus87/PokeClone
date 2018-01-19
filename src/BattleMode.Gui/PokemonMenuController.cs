@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using BattleMode.Shared;
+using GameEngine.Core.ECS;
+using GameEngine.Core.ECS.Actions;
 using GameEngine.Core.ECS.Systems;
 using GameEngine.Globals;
 using GameEngine.GUI;
@@ -17,6 +19,8 @@ namespace BattleMode.Gui
     {
         //private readonly List<PokemonMenuLine> _pokemonMenuLines = new List<PokemonMenuLine>();
         private readonly GuiSystem _guiManager;
+        private readonly IMessageBus _messageBus;
+
 
 #pragma warning disable 649
 
@@ -26,9 +30,10 @@ namespace BattleMode.Gui
         private readonly Panel _panel;
 
 #pragma warning restore 649
-        public PokemonMenuController(GuiSystem guiManager, Client client, GuiFactory factory)
+        public PokemonMenuController(GuiSystem guiManager, Client client, GuiFactory factory, IMessageBus messageBus)
         {
             _guiManager = guiManager;
+            _messageBus = messageBus;
 
             factory.LoadFromFile(@"BattleMode\Gui\PokemonMenu.xml", this);
 
@@ -67,13 +72,14 @@ namespace BattleMode.Gui
         public void Show()
         {
             _listView.SelectCell(0);
-            //_pokemonMenuLines.ForEach(x => x.UpdateData());
-            _guiManager.ShowWidget(_panel);
+            _messageBus.SendAction(new SetGuiComponentVisibleAction { Widget = _panel, IsVisble = true });
+
         }
 
         public void Close()
         {
-            _guiManager.CloseWidget(_panel);
+            _messageBus.SendAction(new SetGuiComponentVisibleAction { Widget = _panel, IsVisble = false });
+
         }
         protected void OnExitRequested()
         {

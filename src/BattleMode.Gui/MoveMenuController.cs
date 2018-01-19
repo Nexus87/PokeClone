@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using BattleMode.Shared;
+using GameEngine.Core.ECS;
+using GameEngine.Core.ECS.Actions;
 using GameEngine.Core.ECS.Systems;
 using GameEngine.Globals;
 using GameEngine.GUI;
@@ -15,6 +17,7 @@ namespace BattleMode.Gui
     public class MoveMenuController
     {
         private readonly GuiSystem _guiManager;
+        private readonly IMessageBus _messageBus;
 
 #pragma warning disable 649
 
@@ -25,9 +28,10 @@ namespace BattleMode.Gui
 
 #pragma warning restore 649
 
-        public MoveMenuController(GuiSystem guiManager, BattleData data, GuiFactory factory)
+        public MoveMenuController(GuiSystem guiManager, BattleData data, GuiFactory factory, IMessageBus messageBus)
         {
             _guiManager = guiManager;
+            _messageBus = messageBus;
 
             factory.LoadFromFile(@"BattleMode\Gui\MoveMenu.xml", this);
 
@@ -60,13 +64,15 @@ namespace BattleMode.Gui
 
         public void Show()
         {
-            _guiManager.ShowWidget(_window);
             _listView.SelectCell(0);
+            _messageBus.SendAction(new SetGuiComponentVisibleAction { Widget = _window, IsVisble = true });
+
         }
 
         public void Close()
         {
-            _guiManager.CloseWidget(_window);
+            _messageBus.SendAction(new SetGuiComponentVisibleAction { Widget = _window, IsVisble = false });
+
         }
         protected virtual void OnExitRequested()
         {

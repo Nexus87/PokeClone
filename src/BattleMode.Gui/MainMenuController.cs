@@ -1,4 +1,6 @@
 ﻿using System;
+using GameEngine.Core.ECS;
+using GameEngine.Core.ECS.Actions;
 using GameEngine.Core.ECS.Systems;
 using GameEngine.Globals;
 using GameEngine.GUI.Controlls;
@@ -27,10 +29,12 @@ namespace BattleMode.Gui
         [GuiLoaderId("run")]
         private Button _runButton;
 #pragma warning restore 649
+        private readonly IMessageBus _messageBus;
 
-        public MainMenuController(GuiSystem guiSystem)
+        public MainMenuController(GuiSystem guiSystem, IMessageBus messageBus)
         {
             _guiSystem = guiSystem;
+            _messageBus = messageBus;
             _guiSystem.Factory.LoadFromFile(@"BattleMode\Gui\MainMenu.xml", this);
 
             _attackButton.ButtonPressed += delegate { OnItemSelected(MainMenuEntries.Attack); };
@@ -47,13 +51,13 @@ namespace BattleMode.Gui
         public void Show()
         {
             _grid.SelectComponent(0, 0);
-            _guiSystem.ShowWidget(_window);
+            _messageBus.SendAction(new SetGuiComponentVisibleAction{Widget = _window, IsVisble = true});
         }
 
 
         public void Close()
         {
-            _guiSystem.CloseWidget(_window);
+            _messageBus.SendAction(new SetGuiComponentVisibleAction{Widget = _window, IsVisble = false});
         }
 
         protected virtual void OnItemSelected(MainMenuEntries e)
