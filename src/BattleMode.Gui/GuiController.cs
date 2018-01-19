@@ -18,13 +18,13 @@ namespace BattleMode.Gui
         private MessageBox _messageBox;
         #pragma warning restore 649
 
-        private readonly Dictionary<ClientIdentifier, IPokemonDataView> _dataViews = new Dictionary<ClientIdentifier, IPokemonDataView>();
+        private readonly Dictionary<ClientIdentifier, PokemonDataView> _dataViews = new Dictionary<ClientIdentifier, PokemonDataView>();
 
         public GuiController(GuiSystem manager,
             MainMenuController mainController,
             MoveMenuController moveController, PokemonMenuController pokemonController,
             ItemMenuController itemController, 
-            PlayerPokemonDataView playerView, AiPokemonDataView aiView,
+            PokemonDataView playerView, PokemonDataView aiView,
             IMessageBus messageBus,
             BattleData data)
         {

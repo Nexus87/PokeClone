@@ -26,8 +26,8 @@ namespace BattleMode.Core
 
             var pokemonMenuController = new PokemonMenuController(_player, GuiSystem.Factory, MessageBus);
             var itemMenuController = new ItemMenuController(GuiSystem.Factory, MessageBus);
-            var playerPokemonDataView = new PlayerPokemonDataView(GuiSystem.Factory, MessageBus);
-            var aiPokemonDataView = new AiPokemonDataView(GuiSystem.Factory, MessageBus);
+            var playerPokemonDataView = new PokemonDataView(GuiSystem.Factory, @"BattleMode\Gui\PlayerDataView.xml", MessageBus);
+            var aiPokemonDataView = new PokemonDataView(GuiSystem.Factory, @"BattleMode\Gui\AiDataView.xml", MessageBus);
             _guiController = new GuiController(GuiSystem, mainMenuController, moveMenuController,
                 pokemonMenuController, itemMenuController, playerPokemonDataView, aiPokemonDataView, MessageBus, data);
 
