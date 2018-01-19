@@ -15,7 +15,6 @@ namespace BattleMode.Gui
     public class MoveMenuController
     {
         private readonly GuiSystem _guiManager;
-        private readonly ISkin _skin;
 
 #pragma warning disable 649
 
@@ -26,10 +25,9 @@ namespace BattleMode.Gui
 
 #pragma warning restore 649
 
-        public MoveMenuController(GuiSystem guiManager, BattleData data, ISkin skin, GuiFactory factory)
+        public MoveMenuController(GuiSystem guiManager, BattleData data, GuiFactory factory)
         {
             _guiManager = guiManager;
-            _skin = skin;
 
             factory.LoadFromFile(@"BattleMode\Gui\MoveMenu.xml", this);
 

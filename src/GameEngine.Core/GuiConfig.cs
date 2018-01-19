@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using Autofac;
 using GameEngine.Globals;
+using GameEngine.Graphics.Textures;
 using GameEngine.GUI;
+using GameEngine.GUI.Components;
 using GameEngine.GUI.Controlls;
 using GameEngine.GUI.Loader;
 using GameEngine.GUI.Loader.ControllBuilder;
@@ -19,10 +21,11 @@ namespace GameEngine.Core
         private readonly Dictionary<string, IBuilder> _builders = new Dictionary<string, IBuilder>();
         private IContainer _container;
 
-        public GuiConfig()
+        public GuiConfig(string contentRoot)
         {
             CurrentSkin = ClassicSkin;
             _builder = new ContainerBuilder();
+            SkinTextureConfigurationBuilder = new TextureConfigurationBuilder(contentRoot);
             InitDefaults();
         }
 
@@ -55,9 +58,12 @@ namespace GameEngine.Core
 
             _builders["Button"] = new ButtonBuilder();
             _builder.RegisterType<Button>();
+
+            _builders["MessageBox"] = new MessageBoxBuilder();
+            _builder.RegisterType<MessageBox>();
         }
 
-
+        public TextureConfigurationBuilder SkinTextureConfigurationBuilder { get; }
         public void AddGuiElement<T>(string componentName, IBuilder componentBuilder, Func<ISkin, T> componentFactory)
         {
             _builder.Register(x => componentFactory(CurrentSkin));
@@ -67,6 +73,7 @@ namespace GameEngine.Core
         internal GuiFactory Init(ScreenConstants screenConstants)
         {
             _container = _builder.Build();
+            CurrentSkin.AddTextureConfigurations(SkinTextureConfigurationBuilder);
             var loader = new GuiLoader(screenConstants, _container, _builders);
             return new GuiFactory(loader, _container);
         }

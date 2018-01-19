@@ -26,7 +26,7 @@ namespace BattleMode.Gui
         private readonly Panel _panel;
 
 #pragma warning restore 649
-        public PokemonMenuController(GuiSystem guiManager, Client client, ISkin skin, GuiFactory factory)
+        public PokemonMenuController(GuiSystem guiManager, Client client, GuiFactory factory)
         {
             _guiManager = guiManager;
 

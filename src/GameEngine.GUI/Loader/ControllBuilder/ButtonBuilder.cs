@@ -10,18 +10,18 @@ namespace GameEngine.GUI.Loader.ControllBuilder
         public override IGuiComponent Build(IContainer container, GuiLoader loader, ScreenConstants screenConstants, XElement xElement,
             object controller)
         {
-            var label = container.Resolve<Button>();
-            label.Area = ReadPosition(screenConstants, xElement);
-            SetUpController(controller, label, xElement);
+            var button = container.Resolve<Button>();
+            button.Area = ReadPosition(screenConstants, xElement);
+            SetUpController(controller, button, xElement);
 
             var text = xElement.Attribute(nameof(Button.Text));
             var textSize = xElement.Attribute(nameof(Button.TextHeight));
             if (text != null)
-                label.Text = text.Value;
+                button.Text = text.Value;
             if (textSize != null)
-                label.TextHeight = int.Parse(textSize.Value);
+                button.TextHeight = int.Parse(textSize.Value);
 
-            return label;
+            return button;
         }
     }
 }

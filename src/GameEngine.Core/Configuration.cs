@@ -1,13 +1,16 @@
 ﻿using System.Collections.Generic;
+using GameEngine.Core.GameStates;
 using GameEngine.Globals;
+using GameEngine.Graphics.Textures;
 using Microsoft.Xna.Framework.Input;
 
 namespace GameEngine.Core
 {
-    public class Configuration
+    public class GameConfiguration
     {
-        public Configuration() 
+        public GameConfiguration(string contentRoot)
         {
+            TextureConfigurationBuilder = new TextureConfigurationBuilder(contentRoot);
             keyMap.Add(Keys.Up, CommandKeys.Up);
             keyMap.Add(Keys.Down, CommandKeys.Down);
             keyMap.Add(Keys.Left, CommandKeys.Left);
@@ -42,9 +45,11 @@ namespace GameEngine.Core
                     ret = Keys.Escape;
                     break;
             }
-            return (T) ret;
+            return (T)ret;
         }
 
+        public State InitialState { get; set; }
         public IReadOnlyDictionary<Keys, CommandKeys> KeyMap => keyMap;
+        public TextureConfigurationBuilder TextureConfigurationBuilder { get; }
     }
 }

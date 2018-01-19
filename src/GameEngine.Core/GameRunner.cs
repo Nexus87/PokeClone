@@ -2,26 +2,32 @@
 using System.Collections.Generic;
 using GameEngine.Core.GameStates;
 using GameEngine.Globals;
+using GameEngine.Graphics.Textures;
 using GameEngine.GUI;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
 
 namespace GameEngine.Core
 {
     public class GameRunner : Game, IEngineInterface
     {
-        internal readonly Screen Screen;
+        private readonly Screen Screen;
         public readonly GraphicsDeviceManager GraphicsDeviceManager;
+        private StateManager StateManager;
+        private GuiFactory GuiFactory;
+        private readonly GameConfiguration _gameConfiguration;
+        private readonly GuiConfig _guiConfig;
+        private TextureProvider _textureProvider;
 
-        internal Action<GameRunner> OnContentLoad;
-        internal StateManager StateManager;
-        internal ISkin Skin;
-        internal GuiFactory GuiFactory;
-        private readonly IReadOnlyDictionary<Keys, CommandKeys> _keyMap;
-
-        public GameRunner(IReadOnlyDictionary<Keys, CommandKeys> keyMap)
+        public GameRunner(
+            GameConfiguration gameConfiguration,
+            GuiConfig guiConfig
+        )
         {
-            _keyMap = keyMap;
+            _gameConfiguration = gameConfiguration;
+            _guiConfig = guiConfig;
+
             GraphicsDeviceManager = new GraphicsDeviceManager(this);
             Screen = new Screen(new ScreenConstants(), GraphicsDeviceManager);
 
@@ -30,8 +36,6 @@ namespace GameEngine.Core
 
             GraphicsDeviceManager.ApplyChanges();
         }
-
-        public State InitialState { get; set; }
 
         protected override void Draw(GameTime gameTime)
         {
@@ -52,14 +56,26 @@ namespace GameEngine.Core
             };
             Screen.WindowsResizeHandler(Window.ClientBounds.Width, Window.ClientBounds.Height);
 
-            StateManager = new StateManager(Screen, _keyMap, Skin, GuiFactory);
-            StateManager.PushState(InitialState);
+            StateManager = new StateManager(Screen, _gameConfiguration.KeyMap, _guiConfig.CurrentSkin, GuiFactory);
+            StateManager.PushState(_gameConfiguration.InitialState);
         }
 
         protected override void LoadContent()
         {
             base.LoadContent();
-            OnContentLoad?.Invoke(this);
+            GuiFactory = _guiConfig.Init(Screen.Constants);
+
+            _textureProvider = InitTextureProvider(_gameConfiguration.TextureConfigurationBuilder);
+            _guiConfig.CurrentSkin.Init(InitTextureProvider(_guiConfig.SkinTextureConfigurationBuilder));
+        }
+
+        private TextureProvider InitTextureProvider(TextureConfigurationBuilder builder)
+        {
+            var provider = new TextureProvider();
+            provider.SetConfiguration(builder.BuildConfiguration(), new ContentManager(Services, builder.ContentRoot));
+            provider.Init(GraphicsDevice);
+
+            return provider;
         }
     }
 }

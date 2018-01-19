@@ -6,23 +6,28 @@ using GameEngine.Core.ECS.Systems;
 using GameEngine.Globals;
 using GameEngine.GUI;
 using GameEngine.GUI.Components;
+using GameEngine.GUI.Loader;
 using Microsoft.Xna.Framework;
 
 namespace BattleMode.Gui
 {
     public class GuiController
     {
-        private readonly MessageBox _messageBox;
+        #pragma warning disable 649
+        [GuiLoaderId("MessageBox")]
+        private MessageBox _messageBox;
+        #pragma warning restore 649
+
         private readonly Dictionary<ClientIdentifier, IPokemonDataView> _dataViews = new Dictionary<ClientIdentifier, IPokemonDataView>();
 
-        public GuiController(ScreenConstants screen, GuiSystem manager,
-            MessageBox messageBox,
+        public GuiController(GuiSystem manager,
             MainMenuController mainController,
             MoveMenuController moveController, PokemonMenuController pokemonController,
             ItemMenuController itemController, 
             PlayerPokemonDataView playerView, AiPokemonDataView aiView,
             BattleData data)
         {
+            manager.Factory.LoadFromFile(@"BattleMode\Gui\MessageBox.xml", this);
             var playerId = data.PlayerId;
             var ai = data.Clients.First(id => !id.IsPlayer);
 
@@ -34,9 +39,7 @@ namespace BattleMode.Gui
             _mainController = mainController;
             _pokemonController = pokemonController;
 
-            _messageBox = messageBox;
-
-            InitMessageBox(screen);
+            InitMessageBox();
 
             _mainController.ItemSelected += MainMenu_ItemSelected;
             //_mainController.ExitRequested += delegate { engineInterface.Exit(); };
@@ -104,14 +107,8 @@ namespace BattleMode.Gui
             _mainController.Show();
         }
 
-        private void InitMessageBox(ScreenConstants screen)
+        private void InitMessageBox()
         {
-            const int xPosition = 0;
-            var yPosition = 2.0f * screen.ScreenHeight / 3.0f;
-            var width = screen.ScreenWidth;
-            var height = screen.ScreenHeight - yPosition;
-
-            _messageBox.SetCoordinates(xPosition, yPosition, width, height);
             _messageBox.OnAllLineShowed += AllLineShowedHandler;
         }
 

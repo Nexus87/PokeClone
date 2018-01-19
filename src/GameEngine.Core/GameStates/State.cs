@@ -34,9 +34,6 @@ namespace GameEngine.Core.GameStates
         private RenderSystem RenderSystem { get; }
         protected IMessageBus MessageBus { get; set; }
         protected Entity StateEntity { get; private set; }
-        protected Screen Screen { get; private set; }
-
-        protected ISkin Skin { get; private set; }
 
         protected abstract void Init();
 
@@ -44,8 +41,6 @@ namespace GameEngine.Core.GameStates
         {
             StateEntity = GameStateEntity.Create(_entityManager, screen, keyMap, skin);
             GuiSystem.Factory = factory;
-            Screen = screen;
-            Skin = skin;
             Init();
         }
 

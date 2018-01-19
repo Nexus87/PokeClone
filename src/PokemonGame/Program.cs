@@ -41,7 +41,7 @@ namespace PokemonGame
             engine.GuiConfig.ClassicSkin.SetRendererAs<ClassicLineRenderer, HpLineRenderer, HpLine>(new ClassicLineRenderer());
             engine.GuiConfig.ClassicSkin.SetRendererAs<ClassicHpTextRenderer, HpTextRenderer, HpText>(new ClassicHpTextRenderer());
 
-            engine.SetState(new BattleModule());
+            engine.GameConfiguration.InitialState = new BattleState();
             engine.Run();
         }
     }
