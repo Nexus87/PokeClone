@@ -31,13 +31,19 @@ namespace GameEngine.GUI.Renderers
 
         public void Render(ISpriteBatch spriteBatch, IGuiComponent component)
         {
-            var typedComponent = (T) component;
+            var typedComponent = (T)component;
+            if(typedComponent.NeedsUpdate){
+                UpdateComponent(typedComponent);
+                typedComponent.NeedsUpdate = false;
+            }
+
             RenderComponent(spriteBatch, typedComponent);
 #if DEBUG
             DebugRectangle.Rectangle?.Draw(spriteBatch, component.Area, Color.Black);
 #endif
         }
 
+        protected abstract void UpdateComponent(T component);
         public abstract void Init(ITextureProvider textureProvider);
 
         protected abstract void RenderComponent(ISpriteBatch spriteBatch, T component);

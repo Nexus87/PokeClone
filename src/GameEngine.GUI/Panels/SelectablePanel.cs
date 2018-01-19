@@ -6,13 +6,11 @@ namespace GameEngine.GUI.Panels
 {
     public class SelectablePanel : AbstractPanel
     {
-        private readonly SelectablePanelRenderer _renderer;
         private IGuiComponent _content;
         public bool ShouldHandleKeyInput { get; set; }
 
-        public SelectablePanel(SelectablePanelRenderer renderer)
+        public SelectablePanel()
         {
-            _renderer = renderer;
             IsSelectable = true;
         }
 
@@ -33,16 +31,6 @@ namespace GameEngine.GUI.Panels
             get { return IsSelectable; }
             set { IsSelectable = value; }
         }
-
-
-        public override void Update()
-        {
-            if(!NeedsUpdate)
-                return;
-
-            Content.Area = _renderer.GetContentArea(this);
-        }
-
 
         public override void HandleKeyInput(CommandKeys key)
         {

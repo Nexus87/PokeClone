@@ -38,7 +38,7 @@ namespace BattleMode.Gui
             _listView.CellHeight = 75;
             _listView.ListCellFactory = value =>
             {
-                var component = new SelectablePanel((SelectablePanelRenderer)skin.GetRendererForComponent(typeof(SelectablePanel)));
+                var component = new SelectablePanel();
                 //var line = new PokemonMenuLine(); registry.ResolveType<PokemonMenuLine>();
                 //component.Content = line;
                 component.ShouldHandleKeyInput = true;

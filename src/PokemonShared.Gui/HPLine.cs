@@ -8,17 +8,10 @@ namespace PokemonShared.Gui
 {
     public class HpLine : AbstractGuiComponent
     {
-        private readonly HpLineRenderer _renderer;
 
 
         private int _currentHp;
         private int _maxHp;
-
-
-        public HpLine(HpLineRenderer renderer)
-        {
-            _renderer = renderer;
-        }
 
         public int Current { 
             get { return _currentHp; }

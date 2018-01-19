@@ -35,5 +35,9 @@ namespace GameEngine.GUI.Renderers.PokemonClassicRenderer
         {
             return textArea.TextHeight + LineSpacing;
         }
+
+        protected override void UpdateComponent(TextArea component)
+        {
+        }
     }
 }

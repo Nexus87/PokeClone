@@ -14,7 +14,7 @@ namespace GameEngine.GUI
             NeedsUpdate = true;
         }
 
-        protected bool NeedsUpdate { get; set; }
+        public bool NeedsUpdate { get; set; }
         private float _preferredHeight;
         private float _preferredWidth;
         private Rectangle _area;
@@ -37,7 +37,7 @@ namespace GameEngine.GUI
 
         public virtual float PreferredHeight {
             get => _preferredHeight;
-            protected set
+            set
             {
                 if (value.AlmostEqual(_preferredHeight))
                     return;
@@ -49,7 +49,7 @@ namespace GameEngine.GUI
         public virtual float PreferredWidth
         {
             get => _preferredWidth;
-            protected set
+            set
             {
                 if (value.AlmostEqual(_preferredWidth))
                     return;

@@ -35,8 +35,8 @@ namespace PokemonGame
             //engine.SetSkin(engine.GuiSystem.ClassicSkin);
             //engine.SetStartModule(startModule);
 
-            engine.GuiConfig.AddGuiElement("HpLine", new HpLineBuilder(), skin => new HpLine(skin.GetRendererForComponent<HpLine, HpLineRenderer>()));
-            engine.GuiConfig.AddGuiElement("HpText", new HpTextBuilder(), skin => new HpText(skin.GetRendererForComponent<HpText, HpTextRenderer>()));
+            engine.GuiConfig.AddGuiElement("HpLine", new HpLineBuilder(), skin => new HpLine());
+            engine.GuiConfig.AddGuiElement("HpText", new HpTextBuilder(), skin => new HpText());
 
             engine.GuiConfig.ClassicSkin.SetRendererAs<ClassicLineRenderer, HpLineRenderer, HpLine>(new ClassicLineRenderer());
             engine.GuiConfig.ClassicSkin.SetRendererAs<ClassicHpTextRenderer, HpTextRenderer, HpText>(new ClassicHpTextRenderer());

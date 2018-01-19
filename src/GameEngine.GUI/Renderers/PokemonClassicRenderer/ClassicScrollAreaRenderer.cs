@@ -19,5 +19,9 @@ namespace GameEngine.GUI.Renderers.PokemonClassicRenderer
         {
           
         }
+
+        protected override void UpdateComponent(ScrollArea component)
+        {
+        }
     }
 }

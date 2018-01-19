@@ -25,5 +25,17 @@ namespace GameEngine.GUI.Renderers.PokemonClassicRenderer
         {
             RenderImage(spriteBatch, _borderTexture, component.Area);
         }
+
+        protected override void UpdateComponent(Window component)
+        {
+            var _content = component.Content;
+            var area = component.Area;
+            _content?.SetCoordinates(
+                area.X + LeftMargin,
+                area.Y + TopMargin,
+                area.Width - (RightMargin + LeftMargin),
+                area.Height - (BottomMargin + TopMargin)
+            );
+        }
     }
 }

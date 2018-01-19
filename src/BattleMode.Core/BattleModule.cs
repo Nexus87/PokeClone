@@ -54,7 +54,7 @@ namespace BattleMode.Core
             _player = new Client(playerId);
             var ai = new Client(aiId);
             var messageBox = new MessageBox(
-                new Window((WindowRenderer) Skin.GetRendererForComponent(typeof(Window))),
+                new Window(),
                 new TextArea(
                     (TextAreaRenderer) Skin.GetRendererForComponent(typeof(TextAreaRenderer)),
                     new DefaultTextSplitter()

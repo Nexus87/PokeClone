@@ -28,5 +28,11 @@ namespace GameEngine.GUI.Renderers.PokemonClassicRenderer
         {
             return label.TextHeight;
         }
+
+        protected override void UpdateComponent(Label component)
+        {
+            component.PreferredHeight = GetPreferedHeight(component);
+            component.PreferredWidth = GetPreferedWidth(component);
+        }
     }
 }

@@ -23,6 +23,7 @@ namespace GameEngine.GUI
     public interface IGuiComponent
     {
 
+        bool NeedsUpdate { get; set; }
         void Update();
 
         void HandleKeyInput(CommandKeys key);
@@ -31,8 +32,8 @@ namespace GameEngine.GUI
 
         event EventHandler<GraphicComponentSizeChangedEventArgs> PreferredSizeChanged;
 
-        float PreferredHeight { get; }
-        float PreferredWidth { get; }
+        float PreferredHeight { get; set; }
+        float PreferredWidth { get; set; }
 
         Rectangle ScissorArea { get; set; }
         Rectangle Area { get; set; }

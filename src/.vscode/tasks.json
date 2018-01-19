@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/GameEngine.Core.Tests/GameEngine.Core.Tests.csproj"
+                "${workspaceFolder}/PokemonGame/PokemonGame.csproj"
             ],
             "problemMatcher": "$msCompile"
         }

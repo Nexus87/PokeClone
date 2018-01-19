@@ -17,5 +17,9 @@ namespace GameEngine.GUI.Renderers.PokemonClassicRenderer
 
             RenderImage(spriteBatch, component.Image, component.Area);
         }
+
+        protected override void UpdateComponent(ImageBox component)
+        {
+        }
     }
 }

@@ -44,5 +44,10 @@ namespace GameEngine.GUI.Renderers.PokemonClassicRenderer
             var arrowSize = Math.Min(DefaultArrowSize, panelArea.Height);
             return panelArea.Width > arrowSize ? arrowSize : 0;
         }
+
+        protected override void UpdateComponent(SelectablePanel component)
+        {
+            component.Content.Area = GetContentArea(component);
+        }
     }
 }

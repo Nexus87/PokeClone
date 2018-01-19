@@ -7,35 +7,20 @@ namespace GameEngine.GUI.Panels
 {
     public class Window : AbstractPanel
     {
-        private readonly WindowRenderer _renderer;
         private IGuiComponent _content;
         private readonly Dictionary<CommandKeys, Action> _inputListeners = new Dictionary<CommandKeys, Action>();
 
-        public Window(WindowRenderer renderer)
-        {
-            _renderer = renderer;
+        public IGuiComponent Content { 
+            get => _content; 
+            set => SetContent(value); 
         }
 
-        public void SetContent(IGuiComponent component)
+        private void SetContent(IGuiComponent component)
         {
             RemoveChild(_content);
             _content = component;
             AddChild(_content);
             Invalidate();
-        }
-
-
-        public override void Update()
-        {
-            if(!NeedsUpdate)
-                return;
-
-            _content?.SetCoordinates(
-                Area.X + _renderer.LeftMargin,
-                Area.Y + _renderer.TopMargin,
-                Area.Width - (_renderer.RightMargin + _renderer.LeftMargin),
-                Area.Height - (_renderer.BottomMargin + _renderer.TopMargin)
-            );
         }
 
         public override void HandleKeyInput(CommandKeys key)

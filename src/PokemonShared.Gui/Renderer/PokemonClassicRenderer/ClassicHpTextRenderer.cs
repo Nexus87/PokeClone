@@ -33,5 +33,11 @@ namespace PokemonShared.Gui.Renderer.PokemonClassicRenderer
         {
             return hpText.PreferredTextHeight;
         }
+
+        protected override void UpdateComponent(HpText component)
+        {
+            component.PreferredHeight = GetPreferredHeight(component);
+            component.PreferredWidth = GetPreferredWidth(component);
+        }
     }
 }

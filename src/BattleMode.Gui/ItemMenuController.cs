@@ -37,7 +37,7 @@ namespace BattleMode.Gui
             _listView.Model = new ObservableCollection<Item>(model);
             _listView.ListCellFactory = value =>
             {
-                var button = new Button(new ClassicButtonRenderer());
+                var button = new Button();
                 button.Text = value.Name;
                 button.ButtonPressed += delegate { OnItemSelected(value); };
                 return button;

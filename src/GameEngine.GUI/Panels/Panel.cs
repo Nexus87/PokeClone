@@ -10,14 +10,8 @@ namespace GameEngine.GUI.Panels
     public class Panel : AbstractPanel
     {
         public Color BackgroundColor { get; set; }
-        private readonly PanelRenderer _renderer;
         private IGuiComponent _component;
         private readonly Dictionary<CommandKeys, Action> _inputListeners = new Dictionary<CommandKeys, Action>();
-
-        public Panel(PanelRenderer renderer)
-        {
-            _renderer = renderer;
-        }
 
         public void SetContent(IGuiComponent component)
         {

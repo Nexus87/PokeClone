@@ -6,14 +6,9 @@ namespace GameEngine.GUI.Panels
 {
     public class ScrollArea : AbstractPanel
     {
-        private readonly ScrollAreaRenderer _renderer;
         private IGuiComponent _content;
         public bool Autoscrolling { get; set; }
 
-        public ScrollArea(ScrollAreaRenderer renderer)
-        {
-            _renderer = renderer;
-        }
 
         public override Rectangle Area
         {

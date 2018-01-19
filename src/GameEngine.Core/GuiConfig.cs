@@ -33,28 +33,28 @@ namespace GameEngine.Core
         internal void InitDefaults()
         {
             _builders["Window"] = new WindowBuilder();
-            _builder.Register(x => new Window(CurrentSkin.GetRendererForComponent<Window, WindowRenderer>()));
+            _builder.RegisterType<Window>();
 
             _builders["Grid"] = new GridBuilder();
-            _builder.Register(x => new Grid());
+            _builder.RegisterType<Grid>();
 
             _builders["ScrollArea"] = new ScrollAreaBuilder();
-            _builder.Register(x => new ScrollArea(CurrentSkin.GetRendererForComponent<ScrollArea, ScrollAreaRenderer>()));
+            _builder.RegisterType<ScrollArea>();
 
             _builders["ListView"] = new ListViewBuilder();
             _builder.RegisterGeneric(typeof(ListView<>));
 
             _builders["Panel"] = new PanelBuilder();
-            _builder.Register(x => new Panel(CurrentSkin.GetRendererForComponent<Panel, PanelRenderer>()));
+            _builder.RegisterType<Panel>();
 
             _builders["Label"] = new LabelBuilder();
-            _builder.Register(x => new Label(CurrentSkin.GetRendererForComponent<Label, LabelRenderer>()));
+            _builder.RegisterType<Label>();
 
             _builders["Spacer"] = new SpacerBuilder();
-            _builder.Register(x => new Spacer());
+            _builder.RegisterType<Spacer>();
 
             _builders["Button"] = new ButtonBuilder();
-            _builder.Register(x => new Button(CurrentSkin.GetRendererForComponent<Button, ButtonRenderer>()));
+            _builder.RegisterType<Button>();
         }
 
 

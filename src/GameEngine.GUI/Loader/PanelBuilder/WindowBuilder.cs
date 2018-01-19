@@ -16,8 +16,8 @@ namespace GameEngine.GUI.Loader.PanelBuilder
             SetUpController(controller, window, xElement);
 
             var contentXElement = xElement.Elements().SingleOrDefault();
-            if(contentXElement != null)
-                window.SetContent(loader.LoadFromXml(contentXElement, controller));
+            if (contentXElement != null)
+                window.Content = loader.LoadFromXml(contentXElement, controller);
 
             return window;
         }

@@ -4,14 +4,12 @@ namespace GameEngine.GUI.Controlls
 {
     public class Label : AbstractGuiComponent
     {
-        private readonly LabelRenderer _renderer;
         private string _text;
         private float _textHeight = 32;
 
-        public Label(LabelRenderer renderer)
+        public Label()
         {
             IsSelectable = false;
-            _renderer = renderer;
             Text = null;
         }
 
@@ -33,15 +31,6 @@ namespace GameEngine.GUI.Controlls
                 _textHeight = value;
                 Invalidate();
             }
-        }
-
-        public override void Update()
-        {
-            if (!NeedsUpdate)
-                return;
-
-            PreferredHeight = _renderer.GetPreferedHeight(this);
-            PreferredWidth = _renderer.GetPreferedWidth(this);
         }
     }
 }

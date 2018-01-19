@@ -6,14 +6,12 @@ namespace GameEngine.GUI.Controlls
 {
     public sealed class Button : AbstractGuiComponent
     {
-        private readonly ButtonRenderer _buttonRenderer;
         private string _text;
         private float _textHeight;
 
-        public Button(ButtonRenderer buttonRenderer)
+        public Button()
         {
             TextHeight = 32;
-            _buttonRenderer = buttonRenderer;
             IsSelectable = true;
         }
 
@@ -57,21 +55,6 @@ namespace GameEngine.GUI.Controlls
         private void OnButtonPressed()
         {
             ButtonPressed?.Invoke(this, EventArgs.Empty);
-        }
-
-        public override void Update()
-        {
-            if (!NeedsUpdate)
-                return;
-
-            base.Update();
-            UpdatePreferredSize();
-        }
-
-        private void UpdatePreferredSize()
-        {
-            PreferredHeight = _buttonRenderer.GetPreferedHeight(this);
-            PreferredWidth = _buttonRenderer.GetPreferedWidth(this);
         }
     }
 }

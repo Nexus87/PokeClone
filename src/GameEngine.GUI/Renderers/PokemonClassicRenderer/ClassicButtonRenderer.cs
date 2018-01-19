@@ -50,5 +50,11 @@ namespace GameEngine.GUI.Renderers.PokemonClassicRenderer
         {
             return button.TextHeight;
         }
+
+        protected override void UpdateComponent(Button component)
+        {
+            component.PreferredHeight = GetPreferedHeight(component);
+            component.PreferredWidth = GetPreferedWidth(component);
+        }
     }
 }

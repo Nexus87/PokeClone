@@ -47,7 +47,7 @@ namespace BattleMode.Gui
 
             _listView.ListCellFactory = value =>
             {
-                var button = new Button((ButtonRenderer) _skin.GetRendererForComponent(typeof(Button)));
+                var button = new Button();
                 button.Text = value?.Name ?? "--------";
                 button.Enabled = value != null;
                 button.ButtonPressed += delegate { OnItemSelected(value); };

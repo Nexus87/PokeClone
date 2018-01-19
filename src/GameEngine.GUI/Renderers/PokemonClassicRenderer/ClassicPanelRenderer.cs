@@ -17,5 +17,9 @@ namespace GameEngine.GUI.Renderers.PokemonClassicRenderer
         {
             RenderImage(spriteBatch, _pixel, component.Area, component.BackgroundColor);
         }
+
+        protected override void UpdateComponent(Panel component)
+        {
+        }
     }
 }

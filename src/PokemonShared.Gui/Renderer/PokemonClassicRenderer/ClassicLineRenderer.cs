@@ -62,5 +62,9 @@ namespace PokemonShared.Gui.Renderer.PokemonClassicRenderer
             RenderImage(batch, _cup, new Rectangle(leftCupPosition, cupSize), color);
             RenderImage(batch, _cup, new Rectangle(rightCupPosition, cupSize), color);
         }
+
+        protected override void UpdateComponent(HpLine component)
+        {
+        }
     }
 }
