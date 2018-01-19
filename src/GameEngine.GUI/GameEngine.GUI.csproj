@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.6.2" />
-    <PackageReference Include="Monogame.Framework.DesktopGL" Version="3.6.0.1625" NoWarn="NU1701" />
+    <PackageReference Include="Monogame.Framework.DesktopGL.Core" Version="3.7.0.3" />
   </ItemGroup>
 
   <ItemGroup>

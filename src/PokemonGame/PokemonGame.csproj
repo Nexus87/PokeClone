@@ -9,7 +9,11 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None  Update=".\Content\**\*" CopyToOutputDirectory="Always" />
+  </ItemGroup>
 </Project>
