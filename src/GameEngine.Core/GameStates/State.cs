@@ -12,12 +12,12 @@ namespace GameEngine.Core.GameStates
 {
     public abstract class State
     {
-        private readonly EntityManager _entityManager;
+        protected readonly EntityManager EntityManager;
 
         protected State()
         {
-            _entityManager = new EntityManager();
-            MessageBus = new MessageBus(_entityManager);
+            EntityManager = new EntityManager();
+            MessageBus = new MessageBus(EntityManager);
 
             RenderSystem = new RenderSystem();
             InputSystem = new InputSystem(MessageBus);
@@ -41,7 +41,7 @@ namespace GameEngine.Core.GameStates
 
         public void Init(Screen screen, IReadOnlyDictionary<Keys, CommandKeys> keyMap, ISkin skin, GuiFactory factory)
         {
-            StateEntity = GameStateEntity.Create(_entityManager, screen, keyMap, skin);
+            StateEntity = GameStateEntity.Create(EntityManager, screen, keyMap, skin);
             GuiSystem.Factory = factory;
             Init();
         }

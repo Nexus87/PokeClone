@@ -8,7 +8,7 @@ namespace PokemonShared.Models
         {
             StackSize = 1;
         }
-        public String Name { get; set; }
+        public string Name { get; set; }
         public int StackSize { get; set; }
         public override string ToString()
         {

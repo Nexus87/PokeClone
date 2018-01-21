@@ -75,9 +75,11 @@ namespace GameEngine.GUI.Controlls
                     var i = args.NewStartingIndex;
                     foreach (var item in args.NewItems.Cast<T>())
                     {
+                        Children.Remove(_listItems[i].Component);
                         _listItems[i].Component = ListCellFactory(item);
                         i++;
                     }
+
                     break;
                 case NotifyCollectionChangedAction.Move:
                     RemoveItems(args.OldStartingIndex, args.OldItems.Count);
@@ -92,6 +94,12 @@ namespace GameEngine.GUI.Controlls
 
         private void RemoveItems(int startingIndex, int itemCount)
         {
+            _listItems
+                .Skip(startingIndex)
+                .Take(itemCount)
+                .ToList()
+                .ForEach(x => Children.Remove(x.Component));
+
             _listItems.RemoveRange(startingIndex, itemCount);
         }
 
@@ -180,6 +188,7 @@ namespace GameEngine.GUI.Controlls
         private void ReCreateItems()
         {
             _listItems.Clear();
+            Children.Clear();
             foreach (var item in Model)
             {
                 var cell = CreateCell(item);
@@ -190,6 +199,8 @@ namespace GameEngine.GUI.Controlls
         private ListCell CreateCell(T item)
         {
             var cell = new ListCell {Component = ListCellFactory(item)};
+            Children.Add(cell.Component);
+
             cell.CellSelected += (sender, args) => OnComponentSelected(args);
             cell.CellSelected += (sender, args) => _lastSelectedIndex = _listItems.IndexOf(sender as ListCell);
             return cell;
@@ -198,7 +209,8 @@ namespace GameEngine.GUI.Controlls
         public void SelectCell(int i)
         {
             UnselectLastIndex();
-            _listItems[i].IsSelected = true;
+            if(i < _listItems.Count)
+                _listItems[i].IsSelected = true;
         }
 
         public IGuiComponent GetComponent(int i)

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using BattleMode.Shared;
 using GameEngine.Core.ECS;
@@ -26,7 +27,7 @@ namespace BattleMode.Gui
         private readonly Panel _panel;
 
 #pragma warning restore 649
-        public PokemonMenuController(Client client, GuiFactory factory, IMessageBus messageBus)
+        public PokemonMenuController(GuiFactory factory, IMessageBus messageBus)
         {
             _messageBus = messageBus;
 
@@ -34,7 +35,7 @@ namespace BattleMode.Gui
 
             _panel.SetContent(_listView);
 
-            _listView.Model = new ObservableCollection<Pokemon>(client.Pokemons);
+            _listView.Model = new ObservableCollection<Pokemon>();
             _listView.CellHeight = 75;
             _listView.ListCellFactory = value =>
             {
@@ -54,6 +55,11 @@ namespace BattleMode.Gui
         public event EventHandler ExitRequested;
         public event EventHandler<SelectionEventArgs<Pokemon>> ItemSelected;
 
+        public void SetPlayerPokemon(List<Pokemon> pokemon)
+        {
+            _listView.Model.Clear();
+            pokemon.ForEach(_listView.Model.Add);
+        }
 
         public void HandleKeyInput(CommandKeys key)
         {

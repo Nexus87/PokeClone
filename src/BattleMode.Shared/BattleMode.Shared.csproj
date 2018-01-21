@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <ProjectReference Include="..\GameEngine.Core\GameEngine.Core.csproj" />
     <ProjectReference Include="..\PokemonShared.Models\PokemonShared.Models.csproj" />
     <ProjectReference Include="..\PokemonShared.Data\PokemonShared.Data.csproj" />
   </ItemGroup>

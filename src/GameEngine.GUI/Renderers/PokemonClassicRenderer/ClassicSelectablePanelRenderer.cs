@@ -47,7 +47,8 @@ namespace GameEngine.GUI.Renderers.PokemonClassicRenderer
 
         protected override void UpdateComponent(SelectablePanel component)
         {
-            component.Content.Area = GetContentArea(component);
+            if(component.Content != null)
+                component.Content.Area = GetContentArea(component);
         }
     }
 }

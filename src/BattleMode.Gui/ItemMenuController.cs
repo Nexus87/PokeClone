@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using GameEngine.Core.ECS;
 using GameEngine.Core.ECS.Actions;
 using GameEngine.Globals;
@@ -29,11 +29,7 @@ namespace BattleMode.Gui
             _messageBus = messageBus;
             factory.LoadFromFile(@"BattleMode\Gui\ItemMenu.xml", this);
 
-            var model = Enumerable
-                .Range(0, 20)
-                .Select(x => new Item {Name = "Item" + x});
-
-            _listView.Model = new ObservableCollection<Item>(model);
+            _listView.Model = new ObservableCollection<Item>();
             _listView.ListCellFactory = value =>
             {
                 var button = new Button {Text = value.Name};
@@ -67,6 +63,12 @@ namespace BattleMode.Gui
         protected void OnExitRequested()
         {
             ExitRequested?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void SetItems(List<Item> trainerComponentItems)
+        {
+            _listView.Model.Clear();
+            trainerComponentItems.ForEach(_listView.Model.Add);
         }
     }
 }

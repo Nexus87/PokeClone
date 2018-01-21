@@ -1,11 +1,11 @@
-﻿using BattleMode.Shared;
-using GameEngine.Core.ECS;
+﻿using GameEngine.Core.ECS;
 using GameEngine.Core.ECS.Actions;
 using GameEngine.GUI;
 using GameEngine.GUI.Controlls;
 using GameEngine.GUI.Loader;
 using GameEngine.GUI.Panels;
 using PokemonShared.Gui;
+using PokemonShared.Models;
 
 namespace BattleMode.Gui
 {
@@ -37,7 +37,7 @@ namespace BattleMode.Gui
                 _hpText.CurrentHp = newHp;
         }
 
-        public void SetPokemon(PokemonEntity pokemon)
+        public void SetPokemon(Pokemon pokemon)
         {
             _name.Text = pokemon.Name;
             _lvl.Text = ":L" + pokemon.Level;
