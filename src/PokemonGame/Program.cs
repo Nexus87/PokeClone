@@ -42,6 +42,8 @@ namespace PokemonGame
             engine.GuiConfig.ClassicSkin.SetRendererAs<ClassicHpTextRenderer, HpTextRenderer, HpText>(new ClassicHpTextRenderer());
 
             engine.GameConfiguration.InitialState = new BattleState();
+            pokemonSharedModule.AddTextureConfigurations(engine.GameConfiguration.TextureConfigurationBuilder);
+
             engine.Run();
         }
     }

@@ -9,6 +9,7 @@ using GameEngine.Core.ECS.Actions;
 using GameEngine.Core.ECS.Systems;
 using GameEngine.GUI.Components;
 using GameEngine.GUI.Loader;
+using PokemonShared.Service;
 
 namespace BattleMode.Gui
 {
@@ -25,11 +26,12 @@ namespace BattleMode.Gui
         [GuiLoaderId("MessageBox")] private MessageBox _messageBox;
 #pragma warning restore 649
 
-        public GuiControllerSystem(GuiSystem system, IMessageBus messageBus, Entity player, Entity ai) :
+        public GuiControllerSystem(GuiSystem system, IMessageBus messageBus, Entity player, Entity ai,
+            SpriteProvider spriteProvider) :
             this(system,
                 new MainMenuController(system.Factory, messageBus),
                 new MoveMenuController(new BattleData(), system.Factory, messageBus),
-                new PokemonMenuController(system.Factory, messageBus),
+                new PokemonMenuController(system.Factory, messageBus, spriteProvider),
                 new ItemMenuController(system.Factory, messageBus),
                 new PokemonDataView(system.Factory, @"BattleMode\Gui\PlayerDataView.xml", messageBus),
                 new PokemonDataView(system.Factory, @"BattleMode\Gui\AiDataView.xml", messageBus),

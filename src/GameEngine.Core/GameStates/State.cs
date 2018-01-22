@@ -4,6 +4,7 @@ using GameEngine.Core.ECS.Actions;
 using GameEngine.Core.ECS.Entities;
 using GameEngine.Core.ECS.Systems;
 using GameEngine.Globals;
+using GameEngine.Graphics.Textures;
 using GameEngine.GUI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
@@ -35,12 +36,14 @@ namespace GameEngine.Core.GameStates
         protected GuiSystem GuiSystem { get; }
         private RenderSystem RenderSystem { get; }
         protected IMessageBus MessageBus { get; }
+        protected ITextureProvider TextureProvider { get; private set; }
         private Entity StateEntity { get; set; }
 
         protected abstract void Init();
 
-        public void Init(Screen screen, IReadOnlyDictionary<Keys, CommandKeys> keyMap, ISkin skin, GuiFactory factory)
+        public void Init(Screen screen, IReadOnlyDictionary<Keys, CommandKeys> keyMap, ISkin skin, GuiFactory factory, ITextureProvider textureProvider)
         {
+            TextureProvider = textureProvider;
             StateEntity = GameStateEntity.Create(EntityManager, screen, keyMap, skin);
             GuiSystem.Factory = factory;
             Init();

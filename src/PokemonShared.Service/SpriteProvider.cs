@@ -4,9 +4,9 @@ namespace PokemonShared.Service
 {
     public class SpriteProvider
     {
-        private readonly TextureProvider _textureProvider;
+        private readonly ITextureProvider _textureProvider;
 
-        public SpriteProvider(TextureProvider textureProvider)
+        public SpriteProvider(ITextureProvider textureProvider)
         {
             _textureProvider = textureProvider;
         }

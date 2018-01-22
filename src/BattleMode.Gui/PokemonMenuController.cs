@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using BattleMode.Shared;
 using GameEngine.Core.ECS;
 using GameEngine.Core.ECS.Actions;
 using GameEngine.Globals;
@@ -9,7 +8,9 @@ using GameEngine.GUI;
 using GameEngine.GUI.Controlls;
 using GameEngine.GUI.Loader;
 using GameEngine.GUI.Panels;
+using Microsoft.Xna.Framework;
 using PokemonShared.Models;
+using PokemonShared.Service;
 
 namespace BattleMode.Gui
 {
@@ -27,7 +28,7 @@ namespace BattleMode.Gui
         private readonly Panel _panel;
 
 #pragma warning restore 649
-        public PokemonMenuController(GuiFactory factory, IMessageBus messageBus)
+        public PokemonMenuController(GuiFactory factory, IMessageBus messageBus, SpriteProvider spriteProvider)
         {
             _messageBus = messageBus;
 
@@ -36,10 +37,9 @@ namespace BattleMode.Gui
             _panel.SetContent(_listView);
 
             _listView.Model = new ObservableCollection<Pokemon>();
-            _listView.CellHeight = 75;
             _listView.ListCellFactory = value =>
             {
-                var line = new PokemonMenuLineController(factory);
+                var line = new PokemonMenuLineController(factory, spriteProvider);
                 line.SetPokemon(value);
 
                 var component = new SelectablePanel {

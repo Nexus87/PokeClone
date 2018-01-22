@@ -1,17 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using GameEngine.Globals;
-using GameEngine.Graphics.General;
-using GameEngine.GUI.Renderers;
 using Microsoft.Xna.Framework;
 
 namespace GameEngine.GUI.Panels
 {
     public class Panel : AbstractPanel
     {
-        public Color BackgroundColor { get; set; }
-        private IGuiComponent _component;
         private readonly Dictionary<CommandKeys, Action> _inputListeners = new Dictionary<CommandKeys, Action>();
+        private IGuiComponent _component;
+        public Color BackgroundColor { get; set; }
+
+        public int MarginLeft { get; set; } = 20;
+        public int MarginRight { get; set; } = 20;
+        public int MarginTop { get; set; } = 20;
+        public int MarginBottom { get; set; } = 20;
 
         public void SetContent(IGuiComponent component)
         {
@@ -23,10 +26,14 @@ namespace GameEngine.GUI.Panels
 
         public override void Update()
         {
-            if(!NeedsUpdate)
+            if (!NeedsUpdate)
                 return;
 
-            _component.SetCoordinates(Area.X + 20, Area.Y + 20, Area.Width - 40, Area.Height - 40);
+            _component.SetCoordinates(
+                Area.X + MarginLeft,
+                Area.Y + MarginTop,
+                Area.Width - (MarginLeft + MarginRight),
+                Area.Height - (MarginTop + MarginBottom));
         }
 
         public void AddInputListener(CommandKeys key, Action action)

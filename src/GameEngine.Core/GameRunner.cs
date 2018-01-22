@@ -1,21 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using GameEngine.Core.GameStates;
+﻿using GameEngine.Core.GameStates;
 using GameEngine.Globals;
 using GameEngine.Graphics.Textures;
 using GameEngine.GUI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Input;
 
 namespace GameEngine.Core
 {
     public class GameRunner : Game, IEngineInterface
     {
-        private readonly Screen Screen;
-        public readonly GraphicsDeviceManager GraphicsDeviceManager;
-        private StateManager StateManager;
-        private GuiFactory GuiFactory;
+        private readonly Screen _screen;
+        private StateManager _stateManager;
+        private GuiFactory _guiFactory;
         private readonly GameConfiguration _gameConfiguration;
         private readonly GuiConfig _guiConfig;
         private TextureProvider _textureProvider;
@@ -28,23 +24,23 @@ namespace GameEngine.Core
             _gameConfiguration = gameConfiguration;
             _guiConfig = guiConfig;
 
-            GraphicsDeviceManager = new GraphicsDeviceManager(this);
-            Screen = new Screen(new ScreenConstants(), GraphicsDeviceManager);
+            var graphicsDeviceManager = new GraphicsDeviceManager(this);
+            _screen = new Screen(new ScreenConstants(), graphicsDeviceManager);
 
             Window.AllowUserResizing = true;
             Content.RootDirectory = @".";
 
-            GraphicsDeviceManager.ApplyChanges();
+            graphicsDeviceManager.ApplyChanges();
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            Screen.Draw();
+            _screen.Draw();
         }
 
         protected override void Update(GameTime gameTime)
         {
-            StateManager.CurrentState.Update(gameTime);
+            _stateManager.CurrentState.Update(gameTime);
         }
 
         protected override void Initialize()
@@ -52,18 +48,18 @@ namespace GameEngine.Core
             base.Initialize();
             Window.ClientSizeChanged += delegate
             {
-                Screen.WindowsResizeHandler(Window.ClientBounds.Width, Window.ClientBounds.Height);
+                _screen.WindowsResizeHandler(Window.ClientBounds.Width, Window.ClientBounds.Height);
             };
-            Screen.WindowsResizeHandler(Window.ClientBounds.Width, Window.ClientBounds.Height);
+            _screen.WindowsResizeHandler(Window.ClientBounds.Width, Window.ClientBounds.Height);
 
-            StateManager = new StateManager(Screen, _gameConfiguration.KeyMap, _guiConfig.CurrentSkin, GuiFactory);
-            StateManager.PushState(_gameConfiguration.InitialState);
+            _stateManager = new StateManager(_screen, _gameConfiguration.KeyMap, _guiConfig.CurrentSkin, _guiFactory, _textureProvider);
+            _stateManager.PushState(_gameConfiguration.InitialState);
         }
 
         protected override void LoadContent()
         {
             base.LoadContent();
-            GuiFactory = _guiConfig.Init(Screen.Constants);
+            _guiFactory = _guiConfig.Init(_screen.Constants);
 
             _textureProvider = InitTextureProvider(_gameConfiguration.TextureConfigurationBuilder);
             _guiConfig.CurrentSkin.Init(InitTextureProvider(_guiConfig.SkinTextureConfigurationBuilder));
