@@ -50,17 +50,20 @@ namespace GameEngine.Core
             _builders["Panel"] = new PanelBuilder();
             _builder.RegisterType<Panel>();
 
-            _builders["Label"] = new LabelBuilder();
+            _builders["Label"] = new GenericBuilder<Label>();
             _builder.RegisterType<Label>();
 
-            _builders["Spacer"] = new SpacerBuilder();
+            _builders["Spacer"] = new GenericBuilder<Spacer>();
             _builder.RegisterType<Spacer>();
 
-            _builders["Button"] = new ButtonBuilder();
+            _builders["Button"] = new GenericBuilder<Button>();
             _builder.RegisterType<Button>();
 
-            _builders["MessageBox"] = new MessageBoxBuilder();
+            _builders["MessageBox"] = new GenericBuilder<MessageBox>();
             _builder.RegisterType<MessageBox>();
+
+            _builders["ImageBox"] = new GenericBuilder<ImageBox>();
+            _builder.RegisterType<ImageBox>();
         }
 
         public TextureConfigurationBuilder SkinTextureConfigurationBuilder { get; }

@@ -8,10 +8,10 @@
     </Grid.ColumnDefinitions>
     <ImageBox id="icon" />
     <Grid Grid.Column="1">
-        <Grid.RowDefinition>
+        <Grid.RowDefinitions>
             <RowDefinition Height="1*" />
             <RowDefinition Height="1*"/>
-        </Grid.RowDefinition>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
