@@ -1,0 +1,43 @@
+<Grid id="main" X="0.2*" Y="0.1*" Width="250" Height="0.1*">
+    <Grid.RowDefinitions>
+        <RowDefinition Height="1*"/>
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="1*"/>
+    </Grid.ColumnDefinitions>
+    <ImageBox id="icon" />
+    <Grid Grid.Column="1">
+        <Grid.RowDefinition>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinition>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Label id="name" />
+            <Label id="level" Grid.Column="1" />
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Label id="hpLabel" Text="HP:" TextHeight="24" />
+            <HpLine id="hpLine" Grid.Column="1" />
+            <HpText id="hpText" Grid.Column="2" />
+        </Grid>
+    </Grid>
+</Grid>

@@ -39,12 +39,14 @@ namespace BattleMode.Gui
             _listView.CellHeight = 75;
             _listView.ListCellFactory = value =>
             {
-                var component = new SelectablePanel {ShouldHandleKeyInput = true};
-                //var line = new PokemonMenuLine(); registry.ResolveType<PokemonMenuLine>();
-                //component.Content = line;
+                var line = new PokemonMenuLineController(factory);
+                line.SetPokemon(value);
+
+                var component = new SelectablePanel {
+                    ShouldHandleKeyInput = true,
+                    Content = line.Component
+                };
                 component.PanelPressed += delegate { OnItemSelected(value); };
-                //line.SetPokemon(value);
-                //_pokemonMenuLines.Add(line);
                 return component;
             };
 
