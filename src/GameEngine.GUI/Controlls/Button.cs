@@ -44,7 +44,7 @@ namespace GameEngine.GUI.Controlls
             }
         }
 
-        public event EventHandler ButtonPressed;
+        public event Action OnPressed;
 
         public override void HandleKeyInput(CommandKeys key)
         {
@@ -54,7 +54,7 @@ namespace GameEngine.GUI.Controlls
 
         private void OnButtonPressed()
         {
-            ButtonPressed?.Invoke(this, EventArgs.Empty);
+            OnPressed?.Invoke();
         }
     }
 }

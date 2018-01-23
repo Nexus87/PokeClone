@@ -33,7 +33,7 @@ namespace BattleMode.Gui
             _listView.ListCellFactory = value =>
             {
                 var button = new Button {Text = value.Name};
-                button.ButtonPressed += delegate { OnItemSelected(value); };
+                button.OnPressed += delegate { OnItemSelected(value); };
                 return button;
             };
 

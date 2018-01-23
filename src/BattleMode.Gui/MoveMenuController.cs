@@ -39,7 +39,7 @@ namespace BattleMode.Gui
                     Text = value?.Name ?? "--------",
                     Enabled = value != null
                 };
-                button.ButtonPressed += delegate { OnItemSelected(value); };
+                button.OnPressed += delegate { OnItemSelected(value); };
                 return button;
             };
 

@@ -35,17 +35,19 @@ namespace BattleMode.Gui
             _messageBus = messageBus;
             factory.LoadFromFile(@"BattleMode\Gui\MainMenu.xml", this);
 
-            _attackButton.ButtonPressed += delegate { OnItemSelected(MainMenuEntries.Attack); };
-            _pkmnButton.ButtonPressed += delegate { OnItemSelected(MainMenuEntries.Pkmn); };
-            _itemButton.ButtonPressed += delegate { OnItemSelected(MainMenuEntries.Item); };
-            _runButton.ButtonPressed += delegate { OnItemSelected(MainMenuEntries.Run); };
+            _attackButton.OnPressed += delegate { OnItemSelected(MainMenuEntries.Attack); };
+            _pkmnButton.OnPressed += delegate { OnItemSelected(MainMenuEntries.Pkmn); };
+            _itemButton.OnPressed += delegate { OnItemSelected(MainMenuEntries.Item); };
+            _runButton.OnPressed += delegate { OnItemSelected(MainMenuEntries.Run); };
             _window.SetInputListener(CommandKeys.Back, OnExitRequested);
 
         }
 
         public event EventHandler ExitRequested;
         public event EventHandler<SelectionEventArgs<MainMenuEntries>> ItemSelected;
-
+        public void Write() {
+            System.Console.WriteLine("Run!");
+        }
         public void Show()
         {
             _grid.SelectComponent(0, 0);

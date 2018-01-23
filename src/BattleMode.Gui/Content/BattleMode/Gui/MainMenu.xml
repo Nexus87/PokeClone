@@ -11,6 +11,6 @@
       <Button Text="Attack" id="attack"/>
       <Button Text="PKMN" id="pkmn" Grid.Row="1"/>
       <Button Text="Item" id="item" Grid.Column="1"/>
-      <Button Text="Run" id="run" Grid.Column="1" Grid.Row="1"/>
+      <Button Text="Run" id="run" Grid.Column="1" Grid.Row="1" OnPressed="Write" />
     </Grid>
 </Window>

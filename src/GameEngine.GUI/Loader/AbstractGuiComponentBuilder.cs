@@ -52,23 +52,53 @@ namespace GameEngine.GUI.Loader
                 .ForEach(x =>
                 {
                     var prop = component.GetType().GetProperty(x.Name.LocalName);
-                    if(prop == null)
+                    if (prop == null)
                         return;
 
                     prop.SetValue(component, ConvertToType(prop.PropertyType, x.Value));
                 });
         }
+        protected void MapEventsToFunctions(XElement xElement, IGuiComponent component, object controller)
+        {
+            var attributes = xElement.Attributes().ToList();
+            var events = component
+                .GetType()
+                .GetEvents()
+                .Select(x => (x, attributes.FirstOrDefault(y => y.Name.LocalName == x.Name)))
+                .Where(x => x.Item2 != null);
 
+            foreach (var (e, a) in events)
+            {
+                var method = controller.GetType().GetMethod(a.Value);
+                if (method == null)
+                    continue;
+                try
+                {
+                    var d = Delegate.CreateDelegate(e.EventHandlerType, controller, method);
+                    e.AddEventHandler(component, d);
+                }
+                catch (Exception ex)
+                {
+                    System.Console.Error.WriteLine(ex.Message);
+                    System.Console.Error.WriteLine(ex.StackTrace);
+                }
+
+
+            }
+        }
         private object ConvertToType(Type propertyType, string value)
         {
-            if(propertyType == typeof(string)){
+            if (propertyType == typeof(string))
+            {
                 return value;
             }
-            if(propertyType == typeof(int)){
+            if (propertyType == typeof(int))
+            {
                 int.TryParse(value, out var result);
                 return result;
             }
-            if(propertyType == typeof(float)){
+            if (propertyType == typeof(float))
+            {
                 float.TryParse(value, out var result);
                 return result;
             }
