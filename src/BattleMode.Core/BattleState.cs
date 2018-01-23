@@ -22,6 +22,8 @@ namespace BattleMode.Core
             var spriteProvider = new SpriteProvider(TextureProvider);
             var playerEntity = PlayerEntity.Create(EntityManager, ScreenConstants);
             var aiEntity = AiEntity.Create(EntityManager, ScreenConstants);
+            var battleStateEntity = BattleStateEntity.Create(EntityManager);
+            
             _guiControllerSystem = new GuiControllerSystem(GuiSystem, MessageBus, playerEntity, aiEntity, spriteProvider);
             var graphicsSystem = new BattleGraphicController(spriteProvider);
 
@@ -34,7 +36,6 @@ namespace BattleMode.Core
 
             var playerPokemon = EntityManager.GetComponentByTypeAndEntity<PokemonComponent>(playerEntity).First().Pokemon;
             var aiPokemon = EntityManager.GetComponentByTypeAndEntity<PokemonComponent>(playerEntity).First().Pokemon;
-            
             MessageBus.SendAction(new SetGuiVisibleAction(true));
             MessageBus.SendAction(new SetPlayerAction(playerEntity));
             MessageBus.SendAction(new SetPokemonAction(playerEntity, playerPokemon));

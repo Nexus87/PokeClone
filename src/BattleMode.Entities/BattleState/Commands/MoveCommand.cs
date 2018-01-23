@@ -1,5 +1,4 @@
-﻿using BattleMode.Shared;
-using PokemonShared.Models;
+﻿using PokemonShared.Models;
 
 namespace BattleMode.Entities.BattleState.Commands
 {
@@ -7,22 +6,9 @@ namespace BattleMode.Entities.BattleState.Commands
     {
         public Move Move { get; }
 
-        public MoveCommand(ClientIdentifier source, ClientIdentifier target, Move move)
+        public MoveCommand(Move move)
         {
             Move = move;
-            Source = source;
-            Target = target;
-        }
-
-        public int Priority => Move.Priority;
-
-        public ClientIdentifier Source { get; }
-        public ClientIdentifier Target { get; }
-
-
-        public void Execute(CommandExecuter executer)
-        {
-            executer.DispatchCommand(this);
         }
     }
 }
