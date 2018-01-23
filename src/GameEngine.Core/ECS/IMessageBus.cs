@@ -5,6 +5,9 @@ namespace GameEngine.Core.ECS
     public interface IMessageBus
     {
         void RegisterForAction<TAction>(Action<TAction, IEntityManager> handler);
+        void RegisterForAction<TAction>(Action<IEntityManager> handler);
+        void RegisterForAction<TAction>(Action<TAction> handler);
+        void RegisterForAction<TAction>(Action handler);
         void UnregisterHandler<TAction>(Action<TAction, IEntityManager> handler);
 
         void StartProcess();

@@ -67,5 +67,20 @@ namespace GameEngine.Core.ECS
         {
             _messageQueue.Enqueue(action);
         }
+
+        public void RegisterForAction<TAction>(Action<IEntityManager> handler)
+        {
+            RegisterForAction<TAction>((a, e) => handler(e));
+        }
+
+        public void RegisterForAction<TAction>(Action<TAction> handler)
+        {
+            RegisterForAction<TAction>((a, e) => handler(a));
+        }
+
+        public void RegisterForAction<TAction>(Action handler)
+        {
+            RegisterForAction<TAction>((a, e) => handler());
+        }
     }
 }
