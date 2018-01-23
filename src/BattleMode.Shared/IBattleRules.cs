@@ -4,7 +4,7 @@ namespace BattleMode.Shared
 {
     public interface IBattleRules
     {
-        float CalculateBaseDamage(PokemonEntity source, PokemonEntity target, Move move);
+        float CalculateBaseDamage(Pokemon source, Pokemon target, Move move);
 
         bool CanChange();
 
@@ -14,14 +14,14 @@ namespace BattleMode.Shared
 
         float GetCriticalHitModifier();
 
-        float GetHitChance(PokemonEntity source, PokemonEntity target, Move move);
+        float GetHitChance(Pokemon source, Pokemon target, Move move);
 
-        float GetMiscModifier(PokemonEntity source, PokemonEntity target, Move move);
+        float GetMiscModifier(Pokemon source, Pokemon target, Move move);
 
         float GetStateModifier(int stage);
 
-        float GetTypeModifier(PokemonEntity source, PokemonEntity target, Move move);
+        float GetTypeModifier(Pokemon source, Pokemon target, Move move);
 
-        float SameTypeAttackBonus(PokemonEntity source, Move move);
+        float SameTypeAttackBonus(Pokemon source, Move move);
     }
 }

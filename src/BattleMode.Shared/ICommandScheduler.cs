@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using BattleMode.Entities.BattleState.Commands;
 
-namespace BattleMode.Entities.BattleState
+namespace BattleMode.Shared
 {
     public interface ICommandScheduler
 	{

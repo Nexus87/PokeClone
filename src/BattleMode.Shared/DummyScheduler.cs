@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using BattleMode.Shared;
 
-namespace PokemonGame.Rules
+namespace BattleMode.Shared
 {
     public class DummyScheduler : ICommandScheduler
     {

@@ -1,14 +1,13 @@
 ﻿using System;
-using BattleMode.Shared;
 using GameEngine.Globals;
 using PokemonShared.Models;
 
-namespace PokemonGame.Rules
+namespace BattleMode.Shared
 {
     public class DefaultMoveEffectCalculator : IMoveEffectCalculator
     {
-        private PokemonEntity _source;
-        private PokemonEntity _target;
+        private Pokemon _source;
+        private Pokemon _target;
         private Move _move;
         private readonly Random _random = new Random();
         private readonly IBattleRules _rules;
@@ -18,7 +17,7 @@ namespace PokemonGame.Rules
             rules.CheckNull("rules");
             _rules = rules;
         }
-        public void Init(PokemonEntity source, Move move, PokemonEntity target)
+        public void Init(Pokemon source, Move move, Pokemon target)
         {
             _source = source;
             _move = move;

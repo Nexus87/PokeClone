@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using BattleMode.Entities.BattleState.Commands;
+using BattleMode.Shared;
 using GameEngine.Core.ECS;
 
 namespace BattleMode.Entities.Components

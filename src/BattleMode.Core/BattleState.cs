@@ -1,8 +1,11 @@
 ﻿using System.Linq;
 using BattleMode.Core.Entities;
+using BattleMode.Entities.Actions;
+using BattleMode.Entities.Systems;
 using BattleMode.Graphic;
 using BattleMode.Gui;
 using BattleMode.Gui.Actions;
+using BattleMode.Shared;
 using BattleMode.Shared.Actions;
 using BattleMode.Shared.Components;
 using GameEngine.Core.ECS.Actions;
@@ -23,7 +26,7 @@ namespace BattleMode.Core
             var playerEntity = PlayerEntity.Create(EntityManager, ScreenConstants);
             var aiEntity = AiEntity.Create(EntityManager, ScreenConstants);
             var battleStateEntity = BattleStateEntity.Create(EntityManager);
-            
+            var battleSystem = new BattleSystem(MessageBus, new DummyScheduler(), new DefaultMoveEffectCalculator(new DummyBattleRules()));
             _guiControllerSystem = new GuiControllerSystem(GuiSystem, MessageBus, playerEntity, aiEntity, spriteProvider);
             var graphicsSystem = new BattleGraphicController(spriteProvider);
 
@@ -34,6 +37,10 @@ namespace BattleMode.Core
             MessageBus.RegisterForAction<ShowMainMenuAction>(_guiControllerSystem.ShowMainMenu);
             MessageBus.RegisterForAction<ShowMenuAction>(_guiControllerSystem.ShowMenu);
 
+            MessageBus.RegisterForAction<SetCommandAction>(battleSystem.SetCommand);
+            MessageBus.RegisterForAction<ExecuteNextCommandAction>(battleSystem.ExecuteNextCommand);
+            MessageBus.RegisterForAction<EndTurnAction>(battleSystem.EndTurn);
+            MessageBus.RegisterForAction<UseMoveAction>(battleSystem.UseMove);
             var playerPokemon = EntityManager.GetComponentByTypeAndEntity<PokemonComponent>(playerEntity).First().Pokemon;
             var aiPokemon = EntityManager.GetComponentByTypeAndEntity<PokemonComponent>(playerEntity).First().Pokemon;
             MessageBus.SendAction(new SetGuiVisibleAction(true));

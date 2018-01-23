@@ -3,7 +3,7 @@ using PokemonShared.Models;
 
 namespace BattleMode.Entities.BattleState
 {
-    public interface IEventCreator : IBattleEvents
+    public interface IEventCreator
     {
         void Critical();
         void Effective(MoveEfficiency effect, PokemonEntity target);

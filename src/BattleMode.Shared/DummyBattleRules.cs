@@ -1,11 +1,10 @@
-﻿using BattleMode.Shared;
-using PokemonShared.Models;
+﻿using PokemonShared.Models;
 
-namespace PokemonGame.Rules
+namespace BattleMode.Shared
 {
     public class DummyBattleRules : IBattleRules
     {
-        public float CalculateBaseDamage(PokemonEntity source, PokemonEntity target, Move move)
+        public float CalculateBaseDamage(Pokemon source, Pokemon target, Move move)
         {
             return 50.0f;
         }
@@ -30,12 +29,12 @@ namespace PokemonGame.Rules
             return 2.0f;
         }
 
-        public float GetHitChance(PokemonEntity source, PokemonEntity target, Move move)
+        public float GetHitChance(Pokemon source, Pokemon target, Move move)
         {
             return 0.95f;
         }
 
-        public float GetMiscModifier(PokemonEntity source, PokemonEntity target, Move move)
+        public float GetMiscModifier(Pokemon source, Pokemon target, Move move)
         {
             return 1.0f;
         }
@@ -45,12 +44,12 @@ namespace PokemonGame.Rules
             return 1.0f;
         }
 
-        public float GetTypeModifier(PokemonEntity source, PokemonEntity target, Move move)
+        public float GetTypeModifier(Pokemon source, Pokemon target, Move move)
         {
             return 1.0f;
         }
 
-        public float SameTypeAttackBonus(PokemonEntity source, Move move)
+        public float SameTypeAttackBonus(Pokemon source, Move move)
         {
             return 1.0f;
         }
