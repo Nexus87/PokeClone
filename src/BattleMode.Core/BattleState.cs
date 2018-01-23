@@ -1,7 +1,9 @@
-﻿using BattleMode.Core.Entities;
+﻿using System.Linq;
+using BattleMode.Core.Entities;
 using BattleMode.Gui;
 using BattleMode.Gui.Actions;
 using BattleMode.Shared.Actions;
+using BattleMode.Shared.Components;
 using GameEngine.Core.ECS.Actions;
 using GameEngine.Core.GameStates;
 using PokemonShared.Service;
@@ -28,8 +30,13 @@ namespace BattleMode.Core
             MessageBus.RegisterForAction<ShowMainMenuAction>(_guiControllerSystem.ShowMainMenu);
             MessageBus.RegisterForAction<ShowMenuAction>(_guiControllerSystem.ShowMenu);
 
+            var playerPokemon = EntityManager.GetComponentByTypeAndEntity<PokemonComponent>(playerEntity).First().Pokemon;
+            var aiPokemon = EntityManager.GetComponentByTypeAndEntity<PokemonComponent>(playerEntity).First().Pokemon;
+            
             MessageBus.SendAction(new SetGuiVisibleAction(true));
             MessageBus.SendAction(new SetPlayerAction(playerEntity));
+            MessageBus.SendAction(new SetPokemonAction(playerEntity, playerPokemon));
+            MessageBus.SendAction(new SetPokemonAction(aiEntity, aiPokemon));
         }
 
         public override void Pause()

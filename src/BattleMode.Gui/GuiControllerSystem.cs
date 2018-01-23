@@ -25,13 +25,14 @@ namespace BattleMode.Gui
         private readonly PokemonMenuController _pokemonController;
 #pragma warning disable 649
         [GuiLoaderId("MessageBox")] private MessageBox _messageBox;
+        private readonly Guid _playerId;
 #pragma warning restore 649
 
         public GuiControllerSystem(GuiSystem system, IMessageBus messageBus, Entity player, Entity ai,
             SpriteProvider spriteProvider) :
             this(system,
                 new MainMenuController(system.Factory, messageBus),
-                new MoveMenuController(new BattleData(), system.Factory, messageBus),
+                new MoveMenuController(system.Factory, messageBus),
                 new PokemonMenuController(system.Factory, messageBus, spriteProvider),
                 new ItemMenuController(system.Factory, messageBus),
                 new PokemonDataView(system.Factory, @"BattleMode\Gui\PlayerDataView.xml", messageBus),
@@ -52,10 +53,10 @@ namespace BattleMode.Gui
         )
         {
             manager.Factory.LoadFromFile(@"BattleMode\Gui\MessageBox.xml", this);
-            var playerId = player.Id;
+            _playerId = player.Id;
             var aiId = ai.Id;
 
-            _dataViews[playerId] = playerView;
+            _dataViews[_playerId] = playerView;
             _dataViews[aiId] = aiView;
 
             _moveController = moveController;
@@ -110,6 +111,10 @@ namespace BattleMode.Gui
             if (_dataViews.TryGetValue(action.Entity.Id, out var value))
             {
                 value.SetPokemon(action.Pokemon);
+            }
+            if(action.Entity.Id == _playerId)
+            {
+                _moveController.SetPokemon(action.Pokemon);
             }
         }
 
