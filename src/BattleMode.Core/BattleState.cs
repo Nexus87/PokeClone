@@ -1,5 +1,6 @@
 ﻿using BattleMode.Core.Entities;
 using BattleMode.Gui;
+using BattleMode.Gui.Actions;
 using BattleMode.Shared.Actions;
 using GameEngine.Core.ECS.Actions;
 using GameEngine.Core.GameStates;
@@ -24,6 +25,8 @@ namespace BattleMode.Core
             MessageBus.RegisterForAction<SetPlayerAction>(_guiControllerSystem.SetPlayer);
             MessageBus.RegisterForAction<SetPokemonAction>(_guiControllerSystem.SetPokemon);
 
+            MessageBus.RegisterForAction<ShowMainMenuAction>(_guiControllerSystem.ShowMainMenu);
+            MessageBus.RegisterForAction<ShowMenuAction>(_guiControllerSystem.ShowMenu);
 
             MessageBus.SendAction(new SetGuiVisibleAction(true));
             MessageBus.SendAction(new SetPlayerAction(playerEntity));

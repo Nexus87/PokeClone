@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using BattleMode.Gui.Actions;
 using BattleMode.Shared;
 using BattleMode.Shared.Actions;
 using BattleMode.Shared.Components;
@@ -62,10 +63,6 @@ namespace BattleMode.Gui
             _mainController = mainController;
             _pokemonController = pokemonController;
 
-            _mainController.ItemSelected += MainMenu_ItemSelected;
-
-            OnItemSelectCloseAll();
-            OnExitRequestedBackToMain();
             messageBus.SendAction(new SetGuiComponentVisibleAction(_messageBox, true));
 
             _mainController.Show();
@@ -74,41 +71,38 @@ namespace BattleMode.Gui
                 view.Show();
         }
 
-        private void OnExitRequestedBackToMain()
+        public void ShowMenu(ShowMenuAction action, IEntityManager entityManager)
         {
-            _itemController.ExitRequested += delegate { BackToMain(); };
-            _moveController.ExitRequested += delegate { BackToMain(); };
-            _pokemonController.ExitRequested += delegate { BackToMain(); };
+            if (action.Menu == MainMenuEntries.Run)
+                return;
+
+            _mainController.Close();
+
+            switch (action.Menu)
+            {
+                case MainMenuEntries.Attack:
+                    _moveController.Show();
+                    break;
+                case MainMenuEntries.Pkmn:
+                    _pokemonController.Show();
+                    break;
+                case MainMenuEntries.Item:
+                    _itemController.Show();
+                    break;
+            }
         }
 
-        private void OnItemSelectCloseAll()
+        public void ShowMainMenu(ShowMainMenuAction action, IEntityManager entityManager)
         {
-            _itemController.ItemSelected += delegate { CloseAll(); };
-            _moveController.ItemSelected += delegate { CloseAll(); };
-            _pokemonController.ItemSelected += delegate { CloseAll(); };
+            CloseAll();
+            _mainController.Show();
         }
-
         private void CloseAll()
         {
             _mainController.Close();
             _itemController.Close();
             _moveController.Close();
             _pokemonController.Close();
-        }
-
-        public void ShowMenu()
-        {
-            _messageBox.ResetText();
-            BackToMain();
-        }
-
-        private void BackToMain()
-        {
-            _itemController.Close();
-            _moveController.Close();
-            _pokemonController.Close();
-
-            _mainController.Show();
         }
 
         public void SetPokemon(SetPokemonAction action, IEntityManager entityManager)
@@ -124,27 +118,6 @@ namespace BattleMode.Gui
             var trainerComponent = entityManager.GetComponentByTypeAndEntity<TrainerComponent>(action.PlayerEntity).First();
             _pokemonController.SetPlayerPokemon(trainerComponent.Pokemons);
             _itemController.SetItems(trainerComponent.Items);
-        }
-
-        private void MainMenu_ItemSelected(object sender, SelectionEventArgs<MainMenuEntries> e)
-        {
-            if (e.SelectedData == MainMenuEntries.Run)
-                return;
-
-            _mainController.Close();
-
-            switch (e.SelectedData)
-            {
-                case MainMenuEntries.Attack:
-                    _moveController.Show();
-                    break;
-                case MainMenuEntries.Pkmn:
-                    _pokemonController.Show();
-                    break;
-                case MainMenuEntries.Item:
-                    _itemController.Show();
-                    break;
-            }
         }
     }
 }

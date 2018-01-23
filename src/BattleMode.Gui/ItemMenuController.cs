@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using BattleMode.Gui.Actions;
 using GameEngine.Core.ECS;
 using GameEngine.Core.ECS.Actions;
 using GameEngine.Globals;
@@ -37,11 +38,9 @@ namespace BattleMode.Gui
                 return button;
             };
 
-            _window.SetInputListener(CommandKeys.Back, OnExitRequested);
+            _window.SetInputListener(CommandKeys.Back, () => messageBus.SendAction(new ShowMainMenuAction()));
 
         }
-
-        public event EventHandler ExitRequested;
         public event EventHandler<SelectionEventArgs<Item>> ItemSelected;
 
         public void Show()
@@ -58,11 +57,6 @@ namespace BattleMode.Gui
         protected virtual void OnItemSelected(Item i)
         {
             ItemSelected?.Invoke(this, new SelectionEventArgs<Item>(i));
-        }
-
-        protected void OnExitRequested()
-        {
-            ExitRequested?.Invoke(this, EventArgs.Empty);
         }
 
         public void SetItems(List<Item> trainerComponentItems)

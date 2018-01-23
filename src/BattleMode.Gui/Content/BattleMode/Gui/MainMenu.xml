@@ -8,9 +8,9 @@
             <ColumnDefinition Width="1*" />
             <ColumnDefinition Width="1*" />
         </Grid.ColumnDefinitions>
-      <Button Text="Attack" id="attack"/>
-      <Button Text="PKMN" id="pkmn" Grid.Row="1"/>
-      <Button Text="Item" id="item" Grid.Column="1"/>
-      <Button Text="Run" id="run" Grid.Column="1" Grid.Row="1" OnPressed="Write" />
+      <Button Text="Attack" id="attack" OnPressed="AttackSelected"/>
+      <Button Text="PKMN" id="pkmn" Grid.Row="1" OnPressed="PkmnSelected"/>
+      <Button Text="Item" id="item" Grid.Column="1" OnPressed="ItemSelected" />
+      <Button Text="Run" id="run" Grid.Column="1" Grid.Row="1" OnPressed="RunSelected" />
     </Grid>
 </Window>

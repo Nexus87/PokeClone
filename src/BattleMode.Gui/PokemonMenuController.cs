@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using BattleMode.Gui.Actions;
 using GameEngine.Core.ECS;
 using GameEngine.Core.ECS.Actions;
 using GameEngine.Globals;
@@ -50,7 +51,7 @@ namespace BattleMode.Gui
                 return component;
             };
 
-            _panel.AddInputListener(CommandKeys.Back, OnExitRequested);
+            _panel.AddInputListener(CommandKeys.Back, () => messageBus.SendAction(new ShowMainMenuAction()));
 
         }
 
