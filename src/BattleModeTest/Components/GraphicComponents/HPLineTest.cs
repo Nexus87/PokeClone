@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using FakeItEasy;
-using GameEngine.Graphics.Textures;
 using GameEngine.GUI;
 using GameEngineTest.Graphics;
-using GameEngineTest.TestUtils;
 using Microsoft.Xna.Framework;
 using NUnit.Framework;
 using PokemonShared.Gui;
-using PokemonShared.Gui.Renderer.PokemonClassicRenderer;
 
 namespace BattleModeTest.Components.GraphicComponents
 {
@@ -19,17 +15,10 @@ namespace BattleModeTest.Components.GraphicComponents
 
         private static HpLine CreateLine()
         {
-            var line = new HpLine(new ClassicLineRenderer(A.Fake<ITexture2D>(), A.Fake<ITexture2D>(), Color.White)) {MaxHp = 100};
+            var line = new HpLine() {MaxHp = 100};
 
             return line;
         }
-
-        public static List<TestCaseData> HpTestData = new List<TestCaseData>
-        {
-            new TestCaseData(100),
-            new TestCaseData(25),
-            new TestCaseData(0)
-        };
 
         public static List<TestCaseData> HpColorTestData = new List<TestCaseData>
         {
@@ -47,7 +36,7 @@ namespace BattleModeTest.Components.GraphicComponents
             line.SetCoordinates(0, 0, 500, 500);
 
             line.Current = hp;
-            line.Draw();
+            line.Update();
 
             Assert.AreEqual(color, line.Color);
         }
@@ -61,7 +50,7 @@ namespace BattleModeTest.Components.GraphicComponents
             line.MaxHp = 0;
             line.Current = 0;
 
-            Assert.DoesNotThrow(()=> line.Draw());
+            Assert.DoesNotThrow(()=> line.Update());
         }
 
         [TestCase(110)]

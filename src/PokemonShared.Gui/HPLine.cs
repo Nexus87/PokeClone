@@ -1,8 +1,6 @@
 ﻿using System;
-using GameEngine.Graphics.General;
 using GameEngine.GUI;
 using Microsoft.Xna.Framework;
-using PokemonShared.Gui.Renderer;
 
 namespace PokemonShared.Gui
 {
