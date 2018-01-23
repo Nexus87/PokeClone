@@ -34,14 +34,12 @@ namespace BattleMode.Gui
             _listView.ListCellFactory = value =>
             {
                 var button = new Button {Text = value.Name};
-                button.OnPressed += delegate { OnItemSelected(value); };
                 return button;
             };
 
             _window.SetInputListener(CommandKeys.Back, () => messageBus.SendAction(new ShowMainMenuAction()));
 
         }
-        public event EventHandler<SelectionEventArgs<Item>> ItemSelected;
 
         public void Show()
         {
@@ -52,11 +50,6 @@ namespace BattleMode.Gui
         public void Close()
         {
             _messageBus.SendAction(new SetGuiComponentVisibleAction(_window, false));
-        }
-
-        protected virtual void OnItemSelected(Item i)
-        {
-            ItemSelected?.Invoke(this, new SelectionEventArgs<Item>(i));
         }
 
         public void SetItems(List<Item> trainerComponentItems)

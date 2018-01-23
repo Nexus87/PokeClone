@@ -31,15 +31,11 @@ namespace BattleMode.Gui
                     Text = value?.Name ?? "--------",
                     Enabled = value != null
                 };
-                button.OnPressed += delegate { OnItemSelected(value); };
                 return button;
             };
 
             _window.SetInputListener(CommandKeys.Back, () => messageBus.SendAction(new ShowMainMenuAction()));
         }
-
-        public event EventHandler ExitRequested;
-        public event EventHandler<SelectionEventArgs<Move>> ItemSelected;
 
         public void SetPokemon(Pokemon pokemon)
         {
@@ -56,11 +52,6 @@ namespace BattleMode.Gui
         public void Close()
         {
             _messageBus.SendAction(new SetGuiComponentVisibleAction(_window, false));
-        }
-
-        protected virtual void OnItemSelected(Move m)
-        {
-            ItemSelected?.Invoke(this, new SelectionEventArgs<Move>(m));
         }
 
 #pragma warning disable 649

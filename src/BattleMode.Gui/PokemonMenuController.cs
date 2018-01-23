@@ -47,7 +47,6 @@ namespace BattleMode.Gui
                     ShouldHandleKeyInput = true,
                     Content = line.Component
                 };
-                component.PanelPressed += delegate { OnItemSelected(value); };
                 return component;
             };
 
@@ -56,7 +55,6 @@ namespace BattleMode.Gui
         }
 
         public event EventHandler ExitRequested;
-        public event EventHandler<SelectionEventArgs<Pokemon>> ItemSelected;
 
         public void SetPlayerPokemon(List<Pokemon> pokemon)
         {
@@ -87,11 +85,6 @@ namespace BattleMode.Gui
         protected void OnExitRequested()
         {
             ExitRequested?.Invoke(this, EventArgs.Empty);
-        }
-
-        protected void OnItemSelected(Pokemon p)
-        {
-            ItemSelected?.Invoke(this, new SelectionEventArgs<Pokemon>(p));
         }
     }
 }
