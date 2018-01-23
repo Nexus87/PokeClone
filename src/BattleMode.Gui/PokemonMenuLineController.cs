@@ -23,8 +23,7 @@ namespace BattleMode.Gui
         private readonly HpText _hpText;
         [GuiLoaderId("name")]
         private readonly Label _nameBox;
-        [GuiLoaderId("hpLabel")]
-        private readonly Label _hpLabel;
+
         [GuiLoaderId("level")]
 
         private readonly Label _level;

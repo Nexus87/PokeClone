@@ -30,7 +30,7 @@ namespace GameEngine.Graphics.General
 
         public void Draw(RenderTarget2D texture, Rectangle destinationRectangle)
         {
-            base.Draw(texture, destinationRectangle: destinationRectangle);
+            base.Draw(texture, destinationRectangle, Color.White);
         }
 
         public void Draw(ITexture2D texture, Rectangle destinationRectangle, Color color, SpriteEffects spriteEffects = SpriteEffects.None)
