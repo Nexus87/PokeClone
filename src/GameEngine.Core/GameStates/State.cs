@@ -36,6 +36,8 @@ namespace GameEngine.Core.GameStates
         protected GuiSystem GuiSystem { get; }
         private RenderSystem RenderSystem { get; }
         protected IMessageBus MessageBus { get; }
+
+        protected ScreenConstants ScreenConstants { get; private set; }
         protected ITextureProvider TextureProvider { get; private set; }
         private Entity StateEntity { get; set; }
 
@@ -46,6 +48,7 @@ namespace GameEngine.Core.GameStates
             TextureProvider = textureProvider;
             StateEntity = GameStateEntity.Create(EntityManager, screen, keyMap, skin);
             GuiSystem.Factory = factory;
+            ScreenConstants = screen.Constants;
             Init();
         }
 

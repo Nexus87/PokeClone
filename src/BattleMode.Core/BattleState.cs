@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using BattleMode.Core.Entities;
+using BattleMode.Graphic;
 using BattleMode.Gui;
 using BattleMode.Gui.Actions;
 using BattleMode.Shared.Actions;
@@ -19,13 +20,14 @@ namespace BattleMode.Core
         protected override void Init()
         {
             var spriteProvider = new SpriteProvider(TextureProvider);
-            var playerEntity = PlayerEntity.Create(EntityManager);
-            var aiEntity = AiEntity.Create(EntityManager);
+            var playerEntity = PlayerEntity.Create(EntityManager, ScreenConstants);
+            var aiEntity = AiEntity.Create(EntityManager, ScreenConstants);
             _guiControllerSystem = new GuiControllerSystem(GuiSystem, MessageBus, playerEntity, aiEntity, spriteProvider);
-
+            var graphicsSystem = new BattleGraphicController(spriteProvider);
 
             MessageBus.RegisterForAction<SetPlayerAction>(_guiControllerSystem.SetPlayer);
             MessageBus.RegisterForAction<SetPokemonAction>(_guiControllerSystem.SetPokemon);
+            MessageBus.RegisterForAction<SetPokemonAction>(graphicsSystem.SetPokemon);
 
             MessageBus.RegisterForAction<ShowMainMenuAction>(_guiControllerSystem.ShowMainMenu);
             MessageBus.RegisterForAction<ShowMenuAction>(_guiControllerSystem.ShowMenu);

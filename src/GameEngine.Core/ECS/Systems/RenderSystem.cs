@@ -9,7 +9,7 @@ namespace GameEngine.Core.ECS.Systems
     {
         public virtual void Render(TimeAction _, IEntityManager entityManager)
         {
-            var renderComonent = entityManager.GetFirstCompnentOfType<RenderAreaComponent>();
+            var renderComonent = entityManager.GetFirstComponentOfType<RenderAreaComponent>();
             var spriteBatch = renderComonent.SpriteBatch;
 
             spriteBatch.Begin();

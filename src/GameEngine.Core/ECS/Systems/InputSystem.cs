@@ -20,8 +20,8 @@ namespace GameEngine.Core.ECS.Systems
 
         public void Update(TimeAction action, IEntityManager entityManager)
         {
-            var keyMap = entityManager.GetFirstCompnentOfType<KeyMapComponent>().KeyMap;
-            var guiVisible = entityManager.GetFirstCompnentOfType<GuiComponent>().GuiVisible;
+            var keyMap = entityManager.GetFirstComponentOfType<KeyMapComponent>().KeyMap;
+            var guiVisible = entityManager.GetFirstComponentOfType<GuiComponent>().GuiVisible;
             var send = guiVisible
                 ? (Action<CommandKeys>) (key => _messageBus.SendAction(new GuiKeyInputAction(key)))
                 : key => _messageBus.SendAction(new KeyInputAction(key));

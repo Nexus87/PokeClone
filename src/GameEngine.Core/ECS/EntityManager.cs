@@ -9,7 +9,7 @@ namespace GameEngine.Core.ECS
     {
         private readonly Dictionary<Type, List<Component>> _components = new Dictionary<Type, List<Component>>();
 
-        public T GetFirstCompnentOfType<T>() where T : Component
+        public T GetFirstComponentOfType<T>() where T : Component
         {
             return GetComponentsOfType<T>().FirstOrDefault();
         }
@@ -86,6 +86,15 @@ namespace GameEngine.Core.ECS
                 _components[typeof(T)] = components;
             }
             return components;
+        }
+
+        public bool HasComponent<TComponent>(Entity entitiy)
+        {
+            if(_components.TryGetValue(typeof(TComponent), out var components)){
+                return components.Any(x => x.EntityId == entitiy.Id);
+            }
+
+            return false;
         }
     }
 }

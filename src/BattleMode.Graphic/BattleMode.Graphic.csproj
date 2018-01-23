@@ -1,5 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+  <ItemGroup>
+    <ProjectReference Include="..\BattleMode.Shared\BattleMode.Shared.csproj" />
+    <ProjectReference Include="..\GameEngine.Core\GameEngine.Core.csproj" />
+    <ProjectReference Include="..\PokemonShared.Service\PokemonShared.Service.csproj" />
+  </ItemGroup>
+
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>

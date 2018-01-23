@@ -18,7 +18,7 @@ namespace GameEngine.Core.ECS.Systems
 
         public void Update(TimeAction action, IEntityManager entityManager)
         {
-            var guiComponent = entityManager.GetFirstCompnentOfType<GuiComponent>();
+            var guiComponent = entityManager.GetFirstComponentOfType<GuiComponent>();
             if (!guiComponent.GuiVisible)
             {
                 return;
@@ -70,7 +70,7 @@ namespace GameEngine.Core.ECS.Systems
 
         public void SetGuiVisiblity(SetGuiVisibleAction action, IEntityManager entityManager)
         {
-            entityManager.GetFirstCompnentOfType<GuiComponent>().GuiVisible = action.IsVisible;
+            entityManager.GetFirstComponentOfType<GuiComponent>().GuiVisible = action.IsVisible;
         }
 
         public void HandleInput(GuiKeyInputAction action, IEntityManager entityManager)
