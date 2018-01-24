@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using BattleMode.Entities.Actions;
 using BattleMode.Gui.Actions;
 using BattleMode.Shared;
 using BattleMode.Shared.Actions;
@@ -32,7 +33,7 @@ namespace BattleMode.Gui
             SpriteProvider spriteProvider) :
             this(system,
                 new MainMenuController(system.Factory, messageBus),
-                new MoveMenuController(system.Factory, messageBus),
+                new MoveMenuController(system.Factory, messageBus, player, ai),
                 new PokemonMenuController(system.Factory, messageBus, spriteProvider),
                 new ItemMenuController(system.Factory, messageBus),
                 new PokemonDataView(system.Factory, @"BattleMode\Gui\PlayerDataView.xml", messageBus),
@@ -70,6 +71,14 @@ namespace BattleMode.Gui
 
             foreach (var view in _dataViews.Values)
                 view.Show();
+        }
+
+        public void SetCommand(SetCommandAction action)
+        {
+            if (action.Entity.Id == _playerId)
+            {
+                CloseAll();
+            }
         }
 
         public void ShowMenu(ShowMenuAction action, IEntityManager entityManager)
@@ -112,7 +121,7 @@ namespace BattleMode.Gui
             {
                 value.SetPokemon(action.Pokemon);
             }
-            if(action.Entity.Id == _playerId)
+            if (action.Entity.Id == _playerId)
             {
                 _moveController.SetPokemon(action.Pokemon);
             }
@@ -123,6 +132,12 @@ namespace BattleMode.Gui
             var trainerComponent = entityManager.GetComponentByTypeAndEntity<TrainerComponent>(action.PlayerEntity).First();
             _pokemonController.SetPlayerPokemon(trainerComponent.Pokemons);
             _itemController.SetItems(trainerComponent.Items);
+        }
+
+        public void UseMove(UseMoveAction action, IEntityManager entityManager)
+        {
+            var pokemon = entityManager.GetComponentByTypeAndEntity<PokemonComponent>(action.Source).First();
+            _messageBox.DisplayText($"{pokemon.Pokemon.Name} uses {action.Move.Name}");
         }
     }
 }

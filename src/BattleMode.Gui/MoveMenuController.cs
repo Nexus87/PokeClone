@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using BattleMode.Entities.Actions;
+using BattleMode.Entities.BattleState.Commands;
 using BattleMode.Gui.Actions;
 using BattleMode.Shared;
 using GameEngine.Core.ECS;
@@ -17,7 +19,7 @@ namespace BattleMode.Gui
     {
         private readonly IMessageBus _messageBus;
 
-        public MoveMenuController(GuiFactory factory, IMessageBus messageBus)
+        public MoveMenuController(GuiFactory factory, IMessageBus messageBus, Entity player, Entity ai)
         {
             _messageBus = messageBus;
 
@@ -30,6 +32,10 @@ namespace BattleMode.Gui
                 {
                     Text = value?.Name ?? "--------",
                     Enabled = value != null
+                };
+                button.OnPressed += () =>
+                {
+                    messageBus.SendAction(new SetCommandAction(new MoveCommand(value, player, ai), player));
                 };
                 return button;
             };

@@ -6,6 +6,7 @@
     <ProjectReference Include="..\GameEngine.Core\GameEngine.Core.csproj" />
     <ProjectReference Include="..\BattleMode.Shared\BattleMode.Shared.csproj" />
     <ProjectReference Include="..\PokemonShared.Service\PokemonShared.Service.csproj" />
+    <ProjectReference Include="..\BattleMode.Entities\BattleMode.Entities.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

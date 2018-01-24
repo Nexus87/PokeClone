@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using GameEngine.Core.ECS.Actions;
 
 namespace GameEngine.Core.ECS
 {
@@ -57,7 +58,11 @@ namespace GameEngine.Core.ECS
             while (_messageQueue.Count > 0)
             {
                 var action = _messageQueue.Dequeue();
-
+                if(action.GetType() != typeof(TimeAction))
+                {
+                    System.Console.WriteLine($"Processing Action of Type: {action.GetType().Name}");
+                }
+                
                 if (_handlers.TryGetValue(action.GetType(), out var handlers))
                     handlers.ForEach(x => x(action, _entityManager));
             }

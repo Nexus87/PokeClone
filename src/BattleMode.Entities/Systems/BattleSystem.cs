@@ -25,12 +25,12 @@ namespace BattleMode.Entities.Systems
         public void SetCommand(SetCommandAction action, IEntityManager entityManager)
         {
             var component = entityManager.GetComponentByTypeAndEntity<CommandComponent>(action.Entity).First();
-            if (component.Command != null)
+            if (component.Command == null)
             {
                 component.Command = action.Command;
             }
-
-            if (entityManager.GetComponentsOfType<CommandComponent>().All(x => x.Command != null))
+            var allComponents = entityManager.GetComponentsOfType<CommandComponent>();
+            if (allComponents.All(x => x.Command != null))
             {
                 _messageBus.SendAction(new EndTurnAction());
             }

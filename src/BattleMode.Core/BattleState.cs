@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using BattleMode.Core.Entities;
 using BattleMode.Entities.Actions;
+using BattleMode.Entities.AI;
 using BattleMode.Entities.Systems;
 using BattleMode.Graphic;
 using BattleMode.Gui;
@@ -29,6 +30,7 @@ namespace BattleMode.Core
             var battleSystem = new BattleSystem(MessageBus, new DummyScheduler(), new DefaultMoveEffectCalculator(new DummyBattleRules()));
             _guiControllerSystem = new GuiControllerSystem(GuiSystem, MessageBus, playerEntity, aiEntity, spriteProvider);
             var graphicsSystem = new BattleGraphicController(spriteProvider);
+            var aiSystem = new AiSystem(aiEntity, playerEntity, MessageBus);
 
             MessageBus.RegisterForAction<SetPlayerAction>(_guiControllerSystem.SetPlayer);
             MessageBus.RegisterForAction<SetPokemonAction>(_guiControllerSystem.SetPokemon);
@@ -38,11 +40,17 @@ namespace BattleMode.Core
             MessageBus.RegisterForAction<ShowMenuAction>(_guiControllerSystem.ShowMenu);
 
             MessageBus.RegisterForAction<SetCommandAction>(battleSystem.SetCommand);
+            MessageBus.RegisterForAction<SetCommandAction>(_guiControllerSystem.SetCommand);
             MessageBus.RegisterForAction<ExecuteNextCommandAction>(battleSystem.ExecuteNextCommand);
             MessageBus.RegisterForAction<EndTurnAction>(battleSystem.EndTurn);
             MessageBus.RegisterForAction<UseMoveAction>(battleSystem.UseMove);
+            MessageBus.RegisterForAction<UseMoveAction>(_guiControllerSystem.UseMove);
+
+            MessageBus.RegisterForAction<StartNewTurnAction>(aiSystem.StartNewTurn);
             var playerPokemon = EntityManager.GetComponentByTypeAndEntity<PokemonComponent>(playerEntity).First().Pokemon;
             var aiPokemon = EntityManager.GetComponentByTypeAndEntity<PokemonComponent>(playerEntity).First().Pokemon;
+            
+            MessageBus.SendAction(new StartNewTurnAction());
             MessageBus.SendAction(new SetGuiVisibleAction(true));
             MessageBus.SendAction(new SetPlayerAction(playerEntity));
             MessageBus.SendAction(new SetPokemonAction(playerEntity, playerPokemon));

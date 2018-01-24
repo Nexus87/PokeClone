@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using BattleMode.Entities.Components;
 using BattleMode.Graphic;
 using BattleMode.Shared.Components;
 using GameEngine.Core.ECS;
@@ -47,10 +48,11 @@ namespace BattleMode.Core.Entities
             };
 
             var entity = new Entity();
-            entityManager.AddComponent(new TrainerComponent(entity.Id){Items=items, Name = "Player", Pokemons = pokemons});
-            entityManager.AddComponent(new PokemonComponent(entity.Id){Pokemon = pokemons.First()});
+            entityManager.AddComponent(new TrainerComponent(entity.Id) { Items = items, Name = "Player", Pokemons = pokemons });
+            entityManager.AddComponent(new PokemonComponent(entity.Id) { Pokemon = pokemons.First() });
             entityManager.AddComponent(new RenderComponent(entity.Id));
-            entityManager.AddComponent(new PositionComponent(entity.Id){Destination = BattleGraphicController.InitPlayerGraphic(constants)});
+            entityManager.AddComponent(new CommandComponent(entity.Id));
+            entityManager.AddComponent(new PositionComponent(entity.Id) { Destination = BattleGraphicController.InitPlayerGraphic(constants) });
             entityManager.AddComponent(new PlayerComponent(entity.Id));
             return entity;
         }
