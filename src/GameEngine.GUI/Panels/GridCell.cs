@@ -1,7 +1,6 @@
 using System;
 using System.Linq;
 using GameEngine.Globals;
-using GameEngine.Graphics.General;
 using Microsoft.Xna.Framework;
 
 namespace GameEngine.GUI.Panels

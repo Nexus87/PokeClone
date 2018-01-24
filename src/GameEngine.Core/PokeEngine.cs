@@ -1,7 +1,5 @@
-﻿using GameEngine.Core.GameStates;
-using GameEngine.Core.ModuleManager;
+﻿using GameEngine.Core.ModuleManager;
 using GameEngine.Graphics.Textures;
-using Microsoft.Xna.Framework.Content;
 
 namespace GameEngine.Core
 {

@@ -6,7 +6,6 @@ using GameEngine.GUI.Components;
 using GameEngine.GUI.Controlls;
 using GameEngine.GUI.Renderers.PokemonClassicRenderer;
 using GameEngineTest.Graphics;
-using GameEngineTest.TestUtils;
 using NUnit.Framework;
 
 namespace GameEngine.GUI.Test.Controls

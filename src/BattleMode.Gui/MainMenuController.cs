@@ -2,10 +2,8 @@
 using BattleMode.Gui.Actions;
 using GameEngine.Core.ECS;
 using GameEngine.Core.ECS.Actions;
-using GameEngine.Core.ECS.Systems;
 using GameEngine.Globals;
 using GameEngine.GUI;
-using GameEngine.GUI.Controlls;
 using GameEngine.GUI.Loader;
 using GameEngine.GUI.Panels;
 

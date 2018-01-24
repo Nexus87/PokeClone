@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using GameEngine.Globals;
-using GameEngine.GUI.Renderers;
 
 namespace GameEngine.GUI.Panels
 {

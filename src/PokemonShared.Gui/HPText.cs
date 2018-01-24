@@ -1,5 +1,4 @@
 ﻿using GameEngine.GUI;
-using PokemonShared.Gui.Renderer;
 using PokemonShared.Models;
 
 namespace PokemonShared.Gui

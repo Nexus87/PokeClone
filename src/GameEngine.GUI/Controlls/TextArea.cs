@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using GameEngine.Globals;
 using GameEngine.GUI.Components;
-using GameEngine.GUI.Renderers;
-using Microsoft.Xna.Framework;
 
 namespace GameEngine.GUI.Controlls
 {

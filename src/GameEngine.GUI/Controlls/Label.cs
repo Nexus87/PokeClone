@@ -1,6 +1,4 @@
-﻿using GameEngine.GUI.Renderers;
-
-namespace GameEngine.GUI.Controlls
+﻿namespace GameEngine.GUI.Controlls
 {
     public class Label : AbstractGuiComponent
     {

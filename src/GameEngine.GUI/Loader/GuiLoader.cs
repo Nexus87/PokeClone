@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Xml.Linq;
 using Autofac;
 using GameEngine.Globals;
-using GameEngine.GUI.Loader.ControllBuilder;
-using GameEngine.GUI.Loader.PanelBuilder;
 
 namespace GameEngine.GUI.Loader
 {

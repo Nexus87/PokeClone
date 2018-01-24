@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using BattleMode.Entities.Actions;
-using BattleMode.Entities.BattleState;
 using BattleMode.Entities.BattleState.Commands;
 using BattleMode.Entities.Components;
 using BattleMode.Shared;

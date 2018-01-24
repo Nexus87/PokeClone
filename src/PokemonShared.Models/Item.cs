@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace PokemonShared.Models
+﻿namespace PokemonShared.Models
 {
     public class Item
     {

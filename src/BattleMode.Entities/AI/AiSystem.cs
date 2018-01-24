@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using BattleMode.Entities.Actions;
-using BattleMode.Entities.BattleState;
 using BattleMode.Entities.BattleState.Commands;
-using BattleMode.Shared;
 using BattleMode.Shared.Components;
 using GameEngine.Core.ECS;
-using Microsoft.Xna.Framework;
 using PokemonShared.Models;
 
 namespace BattleMode.Entities.AI

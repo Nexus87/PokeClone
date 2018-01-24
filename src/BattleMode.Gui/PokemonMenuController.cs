@@ -9,7 +9,6 @@ using GameEngine.GUI;
 using GameEngine.GUI.Controlls;
 using GameEngine.GUI.Loader;
 using GameEngine.GUI.Panels;
-using Microsoft.Xna.Framework;
 using PokemonShared.Models;
 using PokemonShared.Service;
 

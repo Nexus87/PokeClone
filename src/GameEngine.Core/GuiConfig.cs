@@ -10,7 +10,6 @@ using GameEngine.GUI.Loader;
 using GameEngine.GUI.Loader.ControllBuilder;
 using GameEngine.GUI.Loader.PanelBuilder;
 using GameEngine.GUI.Panels;
-using GameEngine.GUI.Renderers;
 
 namespace GameEngine.Core
 {

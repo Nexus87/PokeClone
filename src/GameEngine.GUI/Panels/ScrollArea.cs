@@ -1,5 +1,4 @@
 ﻿using GameEngine.Globals;
-using GameEngine.GUI.Renderers;
 using Microsoft.Xna.Framework;
 
 namespace GameEngine.GUI.Panels

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Text;
 using GameEngine.Graphics.General;
 using GameEngine.Graphics.Textures;

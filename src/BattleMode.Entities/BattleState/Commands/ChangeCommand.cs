@@ -1,5 +1,4 @@
-﻿using System;
-using BattleMode.Shared;
+﻿using BattleMode.Shared;
 using GameEngine.Core.ECS;
 using PokemonShared.Models;
 

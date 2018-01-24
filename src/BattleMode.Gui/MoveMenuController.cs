@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using BattleMode.Entities.Actions;
 using BattleMode.Entities.BattleState.Commands;
 using BattleMode.Gui.Actions;
-using BattleMode.Shared;
 using GameEngine.Core.ECS;
 using GameEngine.Core.ECS.Actions;
 using GameEngine.Globals;

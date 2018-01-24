@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using GameEngine.Core.ECS.Components;
+﻿using System.Collections.Generic;
 
 namespace GameEngine.Core.ECS
 {

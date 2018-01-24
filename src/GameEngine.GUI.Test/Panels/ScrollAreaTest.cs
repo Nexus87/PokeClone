@@ -1,6 +1,5 @@
 ﻿using FakeItEasy;
 using GameEngine.GUI.Panels;
-using GameEngine.GUI.Renderers.PokemonClassicRenderer;
 using Microsoft.Xna.Framework;
 using NUnit.Framework;
 
