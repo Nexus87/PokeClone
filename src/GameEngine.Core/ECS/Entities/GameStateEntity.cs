@@ -14,6 +14,7 @@ namespace GameEngine.Core.ECS.Entities
             entityManager.AddComponent(new RenderAreaComponent(entity.Id, screen));
             entityManager.AddComponent(new GuiComponent(entity.Id, screen, skin));
             entityManager.AddComponent(new KeyMapComponent(entity.Id, keyMap));
+            entityManager.AddComponent(new ActionQueueComponent(entity.Id));
 
             return entity;
         }

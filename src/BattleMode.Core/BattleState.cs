@@ -46,6 +46,10 @@ namespace BattleMode.Core
             MessageBus.RegisterForAction<UseMoveAction>(battleSystem.UseMove);
             MessageBus.RegisterForAction<UseMoveAction>(_guiControllerSystem.UseMove);
 
+            MessageBus.RegisterForAction<ChangeHpAction>(_guiControllerSystem.ChangeHp);
+            MessageBus.RegisterForAction<ShowMessageAction>(_guiControllerSystem.ShowMessage);
+            MessageBus.RegisterForAction<DoDamageAction>(_guiControllerSystem.DoDamage);
+            
             MessageBus.RegisterForAction<StartNewTurnAction>(aiSystem.StartNewTurn);
             var playerPokemon = EntityManager.GetComponentByTypeAndEntity<PokemonComponent>(playerEntity).First().Pokemon;
             var aiPokemon = EntityManager.GetComponentByTypeAndEntity<PokemonComponent>(playerEntity).First().Pokemon;

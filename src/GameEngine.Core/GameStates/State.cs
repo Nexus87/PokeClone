@@ -23,17 +23,26 @@ namespace GameEngine.Core.GameStates
             RenderSystem = new RenderSystem();
             InputSystem = new InputSystem(MessageBus);
             GuiSystem = new GuiSystem();
+            _queueSystem = new BlockingQueueingSystem(MessageBus);
 
             MessageBus.RegisterForAction<TimeAction>(RenderSystem.Render);
             MessageBus.RegisterForAction<TimeAction>(InputSystem.Update);
             MessageBus.RegisterForAction<TimeAction>(GuiSystem.Update);
+            MessageBus.RegisterForAction<TimeAction>(_queueSystem.Update);
+
             MessageBus.RegisterForAction<SetGuiComponentVisibleAction>(GuiSystem.SetWidgetVisibility);
             MessageBus.RegisterForAction<GuiKeyInputAction>(GuiSystem.HandleInput);
             MessageBus.RegisterForAction<SetGuiVisibleAction>(GuiSystem.SetGuiVisiblity);
+
+            MessageBus.RegisterForAction<QueueAction>(_queueSystem.QueueAction);
+            MessageBus.RegisterForAction<UnblockQueueAction>(_queueSystem.Unblock);
         }
 
         private InputSystem InputSystem { get; }
         protected GuiSystem GuiSystem { get; }
+
+        private readonly BlockingQueueingSystem _queueSystem;
+
         private RenderSystem RenderSystem { get; }
         protected IMessageBus MessageBus { get; }
 

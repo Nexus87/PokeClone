@@ -12,6 +12,7 @@ namespace GameEngine.Core.ECS
 
         void StartProcess();
         void SendAction<TAction>(TAction action);
+        void SendAction(object action);
         int ActionCount { get; }
     }
 }

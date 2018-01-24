@@ -24,6 +24,8 @@ namespace BattleMode.Gui
         private readonly MainMenuController _mainController;
         private readonly MoveMenuController _moveController;
         private readonly PokemonMenuController _pokemonController;
+
+        private readonly IMessageBus _messageBus;
 #pragma warning disable 649
         [GuiLoaderId("MessageBox")] private MessageBox _messageBox;
         private readonly Guid _playerId;
@@ -64,6 +66,12 @@ namespace BattleMode.Gui
             _itemController = itemController;
             _mainController = mainController;
             _pokemonController = pokemonController;
+            _messageBus = messageBus;
+            _messageBox.OnAllLineShowed += delegate
+            {
+                _messageBus.SendAction(new ShowMessageAction(""));
+                _messageBus.SendAction(new UnblockQueueAction());
+            };
 
             messageBus.SendAction(new SetGuiComponentVisibleAction(_messageBox, true));
 
@@ -134,10 +142,44 @@ namespace BattleMode.Gui
             _itemController.SetItems(trainerComponent.Items);
         }
 
+        public void ShowMessage(ShowMessageAction action)
+        {
+            _messageBox.DisplayText(action.Text);
+        }
+
+        public void ChangeHp(ChangeHpAction action)
+        {
+            var view = _dataViews[action.Target.Id];
+            view.SetHp(view.CurrentHp + action.Diff);
+            _messageBus.SendAction(new UnblockQueueAction());
+        }
         public void UseMove(UseMoveAction action, IEntityManager entityManager)
         {
             var pokemon = entityManager.GetComponentByTypeAndEntity<PokemonComponent>(action.Source).First();
-            _messageBox.DisplayText($"{pokemon.Pokemon.Name} uses {action.Move.Name}");
+            _messageBus.SendAction(new QueueAction(new ShowMessageAction($"{pokemon.Pokemon.Name} uses {action.Move.Name}")));
+        }
+
+        public void DoDamage(DoDamageAction action, IEntityManager entityManager)
+        {
+            _messageBus.SendAction(new QueueAction(new ChangeHpAction(-action.Damage, action.Target)));
+            if (action.Critical)
+            {
+                _messageBus.SendAction(new QueueAction(new ShowMessageAction("Critical!")));
+            }
+
+            if (action.MoveEfficiency == MoveEfficiency.NoEffect)
+            {
+                _messageBus.SendAction(new QueueAction(new ShowMessageAction("It has no effect!")));
+
+            }
+            else if (action.MoveEfficiency == MoveEfficiency.NotEffective)
+            {
+                _messageBus.SendAction(new QueueAction(new ShowMessageAction("It is not very effective!")));
+            }
+            else if (action.MoveEfficiency == MoveEfficiency.VeryEffective)
+            {
+                _messageBus.SendAction(new QueueAction(new ShowMessageAction("It is very effective!")));
+            }
         }
     }
 }

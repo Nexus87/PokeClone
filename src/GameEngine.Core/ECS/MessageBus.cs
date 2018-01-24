@@ -72,6 +72,10 @@ namespace GameEngine.Core.ECS
         {
             _messageQueue.Enqueue(action);
         }
+        public void SendAction(object action)
+        {
+            _messageQueue.Enqueue(action);
+        }
 
         public void RegisterForAction<TAction>(Action<IEntityManager> handler)
         {
@@ -87,5 +91,6 @@ namespace GameEngine.Core.ECS
         {
             RegisterForAction<TAction>((a, e) => handler());
         }
+
     }
 }
