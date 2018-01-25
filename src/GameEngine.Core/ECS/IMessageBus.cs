@@ -16,8 +16,8 @@ namespace GameEngine.Core.ECS
         void UnregisterHandler<TAction>(Action handler);
         
         void StartProcess();
-        void SendAction<TAction>(TAction action);
-        void SendAction(object action);
+        void SendAction<TAction>(TAction action, object sender = null);
+        void SendAction(object action, object sender = null);
         int ActionCount { get; }
     }
 }

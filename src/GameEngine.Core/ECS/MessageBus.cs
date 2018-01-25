@@ -73,12 +73,14 @@ namespace GameEngine.Core.ECS
             }
         }
 
-        public void SendAction<TAction>(TAction action)
+        public void SendAction<TAction>(TAction action, object sender = null)
         {
+            System.Console.WriteLine($"{sender?.GetType().Name} sending action of type {action.GetType().Name}");
             _messageQueue.Enqueue(action);
         }
-        public void SendAction(object action)
+        public void SendAction(object action, object sender = null)
         {
+            System.Console.WriteLine($"{sender?.GetType().Name} sending action of type {action.GetType().Name}");
             _messageQueue.Enqueue(action);
         }
 

@@ -32,7 +32,7 @@ namespace BattleMode.Entities.AI
         {
             var pokemon = entityManager.GetComponentByTypeAndEntity<PokemonComponent>(_aiEntity).First().Pokemon;
             var move = ChooseMove(pokemon);
-            messageBus.SendAction(new SetCommandAction(new MoveCommand(move, _aiEntity, _player), _aiEntity));
+            messageBus.SendSetCommandAction(new MoveCommand(move, _aiEntity, _player), _aiEntity, this);
         }
 
         private Move ChooseMove(Pokemon pokemon)

@@ -11,4 +11,12 @@ namespace BattleMode.Core.Actions
             Entity = entity;
         }
     }
+
+    public static class ActionCreator
+    {
+        public static void SendHpChangedFinishedAction(this IMessageBus messageBus, Guid entity, object sender)
+        {
+            messageBus.SendAction(new HpChangeFinishedAction(entity), sender);
+        }
+    }
 }

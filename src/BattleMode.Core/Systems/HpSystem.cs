@@ -21,6 +21,7 @@ namespace BattleMode.Core.Systems
             component.ChangeHp = action.Diff;
         }
 
+        private static readonly HpSystem instanceForLogging = new HpSystem();
         public static void Update(IEntityManager entityManager, IMessageBus messageBus)
         {
             var components = entityManager.GetComponentsOfType<PokemonComponent>().Where(x => x.ChangeHp != 0);
@@ -32,13 +33,13 @@ namespace BattleMode.Core.Systems
                 {
                     item.Pokemon.Hp = item.Pokemon.MaxHp;
                     item.ChangeHp = 0;
-                    messageBus.SendAction(new HpChangeFinishedAction(item.EntityId));
+                    messageBus.SendHpChangedFinishedAction(item.EntityId, instanceForLogging);
                 }
                 else if (nextHp < 0)
                 {
                     item.Pokemon.Hp = 0;
                     item.ChangeHp = 0;
-                    messageBus.SendAction(new HpChangeFinishedAction(item.EntityId));
+                    messageBus.SendHpChangedFinishedAction(item.EntityId, instanceForLogging);
                 }
                 else
                 {
@@ -46,7 +47,7 @@ namespace BattleMode.Core.Systems
                     item.Pokemon.Hp = nextHp;
                     if(item.ChangeHp == 0)
                     {
-                        messageBus.SendAction(new HpChangeFinishedAction(item.EntityId));
+                        messageBus.SendHpChangedFinishedAction(item.EntityId, instanceForLogging);
                     }
                 }
             }

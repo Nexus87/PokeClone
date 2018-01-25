@@ -37,7 +37,7 @@ namespace BattleMode.Entities.Systems
             var allComponents = entityManager.GetComponentsOfType<CommandComponent>();
             if (allComponents.All(x => x.Command != null))
             {
-                messageBus.SendAction(new EndTurnAction());
+                messageBus.SendEndTurnAction(this);
             }
         }
 
@@ -46,20 +46,20 @@ namespace BattleMode.Entities.Systems
             var queue = entityManager.GetFirstComponentOfType<BattleStateComponent>().CommandQueues;
             if (queue.Count == 0)
             {
-                messageBus.SendAction(new StartNewTurnAction());
+                messageBus.SendStartNewTurnAction(this);
                 return;
             }
 
             switch (queue.Dequeue())
             {
                 case MoveCommand m:
-                    messageBus.SendAction(new UseMoveAction(m.Move, m.Source, m.Target));
+                    messageBus.SendUseMoveAction(m.Move, m.Source, m.Target, this);
                     break;
                 case ItemCommand i:
-                    messageBus.SendAction(new UseItemAction(i.Item, i.Target));
+                    messageBus.SendUseItemAction(i.Item, i.Target, this);
                     break;
                 case ChangeCommand c:
-                    messageBus.SendAction(new UsePokemonChange(c.Pokemon, c.Target));
+                    messageBus.SendUsePokemonChange(c.Pokemon, c.Target, this);
                     break;
             }
 
@@ -70,7 +70,7 @@ namespace BattleMode.Entities.Systems
             var battleStateComponent = entityManager.GetFirstComponentOfType<BattleStateComponent>();
             battleStateComponent.CommandQueues = ScheduleCommands(entityManager.GetComponentsOfType<CommandComponent>().Select(x => x.Command));
 
-            messageBus.SendAction(new ExecuteNextCommandAction());
+            messageBus.SendExecuteNextCommandAction(this);
         }
 
         private Queue<ICommand> ScheduleCommands(IEnumerable<ICommand> commands)
@@ -89,14 +89,11 @@ namespace BattleMode.Entities.Systems
             _calculator.Init(source, move, target);
             if (!_calculator.IsHit)
             {
-                messageBus.SendAction(new MoveMissedAction());
+                messageBus.SendMoveMissedAction(this);
                 return;
             }
 
-            var responseAction = new DoDamageAction(_calculator.Damage, GetEffect(_calculator.TypeModifier),
-                action.Target, _calculator.IsCritical);
-
-            messageBus.SendAction(responseAction);
+            messageBus.SendDoDamageAction(_calculator.Damage, GetEffect(_calculator.TypeModifier), action.Target, _calculator.IsCritical, this);
         }
 
         private static MoveEfficiency GetEffect(float typeModifier)
