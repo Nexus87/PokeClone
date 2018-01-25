@@ -14,6 +14,11 @@ namespace BattleMode.Entities.AI
 {
     public class AiSystem
     {
+        public void RegisterHandler(IMessageBus messageBus)
+        {
+            messageBus.RegisterForAction<StartNewTurnAction>(StartNewTurn);
+
+        }
         private readonly Entity _aiEntity;
         private readonly Entity _player;
 

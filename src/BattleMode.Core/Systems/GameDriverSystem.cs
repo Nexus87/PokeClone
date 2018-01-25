@@ -11,13 +11,18 @@ namespace BattleMode.Core.Systems
 {
     public class GameDriverSystem
     {
-        public void UseMove(UseMoveAction action, IEntityManager entityManager, IMessageBus messageBus)
+        public static void RegisterHandler(IMessageBus messageBus)
+        {
+            messageBus.RegisterForAction<UseMoveAction>(UseMove);
+            messageBus.RegisterForAction<DoDamageAction>(DoDamage);
+        }
+        public static void UseMove(UseMoveAction action, IEntityManager entityManager, IMessageBus messageBus)
         {
             var pokemon = entityManager.GetComponentByTypeAndEntity<PokemonComponent>(action.Source).First();
             messageBus.SendAction(new QueueAction(new ShowMessageAction($"{pokemon.Pokemon.Name} uses {action.Move.Name}")));
         }
 
-        public void DoDamage(DoDamageAction action, IEntityManager entityManager, IMessageBus messageBus)
+        public static void DoDamage(DoDamageAction action, IEntityManager entityManager, IMessageBus messageBus)
         {
             messageBus.SendAction(new QueueAction(new ChangeHpAction(-action.Damage, action.Target)));
             if (action.Critical)
@@ -45,6 +50,6 @@ namespace BattleMode.Core.Systems
             messageBus.SendAction(new UnblockQueueAction());
         }
 
-        
+
     }
 }

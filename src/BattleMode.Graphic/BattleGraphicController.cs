@@ -14,7 +14,10 @@ namespace BattleMode.Graphic
     public class BattleGraphicController
     {
         private readonly SpriteProvider _provider;
-
+        public void RegisterHandler(IMessageBus messageBus)
+        {
+            messageBus.RegisterForAction<SetPokemonAction>(SetPokemon);
+        }
         public BattleGraphicController(SpriteProvider provider)
         {
             _provider = provider;
@@ -44,7 +47,7 @@ namespace BattleMode.Graphic
 
         public static Rectangle InitPlayerGraphic(ScreenConstants screen)
         {
-            
+
             var xPosition = screen.ScreenWidth * 0.2f;
             var yPosition = screen.ScreenHeight * 0.4f;
 

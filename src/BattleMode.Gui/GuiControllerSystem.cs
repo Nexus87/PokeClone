@@ -32,6 +32,16 @@ namespace BattleMode.Gui
         private readonly Guid _playerId;
 #pragma warning restore 649
 
+        public void RegisterHandler(IMessageBus messageBus)
+        {
+            messageBus.RegisterForAction<TimeAction>(Update);
+            messageBus.RegisterForAction<SetPlayerAction>(SetPlayer);
+            messageBus.RegisterForAction<SetPokemonAction>(SetPokemon);
+            messageBus.RegisterForAction<ShowMainMenuAction>(ShowMainMenu);
+            messageBus.RegisterForAction<ShowMenuAction>(ShowMenu);
+            messageBus.RegisterForAction<SetCommandAction>(SetCommand);
+            messageBus.RegisterForAction<ShowMessageAction>(ShowMessage);
+        }
         public GuiControllerSystem(GuiFactory guiFactory, IMessageBus messageBus, Entity player, Entity ai,
             SpriteProvider spriteProvider) :
             this(guiFactory,

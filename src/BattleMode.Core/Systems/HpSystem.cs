@@ -4,18 +4,24 @@ using BattleMode.Core.Actions;
 using BattleMode.Gui.Actions;
 using BattleMode.Shared.Components;
 using GameEngine.Core.ECS;
+using GameEngine.Core.ECS.Actions;
 
 namespace BattleMode.Core.Systems
 {
     public class HpSystem
     {
-        public void ChangeHp(ChangeHpAction action, IEntityManager entityManager, IMessageBus messageBus)
+        public static void RegisterHandler(IMessageBus messageBus)
+        {
+            messageBus.RegisterForAction<TimeAction>(Update);
+            messageBus.RegisterForAction<ChangeHpAction>(ChangeHp);
+        }
+        public static void ChangeHp(ChangeHpAction action, IEntityManager entityManager, IMessageBus messageBus)
         {
             var component = entityManager.GetComponentByTypeAndEntity<PokemonComponent>(action.Target).First();
             component.ChangeHp = action.Diff;
         }
 
-        public void Update(IEntityManager entityManager, IMessageBus messageBus)
+        public static void Update(IEntityManager entityManager, IMessageBus messageBus)
         {
             var components = entityManager.GetComponentsOfType<PokemonComponent>().Where(x => x.ChangeHp != 0);
             foreach (var item in components)

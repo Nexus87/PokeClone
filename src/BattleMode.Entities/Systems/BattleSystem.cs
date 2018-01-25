@@ -15,6 +15,13 @@ namespace BattleMode.Entities.Systems
         private readonly ICommandScheduler _scheduler;
         private readonly IMoveEffectCalculator _calculator;
 
+        public void RegisterHandler(IMessageBus messageBus)
+        {
+            messageBus.RegisterForAction<SetCommandAction>(SetCommand);
+            messageBus.RegisterForAction<ExecuteNextCommandAction>(ExecuteNextCommand);
+            messageBus.RegisterForAction<EndTurnAction>(EndTurn);
+            messageBus.RegisterForAction<UseMoveAction>(UseMove);
+        }
         public BattleSystem(ICommandScheduler scheduler, IMoveEffectCalculator calculator)
         {
             _scheduler = scheduler;

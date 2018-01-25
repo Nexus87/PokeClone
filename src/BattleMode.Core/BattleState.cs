@@ -18,7 +18,6 @@ namespace BattleMode.Core
 {
     public class BattleState : State
     {
-        private GuiControllerSystem _guiControllerSystem;
 
         public string ModuleName => "BattleMode";
 
@@ -28,34 +27,19 @@ namespace BattleMode.Core
             var playerEntity = PlayerEntity.Create(EntityManager, ScreenConstants);
             var aiEntity = AiEntity.Create(EntityManager, ScreenConstants);
             var battleStateEntity = BattleStateEntity.Create(EntityManager);
+            
             var battleSystem = new BattleSystem(new DummyScheduler(), new DefaultMoveEffectCalculator(new DummyBattleRules()));
-            _guiControllerSystem = new GuiControllerSystem(GuiFactory, MessageBus, playerEntity, aiEntity, spriteProvider);
+            var guiControllerSystem = new GuiControllerSystem(GuiFactory, MessageBus, playerEntity, aiEntity, spriteProvider);
             var graphicsSystem = new BattleGraphicController(spriteProvider);
             var aiSystem = new AiSystem(aiEntity, playerEntity);
-            var gameDriverSystem = new GameDriverSystem();
-            var hpSystem = new HpSystem();
 
-            MessageBus.RegisterForAction<TimeAction>(_guiControllerSystem.Update);
-            MessageBus.RegisterForAction<TimeAction>(hpSystem.Update);
-            MessageBus.RegisterForAction<ChangeHpAction>(hpSystem.ChangeHp);
-            MessageBus.RegisterForAction<SetPlayerAction>(_guiControllerSystem.SetPlayer);
-            MessageBus.RegisterForAction<SetPokemonAction>(_guiControllerSystem.SetPokemon);
-            MessageBus.RegisterForAction<SetPokemonAction>(graphicsSystem.SetPokemon);
+            GameDriverSystem.RegisterHandler(MessageBus);
+            HpSystem.RegisterHandler(MessageBus);
+            battleSystem.RegisterHandler(MessageBus);
+            guiControllerSystem.RegisterHandler(MessageBus);
+            graphicsSystem.RegisterHandler(MessageBus);
+            aiSystem.RegisterHandler(MessageBus);
 
-            MessageBus.RegisterForAction<ShowMainMenuAction>(_guiControllerSystem.ShowMainMenu);
-            MessageBus.RegisterForAction<ShowMenuAction>(_guiControllerSystem.ShowMenu);
-
-            MessageBus.RegisterForAction<SetCommandAction>(battleSystem.SetCommand);
-            MessageBus.RegisterForAction<SetCommandAction>(_guiControllerSystem.SetCommand);
-            MessageBus.RegisterForAction<ExecuteNextCommandAction>(battleSystem.ExecuteNextCommand);
-            MessageBus.RegisterForAction<EndTurnAction>(battleSystem.EndTurn);
-            MessageBus.RegisterForAction<UseMoveAction>(battleSystem.UseMove);
-            MessageBus.RegisterForAction<UseMoveAction>(gameDriverSystem.UseMove);
-
-            MessageBus.RegisterForAction<ShowMessageAction>(_guiControllerSystem.ShowMessage);
-            MessageBus.RegisterForAction<DoDamageAction>(gameDriverSystem.DoDamage);
-            
-            MessageBus.RegisterForAction<StartNewTurnAction>(aiSystem.StartNewTurn);
             var playerPokemon = EntityManager.GetComponentByTypeAndEntity<PokemonComponent>(playerEntity).First().Pokemon;
             var aiPokemon = EntityManager.GetComponentByTypeAndEntity<PokemonComponent>(playerEntity).First().Pokemon;
             
