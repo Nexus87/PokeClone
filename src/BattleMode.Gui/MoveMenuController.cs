@@ -17,11 +17,9 @@ namespace BattleMode.Gui
 {
     public class MoveMenuController
     {
-        private readonly IMessageBus _messageBus;
 
         public MoveMenuController(GuiFactory factory, IMessageBus messageBus, Entity player, Entity ai)
         {
-            _messageBus = messageBus;
 
             factory.LoadFromFile(@"BattleMode\Gui\MoveMenu.xml", this);
             _listView.Model = new ObservableCollection<Move>();
@@ -49,15 +47,15 @@ namespace BattleMode.Gui
             foreach (var sourceMove in pokemon.Moves)
                 _listView.Model.Add(sourceMove);
         }
-        public void Show()
+        public void Show(IMessageBus messageBus)
         {
             _listView.SelectCell(0);
-            _messageBus.SendAction(new SetGuiComponentVisibleAction(_window, true));
+            messageBus.SendAction(new SetGuiComponentVisibleAction(_window, true));
         }
 
-        public void Close()
+        public void Close(IMessageBus messageBus)
         {
-            _messageBus.SendAction(new SetGuiComponentVisibleAction(_window, false));
+            messageBus.SendAction(new SetGuiComponentVisibleAction(_window, false));
         }
 
 #pragma warning disable 649

@@ -17,9 +17,6 @@ namespace BattleMode.Gui
 {
     public class PokemonMenuController
     {
-        //private readonly List<PokemonMenuLine> _pokemonMenuLines = new List<PokemonMenuLine>();
-        private readonly IMessageBus _messageBus;
-
 
 #pragma warning disable 649
 
@@ -31,7 +28,6 @@ namespace BattleMode.Gui
 #pragma warning restore 649
         public PokemonMenuController(GuiFactory factory, IMessageBus messageBus, SpriteProvider spriteProvider)
         {
-            _messageBus = messageBus;
 
             factory.LoadFromFile(@"BattleMode\Gui\PokemonMenu.xml", this);
 
@@ -70,16 +66,16 @@ namespace BattleMode.Gui
                 _listView.HandleKeyInput(key);
         }
 
-        public void Show()
+        public void Show(IMessageBus messageBus)
         {
             _listView.SelectCell(0);
-            _messageBus.SendAction(new SetGuiComponentVisibleAction(_panel, true));
+            messageBus.SendAction(new SetGuiComponentVisibleAction(_panel, true));
 
         }
 
-        public void Close()
+        public void Close(IMessageBus messageBus)
         {
-            _messageBus.SendAction(new SetGuiComponentVisibleAction(_panel, false));
+            messageBus.SendAction(new SetGuiComponentVisibleAction(_panel, false));
 
         }
         protected void OnExitRequested()

@@ -9,6 +9,7 @@ using BattleMode.Shared.Components;
 using GameEngine.Core.ECS;
 using GameEngine.Core.ECS.Actions;
 using GameEngine.Core.ECS.Systems;
+using GameEngine.GUI;
 using GameEngine.GUI.Components;
 using GameEngine.GUI.Loader;
 using PokemonShared.Service;
@@ -31,22 +32,22 @@ namespace BattleMode.Gui
         private readonly Guid _playerId;
 #pragma warning restore 649
 
-        public GuiControllerSystem(GuiSystem system, IMessageBus messageBus, Entity player, Entity ai,
+        public GuiControllerSystem(GuiFactory guiFactory, IMessageBus messageBus, Entity player, Entity ai,
             SpriteProvider spriteProvider) :
-            this(system,
-                new MainMenuController(system.Factory, messageBus),
-                new MoveMenuController(system.Factory, messageBus, player, ai),
-                new PokemonMenuController(system.Factory, messageBus, spriteProvider),
-                new ItemMenuController(system.Factory, messageBus),
-                new PokemonDataView(system.Factory, @"BattleMode\Gui\PlayerDataView.xml", messageBus, player),
-                new PokemonDataView(system.Factory, @"BattleMode\Gui\AiDataView.xml", messageBus, ai),
+            this(guiFactory,
+                new MainMenuController(guiFactory, messageBus),
+                new MoveMenuController(guiFactory, messageBus, player, ai),
+                new PokemonMenuController(guiFactory, messageBus, spriteProvider),
+                new ItemMenuController(guiFactory, messageBus),
+                new PokemonDataView(guiFactory, @"BattleMode\Gui\PlayerDataView.xml", messageBus, player),
+                new PokemonDataView(guiFactory, @"BattleMode\Gui\AiDataView.xml", messageBus, ai),
                 messageBus,
                 player, ai
             )
         {
         }
 
-        public GuiControllerSystem(GuiSystem manager,
+        public GuiControllerSystem(GuiFactory guiFactory,
             MainMenuController mainController,
             MoveMenuController moveController, PokemonMenuController pokemonController,
             ItemMenuController itemController,
@@ -55,7 +56,7 @@ namespace BattleMode.Gui
             Entity player, Entity ai
         )
         {
-            manager.Factory.LoadFromFile(@"BattleMode\Gui\MessageBox.xml", this);
+            guiFactory.LoadFromFile(@"BattleMode\Gui\MessageBox.xml", this);
             _playerId = player.Id;
             var aiId = ai.Id;
 
@@ -80,22 +81,22 @@ namespace BattleMode.Gui
             foreach (var view in _dataViews.Values)
                 view.Show();
         }
-        public void Update(IEntityManager entityManager) 
+        public void Update(IEntityManager entityManager, IMessageBus messageBus) 
         {
             foreach (var view in _dataViews.Values)
             {
                 view.Update(entityManager);
             }
         }
-        public void SetCommand(SetCommandAction action)
+        public void SetCommand(SetCommandAction action, IMessageBus messageBus)
         {
             if (action.Entity.Id == _playerId)
             {
-                CloseAll();
+                CloseAll(messageBus);
             }
         }
 
-        public void ShowMenu(ShowMenuAction action, IEntityManager entityManager)
+        public void ShowMenu(ShowMenuAction action, IMessageBus messageBus)
         {
             if (action.Menu == MainMenuEntries.Run)
                 return;
@@ -105,31 +106,31 @@ namespace BattleMode.Gui
             switch (action.Menu)
             {
                 case MainMenuEntries.Attack:
-                    _moveController.Show();
+                    _moveController.Show(messageBus);
                     break;
                 case MainMenuEntries.Pkmn:
-                    _pokemonController.Show();
+                    _pokemonController.Show(messageBus);
                     break;
                 case MainMenuEntries.Item:
-                    _itemController.Show();
+                    _itemController.Show(messageBus);
                     break;
             }
         }
 
-        public void ShowMainMenu(ShowMainMenuAction action, IEntityManager entityManager)
+        public void ShowMainMenu(IMessageBus messageBus)
         {
-            CloseAll();
+            CloseAll(messageBus);
             _mainController.Show();
         }
-        private void CloseAll()
+        private void CloseAll(IMessageBus messageBus)
         {
             _mainController.Close();
-            _itemController.Close();
-            _moveController.Close();
-            _pokemonController.Close();
+            _itemController.Close(messageBus);
+            _moveController.Close(messageBus);
+            _pokemonController.Close(messageBus);
         }
 
-        public void SetPokemon(SetPokemonAction action, IEntityManager entityManager)
+        public void SetPokemon(SetPokemonAction action, IMessageBus messageBus)
         {
             if (_dataViews.TryGetValue(action.Entity.Id, out var value))
             {
@@ -141,14 +142,14 @@ namespace BattleMode.Gui
             }
         }
 
-        public void SetPlayer(SetPlayerAction action, IEntityManager entityManager)
+        public void SetPlayer(SetPlayerAction action, IEntityManager entityManager, IMessageBus messageBus)
         {
             var trainerComponent = entityManager.GetComponentByTypeAndEntity<TrainerComponent>(action.PlayerEntity).First();
             _pokemonController.SetPlayerPokemon(trainerComponent.Pokemons);
             _itemController.SetItems(trainerComponent.Items);
         }
 
-        public void ShowMessage(ShowMessageAction action)
+        public void ShowMessage(ShowMessageAction action, IMessageBus messageBus)
         {
             _messageBox.DisplayText(action.Text);
         }

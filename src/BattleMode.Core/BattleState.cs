@@ -28,12 +28,12 @@ namespace BattleMode.Core
             var playerEntity = PlayerEntity.Create(EntityManager, ScreenConstants);
             var aiEntity = AiEntity.Create(EntityManager, ScreenConstants);
             var battleStateEntity = BattleStateEntity.Create(EntityManager);
-            var battleSystem = new BattleSystem(MessageBus, new DummyScheduler(), new DefaultMoveEffectCalculator(new DummyBattleRules()));
-            _guiControllerSystem = new GuiControllerSystem(GuiSystem, MessageBus, playerEntity, aiEntity, spriteProvider);
+            var battleSystem = new BattleSystem(new DummyScheduler(), new DefaultMoveEffectCalculator(new DummyBattleRules()));
+            _guiControllerSystem = new GuiControllerSystem(GuiFactory, MessageBus, playerEntity, aiEntity, spriteProvider);
             var graphicsSystem = new BattleGraphicController(spriteProvider);
-            var aiSystem = new AiSystem(aiEntity, playerEntity, MessageBus);
-            var gameDriverSystem = new GameDriverSystem(MessageBus);
-            var hpSystem = new HpSystem(MessageBus);
+            var aiSystem = new AiSystem(aiEntity, playerEntity);
+            var gameDriverSystem = new GameDriverSystem();
+            var hpSystem = new HpSystem();
 
             MessageBus.RegisterForAction<TimeAction>(_guiControllerSystem.Update);
             MessageBus.RegisterForAction<TimeAction>(hpSystem.Update);

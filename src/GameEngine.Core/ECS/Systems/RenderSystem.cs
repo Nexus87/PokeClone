@@ -7,7 +7,11 @@ namespace GameEngine.Core.ECS.Systems
 {
     public class RenderSystem
     {
-        public virtual void Render(TimeAction _, IEntityManager entityManager)
+        public static void RegisterHandlers(IMessageBus messageBus)
+        {
+            messageBus.RegisterForAction<TimeAction>(RenderSystem.Render);
+        }
+        public static void Render(IEntityManager entityManager, IMessageBus messageBus)
         {
             var renderComonent = entityManager.GetFirstComponentOfType<RenderAreaComponent>();
             var spriteBatch = renderComonent.SpriteBatch;

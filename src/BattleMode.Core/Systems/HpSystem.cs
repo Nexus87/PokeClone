@@ -9,18 +9,13 @@ namespace BattleMode.Core.Systems
 {
     public class HpSystem
     {
-        private readonly IMessageBus _messageBux;
-        public HpSystem(IMessageBus messageBus)
-        {
-            _messageBux = messageBus;
-        }
-        public void ChangeHp(ChangeHpAction action, IEntityManager entityManager)
+        public void ChangeHp(ChangeHpAction action, IEntityManager entityManager, IMessageBus messageBus)
         {
             var component = entityManager.GetComponentByTypeAndEntity<PokemonComponent>(action.Target).First();
             component.ChangeHp = action.Diff;
         }
 
-        public void Update(IEntityManager entityManager)
+        public void Update(IEntityManager entityManager, IMessageBus messageBus)
         {
             var components = entityManager.GetComponentsOfType<PokemonComponent>().Where(x => x.ChangeHp != 0);
             foreach (var item in components)
@@ -31,13 +26,13 @@ namespace BattleMode.Core.Systems
                 {
                     item.Pokemon.Hp = item.Pokemon.MaxHp;
                     item.ChangeHp = 0;
-                    _messageBux.SendAction(new HpChangeFinishedAction(item.EntityId));
+                    messageBus.SendAction(new HpChangeFinishedAction(item.EntityId));
                 }
                 else if (nextHp < 0)
                 {
                     item.Pokemon.Hp = 0;
                     item.ChangeHp = 0;
-                    _messageBux.SendAction(new HpChangeFinishedAction(item.EntityId));
+                    messageBus.SendAction(new HpChangeFinishedAction(item.EntityId));
                 }
                 else
                 {
@@ -45,7 +40,7 @@ namespace BattleMode.Core.Systems
                     item.Pokemon.Hp = nextHp;
                     if(item.ChangeHp == 0)
                     {
-                        _messageBux.SendAction(new HpChangeFinishedAction(item.EntityId));
+                        messageBus.SendAction(new HpChangeFinishedAction(item.EntityId));
                     }
                 }
             }

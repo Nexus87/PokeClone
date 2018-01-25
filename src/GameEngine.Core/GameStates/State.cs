@@ -20,32 +20,18 @@ namespace GameEngine.Core.GameStates
             EntityManager = new EntityManager();
             MessageBus = new MessageBus(EntityManager);
 
-            RenderSystem = new RenderSystem();
-            InputSystem = new InputSystem(MessageBus);
-            GuiSystem = new GuiSystem();
-            _queueSystem = new BlockingQueueingSystem(MessageBus);
+            var inputSystem = new InputSystem();
+            var guiSystem = new GuiSystem();
 
-            MessageBus.RegisterForAction<TimeAction>(RenderSystem.Render);
-            MessageBus.RegisterForAction<TimeAction>(InputSystem.Update);
-            MessageBus.RegisterForAction<TimeAction>(GuiSystem.Update);
-            MessageBus.RegisterForAction<TimeAction>(_queueSystem.Update);
-
-            MessageBus.RegisterForAction<SetGuiComponentVisibleAction>(GuiSystem.SetWidgetVisibility);
-            MessageBus.RegisterForAction<GuiKeyInputAction>(GuiSystem.HandleInput);
-            MessageBus.RegisterForAction<SetGuiVisibleAction>(GuiSystem.SetGuiVisiblity);
-
-            MessageBus.RegisterForAction<QueueAction>(_queueSystem.QueueAction);
-            MessageBus.RegisterForAction<UnblockQueueAction>(_queueSystem.Unblock);
+            BlockingQueueingSystem.RegisterHandler(MessageBus);
+            guiSystem.RegisterHandler(MessageBus);
+            inputSystem.RegisterHandler(MessageBus);
+            RenderSystem.RegisterHandlers(MessageBus);
         }
 
-        private InputSystem InputSystem { get; }
-        protected GuiSystem GuiSystem { get; }
-
-        private readonly BlockingQueueingSystem _queueSystem;
-
-        private RenderSystem RenderSystem { get; }
         protected IMessageBus MessageBus { get; }
 
+        protected GuiFactory GuiFactory { get; private set;}
         protected ScreenConstants ScreenConstants { get; private set; }
         protected ITextureProvider TextureProvider { get; private set; }
         private Entity StateEntity { get; set; }
@@ -56,7 +42,7 @@ namespace GameEngine.Core.GameStates
         {
             TextureProvider = textureProvider;
             StateEntity = GameStateEntity.Create(EntityManager, screen, keyMap, skin);
-            GuiSystem.Factory = factory;
+            GuiFactory = factory;
             ScreenConstants = screen.Constants;
             Init();
         }

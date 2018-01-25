@@ -20,7 +20,7 @@ namespace BattleMode.Graphic
             _provider = provider;
         }
 
-        public void SetPokemon(SetPokemonAction action, IEntityManager entityManager)
+        public void SetPokemon(SetPokemonAction action, IEntityManager entityManager, IMessageBus messageBus)
         {
             var renderComponent = entityManager.GetComponentByTypeAndEntity<RenderComponent>(action.Entity).FirstOrDefault();
             renderComponent.Texture = entityManager.HasComponent<PlayerComponent>(action.Entity)

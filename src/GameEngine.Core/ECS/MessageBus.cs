@@ -11,11 +11,11 @@ namespace GameEngine.Core.ECS
         private readonly IEntityManager _entityManager;
         private readonly Queue<object> _messageQueue = new Queue<object>();
 
-        private readonly Dictionary<Type, List<Action<object, IEntityManager>>> _handlers = 
-            new Dictionary<Type, List<Action<object, IEntityManager>>>();
+        private readonly Dictionary<Type, List<Action<object, IEntityManager, IMessageBus>>> _handlers = 
+            new Dictionary<Type, List<Action<object, IEntityManager, IMessageBus>>>();
 
-        private readonly Dictionary<object, Action<object, IEntityManager>> _handlerMap =
-            new Dictionary<object, Action<object, IEntityManager>>();
+        private readonly Dictionary<object, Action<object, IEntityManager, IMessageBus>> _handlerMap =
+            new Dictionary<object, Action<object, IEntityManager, IMessageBus>>();
 
 
         public MessageBus(IEntityManager entityManager)
@@ -24,26 +24,25 @@ namespace GameEngine.Core.ECS
         }
 
 
-        public void RegisterForAction<TAction>(Action<TAction, IEntityManager> handler)
+        public void RegisterForAction<TAction>(Action<TAction, IEntityManager, IMessageBus> handler)
         {
             if (_handlerMap.ContainsKey(handler))
             {
                 return;
             }
 
-            void Wrapper(object x, IEntityManager y) => handler((TAction) x, y);
+            void Wrapper(object x, IEntityManager y, IMessageBus z) => handler((TAction) x, y, z);
 
             _handlerMap[handler] = Wrapper;
             if (!_handlers.TryGetValue(typeof(TAction), out var handlerList))
             {
-                handlerList = new List<Action<object, IEntityManager>>();
+                handlerList = new List<Action<object, IEntityManager, IMessageBus>>();
                 _handlers[typeof(TAction)] = handlerList;
             }
 
             handlerList.Add(Wrapper);
         }
-
-        public void UnregisterHandler<TAction>(Action<TAction, IEntityManager> handler)
+        private void UnregisterHandler<TAction>(object handler)
         {
             if (!_handlerMap.TryGetValue(handler, out var wrapper))
             {
@@ -52,7 +51,13 @@ namespace GameEngine.Core.ECS
 
             _handlers[typeof(TAction)].Remove(wrapper);
         }
+        public void UnregisterHandler<TAction>(Action<TAction, IEntityManager, IMessageBus> handler) => UnregisterHandler<TAction>(handler);
+        public void UnregisterHandler<TAction>(Action<IEntityManager, IMessageBus> handler) => UnregisterHandler<TAction>(handler);
 
+        public void UnregisterHandler<TAction>(Action<TAction, IMessageBus> handler) => UnregisterHandler<TAction>(handler);
+
+        public void UnregisterHandler<TAction>(Action<IMessageBus> handler) => UnregisterHandler<TAction>(handler);
+        public void UnregisterHandler<TAction>(Action handler) => UnregisterHandler<TAction>(handler);
         public void StartProcess()
         {
             while (_messageQueue.Count > 0)
@@ -64,7 +69,7 @@ namespace GameEngine.Core.ECS
                 }
                 
                 if (_handlers.TryGetValue(action.GetType(), out var handlers))
-                    handlers.ForEach(x => x(action, _entityManager));
+                    handlers.ForEach(x => x(action, _entityManager, this));
             }
         }
 
@@ -77,20 +82,26 @@ namespace GameEngine.Core.ECS
             _messageQueue.Enqueue(action);
         }
 
-        public void RegisterForAction<TAction>(Action<IEntityManager> handler)
+        public void RegisterForAction<TAction>(Action<IEntityManager, IMessageBus> handler)
         {
-            RegisterForAction<TAction>((a, e) => handler(e));
+            RegisterForAction<TAction>((a, e, m) => handler(e, m));
         }
 
-        public void RegisterForAction<TAction>(Action<TAction> handler)
+        public void RegisterForAction<TAction>(Action<TAction, IMessageBus> handler)
         {
-            RegisterForAction<TAction>((a, e) => handler(a));
+            RegisterForAction<TAction>((a, e, m) => handler(a, m));
+        }
+
+        public void RegisterForAction<TAction>(Action<IMessageBus> handler)
+        {
+            RegisterForAction<TAction>((a, e, m) => handler(m));
         }
 
         public void RegisterForAction<TAction>(Action handler)
         {
-            RegisterForAction<TAction>((a, e) => handler());
+            RegisterForAction<TAction>((a, e, m) => handler());
         }
+
 
     }
 }

@@ -9,22 +9,24 @@ namespace GameEngine.Core.ECS.Systems
 {
     public class InputSystem
     {
+        public void RegisterHandler(IMessageBus messageBus)
+        {
+            messageBus.RegisterForAction<TimeAction>(Update);
+        }
         private readonly KeyboardManager _keyboardManager;
-        private readonly IMessageBus _messageBus;
 
-        public InputSystem(IMessageBus messageBus)
+        public InputSystem()
         {
             _keyboardManager = new KeyboardManager();
-            _messageBus = messageBus;
         }
 
-        public void Update(TimeAction action, IEntityManager entityManager)
+        public void Update(IEntityManager entityManager, IMessageBus messageBus)
         {
             var keyMap = entityManager.GetFirstComponentOfType<KeyMapComponent>().KeyMap;
             var guiVisible = entityManager.GetFirstComponentOfType<GuiComponent>().GuiVisible;
             var send = guiVisible
-                ? (Action<CommandKeys>) (key => _messageBus.SendAction(new GuiKeyInputAction(key)))
-                : key => _messageBus.SendAction(new KeyInputAction(key));
+                ? (Action<CommandKeys>)(key => messageBus.SendAction(new GuiKeyInputAction(key)))
+                : key => messageBus.SendAction(new KeyInputAction(key));
 
             _keyboardManager.Update();
 

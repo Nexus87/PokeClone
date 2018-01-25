@@ -11,44 +11,38 @@ namespace BattleMode.Core.Systems
 {
     public class GameDriverSystem
     {
-        private readonly IMessageBus _messageBus;
-
-        public GameDriverSystem(IMessageBus messageBus)
-        {
-            _messageBus = messageBus;
-        }
-        public void UseMove(UseMoveAction action, IEntityManager entityManager)
+        public void UseMove(UseMoveAction action, IEntityManager entityManager, IMessageBus messageBus)
         {
             var pokemon = entityManager.GetComponentByTypeAndEntity<PokemonComponent>(action.Source).First();
-            _messageBus.SendAction(new QueueAction(new ShowMessageAction($"{pokemon.Pokemon.Name} uses {action.Move.Name}")));
+            messageBus.SendAction(new QueueAction(new ShowMessageAction($"{pokemon.Pokemon.Name} uses {action.Move.Name}")));
         }
 
-        public void DoDamage(DoDamageAction action, IEntityManager entityManager)
+        public void DoDamage(DoDamageAction action, IEntityManager entityManager, IMessageBus messageBus)
         {
-            _messageBus.SendAction(new QueueAction(new ChangeHpAction(-action.Damage, action.Target)));
+            messageBus.SendAction(new QueueAction(new ChangeHpAction(-action.Damage, action.Target)));
             if (action.Critical)
             {
-                _messageBus.SendAction(new QueueAction(new ShowMessageAction("Critical!")));
+                messageBus.SendAction(new QueueAction(new ShowMessageAction("Critical!")));
             }
 
             if (action.MoveEfficiency == MoveEfficiency.NoEffect)
             {
-                _messageBus.SendAction(new QueueAction(new ShowMessageAction("It has no effect!")));
+                messageBus.SendAction(new QueueAction(new ShowMessageAction("It has no effect!")));
 
             }
             else if (action.MoveEfficiency == MoveEfficiency.NotEffective)
             {
-                _messageBus.SendAction(new QueueAction(new ShowMessageAction("It is not very effective!")));
+                messageBus.SendAction(new QueueAction(new ShowMessageAction("It is not very effective!")));
             }
             else if (action.MoveEfficiency == MoveEfficiency.VeryEffective)
             {
-                _messageBus.SendAction(new QueueAction(new ShowMessageAction("It is very effective!")));
+                messageBus.SendAction(new QueueAction(new ShowMessageAction("It is very effective!")));
             }
         }
 
-        public void HpChangeFinsihed(HpChangeFinishedAction action, IEntityManager entityManager)
+        public void HpChangeFinsihed(HpChangeFinishedAction action, IEntityManager entityManager, IMessageBus messageBus)
         {
-            _messageBus.SendAction(new UnblockQueueAction());
+            messageBus.SendAction(new UnblockQueueAction());
         }
 
         

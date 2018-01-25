@@ -5,31 +5,32 @@ namespace GameEngine.Core.ECS.Systems
 {
     public class BlockingQueueingSystem
     {
-        private readonly IMessageBus _messageBus;
-
-        public BlockingQueueingSystem(IMessageBus messageBus)
+        public static void RegisterHandler(IMessageBus messageBus)
         {
-            _messageBus = messageBus;
+            messageBus.RegisterForAction<TimeAction>(BlockingQueueingSystem.Update);
+            messageBus.RegisterForAction<QueueAction>(BlockingQueueingSystem.QueueAction);
+            messageBus.RegisterForAction<UnblockQueueAction>(BlockingQueueingSystem.Unblock);
+
         }
-        public void QueueAction(QueueAction action, IEntityManager entityManager)
+        public static void QueueAction(QueueAction action, IEntityManager entityManager, IMessageBus messageBus)
         {
             var component = entityManager.GetFirstComponentOfType<ActionQueueComponent>();
             component.Actions.Enqueue(action.Action);
         }
 
-        public void Update(IEntityManager entityManager)
+        public static void Update(IEntityManager entityManager, IMessageBus messageBus)
         {
             var component = entityManager.GetFirstComponentOfType<ActionQueueComponent>();
-            if(!component.IsBlocked && component.Actions.Count > 0)
+            if (!component.IsBlocked && component.Actions.Count > 0)
             {
                 component.IsBlocked = true;
-                _messageBus.SendAction(component.Actions.Dequeue());
+                messageBus.SendAction(component.Actions.Dequeue());
             }
         }
-        public void Unblock(IEntityManager entityManager)
+        public static void Unblock(IEntityManager entityManager, IMessageBus messageBus)
         {
             var component = entityManager.GetFirstComponentOfType<ActionQueueComponent>();
-            component.IsBlocked = false;            
+            component.IsBlocked = false;
         }
     }
 }

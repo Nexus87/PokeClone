@@ -11,12 +11,18 @@ namespace GameEngine.Core.ECS.Systems
 {
     public class GuiSystem
     {
+        public void RegisterHandler(IMessageBus messageBus)
+        {
+            messageBus.RegisterForAction<TimeAction>(Update);
+            messageBus.RegisterForAction<SetGuiComponentVisibleAction>(SetWidgetVisibility);
+            messageBus.RegisterForAction<SetGuiVisibleAction>(SetGuiVisiblity);
+            messageBus.RegisterForAction<GuiKeyInputAction>(HandleInput);
+        }
         private readonly List<WidgetItem> _widgets = new List<WidgetItem>();
 
         private IGuiComponent FocusedWidget => _widgets.LastOrDefault()?.Component;
-        public GuiFactory Factory { get; set; }
 
-        public void Update(TimeAction action, IEntityManager entityManager)
+        public void Update(TimeAction action, IEntityManager entityManager, IMessageBus messageBus)
         {
             var guiComponent = entityManager.GetFirstComponentOfType<GuiComponent>();
             if (!guiComponent.GuiVisible)
@@ -37,7 +43,7 @@ namespace GameEngine.Core.ECS.Systems
             spriteBatch.GraphicsDevice.Clear(Color.Transparent);
         }
 
-        public void SetWidgetVisibility(SetGuiComponentVisibleAction action, IEntityManager entityManager)
+        public void SetWidgetVisibility(SetGuiComponentVisibleAction action, IMessageBus messageBus)
         {
             if (action.IsVisble)
             {
@@ -68,12 +74,12 @@ namespace GameEngine.Core.ECS.Systems
                 _widgets.Remove(w);
         }
 
-        public void SetGuiVisiblity(SetGuiVisibleAction action, IEntityManager entityManager)
+        public void SetGuiVisiblity(SetGuiVisibleAction action, IEntityManager entityManager, IMessageBus messageBus)
         {
             entityManager.GetFirstComponentOfType<GuiComponent>().GuiVisible = action.IsVisible;
         }
 
-        public void HandleInput(GuiKeyInputAction action, IEntityManager entityManager)
+        public void HandleInput(GuiKeyInputAction action, IEntityManager entityManager, IMessageBus messageBus)
         {
             FocusedWidget?.HandleKeyInput(action.Key);
         }

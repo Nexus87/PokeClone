@@ -15,7 +15,6 @@ namespace BattleMode.Gui
 {
     public class ItemMenuController
     {
-        private readonly IMessageBus _messageBus;
 #pragma warning disable 649
 
         [GuiLoaderId("Window")]
@@ -27,7 +26,6 @@ namespace BattleMode.Gui
 
         public ItemMenuController(GuiFactory factory, IMessageBus messageBus) 
         {
-            _messageBus = messageBus;
             factory.LoadFromFile(@"BattleMode\Gui\ItemMenu.xml", this);
 
             _listView.Model = new ObservableCollection<Item>();
@@ -41,15 +39,15 @@ namespace BattleMode.Gui
 
         }
 
-        public void Show()
+        public void Show(IMessageBus messageBus)
         {
             _listView.SelectCell(0);
-            _messageBus.SendAction(new SetGuiComponentVisibleAction(_window, true));
+            messageBus.SendAction(new SetGuiComponentVisibleAction(_window, true));
         }
 
-        public void Close()
+        public void Close(IMessageBus messageBus)
         {
-            _messageBus.SendAction(new SetGuiComponentVisibleAction(_window, false));
+            messageBus.SendAction(new SetGuiComponentVisibleAction(_window, false));
         }
 
         public void SetItems(List<Item> trainerComponentItems)

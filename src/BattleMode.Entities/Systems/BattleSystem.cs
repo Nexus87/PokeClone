@@ -12,17 +12,15 @@ namespace BattleMode.Entities.Systems
 {
     public class BattleSystem
     {
-        private readonly IMessageBus _messageBus;
         private readonly ICommandScheduler _scheduler;
         private readonly IMoveEffectCalculator _calculator;
 
-        public BattleSystem(IMessageBus messageBus, ICommandScheduler scheduler, IMoveEffectCalculator calculator)
+        public BattleSystem(ICommandScheduler scheduler, IMoveEffectCalculator calculator)
         {
-            _messageBus = messageBus;
             _scheduler = scheduler;
             _calculator = calculator;
         }
-        public void SetCommand(SetCommandAction action, IEntityManager entityManager)
+        public void SetCommand(SetCommandAction action, IEntityManager entityManager, IMessageBus messageBus)
         {
             var component = entityManager.GetComponentByTypeAndEntity<CommandComponent>(action.Entity).First();
             if (component.Command == null)
@@ -32,40 +30,40 @@ namespace BattleMode.Entities.Systems
             var allComponents = entityManager.GetComponentsOfType<CommandComponent>();
             if (allComponents.All(x => x.Command != null))
             {
-                _messageBus.SendAction(new EndTurnAction());
+                messageBus.SendAction(new EndTurnAction());
             }
         }
 
-        public void ExecuteNextCommand(IEntityManager entityManager)
+        public void ExecuteNextCommand(IEntityManager entityManager, IMessageBus messageBus)
         {
             var queue = entityManager.GetFirstComponentOfType<BattleStateComponent>().CommandQueues;
             if (queue.Count == 0)
             {
-                _messageBus.SendAction(new StartNewTurnAction());
+                messageBus.SendAction(new StartNewTurnAction());
                 return;
             }
 
             switch (queue.Dequeue())
             {
                 case MoveCommand m:
-                    _messageBus.SendAction(new UseMoveAction(m.Move, m.Source, m.Target));
+                    messageBus.SendAction(new UseMoveAction(m.Move, m.Source, m.Target));
                     break;
                 case ItemCommand i:
-                    _messageBus.SendAction(new UseItemAction(i.Item, i.Target));
+                    messageBus.SendAction(new UseItemAction(i.Item, i.Target));
                     break;
                 case ChangeCommand c:
-                    _messageBus.SendAction(new UsePokemonChange(c.Pokemon, c.Target));
+                    messageBus.SendAction(new UsePokemonChange(c.Pokemon, c.Target));
                     break;
             }
 
         }
 
-        public void EndTurn(IEntityManager entityManager)
+        public void EndTurn(IEntityManager entityManager, IMessageBus messageBus)
         {
             var battleStateComponent = entityManager.GetFirstComponentOfType<BattleStateComponent>();
             battleStateComponent.CommandQueues = ScheduleCommands(entityManager.GetComponentsOfType<CommandComponent>().Select(x => x.Command));
 
-            _messageBus.SendAction(new ExecuteNextCommandAction());
+            messageBus.SendAction(new ExecuteNextCommandAction());
         }
 
         private Queue<ICommand> ScheduleCommands(IEnumerable<ICommand> commands)
@@ -75,7 +73,7 @@ namespace BattleMode.Entities.Systems
             return new Queue<ICommand>(_scheduler.ScheduleCommands().ToList());
         }
 
-        public void UseMove(UseMoveAction action, IEntityManager entityManager)
+        public void UseMove(UseMoveAction action, IEntityManager entityManager, IMessageBus messageBus)
         {
             var source = entityManager.GetComponentByTypeAndEntity<PokemonComponent>(action.Source).First().Pokemon;
             var move = action.Move;
@@ -84,14 +82,14 @@ namespace BattleMode.Entities.Systems
             _calculator.Init(source, move, target);
             if (!_calculator.IsHit)
             {
-                _messageBus.SendAction(new MoveMissedAction());
+                messageBus.SendAction(new MoveMissedAction());
                 return;
             }
 
             var responseAction = new DoDamageAction(_calculator.Damage, GetEffect(_calculator.TypeModifier),
                 action.Target, _calculator.IsCritical);
 
-            _messageBus.SendAction(responseAction);
+            messageBus.SendAction(responseAction);
         }
 
         private static MoveEfficiency GetEffect(float typeModifier)

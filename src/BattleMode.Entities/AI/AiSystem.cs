@@ -16,20 +16,18 @@ namespace BattleMode.Entities.AI
     {
         private readonly Entity _aiEntity;
         private readonly Entity _player;
-        private readonly IMessageBus _messageBus;
 
-        public AiSystem(Entity aiEntity, Entity player, IMessageBus messageBus)
+        public AiSystem(Entity aiEntity, Entity player)
         {
             _aiEntity = aiEntity;
             _player = player;
-            _messageBus = messageBus;
         }
 
-        public void StartNewTurn(StartNewTurnAction action, IEntityManager entityManager)
+        public void StartNewTurn(StartNewTurnAction action, IEntityManager entityManager, IMessageBus messageBus)
         {
             var pokemon = entityManager.GetComponentByTypeAndEntity<PokemonComponent>(_aiEntity).First().Pokemon;
             var move = ChooseMove(pokemon);
-            _messageBus.SendAction(new SetCommandAction(new MoveCommand(move, _aiEntity, _player), _aiEntity));
+            messageBus.SendAction(new SetCommandAction(new MoveCommand(move, _aiEntity, _player), _aiEntity));
         }
 
         private Move ChooseMove(Pokemon pokemon)
