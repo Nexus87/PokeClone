@@ -13,8 +13,8 @@ namespace GameEngine.Core.Tests.ECS
 
         public interface IHandler
         {
-            void StringHandler(string action, IEntityManager entityManager);
-            void ObjectHandler(object action, IEntityManager entityManager);
+            void StringHandler(string action, IEntityManager entityManager, IMessageBus bus);
+            void ObjectHandler(object action, IEntityManager entityManager, IMessageBus bus);
         }
 
         private IHandler _handlerFake;
@@ -47,7 +47,7 @@ namespace GameEngine.Core.Tests.ECS
 
             _messageBus.StartProcess();
 
-            A.CallTo(() => _handlerFake.StringHandler(StringAction, A<IEntityManager>._))
+            A.CallTo(() => _handlerFake.StringHandler(StringAction, A<IEntityManager>._, A<IMessageBus>._))
                 .MustHaveHappened(Repeated.Exactly.Once);
         }
 
@@ -60,9 +60,9 @@ namespace GameEngine.Core.Tests.ECS
             messageBus.SendAction(IntAction);
             messageBus.StartProcess();
 
-            A.CallTo(() => _handlerFake.StringHandler(A<string>._, A<IEntityManager>._))
+            A.CallTo(() => _handlerFake.StringHandler(A<string>._, A<IEntityManager>._, A<IMessageBus>._))
                 .MustNotHaveHappened();
-            A.CallTo(() => _handlerFake.ObjectHandler(A<object>._, A<IEntityManager>._))
+            A.CallTo(() => _handlerFake.ObjectHandler(A<object>._, A<IEntityManager>._, A<IMessageBus>._))
                 .MustNotHaveHappened();
         }
 
@@ -75,7 +75,7 @@ namespace GameEngine.Core.Tests.ECS
             _messageBus.SendAction(StringAction);
             _messageBus.StartProcess();
 
-            A.CallTo(() => _handlerFake.StringHandler(StringAction, A<IEntityManager>._))
+            A.CallTo(() => _handlerFake.StringHandler(StringAction, A<IEntityManager>._, A<IMessageBus>._))
                 .MustNotHaveHappened();
         }
 
@@ -89,10 +89,10 @@ namespace GameEngine.Core.Tests.ECS
             _messageBus.StartProcess();
 
 
-            A.CallTo(() => _handlerFake.StringHandler(A<string>._, A<IEntityManager>._))
+            A.CallTo(() => _handlerFake.StringHandler(A<string>._, A<IEntityManager>._, A<IMessageBus>._))
                 .MustHaveHappened()
                 .Then(
-                    A.CallTo(() => _handlerFake.ObjectHandler(A<object>._, A<IEntityManager>._)).MustHaveHappened()
+                    A.CallTo(() => _handlerFake.ObjectHandler(A<object>._, A<IEntityManager>._, A<IMessageBus>._)).MustHaveHappened()
                 );
         }
 
@@ -101,20 +101,20 @@ namespace GameEngine.Core.Tests.ECS
             public static BlockingHandler Instance()
             {
                 var blockingHandler = A.Fake<BlockingHandler>();
-                A.CallTo(() => blockingHandler.StringHandler(A<string>._, A<IEntityManager>._)).CallsBaseMethod();
+                A.CallTo(() => blockingHandler.StringHandler(A<string>._, A<IEntityManager>._, A<IMessageBus>._)).CallsBaseMethod();
                 return blockingHandler;
             }
 
             private bool _block = true;
 
-            public virtual void StringHandler(string action, IEntityManager entityManager)
+            public virtual void StringHandler(string action, IEntityManager entityManager, IMessageBus messageBus)
             {
                 while (_block)
                 {
                 }
             }
 
-            public virtual void ObjectHandler(object action, IEntityManager entityManager)
+            public virtual void ObjectHandler(object action, IEntityManager entityManager, IMessageBus messageBus)
             {
             }
 
@@ -138,14 +138,14 @@ namespace GameEngine.Core.Tests.ECS
 
             WaitForActionProcessed(1);
 
-            A.CallTo(() => blockingHandler.ObjectHandler(_objectAction, A<IEntityManager>._))
+            A.CallTo(() => blockingHandler.ObjectHandler(_objectAction, A<IEntityManager>._, A<IMessageBus>._))
                 .MustNotHaveHappened();
 
             blockingHandler.StopBlocking();
 
             await processTask;
 
-            A.CallTo(() => blockingHandler.ObjectHandler(_objectAction, A<IEntityManager>._))
+            A.CallTo(() => blockingHandler.ObjectHandler(_objectAction, A<IEntityManager>._, A<IMessageBus>._))
                 .MustHaveHappened();
         }
 

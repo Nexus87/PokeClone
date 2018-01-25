@@ -31,7 +31,7 @@ namespace BattleMode.Gui
                 };
                 button.OnPressed += () =>
                 {
-                    messageBus.SendAction(new SetCommandAction(new MoveCommand(value, player, ai), player));
+                    messageBus.SendSetCommandAction(new MoveCommand(value, player, ai), player, this);
                 };
                 return button;
             };

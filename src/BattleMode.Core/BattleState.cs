@@ -43,7 +43,7 @@ namespace BattleMode.Core
             var playerPokemon = EntityManager.GetComponentByTypeAndEntity<PokemonComponent>(playerEntity).First().Pokemon;
             var aiPokemon = EntityManager.GetComponentByTypeAndEntity<PokemonComponent>(playerEntity).First().Pokemon;
             
-            MessageBus.SendAction(new StartNewTurnAction());
+            MessageBus.SendStartNewTurnAction(this);
             MessageBus.SendAction(new SetGuiVisibleAction(true));
             MessageBus.SendAction(new SetPlayerAction(playerEntity));
             MessageBus.SendAction(new SetPokemonAction(playerEntity, playerPokemon));

@@ -7,9 +7,9 @@ namespace GameEngine.Core.ECS.Systems
     {
         public static void RegisterHandler(IMessageBus messageBus)
         {
-            messageBus.RegisterForAction<TimeAction>(BlockingQueueingSystem.Update);
-            messageBus.RegisterForAction<QueueAction>(BlockingQueueingSystem.QueueAction);
-            messageBus.RegisterForAction<UnblockQueueAction>(BlockingQueueingSystem.Unblock);
+            messageBus.RegisterForAction<TimeAction>(Update);
+            messageBus.RegisterForAction<QueueAction>(QueueAction);
+            messageBus.RegisterForAction<UnblockQueueAction>(Unblock);
 
         }
         public static void QueueAction(QueueAction action, IEntityManager entityManager, IMessageBus messageBus)
