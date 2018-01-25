@@ -38,8 +38,8 @@ namespace BattleMode.Gui
                 new MoveMenuController(system.Factory, messageBus, player, ai),
                 new PokemonMenuController(system.Factory, messageBus, spriteProvider),
                 new ItemMenuController(system.Factory, messageBus),
-                new PokemonDataView(system.Factory, @"BattleMode\Gui\PlayerDataView.xml", messageBus),
-                new PokemonDataView(system.Factory, @"BattleMode\Gui\AiDataView.xml", messageBus),
+                new PokemonDataView(system.Factory, @"BattleMode\Gui\PlayerDataView.xml", messageBus, player),
+                new PokemonDataView(system.Factory, @"BattleMode\Gui\AiDataView.xml", messageBus, ai),
                 messageBus,
                 player, ai
             )
@@ -80,7 +80,13 @@ namespace BattleMode.Gui
             foreach (var view in _dataViews.Values)
                 view.Show();
         }
-
+        public void Update(IEntityManager entityManager) 
+        {
+            foreach (var view in _dataViews.Values)
+            {
+                view.Update(entityManager);
+            }
+        }
         public void SetCommand(SetCommandAction action)
         {
             if (action.Entity.Id == _playerId)
@@ -147,39 +153,5 @@ namespace BattleMode.Gui
             _messageBox.DisplayText(action.Text);
         }
 
-        public void ChangeHp(ChangeHpAction action)
-        {
-            var view = _dataViews[action.Target.Id];
-            view.SetHp(view.CurrentHp + action.Diff);
-            _messageBus.SendAction(new UnblockQueueAction());
-        }
-        public void UseMove(UseMoveAction action, IEntityManager entityManager)
-        {
-            var pokemon = entityManager.GetComponentByTypeAndEntity<PokemonComponent>(action.Source).First();
-            _messageBus.SendAction(new QueueAction(new ShowMessageAction($"{pokemon.Pokemon.Name} uses {action.Move.Name}")));
-        }
-
-        public void DoDamage(DoDamageAction action, IEntityManager entityManager)
-        {
-            _messageBus.SendAction(new QueueAction(new ChangeHpAction(-action.Damage, action.Target)));
-            if (action.Critical)
-            {
-                _messageBus.SendAction(new QueueAction(new ShowMessageAction("Critical!")));
-            }
-
-            if (action.MoveEfficiency == MoveEfficiency.NoEffect)
-            {
-                _messageBus.SendAction(new QueueAction(new ShowMessageAction("It has no effect!")));
-
-            }
-            else if (action.MoveEfficiency == MoveEfficiency.NotEffective)
-            {
-                _messageBus.SendAction(new QueueAction(new ShowMessageAction("It is not very effective!")));
-            }
-            else if (action.MoveEfficiency == MoveEfficiency.VeryEffective)
-            {
-                _messageBus.SendAction(new QueueAction(new ShowMessageAction("It is very effective!")));
-            }
-        }
     }
 }

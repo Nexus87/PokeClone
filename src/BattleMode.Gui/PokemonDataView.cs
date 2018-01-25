@@ -1,4 +1,6 @@
-﻿using GameEngine.Core.ECS;
+﻿using System.Linq;
+using BattleMode.Shared.Components;
+using GameEngine.Core.ECS;
 using GameEngine.Core.ECS.Actions;
 using GameEngine.GUI;
 using GameEngine.GUI.Controlls;
@@ -12,6 +14,7 @@ namespace BattleMode.Gui
     public class PokemonDataView
     {
         private readonly IMessageBus _messageBus;
+        private readonly Entity _entity;
 
 
 #pragma warning disable 649
@@ -22,15 +25,24 @@ namespace BattleMode.Gui
         [GuiLoaderId("HpText")] private HpText _hpText;
 #pragma warning restore 649
 
-        public PokemonDataView(GuiFactory factory, string xmlPath, IMessageBus messageBus)
+        public PokemonDataView(GuiFactory factory, string xmlPath, IMessageBus messageBus, Entity entity)
         {
             _messageBus = messageBus;
+            _entity = entity;
             factory.LoadFromFile(xmlPath, this);
         }
 
         public int CurrentHp => _hpLine.Current;
 
-        public void SetHp(int newHp)
+        public void Update(IEntityManager entityManager) 
+        {
+            var component = entityManager.GetComponentByTypeAndEntity<PokemonComponent>(_entity).First();
+            if(component.Pokemon.Hp != _hpLine.Current)
+            {
+                SetHp(component.Pokemon.Hp);
+            }
+        }
+        private void SetHp(int newHp)
         {
             _hpLine.Current = newHp;
             if (_hpText != null)

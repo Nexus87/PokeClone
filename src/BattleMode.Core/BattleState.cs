@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using BattleMode.Core.Entities;
+using BattleMode.Core.Systems;
 using BattleMode.Entities.Actions;
 using BattleMode.Entities.AI;
 using BattleMode.Entities.Systems;
@@ -31,7 +32,12 @@ namespace BattleMode.Core
             _guiControllerSystem = new GuiControllerSystem(GuiSystem, MessageBus, playerEntity, aiEntity, spriteProvider);
             var graphicsSystem = new BattleGraphicController(spriteProvider);
             var aiSystem = new AiSystem(aiEntity, playerEntity, MessageBus);
+            var gameDriverSystem = new GameDriverSystem(MessageBus);
+            var hpSystem = new HpSystem(MessageBus);
 
+            MessageBus.RegisterForAction<TimeAction>(_guiControllerSystem.Update);
+            MessageBus.RegisterForAction<TimeAction>(hpSystem.Update);
+            MessageBus.RegisterForAction<ChangeHpAction>(hpSystem.ChangeHp);
             MessageBus.RegisterForAction<SetPlayerAction>(_guiControllerSystem.SetPlayer);
             MessageBus.RegisterForAction<SetPokemonAction>(_guiControllerSystem.SetPokemon);
             MessageBus.RegisterForAction<SetPokemonAction>(graphicsSystem.SetPokemon);
@@ -44,11 +50,10 @@ namespace BattleMode.Core
             MessageBus.RegisterForAction<ExecuteNextCommandAction>(battleSystem.ExecuteNextCommand);
             MessageBus.RegisterForAction<EndTurnAction>(battleSystem.EndTurn);
             MessageBus.RegisterForAction<UseMoveAction>(battleSystem.UseMove);
-            MessageBus.RegisterForAction<UseMoveAction>(_guiControllerSystem.UseMove);
+            MessageBus.RegisterForAction<UseMoveAction>(gameDriverSystem.UseMove);
 
-            MessageBus.RegisterForAction<ChangeHpAction>(_guiControllerSystem.ChangeHp);
             MessageBus.RegisterForAction<ShowMessageAction>(_guiControllerSystem.ShowMessage);
-            MessageBus.RegisterForAction<DoDamageAction>(_guiControllerSystem.DoDamage);
+            MessageBus.RegisterForAction<DoDamageAction>(gameDriverSystem.DoDamage);
             
             MessageBus.RegisterForAction<StartNewTurnAction>(aiSystem.StartNewTurn);
             var playerPokemon = EntityManager.GetComponentByTypeAndEntity<PokemonComponent>(playerEntity).First().Pokemon;

@@ -14,5 +14,6 @@ namespace BattleMode.Shared.Components
         public Pokemon Pokemon { get; set; }
         public Stats Modifier { get; set; }
 
+        public int ChangeHp { get; set; }
     }
 }
